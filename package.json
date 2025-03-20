@@ -48,6 +48,7 @@
     "commit": "czg"
   },
   "dependencies": {
+    "acorn-jsx": "^5.3.2",
     "axios": "^1.8.4",
     "axios-mock-adapter": "^2.1.0",
     "i18next": "^24.2.3",
@@ -62,7 +63,9 @@
     "rollup-plugin-less-modules": "^0.1.11",
     "rollup-plugin-scss": "^4.0.1",
     "rollup-plugin-string": "^3.0.0",
-    "rxjs": "^7.8.2"
+    "rxjs": "^7.8.2",
+    "sinon-chrome": "^3.0.1",
+    "update": "^0.7.4"
   },
   "peerDependencies": {
     "react": ">= 18.0.0"

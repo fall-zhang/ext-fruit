@@ -33,14 +33,15 @@ const distConfig = defineConfig({
     plugins: [],
     manualChunks: []
   }],
+  // acornInjectPlugins: [jsx()],
   plugins: [
     json(),
     less(),
     lessModules(),
     scss({ fileName: 'bundle.css' }),
     bundleScss(),
+    typescript({ compilerOptions: { jsx: 'preserve' } }),
     jsx({ factory: 'React.createElement' }),
-    typescript(),
     string({
       // Required to be specified
       include: '**/*.html'
@@ -63,6 +64,7 @@ const distConfig = defineConfig({
 
 const libConfig = defineConfig({
   // clean: true,
+  // input: 'packages/content/index.tsx',
   input: 'packages/content/index.tsx',
   external: ['react', 'react-dom', 'react-redux'],
   output: [{
@@ -74,14 +76,15 @@ const libConfig = defineConfig({
     plugins: [],
     manualChunks: []
   }],
+  // acornInjectPlugins: [jsx()],
   plugins: [
     json(),
     less(),
     lessModules(),
     scss({ fileName: 'bundle.css' }),
     bundleScss(),
+    typescript({ compilerOptions: { jsx: 'preserve' } }),
     jsx({ factory: 'React.createElement' }),
-    typescript(),
     string({
       // Required to be specified
       include: '**/*.html'
