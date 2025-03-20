@@ -5,7 +5,8 @@ import React, {
   useContext,
   useRef,
   Fragment,
-  PropsWithChildren
+  PropsWithChildren,
+  ReactElement
 } from 'react'
 import mapValues from 'lodash/mapValues'
 import * as i18n from 'i18next'
@@ -123,7 +124,9 @@ if (process.env.DEBUG) {
   I18nContext.displayName = 'I18nContext'
 }
 
-export const I18nContextProvider: FC = ({ children }) => {
+export const I18nContextProvider: FC<{
+  children:ReactElement
+}> = ({ children }) => {
   const [lang, setLang] = useState<string | undefined>(undefined)
 
   useLayoutEffect(() => {

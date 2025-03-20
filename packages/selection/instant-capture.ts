@@ -43,9 +43,19 @@ export function createIntantCaptureStream (config: AppConfig | null) {
   return combineLatest(isPinned$, responseToQSPanel$).pipe(
     switchMap(([isPinned, responseToQSPanel]) => {
       const { instant: panelInstant } = config.panelMode
-      const { instant: otherInstant } = config[
-        responseToQSPanel ? 'qsPanelMode' : isPinned ? 'pinMode' : 'mode'
-      ]
+      let modeType:'mode'|'qsPanelMode'|'pinMode'
+      if (responseToQSPanel) {
+        modeType = 'qsPanelMode'
+      } else if (isPinned) {
+        modeType = 'pinMode'
+      } else {
+        modeType = 'mode'
+      }
+
+      const { instant: otherInstant } = config[modeType]
+      // const { instant: otherInstant } = config[
+      //   responseToQSPanel ? 'qsPanelMode' : isPinned ? 'pinMode' : 'mode'
+      // ]
 
       if (!panelInstant.enable && !otherInstant.enable) {
         return of(null)

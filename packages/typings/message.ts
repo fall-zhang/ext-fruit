@@ -88,7 +88,7 @@ export type MessageConfig = MessageConfigType<{
   }
 
   /** Inject dict panel to any page */
-  INJECT_DICTPANEL: {}
+  INJECT_DICTPANEL: any
 
   /* ------------------------------------------------ *\
      Backend IndexedDB: Notebook or History
@@ -108,7 +108,7 @@ export type MessageConfig = MessageConfigType<{
     }
   }
 
-  WORD_SAVED: {}
+  WORD_SAVED: any
 
   DELETE_WORDS: {
     payload: {
@@ -150,7 +150,7 @@ export type MessageConfig = MessageConfigType<{
     payload: string
   }
 
-  STOP_AUDIO: {}
+  STOP_AUDIO: any
 
   LAST_PLAY_AUDIO: {
     response?: null | { src: string; timestamp: number }

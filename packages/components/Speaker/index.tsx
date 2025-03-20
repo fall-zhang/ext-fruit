@@ -9,10 +9,11 @@ import { useUpdateEffect } from 'react-use'
 import { timer, reflect } from '@/_helpers/promise-more'
 import { isTagName } from '@/_helpers/dom'
 
+type StaticSpeakerType ={
+  (src: string): Promise<void>
+}
 /** onPlayStart */
-const StaticSpeakerContext = React.createContext<
-  (src: string) => Promise<void>
-    >async () => {}
+const StaticSpeakerContext = React.createContext<StaticSpeakerType>(async () => {})
 
 export interface SpeakerProps {
   /** render nothing when no src */
