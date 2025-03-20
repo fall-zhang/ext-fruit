@@ -1,0 +1,187 @@
+@import '@/_sass_shared/_fancy-scrollbar.scss';
+
+.wordEditorPanel-Background {
+  position: fixed;
+  z-index: $global-zindex-dicteditor;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  text-align: initial;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.wordEditorPanel-Container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  min-width: 440px;
+  margin-left: auto;
+}
+
+.wordEditorPanel {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-width: 800px;
+  min-width: 400px;
+  max-height: 90vh;
+  border-radius: 6px;
+  color: var(--color-font);
+  background-color: var(--color-background);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  font-size: 13px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, 'Hiragino Sans GB',
+    'Hiragino Sans GB W3', 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
+}
+
+.wordEditorPanel-Header {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+
+.wordEditorPanel-Title {
+  margin: 0;
+  font-size: 18px;
+  padding: 15px;
+}
+
+.wordEditorPanel-BtnClose {
+  text-decoration: none;
+  margin-left: auto;
+  padding: 15px;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1;
+  border: none;
+  background: transparent;
+  color: var(--color-font);
+  text-shadow: 0 1px 0 var(--color-background);
+  opacity: 0.5;
+  cursor: pointer;
+
+  &:hover {
+    outline: none;
+  }
+}
+
+.wordEditorPanel-Main {
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
+}
+
+.wordEditorPanel-Footer {
+  padding: 15px;
+  text-align: right;
+  border-top: 1px solid #ccc;
+}
+
+%wordEditorPanel-Btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857;
+  border-radius: 4px;
+  user-select: none;
+}
+
+.wordEditorPanel-Btn {
+  @extend %wordEditorPanel-Btn;
+  margin-right: 10px;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+
+  &:focus {
+    background-color: #e6e6e6;
+    border-color: #8c8c8c;
+  }
+
+  &:hover {
+    outline: 0;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+  }
+
+  &:active {
+    outline: 0;
+    background-color: #e6e6e6;
+    border-color: #8c8c8c;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  }
+}
+
+.wordEditorPanel-Btn_normal {
+  @extend .wordEditorPanel-Btn;
+}
+
+.wordEditorPanel-Btn_primary {
+  @extend %wordEditorPanel-Btn;
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+
+  &:focus {
+    background-color: #286090;
+    border-color: #122b40;
+  }
+
+  &:hover {
+    outline: 0;
+    background-color: #286090;
+    border-color: #204d74;
+  }
+
+  &:active {
+    outline: 0;
+    background-color: #204d74;
+    border-color: #122b40;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  }
+}
+
+.darkMode {
+  .wordEditorPanel-Header,
+  .wordEditorPanel-Footer {
+    border-color: #8b8b8b;
+  }
+
+  .wordEditorPanel-Btn {
+    @extend %wordEditorPanel-Btn;
+    margin-right: 10px;
+    color: #333;
+    background-color: #ddd;
+    border-color: #ccc;
+
+    &:focus {
+      background-color: #bfbfbf;
+      border-color: #8c8c8c;
+    }
+
+    &:hover {
+      outline: 0;
+      background-color: #bfbfbf;
+      border-color: #adadad;
+    }
+
+    &:active {
+      outline: 0;
+      background-color: #bfbfbf;
+      border-color: #8c8c8c;
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    }
+  }
+}

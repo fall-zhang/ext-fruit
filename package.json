@@ -1,0 +1,154 @@
+{
+  "name": "ext-fruit",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "libs/main.js",
+  "description": "Vue table component for huge data",
+  "author": "Fall Zhang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fall-zhang/ext-fruit"
+  },
+  "types": "./libs/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./libs/main.d.ts",
+      "import": "./libs/main.js",
+      "require": "./libs/main.cjs"
+    },
+    "./lib/*": {
+      "types": "./libs/*.d.ts",
+      "require": "./lib/*.js"
+    },
+    "./*": "./*"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "files": [
+    "libs",
+    "packages",
+    "types"
+  ],
+  "scripts": {
+    "lint": "eslint ",
+    "lint:fix": "eslint --fix",
+    "lint:quiet": "eslint --quiet",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "build": "npm run build:remove && npm run build:js && npm run build:css ",
+    "build:remove": "rimraf libs",
+    "build:js": "rollup --config rollup.config.js",
+    "build:css": "lessc packages/theme-default/index.less libs/theme-default.css && lessc packages/theme-dark/index.less libs/theme-dark.css",
+    "build:vite": "vite build",
+    "lint-staged": "lint-staged",
+    "prepare": "npx husky install",
+    "prepublishOnly": "npm run build && tsc -p tsconfig.build.json",
+    "commit": "czg"
+  },
+  "dependencies": {
+    "i18next": "^24.2.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-redux": "^9.2.0",
+    "rollup-plugin-string": "^3.0.0",
+    "rxjs": "^7.8.2"
+  },
+  "peerDependencies": {
+    "react": ">= 18.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.3",
+    "@eslint/js": "^9.22.0",
+    "@rollup/plugin-alias": "^5.1.1",
+    "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.3.1",
+    "@rollup/plugin-sucrase": "^5.0.2",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@rollup/pluginutils": "^5.1.4",
+    "@types/dompurify": "0.0.32",
+    "@types/firefox-webext-browser": "^67.0.2",
+    "@types/lodash": "^4.17.16",
+    "@types/node": "20.11.4",
+    "@types/react": "^18.3.18",
+    "@types/react-beautiful-dnd": "^13.1.8",
+    "@types/react-dom": "^18.3.5",
+    "@types/react-helmet": "^5.0.27",
+    "@types/react-redux": "^7.1.34",
+    "@types/react-resize-detector": "^4.2.0",
+    "@types/react-textarea-autosize": "^4.3.6",
+    "@types/react-transition-group": "^4.4.12",
+    "@types/shallowequal": "^1.1.5",
+    "@types/uuid": "^10.0.0",
+    "@types/wavesurfer.js": "2.0.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/ui": "^1.6.1",
+    "cross-env": "^7.0.3",
+    "cz-git": "^1.11.1",
+    "czg": "^1.11.1",
+    "echarts": "^5.6.0",
+    "eslint": "^9.22.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^17.16.2",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "husky": "^8.0.3",
+    "jsdom": "^23.2.0",
+    "less": "^4.2.2",
+    "lint-staged": "^15.5.0",
+    "mitt": "^3.0.1",
+    "postcss": "^8.5.3",
+    "postcss-load-config": "^5.1.0",
+    "rimraf": "^5.0.10",
+    "rollup": "^4.36.0",
+    "rollup-plugin-jsx": "^1.0.3",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.1",
+    "vite": "^5.4.14",
+    "vitest": "^1.6.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/fall-zhang/vue-fantable/issues"
+  },
+  "engines": {
+    "node": "^16.18.0 || >=18.0.0"
+  },
+  "homepage": "https://github.com/fall-zhang/vue-fantable",
+  "docVersions": [
+    {
+      "value": "/vue-fantable",
+      "label": "0.10.0"
+    }
+  ],
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "keywords": [
+    "react",
+    "table",
+    "grid",
+    "translate",
+    "chrome",
+    "chrome-plugin",
+    "i18n"
+  ]
+}

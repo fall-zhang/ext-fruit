@@ -1,0 +1,25 @@
+.entryBox-Wrap {
+  padding-top: 0.8em;
+}
+
+.entryBox {
+  position: relative;
+  border: 1px solid #c76e06;
+  border-radius: 5px;
+  margin-bottom: 1em;
+  padding: 1em 0.5em 0.5em 0.5em;
+}
+
+.entryBox-Title {
+  position: absolute;
+  top: 0;
+  left: 1em;
+  transform: translateY(-50%);
+  max-width: 90%;
+  overflow: hidden;
+  padding: 0 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 1.2em;
+  background: var(--color-background);
+}

@@ -1,0 +1,28 @@
+@import '@/components/FloatBox/FloatBox.scss';
+
+.hoverBox-Container {
+  display: inline-block;
+  position: relative;
+}
+
+.hoverBox-FloatBox {
+  position: absolute;
+  z-index: $global-zindex-dictpanel;
+}
+
+.csst-hoverBox {
+  @include isAnimate(-enter) {
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  @include isAnimate(-enter-active, -exit) {
+    opacity: 1;
+    transition: opacity 0.4s;
+  }
+
+  @include isAnimate(-exit-active) {
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+}

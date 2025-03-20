@@ -1,0 +1,21 @@
+@import '@/components/HoverBox/HoverBox.scss';
+@import './MenubarBtns.scss';
+
+.menuBar-ProfileItem {
+  position: relative;
+  padding-left: 10px;
+  color: var(--color-font);
+
+  &.isActive::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-55%);
+    left: -5px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid currentColor;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }
+}

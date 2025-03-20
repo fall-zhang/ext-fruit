@@ -1,0 +1,65 @@
+.mtaBox-TextArea-Wrap {
+  max-height: var(--panel-max-height);
+  position: relative;
+  overflow: hidden;
+  height: 0; // init height transition
+
+  @include isAnimate {
+    transition: height 0.4s;
+
+    &.isTyping {
+      transition: height 0s;
+    }
+  }
+}
+
+.mtaBox-TextArea {
+  display: block;
+  width: 100%;
+  max-height: var(--panel-max-height);
+  box-sizing: border-box;
+  padding: 5px 5px 10px;
+  border: none;
+  color: var(--color-font);
+  font-size: var(--panel-font-size);
+  background: transparent;
+}
+
+.mtaBox-TextArea-Wrap-appear,
+.mtaBox-TextArea-Wrap-appear-active,
+.mtaBox-TextArea-Wrap-enter,
+.mtaBox-TextArea-Wrap-enter-active,
+.mtaBox-TextArea-Wrap-exit,
+.mtaBox-TextArea-Wrap-exit-active {
+  .mtaBox-TextArea {
+    position: absolute;
+    bottom: 0;
+  }
+}
+
+.mtaBox-DrawerBtn {
+  display: block;
+  width: 100%;
+  height: 12px;
+  overflow: hidden;
+  padding: 0; // remove padding in firefox
+  border: none;
+  border-top: 1px solid var(--color-divider);
+  border-bottom: 1px dashed var(--color-divider);
+  font-size: 0;
+  background-color: var(--color-background);
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border: 1px solid var(--color-font) !important;
+  }
+}
+
+.mtaBox-DrawerBtn_Arrow {
+  fill: var(--color-font);
+
+  &.isExpand {
+    transform: rotate(180deg);
+  }
+}

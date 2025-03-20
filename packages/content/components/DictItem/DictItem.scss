@@ -1,0 +1,159 @@
+@import './DictItemHead.scss';
+
+.dictItem {
+  position: relative;
+  background: var(--color-background);
+}
+
+.dictItem-Body {
+  overflow: hidden;
+  position: relative;
+  padding: 0 10px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-font);
+
+  @include isAnimate {
+    transition: height 0.4s, opacity 0.4s;
+  }
+}
+
+.dictItem-BodyMesure {
+  // clear margin collapsing which seems to causing flickering
+  // when changing the parent height
+  overflow: hidden;
+  opacity: 0;
+  // react-resize-reporter
+  position: relative;
+
+  > *:first-child {
+    margin-top: 10px !important;
+  }
+
+  > *:last-child {
+    margin-bottom: 10px !important;
+  }
+
+  @include isAnimate {
+    transition: opacity 0.4s;
+  }
+
+  @include atRoot(".isUnfold") {
+    opacity: 1;
+  }
+}
+
+.dictItem-Loader {
+  align-self: center;
+  width: 120px;
+  height: 10px;
+  user-select: none;
+}
+
+.dictItem-Loader_Ball {
+  width: 10px;
+  height: 10px;
+  fill: orange;
+
+  &:nth-child(2) {
+    transform: translateX(15px);
+  }
+  &:nth-child(3) {
+    transform: translateX(30px);
+  }
+  &:nth-child(4) {
+    transform: translateX(45px);
+  }
+  &:nth-child(5) {
+    transform: translateX(60px);
+  }
+
+  @include isAnimate {
+    animation: dictItem-Loader-shift 2s linear infinite;
+
+    &:nth-child(2) {
+      animation-delay: -0.4s;
+    }
+    &:nth-child(3) {
+      animation-delay: -0.8s;
+    }
+    &:nth-child(4) {
+      animation-delay: -1.2s;
+    }
+    &:nth-child(5) {
+      animation-delay: -1.6s;
+    }
+  }
+}
+
+.dictItem-FoldMask {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  padding: 0;
+  border: none;
+  // safari doesn't support transparent
+  background: linear-gradient(
+    rgba(var(--color-rgb-background), 0) 40%,
+    rgba(var(--color-rgb-background), 0.5) 60%,
+    var(--color-background) 100%
+  );
+  opacity: 0.6;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    outline: none;
+
+    opacity: 1;
+  }
+
+  @include isAnimate {
+    transition: opacity 400ms;
+  }
+}
+
+.dictItem-FoldMaskArrow {
+  position: absolute;
+  z-index: 10;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 15px;
+  height: 15px;
+  fill: var(--color-font);
+}
+
+/*-----------------------------------------------*\
+    States
+\*-----------------------------------------------*/
+
+.noHeightTransition {
+  .dictItem-Body {
+    @include isAnimate {
+      transition: height 0s;
+    }
+  }
+}
+
+@keyframes dictItem-Loader-shift {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(30px);
+    opacity: 1;
+  }
+  90% {
+    transform: translateX(80px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(110px);
+    opacity: 0;
+  }
+}

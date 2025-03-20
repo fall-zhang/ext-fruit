@@ -1,0 +1,36 @@
+$speaker-duration: 1s !default;
+
+.saladict-Speaker {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  text-decoration: none;
+  margin: 0 5px;
+  padding: 0;
+  line-height: 1;
+  vertical-align: text-bottom;
+  border: none;
+  background: no-repeat left / cover url('~@/assets/Speaker.svg');
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    outline: none;
+  }
+}
+
+.saladict-Speaker.isActive {
+  animation: saladict-Speaker-playing $speaker-duration steps(6) infinite;
+}
+
+@keyframes saladict-Speaker-playing {
+  from {
+    background-position-x: 0;
+  }
+  70% {
+    background-position-x: 100%;
+  }
+  100% {
+    background-position-x: 100%;
+  }
+}

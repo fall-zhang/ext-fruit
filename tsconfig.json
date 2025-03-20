@@ -1,0 +1,24 @@
+{
+  // Change this to match your project
+  "extends": "./tsconfig.base.json",
+  "include": [
+    "packages/**/*.tsx",
+    "packages/**/*.ts",
+    "tests/**/*.js",
+    "tests/**/*.jsx",
+  ],
+  "compilerOptions": {
+    "noEmit": true,
+    "paths": {
+      "@/*": [
+        "packages/*"
+      ]
+    },
+    "lib": [
+      "ES2023",
+      "DOM",
+      "DOM.Iterable",
+    ],
+    "outDir": "types"
+  }
+}
