@@ -3,7 +3,7 @@ import { Provider as ProviderRedux } from 'react-redux'
 import SaladBowlContainer from './components/SaladBowl/SaladBowl.container'
 import DictPanelContainer from './components/DictPanel/DictPanel.container'
 import WordEditorContainer from './components/WordEditor/WordEditor.container'
-import { createStore } from './redux/index.ts'
+import { createStore } from './redux/index'
 
 import { I18nContextProvider } from '@/_helpers/i18n'
 

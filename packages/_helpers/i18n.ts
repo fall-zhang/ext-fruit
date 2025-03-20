@@ -15,9 +15,7 @@ import { getConfig, addConfigListener } from '@/_helpers/config-manager'
 import zip from 'lodash/zip'
 
 export type LangCode = 'zh-CN' | 'zh-TW' | 'en'
-export type Namespace =
-  | 'common'
-  | 'content'
+export type Namespace = 'common' | 'content'
   | 'langcode'
   | 'menus'
   | 'options'

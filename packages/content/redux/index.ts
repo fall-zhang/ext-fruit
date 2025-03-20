@@ -26,11 +26,7 @@ import {
 import { init } from './init'
 import { epics } from './epics'
 
-const epicMiddleware = createEpicMiddleware<
-  StoreAction,
-  StoreAction,
-  StoreState
->()
+const epicMiddleware = createEpicMiddleware<StoreAction, StoreAction, StoreState>()
 
 export const useStore: () => Store<StoreState, StoreAction> = _useStore
 
