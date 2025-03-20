@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "target": "ES2022",
+    "target": "ES2023",
     "module": "ES2022",
     // This compiler run should only output d.ts files
     // Types should go into this directory.

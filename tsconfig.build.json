@@ -11,7 +11,7 @@
   ],
   "compilerOptions": {
     "lib": [
-      "ES2022",
+      "ES2023",
       "DOM.Iterable",
       "DOM"
     ],

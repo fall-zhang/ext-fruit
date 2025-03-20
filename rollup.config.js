@@ -12,7 +12,9 @@ import jsx from 'rollup-plugin-jsx'
 import less from 'rollup-plugin-less'
 import lessModules from 'rollup-plugin-less-modules'
 import { string } from 'rollup-plugin-string'
-
+import scss from 'rollup-plugin-scss'
+import bundleScss from 'rollup-plugin-bundle-scss'
+import typescript from '@rollup/plugin-typescript'
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const langLocation = (fileName) => {
   return path.resolve(__dirname, 'packages/_locales/' + fileName)
@@ -21,7 +23,7 @@ const distConfig = defineConfig({
   // clean: true,
   // sourcemap: 'inline',
   input: languages.map((lang) => langLocation(lang)),
-  external: ['react', 'react-dom'],
+  external: ['react', 'react-dom', 'react-redux'],
   output: [{
     format: 'es',
     dir: './libs/lang',
@@ -33,15 +35,18 @@ const distConfig = defineConfig({
   }],
   plugins: [
     json(),
-    jsx({ factory: 'React.createElement' }),
     less(),
+    lessModules(),
+    scss({ fileName: 'bundle.css' }),
+    bundleScss(),
+    jsx({ factory: 'React.createElement' }),
+    typescript(),
     string({
       // Required to be specified
       include: '**/*.html'
       // Undefined by default
       // exclude: ['**/index.html']
     }),
-    lessModules(),
     alias({
       entries: [
         // { find: 'packages/', replacement: '@/' },
@@ -59,7 +64,7 @@ const distConfig = defineConfig({
 const libConfig = defineConfig({
   // clean: true,
   input: 'packages/content/index.tsx',
-  external: ['react', 'react-dom'],
+  external: ['react', 'react-dom', 'react-redux'],
   output: [{
     format: 'es',
     dir: './libs',
@@ -71,15 +76,18 @@ const libConfig = defineConfig({
   }],
   plugins: [
     json(),
-    jsx({ factory: 'React.createElement' }),
     less(),
+    lessModules(),
+    scss({ fileName: 'bundle.css' }),
+    bundleScss(),
+    jsx({ factory: 'React.createElement' }),
+    typescript(),
     string({
       // Required to be specified
       include: '**/*.html'
       // Undefined by default
       // exclude: ['**/index.html']
     }),
-    lessModules(),
     // terser(),
     alias({
       entries: [

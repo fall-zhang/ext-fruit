@@ -1,3 +1,4 @@
+// import {UserConfig} from 'cz-git'
 // @see: https://cz-git.qbenben.com/zh/guide
 // const fs = require('fs')
 // const path = require('path')
@@ -10,8 +11,8 @@
 //     'markdown', 'global'
 //   )
 
-/** @type {import('cz-git').UserConfig} */
-module.exports = {
+// /** @type {import('cz-git').UserConfig} */
+const commitLintOption = {
   ignores: [commit => commit.includes('init')],
   extends: ['@commitlint/config-conventional'],
   rules: {
@@ -110,3 +111,5 @@ module.exports = {
     allowBreakingChanges: ['feat', 'fix']
   }
 }
+
+export default commitLintOption

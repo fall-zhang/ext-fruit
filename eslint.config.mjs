@@ -38,7 +38,7 @@ export default [
   },
   {
     name: 'app/files-to-ignore',
-    ignores: ['**/build/**', '**/.docusaurus/**', '**/coverage/**', '**/temp.js', '**/release/**']
+    ignores: ['**/build/**', '**/.docusaurus/**', '**/coverage/**', '**/temp.js', '**/release/**', '**/test/**']
   },
   jslint.configs.recommended,
   lintReact.configs.flat.recommended,
