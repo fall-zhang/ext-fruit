@@ -74,3 +74,13 @@ yarn build
 <p align="center">
   <a href="https://github.com/crimx/ext-saladict/releases/" target="_blank"><img src="https://github.com/crimx/ext-saladict/wiki/images/pin.gif" /></a>
 </p>
+
+## 目标浏览器
+
+目标浏览器同 vite
+['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14']
+
+## 待更新功能
+
+- 自动 dark mode
+- 打包为本地应用使用
