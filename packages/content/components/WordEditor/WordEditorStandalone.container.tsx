@@ -1,5 +1,5 @@
-import { connect } from 'react-redux'
-import { MapStateToProps } from 'react-retux'
+import { connect, MapStateToProps } from 'react-redux'
+
 import { StoreState } from '@/content/redux/modules'
 import { WordEditor, WordEditorProps } from './WordEditor'
 

@@ -1,10 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {
-  ExtractDispatchers,
+import type {
   MapStateToProps,
   MapDispatchToProps
-} from 'react-retux'
+} from 'react-redux'
 import { StoreState, StoreAction } from '@/content/redux/modules'
 import { DictPanelPortal, DictPanelPortalProps } from './DictPanel.portal'
 import { MenuBarContainer } from '../MenuBar/MenuBar.container'
@@ -12,16 +11,12 @@ import { MtaBoxContainer } from '../MtaBox/MtaBox.container'
 import { DictListContainer } from '../DictList/DictList.container'
 import { WaveformBoxContainer } from '../WaveformBox/WaveformBox.container'
 
-const menuBar = <MenuBarContainer />
-const dictList = <DictListContainer />
 const waveformBox = <WaveformBoxContainer />
-
-type Dispatchers = ExtractDispatchers<DictPanelPortalProps, 'onDragEnd'>
 
 const mapStateToProps: MapStateToProps<
   StoreState,
   DictPanelPortalProps,
-  Dispatchers
+  any
 > = state => ({
   show: state.isShowDictPanel,
   coord: state.dictPanelCoord,
@@ -33,9 +28,9 @@ const mapStateToProps: MapStateToProps<
   withAnimation: state.config.animation,
   panelCSS: state.config.panelCSS,
   darkMode: state.config.darkMode,
-  menuBar,
+  menuBar: <MenuBarContainer />,
   mtaBox: state.isShowMtaBox ? <MtaBoxContainer /> : null,
-  dictList,
+  dictList: <DictListContainer />,
   waveformBox: state.activeProfile.waveform ? waveformBox : null,
   dragStartCoord: state.dragStartCoord
 })
@@ -44,7 +39,7 @@ const mapDispatchToProps: MapDispatchToProps<
   StoreAction,
   DictPanelPortalProps,
   Dispatchers
-> = dispatch => ({
+> = (dispatch) => ({
   onDragEnd: () => {
     dispatch({ type: 'DRAG_START_COORD', payload: null })
   }

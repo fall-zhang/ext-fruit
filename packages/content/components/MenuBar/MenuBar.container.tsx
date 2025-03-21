@@ -1,9 +1,10 @@
-import { connect } from 'react-redux'
 import {
+  connect,
   ExtractDispatchers,
   MapStateToProps,
   MapDispatchToPropsFunction
-} from 'react-retux'
+} from 'react-redux'
+
 import { StoreState, StoreDispatch } from '@/content/redux/modules'
 import { updateActiveProfileID } from '@/_helpers/profile-manager'
 import {

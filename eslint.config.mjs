@@ -34,7 +34,7 @@ const defaultConfig = {
 export default [
   {
     name: 'app/files-to-lint',
-    files: ['**/*.{tsx,ts,js,mjs,jsx}']
+    files: ['**/*.{tsx,ts,js,jsx}']
   },
   {
     name: 'app/files-to-ignore',

@@ -1,9 +1,10 @@
-import { connect } from 'react-redux'
 import {
+  connect,
   ExtractDispatchers,
   MapStateToProps,
   MapDispatchToProps
-} from 'react-retux'
+} from 'react-redux'
+
 import { StoreState, StoreAction } from '@/content/redux/modules'
 import { newWord } from '@/_helpers/record-manager'
 import { isQuickSearchPage, isPopupPage } from '@/_helpers/saladict'

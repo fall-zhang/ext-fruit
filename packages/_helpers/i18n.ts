@@ -14,15 +14,8 @@ import { TFunction } from 'i18next'
 import { getConfig, addConfigListener } from '@/_helpers/config-manager'
 import zip from 'lodash/zip'
 
-export type LangCode = 'zh-CN' | 'zh-TW' | 'en'
-export type Namespace = 'common' | 'content'
-  | 'langcode'
-  | 'menus'
-  | 'options'
-  | 'popup'
-  | 'wordpage'
-  | 'dicts'
-  | 'sync'
+export type LangCode = 'zh-CN' | 'zh-TW' | 'en';
+export type Namespace = 'common' | 'content' | 'langcode' | 'menus' | 'options' | 'popup' | 'wordpage' | 'dicts' | 'sync';
 
 export interface RawLocale {
   'zh-CN': string
@@ -50,11 +43,11 @@ export interface DictLocales {
   }
 }
 
-export async function i18nLoader (): Promise<i18n.i18n> {
-  if (i18n.language) {
-    // singleton
-    return i18n
-  }
+export async function i18nLoader (): Promise<TFunction> {
+  // if (i18n.language) {
+  //   // singleton
+  //   return i18n
+  // }
 
   const { langCode } = await getConfig()
 
@@ -92,7 +85,7 @@ export async function i18nLoader (): Promise<i18n.i18n> {
     .init({
       lng: langCode,
       fallbackLng: false,
-      whitelist: ['en', 'zh-CN', 'zh-TW'],
+      // whitelist: ['en', 'zh-CN', 'zh-TW'],
 
       debug: process.env.NODE_ENV === 'development',
       saveMissing: false,

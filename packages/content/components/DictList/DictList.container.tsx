@@ -1,9 +1,9 @@
-import { connect } from 'react-redux'
 import {
-  ExtractDispatchers,
+  connect,
   MapStateToProps,
   MapDispatchToPropsFunction
-} from 'react-retux'
+} from 'react-redux'
+
 import memoizeOne from 'memoize-one'
 import { StoreState, StoreDispatch } from '@/content/redux/modules'
 import { message } from '@/_helpers/browser-api'
@@ -23,20 +23,10 @@ const memoizedDicts = memoizeOne(
     }))
 )
 
-type Dispatchers = ExtractDispatchers<
-  DictListProps,
-  | 'searchText'
-  | 'openDictSrcPage'
-  | 'onHeightChanged'
-  | 'onUserFold'
-  | 'onSpeakerPlay'
-  | 'newSelection'
->
-
 const mapStateToProps: MapStateToProps<
   StoreState,
   DictListProps,
-  Dispatchers
+  any
 > = state => {
   const { config } = state
   return {
@@ -52,14 +42,13 @@ const mapStateToProps: MapStateToProps<
 
 const mapDispatchToProps: MapDispatchToPropsFunction<
   StoreDispatch,
-  DictListProps,
-  Dispatchers
+  DictListProps
 > = dispatch => ({
-  searchText: payload => {
+  searchText: (payload: any) => {
     dispatch({ type: 'SEARCH_START', payload })
   },
   openDictSrcPage: (id, ctrlKey) => {
-    dispatch((dispatch, getState) => {
+    dispatch((_dispatch, getState) => {
       const { searchHistory } = getState()
       const word = searchHistory[searchHistory.length - 1]
       message.send({

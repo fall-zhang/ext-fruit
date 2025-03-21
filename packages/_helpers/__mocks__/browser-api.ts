@@ -20,7 +20,9 @@ export type StorageListenerCb = (
 type onMessageEvent = (
   message: Message,
   sender: browser.runtime.MessageSender,
-  sendResponse: Function
+  sendResponse: {
+    (rec:any):any
+  }
 ) => Promise<any> | boolean | void
 
 /* --------------------------------------- *\

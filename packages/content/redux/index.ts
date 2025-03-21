@@ -26,14 +26,21 @@ import {
 import { init } from './init'
 import { epics } from './epics'
 
-const epicMiddleware = createEpicMiddleware<StoreAction, StoreAction, StoreState>()
+// const epicMiddleware = createEpicMiddleware<StoreAction, StoreAction, StoreState>()
+const epicMiddleware = createEpicMiddleware()
 
-export const useStore: () => Store<StoreState, StoreAction> = _useStore
+export const useStore: {
+  ():Store<StoreState, StoreAction>
+} = _useStore
 
-export const useSelector: <TSelected = unknown>(
-  selector: (state: StoreState) => TSelected,
-  equalityFn?: (left: TSelected, right: TSelected) => boolean
-) => TSelected = _useSelector
+
+type UseSelectorType<T> = {
+  (
+    selector: {(state: StoreState):T},
+    equalityFn?: {(left: T, right: T) :boolean}
+  ):T
+}
+export const useSelector:UseSelectorType = _useSelector
 
 export const useDispatch: () => StoreDispatch = _useDispatch
 

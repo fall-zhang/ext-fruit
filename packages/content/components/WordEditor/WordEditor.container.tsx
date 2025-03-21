@@ -1,19 +1,20 @@
-import { connect } from 'react-redux'
 import {
+  connect,
   ExtractDispatchers,
   MapStateToProps,
   MapDispatchToProps
-} from 'react-retux'
+} from 'react-redux'
+
 import { StoreState, StoreAction } from '@/content/redux/modules'
 import { WordEditorPortal, WordEditorPortalProps } from './WordEditor.portal'
 
-type Dispatchers = ExtractDispatchers<WordEditorPortalProps, 'onClose'>
+type Dispatchers = ExtractDispatchers<WordEditorPortalProps, 'onClose'>;
 
 const mapStateToProps: MapStateToProps<
   StoreState,
   WordEditorPortalProps,
   Dispatchers
-> = state => ({
+> = (state) => ({
   show: state.wordEditor.isShow,
   darkMode: state.config.darkMode,
   withAnimation: state.config.animation,

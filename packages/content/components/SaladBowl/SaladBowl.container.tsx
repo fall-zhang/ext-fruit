@@ -1,19 +1,18 @@
-import { connect } from 'react-redux'
 import {
-  ExtractDispatchers,
+  connect,
   MapStateToProps,
   MapDispatchToProps
-} from 'react-retux'
+} from 'react-redux'
+
 import { StoreState, StoreAction } from '@/content/redux/modules'
 import { SaladBowlPortal, SaladBowlPortalProps } from './SaladBowl.portal'
 
-type Dispatchers = ExtractDispatchers<SaladBowlPortalProps, 'onActive'>
 
 const mapStateToProps: MapStateToProps<
   StoreState,
   SaladBowlPortalProps,
-  Dispatchers
-> = state => ({
+  any
+> = (state) => ({
   show: state.isShowBowl,
   panelCSS: state.config.panelCSS,
   x: state.bowlCoord.x,

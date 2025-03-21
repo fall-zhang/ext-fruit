@@ -1,9 +1,10 @@
-import { connect } from 'react-redux'
 import {
+  connect,
   ExtractDispatchers,
   MapStateToProps,
   MapDispatchToProps
-} from 'react-retux'
+} from 'react-redux'
+
 import { StoreAction, StoreState } from '@/content/redux/modules'
 import { WaveformBox, WaveformBoxProps } from './WaveformBox'
 

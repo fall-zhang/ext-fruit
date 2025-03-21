@@ -1,8 +1,7 @@
-import React, { FC, ComponentProps } from 'react'
-import Icon from '@ant-design/icons/lib/components/Icon'
+import React, { FC, ReactElement } from 'react'
 
-export const PreviewIcon: FC<ComponentProps<typeof Icon>> = props => {
-  const SVGIcon = () => (
+export const PreviewIcon: FC = (props) => {
+  return (
     <svg width={21} height={21} viewBox="0 0 21 21" fill="currentColor">
       <g fillRule="evenodd">
         <g fillRule="nonzero">
@@ -11,5 +10,4 @@ export const PreviewIcon: FC<ComponentProps<typeof Icon>> = props => {
       </g>
     </svg>
   )
-  return <Icon component={SVGIcon} {...props} />
 }
