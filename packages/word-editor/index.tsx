@@ -11,6 +11,7 @@ import { I18nContextProvider } from '@/_helpers/i18n'
 import { WordEditorStandaloneContainer } from '@/content/components/WordEditor/WordEditorStandalone.container'
 
 import './word-editor.scss'
+import { createRoot } from 'react-dom/client'
 
 document.title = 'Saladict Word Editor'
 
@@ -31,13 +32,10 @@ createStore().then(store => {
       console.warn(e)
     }
   }
-
-  ReactDOM.render(
-    <I18nContextProvider>
-      <ProviderRedux store={store}>
-        <WordEditorStandaloneContainer />
-      </ProviderRedux>
-    </I18nContextProvider>,
-    document.getElementById('root')
-  )
+  const root = createRoot(document.getElementById('root')!)
+  root.render(<I18nContextProvider>
+    <ProviderRedux store={store}>
+      <WordEditorStandaloneContainer />
+    </ProviderRedux>
+  </I18nContextProvider>)
 })

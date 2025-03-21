@@ -19,6 +19,7 @@ import { I18nContextProvider, useTranslate } from '@/_helpers/i18n'
 import Popup from './Popup'
 import Notebook from './Notebook'
 import './_style.scss'
+import { createRoot } from 'react-dom/client'
 
 // This is a workaround for browser action page
 // which does not fire beforeunload event
@@ -61,20 +62,14 @@ getConfig().then(config => {
 })
 
 async function showPanel (config: AppConfig) {
-  if (config.analytics) {
-  }
-
   const store = await createStore()
-
-  ReactDOM.render(
-    <I18nContextProvider>
-      <Title />
-      <ProviderRedux store={store}>
-        <Popup config={config} />
-      </ProviderRedux>
-    </I18nContextProvider>,
-    document.getElementById('root')
-  )
+  const root = createRoot(document.getElementById('root')!)
+  root.render(<I18nContextProvider>
+    <Title />
+    <ProviderRedux store={store}>
+      <Popup config={config} />
+    </ProviderRedux>
+  </I18nContextProvider>)
 }
 
 async function addNotebook () {
@@ -102,13 +97,11 @@ async function addNotebook () {
   } else {
     hasError = true
   }
+  const root = createRoot(document.getElementById('root')!)
+  root.render(<I18nContextProvider>
+    <Notebook word={word} hasError={hasError} />
+  </I18nContextProvider>)
 
-  ReactDOM.render(
-    <I18nContextProvider>
-      <Notebook word={word} hasError={hasError} />
-    </I18nContextProvider>,
-    document.getElementById('root')
-  )
 
   // async get translations
   if (word && word.context) {

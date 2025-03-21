@@ -14,6 +14,7 @@ import { I18nContextProvider, useTranslate } from '@/_helpers/i18n'
 import { DictPanelStandaloneContainer } from '@/content/components/DictPanel/DictPanelStandalone.container'
 
 import './quick-search.scss'
+import { createRoot } from 'react-dom/client'
 
 document.title = 'Saladict Standalone Panel'
 
@@ -27,15 +28,13 @@ const Title: FC = () => {
 }
 
 createStore().then(store => {
-  ReactDOM.render(
-    <I18nContextProvider>
-      <Title />
-      <ProviderRedux store={store}>
-        <DictPanelStandaloneContainer width="100vw" height="100vh" />
-      </ProviderRedux>
-    </I18nContextProvider>,
-    document.getElementById('root')
-  )
+  const root = createRoot(document.getElementById('root')!)
+  root.render(<I18nContextProvider>
+    <Title />
+    <ProviderRedux store={store}>
+      <DictPanelStandaloneContainer width="100vw" height="100vh" />
+    </ProviderRedux>
+  </I18nContextProvider>)
 
   // Firefox cannot fire 'unload' event.
   window.addEventListener('beforeunload', () => {

@@ -10,6 +10,7 @@ import { timer } from '@/_helpers/promise-more'
 import { AntdRootContainer } from './AntdRootContainer'
 
 import './_style.scss'
+import { createRoot } from 'react-dom/client'
 
 export const initAntdRoot = async (
   render: () => React.ReactNode,
@@ -27,18 +28,15 @@ export const initAntdRoot = async (
       switchAntdTheme(darkMode)
     }
   })
-
-  ReactDOM.render(
-    <I18nContextProvider>
-      <ReduxProvider store={store}>
-        <AntdRootContainer gaPath={gaPath} render={render} />
-        <SaladBowlContainer />
-        <DictPanelContainer />
-        <WordEditorContainer />
-      </ReduxProvider>
-    </I18nContextProvider>,
-    document.getElementById('root')
-  )
+  const root = createRoot(document.getElementById('root')!)
+  root.render(<I18nContextProvider>
+    <ReduxProvider store={store}>
+      <AntdRootContainer gaPath={gaPath} render={render} />
+      <SaladBowlContainer />
+      <DictPanelContainer />
+      <WordEditorContainer />
+    </ReduxProvider>
+  </I18nContextProvider>)
 }
 
 async function switchAntdTheme (darkMode: boolean): Promise<void> {
