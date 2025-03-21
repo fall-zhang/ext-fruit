@@ -1,33 +1,29 @@
-import React from "react";
-import faker from "faker";
-import { jsxDecorator } from "storybook-addon-jsx";
-import { withPropsTable } from "storybook-addon-react-docgen";
-import { action } from "@storybook/addon-actions";
-import { withKnobs, select, number } from "@storybook/addon-knobs";
-import { withi18nNS, withSaladictPanel } from "@/_helpers/storybook";
-import { DictItem } from "./DictItem";
+import React from 'react'
+import faker from 'faker'
+import { action } from '@storybook/addon-actions'
+import { withKnobs, select, number } from '@storybook/addon-knobs'
+import { withi18nNS, withSaladictPanel } from '@/_helpers/storybook'
+import { DictItem } from './DictItem'
 
 export default {
-  title: "Content Scripts|Dict Panel",
+  title: 'Content Scripts|Dict Panel',
 
   decorators: [
-    withPropsTable,
-    jsxDecorator,
     withKnobs,
-    withi18nNS("content"),
+    withi18nNS('content'),
     withSaladictPanel({
-      head: <style>{require("./DictItem.scss").toString()}</style>,
-      height: "auto",
-    }),
+      head: <style>{require('./DictItem.scss').toString()}</style>,
+      height: 'auto'
+    })
   ],
 
   parameters: {
     backgrounds: [
-      { name: "Saladict", value: "#5caf9e", default: true },
-      { name: "Black", value: "#000" },
-    ],
-  },
-};
+      { name: 'Saladict', value: '#5caf9e', default: true },
+      { name: 'Black', value: '#000' }
+    ]
+  }
+}
 
 export const _DictItem = ({ withAnimation, darkMode }) => {
   return (
@@ -35,15 +31,15 @@ export const _DictItem = ({ withAnimation, darkMode }) => {
       dictID="baidu"
       darkMode={darkMode}
       withAnimation={withAnimation}
-      panelCSS={""}
-      preferredHeight={number("Preferred Height", 256)}
+      panelCSS={''}
+      preferredHeight={number('Preferred Height', 256)}
       searchStatus={select(
-        "Search Status",
-        { IDLE: "IDLE", SEARCHING: "SEARCHING", FINISH: "FINISH" },
-        "FINISH",
+        'Search Status',
+        { IDLE: 'IDLE', SEARCHING: 'SEARCHING', FINISH: 'FINISH' },
+        'FINISH'
       )}
       searchResult={{
-        count: number("Paragraphs", 5),
+        count: number('Paragraphs', 5)
       }}
       TestComp={({ result }: { result: { count: number } }) => (
         <>
@@ -52,16 +48,16 @@ export const _DictItem = ({ withAnimation, darkMode }) => {
           ))}
         </>
       )}
-      searchText={action("Search Text")}
-      openDictSrcPage={action("Open Dict Source Page")}
-      onHeightChanged={action("Height Changed")}
-      onUserFold={action("User fold")}
-      onInPanelSelect={action("In-panel Selection")}
-      onSpeakerPlay={async (src) => action("Speaker Play")(src)}
+      searchText={action('Search Text')}
+      openDictSrcPage={action('Open Dict Source Page')}
+      onHeightChanged={action('Height Changed')}
+      onUserFold={action('User fold')}
+      onInPanelSelect={action('In-panel Selection')}
+      onSpeakerPlay={async (src) => action('Speaker Play')(src)}
     />
-  );
-};
+  )
+}
 
 _DictItem.story = {
-  name: "DictItem",
-};
+  name: 'DictItem'
+}

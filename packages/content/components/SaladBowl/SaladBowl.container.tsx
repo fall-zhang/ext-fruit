@@ -23,9 +23,8 @@ const mapStateToProps: MapStateToProps<
 
 const mapDispatchToProps: MapDispatchToProps<
   StoreAction,
-  SaladBowlPortalProps,
-  Dispatchers
-> = dispatch => ({
+  SaladBowlPortalProps
+> = (dispatch) => ({
   onActive: () => {
     dispatch({ type: 'BOWL_ACTIVATED' })
   }

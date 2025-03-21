@@ -7,10 +7,7 @@ const onClose = () => {
   window.close()
 }
 
-const mapStateToProps: MapStateToProps<
-  StoreState,
-  WordEditorProps
-> = state => ({
+const mapStateToProps: MapStateToProps< StoreState, WordEditorProps, any> = (state) => ({
   darkMode: state.config.darkMode,
   containerWidth: window.innerWidth,
   ctxTrans: state.config.ctxTrans,

@@ -1,10 +1,10 @@
 import {
-  createStore as createReduxStore,
   applyMiddleware,
   compose,
   Store
 } from 'redux'
-import thunkMiddleware from 'redux-thunk'
+import { configureStore as createReduxStore } from '@reduxjs/toolkit'
+import * as thunkMiddleware from 'redux-thunk'
 import {
   useStore as _useStore,
   useSelector as _useSelector,

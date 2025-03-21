@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC, useState, useEffect, ReactElement } from 'react'
 import classNames from 'classnames'
 import root from 'react-shadow'
 import i18next from 'i18next'
@@ -9,6 +9,7 @@ import { I18nContext, Namespace } from './i18n'
 
 interface StyleWrapProps {
   style: string
+  children:ReactElement
 }
 
 export const browser: typeof SinonChrome = window.browser as any
