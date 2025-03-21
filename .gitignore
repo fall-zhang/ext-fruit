@@ -3,6 +3,8 @@ node_modules
 __snapshots__
 dist
 libs/*
+__test__/*
+__test__
 
 # local env files
 .env.local

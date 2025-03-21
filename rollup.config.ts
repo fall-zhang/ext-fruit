@@ -12,7 +12,7 @@ import less from 'rollup-plugin-less'
 import lessModules from 'rollup-plugin-less-modules'
 import { string } from 'rollup-plugin-string'
 import scss from 'rollup-plugin-scss'
-import bundleScss from 'rollup-plugin-bundle-scss'
+// import bundleScss from 'rollup-plugin-bundle-scss'
 import typescript from '@rollup/plugin-typescript'
 import commonjs from '@rollup/plugin-commonjs'
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
@@ -39,7 +39,6 @@ const distConfig = defineConfig({
     less(),
     lessModules(),
     scss({ fileName: 'bundle.css' }),
-    bundleScss(),
     commonjs(),
     typescript({ compilerOptions: { jsx: 'preserve' } }),
     string({
@@ -70,6 +69,7 @@ const libConfig = defineConfig({
   external: ['react', 'react-dom', 'react-redux'],
   output: [{
     format: 'es',
+    sourcemap: 'inline',
     dir: './libs',
     entryFileNames: 'main.js',
     chunkFileNames: '[name].ts',
@@ -82,7 +82,6 @@ const libConfig = defineConfig({
     less(),
     lessModules(),
     scss({ fileName: 'bundle.css' }),
-    bundleScss(),
     commonjs(),
     typescript({ // 默认使用 tsconfig.json 中的 compilerOptions
       // include: [
