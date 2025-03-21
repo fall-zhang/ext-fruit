@@ -14,21 +14,25 @@ export function postMessageHandler ({ data, source }: PostMessageEvent) {
   }
 
   // get the souce iframe
-  const matchSrc = ({ contentWindow }: HTMLIFrameElement | HTMLFrameElement) =>
+  const matchSrc = ({ contentWindow }: HTMLIFrameElement) =>
     contentWindow === source
 
   const frame =
-    Array.from(document.querySelectorAll('iframe')).find(matchSrc) ||
-    Array.from(document.querySelectorAll('frame')).find(matchSrc)
+    Array.from(document.querySelectorAll('iframe')).find(matchSrc)
 
   if (!frame) {
     return
   }
 
   const { left, top } = frame.getBoundingClientRect()
-  data.payload.mouseX = data.payload.mouseX + left
-  data.payload.mouseY = data.payload.mouseY + top
-  sendMessage(data.payload)
+  // data.payload.mouseX = data.payload.mouseX + left
+  // data.payload.mouseY = data.payload.mouseY + top
+  const payload = {
+    ...data.payload
+  }
+  payload.mouseX = data.payload.mouseX + left
+  payload.mouseY = data.payload.mouseY + top
+  sendMessage(payload)
 }
 
 /**

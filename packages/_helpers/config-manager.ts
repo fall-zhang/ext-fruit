@@ -48,21 +48,21 @@ function inflate (
 }
 
 export async function initConfig (): Promise<AppConfig> {
-  let baseconfig = await getConfig()
+  let baseConfig = await getConfig()
 
-  baseconfig =
-    baseconfig && baseconfig.version
-      ? mergeConfig(baseconfig)
+  baseConfig =
+    baseConfig && baseConfig.version
+      ? mergeConfig(baseConfig)
       : getDefaultConfig()
 
-  await updateConfig(baseconfig)
-  return baseconfig
+  await updateConfig(baseConfig)
+  return baseConfig
 }
 
 export async function resetConfig () {
-  const baseconfig = getDefaultConfig()
-  await updateConfig(baseconfig)
-  return baseconfig
+  const baseConfig = getDefaultConfig()
+  await updateConfig(baseConfig)
+  return baseConfig
 }
 
 export async function getConfig (): Promise<AppConfig> {

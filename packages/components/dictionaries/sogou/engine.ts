@@ -10,28 +10,38 @@ import {
 import { SogouLanguage } from './config'
 
 export const getTranslator = memoizeOne(
-  () =>
-    new Sogou({
-      env: 'ext',
-      config:
-        process.env.SOGOU_PID && process.env.SOGOU_KEY
-          ? {
-            pid: process.env.SOGOU_PID,
-            key: process.env.SOGOU_KEY
-          }
-          : undefined
-    })
+  () => new Sogou({
+    env: 'ext',
+    config: process.env.SOGOU_PID && process.env.SOGOU_KEY
+      ? {
+        pid: process.env.SOGOU_PID,
+        key: process.env.SOGOU_KEY
+      }
+      : undefined
+  })
 )
 
 export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
-  const lang =
-    profile.dicts.all.sogou.options.tl === 'default'
-      ? config.langCode === 'zh-CN'
-        ? 'zh-CHS'
-        : config.langCode === 'zh-TW'
-          ? 'zh-CHT'
-          : 'en'
-      : profile.dicts.all.sogou.options.tl
+  let lang = ''
+  if (profile.dicts.all.sogou.options.tl === 'default') {
+    if (config.langCode === 'zh-CN') {
+      lang = 'zh-CHS'
+    } else if (config.langCode === 'zh-TW') {
+      lang = 'zh-CHT'
+    } else {
+      lang = 'en'
+    }
+  } else {
+    lang = profile.dicts.all.sogou.options.tl
+  }
+  // const lang =
+  //   profile.dicts.all.sogou.options.tl === 'default'
+  //     ? config.langCode === 'zh-CN'
+  //       ? 'zh-CHS'
+  //       : config.langCode === 'zh-TW'
+  //         ? 'zh-CHT'
+  //         : 'en'
+  //     : profile.dicts.all.sogou.options.tl
 
   return `https://fanyi.sogou.com/#auto/${lang}/${text}`
 }

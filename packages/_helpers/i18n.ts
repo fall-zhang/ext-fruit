@@ -6,7 +6,8 @@ import React, {
   useRef,
   Fragment,
   PropsWithChildren,
-  ReactElement
+  ReactElement,
+  ReactNode
 } from 'react'
 import mapValues from 'lodash/mapValues'
 import * as i18n from 'i18next'
@@ -116,7 +117,7 @@ if (process.env.DEBUG) {
 }
 
 export const I18nContextProvider: FC<{
-  children:ReactElement
+  children:ReactNode
 }> = ({ children }) => {
   const [lang, setLang] = useState<string | undefined>(undefined)
 

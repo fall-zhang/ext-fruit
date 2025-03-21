@@ -98,13 +98,14 @@ body {
 
 $switch-button-width: 55px;
 $switch-button-height: 35px;
+
 .btn-switch {
   // hide input
   position: absolute;
   z-index: -200000;
   opacity: 0;
 
-  & + label {
+  &+label {
     display: inline-block;
     width: $switch-button-width;
     height: $switch-button-height;
@@ -117,7 +118,7 @@ $switch-button-height: 35px;
     user-select: none;
   }
 
-  & + label:before {
+  &+label:before {
     content: '';
     display: block;
     position: absolute;
@@ -127,10 +128,10 @@ $switch-button-height: 35px;
     right: 1px;
     background-color: #f1f1f1;
     border-radius: $switch-button-height;
-    transition: background 0.4s;
+    transition: 0.4s;
   }
 
-  & + label:after {
+  &+label:after {
     content: '';
     display: block;
     position: absolute;
@@ -142,21 +143,21 @@ $switch-button-height: 35px;
     transition: margin 0.4s;
   }
 
-  &:checked + label:before {
+  &:checked+label:before {
     background-color: #8ce196;
   }
 
-  &:checked + label:after {
+  &:checked+label:after {
     margin-left: $switch-button-width - $switch-button-height + 2px;
   }
 
-  &:active + label,
-  &:focus + label {
+  &:active+label,
+  &:focus+label {
     outline: 5px auto rgb(59, 153, 252);
     outline: 5px auto -webkit-focus-ring-color;
   }
 
-  & + label:hover {
+  &+label:hover {
     outline: none !important;
   }
 }
@@ -190,15 +191,15 @@ $switch-button-height: 35px;
     fill: #ddd;
   }
 
-  .btn-switch + label:before {
+  .btn-switch+label:before {
     background-color: #666;
   }
 
-  .btn-switch:checked + label:before {
+  .btn-switch:checked+label:before {
     background-color: #8ce196;
   }
 
-  .btn-switch + label:after {
+  .btn-switch+label:after {
     background-color: #ddd;
   }
 

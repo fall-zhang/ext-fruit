@@ -1,22 +1,22 @@
-import React from "react";
-import { Subject } from "rxjs";
-import faker from "faker";
-import { action } from "@storybook/addon-actions";
-import { withKnobs, boolean } from "@storybook/addon-knobs";
-import { jsxDecorator } from "storybook-addon-jsx";
-import { withPropsTable } from "storybook-addon-react-docgen";
+import React from 'react'
+import { Subject } from 'rxjs'
+import faker from 'faker'
+import { action } from '@storybook/addon-actions'
+import { withKnobs, boolean } from '@storybook/addon-knobs'
+import { jsxDecorator } from 'storybook-addon-jsx'
+import { withPropsTable } from 'storybook-addon-react-docgen'
 import {
   withSaladictPanel,
   withi18nNS,
   withSideEffect,
-  mockRuntimeMessage,
-} from "@/_helpers/storybook";
-import { DictItemHead } from "@/content/components/DictItem/DictItemHead";
-import { MachineTrans } from "./MachineTrans";
-import { machineResult } from "./engine";
+  mockRuntimeMessage
+} from '@/_helpers/storybook'
+import { DictItemHead } from '@/content/components/DictItem/DictItemHead'
+import { MachineTrans } from './MachineTrans'
+import { machineResult } from './engine'
 
 export default {
-  title: "Content Scripts|Components",
+  title: 'Content Scripts|Components',
 
   decorators: [
     withPropsTable,
@@ -24,73 +24,73 @@ export default {
     withKnobs,
     withSideEffect(
       mockRuntimeMessage(async (message) => {
-        action(message.type)(message.payload);
-      }),
+        action(message.type)(message.payload)
+      })
     ),
     withSaladictPanel({
       head: (
         <style>
-          {require("./MachineTrans.scss").toString()}
-          {require("@/components/Speaker/Speaker.scss").toString()}
-          {require("@/content/components/DictItem/DictItemHead.scss").toString()}
+          {require('./MachineTrans.scss').toString()}
+          {require('@/components/Speaker/Speaker.scss').toString()}
+          {require('@/content/components/DictItem/DictItemHead.scss').toString()}
         </style>
-      ),
+      )
     }),
-    withi18nNS(["content", "langcode"]),
-  ],
-};
+    withi18nNS(['content', 'langcode'])
+  ]
+}
 
 export const _MachineTrans = () => {
-  const rtl = boolean("rtl", true);
+  const rtl = boolean('rtl', true)
   return (
     <MachineTrans
       result={{
-        id: "baidu",
-        sl: "en",
-        tl: rtl ? "ara" : "zh",
-        slInitial: "collapse",
+        id: 'baidu',
+        sl: 'en',
+        tl: rtl ? 'ara' : 'zh',
+        slInitial: 'collapse',
         searchText: {
           paragraphs: [faker.lorem.paragraph()],
-          tts: faker.internet.url(),
+          tts: faker.internet.url()
         },
         trans: {
           paragraphs: [faker.lorem.paragraph()],
-          tts: faker.internet.url(),
-        },
+          tts: faker.internet.url()
+        }
       }}
-      searchText={action("Search Text")}
+      searchText={action('Search Text')}
       catalogSelect$={new Subject()}
     />
-  );
-};
+  )
+}
 
 _MachineTrans.story = {
-  name: "MachineTrans",
-};
+  name: 'MachineTrans'
+}
 
 export const MachineTransCatalog = () => {
-  const rtl = boolean("rtl", false);
-  const noop = () => {};
-  const catalogSelect$ = new Subject<{ key: string; value: string }>();
+  const rtl = boolean('rtl', false)
+  const noop = () => {}
+  const catalogSelect$ = new Subject<{ key: string; value: string }>()
   const mt = machineResult(
     {
       result: {
-        id: "google",
-        sl: rtl ? "ara" : "en",
-        tl: "zh",
-        slInitial: "hide",
+        id: 'google',
+        sl: rtl ? 'ara' : 'en',
+        tl: 'zh',
+        slInitial: 'hide',
         searchText: {
           paragraphs: [faker.lorem.paragraph()],
-          tts: faker.internet.url(),
+          tts: faker.internet.url()
         },
         trans: {
           paragraphs: [faker.lorem.paragraph()],
-          tts: faker.internet.url(),
-        },
-      },
+          tts: faker.internet.url()
+        }
+      }
     },
-    ["zh", "cht", "en"],
-  );
+    ['zh', 'cht', 'en']
+  )
   return (
     <>
       <DictItemHead
@@ -103,13 +103,13 @@ export const MachineTransCatalog = () => {
       />
       <MachineTrans
         result={mt.result}
-        searchText={action("Search Text")}
+        searchText={action('Search Text')}
         catalogSelect$={catalogSelect$}
       />
     </>
-  );
-};
+  )
+}
 
 MachineTransCatalog.story = {
-  name: "MachineTransCatalog",
-};
+  name: 'MachineTransCatalog'
+}
