@@ -8,21 +8,21 @@ import resolve from '@rollup/plugin-node-resolve'
 import languages from './build/support-languages.js'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'rollup'
-import jsx from 'rollup-plugin-jsx'
 import less from 'rollup-plugin-less'
 import lessModules from 'rollup-plugin-less-modules'
 import { string } from 'rollup-plugin-string'
 import scss from 'rollup-plugin-scss'
 import bundleScss from 'rollup-plugin-bundle-scss'
 import typescript from '@rollup/plugin-typescript'
+import commonjs from '@rollup/plugin-commonjs'
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
-const langLocation = (fileName) => {
+const langLocation = (fileName:string) => {
   return path.resolve(__dirname, 'packages/_locales/' + fileName)
 }
 const distConfig = defineConfig({
   // clean: true,
   // sourcemap: 'inline',
-  input: languages.map((lang) => langLocation(lang)),
+  input: languages.map((lang:string) => langLocation(lang)),
   external: ['react', 'react-dom', 'react-redux'],
   output: [{
     format: 'es',
@@ -30,8 +30,8 @@ const distConfig = defineConfig({
     entryFileNames: '[name].ts',
     chunkFileNames: '[name]-[hash].ts',
     exports: 'named',
-    plugins: [],
-    manualChunks: []
+    plugins: []
+    // manualChunks: []
   }],
   // acornInjectPlugins: [jsx()],
   plugins: [
@@ -40,8 +40,8 @@ const distConfig = defineConfig({
     lessModules(),
     scss({ fileName: 'bundle.css' }),
     bundleScss(),
+    commonjs(),
     typescript({ compilerOptions: { jsx: 'preserve' } }),
-    jsx({ factory: 'React.createElement' }),
     string({
       // Required to be specified
       include: '**/*.html'
@@ -64,17 +64,17 @@ const distConfig = defineConfig({
 
 const libConfig = defineConfig({
   // clean: true,
-  // input: 'packages/content/index.tsx',
   input: 'packages/content/index.tsx',
+  // input: 'example/index.tsx',
+  jsx: 'react-jsx',
   external: ['react', 'react-dom', 'react-redux'],
   output: [{
     format: 'es',
     dir: './libs',
-    entryFileNames: 'main.ts',
+    entryFileNames: 'main.js',
     chunkFileNames: '[name].ts',
     exports: 'named',
-    plugins: [],
-    manualChunks: []
+    plugins: []
   }],
   // acornInjectPlugins: [jsx()],
   plugins: [
@@ -83,8 +83,17 @@ const libConfig = defineConfig({
     lessModules(),
     scss({ fileName: 'bundle.css' }),
     bundleScss(),
-    typescript({ compilerOptions: { jsx: 'preserve' } }),
-    jsx({ factory: 'React.createElement' }),
+    commonjs(),
+    typescript({ // 默认使用 tsconfig.json 中的 compilerOptions
+      // include: [
+      //   'example/**/*.tsx'
+      // ],
+      compilerOptions: {
+        // 因为并非提供调用，所以打包后，不需要生成 .d.ts 文件
+        // declaration: true
+        // emitDeclarationOnly: false
+      }
+    }),
     string({
       // Required to be specified
       include: '**/*.html'
@@ -107,8 +116,8 @@ const libConfig = defineConfig({
 
 export default () => {
   return defineConfig([
-    libConfig,
-    distConfig
+    libConfig
+    // distConfig
   ])
 }
 
