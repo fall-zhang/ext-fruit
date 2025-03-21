@@ -1,52 +1,30 @@
 {
-  "name": "vue-fantable-doc",
-  "version": "0.2.3",
-  "author": "https://github.com/fall-zhang",
-  "license": "MIT",
+  "name": "dict",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "lint": "vue-cli-service lint",
-    "lint:fix": "eslint src/ --fix --ext .js,.jsx"
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@icon-park/vue-next": "^1.4.2",
-    "axios": "^1.7.2",
-    "chalk": "^5.3.0",
-    "clipboard": "^2.0.11",
-    "echarts": "^5.5.0",
-    "highlight.js": "^11.9.0",
-    "lodash-es": "^4.17.21",
-    "lz-string": "^1.5.0",
-    "mockjs": "^1.1.0",
-    "nprogress": "^0.2.0",
-    "prismjs": "^1.29.0",
-    "transliteration": "^2.3.5",
-    "vue": "^3.4.27",
-    "vue-router": "^4.3.2"
+    "react": "^19.0.0",
+    "react-router-dom": "^7.4.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@types/nprogress": "^0.2.3",
-    "@vitejs/plugin-vue": "^4.6.2",
-    "@vitejs/plugin-vue-jsx": "^3.1.0",
-    "element-plus": "^2.7.3",
-    "escape-html": "^1.0.3",
-    "less": "^4.2.0",
-    "lint-staged": "^9.5.0",
-    "markdown-it": "13.0.0",
-    "markdown-it-anchor": "^8.6.7",
-    "markdown-it-container": "^4.0.0",
-    "markdown-it-ins": "^4.0.0",
-    "markdown-it-prism": "^2.3.0",
-    "unplugin-auto-import": "^0.16.7",
-    "unplugin-vue-components": "^0.25.2",
-    "unplugin-vue-markdown": "^0.25.2",
-    "vite": "^5.2.11"
-  },
-  "browserslist": [
-    "last 2 version",
-    "> 1%"
-  ]
+    "@eslint/js": "^9.21.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react-swc": "^3.8.0",
+    "eslint": "^9.21.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.24.1",
+    "vite": "^6.2.0"
+  }
 }
