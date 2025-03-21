@@ -2,13 +2,16 @@
   // Change this to match your project
   "extends": "./tsconfig.base.json",
   "include": [
-    "packages/**/*.tsx",
+    // "example/**/*.tsx",
     "packages/**/*.ts",
-    "tests/**/*.js",
-    "tests/**/*.jsx",
+    "packages/**/*.tsx",
+    "rollup.config.ts"
+    // "tests/**/*.js",
+    // "tests/**/*.jsx",
   ],
   "compilerOptions": {
     "noEmit": true,
+    "target":"ES2020",
     "paths": {
       "@/*": [
         "packages/*"
@@ -19,6 +22,6 @@
       "DOM",
       "DOM.Iterable",
     ],
-    "outDir": "types"
+    "outDir": "./libs"
   }
 }

@@ -11,7 +11,7 @@
     // Tells TypeScript to read JS files, as
     // normally they are ignored as source files
     "allowJs": false,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "jsxImportSource": "react",
     // Generate d.ts files
     "declaration": false,
