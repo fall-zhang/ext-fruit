@@ -1,4 +1,4 @@
-import { MockRequest } from '@/components/dictionaries/helpers'
+import { MockRequest } from '@P/trans-api/src/helpers'
 
 export const mockSearchTexts = ['主催', 'love', '吐く', '当たる']
 
