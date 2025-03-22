@@ -13,13 +13,13 @@ export default defineConfig({
   // root: 'build',
   resolve: {
     alias: {
-      '@P': resolve(__dirname, '../packages'),
+      '@P': resolve(__dirname, '../packages')
     }
   },
   build: {
     lib: {
       // Could also be a dictionary or array of multiple entry points
-      entry: [pathResolve('index.js'), pathResolve('theme-dark/index.less'), pathResolve('theme-default/index.less')],
+      entry: [pathResolve('index.js'), pathResolve('theme-dark/index.less'), pathResolve('theme-default/index.less')]
       // name: 'MyLib',
       // the proper extensions will be addedoutput.exports
       // fileName: ['main', 'theme-dark', 'theme-default'],
@@ -31,9 +31,9 @@ export default defineConfig({
         exports: 'named',
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
         globals: {
-          vue: 'Vue',
-        },
-      },
-    },
-  },
+          vue: 'Vue'
+        }
+      }
+    }
+  }
 })

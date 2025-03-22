@@ -11,7 +11,7 @@ export class AudioManager {
   }
 
   // singleton
-  // eslint-disable-next-line no-useless-constructor
+
   private constructor () {}
 
   private audio?: HTMLAudioElement

@@ -1,52 +1,52 @@
-import React from "react";
-import i18next from "i18next";
-import { jsxDecorator } from "storybook-addon-jsx";
-import { withPropsTable } from "storybook-addon-react-docgen";
-import { withKnobs, select } from "@storybook/addon-knobs";
-import { withi18nNS, withSaladictPanel } from "@/_helpers/storybook";
-import { Profiles } from "./Profiles";
-import { action } from "@storybook/addon-actions";
+import React from 'react'
+import i18next from 'i18next'
+import { jsxDecorator } from 'storybook-addon-jsx'
+import { withPropsTable } from 'storybook-addon-react-docgen'
+import { withKnobs, select } from '@storybook/addon-knobs'
+import { withi18nNS, withSaladictPanel } from '@/_helpers/storybook'
+import { Profiles } from './Profiles'
+import { action } from '@storybook/addon-actions'
 
 export default {
-  title: "Content Scripts|Dict Panel/Menubar",
+  title: 'Content Scripts|Dict Panel/Menubar',
 
   decorators: [
     withPropsTable,
     jsxDecorator,
     withKnobs,
     withSaladictPanel({
-      head: <style>{require("./Profiles.scss").toString()}</style>,
-      backgroundColor: "transparent",
+      head: <style>{require('./Profiles.scss').toString()}</style>,
+      backgroundColor: 'transparent'
     }),
     (stroy) => <div style={{ marginLeft: 50 }}>{stroy()}</div>,
-    withi18nNS("content"),
+    withi18nNS('content')
   ],
 
   parameters: {
     backgrounds: [
-      { name: "Saladict", value: "#5caf9e", default: true },
-      { name: "Black", value: "#000" },
-    ],
-  },
-};
+      { name: 'Saladict', value: '#5caf9e', default: true },
+      { name: 'Black', value: '#000' }
+    ]
+  }
+}
 
 export const _Profiles = () => {
   const profiles = Array.from(Array(5)).map((_, i) => ({
     id: `profile${i + 1}`,
-    name: `Profile${i + 1}`,
-  }));
+    name: `Profile${i + 1}`
+  }))
 
   const profilesOption = profiles.reduce((o, p) => {
-    o[p.name] = p.id;
-    return o;
-  }, {});
+    o[p.name] = p.id
+    return o
+  }, {})
   return (
     <Profiles
-      t={i18next.getFixedT(i18next.language, ["content", "common"])}
+      t={i18next.getFixedT(i18next.language, ['content', 'common'])}
       profiles={profiles}
-      activeProfileId={select("Active Profile", profilesOption, profiles[0].id)}
-      onHeightChanged={action("Height Changed")}
-      onSelectProfile={action("Profile Selected")}
+      activeProfileId={select('Active Profile', profilesOption, profiles[0].id)}
+      onHeightChanged={action('Height Changed')}
+      onSelectProfile={action('Profile Selected')}
     />
-  );
-};
+  )
+}

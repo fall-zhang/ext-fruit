@@ -52,7 +52,7 @@ export const search: SearchFunction<AhdictResult> = (
       encodeURIComponent(text.replace(/\s+/g, ' '))
   )
     .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, options))
+    .then((doc:any) => handleDOM(doc, options))
 }
 
 function handleDOM (
@@ -89,7 +89,7 @@ function handleDOM (
 
     const $pseg = Array.from($panel.querySelectorAll('.pseg'))
 
-    $pseg.map(item => {
+    $pseg.forEach(item => {
       resultItem.meaning.push(
         getInnerHTML(HOST, item).replace(/<\/?(span|font)[^>]*>/g, '')
       )
@@ -98,7 +98,7 @@ function handleDOM (
     const $idmseg = Array.from($panel.querySelectorAll('.idmseg'))
 
     if ($idmseg.length) {
-      $idmseg.map(item => {
+      $idmseg.forEach(item => {
         const idiom = {} as Idiom
         idiom.title = getText(item, 'b')
         idiom.eg = getText(item, '.ds-single')
