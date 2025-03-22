@@ -24,7 +24,7 @@ export const SALADICT_PANEL = 'saladict-panel'
 
 export const isFirefox = navigator.userAgent.includes('Firefox')
 export const isOpera = navigator.userAgent.includes('OPR')
-export const isSafari = /apple/i.test(navigator.vendor)
+export const isSafari = navigator.userAgent.includes('Safari')
 
 /**
  * Is element in a Saladict external element

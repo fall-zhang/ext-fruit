@@ -1,5 +1,5 @@
 import { DeepReadonly } from '@/typings/helpers'
-import { SupportedLangs } from '@/_helpers/lang-check'
+import type { SupportedLangs } from '@P/trans-api/types/api-types'
 import { getAllDicts } from './dicts'
 import { getAllContextMenus } from './context-menus'
 import { MtaAutoUnfold as _MtaAutoUnfold } from './profiles'
@@ -9,12 +9,17 @@ import { isFirefox } from '@/_helpers/saladict'
 export type LangCode = 'zh-CN' | 'zh-TW' | 'en'
 
 const langUI = browser.i18n.getUILanguage()
-const langCode: LangCode =
-  langUI === 'zh-CN'
-    ? 'zh-CN'
-    : langUI === 'zh-TW' || langUI === 'zh-HK'
-      ? 'zh-TW'
-      : 'en'
+
+
+let langCode: LangCode
+if (langUI === 'zh-CN') {
+  langCode = 'zh-CN'
+} else if (langUI === 'zh-TW' || langUI === 'zh-HK') {
+  langCode = 'zh-TW'
+} else {
+  langCode = 'en'
+}
+
 
 export type DictConfigsMutable = ReturnType<typeof getAllDicts>
 export type DictConfigs = DeepReadonly<DictConfigsMutable>

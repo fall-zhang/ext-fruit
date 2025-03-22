@@ -1,4 +1,5 @@
 import memoizeOne from 'memoize-one'
+import { SupportedLangs } from '@P/trans-api/types/api-types'
 
 const languages = [
   'chinese',
@@ -83,10 +84,6 @@ export const countWords = memoizeOne((text: string): number => {
       .match(/\S+/g) || ''
   ).length
 })
-
-export type SupportedLangs = {
-  [key in Languages | 'others' | 'matchAll']: boolean
-}
 
 export const supportedLangs: ReadonlyArray<keyof SupportedLangs> = [
   ...languages,
