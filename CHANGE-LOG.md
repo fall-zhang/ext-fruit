@@ -12,5 +12,5 @@ Vx.x.x(TPL)
 
 #### Dependencies Changes
 
-- 移除 IE 浏览器的 polyfill，大部分 lodash 的使用
-- 更新打包工具配置
+- 更新 eslint，react，等一系列依赖
+- 使用 rollup 代替 webpack 打包
