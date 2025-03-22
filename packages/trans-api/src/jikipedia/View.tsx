@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import { JikipediaResult } from './engine'
 import { StrElm } from '@/components/StrElm'
 

@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import Speaker from '@/components/Speaker'
 import { OaldictResult } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictOal: FC<ViewPorps<OaldictResult>> = ({ result }) => (

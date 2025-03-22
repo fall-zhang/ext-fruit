@@ -6,7 +6,7 @@ import {
   BingResultMachine,
   BingResultRelated
 } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictBing: FC<ViewPorps<BingResult>> = ({ result }) => {

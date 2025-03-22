@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { ZdicResult } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import EntryBox from '@/components/EntryBox'
 import { StrElm } from '@/components/StrElm'
 

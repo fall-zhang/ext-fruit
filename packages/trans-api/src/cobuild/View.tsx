@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react'
 import { Speaker } from '@/components/Speaker'
 import StarRates from '@/components/StarRates'
 import { COBUILDResult, COBUILDCibaResult, COBUILDColResult } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictCOBUILD: FC<ViewPorps<COBUILDResult>> = ({ result }) => {

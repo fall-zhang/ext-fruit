@@ -5,7 +5,7 @@ import {
   fetchLangList,
   LangList
 } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import { message } from '@/_helpers/browser-api'
 import { useTranslate } from '@/_helpers/i18n'
 import { StrElm } from '@/components/StrElm'

@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { PromiseType } from 'utility-types'
 import Speaker from '@/components/Speaker'
 import EntryBox from '@/components/EntryBox'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import { message } from '@/_helpers/browser-api'
 import { MojidictResult, GetTTS } from './engine'
 

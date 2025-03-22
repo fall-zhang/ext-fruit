@@ -125,9 +125,9 @@ function handleLexResult (
 
   // pronunciation
   if (options.phsym) {
-    const $prons = Array.from(doc.querySelectorAll('.client_def_hd_pn_list'))
-    if ($prons.length > 0) {
-      searchResult.result.phsym = $prons.map(el => {
+    const $pnList = Array.from(doc.querySelectorAll('.client_def_hd_pn_list'))
+    if ($pnList.length > 0) {
+      searchResult.result.phsym = $pnList.map(el => {
         let pron = ''
         const $audio = el.querySelector('.client_aud_o')
         if ($audio) {

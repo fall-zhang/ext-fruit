@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react'
 import Speaker from '@/components/Speaker'
 import { RenrenResult, RenrenSlide } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import { message } from '@/_helpers/browser-api'
 import { StrElm } from '@/components/StrElm'
 

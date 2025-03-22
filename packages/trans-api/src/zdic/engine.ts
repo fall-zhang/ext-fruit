@@ -88,10 +88,18 @@ function handleDOM (
 function modifyReferer () {
   const extraInfoSpec = ['blocking', 'requestHeaders']
   // https://developer.chrome.com/extensions/webRequest#life_cycle_footnote
-  if (
-    browser.webRequest.OnBeforeSendHeadersOptions &&
+  // if (
+  //   browser.webRequest.OnBeforeSendHeadersOptions &&
+  //   Object.prototype.hasOwnProperty.call(
+  //     browser.webRequest.OnBeforeSendHeadersOptions,
+  //     'EXTRA_HEADERS'
+  //   )
+  // ) {
+  //   extraInfoSpec.push('extraHeaders')
+  // }
+  if (browser.webRequest.onBeforeSendHeaders &&
     Object.prototype.hasOwnProperty.call(
-      browser.webRequest.OnBeforeSendHeadersOptions,
+      browser.webRequest.onBeforeSendHeaders,
       'EXTRA_HEADERS'
     )
   ) {
@@ -100,21 +108,22 @@ function modifyReferer () {
 
   browser.webRequest.onBeforeSendHeaders.addListener(
     details => {
-      if (details && details.requestHeaders) {
-        for (var i = 0; i < details.requestHeaders.length; ++i) {
-          if (details.requestHeaders[i].name === 'Referer') {
-            details.requestHeaders[i].value = 'https://www.zdic.net'
+      const detailsVal = {
+        ...details
+      }
+      if (detailsVal && detailsVal.requestHeaders) {
+        for (let i = 0; i < detailsVal.requestHeaders.length; ++i) {
+          if (detailsVal.requestHeaders[i].name === 'Referer') {
+            detailsVal.requestHeaders[i].value = 'https://www.zdic.net'
             break
           }
         }
-        if (i === details.requestHeaders.length) {
-          details.requestHeaders.push({
-            name: 'Referer',
-            value: 'https://www.zdic.net'
-          })
-        }
+        detailsVal.requestHeaders.push({
+          name: 'Referer',
+          value: 'https://www.zdic.net'
+        })
       }
-      return { requestHeaders: details.requestHeaders }
+      return { requestHeaders: detailsVal.requestHeaders }
     },
     { urls: ['https://img.zdic.net/audio/*'] },
     /** WebExt type is missing Chrome support */

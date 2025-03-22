@@ -15,16 +15,15 @@ import {
 export type JukuuLang = 'engjp' | 'zhjp' | 'zheng'
 
 function getUrl (text: string, lang: JukuuLang) {
-  text = encodeURIComponent(text.replace(/\s+/g, '+'))
+  const newText = encodeURIComponent(text.replace(/\s+/g, '+'))
 
   switch (lang) {
   case 'engjp':
-    return 'http://www.jukuu.com/jsearch.php?q=' + text
+    return 'http://www.jukuu.com/jsearch.php?q=' + newText
   case 'zhjp':
-    return 'http://www.jukuu.com/jcsearch.php?q=' + text
-    // case 'zheng':
+    return 'http://www.jukuu.com/jcsearch.php?q=' + newText
   default:
-    return 'http://www.jukuu.com/search.php?q=' + text
+    return 'http://www.jukuu.com/search.php?q=' + newText
   }
 }
 
@@ -69,13 +68,13 @@ function handleDOM (doc: Document): JukuuTransItem[] {
     .map($e => {
       const $trans = $e.lastElementChild
       if (!$trans) {
-        return
+        return {}
       }
       removeChildren($trans, 'img')
 
       const $original = $e.nextElementSibling
       if (!$original || !$original.classList.contains('c')) {
-        return
+        return {}
       }
 
       const $src = $original.nextElementSibling

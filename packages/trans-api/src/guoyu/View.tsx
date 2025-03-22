@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { GuoYuResult } from './engine'
 import Speaker from '@/components/Speaker'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 
 export const DictGuoyu: FC<ViewPorps<GuoYuResult>> = ({ result }) => (
   <>

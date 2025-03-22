@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { WeblioejjeResult } from './engine'
 import EntryBox from '@/components/EntryBox'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictWeblioejje: FC<ViewPorps<WeblioejjeResult>> = ({ result }) => (

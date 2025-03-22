@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import Speaker from '@/components/Speaker'
 import { MerriamWebsterResultV2 } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 
 export const DictMerriamWebster: FC<ViewPorps<MerriamWebsterResultV2>> = ({
   result

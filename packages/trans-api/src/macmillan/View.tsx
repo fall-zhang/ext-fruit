@@ -6,7 +6,7 @@ import {
   MacmillanResultLex,
   MacmillanResultRelated
 } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictMacmillan: FC<ViewPorps<MacmillanResult>> = ({

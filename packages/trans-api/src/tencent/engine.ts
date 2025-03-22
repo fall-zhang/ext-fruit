@@ -25,16 +25,28 @@ export const getTranslator = memoizeOne(
 )
 
 export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
-  const lang =
-    profile.dicts.all.tencent.options.tl === 'default'
-      ? config.langCode === 'zh-CN'
-        ? 'zh-CHS'
-        : config.langCode === 'zh-TW'
-          ? 'zh-CHT'
-          : 'en'
-      : profile.dicts.all.tencent.options.tl
+  let langSrc = ''
+  if (profile.dicts.all.tencent.options.tl === 'default') {
+    if (config.langCode === 'zh-CN') {
+      langSrc = 'zh-CN'
+    } else if (config.langCode === 'zh-TW') {
+      langSrc = 'zh-CHT'
+    } else {
+      langSrc = 'en'
+    }
+  } else {
+    langSrc = profile.dicts.all.tencent.options.tl
+  }
+  // const lang =
+  //   profile.dicts.all.tencent.options.tl === 'default'
+  //     ? config.langCode === 'zh-CN'
+  //       ? 'zh-CHS'
+  //       : config.langCode === 'zh-TW'
+  //         ? 'zh-CHT'
+  //         : 'en'
+  //     : profile.dicts.all.tencent.options.tl
 
-  return `https://fanyi.qq.com/#auto/${lang}/${text}`
+  return `https://fanyi.qq.com/#auto/${langSrc}/${text}`
 }
 
 export type TencentResult = MachineTranslateResult<'tencent'>

@@ -1,19 +1,29 @@
 import React, { FC } from 'react'
 import { HjdictResult, HjdictResultLex, HjdictResultRelated } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+// import { ViewPorps } from '@P/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import { useTranslate } from '@/_helpers/i18n'
 import { StrElm } from '@/components/StrElm'
 
-export const DictHjDict: FC<ViewPorps<HjdictResult>> = props =>
-  (props.result.type === 'lex'
-    ? (
-      <Lex {...props} />
-    )
-    : props.result.type === 'related'
-      ? (
-        <Related {...props} />
-      )
-      : null)
+export const DictHjDict: FC<ViewPorps<HjdictResult>> = props => {
+  if (props.result.type === 'lex') {
+    return <Lex {...props} />
+  } else if (props.result.type === 'related') {
+    return <Related {...props} />
+  }
+  return <></>
+
+
+  // return (props.result.type === 'lex'
+  //   ? (
+  //     <Lex {...props} />
+  //   )
+  //   : props.result.type === 'related'
+  //     ? (
+  //       <Related {...props} />
+  //     )
+  //     : null)
+}
 
 export default DictHjDict
 

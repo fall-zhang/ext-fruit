@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { CambridgeResult } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictCambridge: FC<ViewPorps<CambridgeResult>> = props => (

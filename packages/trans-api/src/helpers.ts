@@ -10,15 +10,6 @@ import { Word } from '@/_helpers/record-manager'
 import { isTagName } from '@/_helpers/dom'
 import { isInternalPage } from '@/_helpers/saladict'
 
-/** Fetch and parse dictionary search result */
-export interface SearchFunction<Result, Payload = {}> {
-  (
-    text: string,
-    config: AppConfig,
-    profile: Profile,
-    payload: Readonly<Payload & { isPDF: boolean }>
-  ): Promise<DictSearchResult<Result>>
-}
 
 export interface DictSearchResult<Result> {
   /** search result */
@@ -50,6 +41,17 @@ export interface DictSearchResult<Result> {
       }
   >
 }
+
+/** Fetch and parse dictionary search result */
+export interface SearchFunction<Result, Payload = {}> {
+  (
+    text: string,
+    config: AppConfig,
+    profile: Profile,
+    payload: Readonly<Payload & { isPDF: boolean }>
+  ): Promise<DictSearchResult<Result>>
+}
+
 
 /** Return a dictionary source page url for the dictionary header */
 export interface GetSrcPageFunction {
@@ -209,12 +211,12 @@ export function getHTML (
     node.querySelectorAll('img').forEach(fillLink)
   }
 
-  const fragment = DOMPurify.sanitize(node, {
+  const fragment:DocumentFragment = DOMPurify.sanitize(node, {
     ...config,
     RETURN_DOM_FRAGMENT: true
   })
-
-  const content = fragment.firstChild ? fragment.firstChild[mode] : ''
+  const firstChild = fragment.firstChild
+  const content = firstChild ? firstChild[mode] : ''
 
   return transform ? transform(content) : content
 }
@@ -281,11 +283,12 @@ export function externalLink ($a: HTMLElement) {
 }
 
 export function getFullLink (host: string, el: Element, attr: string): string {
+  let newHost = ''
   if (host.endsWith('/')) {
-    host = host.slice(0, -1)
+    newHost = host.slice(0, -1)
   }
 
-  const protocol = host.startsWith('https') ? 'https:' : 'http:'
+  const protocol = newHost.startsWith('https') ? 'https:' : 'http:'
 
   const link = el.getAttribute(attr)
   if (!link) {
@@ -301,10 +304,10 @@ export function getFullLink (host: string, el: Element, attr: string): string {
   }
 
   if (/^.?\/+/.test(link)) {
-    return host + '/' + link.replace(/^.?\/+/, '')
+    return newHost + '/' + link.replace(/^.?\/+/, '')
   }
 
-  return host + '/' + link
+  return newHost + '/' + link
 }
 
 /**
