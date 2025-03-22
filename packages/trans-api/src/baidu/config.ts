@@ -3,7 +3,7 @@ import {
   machineConfig
 } from '@/components/MachineTrans/engine'
 import { Language } from '@opentranslate/translator'
-import { Subunion } from '@/typings/helpers'
+import { Subunion } from '@P/trans-api/types/util-type'
 
 export type BaiduLanguage = Subunion<
   Language,
