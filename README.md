@@ -30,10 +30,11 @@
 
 ## 从源码构建
 
+> 确保运行环境 node 版本至少为 20
 ```bash
 git clone git@github.com:crimx/ext-saladict.git
 cd ext-saladict
-yarn install
+pnpm install
 yarn pdf
 ```
 
@@ -78,7 +79,6 @@ yarn build
 ## 目标浏览器
 
 目标浏览器同 vite
-['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14']
 
 ## 待更新功能
 

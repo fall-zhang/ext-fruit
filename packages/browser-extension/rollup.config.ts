@@ -45,7 +45,8 @@ const langLib = defineConfig({
     alias({
       entries: [
         // { find: 'packages/', replacement: '@/' },
-        { find: '@/', replacement: path.join(__dirname + 'packages/') }
+        { find: '@P/', replacement: path.join(__dirname + '../') },
+        { find: '@/', replacement: path.join(__dirname + '../packages/saladict-core') }
       ]
     }),
     // 让 Rollup 查找到外部模块，打包到产物内
@@ -95,9 +96,7 @@ const libConfig = defineConfig({
     // terser(),
     alias({
       entries: [
-        { find: '@/', replacement: path.join(__dirname + 'packages/') },
-        { find: '@P/', replacement: path.join(__dirname + '../') }
-
+        { find: '@/', replacement: path.join(__dirname + 'packages/') }
       ]
     }),
     // 让 Rollup 查找到外部模块，打包到产物内

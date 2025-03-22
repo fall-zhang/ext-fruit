@@ -17,7 +17,7 @@
         "packages/*"
       ],
       "@/*": [
-        "saladict-core/*"
+        "packages/saladict-core/src/*"
       ]
     },
     "lib": [
