@@ -1,4 +1,5 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+import { fetchDirtyDOM } from '../utils/fetch-dom'
+
 import { getStaticSpeaker } from '@/components/Speaker'
 import { DictConfigs } from '@/app-config'
 import {

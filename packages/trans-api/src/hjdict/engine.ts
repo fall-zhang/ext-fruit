@@ -18,7 +18,8 @@ import {
 import { DictConfigs } from '@/app-config'
 import { Profile } from '@/app-config/profiles'
 import { getStaticSpeaker } from '@/components/Speaker'
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+import { fetchDirtyDOM } from '../utils/fetch-dom'
+
 
 export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
   return `https://www.hjdict.com/${getLangCode(

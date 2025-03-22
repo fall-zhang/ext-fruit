@@ -1,4 +1,4 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+import { fetchDirtyDOM } from './fetch-dom'
 import { first } from '@/_helpers/promise-more'
 import { handleNoResult, getText } from '@/components/dictionaries/helpers'
 

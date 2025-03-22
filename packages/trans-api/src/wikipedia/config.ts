@@ -1,4 +1,4 @@
-import { DictItem } from '@/app-config/dicts'
+import { DictItem } from '@P/trans-api/types/api-types'
 
 export type WikipediaConfig = DictItem<{
   lang: 'auto' | 'zh' | 'zh-cn' | 'zh-tw' | 'zh-hk' | 'en' | 'ja' | 'fr' | 'de'
