@@ -21,6 +21,7 @@
     "acorn-jsx": "^5.3.2",
     "antd": "^5.24.4",
     "dexie": "^4.0.11",
+    "get-selection-more": "^1.1.0",
     "i18next": "^24.2.3",
     "lodash": "^4.17.21",
     "normalize-scss": "^8.0.0",

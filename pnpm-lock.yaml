@@ -20,12 +20,18 @@ importers:
       memoize-one:
         specifier: ^6.0.0
         version: 6.0.0
+      observable-hooks:
+        specifier: ^4.2.4
+        version: 4.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rxjs@7.8.2)
       react:
         specifier: ^18.3.1
         version: 18.3.1
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
+      rxjs:
+        specifier: ^7.8.2
+        version: 7.8.2
       uuid:
         specifier: ^11.1.0
         version: 11.1.0
@@ -283,6 +289,9 @@ importers:
       dexie:
         specifier: ^4.0.11
         version: 4.0.11
+      get-selection-more:
+        specifier: ^1.1.0
+        version: 1.1.0
       i18next:
         specifier: ^24.2.3
         version: 24.2.3(typescript@5.8.2)
@@ -2649,6 +2658,10 @@ packages:
   get-proto@1.0.1:
     resolution: {integrity: sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==}
     engines: {node: '>= 0.4'}
+
+  get-selection-more@1.1.0:
+    resolution: {integrity: sha512-UbDYXviVZvePCcF3MoCbaislXg4jIvcMxi+VlgruYQT64Y6jezgTuwfZleWIktzodHyIh5NNRjsSYxPmaFNRMQ==}
+    engines: {node: '>=10.0.0'}
 
   get-stream@8.0.1:
     resolution: {integrity: sha512-VaUJspBffn/LMCJVoMvSAdmscJyS1auj5Zulnn5UoYcY531UWmdwhRWkcGKnGU93m5HSXP9LP2usOryrBtQowA==}
@@ -7503,6 +7516,8 @@ snapshots:
       dunder-proto: 1.0.1
       es-object-atoms: 1.1.1
 
+  get-selection-more@1.1.0: {}
+
   get-stream@8.0.1: {}
 
   get-symbol-description@1.1.0:
@@ -8265,6 +8280,12 @@ snapshots:
       call-bound: 1.0.4
       define-properties: 1.2.1
       es-object-atoms: 1.1.1
+
+  observable-hooks@4.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rxjs@7.8.2):
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      rxjs: 7.8.2
 
   observable-hooks@4.2.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(rxjs@7.8.2):
     dependencies:

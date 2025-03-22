@@ -58,7 +58,7 @@ const langLib = defineConfig({
 
 const libConfig = defineConfig({
   // clean: true,
-  input: 'packages/content/index.tsx',
+  input: './src/main.tsx',
   // input: 'example/index.tsx',
   jsx: 'react-jsx',
   external: ['react', 'react-dom', 'react-redux'],
@@ -81,6 +81,24 @@ const libConfig = defineConfig({
       //   'example/**/*.tsx'
       // ],
       compilerOptions: {
+        jsx: 'react-jsx',
+        jsxImportSource: 'react',
+        noEmit: true,
+        target: 'ES2020',
+        paths: {
+          '@P/*': [
+            '../*'
+          ],
+          '@/*': [
+            './src/*'
+          ]
+        },
+        lib: [
+          'ES2023',
+          'DOM',
+          'DOM.Iterable'
+        ],
+        outDir: './libs'
         // 因为并非提供调用，所以打包后，不需要生成 .d.ts 文件
         // declaration: true
         // emitDeclarationOnly: false
@@ -95,9 +113,8 @@ const libConfig = defineConfig({
     // terser(),
     alias({
       entries: [
-        { find: '@/', replacement: path.join(__dirname + 'packages/') },
+        { find: '@/', replacement: path.join(__dirname + './src/') },
         { find: '@P/', replacement: path.join(__dirname + '../') }
-
       ]
     }),
     // 让 Rollup 查找到外部模块，打包到产物内
