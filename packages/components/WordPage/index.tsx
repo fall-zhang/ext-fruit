@@ -161,20 +161,32 @@ export const WordPage: FC<WordPageProps> = props => {
             setExportModalWords(selectedRows)
           } else if (key === 'page') {
             setExportModalTitle(key)
-            setExportModalWords(tableInfo.dataSource || [])
+            const dataSource = tableInfo.dataSource || []
+            const copyData = dataSource.map(item => ({ ...item }))
+            setExportModalWords(copyData)
           } else {
             setExportModalTitle('')
           }
         }}
         onDelete={key => {
-          const keys =
-            key === 'selected'
-              ? tableInfo.rowSelection?.selectedRowKeys?.map(date =>
-                Number(date)
-              )
-              : key === 'page'
-                ? tableInfo.dataSource?.map(({ date }) => date)
-                : undefined
+          let keys:number[]|undefined = []
+          if (key === 'selected') {
+            keys = tableInfo.rowSelection?.selectedRowKeys?.map(date =>
+              Number(date)
+            )
+          } else if (key === 'page') {
+            keys = tableInfo.dataSource?.map(({ date }) => date)
+          } else {
+            keys = undefined
+          }
+          // const keys =
+          //   key === 'selected'
+          //     ? tableInfo.rowSelection?.selectedRowKeys?.map(date =>
+          //       Number(date)
+          //     )
+          //     : key === 'page'
+          //       ? tableInfo.dataSource?.map(({ date }) => date)
+          //       : undefined
           deleteWords(props.area, keys).then(() => fetchWords({}))
         }}
       />
