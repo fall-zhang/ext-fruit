@@ -5,11 +5,9 @@ import json from '@rollup/plugin-json'
 // import sucrase from '@rollup/plugin-sucrase'
 import resolve from '@rollup/plugin-node-resolve'
 // import terser from '@rollup/plugin-terser'
-import languages from './build/support-languages.js'
+import { supportLanguages } from './build-utils/support-languages.js'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'rollup'
-import less from 'rollup-plugin-less'
-import lessModules from 'rollup-plugin-less-modules'
 import { string } from 'rollup-plugin-string'
 import scss from 'rollup-plugin-scss'
 // import bundleScss from 'rollup-plugin-bundle-scss'
@@ -19,10 +17,10 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const langLocation = (fileName:string) => {
   return path.resolve(__dirname, 'packages/_locales/' + fileName)
 }
-const distConfig = defineConfig({
+const langLib = defineConfig({
   // clean: true,
   // sourcemap: 'inline',
-  input: languages.map((lang:string) => langLocation(lang)),
+  input: supportLanguages.map((lang:string) => langLocation(lang)),
   external: ['react', 'react-dom', 'react-redux'],
   output: [{
     format: 'es',
@@ -36,8 +34,6 @@ const distConfig = defineConfig({
   // acornInjectPlugins: [jsx()],
   plugins: [
     json(),
-    less(),
-    lessModules(),
     scss({ fileName: 'bundle.css' }),
     commonjs(),
     typescript({ compilerOptions: { jsx: 'preserve' } }),
@@ -79,8 +75,6 @@ const libConfig = defineConfig({
   // acornInjectPlugins: [jsx()],
   plugins: [
     json(),
-    less(),
-    lessModules(),
     scss({ fileName: 'bundle.css' }),
     commonjs(),
     typescript({ // 默认使用 tsconfig.json 中的 compilerOptions
@@ -116,7 +110,7 @@ const libConfig = defineConfig({
 export default () => {
   return defineConfig([
     libConfig
-    // distConfig
+    // langDist
   ])
 }
 
