@@ -1,6 +1,6 @@
 import { fetchDirtyDOM } from './fetch-dom'
 import { first } from '@/_helpers/promise-more'
-import { handleNoResult, getText } from '@/components/dictionaries/helpers'
+import { handleNoResult, getText } from '@P/trans-api/src/helpers'
 
 export async function getWordOfTheDay (): Promise<string> {
   if (!process.env.DEBUG) {
@@ -9,7 +9,9 @@ export async function getWordOfTheDay (): Promise<string> {
         getWebsterWordOfTheDay(),
         getDictionaryWordOfTheDay()
       ])
-    } catch (e) {}
+    } catch (e) {
+      console.warn(e)
+    }
   }
   return 'salad'
 }

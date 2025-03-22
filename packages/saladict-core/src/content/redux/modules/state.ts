@@ -9,7 +9,7 @@ import {
   isOptionsPage,
   isPopupPage
 } from '@/_helpers/saladict'
-import { DictSearchResult } from '@/components/dictionaries/helpers'
+import { DictSearchResult } from '@P/trans-api/src/helpers'
 
 export const initState = async () => {
   const pConfig = getConfig()

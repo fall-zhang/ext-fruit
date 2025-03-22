@@ -331,10 +331,13 @@ export function useInPanelSelect (
   )
 
   useSubscription(output$, async result => {
-    if (result.word) {
-      result.word = await newSelectionWord(result.word)
+    const newRes = {
+      ...result
     }
-    newSelection(result as Message<'SELECTION'>['payload'])
+    if (result.word) {
+      newRes.word = await newSelectionWord(result.word)
+    }
+    newSelection(newRes as Message<'SELECTION'>['payload'])
   })
 
   return onMouseUp

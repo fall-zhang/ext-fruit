@@ -13,10 +13,10 @@ import './_style.scss'
 if (window.parent === window && !window.__SALADICT_PANEL_LOADED__) {
   window.__SALADICT_PANEL_LOADED__ = true
 
-  main()
+  ContentPage()
 }
 
-async function main () {
+export async function ContentPage () {
   const store = await createStore()
   const App = () => (
     <ProviderRedux store={store}>

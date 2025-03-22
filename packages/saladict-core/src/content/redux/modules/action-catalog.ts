@@ -3,7 +3,7 @@ import { AppConfig, DictID } from '@/app-config'
 import { Profile, ProfileIDList } from '@/app-config/profiles'
 import { Message } from '@/typings/message'
 import { Word } from '@/_helpers/record-manager'
-import { DictSearchResult } from '@/components/dictionaries/helpers'
+import { DictSearchResult } from '@P/trans-api/src/helpers'
 
 export type ActionCatalog = CreateActionCatalog<{
   NEW_CONFIG: {

@@ -8,7 +8,7 @@ import {
   SearchFunction,
   DictSearchResult,
   GetSrcPageFunction
-} from '@/components/dictionaries/helpers'
+} from '@P/trans-api/src/helpers'
 import {
   isInNotebook,
   saveWord,

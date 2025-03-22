@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import { useSubscription } from 'observable-hooks'
 import Speaker from '@/components/Speaker'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import { DictID } from '@/app-config'
 import { message } from '@/_helpers/browser-api'
 import { MachineTranslateResult } from './engine'

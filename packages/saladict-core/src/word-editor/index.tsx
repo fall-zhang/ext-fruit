@@ -1,8 +1,5 @@
 import './env'
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-
 import { Provider as ProviderRedux } from 'react-redux'
 import { createStore } from '@/content/redux'
 

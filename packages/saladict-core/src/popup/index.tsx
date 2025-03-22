@@ -1,8 +1,7 @@
 import './env'
 import '@/selection'
 
-import React, { FC } from 'react'
-import ReactDOM from 'react-dom'
+import  { FC } from 'react'
 import { Helmet } from 'react-helmet'
 import { AppConfig } from '@/app-config'
 import { getConfig } from '@/_helpers/config-manager'

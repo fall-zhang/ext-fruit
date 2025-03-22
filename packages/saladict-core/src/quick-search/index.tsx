@@ -2,7 +2,6 @@ import './env'
 import '@/selection'
 
 import React, { FC } from 'react'
-import ReactDOM from 'react-dom'
 import { Helmet } from 'react-helmet'
 import { message, storage } from '@/_helpers/browser-api'
 

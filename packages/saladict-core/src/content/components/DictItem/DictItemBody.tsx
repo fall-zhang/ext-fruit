@@ -5,7 +5,7 @@ import { Observable } from 'rxjs'
 import { DictID } from '@/app-config'
 import { Word } from '@/_helpers/record-manager'
 import { SALADICT_PANEL } from '@/_helpers/saladict'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewPorps } from '@P/trans-api/src/helpers'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { StaticSpeakerContainer } from '@/components/Speaker'
 

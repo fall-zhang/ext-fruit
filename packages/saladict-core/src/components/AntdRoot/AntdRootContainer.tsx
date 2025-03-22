@@ -1,20 +1,20 @@
 import React, { FC, useEffect, useMemo } from 'react'
 import { shallowEqual } from 'react-redux'
 import { ConfigProvider as AntdConfigProvider } from 'antd'
-import zh_CN from 'antd/lib/locale-provider/zh_CN'
-import zh_TW from 'antd/lib/locale-provider/zh_TW'
-import en_US from 'antd/lib/locale-provider/en_US'
+import langZhCN from 'antd/lib/locale/zh_CN'
+import langZhTW from 'antd/lib/locale/zh_TW'
+import langEnUS from 'antd/lib/locale/en_US'
 import { useSelector } from '@/content/redux'
 import { reportPageView } from '@/_helpers/analytics'
 
 const antdLocales = (saladictLocale: string) => {
   switch (saladictLocale) {
   case 'zh-CN':
-    return zh_CN
+    return langZhCN
   case 'zh-TW':
-    return zh_TW
+    return langZhTW
   default:
-    return en_US
+    return langEnUS
   }
 }
 

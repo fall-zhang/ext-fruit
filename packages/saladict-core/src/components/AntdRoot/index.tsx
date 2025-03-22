@@ -1,6 +1,5 @@
 import React from 'react'
 import { Provider as ReduxProvider } from 'react-redux'
-import ReactDOM from 'react-dom'
 import { createStore } from '@/content/redux'
 import SaladBowlContainer from '@/content/components/SaladBowl/SaladBowl.container'
 import DictPanelContainer from '@/content/components/DictPanel/DictPanel.container'

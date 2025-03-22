@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, ReactNode } from 'react'
-import ReactDOM from 'react-dom'
+import { createPortal } from 'react-dom'
 import CSSTransition, {
   CSSTransitionProps
 } from 'react-transition-group/CSSTransition'
@@ -63,7 +63,7 @@ export const ShadowPortal = (props: ShadowPortalProps) => {
     []
   )
 
-  return ReactDOM.createPortal(
+  return createPortal(
     <root.div className={shadowRootClassName || SALADICT_EXTERNAL}>
       <div className={innerRootClassName} style={styleResetBoundary}>
         {head}
