@@ -26,12 +26,18 @@
     "lodash": "^4.17.21",
     "normalize-scss": "^8.0.0",
     "observable-hooks": "^4.2.4",
+    "pako": "^2.1.0",
     "react-redux": "^9.2.0",
+    "react-resize-reporter": "^1.0.2",
     "react-shadow": "^20.6.0",
+    "react-textarea-autosize": "^8.5.8",
+    "react-transition-group": "^4.4.5",
+    "react-use": "^17.6.0",
     "redux": "^5.0.1",
     "redux-observable": "3.0.0-rc.2",
     "redux-thunk": "^3.1.0",
     "rxjs": "^7.8.2",
-    "sinon-chrome": "^3.0.1"
+    "sinon-chrome": "^3.0.1",
+    "ua-parser-js": "^2.0.3"
   }
 }
