@@ -1,6 +1,4 @@
-import { Action, ActionType, createReducer } from 'retux'
 import {
-  ThunkAction as CreateThunkAction,
   ThunkDispatch as CreateThunkDispatch
 } from 'redux-thunk'
 import { initState, State } from './state'
@@ -11,27 +9,31 @@ export type StoreState = State
 
 export type StoreActionCatalog = ActionCatalog
 
-export type StoreActionType = ActionType<StoreActionCatalog>
+export type StoreActionType =any
+// export type StoreActionType = ActionType<StoreActionCatalog>
 
-export type StoreAction<T extends StoreActionType = StoreActionType> = Action<
-  StoreActionCatalog,
-  T
->
+export type StoreAction =any
+// export type StoreAction<T extends StoreActionType = StoreActionType> = Action<
+//   StoreActionCatalog,
+//   T
+// >
 
-export type ThunkAction<
-  Type extends StoreActionType = StoreActionType,
-  Result = void
-> = CreateThunkAction<
-  Result,
-  StoreState,
-  never,
-  Action<StoreActionCatalog, Type>
->
+export type ThunkAction = any
+// export type ThunkAction<
+//   Type extends StoreActionType = StoreActionType,
+//   Result = void
+// > = CreateThunkAction<
+//   Result,
+//   StoreState,
+//   never,
+//   Action<StoreActionCatalog, Type>
+// >
 
 export type StoreDispatch<
   Type extends StoreActionType = StoreActionType
 > = CreateThunkDispatch<StoreState, never, StoreAction<Type>>
 
 export const getRootReducer = async () => {
-  return createReducer(await initState(), actionHandlers)
+  return initState()
+  // return createReducer(await initState(), actionHandlers)
 }

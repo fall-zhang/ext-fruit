@@ -1,4 +1,3 @@
-import { ActionHandlers } from 'retux'
 import {
   isStandalonePage,
   isPopupPage,
@@ -11,7 +10,7 @@ import { searchStart } from './search-start'
 import { newSelection } from './new-selection'
 import { openQSPanel } from './open-qs-panel'
 
-export const actionHandlers: ActionHandlers<State, ActionCatalog> = {
+export const actionHandlers = {
   NEW_CONFIG: (state, { payload }) => {
     const url = window.location.href
     const panelMaxHeight =

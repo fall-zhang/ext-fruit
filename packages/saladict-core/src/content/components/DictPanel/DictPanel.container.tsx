@@ -37,8 +37,7 @@ const mapStateToProps: MapStateToProps<
 
 const mapDispatchToProps: MapDispatchToProps<
   StoreAction,
-  DictPanelPortalProps,
-  Dispatchers
+  DictPanelPortalProps
 > = (dispatch) => ({
   onDragEnd: () => {
     dispatch({ type: 'DRAG_START_COORD', payload: null })

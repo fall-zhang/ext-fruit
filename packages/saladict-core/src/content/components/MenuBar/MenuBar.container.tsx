@@ -1,6 +1,5 @@
 import {
   connect,
-  ExtractDispatchers,
   MapStateToProps,
   MapDispatchToPropsFunction
 } from 'react-redux'
@@ -17,23 +16,8 @@ import { message } from '@/_helpers/browser-api'
 import { MenuBar, MenuBarProps } from './MenuBar'
 import { updateConfig } from '@/_helpers/config-manager'
 import { timer } from '@/_helpers/promise-more'
-import { objectKeys } from '@/typings/helpers'
 
-type Dispatchers = ExtractDispatchers<
-  MenuBarProps,
-  | 'searchText'
-  | 'updateText'
-  | 'addToNoteBook'
-  | 'switchHistory'
-  | 'togglePin'
-  | 'toggleQSFocus'
-  | 'onClose'
-  | 'onSwitchSidebar'
-  | 'onSelectProfile'
-  | 'onDragAreaMouseDown'
-  | 'onDragAreaTouchStart'
-  | 'onHeightChanged'
->
+type Dispatchers = any
 
 const mapStateToProps: MapStateToProps<
   StoreState,
@@ -60,10 +44,9 @@ const mapStateToProps: MapStateToProps<
 
 const mapDispatchToProps: MapDispatchToPropsFunction<
   StoreDispatch,
-  MenuBarProps,
-  Dispatchers
+  MenuBarProps
 > = dispatch => ({
-  searchText: text => {
+  searchText: (text: unknown) => {
     dispatch({
       type: 'SEARCH_START',
       payload: {
@@ -75,13 +58,13 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
       }
     })
   },
-  updateText: text => {
+  updateText: (text: unknown) => {
     dispatch({ type: 'UPDATE_TEXT', payload: text })
   },
   addToNoteBook: () => {
     dispatch({ type: 'ADD_TO_NOTEBOOK' })
   },
-  switchHistory: direction => {
+  switchHistory: (direction: unknown) => {
     dispatch({ type: 'SWITCH_HISTORY', payload: direction })
   },
   togglePin: () => {
@@ -141,8 +124,8 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
         })
 
         if (
-          objectKeys(dictAuth).every(id =>
-            objectKeys(dictAuth[id]).every(k => !dictAuth[id]?.[k])
+          Object.keys(dictAuth).every(id =>
+            Object.keys(dictAuth[id]).every(k => !dictAuth[id]?.[k])
           )
         ) {
           message.send({

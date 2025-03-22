@@ -1,4 +1,4 @@
-import UAParser from 'ua-parser-js'
+import { UAParser } from 'ua-parser-js'
 import axios from 'axios'
 import { v4 as uuid } from 'uuid'
 import { message, storage } from '@/_helpers/browser-api'
@@ -9,9 +9,11 @@ import { isBackgroundPage } from '../saladict'
 export type GAParams = { [key: string]: string }
 
 export async function reportPageView (page: string): Promise<void> {
-  const ua = new UAParser()
-  const browser = ua.getBrowser()
-  const os = ua.getOS()
+  const ua = navigator.userAgent
+  const { browser, cpu, device, os } = UAParser(ua)
+  // const ua = new UAParser()
+  // const browser = ua.getBrowser()
+  // const os = device.getOS()
 
   try {
     await requestGA({

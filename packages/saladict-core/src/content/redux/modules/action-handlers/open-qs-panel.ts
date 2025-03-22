@@ -1,12 +1,7 @@
-import { ActionHandler } from 'retux'
 import { State } from '../state'
 import { ActionCatalog } from '../action-catalog'
 
-export const openQSPanel: ActionHandler<
-  State,
-  ActionCatalog,
-  'OPEN_QS_PANEL'
-> = state => {
+export const openQSPanel = state => {
   const { panelWidth, tripleCtrl, qsLocation } = state.config
 
   if (!tripleCtrl || state.isShowDictPanel) {
