@@ -53,7 +53,7 @@ export const search: SearchFunction<COBUILDResult> = async (
   profile,
   payload
 ) => {
-  text = encodeURIComponent(text.replace(/\s+/g, '-'))
+  const newText = encodeURIComponent(text.replace(/\s+/g, '-'))
   const { options } = profile.dicts.all.cobuild
   const sources: string[] = [
     'https://www.collinsdictionary.com/dictionary/english/',
@@ -65,11 +65,11 @@ export const search: SearchFunction<COBUILDResult> = async (
   }
 
   try {
-    return handleDOM(await fetchDirtyDOM(sources[0] + text), config)
+    return handleDOM(await fetchDirtyDOM(sources[0] + newText), config)
   } catch (e) {
     let doc: Document
     try {
-      doc = await fetchDirtyDOM(sources[1] + text)
+      doc = await fetchDirtyDOM(sources[1] + newText)
     } catch (e) {
       return handleNetWorkError()
     }

@@ -91,6 +91,7 @@ export async function initProfiles (): Promise<Profile> {
   if (profileIDList.length > 0) {
     // quota bytes limit
     for (const { id } of profileIDList) {
+      // eslint-disable-next-line no-await-in-loop
       const profile = await getProfile(id)
       profiles.push(profile ? mergeProfile(profile) : getDefaultProfile(id))
     }
@@ -113,6 +114,7 @@ export async function initProfiles (): Promise<Profile> {
 
   // quota bytes per item limit
   for (const profile of profiles) {
+    // eslint-disable-next-line no-await-in-loop
     await updateProfile(profile)
   }
 

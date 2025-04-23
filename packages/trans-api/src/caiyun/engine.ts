@@ -54,7 +54,9 @@ export const search: SearchFunction<
     if (langcodes.includes(baiduResult.from)) {
       sl = baiduResult.from
     }
-  } catch (e) {}
+  } catch (e) {
+    console.warn(e)
+  }
 
   const caiYunToken = config.dictAuth.caiyun.token
   const caiYunConfig = caiYunToken ? { token: caiYunToken } : undefined

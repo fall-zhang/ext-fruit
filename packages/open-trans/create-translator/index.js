@@ -1,10 +1,12 @@
 import fs from 'fs-extra'
-const path = require('path')
-const fg = require('fast-glob')
-const ejs = require('ejs')
-const argv = require('yargs').argv
-const lernaConfig = require('../../lerna.json')
-
+import path from 'path'
+import fg from 'fast-glo'
+import ejs from 'ejs'
+import { argv } from 'yargs'
+import packageJSON from '../package.json'
+import { __dirname } from 'node:fs'
+import console from 'node:console'
+import process from 'node:process'
 const packagePath = path.join(__dirname, '../../packages')
 
 async function checkExistingTranslator (engine) {
@@ -47,7 +49,7 @@ async function main () {
 
   entries.forEach(async entry => {
     const data = {
-      version: lernaConfig.version,
+      version: packageJSON.version,
       engine,
       engineTitled: engine[0].toUpperCase() + engine.slice(1)
     }

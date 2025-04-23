@@ -38,11 +38,11 @@ export const search: SearchFunction<EtymonlineResult> = (
   payload
 ) => {
   const options = profile.dicts.all.etymonline.options
-  text = encodeURIComponent(text.replace(/\s+/g, ' '))
+  const newText = encodeURIComponent(text.replace(/\s+/g, ' '))
 
   // http to bypass the referer checking
-  return fetchDirtyDOM('https://www.etymonline.com/word/' + text)
-    .catch(() => fetchDirtyDOM('https://www.etymonline.com/search?q=' + text))
+  return fetchDirtyDOM('https://www.etymonline.com/word/' + newText)
+    .catch(() => fetchDirtyDOM('https://www.etymonline.com/search?q=' + newText))
     .catch(handleNetWorkError)
     .then(doc => handleDOM(doc, options))
 }

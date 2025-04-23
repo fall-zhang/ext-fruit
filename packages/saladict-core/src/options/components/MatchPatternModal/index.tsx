@@ -122,7 +122,7 @@ export const MatchPatternModal: FC<MatchPatternModalProps> = ({
             <div>
               {fields.map(field => (
                 <Form.Item
-                  // @ts-ignore
+                  // @ts-expect-error
                   key={field.key}
                   {...field}
                   validateTrigger={['onChange', 'onBlur']}

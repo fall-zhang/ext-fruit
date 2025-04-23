@@ -49,11 +49,17 @@ export default DictLexico
 
 function onLexClick (e: React.MouseEvent): void {
   const $target = e.target as Element
-  const $info = $target.classList?.contains('moreInfo')
-    ? $target
-    : $target.parentElement?.classList?.contains('moreInfo')
-      ? $target.parentElement
-      : null
+  // let $info = $target.classList?.contains('moreInfo')
+  //   ? $target
+  //   : $target.parentElement?.classList?.contains('moreInfo')
+  //     ? $target.parentElement
+  //     : null
+  let $info = null
+  if ($target.classList?.contains('moreInfo')) {
+    $info = $target
+  } else if ($target.parentElement?.classList?.contains('moreInfo')) {
+    $info = $target.parentElement
+  }
   if ($info) {
     $info.classList.toggle('active')
   }

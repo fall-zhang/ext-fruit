@@ -10,9 +10,9 @@ jest.mock('@/_helpers/config-manager')
 let configManager: typeof configManagerMock
 
 function hasListenerPatch (fn) {
-  // @ts-ignore
+  // @ts-expect-error
   if (this._listeners) {
-    // @ts-ignore
+    // @ts-expect-error
     return this._listeners.some(x => x === fn)
   }
   return false
@@ -32,9 +32,9 @@ describe('PDF Sniffer', () => {
     jest.resetModules()
     initPdf = require('@/background/pdf-sniffer').init
     configManager = require('@/_helpers/config-manager')
-    // @ts-ignore
+    // @ts-expect-error
     browser.webRequest.onBeforeRequest.hasListener = hasListenerPatch
-    // @ts-ignore
+    // @ts-expect-error
     browser.webRequest.onHeadersReceived.hasListener = hasListenerPatch
     window.appConfig = getDefaultConfig()
   })

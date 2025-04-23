@@ -3,8 +3,19 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": false,
     "baseUrl": ".",
+    "declaration": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "module": "commonjs",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "esnext",
+    "types": ["jest","node"],
     "paths": {
       "@opentranslate/*": ["./*/src"]
     }
-  }
+  },
+  "exclude": ["node_modules", "dist"]
 }

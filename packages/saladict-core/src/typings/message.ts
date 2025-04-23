@@ -196,12 +196,12 @@ export type MessageConfig = MessageConfigType<{
   }
 
   /** Manually emit selection */
-  EMIT_SELECTION: {}
+  EMIT_SELECTION: Record<string, unknown>
 
-  ESCAPE_KEY: {}
+  ESCAPE_KEY: Record<string, unknown>
 
   /** Ctrl/Command has been hit 3 times */
-  TRIPLE_CTRL: {}
+  TRIPLE_CTRL: Record<string, unknown>
 
   /* ------------------------------------------------ *\
      Dict Panel
@@ -236,7 +236,7 @@ export type MessageConfig = MessageConfigType<{
   }
 
   /** request closing panel */
-  CLOSE_PANEL: {}
+  CLOSE_PANEL: Record<string, unknown>
 
   TEMP_DISABLED_STATE: {
     payload:
@@ -278,9 +278,9 @@ export type MessageConfig = MessageConfigType<{
   }
 
   /** Open or update Quick Search Panel */
-  OPEN_QS_PANEL: {}
+  OPEN_QS_PANEL: Record<string, unknown>
 
-  CLOSE_QS_PANEL: {}
+  CLOSE_QS_PANEL: Record<string, unknown>
 
   /** query backend for standalone panel appearance */
   QUERY_QS_PANEL: {
@@ -293,7 +293,7 @@ export type MessageConfig = MessageConfigType<{
   }
 
   /** Focus standalone quick search panel */
-  QS_PANEL_FOCUSED: {}
+  QS_PANEL_FOCUSED: Record<string, unknown>
 
   /** Switch to Sidebar */
   QS_SWITCH_SIDEBAR: {

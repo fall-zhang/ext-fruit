@@ -73,9 +73,9 @@ async function switchAntdTheme (darkMode: boolean): Promise<void> {
 
     let loaded = false
 
-    // @ts-ignore
+    // @ts-expect-error
     $link.onreadystatechange = function () {
-      // @ts-ignore
+      // @ts-expect-error
       if (this.readyState === 'complete' || this.readyState === 'loaded') {
         if (loaded === false) {
           resolve()

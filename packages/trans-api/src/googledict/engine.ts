@@ -49,11 +49,13 @@ export const search: SearchFunction<GoogleDictResult> = async (
       .catch(handleNetWorkError)
       .then(handleDOM)
   } catch (e) {
-    return await fetchPlainText(
+    const res = await fetchPlainText(
       `https://www.google.com/search?hl=en&safe=off&${isen}q=define:${encodedText}`
     )
       .catch(handleNetWorkError)
       .then(handleDOM)
+
+    return res
   }
 
   function handleDOM (
