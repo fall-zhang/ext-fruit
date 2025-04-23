@@ -1,0 +1,35 @@
+{
+  "name": "open-trans",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --no-eslintrc -c .eslintrc.js ./*.js ./scripts/**/*.js ./packages/**/*.ts",
+    "create-translator": "node scripts/create-translator",
+    "commit": "git-cz"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "axios-mock-adapter": "^1.17.0",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2",
+    "dotenv": "^8.2.0",
+    "ejs": "^2.7.1",
+    "fast-glob": "^3.0.4",
+    "fs-extra": "^8.1.0",
+    "lodash": "^4.17.15",
+    "ts-jest": "^24.1.0",
+    "yargs": "^14.0.0"
+  }
+}
