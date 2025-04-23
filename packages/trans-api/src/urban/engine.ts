@@ -95,7 +95,7 @@ async function getThumbsNums (ids: string): Promise<thumbMap | null> {
     return null
   }
 
-  result?.data?.thumbs?.map(t => {
+  result?.data?.thumbs?.forEach(t => {
     thumbsMap[t.defid] = {
       up: t.up,
       down: t.down

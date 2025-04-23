@@ -1,6 +1,6 @@
 import { SearchFunction, GetSrcPageFunction } from '../helpers'
 import memoizeOne from 'memoize-one'
-import { Sogou } from '@opentranslate/sogou'
+import { Sogou } from '@P/open-trans/sogou'
 import {
   MachineTranslateResult,
   MachineTranslatePayload,

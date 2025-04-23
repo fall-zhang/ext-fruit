@@ -1,6 +1,6 @@
 import { SearchFunction, GetSrcPageFunction } from '../helpers'
 import memoizeOne from 'memoize-one'
-import { Google } from '@opentranslate/google'
+import { Google } from '@P/open-trans/google'
 import {
   MachineTranslateResult,
   MachineTranslatePayload,
@@ -8,7 +8,7 @@ import {
   machineResult
 } from '@/components/MachineTrans/engine'
 import { GoogleLanguage } from './config'
-import { Language } from '@opentranslate/languages'
+import { Language } from '@P/open-trans/languages'
 
 export const getTranslator = memoizeOne(() => new Google({ env: 'ext' }))
 

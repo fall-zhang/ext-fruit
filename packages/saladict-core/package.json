@@ -1,6 +1,6 @@
 {
   "name": "saladict-core",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "private": true,
@@ -26,6 +26,8 @@
     "lodash": "^4.17.21",
     "normalize-scss": "^8.0.0",
     "observable-hooks": "^4.2.4",
+    "open-trans": "workspace:*",
+    "pako": "^2.1.0",
     "react-redux": "^9.2.0",
     "react-shadow": "^20.6.0",
     "redux": "^5.0.1",

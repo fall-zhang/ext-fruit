@@ -2,7 +2,7 @@ import {
   MachineDictItem,
   machineConfig
 } from '@/components/MachineTrans/engine'
-import { Language } from '@opentranslate/translator'
+import { Language } from '@P/open-trans/translator'
 import { Subunion } from '@/typings/helpers'
 
 export type YoudaotransLanguage = Subunion<

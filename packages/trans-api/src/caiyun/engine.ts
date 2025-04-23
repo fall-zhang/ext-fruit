@@ -1,7 +1,7 @@
 import { SearchFunction, GetSrcPageFunction } from '../helpers'
 import memoizeOne from 'memoize-one'
-import { Caiyun } from '@opentranslate/caiyun'
-import { TranslateResult } from '@opentranslate/translator'
+import { Caiyun } from '@P/open-trans/caiyun'
+import { TranslateResult } from '@P/open-trans/translator'
 import {
   MachineTranslateResult,
   MachineTranslatePayload,

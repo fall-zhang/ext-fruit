@@ -1,6 +1,6 @@
 import { DictID, AppConfig } from '@/app-config'
-import { Language } from '@opentranslate/languages'
-import { Translator } from '@opentranslate/translator'
+import { Language } from '@P/open-trans/languages'
+import { Translator } from '@P/open-trans/translator'
 import { DictItem, SelectOptions } from '@/app-config/dicts'
 import { isContainJapanese, isContainKorean } from '@/_helpers/lang-check'
 import { DictSearchResult } from '../dictionaries/helpers'
@@ -59,7 +59,7 @@ export type ExtractOptionsFromConfig<Config> = Config extends MachineDictItem<
 /**
  * Get Machine Translate arguments
  */
-export async function getMTArgs (
+export async function getMTArgs(
   translator: Translator,
   text: string,
   {
@@ -147,7 +147,7 @@ export async function getMTArgs (
   return { sl, tl, text }
 }
 
-export function machineConfig<Config extends MachineDictItem<Language>> (
+export function machineConfig<Config extends MachineDictItem<Language>>(
   langs: ExtractLangFromConfig<Config>[],
   /** overwrite configs */
   config: Partial<Config>,
@@ -202,7 +202,7 @@ export function machineConfig<Config extends MachineDictItem<Language>> (
 }
 
 /** Generate catalog */
-export function machineResult<ID extends DictID> (
+export function machineResult<ID extends DictID>(
   data: DictSearchResult<MachineTranslateResult<ID>>,
   langcodes: ReadonlyArray<string>
 ): DictSearchResult<MachineTranslateResult<ID>> {

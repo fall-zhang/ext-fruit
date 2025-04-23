@@ -1,6 +1,6 @@
 import { SearchFunction, GetSrcPageFunction } from '../helpers'
 import memoizeOne from 'memoize-one'
-import { Baidu } from '@opentranslate/baidu'
+import { Baidu } from '@P/open-trans/baidu'
 import {
   MachineTranslateResult,
   MachineTranslatePayload,

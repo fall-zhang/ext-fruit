@@ -1,6 +1,6 @@
 import { SearchFunction, GetSrcPageFunction } from '../helpers'
 import memoizeOne from 'memoize-one'
-import { Tencent } from '@opentranslate/tencent'
+import { Tencent } from '@P/open-trans/tencent'
 import {
   MachineTranslateResult,
   MachineTranslatePayload,

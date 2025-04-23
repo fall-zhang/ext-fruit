@@ -10,12 +10,19 @@ import {
 import { ViewPorps } from '@P/trans-api/src/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictLongman: FC<ViewPorps<LongmanResult>> = ({ result }) =>
-  (result.type === 'lex'
-    ? renderLex(result)
-    : result.type === 'related'
-      ? renderRelated(result)
-      : null)
+export const DictLongman: FC<ViewPorps<LongmanResult>> = ({ result }) => {
+  if (result.type === 'lex') {
+    return renderLex(result)
+  } else if (result.type === 'related') {
+    return renderRelated(result)
+  }
+  return null
+}
+// (result.type === 'lex'
+//   ? renderLex(result)
+//   : result.type === 'related'
+//     ? renderRelated(result)
+//     : null)
 
 export default DictLongman
 
@@ -125,14 +132,15 @@ function renderLex (result: LongmanResultLex) {
       )}
 
       {dicts.map((dict, index) =>
-        (result[dict].length > 0 ? (
-          <div className="dictLongman-Dict" key={dict + index}>
+        (result[dict].length > 0
+          ? (<div className="dictLongman-Dict" key={dict + index}>
             {/* <h1 className='dictLongman-DictTitle'>
               <span>- {dictTitle[dict]} -</span>
             </h1> */}
             {result[dict].map(renderEntry)}
           </div>
-        ) : null)
+          )
+          : null)
       )}
     </>
   )

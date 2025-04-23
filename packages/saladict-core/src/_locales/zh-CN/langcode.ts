@@ -1,4 +1,4 @@
-import zhCN from '@opentranslate/languages/locales/zh-CN.json'
+import zhCN from '@P/open-trans/languages/locales/zh-CN.json'
 
 export const locale = {
   ...zhCN,

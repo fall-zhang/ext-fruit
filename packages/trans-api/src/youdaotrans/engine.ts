@@ -1,6 +1,6 @@
 import { SearchFunction, GetSrcPageFunction } from '../helpers'
 import memoizeOne from 'memoize-one'
-import { Youdao } from '@opentranslate/youdao'
+import { Youdao } from '@P/open-trans/youdao'
 import {
   MachineTranslateResult,
   MachineTranslatePayload,

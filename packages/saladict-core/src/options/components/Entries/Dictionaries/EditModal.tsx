@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react'
 import { shallowEqual } from 'react-redux'
-import { Translator } from '@opentranslate/translator'
+import { Translator } from '@P/open-trans/translator'
 import { Switch, Select, Checkbox, Button, Modal } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Rule } from 'antd/lib/form'
