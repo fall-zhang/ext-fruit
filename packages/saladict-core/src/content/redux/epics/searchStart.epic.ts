@@ -4,12 +4,12 @@ import {
   share,
   take,
   filter,
-  tap,
-  switchMapTo
+  tap
 } from 'rxjs/operators'
 import { merge, from, EMPTY } from 'rxjs'
 import { StoreAction } from '../modules'
-import { Epic, ofType } from './utils'
+import { Epic } from './utils'
+import { ofType } from 'redux-observable'
 import { isInNotebook, saveWord } from '@/_helpers/record-manager'
 import { message } from '@/_helpers/browser-api'
 import {
@@ -113,7 +113,7 @@ export const searchStartEpic: Epic = (action$, state$) =>
               })
             }),
             // never pass to down stream
-            switchMapTo(EMPTY)
+            switchMap(() => EMPTY)
           )
 
       return merge(

@@ -72,18 +72,21 @@ export const SaladictForm = React.forwardRef(
         hideFieldFns: { [index: string]: (values: FieldValues) => boolean }
       } = { initialValues: {}, hideFieldFns: {} }
     ): { [index: string]: any } {
+      const newResult = {
+        ...result
+      }
       for (const item of items) {
         if (item.items) {
-          extractInitial(item.items, result)
+          extractInitial(item.items, newResult)
         } else {
           if (item.hide) {
-            result.hideFieldFns[(item.key || item.name)!] = item.hide
+            newResult.hideFieldFns[(item.key || item.name)!] = item.hide
           }
 
           if (item.name) {
             const value = get(data, item.name, data)
             if (value !== data) {
-              result.initialValues[item.name] = value
+              newResult.initialValues[item.name] = value
             } else if (process.env.DEBUG) {
               console.warn(
                 new Error('Missing value for form key: ' + item.name)
@@ -116,13 +119,13 @@ export const SaladictForm = React.forwardRef(
       return items.map(item => {
         const name = (item.key || item.name)!
         const isProfile = name.startsWith('profile.')
-
+        const newItem = { ...item }
         if (
-          item.label === undefined &&
+          newItem.label === undefined &&
           ready &&
           i18n.exists(`options:${name}`)
         ) {
-          item.label = isProfile
+          newItem.label = isProfile
             ? (
               <Tooltip
                 title={t('profile.opt.item_extra')}
@@ -134,26 +137,24 @@ export const SaladictForm = React.forwardRef(
                 </span>
               </Tooltip>
             )
-            : (
-              t(name)
-            )
+            : (t(name))
         }
 
-        if (item.help === undefined) {
+        if (newItem.help === undefined) {
           const help = `options:${name}_help`
           if (ready && i18n.exists(help)) {
-            item.help = t(help)
+            newItem.help = t(help)
           }
         }
 
-        if (item.extra === undefined) {
+        if (newItem.extra === undefined) {
           const extra = `options:${name}_extra`
           if (ready && i18n.exists(extra)) {
-            item.extra = t(extra)
+            newItem.extra = t(extra)
           }
         }
 
-        let { className, hide, children, items: subItems, ...itemProps } = item
+        let { className, children, items: subItems, ...itemProps } = item
         if (hideFields[name]) {
           className = className ? className + ' saladict-hide' : 'saladict-hide'
         }
@@ -166,12 +167,7 @@ export const SaladictForm = React.forwardRef(
       })
     }
 
-    const formItems = useMemo(() => genFormItems(items), [
-      ready,
-      i18n.language,
-      hideFields,
-      items
-    ])
+    const formItems = genFormItems(items)
 
     return (
       <Form

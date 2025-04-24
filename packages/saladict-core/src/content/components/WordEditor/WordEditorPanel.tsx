@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, ReactNode } from 'react'
 import { isInternalPage } from '@/_helpers/saladict'
 
 export type WordEditorPanelBtns = Array<{
@@ -8,6 +8,7 @@ export type WordEditorPanelBtns = Array<{
 }>
 
 export interface WordEditorPanelProps {
+  children:ReactNode
   containerWidth: number
   title: React.ReactNode
   btns?: WordEditorPanelBtns

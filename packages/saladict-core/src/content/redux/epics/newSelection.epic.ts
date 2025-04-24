@@ -1,7 +1,8 @@
 import { switchMap } from 'rxjs/operators'
 import { EMPTY, of } from 'rxjs'
 import { StoreAction, StoreState } from '../modules'
-import { Epic, ofType } from './utils'
+import { Epic } from './utils'
+import { ofType } from 'redux-observable'
 import { message } from '@/_helpers/browser-api'
 import { isStandalonePage, isOptionsPage } from '@/_helpers/saladict'
 

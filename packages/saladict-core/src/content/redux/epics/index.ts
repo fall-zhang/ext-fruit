@@ -1,4 +1,4 @@
-import { combineEpics } from 'redux-observable'
+import { combineEpics, ofType } from 'redux-observable'
 import { from, of, EMPTY } from 'rxjs'
 import { map, mapTo, mergeMap, filter, pairwise } from 'rxjs/operators'
 
@@ -6,7 +6,7 @@ import { isPopupPage, isStandalonePage } from '@/_helpers/saladict'
 import { saveWord } from '@/_helpers/record-manager'
 
 import { StoreAction, StoreState } from '../modules'
-import { ofType } from './utils'
+
 
 import searchStartEpic from './searchStart.epic'
 import newSelectionEpic from './newSelection.epic'

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import React, { FC, useState, useEffect } from 'react'
 import { useUpdateEffect } from 'react-use'
 import {
@@ -77,7 +78,7 @@ export const Notes: FC<NotesProps> = props => {
 
   const [getRelatedWords, relatedWords$] = useObservableCallback<
     Word[],
-    never,
+    unknown,
     []
   >(event$ =>
     event$.pipe(
@@ -93,7 +94,7 @@ export const Notes: FC<NotesProps> = props => {
           .catch(() => [])
       }),
       startWith([])
-    )
+    ), () => undefined
   )
 
   const relatedWords = useObservableState(relatedWords$)
@@ -199,7 +200,7 @@ export const Notes: FC<NotesProps> = props => {
     return () => {
       isRunning = false
     }
-  }, [])
+  }, [word.date])
 
   if (ankiCardId) {
     panelBtns.unshift({
