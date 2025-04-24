@@ -1,7 +1,7 @@
 import { languages } from '../src/languages'
-import en from '../locales/en.json'
-import zhCN from '../locales/zh-CN.json'
-import zhTW from '../locales/zh-TW.json'
+import * as en from '../locales/en.json'
+import * as zhCN from '../locales/zh-CN.json'
+import * as zhTW from '../locales/zh-TW.json'
 
 describe('Locales', () => {
   it('should provide locale for every supported language', () => {

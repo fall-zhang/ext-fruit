@@ -2,7 +2,8 @@
 import {
   Language,
   Translator,
-  TranslateQueryResult
+  TranslateQueryResult,
+  TranslateError
 } from 'open-trans/translator'
 import SHA256 from 'crypto-js/sha256'
 import HMACSHA256 from 'crypto-js/hmac-sha256'
@@ -62,13 +63,19 @@ export class Tencent extends Translator<TencentConfig> {
     }
     Tencent.isStubHeaders[host] = true
 
-    const extGlobal =
-      typeof browser !== 'undefined'
-        ? browser
-        : typeof chrome !== 'undefined'
-          ? chrome
-          : null
 
+    // const extGlobal = typeof browser !== 'undefined'
+    //   ? browser
+    //   : typeof chrome !== 'undefined'
+    //     ? chrome
+    //     : null
+    let extGlobal = null
+
+    if (typeof browser !== 'undefined') {
+      extGlobal = browser
+    } else if (typeof chrome !== 'undefined') {
+      extGlobal = chrome
+    }
     const extraInfoSpec = ['blocking', 'requestHeaders']
 
     // For Chrome >= 72
@@ -101,7 +108,7 @@ export class Tencent extends Translator<TencentConfig> {
     )
   }
 
-  private signedRequest<R = {}> ({
+  private signedRequest<R = Record<string, unknown>> ({
     secretId,
     secretKey,
     action,
@@ -117,7 +124,8 @@ export class Tencent extends Translator<TencentConfig> {
     version: string;
   }): AxiosPromise<R> {
     const host = `${service}.tencentcloudapi.com`
-    this.stubHeaders(host)
+    // seems not necessary and not allowed in content script(only in service worker)
+    // this.stubHeaders(host);
 
     const now = new Date()
     const timestamp = `${new Date().valueOf()}`.slice(0, 10)
@@ -152,7 +160,8 @@ export class Tencent extends Translator<TencentConfig> {
       EncHEX
     )
 
-    return this.request<R>(`https://${service}.tencentcloudapi.com`, {
+    return this.request<R>({
+      url: `https://${service}.tencentcloudapi.com`,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -186,6 +195,9 @@ export class Tencent extends Translator<TencentConfig> {
         Source: string;
         Target: string;
         RequestId: string;
+        Error: {
+          Code: string;
+        };
       };
     }>({
       secretId: config.secretId,
@@ -194,7 +206,24 @@ export class Tencent extends Translator<TencentConfig> {
       payload: RequestPayload,
       service: 'tmt',
       version: '2018-03-21'
+    }).catch(() => {
+      throw new TranslateError('NETWORK_ERROR')
     })
+
+    // https://cloud.tencent.com/document/product/551/14403
+    if (data.Response.Error && data.Response.Error.Code) {
+      switch (data.Response.Error.Code) {
+      case 'AuthFailure.SecretIdNotFound':
+      case 'AuthFailure.InvalidSecretId':
+        throw new TranslateError('AUTH_ERROR', data.Response.Error.Code)
+      case 'FailedOperation.NoFreeAmount':
+      case 'FailedOperation.UserHasNoFreeAmount':
+      case 'FailedOperation.ServiceIsolate':
+        throw new TranslateError('USEAGE_LIMIT', data.Response.Error.Code)
+      default:
+        throw new TranslateError('UNKNOWN', data.Response.Error.Code)
+      }
+    }
 
     return {
       text,

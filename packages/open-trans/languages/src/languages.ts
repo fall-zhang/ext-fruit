@@ -1,5 +1,4 @@
 
-export type Language = (typeof languages)[number];
 
 export const languages = [
   'af',
@@ -119,5 +118,8 @@ export const languages = [
   'yue',
   'zh-CN',
   'zh-TW',
-  'zu'
+  'zu',
+  'zh'
 ] as const
+
+export type Language = typeof languages[number];

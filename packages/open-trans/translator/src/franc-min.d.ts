@@ -1,4 +1,4 @@
-declare module 'franc-min' {
+declare module "franc-min" {
   interface Options {
     minLength?: number;
     only?: string[];
@@ -11,5 +11,5 @@ declare module 'franc-min' {
     function all(text: string, options?: Options): [string, number][];
   }
 
-  export default franc
+  export default franc;
 }

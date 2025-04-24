@@ -32,8 +32,11 @@ export async function fetchScheduled<R> (
   }
   for (let i = 0; i < requests.length; i++) {
     try {
+      // eslint-disable-next-line no-await-in-loop
       return await requests[i]()
-    } catch (e) {}
+    } catch (e) {
+      console.warn('🚀 ~ fetchScheduled err:', e)
+    }
   }
 
   return Promise.reject(new Error('All rejected'))

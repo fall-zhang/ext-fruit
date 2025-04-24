@@ -1,0 +1,30 @@
+# @opentranslate/aliyun
+
+[![npm-version](https://img.shields.io/npm/v/@opentranslate/aliyun.svg)](https://www.npmjs.com/package/@opentranslate/aliyun)
+[![OpenTranslate](https://img.shields.io/badge/OpenTranslate-Compatible-brightgreen)](https://github.com/OpenTranslate)
+
+Aliyun translator with [OpenTranslate](https://github.com/OpenTranslate) API.
+
+## Installation
+
+Yarn
+
+```
+yarn add @opentranslate/aliyun
+```
+
+NPM
+
+```
+npm i @opentranslate/aliyun
+```
+
+
+
+## API
+
+See [translator](https://github.com/OpenTranslate/OpenTranslate/blob/master/packages/translator/README.md) for more details.
+
+## Disclaimer
+
+The material and source code from this package are for study and research purposes only. Any reliance you place on such material or source code are strictly at your own risk.

@@ -4,20 +4,20 @@ import {
   TranslatorInit,
   TranslateResult,
   TranslateQueryResult
-} from './type'
-import { Language } from 'open-trans/languages'
-import Axios, { AxiosInstance, AxiosRequestConfig, AxiosPromise } from 'axios'
-import { detectLang } from './detect-lang'
+} from "./type";
+import { Language } from "open-trans/languages";
+import Axios, { AxiosInstance, AxiosRequestConfig, AxiosPromise } from "axios";
+import { detectLang } from "./detect-lang";
 
 export abstract class Translator<Config extends {} = {}> {
-  axios: AxiosInstance
+  axios: AxiosInstance;
 
-  protected readonly env: TranslatorEnv
+  protected readonly env: TranslatorEnv;
 
   /**
    * 自定义选项
    */
-  config: Config
+  config: Config;
 
   /**
    * 翻译源标识符
@@ -27,10 +27,10 @@ export abstract class Translator<Config extends {} = {}> {
   /**
    * 可选的axios实例
    */
-  constructor (init: TranslatorInit<Config> = {}) {
-    this.env = init.env || 'node'
-    this.axios = init.axios || Axios
-    this.config = init.config || ({} as Config)
+  constructor(init: TranslatorInit<Config> = {}) {
+    this.env = init.env || "node";
+    this.axios = init.axios || Axios;
+    this.config = init.config || ({} as Config);
   }
 
   /**
@@ -41,7 +41,7 @@ export abstract class Translator<Config extends {} = {}> {
   /**
    * 下游应用调用的接口
    */
-  async translate (
+  async translate(
     text: string,
     from: Language,
     to: Language,
@@ -50,12 +50,12 @@ export abstract class Translator<Config extends {} = {}> {
     const queryResult = await this.query(text, from, to, {
       ...this.config,
       ...config
-    })
+    });
 
     return {
       ...queryResult,
       engine: this.name
-    }
+    };
   }
 
   /**
@@ -73,29 +73,26 @@ export abstract class Translator<Config extends {} = {}> {
     config: Config
   ): Promise<TranslateQueryResult>;
 
-  protected request<R = {}> (
-    url: string,
-    config?: AxiosRequestConfig
-  ): AxiosPromise<R> {
-    return this.axios(url, config)
+  protected request<R = {}>(config: AxiosRequestConfig): AxiosPromise<R> {
+    return this.axios(config);
   }
 
   /**
    * 如果翻译源提供了单独的检测语言的功能，请实现此接口
    */
-  async detect (text: string): Promise<Language> {
-    return detectLang(text)
+  async detect(text: string, config?: Config): Promise<Language> {
+    return detectLang(text);
   }
 
   /**
    * 文本转换为语音
    * @returns {Promise<string|null>} 语言文件地址
    */
-  textToSpeech (
+  textToSpeech(
     text: string,
     lang: Language,
     meta?: any // eslint-disable-line @typescript-eslint/no-explicit-any
   ): Promise<string | null> {
-    return Promise.resolve(null)
+    return Promise.resolve(null);
   }
 }

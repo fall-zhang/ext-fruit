@@ -3,41 +3,41 @@ import {
   Translator,
   TranslateError,
   TranslateQueryResult
-} from 'open-trans/translator'
-import md5 from 'md5'
-import qs from 'qs'
+} from "open-trans/translator";
+import md5 from "md5";
+import qs from "qs";
 
 const langMap: [Language, string][] = [
-  ['auto', 'auto'],
-  ['zh-CN', 'zh'],
-  ['en', 'en'],
-  ['yue', 'yue'],
-  ['wyw', 'wyw'],
-  ['ja', 'jp'],
-  ['ko', 'kor'],
-  ['fr', 'fra'],
-  ['es', 'spa'],
-  ['th', 'th'],
-  ['ar', 'ara'],
-  ['ru', 'ru'],
-  ['pt', 'pt'],
-  ['de', 'de'],
-  ['it', 'it'],
-  ['el', 'el'],
-  ['nl', 'nl'],
-  ['pl', 'pl'],
-  ['bg', 'bul'],
-  ['et', 'est'],
-  ['da', 'dan'],
-  ['fi', 'fin'],
-  ['cs', 'cs'],
-  ['ro', 'rom'],
-  ['sl', 'slo'],
-  ['sv', 'swe'],
-  ['hu', 'hu'],
-  ['zh-TW', 'cht'],
-  ['vi', 'vie']
-]
+  ["auto", "auto"],
+  ["zh-CN", "zh"],
+  ["zh-TW", "cht"],
+  ["en", "en"],
+  ["yue", "yue"],
+  ["wyw", "wyw"],
+  ["ja", "jp"],
+  ["ko", "kor"],
+  ["fr", "fra"],
+  ["es", "spa"],
+  ["th", "th"],
+  ["ar", "ara"],
+  ["ru", "ru"],
+  ["pt", "pt"],
+  ["de", "de"],
+  ["it", "it"],
+  ["el", "el"],
+  ["nl", "nl"],
+  ["pl", "pl"],
+  ["bg", "bul"],
+  ["et", "est"],
+  ["da", "dan"],
+  ["fi", "fin"],
+  ["cs", "cs"],
+  ["ro", "rom"],
+  ["sl", "slo"],
+  ["sv", "swe"],
+  ["hu", "hu"],
+  ["vi", "vie"]
+];
 
 export interface BaiduConfig {
   placeholder?: string;
@@ -45,66 +45,77 @@ export interface BaiduConfig {
   key: string;
 }
 
+type BaiduTranslateResult = {
+  from: string;
+  to: string;
+  trans_result: Array<{
+    dst: string;
+    src: string;
+  }>;
+  lan?: Language;
+};
+
 export class Baidu extends Translator<BaiduConfig> {
-  readonly name = 'baidu'
+  readonly name = "baidu";
 
-  readonly endpoint = 'https://api.fanyi.baidu.com/api/trans/vip/translate'
+  readonly endpoint = "https://api.fanyi.baidu.com/api/trans/vip/translate";
 
-  protected async query (
+
+  protected async query(
     text: string,
     from: Language,
     to: Language,
     config: BaiduConfig
   ): Promise<TranslateQueryResult> {
     type BaiduTranslateError = {
-      error_code: '54001' | string;
-      error_msg: 'Invalid Sign' | string;
+      error_code: "54001" | string;
+      error_msg: "Invalid Sign" | string;
     };
 
-    type BaiduTranslateResult = {
-      from: string;
-      to: string;
-      trans_result: Array<{
-        dst: string;
-        src: string;
-      }>;
-    };
 
-    const salt = Date.now()
-    const { endpoint } = this
-    const { appid, key } = config
+    const salt = Date.now();
+    const { endpoint } = this;
+    const { appid, key } = config;
 
-    const res = await this.request<BaiduTranslateResult | BaiduTranslateError>(
-      endpoint,
-      {
-        params: {
-          from: Baidu.langMap.get(from),
-          to: Baidu.langMap.get(to),
-          q: text,
-          salt,
-          appid,
-          sign: md5(appid + text + salt + key)
-        }
+    const res = await this.request<BaiduTranslateResult | BaiduTranslateError>({
+      url: endpoint,
+      params: {
+        from: Baidu.langMap.get(from),
+        to: Baidu.langMap.get(to),
+        q: text,
+        salt,
+        appid,
+        sign: md5(appid + text + salt + key)
       }
-    ).catch(() => {
-      throw new TranslateError('NETWORK_ERROR')
-    })
+    }).catch(e => {
+      console.error(new Error("[Baidu service]" + e));
+      throw e;
+    });
 
-    const { data } = res
+    const { data } = res;
 
-    if ((data as BaiduTranslateError).error_code) {
-      console.error(
-        new Error('[Baidu service]' + (data as BaiduTranslateError).error_msg)
-      )
-      throw new TranslateError('API_SERVER_ERROR')
+    const translateError = data as BaiduTranslateError;
+    const error = translateError.error_code;
+    if (error) {
+      // https://api.fanyi.baidu.com/api/trans/product/apidoc#joinFile
+      console.error(new Error("[Baidu service]" + error));
+      switch (error) {
+        case "52003":
+        case "54000":
+          throw new TranslateError("AUTH_ERROR", translateError.error_msg);
+        case "54004":
+          throw new TranslateError("USEAGE_LIMIT", translateError.error_msg);
+        default:
+          throw new TranslateError("UNKNOWN", translateError.error_msg);
+      }
     }
 
     const {
       trans_result: transResult,
       from: langDetected
-    } = data as BaiduTranslateResult
-    const transParagraphs = transResult.map(({ dst }) => dst)
-    const detectedFrom = Baidu.langMapReverse.get(langDetected) as Language
+    } = data as BaiduTranslateResult;
+    const transParagraphs = transResult.map(({ dst }) => dst);
+    const detectedFrom = Baidu.langMapReverse.get(langDetected) as Language;
 
     return {
       text,
@@ -116,30 +127,49 @@ export class Baidu extends Translator<BaiduConfig> {
       },
       trans: {
         paragraphs: transParagraphs,
-        tts: await this.textToSpeech(transParagraphs.join(' '), to)
+        tts: await this.textToSpeech(transParagraphs.join(" "), to)
       }
-    }
+    };
   }
 
   /** Translator lang to custom lang */
-  private static readonly langMap = new Map(langMap)
+  private static readonly langMap = new Map(langMap);
 
   /** Custom lang to translator lang */
   private static readonly langMapReverse = new Map(
     langMap.map(([translatorLang, lang]) => [lang, translatorLang])
-  )
+  );
 
-  getSupportLanguages (): Language[] {
-    return [...Baidu.langMap.keys()]
+  getSupportLanguages(): Language[] {
+    return [...Baidu.langMap.keys()];
   }
 
-  async textToSpeech (text: string, lang: Language): Promise<string> {
+  async textToSpeech(text: string, lang: Language): Promise<string> {
     return `https://fanyi.baidu.com/gettts?${qs.stringify({
-      lan: Baidu.langMap.get(lang !== 'auto' ? lang : 'zh-CN') || 'zh',
+      lan: Baidu.langMap.get(lang !== "auto" ? lang : "zh-CN") || "zh",
       text,
       spd: 5
-    })}`
+    })}`;
+  }
+
+  async detect(text: string, config?: BaiduConfig): Promise<Language> {
+    try {
+      let res = await await this.request<BaiduTranslateResult>( {
+        url: "https://fanyi.baidu.com/langdetect",
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        data: qs.stringify({
+          query: text
+        })
+      });
+      let result = res.data;
+      return result.lan as Language;
+    } catch (e) {
+      return "en";
+    }
   }
 }
 
-export default Baidu
+export default Baidu;
