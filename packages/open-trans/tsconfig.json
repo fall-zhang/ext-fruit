@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": false,
     "baseUrl": ".",
     "declaration": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "importHelpers": true,
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
     "module": "ES2020",

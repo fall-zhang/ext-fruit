@@ -3,7 +3,7 @@ import {
   Translator,
   TranslateQueryResult,
   TranslateError
-} from 'open-trans/translator'
+} from '../../translator'
 type NiuTranslateResult = {
   from: string;
   to: string;

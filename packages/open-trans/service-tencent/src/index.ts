@@ -4,7 +4,7 @@ import {
   Translator,
   TranslateQueryResult,
   TranslateError
-} from 'open-trans/translator'
+} from '../../translator'
 import SHA256 from 'crypto-js/sha256'
 import HMACSHA256 from 'crypto-js/hmac-sha256'
 import EncHEX from 'crypto-js/enc-hex'
