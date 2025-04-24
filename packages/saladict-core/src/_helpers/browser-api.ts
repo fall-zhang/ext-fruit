@@ -49,8 +49,8 @@ const noop = () => {
  * values: {Map} listeners, key: message type, values: generated or user's callback functions
  */
 const messageListeners: WeakMap<
-  Function,
-  Map<MsgType | '__DEFAULT_MSGTYPE__', Function>
+  any,
+  Map<MsgType | '__DEFAULT_MSGTYPE__', any>
 > = new WeakMap()
 
 /**
@@ -59,8 +59,8 @@ const messageListeners: WeakMap<
  * values: {Map} listeners, key: message type, values: generated or user's callback functions
  */
 const messageSelfListeners: WeakMap<
-  Function,
-  Map<MsgType | '__DEFAULT_MSGTYPE__', Function>
+  any,
+  Map<MsgType | '__DEFAULT_MSGTYPE__', any>
 > = new WeakMap()
 
 /**
@@ -440,7 +440,6 @@ function messageRemoveListener (
     if (messageType) {
       const listener = listeners.get(messageType)
       if (listener) {
-        // @ts-expect-error
         browser.runtime.onMessage.removeListener(listener)
         listeners.delete(messageType)
         if (listeners.size <= 0) {
@@ -451,14 +450,12 @@ function messageRemoveListener (
     } else {
       // delete all cb related callbacks
       listeners.forEach(listener =>
-        // @ts-expect-error
         browser.runtime.onMessage.removeListener(listener)
       )
       allListeners.delete(cb)
       return
     }
   }
-  // @ts-expect-error
   browser.runtime.onMessage.removeListener(cb)
 }
 

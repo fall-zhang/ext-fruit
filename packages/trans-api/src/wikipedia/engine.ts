@@ -146,7 +146,12 @@ function getSubdomain (
   }
 
   if (lang === 'auto') {
-    return isContainJapanese(text) ? 'ja' : isContainChinese(text) ? 'zh' : 'en'
+    if (isContainJapanese(text)) {
+      return 'ja'
+    } if (isContainChinese(text)) {
+      return 'zh'
+    }
+    return 'en'
   }
 
   return lang
@@ -160,6 +165,7 @@ function getLangList (doc: Document): LangList {
       if (url && title) {
         return { url, title }
       }
+      return undefined
     })
     .filter((x): x is LangListItem => !!x)
 }

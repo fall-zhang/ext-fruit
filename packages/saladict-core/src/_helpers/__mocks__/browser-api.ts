@@ -419,7 +419,7 @@ function _messageCreateStream (self: boolean) {
 interface DispatchMessageEventOptions {
   message: Message
   sender?: browser.runtime.MessageSender
-  sendResponse?: Function
+  sendResponse?: any
 }
 
 interface DispatchMessageEventOptionsGeneral

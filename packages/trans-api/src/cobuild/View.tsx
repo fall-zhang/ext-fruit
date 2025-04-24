@@ -10,7 +10,7 @@ export const DictCOBUILD: FC<ViewPorps<COBUILDResult>> = ({ result }) => {
   case 'ciba':
     return renderCiba(result)
   case 'collins':
-    return renderCol(result)
+    return RenderCol(result)
   }
   return null
 }
@@ -48,7 +48,7 @@ function renderCiba (result: COBUILDCibaResult) {
   )
 }
 
-function renderCol (result: COBUILDColResult) {
+function RenderCol (result: COBUILDColResult) {
   const [iSec, setiSec] = useState('0')
   const curSection = result.sections[iSec]
 

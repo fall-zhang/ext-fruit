@@ -107,6 +107,7 @@ function handleDOM (
 
     $entry.querySelectorAll('br').forEach($br => {
       $br.classList.add('br')
+      // eslint-disable-next-line no-param-reassign
       $br.outerHTML = `<div class="${$br.className}"></div>`
     })
 

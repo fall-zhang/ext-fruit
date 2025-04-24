@@ -17,7 +17,6 @@ import { message } from '@/_helpers/browser-api'
 import { MenuBar, MenuBarProps } from './MenuBar'
 import { updateConfig } from '@/_helpers/config-manager'
 import { timer } from '@/_helpers/promise-more'
-import { objectKeys } from '@/typings/helpers'
 
 type Dispatchers = ExtractDispatchers<
   MenuBarProps,
@@ -141,8 +140,8 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
         })
 
         if (
-          objectKeys(dictAuth).every(id =>
-            objectKeys(dictAuth[id]).every(k => !dictAuth[id]?.[k])
+          Object.keys(dictAuth).every(id =>
+            Object.keys(dictAuth[id]).every(k => !dictAuth[id]?.[k])
           )
         ) {
           message.send({

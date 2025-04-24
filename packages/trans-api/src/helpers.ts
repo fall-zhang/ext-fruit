@@ -43,7 +43,7 @@ export interface DictSearchResult<Result> {
 }
 
 /** Fetch and parse dictionary search result */
-export interface SearchFunction<Result, Payload = {}> {
+export interface SearchFunction<Result, Payload = Record<string, unknown>> {
   (
     text: string,
     config: AppConfig,

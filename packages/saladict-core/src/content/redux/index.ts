@@ -34,7 +34,7 @@ export const useStore: {
 } = _useStore
 
 
-type UseSelectorType<T> = {
+type UseSelectorType<T=unknown> = {
   (
     selector: {(state: StoreState):T},
     equalityFn?: {(left: T, right: T) :boolean}
