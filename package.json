@@ -1,5 +1,5 @@
 {
-  "name": "ext-fruit",
+  "name": "fruit-saladict",
   "version": "0.0.1",
   "type": "module",
   "main": "libs/main.js",
@@ -100,7 +100,7 @@
     "@typescript-eslint/eslint-plugin": "^8.31.0",
     "@typescript-eslint/parser": "^8.31.0",
     "@vitejs/plugin-react": "^4.4.1",
-    "@vitest/ui": "^1.6.1",
+    "@vitest/ui": "^3.0.1",
     "cross-env": "^7.0.3",
     "cz-git": "^1.11.1",
     "czg": "^1.11.1",
