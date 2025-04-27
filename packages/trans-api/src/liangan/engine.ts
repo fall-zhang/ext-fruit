@@ -19,14 +19,22 @@ export const search: SearchFunction<LiangAnResult> = (
     text,
     config,
     profile.dicts.all.liangan.options
-  ).then(result => {
-    if (result.result.h) {
-      result.result.h.forEach(h => {
-        if (h.p) {
-          h.p = h.p.replace('<br>陸⃝', ' [大陆]: ')
+  ).then(res => {
+    const result = {
+      ...res
+    }
+    if (res.result.h) {
+      result.result.h = res.result.h.map(h => {
+        const newH = {
+          ...h
         }
+        if (newH.p) {
+          newH.p = h.p.replace('<br>陸⃝', ' [大陆]: ')
+        }
+        return newH
       })
     }
+
     return result
   })
 }

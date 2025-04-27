@@ -3,16 +3,16 @@ import {
   search,
   YoudaoResultLex,
   YoudaoResultRelated
-} from '@/components/dictionaries/youdao/engine'
+} from '@P/trans-api/src/youdao/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile, ProfileMutable } from '@/app-config/profiles'
-
+import { describe, it, expect } from 'vitest'
 describe('Dict/Youdao/engine', () => {
   it('should parse lex result correctly', () => {
     return retry(() =>
       search('love', getDefaultConfig(), getDefaultProfile(), {
         isPDF: false
-      }).then(searchResult => {
+      }).then((searchResult:any) => {
         expect(searchResult.audio && typeof searchResult.audio.uk).toBe(
           'string'
         )
@@ -55,7 +55,7 @@ describe('Dict/Youdao/engine', () => {
     }
     return retry(() =>
       search('love', getDefaultConfig(), profile, { isPDF: false }).then(
-        searchResult => {
+        (searchResult:any) => {
           expect(searchResult.audio && typeof searchResult.audio.uk).toBe(
             'string'
           )
@@ -90,7 +90,7 @@ describe('Dict/Youdao/engine', () => {
     return retry(() =>
       search(text, getDefaultConfig(), getDefaultProfile(), {
         isPDF: false
-      }).then(searchResult => {
+      }).then((searchResult:any) => {
         expect(!searchResult.audio || !searchResult.audio.uk).toBeTruthy()
         expect(!searchResult.audio || !searchResult.audio.us).toBeTruthy()
 
@@ -115,7 +115,7 @@ describe('Dict/Youdao/engine', () => {
     return retry(() =>
       search('jumblish', getDefaultConfig(), getDefaultProfile(), {
         isPDF: false
-      }).then(searchResult => {
+      }).then((searchResult:any) => {
         expect(searchResult.audio).toBeUndefined()
 
         const result = searchResult.result as YoudaoResultRelated

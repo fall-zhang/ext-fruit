@@ -1,8 +1,8 @@
 import { retry } from '../helpers'
-import { search } from '@/components/dictionaries/etymonline/engine'
+import { search } from '@P/trans-api/src/etymonline/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile, ProfileMutable } from '@/app-config/profiles'
-
+import { describe, it, expect } from 'vitest'
 describe('Dict/Etymonline/engine', () => {
   it('should parse result correctly', () => {
     const profile = getDefaultProfile() as ProfileMutable
@@ -12,7 +12,7 @@ describe('Dict/Etymonline/engine', () => {
     }
     return retry(() =>
       search('love', getDefaultConfig(), profile, { isPDF: false }).then(
-        searchResult => {
+        (searchResult:any) => {
           expect(searchResult.audio).toBeUndefined()
 
           const result = searchResult.result

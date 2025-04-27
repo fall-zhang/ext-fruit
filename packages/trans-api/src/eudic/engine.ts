@@ -30,7 +30,7 @@ export const search: SearchFunction<EudicResult> = (
   profile,
   payload
 ) => {
-  text = encodeURIComponent(
+  const newText = encodeURIComponent(
     text
       .split(/\s+/)
       .slice(0, 2)
@@ -38,7 +38,7 @@ export const search: SearchFunction<EudicResult> = (
   )
   const options = profile.dicts.all.eudic.options
 
-  return fetchDirtyDOM('https://dict.eudic.net/dicts/en/' + text, {
+  return fetchDirtyDOM('https://dict.eudic.net/dicts/en/' + newText, {
     withCredentials: false
   })
     .catch(handleNetWorkError)

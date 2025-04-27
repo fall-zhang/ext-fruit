@@ -1,7 +1,9 @@
+/* eslint-disable max-nested-callbacks */
 import { retry } from '../helpers'
-import { search } from '@/components/dictionaries/weblioejje/engine'
+import { search } from '@P/trans-api/src/weblioejje/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile } from '@/app-config/profiles'
+import { describe, expect, it } from 'vitest'
 
 describe('Dict/Weblioejje/engine', () => {
   ;['love', '愛'].forEach(text => {

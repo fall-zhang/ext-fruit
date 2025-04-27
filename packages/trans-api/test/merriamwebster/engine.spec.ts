@@ -1,3 +1,5 @@
+/* eslint-disable max-nested-callbacks */
+/* eslint-disable max-lines-per-function */
 import {
   _getConjugation,
   _getContentEle,
@@ -17,8 +19,9 @@ import {
   _getSyllable,
   _getSynonyms,
   _getTitle
-} from '@/components/dictionaries/merriamwebster/engine'
+} from '@P/trans-api/src/merriamwebster/engine'
 import { cases } from './testCases'
+import { beforeAll, describe, expect, it } from 'vitest'
 // import getDefaultProfile from '@/app-config/profiles'
 
 describe('Dict/MerriamWebster/engine', () => {

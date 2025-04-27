@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks */
 import React, { FC } from 'react'
 import Speaker from '@/components/Speaker'
 import { MerriamWebsterResultV2 } from './engine'
