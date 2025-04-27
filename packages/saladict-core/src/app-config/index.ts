@@ -1,4 +1,3 @@
-import { DeepReadonly } from '@/typings/helpers'
 import type { SupportedLangs } from '@P/trans-api/types/api-types'
 import { getAllDicts } from './dicts'
 import { getAllContextMenus } from './context-menus'
@@ -22,7 +21,7 @@ if (langUI === 'zh-CN') {
 
 
 export type DictConfigsMutable = ReturnType<typeof getAllDicts>
-export type DictConfigs = DeepReadonly<DictConfigsMutable>
+export type DictConfigs = Readonly<DictConfigsMutable>
 export type DictID = keyof DictConfigsMutable
 export type MtaAutoUnfold = _MtaAutoUnfold
 
@@ -45,7 +44,7 @@ export type PreloadSource = '' | 'clipboard' | 'selection'
 export type AllDicts = ReturnType<typeof getAllDicts>
 
 export type AppConfigMutable = ReturnType<typeof _getDefaultConfig>
-export type AppConfig = DeepReadonly<AppConfigMutable>
+export type AppConfig = Readonly<AppConfigMutable>
 
 export const getDefaultConfig: () => AppConfig = _getDefaultConfig
 export default getDefaultConfig

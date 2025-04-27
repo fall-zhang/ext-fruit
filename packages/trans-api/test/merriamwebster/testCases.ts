@@ -1,4 +1,4 @@
-import { MerriamWebsterResultV2 } from '@/components/dictionaries/merriamwebster/engine'
+import { MerriamWebsterResultV2 } from '@P/trans-api/src/merriamwebster/engine'
 import fs from 'fs'
 import path from 'path'
 
@@ -117,7 +117,7 @@ export const cases = {
       etymology: [
         [
           'Verb',
-          'Middle English adden, borrowed from Anglo-French adder, borrowed from Latin addere, from ad- ad- + -dere \"to put, place,\" going back to a reduced ablaut grade of Indo-European *dheh1-  — more at do entry 1'
+          'Middle English adden, borrowed from Anglo-French adder, borrowed from Latin addere, from ad- ad- + -dere "to put, place," going back to a reduced ablaut grade of Indo-European *dheh1-  — more at do entry 1'
         ]
       ]
     } as MerriamWebsterResultV2

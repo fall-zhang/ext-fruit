@@ -4,7 +4,7 @@ import { timer } from '@/_helpers/promise-more'
  * To make sure only one audio plays at a time
  */
 export class AudioManager {
-  private static instance: AudioManager
+  private static instance: any // AudioManager
 
   static getInstance () {
     return AudioManager.instance || (AudioManager.instance = new AudioManager())

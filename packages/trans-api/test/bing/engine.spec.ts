@@ -4,9 +4,10 @@ import {
   BingResultLex,
   BingResultMachine,
   BingResultRelated
-} from '@/components/dictionaries/bing/engine'
+} from '@P/trans-api/src/bing/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile, ProfileMutable } from '@/app-config/profiles'
+import { describe, expect, it } from 'vitest'
 
 describe('Dict/Bing/engine', () => {
   it('should parse lex result correctly', () => {

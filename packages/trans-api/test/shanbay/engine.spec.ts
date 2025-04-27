@@ -1,16 +1,11 @@
 import { retry } from '../helpers'
-import { search } from '@/components/dictionaries/shanbay/engine'
+import { search } from '@P/trans-api/src/shanbay/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile } from '@/app-config/profiles'
 import { isContainChinese } from '@/_helpers/lang-check'
-import { browser } from '../../../../helper'
+import { describe, it, expect, beforeEach } from 'vitest'
 
 describe('Dict/Shanbay/engine', () => {
-  beforeEach(() => {
-    browser.storage.local.get.callsFake(() => Promise.resolve({}))
-    browser.storage.local.set.callsFake(() => Promise.resolve())
-  })
-
   it('should parse result correctly', () => {
     return retry(() =>
       search('hello', getDefaultConfig(), getDefaultProfile(), {

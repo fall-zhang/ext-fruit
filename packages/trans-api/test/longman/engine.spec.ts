@@ -1,11 +1,13 @@
+/* eslint-disable max-nested-callbacks */
 import { retry } from '../helpers'
 import {
   search,
   LongmanResultLex,
   LongmanResultRelated
-} from '@/components/dictionaries/longman/engine'
+} from '@P/trans-api/src/longman/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile, ProfileMutable } from '@/app-config/profiles'
+import { describe, expect, it } from 'vitest'
 
 describe('Dict/Longman/engine', () => {
   it('should parse lex result (love) correctly', () => {

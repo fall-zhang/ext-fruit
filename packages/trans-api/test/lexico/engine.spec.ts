@@ -3,9 +3,10 @@ import {
   search,
   LexicoResultLex,
   LexicoResultRelated
-} from '@/components/dictionaries/lexico/engine'
+} from '@P/trans-api/src/lexico/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile } from '@/app-config/profiles'
+import { describe, expect, it } from 'vitest'
 
 describe('Dict/Lexico/engine', () => {
   it('should parse lex result correctly', () => {

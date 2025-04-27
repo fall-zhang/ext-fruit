@@ -1,5 +1,7 @@
-const path = require('path')
-const env = require('dotenv').config({
+import path, { __dirname } from 'path'
+import env from 'dotenv'
+
+env.config({
   path: path.join(__dirname, '../../../../../.env')
 }).parsed
 

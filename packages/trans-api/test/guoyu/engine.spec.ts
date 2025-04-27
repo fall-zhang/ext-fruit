@@ -1,7 +1,8 @@
 import { retry } from '../helpers'
-import { search } from '@/components/dictionaries/guoyu/engine'
+import { search } from '@P/trans-api/src/guoyu/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile } from '@/app-config/profiles'
+import { describe, expect, it } from 'vitest'
 
 describe('Dict/GuoYu/engine', () => {
   it('should parse result correctly', () => {

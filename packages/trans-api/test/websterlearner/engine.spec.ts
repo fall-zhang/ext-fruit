@@ -2,9 +2,10 @@ import { retry } from '../helpers'
 import {
   search,
   WebsterLearnerResultLex
-} from '@/components/dictionaries/websterlearner/engine'
+} from '@P/trans-api/src/websterlearner/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile } from '@/app-config/profiles'
+import { describe, it, expect } from 'vitest'
 
 describe('Dict/WebsterLearner/engine', () => {
   it('should parse lex result correctly', () => {

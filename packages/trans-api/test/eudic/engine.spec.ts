@@ -1,7 +1,8 @@
 import { retry } from '../helpers'
-import { search } from '@/components/dictionaries/eudic/engine'
+import { search } from '@P/trans-api/src/eudic/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile } from '@/app-config/profiles'
+import { describe, expect, it } from 'vitest'
 
 describe('Dict/Eudic/engine', () => {
   it('should parse result correctly', async () => {

@@ -1,5 +1,5 @@
 import { retry } from '../helpers'
-import { search } from '@/components/dictionaries/vocabulary/engine'
+import { search } from '@P/trans-api/src/vocabulary/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile } from '@/app-config/profiles'
 import { describe, it, expect } from 'vitest'

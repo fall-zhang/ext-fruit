@@ -1,7 +1,8 @@
 import { retry } from '../helpers'
-import { search } from '@/components/dictionaries/jukuu/engine'
+import { search } from '@P/trans-api/src/jukuu/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile } from '@/app-config/profiles'
+import { describe, expect, it } from 'vitest'
 
 describe('Dict/Jukuu/engine', () => {
   it('should parse result correctly', () => {

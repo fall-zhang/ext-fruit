@@ -1,7 +1,8 @@
-import React, { ComponentType } from 'react'
+import React, { ComponentType, ReactNode } from 'react'
 
 interface ErrorBoundaryProps {
   /** Reanders on error */
+  children:ReactNode
   error?: ComponentType
 }
 
@@ -22,10 +23,18 @@ export class ErrorBoundary extends React.PureComponent<
   }
 
   render () {
-    return this.state.hasError
-      ? this.props.error
-        ? React.createElement(this.props.error)
-        : null
-      : this.props.children
+    if (this.state.hasError) {
+      if (this.props.error) {
+        return React.createElement(this.props.error)
+      }
+      return null
+    }
+    return this.props.children
+
+    // return this.state.hasError
+    // ? this.props.error
+    //   ? React.createElement(this.props.error)
+    //   : null
+    // : this.props.children
   }
 }

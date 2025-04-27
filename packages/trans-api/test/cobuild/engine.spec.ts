@@ -1,7 +1,8 @@
 import { retry } from '../helpers'
-import { search } from '@/components/dictionaries/cobuild/engine'
+import { search } from '@P/trans-api/src/cobuild/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile, ProfileMutable } from '@/app-config/profiles'
+import { describe, expect, it } from 'vitest'
 
 describe('Dict/COBUILD/engine', () => {
   it('should parse result correctly', () => {

@@ -1,7 +1,8 @@
 import { retry } from '../helpers'
-import { search } from '@/components/dictionaries/zdic/engine'
+import { search } from '@P/trans-api/src/zdic/engine'
 import { getDefaultConfig } from '@/app-config'
 import getDefaultProfile, { ProfileMutable } from '@/app-config/profiles'
+import { describe, expect, it } from 'vitest'
 
 describe('Dict/Zdic/engine', () => {
   it('should parse word result correctly', () => {

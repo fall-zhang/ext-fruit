@@ -23,3 +23,6 @@ interface Window {
 
   __webpack_public_path__?: string
 }
+
+// scss file
+declare module '*.scss'

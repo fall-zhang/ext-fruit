@@ -1,7 +1,8 @@
 import { retry } from '../helpers'
-import { search } from '@/components/dictionaries/urban/engine'
+import { search } from '@P/trans-api/src/urban/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile } from '@/app-config/profiles'
+import { describe, it, expect } from 'vitest'
 
 describe('Dict/Urban/engine', () => {
   it('should parse result correctly', () => {

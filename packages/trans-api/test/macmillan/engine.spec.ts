@@ -3,9 +3,10 @@ import {
   search,
   MacmillanResultLex,
   MacmillanResultRelated
-} from '@/components/dictionaries/macmillan/engine'
+} from '@P/trans-api/src/macmillan/engine'
 import { getDefaultConfig } from '@/app-config'
 import { getDefaultProfile } from '@/app-config/profiles'
+import { describe, expect, it } from 'vitest'
 
 describe('Dict/Macmillan/engine', () => {
   it('should parse lex result correctly', () => {

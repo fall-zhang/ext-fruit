@@ -87,6 +87,7 @@ function handleDOM (
               }
             }
           }
+          return undefined
         })
         .filter((x): x is CNKIDictItem => Boolean(x))
     }

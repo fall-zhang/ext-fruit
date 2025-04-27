@@ -10,29 +10,29 @@ export interface ApiInfoParams {
 }
 
 class ApiInfo {
-  method: string;
-  path: string;
-  query: Record<string, any>;
-  body: any;
-  header: Record<string, string>;
+  method: string
+  path: string
+  query: Record<string, any>
+  body: any
+  header: Record<string, string>
 
-  constructor({
+  constructor ({
     method,
     path,
     query = {},
     body = null,
     header = {}
   }: ApiInfoParams) {
-    this.method = method;
-    this.path = path;
-    this.query = query;
-    this.body = body;
-    this.header = header;
+    this.method = method
+    this.path = path
+    this.query = query
+    this.body = body
+    this.header = header
   }
 
-  toString(): string {
-    return `method: ${this.method}, path: ${this.path}`;
+  toString (): string {
+    return `method: ${this.method}, path: ${this.path}`
   }
 }
 
-export default ApiInfo;
+export default ApiInfo

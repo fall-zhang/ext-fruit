@@ -1,7 +1,9 @@
+/* eslint-disable max-nested-callbacks */
 import { retry } from '../helpers'
-import { search } from '@/components/dictionaries/cambridge/engine'
+import { search } from '@P/trans-api/src/cambridge/engine'
 import { getDefaultConfig, AppConfigMutable } from '@/app-config'
 import getDefaultProfile from '@/app-config/profiles'
+import { afterAll, describe, expect, it } from 'vitest'
 
 const fetchbak = window.fetch
 

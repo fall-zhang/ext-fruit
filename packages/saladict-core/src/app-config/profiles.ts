@@ -1,11 +1,10 @@
-import { DeepReadonly } from '@/typings/helpers'
 import { genUniqueKey } from '@/_helpers/uniqueKey'
 import { getAllDicts } from './dicts'
 
 export type MtaAutoUnfold = '' | 'once' | 'always' | 'popup' | 'hide'
 
 export type ProfileMutable = ReturnType<typeof _getDefaultProfile>
-export type Profile = DeepReadonly<ProfileMutable>
+export type Profile = Readonly<ProfileMutable>
 
 export interface ProfileID {
   id: string
