@@ -4,7 +4,7 @@
 
 import { Observable, fromEventPattern } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { Message } from '@/typings/message'
+import { Message } from '@/types/message'
 
 /* --------------------------------------- *\
  * #Types

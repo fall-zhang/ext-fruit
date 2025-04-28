@@ -26,3 +26,4 @@ interface Window {
 
 // scss file
 declare module '*.scss'
+declare module '*?raw'

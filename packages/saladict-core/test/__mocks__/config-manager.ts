@@ -3,12 +3,13 @@ import { AppConfig, getDefaultConfig } from '@/app-config'
 import { Observable, fromEventPattern, of, concat } from 'rxjs'
 import { map } from 'rxjs/operators'
 
-const listeners = new Set<(changed: AppConfigChanged) => void>()
-
 export interface AppConfigChanged {
   newConfig: AppConfig
   oldConfig?: AppConfig
 }
+
+
+const listeners = new Set<(changed: AppConfigChanged) => void>()
 
 export const initConfig = jest.fn(() => Promise.resolve())
 
