@@ -1,8 +1,11 @@
+/* eslint-disable max-nested-callbacks */
+/* eslint-disable max-lines-per-function */
 import { message, storage, openUrl } from '@/_helpers/browser-api'
 import { take } from 'rxjs/operators'
 import sinon from 'sinon'
 import { browser } from '../../helper'
-import { Message } from '@/typings/message'
+import { Message } from '@/types/message'
+import { describe, beforeEach, beforeAll, expect, it } from 'vitest'
 
 describe('Browser API Wapper', () => {
   beforeEach(() => {

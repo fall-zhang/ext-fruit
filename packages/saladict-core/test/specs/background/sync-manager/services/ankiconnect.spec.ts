@@ -6,10 +6,10 @@ import {
   Service
   // SyncConfig
 } from '@/background/sync-manager/services/ankiconnect'
+import { describe, afterAll, beforeEach, expect, it } from 'vitest'
 // import { Word, newWord } from '@/_helpers/record-manager'
 
 jest.mock('@/background/sync-manager/helpers')
-
 // const helpers: typeof helpersMock = require('@/background/sync-manager/helpers')
 
 describe('Sync service Anki Connect', () => {
@@ -19,7 +19,9 @@ describe('Sync service Anki Connect', () => {
     axiosMock.onPost().reply(config => {
       try {
         return handler(JSON.parse(config.data))
-      } catch (e) {}
+      } catch (e) {
+        console.warn(e)
+      }
       return [404]
     })
 

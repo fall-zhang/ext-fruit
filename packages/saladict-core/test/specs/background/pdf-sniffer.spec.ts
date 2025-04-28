@@ -2,17 +2,16 @@ import { getDefaultConfig, AppConfigMutable, AppConfig } from '@/app-config'
 import { matchPatternToRegExpStr } from '@/_helpers/matchPatternToRegExpStr'
 import { init as initPdfOrigin } from '@/background/pdf-sniffer'
 import { timer } from '@/_helpers/promise-more'
-import * as configManagerMock from '@/_helpers/__mocks__/config-manager'
+// import * as configManagerMock from '../../__mocks__/config-manager'
 import { browser } from '../../helper'
+import { beforeEach, describe, expect, it } from 'vitest'
+import * as configManager from '@/_helpers/config-manager'
+
 
 jest.mock('@/_helpers/config-manager')
 
-let configManager: typeof configManagerMock
-
 function hasListenerPatch (fn) {
-  // @ts-expect-error
   if (this._listeners) {
-    // @ts-expect-error
     return this._listeners.some(x => x === fn)
   }
   return false
@@ -30,11 +29,9 @@ describe('PDF Sniffer', () => {
     browser.flush()
     browser.runtime.getURL.callsFake(s => s)
     jest.resetModules()
-    initPdf = require('@/background/pdf-sniffer').init
-    configManager = require('@/_helpers/config-manager')
-    // @ts-expect-error
+    // initPdf = require('@/background/pdf-sniffer').init
+    initPdf = initPdfOrigin
     browser.webRequest.onBeforeRequest.hasListener = hasListenerPatch
-    // @ts-expect-error
     browser.webRequest.onHeadersReceived.hasListener = hasListenerPatch
     window.appConfig = getDefaultConfig()
   })

@@ -1,4 +1,5 @@
 import * as pm from '@/_helpers/promise-more'
+import { describe, afterAll, beforeAll, expect, it } from 'vitest'
 
 describe('Promise More', () => {
   beforeAll(() => {
@@ -28,7 +29,7 @@ describe('Promise More', () => {
       const rejectSpy = jest.fn()
       const catchSpy = jest.fn()
       return pm
-        .reflect([1, 2, Promise.reject(null)])
+        .reflect([1, 2, Promise.reject(Error)])
         .then(resolveSpy, rejectSpy)
         .catch(catchSpy)
         .then(() => {
@@ -43,9 +44,9 @@ describe('Promise More', () => {
       const catchSpy = jest.fn()
       return pm
         .reflect([
-          Promise.reject(null),
-          Promise.reject(null),
-          Promise.reject(null)
+          Promise.reject(Error),
+          Promise.reject(Error),
+          Promise.reject(Error)
         ])
         .then(resolveSpy, rejectSpy)
         .catch(catchSpy)
@@ -77,7 +78,7 @@ describe('Promise More', () => {
       const rejectSpy = jest.fn()
       const catchSpy = jest.fn()
       return pm
-        .any([1, 2, Promise.reject(null)])
+        .any([1, 2, Promise.reject(Error)])
         .then(resolveSpy, rejectSpy)
         .catch(catchSpy)
         .then(() => {
@@ -91,7 +92,7 @@ describe('Promise More', () => {
       const rejectSpy = jest.fn()
       const catchSpy = jest.fn()
       return pm
-        .any([Promise.reject(null), Promise.reject(null), Promise.reject(null)])
+        .any([Promise.reject(Error), Promise.reject(Error), Promise.reject(Error)])
         .then(resolveSpy, rejectSpy)
         .catch(catchSpy)
         .then(() => {
@@ -122,7 +123,7 @@ describe('Promise More', () => {
       const rejectSpy = jest.fn()
       const catchSpy = jest.fn()
       return pm
-        .first([Promise.reject(null), 2, 3])
+        .first([Promise.reject(Error), 2, 3])
         .then(resolveSpy, rejectSpy)
         .catch(catchSpy)
         .then(() => {
@@ -137,9 +138,9 @@ describe('Promise More', () => {
       const catchSpy = jest.fn()
       return pm
         .first([
-          Promise.reject(null),
-          Promise.reject(null),
-          Promise.reject(null)
+          Promise.reject(Error),
+          Promise.reject(Error),
+          Promise.reject(Error)
         ])
         .then(resolveSpy, rejectSpy)
         .catch(catchSpy)

@@ -1,19 +1,22 @@
+/* eslint-disable max-nested-callbacks */
 import { getDefaultConfig, AppConfig, AppConfigMutable } from '@/app-config'
 import sinon from 'sinon'
 import { take } from 'rxjs/operators'
 import '@/background/types'
 import { timer } from '@/_helpers/promise-more'
-import * as configManagerMock from '@/_helpers/__mocks__/config-manager'
-import { openUrl as openUrlMock } from '@/_helpers/__mocks__/browser-api'
+// import * as configManagerMock from '@P/saladict-core/test/__mocks__/config-manager'
+import { openUrl as openUrlMock } from '@P/saladict-core/test/__mocks__/browser-api'
+import '@/background/context-menus'
+import * as configManager from '@/_helpers/config-manager'
+import { openUrl } from '@/_helpers/browser-api'
 import { browser } from '../../helper'
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 window.appConfig = getDefaultConfig()
 
 jest.mock('@/_helpers/config-manager')
 jest.mock('@/_helpers/browser-api')
 
-let configManager: typeof configManagerMock
-let openUrl: typeof openUrlMock
 
 function specialConfig () {
   const config = getDefaultConfig() as AppConfigMutable
@@ -27,9 +30,6 @@ describe.skip('Context Menus', () => {
     browser.flush()
     browser.i18n.getUILanguage.returns('en')
     jest.resetModules()
-    require('@/background/context-menus')
-    configManager = require('@/_helpers/config-manager')
-    openUrl = require('@/_helpers/browser-api').openUrl
   })
   afterAll(() => browser.flush())
 

@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import * as helpersMock from '@/background/sync-manager/__mocks__/helpers'
 import { NotebookFile } from '@/background/sync-manager/interface'
 import {
@@ -6,10 +7,10 @@ import {
   SyncMeta
 } from '@/background/sync-manager/services/webdav'
 import { Word, newWord } from '@/_helpers/record-manager'
+import { describe, beforeEach, it, expect } from 'vitest'
+import * as jest from 'vitest'
 
-jest.mock('@/background/sync-manager/helpers')
-
-const helpers: typeof helpersMock = require('@/background/sync-manager/helpers')
+import * as helpers from '@/background/sync-manager/helpers'
 
 const fetchArgs = {
   checkServer (config: SyncConfig) {
@@ -102,7 +103,6 @@ function mockFetch (
 
 describe('Sync service WebDAV', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
     window.fetch = null as any
   })
 

@@ -1,4 +1,5 @@
 import { AudioManager } from '@/background/audio-manager'
+import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
 
 const audioManager = AudioManager.getInstance()
 
