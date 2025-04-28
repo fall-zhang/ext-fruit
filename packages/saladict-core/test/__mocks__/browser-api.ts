@@ -321,7 +321,7 @@ function _messageSend (self: boolean) {
 
   function messageSend(tabId: number, message: Message): Promise<any>
   function messageSend(message: Message): Promise<any>
-  function messageSend (...args): Promise<any> {
+  function messageSend (): Promise<any> {
     return Promise.resolve()
   }
 

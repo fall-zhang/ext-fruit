@@ -4,6 +4,11 @@ import getDefaultProfile from '@/app-config/profiles'
 import { timer } from '@/_helpers/promise-more'
 import '@/background/types'
 import { browser } from '../../helper'
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest'
+import '@/background/initialization'
+import * as contextMenus from '@/background/context-menus'
+import * as pdfSniffer from '@/background/pdf-sniffer'
+import checkUpdate from '@/_helpers/check-update'
 
 window.appConfig = getDefaultConfig()
 window.activeProfile = getDefaultProfile()
@@ -16,7 +21,6 @@ window.fetch = jest.fn(() =>
 ) as any
 
 jest.mock('@/app-config/merge-config', () => {
-  const { getDefaultConfig } = require('@/app-config')
   return {
     mergeConfig: jest.fn(config =>
       Promise.resolve(config || getDefaultConfig())
@@ -25,7 +29,6 @@ jest.mock('@/app-config/merge-config', () => {
 })
 
 jest.mock('@/app-config/merge-profile', () => {
-  const { getDefaultProfile } = require('@/app-config/profiles')
   return {
     mergeProfile: jest.fn(profile =>
       Promise.resolve(profile || getDefaultProfile())
@@ -74,9 +77,9 @@ describe('Initialization', () => {
     browser.flush()
     jest.resetModules()
 
-    const contextMenus = require('@/background/context-menus')
-    const pdfSniffer = require('@/background/pdf-sniffer')
-    initMenus = contextMenus.init
+    // const contextMenus = require('@/background/context-menus')
+    // const pdfSniffer = require('@/background/pdf-sniffer')
+    initMenus = contextMenus.ContextMenus.init
     initPdf = pdfSniffer.init
 
     browser.storage.sync.get.callsFake(() => Promise.resolve({}))
@@ -85,8 +88,6 @@ describe('Initialization', () => {
     browser.storage.local.get.callsFake(() => Promise.resolve({}))
     browser.storage.local.set.callsFake(() => Promise.resolve())
     browser.storage.local.clear.callsFake(() => Promise.resolve())
-
-    require('@/background/initialization')
   })
 
   it('should properly set up', async () => {
@@ -102,11 +103,6 @@ describe('Initialization', () => {
   })
 
   describe('onStartup', () => {
-    let checkUpdate: jest.Mock
-    beforeEach(() => {
-      checkUpdate = require('@/_helpers/check-update')
-    })
-
     it('should not check update if last check was just now', async () => {
       browser.storage.local.get.onFirstCall().returns(
         Promise.resolve({

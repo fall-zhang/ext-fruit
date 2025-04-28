@@ -1,6 +1,6 @@
 import { Word, DBArea } from '@/_helpers/record-manager'
 import { DictID } from '@/app-config'
-import { DictSearchResult } from '@P/trans-api/src/helpers'
+import { DictSearchResult } from '@/components/Dictionaries/helpers'
 import { OpenUrlOptions } from '@/_helpers/browser-api'
 
 type MessageConfigType<
