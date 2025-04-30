@@ -1,4 +1,4 @@
-@import '@/_sass_shared/_theme.scss';
+@import '@/styles/_theme.scss';
 
 .dictPanel-FloatBox-Container {
   position: relative;
@@ -31,7 +31,7 @@
   -webkit-overflow-scrolling: touch;
 }
 
-@import '@/_sass_shared/_fancy-scrollbar.scss';
+@import '@/styles/_fancy-scrollbar.scss';
 
 @import '../MenuBar/MenuBar.scss';
 @import '../MtaBox/MtaBox.scss';

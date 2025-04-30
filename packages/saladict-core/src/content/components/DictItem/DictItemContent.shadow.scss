@@ -1,6 +1,6 @@
-@import '@/_sass_shared/_reset.scss';
-@import '@/components/Speaker/Speaker.scss';
-@import '@/components/EntryBox/EntryBox.scss';
+@use '@/styles/_reset.scss';
+@use '@/components/Speaker/Speaker.scss';
+@use '@/components/EntryBox/EntryBox.scss';
 
 .dictRoot {
   font-size: var(--panel-font-size);
