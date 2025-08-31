@@ -37,6 +37,7 @@ import wikipedia from '@P/trans-api/src/wikipedia/config'
 import youdao from '@P/trans-api/src/youdao/config'
 import youdaotrans from '@P/trans-api/src/youdaotrans/config'
 import zdic from '@P/trans-api/src/zdic/config'
+import { cloneDeep } from 'es-toolkit'
 
 // For TypeScript to generate typings
 // Follow alphabetical order for easy reading
@@ -81,8 +82,7 @@ export const defaultAllDicts = {
 
 export type AllDicts = typeof defaultAllDicts
 
-export const getAllDicts = (): AllDicts =>
-  JSON.parse(JSON.stringify(defaultAllDicts))
+export const getAllDicts = (): AllDicts => cloneDeep(defaultAllDicts)
 
 interface DictItemBase {
   /**
