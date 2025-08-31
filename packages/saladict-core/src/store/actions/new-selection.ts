@@ -1,7 +1,5 @@
 import { isStandalonePage, isOptionsPage } from '@/_helpers/saladict'
 import { Mutable } from '@/typings/helpers'
-import { State } from '../state'
-import { ActionCatalog } from '../action-catalog'
 
 export const newSelection = (state, { payload: selection }) => {
   // Skip selection inside panel

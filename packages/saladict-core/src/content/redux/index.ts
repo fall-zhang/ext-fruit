@@ -1,12 +1,12 @@
 import {
   applyMiddleware,
   compose,
-  Store
+  Store,
+  UnknownAction
 } from 'redux'
 import { configureStore as createReduxStore } from '@reduxjs/toolkit'
 import * as thunkMiddleware from 'redux-thunk'
 import {
-  useStore as _useStore,
   useSelector as _useSelector,
   useDispatch as _useDispatch
 } from 'react-redux'
@@ -18,7 +18,6 @@ import { reportPageView } from '@/_helpers/analytics'
 import { isPDFPage, isPopupPage, isStandalonePage } from '@/_helpers/saladict'
 
 import {
-  getRootReducer,
   StoreState,
   StoreAction,
   StoreDispatch
@@ -29,12 +28,7 @@ import { epics } from './epics'
 // const epicMiddleware = createEpicMiddleware<StoreAction, StoreAction, StoreState>()
 const epicMiddleware = createEpicMiddleware()
 
-export const useStore: {
-  ():Store<StoreState, StoreAction>
-} = _useStore
-
-
-type UseSelectorType<T> = {
+type UseSelectorType<T=any> = {
   (
     selector: {(state: StoreState):T},
     equalityFn?: {(left: T, right: T) :boolean}
@@ -45,13 +39,11 @@ export const useSelector:UseSelectorType = _useSelector
 export const useDispatch: () => StoreDispatch = _useDispatch
 
 export const createStore = async () => {
-  const composeEnhancers: typeof compose =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
-  const store = createReduxStore(
-    await getRootReducer(),
-    composeEnhancers(applyMiddleware(thunkMiddleware, epicMiddleware))
-  )
+  const store = createReduxStore({
+    reducer: function (state: any, action: UnknownAction) {
+      throw new Error('Function not implemented.')
+    }
+  })
 
   epicMiddleware.run(epics)
 

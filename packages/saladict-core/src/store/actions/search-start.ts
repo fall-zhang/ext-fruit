@@ -1,8 +1,6 @@
 import { checkSupportedLangs, countWords } from '@/_helpers/lang-check'
 import { isPopupPage } from '@/_helpers/saladict'
 import { Word } from '@/_helpers/record-manager'
-import { State } from '../state'
-import { ActionCatalog } from '../action-catalog'
 
 export const searchStart = (state, { payload }) => {
   const { activeProfile, searchHistory, historyIndex } = state
@@ -83,5 +81,3 @@ export const searchStart = (state, { payload }) => {
           })
   }
 }
-
-export default searchStart

@@ -1,5 +1,3 @@
-import { State } from '../state'
-import { ActionCatalog } from '../action-catalog'
 
 export const openQSPanel = state => {
   const { panelWidth, tripleCtrl, qsLocation } = state.config
@@ -57,5 +55,3 @@ export const openQSPanel = state => {
     dictPanelCoord: { x, y }
   }
 }
-
-export default openQSPanel
