@@ -1,7 +1,10 @@
 import { isStandalonePage, isOptionsPage } from '@/_helpers/saladict'
 import { Mutable } from '@/typings/helpers'
+import { GlobalState } from '..'
+import { Message } from '../../typings/message'
+import { newWord } from '../../_helpers/record-manager'
 
-export const newSelection = (state, { payload: selection }) => {
+export const newSelection = (state:GlobalState, selection:Message<'SELECTION'>['payload']) => {
   // Skip selection inside panel
   if (selection.self) return state
 
@@ -9,7 +12,10 @@ export const newSelection = (state, { payload: selection }) => {
 
   const newState: Mutable<typeof state> = {
     ...state,
-    selection
+    selection: {
+      ...selection,
+      word: newWord(selection.word)
+    }
   }
 
   if (isOptionsPage()) {

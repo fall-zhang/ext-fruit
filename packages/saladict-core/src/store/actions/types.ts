@@ -1,36 +1,11 @@
 import { AppConfig, DictID } from '@/app-config'
-import { Profile, ProfileIDList } from '@/app-config/profiles'
+import { Profile } from '@/app-config/profiles'
 import { Message } from '@/typings/message'
 import { Word } from '@/_helpers/record-manager'
 import { DictSearchResult } from '@P/trans-api/src/helpers'
+import { ProfileID } from '../profile/types'
 
 export type ActionCatalog = {
-  NEW_CONFIG: {
-    payload: AppConfig
-  }
-
-  NEW_PROFILES: {
-    payload: ProfileIDList
-  }
-
-  NEW_ACTIVE_PROFILE: {
-    payload: Profile
-  }
-
-  NEW_SELECTION: {
-    payload: Message<'SELECTION'>['payload']
-  }
-
-  WINDOW_RESIZE: {}
-
-  /** Is App temporary disabled */
-  TEMP_DISABLED_STATE: {
-    payload: boolean
-  }
-
-  /** Click or hover on salad bowl */
-  BOWL_ACTIVATED: {}
-
   /* ------------------------------------------------ *\
      Dict Panel
   \* ------------------------------------------------ */

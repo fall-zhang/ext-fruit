@@ -11,6 +11,8 @@ import { StateCreator } from 'zustand'
 import { GlobalState } from '../index'
 import { AppConfig } from '../../app-config'
 import { ProfileID } from '../profile/types'
+import { Profile } from '../../app-config/profiles'
+import { Message } from '../../typings/message'
 
 export const actionHandlers:StateCreator<GlobalState> = (set) => {
   return {
@@ -36,7 +38,7 @@ export const actionHandlers:StateCreator<GlobalState> = (set) => {
       profiles: payload
     })),
 
-    NEW_ACTIVE_PROFILE: (state, { payload }) => {
+    NEW_ACTIVE_PROFILE: (payload :Profile) => set(state => {
       const isShowMtaBox = payload.mtaAutoUnfold !== 'hide'
       return {
         ...state,
@@ -51,17 +53,18 @@ export const actionHandlers:StateCreator<GlobalState> = (set) => {
           payload.dicts.selected.includes(id)
         )
       }
-    },
+    }),
 
-    NEW_SELECTION: newSelection,
+    NEW_SELECTION: (payload:Message<'SELECTION'>['payload']) => set(state => newSelection(state, payload)),
 
-    WINDOW_RESIZE: state => ({
+    WINDOW_RESIZE: () => set(state => ({
       ...state,
       panelMaxHeight:
       (window.innerHeight * state.config.panelMaxHeightRatio) / 100
-    }),
+    })),
 
-    TEMP_DISABLED_STATE: (state, { payload }) => {
+    /** Is App temporary disabled */
+    TEMP_DISABLED_STATE: (payload:boolean) => set((state) => {
       if (payload) {
         return {
           ...state,
@@ -78,24 +81,27 @@ export const actionHandlers:StateCreator<GlobalState> = (set) => {
         ...state,
         isTempDisabled: false
       }
-    },
-
-    BOWL_ACTIVATED: state => ({
+    }),
+    /**
+     * Click or hover on salad bowl
+     * 点击
+     */
+    BOWL_ACTIVATED: set(state => ({
       ...state,
       isShowBowl: false,
       isShowDictPanel: true,
       isPinned: state.config.defaultPinned
-    }),
+    })),
 
-    UPDATE_TEXT: (state, { payload }) => ({
+    UPDATE_TEXT: (payload:string) => set((state) => ({
       ...state,
       text: payload
-    }),
+    })),
 
-    TOGGLE_MTA_BOX: state => ({
+    TOGGLE_MTA_BOX: set(state => ({
       ...state,
       isExpandMtaBox: !state.isExpandMtaBox
-    }),
+    })),
 
     TOGGLE_PIN: state => ({
       ...state,

@@ -65,7 +65,7 @@ export interface GlobalState {
    *
    * 当前单词是否在笔记中
    */
-  isFav: false,
+  isFav: boolean,
   bowlCoord: {
     x: number
     y: number
@@ -79,12 +79,12 @@ export interface GlobalState {
   panelHeight: number,
   _panelHeightCache: {
     menubar: number,
-    mtabox: 0,
-    dictlist: 0,
-    waveformbox: 0,
+    mtabox: number,
+    dictlist: number,
+    waveformbox: number,
     sum: number,
     /** independent layer */
-    floatHeight: 0
+    floatHeight: number
   },
   panelMaxHeight: number
   /** Dicts that will be rendered to dict panel */
@@ -92,11 +92,11 @@ export interface GlobalState {
   /** User manually folded or unfolded */
   userFoldedDicts: Record<DictID, boolean>
   /** Search text */
-  text: '',
+  text: string,
   /** 0 is the oldest */
   searchHistory: Word[],
   /** User can view back search history */
-  historyIndex: -1,
+  historyIndex: number,
   /** Record init coordinate on dragstart */
   dragStartCoord: null | { x: number; y: number },
   lastPlayAudio: null | { src: string; timestamp: number },

@@ -2,7 +2,7 @@ import { checkSupportedLangs, countWords } from '@/_helpers/lang-check'
 import { isPopupPage } from '@/_helpers/saladict'
 import { Word } from '@/_helpers/record-manager'
 
-export const searchStart = (state, { payload }) => {
+export const searchStart = (state) => {
   const { activeProfile, searchHistory, historyIndex } = state
 
   let word: Word
