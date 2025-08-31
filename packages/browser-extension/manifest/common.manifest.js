@@ -3,7 +3,7 @@ export default {
 
   homepage_url: 'https://saladict.crimx.com/',
 
-  minimum_chrome_version: '55',
+  minimum_chrome_version: '100',
 
   name: '__MSG_extension_name__',
   short_name: '__MSG_extension_short_name__',
