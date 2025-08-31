@@ -104,7 +104,7 @@ const commitLintOption = {
       //  👾/📝
     ],
     useEmoji: true,
-    scopes: ['markdown', 'typescript', 'css', 'assets', 'global'],
+    scopes: ['typescript', 'css', 'assets', 'global', 'packages'],
     customScopesAlign: 'bottom',
     emptyScopesAlias: 'empty',
     customScopesAlias: 'custom',
