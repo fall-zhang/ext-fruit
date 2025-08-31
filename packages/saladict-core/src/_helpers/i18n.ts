@@ -10,8 +10,9 @@ import React, {
   ReactNode
 } from 'react'
 import mapValues from 'lodash/mapValues'
-import * as i18n from 'i18next'
-import { TFunction } from 'i18next'
+import i18n, { TFunction } from 'i18next'
+import type * as i18nType from 'i18next'
+
 import { getConfig, addConfigListener } from '@/_helpers/config-manager'
 import zip from 'lodash/zip'
 
@@ -44,7 +45,7 @@ export interface DictLocales {
   }
 }
 
-export async function i18nLoader (): Promise<TFunction> {
+export async function i18nLoader () {
   // if (i18n.language) {
   //   // singleton
   //   return i18n
@@ -57,7 +58,7 @@ export async function i18nLoader (): Promise<TFunction> {
       type: 'backend',
       init: () => {},
       create: () => {},
-      read: async (lang: LangCode, ns: Namespace, cb: Function) => {
+      read: async (lang: LangCode, ns: Namespace, cb: any) => {
         try {
           if (ns === 'dicts') {
             const dictLocals = extractDictLocales(lang)
@@ -109,7 +110,6 @@ export async function i18nLoader (): Promise<TFunction> {
   return i18n
 }
 
-const defaultT: i18n.TFunction = () => ''
 
 export const I18nContext = React.createContext<string | undefined>(undefined)
 if (process.env.DEBUG) {
@@ -147,8 +147,8 @@ export interface UseTranslateResult {
    * It is a wrapper of the original fixedT, which
    * keeps the same reference even after namespaces are loaded
    */
-  t: i18n.TFunction
-  i18n: i18n.i18n
+  t: i18nType.TFunction
+  i18n: i18nType.i18n
   /**
    * Are namespaces loaded?
    * false not ready
@@ -167,7 +167,7 @@ export function useTranslate (
   namespaces?: Namespace | Namespace[]
 ): UseTranslateResult {
   const ticketRef = useRef(0)
-  const innerTRef = useRef<TFunction>(defaultT)
+  const innerTRef = useRef<TFunction>()
   // keep the exposed t function always the same
   const tRef = useRef<TFunction>((...args: Parameters<TFunction>) =>
     innerTRef.current(...args)
@@ -273,7 +273,7 @@ export const Trans = React.memo<PropsWithChildren<{ message?: string }>>(
 )
 
 function extractDictLocales (lang: LangCode) {
-  const req = require.context(
+  const req = import(
     '@/components/dictionaries',
     true,
     /_locales\.(json|ts)$/
@@ -296,11 +296,7 @@ function extractDictLocales (lang: LangCode) {
 }
 
 function extractSyncServiceLocales (lang: LangCode) {
-  const req = require.context(
-    '@/background/sync-manager/services',
-    true,
-    /_locales\/.+\.ts$/
-  )
+  const req = import('@/background/sync-manager/services/*/_locales/*.ts')
   return req.keys().reduce<{ [id: string]: DictLocales }>((o, filename) => {
     const idMatch = new RegExp(`/([^/]+)/_locales/${lang}\\.ts$`).exec(filename)
     if (idMatch) {

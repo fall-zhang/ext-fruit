@@ -440,7 +440,6 @@ function messageRemoveListener (
     if (messageType) {
       const listener = listeners.get(messageType)
       if (listener) {
-        // @ts-ignore
         browser.runtime.onMessage.removeListener(listener)
         listeners.delete(messageType)
         if (listeners.size <= 0) {
@@ -451,14 +450,12 @@ function messageRemoveListener (
     } else {
       // delete all cb related callbacks
       listeners.forEach(listener =>
-        // @ts-ignore
         browser.runtime.onMessage.removeListener(listener)
       )
       allListeners.delete(cb)
       return
     }
   }
-  // @ts-ignore
   browser.runtime.onMessage.removeListener(cb)
 }
 

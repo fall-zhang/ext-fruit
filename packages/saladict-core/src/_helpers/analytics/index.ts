@@ -10,7 +10,7 @@ export type GAParams = { [key: string]: string }
 
 export async function reportPageView (page: string): Promise<void> {
   const ua = navigator.userAgent
-  const { browser, cpu, device, os } = UAParser(ua)
+  const { browser, os } = UAParser(ua)
   // const ua = new UAParser()
   // const browser = ua.getBrowser()
   // const os = device.getOS()
