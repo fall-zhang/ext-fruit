@@ -1,0 +1,37 @@
+{
+  "name": "common",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "description": "Common API tools in less-process.",
+  "main": "index.ts",
+  "author": "Fall Zhang",
+  "homepage": "https://github.com/MaTeMaTuK/editor-gantt",
+  "repository": "MaTeMaTuK/editor-gantt",
+  "exports": {
+    "./utils/*": {
+      "types": "./utils/*",
+      "import": "./utils/*",
+      "require": "./utils/*"
+    },
+    "./virtualFileSystem/*": {
+      "types": "./virtualFileSystem/*",
+      "import": "./virtualFileSystem/*",
+      "require": "./virtualFileSystem/*"
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "type": "tsc",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "copy-text-to-clipboard": "^3.2.0",
+    "immer": "^10.1.1",
+    "json5": "^2.2.3",
+    "jsonc-parser": "^3.3.1",
+    "use-immer": "^0.11.0"
+  }
+}
