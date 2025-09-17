@@ -14,7 +14,7 @@ import typescript from '@rollup/plugin-typescript'
 import commonjs from '@rollup/plugin-commonjs'
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const langLocation = (fileName:string) => {
-  return path.resolve(__dirname, 'packages/_locales/' + fileName)
+  return path.resolve(__dirname, 'packages/locales/' + fileName)
 }
 const langLib = defineConfig({
   // clean: true,
