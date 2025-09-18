@@ -1,6 +1,8 @@
 import React, { FC } from 'react'
-import { Word } from '@/_helpers/record-manager'
-import { useTranslate } from '@/_helpers/i18n'
+// import { Word } from '@/_helpers/record-manager'
+// import { useTranslate } from '@/_helpers/i18n'
+import { useTranslate } from '@P/saladict-core/src/locales/i18n'
+import { Word } from '@P/saladict-core/src/store/selection/types'
 
 export interface WordCardsProps {
   words: Word[]

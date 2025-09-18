@@ -1,4 +1,4 @@
-@import '@/content/components/WordEditor/WordEditor.scss';
+@import './WordEditor/WordEditor.scss';
 
 html,
 body,
@@ -13,10 +13,6 @@ body,
 
 #root {
   overflow: hidden;
-}
-
-.wordEditorPanel-Container {
-  width: 100% !important;
 }
 
 .wordEditorPanel {

@@ -1,5 +1,6 @@
-import React, { FC } from 'react'
-import { isInternalPage } from '@/_helpers/saladict'
+import React, { FC, ReactNode } from 'react'
+// import { isInternalPage } from '@/_helpers/saladict'
+import { isInternalPage } from '@P/saladict-core/src/core/saladict-state'
 
 export type WordEditorPanelBtns = Array<{
   type?: 'normal' | 'primary'
@@ -11,6 +12,7 @@ export interface WordEditorPanelProps {
   containerWidth: number
   title: React.ReactNode
   btns?: WordEditorPanelBtns
+  children:ReactNode
   onClose: () => void
 }
 

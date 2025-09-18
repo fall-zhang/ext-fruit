@@ -1,4 +1,3 @@
-import React from 'react'
 import { action } from '@storybook/addon-actions'
 import { jsxDecorator } from 'storybook-addon-jsx'
 import { withPropsTable } from 'storybook-addon-react-docgen'

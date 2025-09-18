@@ -15,21 +15,23 @@ import {
   startWith
 } from 'rxjs/operators'
 
-import {
-  Word,
-  getWordsByText,
-  deleteWords,
-  saveWord
-} from '@/_helpers/record-manager'
-import { AppConfig } from '@/app-config'
-import {
-  translateCtxs,
-  genCtxText,
-  CtxTranslateResults
-} from '@/_helpers/translateCtx'
-import { useTranslate } from '@/_helpers/i18n'
-import { message, storage } from '@/_helpers/browser-api'
-import { isOptionsPage } from '@/_helpers/saladict'
+// import {
+//   Word,
+//   getWordsByText,
+//   deleteWords,
+//   saveWord
+// } from '@/_helpers/record-manager'
+import { getWordsByText, deleteWords, saveWord } from '@P/saladict-core/src/background/database'
+import { AppConfig } from '@P/saladict-core/src/app-config'
+// import {
+//   translateCtxs,
+//   genCtxText,
+//   CtxTranslateResults
+// } from '@/_helpers/translateCtx'
+import { genCtxText, translateCtxs, CtxTranslateResults } from '@P/saladict-core/src/utils/translateCtx'
+import { useTranslate } from '@P/saladict-core/src/locales/i18n'
+// import { isOptionsPage } from '@/_helpers/saladict'
+import { isOptionsPage } from '@P/saladict-core/src/core/saladict-state'
 
 import { WordCards } from './WordCards'
 import {
@@ -39,7 +41,7 @@ import {
 } from './WordEditorPanel'
 import { CSSTransition } from 'react-transition-group'
 import { CtxTransList } from './CtxTransList'
-import { StorageSyncConfig } from '@/background/sync-manager/helpers'
+import { Word } from '@P/saladict-core/src/store/selection/types'
 
 export interface NotesProps
   extends Pick<WordEditorPanelProps, 'containerWidth'> {
@@ -56,6 +58,7 @@ export interface NotesProps
 const notesFadeTimeout = { enter: 400, exit: 100, appear: 400 }
 
 export const Notes: FC<NotesProps> = props => {
+  const message = new Service()
   const { t } = useTranslate(['common', 'content'])
   const [isDirty, setDirty] = useState(false)
   const [isShowCtxTransList, setShowCtxTransList] = useState(false)
@@ -180,26 +183,6 @@ export const Notes: FC<NotesProps> = props => {
   ]
 
   const [ankiCardId, setAnkiCardId] = useState<number | undefined>()
-
-  useEffect(() => {
-    let isRunning = true
-    storage.sync
-      .get<StorageSyncConfig>('syncConfig')
-      .then(async ({ syncConfig }) => {
-        if (syncConfig?.ankiconnect?.enable) {
-          const cardId = await message.send<'ANKI_CONNECT_FIND_WORD'>({
-            type: 'ANKI_CONNECT_FIND_WORD',
-            payload: word.date
-          })
-          if (isRunning) {
-            setAnkiCardId(cardId)
-          }
-        }
-      })
-    return () => {
-      isRunning = false
-    }
-  }, [])
 
   if (ankiCardId) {
     panelBtns.unshift({

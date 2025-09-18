@@ -29,11 +29,3 @@
     @content;
   }
 }
-
-// Usage
-// @include isDarkMode { ... }
-@mixin isDarkMode($modifiers...) {
-  @include atRoot('.darkMode', $modifiers...) {
-    @content;
-  }
-}

@@ -47,7 +47,7 @@
     }
   }
 
-  @include isDarkMode {
+  .darkMode{
     input,
     textarea {
       border-color: #8b8b8b;

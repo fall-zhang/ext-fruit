@@ -1,8 +1,8 @@
-@import '@/_sass_shared/_fancy-scrollbar.scss';
+@import '@P/saladict-core/src/assets/styles/_fancy-scrollbar.scss';
 
 .wordEditorPanel-Background {
   position: fixed;
-  z-index: $global-zindex-dicteditor;
+  z-index: 2147483646;
   top: 0;
   left: 0;
   width: 100vw;
@@ -14,13 +14,13 @@
 }
 
 .wordEditorPanel-Container {
+  width: 100% !important;
   display: flex;
   align-items: center;
   height: 100%;
   min-width: 440px;
   margin-left: auto;
 }
-
 .wordEditorPanel {
   display: flex;
   flex-direction: column;

@@ -1,11 +1,14 @@
 import React, { FC, useState } from 'react'
-import { AppConfig } from '@/app-config'
-import {
-  CtxTranslatorId,
-  CtxTranslateResults,
-  translateCtx
-} from '@/_helpers/translateCtx'
-import { Word } from '@/_helpers/record-manager'
+// import { AppConfig } from '@/app-config'
+import { AppConfig } from '@P/saladict-core/src/app-config'
+// import {
+//   CtxTranslatorId,
+//   CtxTranslateResults,
+//   translateCtx
+// } from '@/_helpers/translateCtx'
+import { CtxTranslateResults, CtxTranslatorId, translateCtx } from '@P/saladict-core/src/utils/translateCtx'
+import { Word } from '@P/saladict-core/src/store/selection/types'
+// import { Word } from '@/_helpers/record-manager'
 
 export interface CtxTransListProps {
   word: Word
