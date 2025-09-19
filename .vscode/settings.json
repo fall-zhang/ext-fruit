@@ -27,5 +27,25 @@
     "youdaotrans",
     "zdic",
     "guoyu"
-  ]
+  ],
+  "eslint.format.enable": true,
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+  // 只在手动 ctrl + s 时，进行保存
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "tailwindCSS.validate": true,
+  // "tailwindCSS.experimental.configFile": {
+  //   "packages/platform-win/src/assets/styles.css": "packages/platform-win/src/**",
+  //   "packages/b/src/app.css": "packages/b/src/**"
+  // },
+  // "tailwindCSS.experimental.configFile": "tailwind.config.ts",
+  "i18n-ally.localesPaths": ["packages/platform-web/src/locales"],
+  "i18n-ally.namespace": true,
+  "i18n-ally.pathMatcher": "{locale}/{namespaces}.json",
+  "i18n-ally.keystyle": "nested"
 }

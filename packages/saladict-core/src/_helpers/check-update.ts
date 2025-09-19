@@ -19,32 +19,42 @@ export type ReleaseResponse = {
   data?: ReleaseData
 }
 
+/**
+ * - 3 major newer
+ * - 2 minor newer
+ * - 1 patch newer
+ * - 0 same version
+ * - -1 patch older
+ * - -2 minor older
+ * - -3 major older
+ */
 export async function checkUpdate (
   compareVersion?: string,
   data?: ReleaseData
 ): Promise<ReleaseResponse> {
+  let res = data
   if (!data) {
     try {
       const isZh = window.appConfig.langCode.startsWith('zh')
       const response = await fetch(
         `https://saladict.crimx.com/releases/${isZh ? 'chs' : 'eng'}.json`
       )
-      data = await response.json()
+      res = await response.json()
     } catch (e) {
       console.error(e)
     }
   }
 
-  if (!data) {
+  if (!res) {
     return { diff: 0 }
   }
 
   if (!compareVersion) {
-    return { diff: 3, data }
+    return { diff: 3, data: res }
   }
 
   const prev = compareVersion.split('.').map(Number)
-  const curr = data.version
+  const curr = res.version
     .slice(1)
     .split('.')
     .map(Number)

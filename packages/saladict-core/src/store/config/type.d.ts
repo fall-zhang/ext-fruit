@@ -1,0 +1,13 @@
+export type LangCode = 'zh-CN' | 'zh-TW' | 'en'
+export type TCDirection =
+  | 'CENTER'
+  | 'TOP'
+  | 'RIGHT'
+  | 'BOTTOM'
+  | 'LEFT'
+  | 'TOP_LEFT'
+  | 'TOP_RIGHT'
+  | 'BOTTOM_LEFT'
+  | 'BOTTOM_RIGHT'
+type InstantSearchKey = 'direct' | 'ctrl' | 'alt' | 'shift'
+type PreloadSource = '' | 'clipboard' | 'selection'

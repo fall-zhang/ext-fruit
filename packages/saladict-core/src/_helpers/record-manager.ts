@@ -25,7 +25,7 @@ export interface Word {
 
 export type DBArea = 'notebook' | 'history'
 
-export function newWord (word?: Partial<Word>): Word {
+export function newWord (word?: Partial<Word>|null): Word {
   return word
     ? {
       date: word.date || Date.now(),

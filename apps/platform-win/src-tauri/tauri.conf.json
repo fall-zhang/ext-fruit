@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "less-process",
+  "mainBinaryName": "less-process",
+  "identifier": "less-process",
+  "version": "0.3.0",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:7799"
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  },
+  "plugins": {},
+  "app": {
+    "security": {
+      "csp": null
+    },
+    "windows": [
+      {
+        "title": "less-process",
+        "label": "main-page",
+        "width": 1080,
+        "height": 780,
+        "visible": true,
+        "useHttpsScheme": true
+      },
+      {
+        "title": "less-process",
+        "label": "splash-screen",
+        "visible": false,
+        "url": "/splash-screen"
+      },
+      {
+        "title": "less-process",
+        "label": "new-window",
+        "visible": false,
+        "url": "/new-window"
+      }
+    ]
+  }
+}

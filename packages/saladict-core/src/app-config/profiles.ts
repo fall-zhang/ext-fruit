@@ -1,17 +1,16 @@
 import { genUniqueKey } from '@/_helpers/uniqueKey'
 import { getAllDicts } from './dicts'
+import { ReadonlyDeep } from 'type-fest'
 
 export type MtaAutoUnfold = '' | 'once' | 'always' | 'popup' | 'hide'
 
 export type ProfileMutable = ReturnType<typeof _getDefaultProfile>
-export type Profile = Readonly<ProfileMutable>
+export type Profile = ReadonlyDeep<ProfileMutable>
 
 export interface ProfileID {
   id: string
   name: string
 }
-
-export type ProfileIDList = Array<ProfileID>
 
 export const getDefaultProfile: (id?: string) => Profile = _getDefaultProfile
 
@@ -67,7 +66,7 @@ export interface ProfileStorage {
 }
 
 export function genProfilesStorage (): {
-  profileIDList: ProfileIDList
+  profileIDList: ProfileID[]
   profiles: Profile[]
   } {
   const defaultID = getDefaultProfileID()

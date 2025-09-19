@@ -1,9 +1,10 @@
+import type { ReadonlyDeep } from 'type-fest'
 import type { SupportedLangs } from '@P/trans-api/types/api-types'
 import { getAllDicts } from './dicts'
 import { getAllContextMenus } from './context-menus'
 import { MtaAutoUnfold as _MtaAutoUnfold } from './profiles'
 import { getDefaultDictAuths } from './auth'
-import { isFirefox } from '@/_helpers/saladict'
+import { isFirefox } from '../utils/browser'
 
 export type LangCode = 'zh-CN' | 'zh-TW' | 'en'
 
@@ -20,8 +21,8 @@ if (langUI === 'zh-CN') {
 }
 
 
-export type DictConfigsMutable = ReturnType<typeof getAllDicts>
-export type DictConfigs = Readonly<DictConfigsMutable>
+ type DictConfigsMutable = ReturnType<typeof getAllDicts>
+export type DictConfigs = ReadonlyDeep<DictConfigsMutable>
 export type DictID = keyof DictConfigsMutable
 export type MtaAutoUnfold = _MtaAutoUnfold
 
@@ -36,15 +37,15 @@ export type TCDirection =
   | 'BOTTOM_LEFT'
   | 'BOTTOM_RIGHT'
 
-export type InstantSearchKey = 'direct' | 'ctrl' | 'alt' | 'shift'
+ type InstantSearchKey = 'direct' | 'ctrl' | 'alt' | 'shift'
 
 /** '' means no preload */
-export type PreloadSource = '' | 'clipboard' | 'selection'
+type PreloadSource = '' | 'clipboard' | 'selection'
 
 export type AllDicts = ReturnType<typeof getAllDicts>
 
 export type AppConfigMutable = ReturnType<typeof _getDefaultConfig>
-export type AppConfig = Readonly<AppConfigMutable>
+export type AppConfig = ReadonlyDeep<AppConfigMutable>
 
 export const getDefaultConfig: () => AppConfig = _getDefaultConfig
 export default getDefaultConfig
