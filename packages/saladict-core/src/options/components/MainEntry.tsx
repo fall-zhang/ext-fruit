@@ -13,8 +13,10 @@ import { HeaderMemo } from './Header'
 import { EntryError } from './EntryError'
 import { BtnPreviewMemo } from './BtnPreview'
 
+const dataInfo = import.meta.glob('./Entries/*')
+
 const EntryComponent = React.memo(({ entry }: { entry: string }) =>
-  React.createElement(require(`./Entries/${entry}`)[entry])
+  React.createElement(dataInfo[`./Entries/${entry}`][entry])
 )
 
 export const MainEntry: FC = () => {

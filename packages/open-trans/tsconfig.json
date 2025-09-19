@@ -12,9 +12,10 @@
     "sourceMap": true,
     "strict": true,
     "target": "esnext",
+    "jsx": "react-jsx",
     "types": ["jest","node"],
     "paths": {
-      "open-trans/*": ["./*/src"]
+      "open-trans/*": ["./"]
     }
   },
   "exclude": ["node_modules", "dist"]

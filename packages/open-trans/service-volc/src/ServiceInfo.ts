@@ -1,4 +1,4 @@
-import { Header } from "./base/Request";
+import { Header } from './base/Request'
 
 interface InterfaceServiceInfoParams {
   host: string;
@@ -10,28 +10,28 @@ interface InterfaceServiceInfoParams {
 }
 
 class ServiceInfo {
-  host: string;
-  header: Header;
-  credentials: any;
-  connectionTimeout: number | undefined;
-  socketTimeout: number | undefined;
-  scheme: string;
+  host: string
+  header: Header
+  credentials: any
+  connectionTimeout: number | undefined
+  socketTimeout: number | undefined
+  scheme: string
 
-  constructor({
+  constructor ({
     host,
     header = new Header(),
     credentials,
     connectionTimeout,
     socketTimeout,
-    scheme = "https"
+    scheme = 'https'
   }: InterfaceServiceInfoParams) {
-    this.host = host;
-    this.header = header;
-    this.credentials = credentials;
-    this.connectionTimeout = connectionTimeout;
-    this.socketTimeout = socketTimeout;
-    this.scheme = scheme;
+    this.host = host
+    this.header = header
+    this.credentials = credentials
+    this.connectionTimeout = connectionTimeout
+    this.socketTimeout = socketTimeout
+    this.scheme = scheme
   }
 }
 
-export default ServiceInfo;
+export default ServiceInfo

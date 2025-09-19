@@ -5,7 +5,7 @@ import { withKnobs, boolean } from '@storybook/addon-knobs'
 import { withSaladictPanel } from '@/_helpers/storybook'
 import { WaveformBox } from './WaveformBox'
 import { action } from '@storybook/addon-actions'
-
+import waveStyle from './WaveformBox.scss?raw'
 export default {
   title: 'Content Scripts|Dict Panel',
 
@@ -25,7 +25,7 @@ export default {
       </div>
     ),
     withSaladictPanel({
-      head: <style>{require('./WaveformBox.scss').toString()}</style>
+      head: <style>{waveStyle}</style>
     })
   ],
 

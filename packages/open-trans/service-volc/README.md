@@ -1,38 +1,38 @@
-# @opentranslate/aliyun
+# @opentranslate/volc
 
-[![npm-version](https://img.shields.io/npm/v/@opentranslate/aliyun.svg)](https://www.npmjs.com/package/@opentranslate/aliyun)
+[![npm-version](https://img.shields.io/npm/v/@opentranslate/volc.svg)](https://www.npmjs.com/package/@opentranslate/volc)
 [![OpenTranslate](https://img.shields.io/badge/OpenTranslate-Compatible-brightgreen)](https://github.com/OpenTranslate)
 
-Aliyun translator with [OpenTranslate](https://github.com/OpenTranslate) API.
+volc translator with [OpenTranslate](https://github.com/OpenTranslate) API.
 
 ## Installation
 
 Yarn
 
 ```
-yarn add @opentranslate/aliyun
+yarn add @opentranslate/volc
 ```
 
 NPM
 
 ```
-npm i @opentranslate/aliyun
+npm i @opentranslate/volc
 ```
 
 ## Usage
 
 ```
-import Aliyun from '@opentranslate/aliyun'
+import volc from '@opentranslate/volc'
 
-//Please refer to https://help.aliyun.com/zh/machine-translation/developer-reference/api-reference-machine-translation-universal-version-call-guide?spm=5176.15007269.console-base_help.dexternal.1afe5d78DUvEPh
-const aliyun = new Aliyun({
+//Please refer to https://help.volc.com/zh/machine-translation/developer-reference/api-reference-machine-translation-universal-version-call-guide?spm=5176.15007269.console-base_help.dexternal.1afe5d78DUvEPh
+const volc = new volc({
     config: {
         appid: "",
         key: ""
     }
 })
 
-aliyun.translate('text').then(console.log)
+volc.translate('text').then(console.log)
 ```
 
 ## API

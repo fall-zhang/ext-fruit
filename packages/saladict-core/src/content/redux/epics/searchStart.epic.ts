@@ -19,7 +19,7 @@ import {
 } from '@/_helpers/saladict'
 import { DictID } from '@/app-config'
 import { MachineTranslateResult } from '@/components/MachineTrans/engine'
-import { MessageResponse } from '@/typings/message'
+import { MessageResponse } from '@/types/message'
 
 export const searchStartEpic: Epic = (action$, state$) =>
   action$.pipe(

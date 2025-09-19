@@ -23,13 +23,19 @@ export function startSyncServiceInterval () {
       filter((v): v is { [id: string]: any } => !!v),
       map(syncConfig => {
         // legacy fix
-        if (
-          syncConfig.webdav &&
-          !Object.prototype.hasOwnProperty.call(syncConfig.webdav, 'enable')
-        ) {
-          syncConfig.webdav.enable = !!syncConfig.webdav.url
+        const newSyncConfig = {
+          ...syncConfig,
+          webdav: {
+            ...syncConfig.webdav
+          }
         }
-        return syncConfig
+        if (
+          newSyncConfig.webdav &&
+          !Object.prototype.hasOwnProperty.call(newSyncConfig.webdav, 'enable')
+        ) {
+          newSyncConfig.webdav.enable = !!newSyncConfig.webdav.url
+        }
+        return newSyncConfig
       })
     )
     .subscribe(async syncConfig => {

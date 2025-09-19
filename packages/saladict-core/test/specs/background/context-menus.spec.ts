@@ -175,11 +175,11 @@ describe.skip('Context Menus', () => {
       })
     })
 
-    it('should set menus when contex menus config changed', done => {
+    it('should set menus when contex menus config changed', async done => {
       const newConfig = specialConfig()
       newConfig.contextMenus.selected.pop()
 
-      const { init } = require('@/background/context-menus')
+      const { init } = (await import('@/background/context-menus')).ContextMenus
       take(1)(init(config.contextMenus)).subscribe(() => {
         expect(browser.contextMenus.removeAll.calledOnce).toBeTruthy()
         configManager.dispatchConfigChangedEvent(newConfig, config)
@@ -190,8 +190,8 @@ describe.skip('Context Menus', () => {
       })
     })
 
-    it('should only set twice if source emits values during the first setting', done => {
-      const { init } = require('@/background/context-menus')
+    it('should only set twice if source emits values during the first setting', async done => {
+      const { init } = (await import('@/background/context-menus')).ContextMenus
       take(1)(init(config.contextMenus)).subscribe(() => {
         expect(browser.contextMenus.removeAll.calledOnce).toBeTruthy()
 

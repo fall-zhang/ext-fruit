@@ -1,5 +1,3 @@
-
-
 class Translator {
   globalContext
   data = {
@@ -22,10 +20,8 @@ class Translator {
       context = this.globalContext
     }
     const isObject = (obj) => {
-      let type
-
-      type = typeof obj
-      return type === 'function' || type === 'object' && !!obj
+      const type = typeof obj
+      return (type === 'function' || type === 'object') && !!obj
     }
     if (isObject(defaultNumOrFormatting)) {
       defaultText = null

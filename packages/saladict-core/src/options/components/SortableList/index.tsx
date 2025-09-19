@@ -8,7 +8,7 @@ import {
   CloseOutlined
 } from '@ant-design/icons'
 import { RadioChangeEvent } from 'antd/lib/radio'
-import { Omit } from '@/typings/helpers'
+import { Omit } from '@/types/helpers'
 import { useTranslate } from '@/_helpers/i18n'
 
 import './_style.scss'

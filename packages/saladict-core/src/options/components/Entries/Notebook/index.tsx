@@ -30,14 +30,17 @@ export const Notebook: FC = () => {
         storage.sync.createStream('syncConfig').pipe(pluck('newValue'))
       ).pipe(
         map(syncConfig => {
+          const newConfig = {
+            ...syncConfig
+          }
           // legacy fix
           if (
             syncConfig?.webdav &&
             !Object.prototype.hasOwnProperty.call(syncConfig.webdav, 'enable')
           ) {
-            syncConfig.webdav.enable = !!syncConfig.webdav.url
+            newConfig.webdav.enable = !!syncConfig.webdav.url
           }
-          return syncConfig
+          return newConfig
         })
       )
     )

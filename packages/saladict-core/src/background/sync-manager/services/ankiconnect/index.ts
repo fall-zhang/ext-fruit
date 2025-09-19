@@ -4,7 +4,7 @@ import { parseCtxText } from '@/_helpers/translateCtx'
 import { AddConfig, SyncService } from '../../interface'
 import { getNotebook } from '../../helpers'
 import { message } from '@/_helpers/browser-api'
-import { Message } from '@/typings/message'
+import { Message } from '@/types/message'
 
 export interface SyncConfig {
   enable: boolean
@@ -98,17 +98,20 @@ export class Service extends SyncService<SyncConfig> {
     if (!(await this.isServerUp())) {
       throw new Error('server')
     }
-
+    let newWords = { ...words }
     if (force) {
-      words = await getNotebook()
+      newWords = await getNotebook()
     }
 
-    if (!words || words.length <= 0) {
+    if (newWords === undefined || !Array.isArray(newWords)) {
+      return
+    }
+    if (newWords.length <= 0) {
       return
     }
 
     await Promise.all(
-      words.map(async word => {
+      newWords.map(async word => {
         if (!(await this.findNote(word.date))) {
           try {
             await this.addWord(word)

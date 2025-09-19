@@ -1,6 +1,6 @@
 import { fetchDirtyDOM } from './fetch-dom'
 import { first } from '@/_helpers/promise-more'
-import { handleNoResult, getText } from '@P/trans-api/src/helpers'
+import { handleNoResult, getText } from '@/components/Dictionaries/helpers'
 
 export async function getWordOfTheDay (): Promise<string> {
   if (!process.env.DEBUG) {

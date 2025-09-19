@@ -3,7 +3,7 @@ import { Subject } from 'rxjs'
 import faker from 'faker'
 import { action } from '@storybook/addon-actions'
 import { withKnobs, boolean } from '@storybook/addon-knobs'
-import { jsxDecorator } from 'storybook-addon-jsx'
+// import { jsxDecorator } from 'storybook-addon-jsx'
 import { withPropsTable } from 'storybook-addon-react-docgen'
 import {
   withSaladictPanel,
@@ -20,7 +20,7 @@ export default {
 
   decorators: [
     withPropsTable,
-    jsxDecorator,
+    // jsxDecorator,
     withKnobs,
     withSideEffect(
       mockRuntimeMessage(async (message) => {

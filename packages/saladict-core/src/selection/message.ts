@@ -1,4 +1,4 @@
-import { Message } from '@/typings/message'
+import { Message } from '@/types/message'
 import { message } from '@/_helpers/browser-api'
 
 interface PostMessageEvent extends MessageEvent {

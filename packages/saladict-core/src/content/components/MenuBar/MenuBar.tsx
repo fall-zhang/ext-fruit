@@ -90,7 +90,14 @@ export const MenuBar: FC<MenuBarProps> = props => {
     ),
     props.onHeightChanged
   )
-
+  let renderType = 'QuickSearchPage'
+  if (isQuickSearchPage()) {
+    renderType = 'QuickSearchPage'
+  } else if (isPopupPage()) {
+    renderType = 'nothing'
+  } else {
+    renderType = 'Btns'
+  }
   return (
     <header className="menuBar">
       <HistoryBackBtn
@@ -170,7 +177,7 @@ export const MenuBar: FC<MenuBarProps> = props => {
           />
         )}
 
-      {isQuickSearchPage()
+      {/* {isQuickSearchPage()
         ? (
           <>
             <FocusBtn
@@ -200,7 +207,35 @@ export const MenuBar: FC<MenuBarProps> = props => {
               />
               <CloseBtn t={t} onClick={props.onClose} />
             </>
-          )}
+          )} */}
+      {
+        renderType === 'QuickSearchPage' && (<>
+          <FocusBtn
+            t={t}
+            isFocus={props.isQSFocus}
+            onClick={props.toggleQSFocus}
+            disabled={isOptionsPage() || isPopupPage()}
+          />
+          <SidebarBtn
+            t={t}
+            onMouseDown={e => {
+              e.preventDefault()
+              props.onSwitchSidebar(e.button === 0 ? 'left' : 'right')
+            }}
+          />
+        </>)
+      }
+      {renderType === 'Btns' && (
+        <>
+          <PinBtn
+            t={t}
+            isPinned={props.isPinned}
+            onClick={props.togglePin}
+            disabled={isOptionsPage() || isPopupPage()}
+          />
+          <CloseBtn t={t} onClick={props.onClose} />
+        </>
+      )}
     </header>
   )
 }

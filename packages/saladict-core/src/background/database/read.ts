@@ -1,5 +1,5 @@
 import { isContainChinese, isContainEnglish } from '@/_helpers/lang-check'
-import { Message, MessageResponse } from '@/typings/message'
+import { Message, MessageResponse } from '@/types/message'
 import { getDB } from './core'
 
 export async function isInNotebook (word: Message<'IS_IN_NOTEBOOK'>['payload']) {

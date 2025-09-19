@@ -5,11 +5,11 @@ import { Observable } from 'rxjs'
 import { DictID } from '@/app-config'
 import { Word } from '@/_helpers/record-manager'
 import { SALADICT_PANEL } from '@/_helpers/saladict'
-import { ViewPorps } from '@P/trans-api/src/helpers'
+import { ViewPorps } from '@/components/Dictionaries/helpers'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { StaticSpeakerContainer } from '@/components/Speaker'
 
-const dictContentStyles = require('./DictItemContent.shadow.scss').toString()
+import dictContentStyles from './DictItemContent.shadow.scss?raw'
 
 export interface DictItemBodyProps {
   dictID: DictID
@@ -44,7 +44,7 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
         import(
           /* webpackInclude: /View\.tsx$/ */
           /* webpackMode: "lazy" */
-          `@/components/dictionaries/${props.dictID}/View.tsx`
+          `@/components/Dictionaries/${props.dictID}/View.tsx`
         )
       ),
     [props.dictID]
@@ -56,7 +56,7 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
         const styleModule = await import(
           /* webpackInclude: /_style\.shadow\.scss$/ */
           /* webpackMode: "lazy" */
-          `@/components/dictionaries/${props.dictID}/_style.shadow.scss`
+          `@/components/Dictionaries/${props.dictID}/_style.shadow.scss`
         )
         return {
           default: () => (

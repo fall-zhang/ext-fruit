@@ -21,7 +21,7 @@ export const DictTitle: FC<DictTitleProps> = ({ dictID, dictLangs }) => {
       <span>
         <img
           className="saladict-dict-title-icon"
-          src={'@P/trans-api/src/' + dictID + '/favicon.png'}
+          src={'@/components/Dictionaries/' + dictID + '/favicon.png'}
           alt={`logo ${title}`}
         />
         <a

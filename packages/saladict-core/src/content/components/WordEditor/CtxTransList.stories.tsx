@@ -13,7 +13,7 @@ import getDefaultConfig from '@/app-config'
 import { CtxTransList } from './CtxTransList'
 import { CtxTranslateResults } from '@/_helpers/translateCtx'
 import { newWord } from '@/_helpers/record-manager'
-
+import style from './CtxTransList.scss'
 export default {
   title: 'Content Scripts|WordEditor',
 
@@ -62,5 +62,5 @@ _CtxTransList.story = {
     jsx: { skip: 1 }
   },
 
-  decorators: [withLocalStyle(require('./CtxTransList.scss'))]
+  decorators: [withLocalStyle(style)]
 }

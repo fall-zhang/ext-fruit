@@ -2,6 +2,7 @@
 
 This package folk from https://github.com/allentown521/OpenTranslate
 
+列出所有可用的翻译 API，并且进行统一格式的包装
 
 ## Usage
 

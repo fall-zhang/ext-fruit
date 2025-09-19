@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { FC, useRef } from 'react'
 import { shallowEqual } from 'react-redux'
 import { useUpdateEffect } from 'react-use'
@@ -122,9 +123,8 @@ export const MatchPatternModal: FC<MatchPatternModalProps> = ({
             <div>
               {fields.map(field => (
                 <Form.Item
-                  // @ts-expect-error
-                  key={field.key}
                   {...field}
+                  key={field.key}
                   validateTrigger={['onChange', 'onBlur']}
                   hasFeedback
                   rules={[{ validator: validatePatterns }]}

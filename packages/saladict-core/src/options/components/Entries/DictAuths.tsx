@@ -43,7 +43,7 @@ export const DictAuths: FC = () => {
           ? (
             <Trans message={t('dictAuth.dictHelp')}>
               <a
-                href={require(`@/components/dictionaries/${dictID}/auth.ts`).url}
+                href={`@/components/Dictionaries/${dictID}/auth.ts`}
                 target="_blank"
                 rel="nofollow noopener noreferrer"
               >

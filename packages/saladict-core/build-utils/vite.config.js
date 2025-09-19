@@ -5,6 +5,7 @@
 
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
+import { __dirname } from 'node:path'
 const pathResolve = (file) => {
   return resolve(__dirname, '../packages/' + file)
 }

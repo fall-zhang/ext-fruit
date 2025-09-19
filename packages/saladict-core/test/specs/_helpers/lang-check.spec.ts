@@ -4,6 +4,7 @@ import {
   checkSupportedLangs,
   SupportedLangs
 } from '@/_helpers/lang-check'
+import { describe, expect, it } from 'vitest'
 
 describe('Language Check', () => {
   it('isContainChinese should return ture if text contains Chinese', () => {
@@ -25,23 +26,21 @@ describe('Language Check', () => {
         text: string,
         ...args: Array<Exclude<keyof SupportedLangs, 'matchAll'>>
       ) {
-        const langs = args.reduce(
-          (result, lang) => {
-            result[lang] = true
-            return result
-          },
-          {
-            chinese: false,
-            english: false,
-            japanese: false,
-            korean: false,
-            french: false,
-            spanish: false,
-            deutsch: false,
-            others: false,
-            matchAll
-          }
-        )
+        const langs = {
+          chinese: false,
+          english: false,
+          japanese: false,
+          korean: false,
+          french: false,
+          spanish: false,
+          deutsch: false,
+          others: false,
+          matchAll
+        }
+        args.reduce((result, lang) => {
+          langs[lang] = true
+          return result
+        })
         return checkSupportedLangs(langs, text)
       }
     }

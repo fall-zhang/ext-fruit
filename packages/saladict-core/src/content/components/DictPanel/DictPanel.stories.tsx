@@ -27,7 +27,7 @@ import { DictList } from '../DictList/DictList'
 import { WaveformBox } from '../WaveformBox/WaveformBox'
 import { timer } from '@/_helpers/promise-more'
 import { SuggestItem } from '../MenuBar/Suggest'
-
+import DictPanelStyle from './DictPanel.shadow.scss?raw'
 const allDicts = getAllDicts()
 const dicts = Object.keys(allDicts).map((id) => ({
   dictID: id as DictID,
@@ -55,7 +55,7 @@ export default {
         console.log(message.type)
       })
     ),
-    withLocalStyle(require('./DictPanel.shadow.scss').toString()),
+    withLocalStyle(DictPanelStyle),
     withi18nNS(['content', 'dicts']),
     (Story) => <Story />
   ],
@@ -68,17 +68,17 @@ export default {
   }
 }
 
-export const _DictPanel = () => <DictPanel {...useDictPanelProps()} />
+export const DictPanelStory = () => <DictPanel {...useDictPanelProps()} />
 
-_DictPanel.story = {
+DictPanelStory.story = {
   name: 'DictPanel'
 }
 
-export const _DictPanelPortal = () => (
+export const DictPanelPortalStory = () => (
   <DictPanelPortal {...useDictPanelProps()} />
 )
 
-_DictPanelPortal.story = {
+DictPanelPortalStory.story = {
   name: 'DictPanelPortal'
 }
 

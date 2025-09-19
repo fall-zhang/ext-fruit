@@ -14,7 +14,7 @@ import { DictID } from '@/app-config'
 import { message } from '@/_helpers/browser-api'
 import { newWord } from '@/_helpers/record-manager'
 import { timer } from '@/_helpers/promise-more'
-import { ViewPorps } from '@P/trans-api/src/helpers'
+import { ViewPorps } from '@/components/Dictionaries/helpers'
 import { DictItemHead, DictItemHeadProps } from './DictItemHead'
 import { DictItemBody, DictItemBodyProps } from './DictItemBody'
 import { isTagName } from '@/_helpers/dom'
@@ -54,15 +54,26 @@ export const DictItem: FC<DictItemProps> = props => {
   const [offsetHeight, setOffsetHeight] = useState(10)
 
   const visibleHeight = useMemo(
-    () =>
-      Math.max(
-        10,
-        foldState === 'COLLAPSE'
-          ? 10
-          : foldState === 'FULL'
-            ? offsetHeight
-            : Math.min(offsetHeight, props.preferredHeight)
-      ),
+    () => {
+      let compareNum = 10
+      if (foldState === 'COLLAPSE') {
+        compareNum = 10
+      } else if (foldState === 'FULL') {
+        compareNum = offsetHeight
+      } else {
+        compareNum = Math.min(offsetHeight, props.preferredHeight)
+      }
+      // const max = Math.max(
+      //   10,
+      //   foldState === 'COLLAPSE'
+      //     ? 10
+      //     : foldState === 'FULL'
+      //       ? offsetHeight
+      //       : Math.min(offsetHeight, props.preferredHeight)
+      // )
+      return Math.max(10, compareNum)
+    }
+    ,
     [foldState, offsetHeight, props.preferredHeight]
   )
 

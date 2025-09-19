@@ -1,10 +1,10 @@
-import i18next, { TFunction } from 'i18next'
+import i18next, { TFunction, i18n } from 'i18next'
 import { i18nLoader, Namespace } from '@/_helpers/i18n'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 
 export class I18nManager {
-  private static instance: I18nManager
+  private static instance: any // I18nManager
 
   static async getInstance () {
     if (!I18nManager.instance) {
@@ -17,7 +17,7 @@ export class I18nManager {
     return I18nManager.instance
   }
 
-  i18n: i18next.i18n
+  i18n: i18n
 
   readonly i18n$$: BehaviorSubject<i18next.i18n>
 

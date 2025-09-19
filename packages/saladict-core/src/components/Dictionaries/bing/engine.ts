@@ -1,4 +1,4 @@
-import { fetchDirtyDOM } from '@P/trans-api/utils/fetch-dom'
+import { fetchDirtyDOM } from '@/utils/fetch-dom'
 
 import {
   handleNoResult,

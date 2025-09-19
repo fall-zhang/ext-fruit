@@ -41,20 +41,21 @@ export function deflate (profile: Profile): ProfileCompressed {
   }
 }
 
-export function inflate(profile: Profile | ProfileCompressed): Profile
-export function inflate(profile: undefined): undefined
-export function inflate(
-  profile?: Profile | ProfileCompressed
-): Profile | undefined
-export function inflate (
-  profile?: Profile | ProfileCompressed
-): Profile | undefined {
-  if (profile && profile.v === 1) {
+type InflateFn = {
+  (profile: Profile | ProfileCompressed): Profile
+  (profile: undefined): undefined
+  (profile?: Profile | ProfileCompressed): Profile | undefined
+}
+
+export const inflate:InflateFn = (
+  profile
+) => {
+  if (profile?.v === 1) {
     return JSON.parse(
       pako.inflate((profile as ProfileCompressed).d, { to: 'string' })
     )
   }
-  return profile as Profile | undefined
+  return profile
 }
 
 export function getProfileName (name: string, t: TFunction): string {

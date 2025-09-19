@@ -6,6 +6,8 @@ import { SALADICT_PANEL } from '@/_helpers/saladict'
 import { ShadowPortal, defaultTimeout } from '@/components/ShadowPortal'
 import { DictPanel, DictPanelProps } from './DictPanel'
 
+import styleText from './DictPanel.shadow.scss?raw'
+
 export interface DictPanelPortalProps extends DictPanelProps {
   show: boolean
   withAnimation: boolean
@@ -25,7 +27,7 @@ export const DictPanelPortal: FC<DictPanelPortalProps> = props => {
   const [show, setShow] = useState(showProps)
 
   const panelStyle = useRefFn(() => (
-    <style>{require('./DictPanel.shadow.scss').toString()}</style>
+    <style>{styleText}</style>
   )).current
 
   useUpdateEffect(() => {

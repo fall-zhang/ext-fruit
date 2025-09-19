@@ -3,7 +3,7 @@ import { Language } from '@P/open-trans/languages'
 import { Translator } from '@P/open-trans/translator'
 import { DictItem, SelectOptions } from '@/app-config/dicts'
 import { isContainJapanese, isContainKorean } from '@/_helpers/lang-check'
-import { DictSearchResult } from '../dictionaries/helpers'
+import { DictSearchResult } from '@/components/Dictionaries/helpers'
 
 export interface MachineTranslatePayload<Lang = string> {
   sl?: Lang
@@ -56,26 +56,27 @@ export type ExtractOptionsFromConfig<Config> = Config extends MachineDictItem<
   ? Omit<Options, keyof DefaultMachineOptions<Lang>>
   : never
 
-/**
- * Get Machine Translate arguments
- */
-export async function getMTArgs(
-  translator: Translator,
-  text: string,
-  {
-    options,
-    options_sel
-  }: {
+type SelOptionType = {
     options: {
       tl: 'default' | Language
       tl2: 'default' | Language
       keepLF: 'none' | 'all' | 'webpage' | 'pdf'
     }
-    options_sel: {
+    optionsSel: {
       tl: ReadonlyArray<'default' | Language>
       tl2: ReadonlyArray<'default' | Language>
     }
-  },
+  }
+/**
+ * Get Machine Translate arguments
+ */
+export async function getMTArgs (
+  translator: Translator,
+  text: string,
+  {
+    options,
+    optionsSel
+  }:SelOptionType,
   config: AppConfig,
   payload: {
     sl?: Language
@@ -110,7 +111,7 @@ export async function getMTArgs(
   if (payload.tl) {
     tl = payload.tl
   } else if (options.tl === 'default') {
-    if (options_sel.tl.includes(config.langCode)) {
+    if (optionsSel.tl.includes(config.langCode)) {
       tl = config.langCode
     }
   } else {
@@ -119,7 +120,7 @@ export async function getMTArgs(
 
   if (!tl) {
     tl =
-      options_sel.tl.find((lang): lang is Language => lang !== 'default') ||
+      optionsSel.tl.find((lang): lang is Language => lang !== 'default') ||
       'en'
   }
 
@@ -132,7 +133,7 @@ export async function getMTArgs(
           tl = 'en'
         } else {
           tl =
-            options_sel.tl.find(
+            optionsSel.tl.find(
               (lang): lang is Language => lang !== 'default' && lang !== tl
             ) || 'en'
         }
@@ -147,14 +148,14 @@ export async function getMTArgs(
   return { sl, tl, text }
 }
 
-export function machineConfig<Config extends MachineDictItem<Language>>(
+export function machineConfig<Config extends MachineDictItem<Language>> (
   langs: ExtractLangFromConfig<Config>[],
   /** overwrite configs */
   config: Partial<Config>,
   options: ExtractOptionsFromConfig<Config>,
   optionsSel: SelectOptions<ExtractOptionsFromConfig<Config>>
 ): Config {
-  return {
+  const setting:Config = {
     lang: '11111111',
     selectionLang: {
       english: true,
@@ -191,18 +192,19 @@ export function machineConfig<Config extends MachineDictItem<Language>>(
       tl2: 'default',
       ...(options as any)
     },
-    options_sel: {
+    optionsSel: {
       keepLF: ['none', 'all', 'webpage', 'pdf'],
       slInitial: ['collapse', 'hide', 'full'],
       tl: ['default', ...langs],
       tl2: ['default', ...langs],
       ...optionsSel
     }
-  } as Config
+  }
+  return setting
 }
 
 /** Generate catalog */
-export function machineResult<ID extends DictID>(
+export function machineResult<ID extends DictID> (
   data: DictSearchResult<MachineTranslateResult<ID>>,
   langcodes: ReadonlyArray<string>
 ): DictSearchResult<MachineTranslateResult<ID>> {

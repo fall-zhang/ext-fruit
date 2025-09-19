@@ -1,4 +1,4 @@
-import { fetchDirtyDOM } from '@P/trans-api/utils/fetch-dom'
+import { fetchDirtyDOM } from '@/utils/fetch-dom'
 
 import {
   handleNetWorkError,
@@ -94,12 +94,13 @@ export function _getSynonyms (
     ?.querySelector('.content-section-body')
 
   if (!synonymsEle) return undefined
-
+  const queryLabel = synonymsEle?.querySelectorAll('.function-label').values()
   const functions = [
-    ...synonymsEle?.querySelectorAll('.function-label').values()
+    ...queryLabel
   ]
+  const queryList = synonymsEle?.querySelectorAll('ul.synonyms-antonyms-grid-list')?.values()
   const lists = [
-    ...synonymsEle?.querySelectorAll('ul.synonyms-antonyms-grid-list')?.values()
+    ...queryList
   ]
 
   if (!lists) return undefined

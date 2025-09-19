@@ -17,9 +17,12 @@ initConfig().then(_config => {
   config.panelMode.direct = true
   updateConfig(config)
 })
-initProfiles().then(profile => {
-  ;(profile as ProfileMutable).dicts.selected = ['bing']
-  updateProfile(profile)
+initProfiles().then((profile:ProfileMutable) => {
+  const newProfile = {
+    ...profile
+  }
+  newProfile.dicts.selected = ['bing']
+  updateProfile(newProfile)
 })
 
 for (let i = 0; i < 10; i++) {

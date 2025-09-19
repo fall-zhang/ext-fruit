@@ -16,11 +16,21 @@ export interface CtxTransListProps {
 }
 
 export const CtxTransList: FC<CtxTransListProps> = props => {
-  const [isLoading, setIsLoading] = useState(() =>
-    Object.keys(props.ctxTransConfig).reduce((result, id) => {
-      result[id] = false
-      return result
-    }, {} as { [id in keyof AppConfig['ctxTrans']]: boolean })
+  const [isLoading, setIsLoading] = useState(() => {
+    const result:Record<keyof AppConfig['ctxTrans'], boolean> = {
+      baidu: false,
+      caiyun: false,
+      google: false,
+      sogou: false,
+      tencent: false,
+      youdaotrans: false
+    }
+    Object.keys(props.ctxTransConfig).forEach((key, index) => {
+      result[key as keyof AppConfig['ctxTrans']] = false
+    })
+    return result
+  }
+
   )
 
   const onTicked = async (evt: React.ChangeEvent<HTMLInputElement>) => {

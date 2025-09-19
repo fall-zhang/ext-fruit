@@ -1,8 +1,8 @@
-const path = require('path')
-const react = require('@neutrinojs/react')
-const wext = require('neutrino-webextension')
+import path, { __dirname } from 'path'
+import react from '@neutrinojs/react'
+import wext from 'neutrino-webextension'
 
-module.exports = {
+export default {
   options: {
     mains: {
       example: {

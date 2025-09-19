@@ -156,14 +156,14 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
             if (optKey === 'tl' || optKey === 'tl2') {
               const getTranslator:
                   | undefined
-                  | (() => Translator) = require(`@/components/dictionaries/${dictID}/engine`)
+                  | (() => Translator) = import(`@/components/Dictionaries/${dictID}/engine`)
                     .getTranslator
 
               const langs = getTranslator
                 ? getTranslator()
                   .getSupportLanguages()
                   .map(lang => (lang === 'auto' ? 'default' : lang))
-                : allDicts[dictID].options_sel[optKey]
+                : allDicts[dictID].optionsSel[optKey]
 
               item.children = (
                 <Select>
@@ -178,7 +178,7 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
             } else {
               item.children = (
                 <Select>
-                  {allDicts[dictID].options_sel[optKey].map(
+                  {allDicts[dictID].optionsSel[optKey].map(
                     (option: string) => (
                       <Select.Option value={option} key={option}>
                         {t(`dicts:${dictID}.options.${optKey}-${option}`)}

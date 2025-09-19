@@ -19,7 +19,7 @@ import {
   SidebarBtn
 } from './MenubarBtns'
 import { useTranslate } from '@/_helpers/i18n'
-
+import menubarBtnsStyle from './MenubarBtns.scss?raw'
 export default {
   title: 'Content Scripts|Dict Panel/Menubar',
 
@@ -29,7 +29,7 @@ export default {
     withKnobs,
     (story) => <BtnsParent story={story} />,
     withSaladictPanel({
-      head: <style>{require('./MenubarBtns.scss').toString()}</style>,
+      head: <style>{menubarBtnsStyle}</style>,
       backgroundColor: 'transparent'
     }),
     withi18nNS('content')

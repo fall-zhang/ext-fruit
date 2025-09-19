@@ -157,28 +157,29 @@ export const DictPanel: FC<DictPanelProps> = props => {
 
 function reconcileX (width: number, x: number): number {
   const winWidth = window.innerWidth
-
+  let newX = x
   // also counted scrollbar width
-  if (x + width + 25 > winWidth) {
-    x = winWidth - 25 - width
+  if (newX + width + 25 > winWidth) {
+    newX = winWidth - 25 - width
   }
 
-  if (x < 10) {
-    x = 10
+  if (newX < 10) {
+    newX = 10
   }
 
-  return x
+  return newX
 }
 
 function reconcileY (height: number, y: number): number {
   const winHeight = window.innerHeight
+  let newY = y
 
-  if (y + height + 15 > winHeight) {
-    y = winHeight - 15 - height
+  if (newY + height + 15 > winHeight) {
+    newY = winHeight - 15 - height
   }
 
-  if (y < 15) {
-    y = 15
+  if (newY < 15) {
+    newY = 15
   }
 
   return y

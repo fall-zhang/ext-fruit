@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import React, { FC } from 'react'
 import { TFunction } from 'i18next'
 import { Row, Col, Upload, notification } from 'antd'

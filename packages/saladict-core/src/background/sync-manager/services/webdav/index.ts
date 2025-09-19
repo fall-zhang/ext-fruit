@@ -13,7 +13,7 @@ import {
   notifyError
 } from '../../helpers'
 
-import { Mutable } from '@/typings/helpers'
+import { Mutable } from '@/types/helpers'
 import { storage } from '@/_helpers/browser-api'
 
 export interface SyncConfig extends SyncServiceConfigBase {

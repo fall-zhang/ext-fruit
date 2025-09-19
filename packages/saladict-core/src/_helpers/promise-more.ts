@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 /**
  * Like Promise.all but always resolves.
  */

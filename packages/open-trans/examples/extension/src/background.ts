@@ -1,6 +1,7 @@
 import { Translator, TranslatorInit } from 'open-trans/translator'
-
-const env = require('../env.json')
+import { env } from 'process'
+// import env from '../env.json'
+// const env = require('../env.json')
 
 const translatorReq = require.context(
   '../../../packages/',

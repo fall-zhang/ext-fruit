@@ -85,8 +85,14 @@ function mockFetch (
     fetchArgs
   ).reduce((o, k) => {
     const args = fetchArgs[k](config)
-    o[args[0] + ((args[1] && args[1].method) || '')] = k
-    return o
+    // o[args[0] + ((args[1] && args[1].method) || '')] = k
+    // return o
+    const key = args[0] + ((args[1] && args[1].method) || '')
+    const result = {
+      ...o,
+      [key]: key
+    }
+    return result
   }, {})
 
   window.fetch = jest.fn(

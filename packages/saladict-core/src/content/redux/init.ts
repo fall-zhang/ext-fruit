@@ -12,7 +12,7 @@ import {
 import { message } from '@/_helpers/browser-api'
 import { Word, newWord } from '@/_helpers/record-manager'
 import { timer } from '@/_helpers/promise-more'
-import { MessageResponse } from '@/typings/message'
+import { MessageResponse } from '@/types/message'
 import { StoreDispatch, StoreState } from './modules'
 import { isTagName } from '@/_helpers/dom'
 

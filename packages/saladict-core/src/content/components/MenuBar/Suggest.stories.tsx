@@ -11,6 +11,7 @@ import {
 } from '@/_helpers/storybook'
 import { Suggest, SuggestItem } from './Suggest'
 import { timer } from '@/_helpers/promise-more'
+import suggestStyle from './Suggest.scss?raw'
 
 export default {
   title: 'Content Scripts|Dict Panel/Menubar',
@@ -20,7 +21,7 @@ export default {
     jsxDecorator,
     withKnobs,
     withSaladictPanel({
-      head: <style>{require('./Suggest.scss').toString()}</style>,
+      head: <style>{suggestStyle}</style>,
       height: 'auto',
       backgroundColor: 'transparent'
     }),

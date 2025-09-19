@@ -1,4 +1,4 @@
-import * as profileManagerOrigin from '@/_helpers/profile-manager'
+/* eslint-disable max-lines-per-function */
 import {
   getDefaultProfile,
   Profile,
@@ -8,6 +8,9 @@ import sinon from 'sinon'
 import { timer } from '@/_helpers/promise-more'
 import { pick } from 'lodash'
 import { browser } from '../../helper'
+import { beforeEach, describe, expect, it } from 'vitest'
+
+import * as profileManager from '@/_helpers/profile-manager'
 
 function fakeStorageGet (store) {
   browser.storage.sync.get.callsFake(keys => {
@@ -17,15 +20,12 @@ function fakeStorageGet (store) {
   })
 }
 
-let profileManager: typeof profileManagerOrigin
-
 describe('Profile Manager', () => {
   beforeEach(() => {
     browser.flush()
     browser.storage.sync.set.callsFake(() => Promise.resolve())
     browser.storage.sync.remove.callsFake(() => Promise.resolve())
     jest.resetModules()
-    profileManager = require('@/_helpers/profile-manager')
   })
 
   it('should init with default profile the first time', async () => {
