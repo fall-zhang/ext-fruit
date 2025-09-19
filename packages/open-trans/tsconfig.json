@@ -13,7 +13,7 @@
     "strict": true,
     "target": "esnext",
     "jsx": "react-jsx",
-    "types": ["jest","node"],
+    "types": ["node"],
     "paths": {
       "open-trans/*": ["./"]
     }

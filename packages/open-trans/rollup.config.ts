@@ -44,9 +44,6 @@ const libConfig = defineConfig({
         paths: {
           '@P/*': [
             '../*'
-          ],
-          '@/*': [
-            './src/*'
           ]
         },
         lib: [
