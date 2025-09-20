@@ -38,9 +38,8 @@ const stories = storiesOf('Content Scripts|Dictionaries', module)
             '/engine.ts')[message.payload.method]
 
           return method(...(message.payload.args || []))
-        } else {
-          action(message.type)(message['payload'])
         }
+        action(message.type)(message.payload)
       })
     )
   )
@@ -81,7 +80,7 @@ Object.keys(getAllDicts())
     ))
   })
 
-function Dict(props: {
+function Dict (props: {
   dictID: DictID
   fontSize: number
   darkMode: boolean
@@ -112,13 +111,13 @@ function Dict(props: {
   const searchText =
     mockSearchTexts.length > 1
       ? select(
-          'Search Text',
-          mockSearchTexts.reduce((o, t) => {
-            o[t] = t
-            return o
-          }, {}),
-          mockSearchTexts[0]
-        )
+        'Search Text',
+        mockSearchTexts.reduce((o, t) => {
+          o[t] = t
+          return o
+        }, {}),
+        mockSearchTexts[0]
+      )
       : mockSearchTexts[0]
 
   const [status, setStatus] = useState<'IDLE' | 'SEARCHING' | 'FINISH'>('IDLE')
@@ -127,7 +126,7 @@ function Dict(props: {
 
   const [profiles, updateProfiles] = useState(() => getDefaultProfile())
   // custom dict options
-  const options = profiles.dicts.all[props.dictID]['options']
+  const options = profiles.dicts.all[props.dictID].options
   const optKeys = options ? Object.keys(options) : []
   const optValues = optKeys.map(key => {
     const name = locales.options[key][i18n.language]
@@ -138,7 +137,7 @@ function Dict(props: {
         return number(name, options[key])
       case 'string': {
         const values: string[] =
-          profiles.dicts.all[props.dictID]['options_sel'][key]
+          profiles.dicts.all[props.dictID].options_sel[key]
         return select(
           name,
           values.reduce((o, k) => {
@@ -155,7 +154,7 @@ function Dict(props: {
 
   useEffect(() => {
     const newProfiles = getDefaultProfile()
-    const newOptions = newProfiles.dicts.all[props.dictID]['options']
+    const newOptions = newProfiles.dicts.all[props.dictID].options
     optKeys.forEach((key, i) => {
       newOptions[key] = optValues[i]
     })
@@ -175,9 +174,7 @@ function Dict(props: {
 
   useEffect(() => {
     setStatus('SEARCHING')
-    search(searchText, getDefaultConfig(), profiles, {
-      isPDF: false
-    }).then(async ({ result, catalog }) => {
+    search(searchText, getDefaultConfig(), profiles).then(async ({ result, catalog }) => {
       setStatus('FINISH')
       setResult(result)
       setCatalog(catalog)

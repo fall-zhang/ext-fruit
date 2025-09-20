@@ -16,7 +16,7 @@ export interface SearchFunction<Result, Payload = {}> {
     text: string,
     config: AppConfig,
     profile: Profile,
-    payload: Readonly<Payload & { isPDF: boolean }>
+    payload: Readonly<Payload>
   ): Promise<DictSearchResult<Result>>
 }
 
@@ -32,22 +32,22 @@ export interface DictSearchResult<Result> {
   /** generate menus on dict titlebars */
   catalog?: Array<
     | {
-        // <button>
-        key: string
+      // <button>
+      key: string
+      value: string
+      label: string
+      options?: undefined
+    } |
+    {
+      // <select>
+      key: string
+      value: string
+      options: Array<{
         value: string
         label: string
-        options?: undefined
-      }
-    | {
-        // <select>
-        key: string
-        value: string
-        options: Array<{
-          value: string
-          label: string
-        }>
-        title?: string
-      }
+      }>
+      title?: string
+    }
   >
 }
 
@@ -80,11 +80,11 @@ export interface ViewPorps<T> {
 
 export type SearchErrorType = 'NO_RESULT' | 'NETWORK_ERROR'
 
-export function handleNoResult<T = any>(): Promise<T> {
+export function handleNoResult<T = any> (): Promise<T> {
   return Promise.reject(new Error('NO_RESULT'))
 }
 
-export function handleNetWorkError(): Promise<never> {
+export function handleNetWorkError (): Promise<never> {
   return Promise.reject(new Error('NETWORK_ERROR'))
 }
 
@@ -93,11 +93,11 @@ export function handleNetWorkError(): Promise<never> {
  * The dict object is huge.
  * @param langCode
  */
-export async function getChsToChz(): Promise<(text: string) => string>
-export async function getChsToChz(
+export async function getChsToChz (): Promise<(text: string) => string>
+export async function getChsToChz (
   langCode: string
 ): Promise<null | ((text: string) => string)>
-export async function getChsToChz(
+export async function getChsToChz (
   langCode?: string
 ): Promise<null | ((text: string) => string)> {
   return langCode == null || /zh-TW|zh-HK/i.test(langCode)
@@ -108,21 +108,21 @@ export async function getChsToChz(
 /**
  * Get the textContent of a node or its child.
  */
-export function getText(
+export function getText (
   parent: ParentNode | null,
   selector?: string,
   transform?: null | ((text: string) => string)
 ): string
-export function getText(
+export function getText (
   parent: ParentNode | null,
   transform?: null | ((text: string) => string),
   selector?: string
 ): string
-export function getText(
+export function getText (
   parent: ParentNode | null,
   ...args:
-    | [string?, (null | ((text: string) => string))?]
-    | [(null | ((text: string) => string))?, string?]
+    | [string?, (null | ((text: string) => string))?] |
+    [(null | ((text: string) => string))?, string?]
 ): string {
   if (!parent) {
     return ''
@@ -167,7 +167,7 @@ const defaultDOMPurifyConfig: DOMPurify.Config = {
   FORBID_ATTR: ['style']
 }
 
-export function getHTML(
+export function getHTML (
   parent: ParentNode,
   {
     mode = 'innerHTML',
@@ -219,7 +219,7 @@ export function getHTML(
   return transform ? transform(content) : content
 }
 
-export function getInnerHTML(
+export function getInnerHTML (
   host: string,
   parent: ParentNode,
   selectorOrConfig: string | Omit<GetHTMLConfig, 'mode' | 'host'> = {}
@@ -232,7 +232,7 @@ export function getInnerHTML(
   )
 }
 
-export function getOuterHTML(
+export function getOuterHTML (
   host: string,
   parent: ParentNode,
   selectorOrConfig: string | Omit<GetHTMLConfig, 'mode' | 'host'> = {}
@@ -248,7 +248,7 @@ export function getOuterHTML(
 /**
  * Remove a child node from a parent node
  */
-export function removeChild(parent: ParentNode, selector: string) {
+export function removeChild (parent: ParentNode, selector: string) {
   const child = parent.querySelector(selector)
   if (child) {
     child.remove()
@@ -258,14 +258,14 @@ export function removeChild(parent: ParentNode, selector: string) {
 /**
  * Remove all the matching child nodes from a parent node
  */
-export function removeChildren(parent: ParentNode, selector: string) {
+export function removeChildren (parent: ParentNode, selector: string) {
   parent.querySelectorAll(selector).forEach(el => el.remove())
 }
 
 /**
  * HEX string to normal string
  */
-export function decodeHEX(text: string): string {
+export function decodeHEX (text: string): string {
   return text.replace(/\\x([0-9A-Fa-f]{2})/g, (m, p1) =>
     String.fromCharCode(parseInt(p1, 16))
   )
@@ -275,12 +275,12 @@ export function decodeHEX(text: string): string {
  * Will jump to the website instead of searching
  * when clicking on the dict panel
  */
-export function externalLink($a: HTMLElement) {
+export function externalLink ($a: HTMLElement) {
   $a.setAttribute('target', '_blank')
   $a.setAttribute('rel', 'nofollow noopener noreferrer')
 }
 
-export function getFullLink(host: string, el: Element, attr: string): string {
+export function getFullLink (host: string, el: Element, attr: string): string {
   if (host.endsWith('/')) {
     host = host.slice(0, -1)
   }
@@ -329,7 +329,7 @@ export const useHorizontalScroll = <T extends HTMLElement>() => {
 
   return tabsRef
 }
-function _useHorizontalScrollOnWheel(event$: Observable<WheelEvent>) {
+function _useHorizontalScrollOnWheel (event$: Observable<WheelEvent>) {
   return event$.pipe(
     map(e => {
       e.stopPropagation()
