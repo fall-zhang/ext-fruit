@@ -6,7 +6,7 @@ import { withKnobs } from '@storybook/addon-knobs'
 import { withSaladictPanel } from '@/_helpers/storybook'
 import faker from 'faker'
 import { MtaBox } from './MtaBox'
-
+import mtaStyle from './MtaBox.scss?raw'
 export default {
   title: 'Content Scripts|Dict Panel',
 
@@ -15,7 +15,7 @@ export default {
     jsxDecorator,
     withKnobs,
     withSaladictPanel({
-      head: <style>{require('./MtaBox.scss').toString()}</style>
+      head: <style>{mtaStyle}</style>
     }),
     (Story) => <Story />
   ],
@@ -28,7 +28,7 @@ export default {
   }
 }
 
-export const _MtaBox = () => {
+export const MtaBoxStory = () => {
   const [expand, setExpand] = useState(true)
   const [text, setText] = useState(() => faker.lorem.paragraph(2))
 
@@ -51,6 +51,6 @@ export const _MtaBox = () => {
   )
 }
 
-_MtaBox.story = {
+MtaBoxStory.story = {
   name: 'MtaBox'
 }

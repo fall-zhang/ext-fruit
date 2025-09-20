@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions'
 import { withKnobs, select, number } from '@storybook/addon-knobs'
 import { withi18nNS, withSaladictPanel } from '@/_helpers/storybook'
 import { DictItem } from './DictItem'
-
+import DictItemStyle from './DictItem.scss?raw'
 export default {
   title: 'Content Scripts|Dict Panel',
 
@@ -12,7 +12,7 @@ export default {
     withKnobs,
     withi18nNS('content'),
     withSaladictPanel({
-      head: <style>{require('./DictItem.scss').toString()}</style>,
+      head: <style>{DictItemStyle}</style>,
       height: 'auto'
     })
   ],

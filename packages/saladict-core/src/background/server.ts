@@ -3,12 +3,12 @@ import { timeout, timer } from '@/_helpers/promise-more'
 import { getSuggests } from '@/_helpers/getSuggests'
 import { injectDictPanel } from '@/_helpers/injectSaladictInternal'
 import { newWord, Word } from '@/_helpers/record-manager'
-import { Message, MessageResponse } from '@/typings/message'
+import { Message, MessageResponse } from '@/types/message'
 import {
   SearchFunction,
   DictSearchResult,
   GetSrcPageFunction
-} from '@P/trans-api/src/helpers'
+} from '@/components/Dictionaries/helpers'
 import {
   isInNotebook,
   saveWord,
@@ -46,7 +46,7 @@ export class BackgroundServer {
     return import(
       /* webpackInclude: /engine\.ts$/ */
       /* webpackMode: "lazy" */
-      `@/components/dictionaries/${id}/engine.ts`
+      `@/components/Dictionaries/${id}/engine.ts`
     )
   }
 

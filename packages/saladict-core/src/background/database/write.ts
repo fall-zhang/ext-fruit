@@ -1,5 +1,5 @@
 import { Word, DBArea } from '@/_helpers/record-manager'
-import { Message } from '@/typings/message'
+import { Message } from '@/types/message'
 import { getDB } from './core'
 
 export async function saveWord ({

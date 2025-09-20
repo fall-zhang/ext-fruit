@@ -19,7 +19,7 @@ import { newWord } from '@/_helpers/record-manager'
 import { MenuBar } from './MenuBar'
 import { timer } from '@/_helpers/promise-more'
 import { SuggestItem } from './Suggest'
-
+import menubarStyle from './MenuBar.scss?raw'
 export default {
   title: 'Content Scripts|Dict Panel/Menubar',
 
@@ -28,7 +28,7 @@ export default {
     jsxDecorator,
     withKnobs,
     withSaladictPanel({
-      head: <style>{require('./MenuBar.scss').toString()}</style>,
+      head: <style>{menubarStyle}</style>,
       backgroundColor: 'transparent'
     }),
     withSideEffect(
@@ -57,8 +57,12 @@ export const _MenuBar = () => {
   }))
 
   const profilesOption = profiles.reduce((o, p) => {
-    o[p.name] = p.id
-    return o
+    const result = {
+      ...o,
+      [p.name]: p.id
+    }
+    // o[p.name] = p.id
+    return result
   }, {})
 
   return (

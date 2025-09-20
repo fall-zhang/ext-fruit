@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import i18next from 'i18next'
 import { action } from '@storybook/addon-actions'
 import { jsxDecorator } from 'storybook-addon-jsx'
@@ -14,7 +14,7 @@ import { SuggestItem } from './Suggest'
 import { SearchBox } from './SearchBox'
 import { timer } from '@/_helpers/promise-more'
 import { useTranslate } from '@/_helpers/i18n'
-
+import SearchBoxStyle from './SearchBox.scss?raw'
 export default {
   title: 'Content Scripts|Dict Panel/Menubar',
 
@@ -24,7 +24,7 @@ export default {
     withKnobs,
     (story) => <BtnsParent story={story} />,
     withSaladictPanel({
-      head: <style>{require('./SearchBox.scss').toString()}</style>,
+      head: <style>{SearchBoxStyle}</style>,
       backgroundColor: 'transparent'
     }),
     withi18nNS('content'),
@@ -47,7 +47,7 @@ export default {
   }
 }
 
-export const _SearchBox = () => {
+export const BaseSearchBox:FC = () => {
   const [text, setText] = useState('text')
   return (
     <SearchBox
@@ -66,10 +66,6 @@ export const _SearchBox = () => {
       onHeightChanged={action('Height Changed')}
     />
   )
-}
-
-_SearchBox.story = {
-  name: 'SearchBox'
 }
 
 function fakeSuggest (text: string): SuggestItem[] {

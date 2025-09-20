@@ -1,8 +1,9 @@
 import * as React from 'react'
 import classNames from 'classnames'
 import WaveSurfer from 'wavesurfer.js'
-import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js'
-import NumberEditor from 'react-number-editor'
+import RegionsPlugin from 'wavesurfer.js/dist/plugins/regions'
+// import NumberEditor from 'react-number-editor'
+import { InputNumber as NumberEditor } from 'antd'
 import { message, storage } from '@/_helpers/browser-api'
 import { isFirefox } from '@/_helpers/saladict'
 import { SoundTouch, SimpleFilter, getWebAudioNode } from 'soundtouchjs'
@@ -159,7 +160,8 @@ export class Waveform extends React.PureComponent<
     this.state.loop ? this.play() : this.pause()
   }
 
-  updateSpeed = (speed: number) => {
+  updateSpeed = (speed: number|null) => {
+    if (speed === null) return
     this.setState({ speed })
 
     if (speed < 0.1 || speed > 3) {
@@ -296,9 +298,9 @@ export class Waveform extends React.PureComponent<
         }
       })
 
-    storage.local.get('waveform_pitch').then(({ waveform_pitch }) => {
-      if (waveform_pitch != null) {
-        this.updatePitchStretch(Boolean(waveform_pitch))
+    storage.local.get('waveform_pitch').then(({ waveformPitch }) => {
+      if (waveformPitch != null) {
+        this.updatePitchStretch(Boolean(waveformPitch))
       }
     })
   }
@@ -336,8 +338,8 @@ export class Waveform extends React.PureComponent<
               min={0.1} // too low could cause error
               max={3}
               step={0.005}
-              decimals={3}
-              onValueChange={this.updateSpeed}
+              precision={3}
+              onChange={this.updateSpeed}
             />
             <label className="saladict-waveformBtn_label" title="Loop">
               {this.state.loop

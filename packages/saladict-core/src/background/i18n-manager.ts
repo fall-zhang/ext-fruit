@@ -1,11 +1,15 @@
+<<<<<<< HEAD
 import i18next, { TFunction } from 'i18next'
 import type { i18n } from 'i18next'
+=======
+import i18next, { TFunction, i18n } from 'i18next'
+>>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2
 import { i18nLoader, Namespace } from '@/_helpers/i18n'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 
 export class I18nManager {
-  private static instance: I18nManager
+  private static instance: any // I18nManager
 
   static async getInstance () {
     if (!I18nManager.instance) {

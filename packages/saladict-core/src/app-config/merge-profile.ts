@@ -101,7 +101,7 @@ export function mergeProfile (
             mergeBoolean(`dicts.all.${id}.options.${opt}`)
           } else if (isString(value)) {
             const choice = get(oldProfile, `dicts.all.${id}.options.${opt}`)
-            const options = get(base, `dicts.all.${id}.options_sel.${opt}`)
+            const options = get(base, `dicts.all.${id}.optionsSel.${opt}`)
             set(
               base,
               `dicts.all.${id}.options.${opt}`,

@@ -6,7 +6,7 @@ import { withKnobs, select } from '@storybook/addon-knobs'
 import { withi18nNS, withSaladictPanel } from '@/_helpers/storybook'
 import { Profiles } from './Profiles'
 import { action } from '@storybook/addon-actions'
-
+import profilesStyle from './Profiles.scss?raw'
 export default {
   title: 'Content Scripts|Dict Panel/Menubar',
 
@@ -15,7 +15,7 @@ export default {
     jsxDecorator,
     withKnobs,
     withSaladictPanel({
-      head: <style>{require('./Profiles.scss').toString()}</style>,
+      head: <style>{profilesStyle}</style>,
       backgroundColor: 'transparent'
     }),
     (stroy) => <div style={{ marginLeft: 50 }}>{stroy()}</div>,

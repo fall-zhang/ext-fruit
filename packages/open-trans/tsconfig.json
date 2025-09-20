@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "module": "ES2020",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "esnext",
+    "jsx": "react-jsx",
+    "types": ["node"],
+    "paths": {
+      "open-trans/*": ["./"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

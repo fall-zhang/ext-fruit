@@ -1,10 +1,19 @@
 /*-----------------------------------------------*\
     Variables
 \*-----------------------------------------------*/
+<<<<<<< HEAD:packages/saladict-core/src/views/word-editor/WordEditor/WordEditor.scss
 // @import '@P/_sass_shared/_theme.scss';
 @import '@P/saladict-core/src/assets/styles/_theme.scss';
+=======
+@use '@/styles/_theme.scss';
+
+/*-----------------------------------------------*\
+Libs
+\*-----------------------------------------------*/
+@use 'normalize-scss';
+>>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2:packages/saladict-core/src/content/components/WordEditor/WordEditor.scss
 
 /*-----------------------------------------------*\
     Components
 \*-----------------------------------------------*/
-@import './Notes.scss';
+@use './Notes.scss';

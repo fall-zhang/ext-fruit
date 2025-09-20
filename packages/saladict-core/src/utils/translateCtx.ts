@@ -72,8 +72,11 @@ export async function translateCtxs (
       })
     )
   ).reduce((result, { id, content }) => {
-    result[id] = content
-    return result
+    // result[id] = content
+    return {
+      ...result,
+      [id]: content
+    }
   }, {} as CtxTranslateResults)
 }
 

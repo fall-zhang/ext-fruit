@@ -12,6 +12,8 @@ import {
   withi18nNS
 } from '@/_helpers/storybook'
 import faker from 'faker'
+import wordEditorPanelStyle from './WordEditorPanel.scss'
+import themeStyle from '@/styles/_theme.scss'
 
 export default {
   title: 'Content Scripts|WordEditor',
@@ -84,7 +86,7 @@ _WordEditorPanel.story = {
   },
 
   decorators: [
-    withLocalStyle(require('./WordEditorPanel.scss')),
-    withLocalStyle(require('@/_sass_shared/_theme.scss'))
+    withLocalStyle(wordEditorPanelStyle),
+    withLocalStyle(themeStyle)
   ]
 }

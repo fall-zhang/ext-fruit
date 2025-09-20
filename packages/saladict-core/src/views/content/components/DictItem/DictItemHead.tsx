@@ -47,13 +47,6 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
     }
   }, [props.isSearching])
 
-  const icon = useMemo(
-    () =>
-      browser.runtime.getURL(
-        require('@/components/dictionaries/' + props.dictID + '/favicon.png')
-      ),
-    [props.dictID]
-  )
 
   const menuItems = useMemo(() => {
     const menuItems: HoverBoxItem[] = []
@@ -97,7 +90,7 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
         isSearching: props.isSearching
       })}
     >
-      <img className="dictItemHead-Logo" src={icon} alt="dict logo" />
+      <img className="dictItemHead-Logo" src={'@/components/Dictionaries/' + props.dictID + '/favicon.png'} alt="dict logo" />
       <h1 className="dictItemHead-Title">
         <a
           href="#"

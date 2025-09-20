@@ -1,4 +1,4 @@
-import zhTW from '@opentranslate/languages/locales/zh-TW.json'
+import zhTW from '@P/open-trans/languages/locales/zh-TW.json'
 import { locale as _locale } from '../zh-CN/langcode'
 
 export const locale: typeof _locale = {

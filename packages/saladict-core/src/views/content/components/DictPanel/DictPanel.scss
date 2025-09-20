@@ -1,4 +1,4 @@
-@import '@/_sass_shared/_theme.scss';
+@import '@/styles/_theme.scss';
 
 .dictPanel-FloatBox-Container {
   position: relative;
@@ -31,7 +31,11 @@
   -webkit-overflow-scrolling: touch;
 }
 
+<<<<<<< HEAD:packages/saladict-core/src/views/content/components/DictPanel/DictPanel.scss
 @import '@P/saladict-core/src/assets/styles/_fancy-scrollbar.scss';
+=======
+@import '@/styles/_fancy-scrollbar.scss';
+>>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2:packages/saladict-core/src/content/components/DictPanel/DictPanel.scss
 
 @import '../MenuBar/MenuBar.scss';
 @import '../MtaBox/MtaBox.scss';

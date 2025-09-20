@@ -3,7 +3,6 @@ import { Switch, Checkbox, Button } from 'antd'
 import { concat, from } from 'rxjs'
 import { pluck, map } from 'rxjs/operators'
 import { useObservableState, useObservable, useRefFn } from 'observable-hooks'
-import { objectKeys } from '@/typings/helpers'
 import { useTranslate } from '@/_helpers/i18n'
 import { storage } from '@/_helpers/browser-api'
 import { useSelector } from '@/content/redux'
@@ -31,14 +30,17 @@ export const Notebook: FC = () => {
         storage.sync.createStream('syncConfig').pipe(pluck('newValue'))
       ).pipe(
         map(syncConfig => {
+          const newConfig = {
+            ...syncConfig
+          }
           // legacy fix
           if (
             syncConfig?.webdav &&
             !Object.prototype.hasOwnProperty.call(syncConfig.webdav, 'enable')
           ) {
-            syncConfig.webdav.enable = !!syncConfig.webdav.url
+            newConfig.webdav.enable = !!syncConfig.webdav.url
           }
-          return syncConfig
+          return newConfig
         })
       )
     )
@@ -64,7 +66,7 @@ export const Notebook: FC = () => {
     {
       key: getConfigPath('ctxTrans'),
       style: { marginBottom: 10 },
-      items: objectKeys(ctxTrans).map(id => ({
+      items: Object.keys(ctxTrans).map(id => ({
         name: getConfigPath('ctxTrans', id),
         valuePropName: 'checked',
         style: { marginBottom: 0 },

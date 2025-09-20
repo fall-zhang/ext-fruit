@@ -3,6 +3,7 @@ import classnames from 'classnames'
 import { useRefFn } from 'observable-hooks'
 import { ShadowPortal, defaultTimeout } from '@/components/ShadowPortal'
 import { WordEditor, WordEditorProps } from './WordEditor'
+import styleFile from './WordEditor.shadow.scss?raw'
 
 export interface WordEditorPortalProps extends WordEditorProps {
   show: boolean
@@ -13,7 +14,7 @@ export interface WordEditorPortalProps extends WordEditorProps {
 export const WordEditorPortal: FC<WordEditorPortalProps> = props => {
   const { show, withAnimation, darkMode, ...restProps } = props
   const editorStyles = useRefFn(() => (
-    <style>{require('./WordEditor.shadow.scss').toString()}</style>
+    <style>{styleFile}</style>
   )).current
   return (
     <ShadowPortal

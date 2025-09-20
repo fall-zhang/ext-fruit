@@ -29,7 +29,7 @@ import {
   getSentenceFromSelection
 } from 'get-selection-more'
 import { checkSupportedLangs } from '@/_helpers/lang-check'
-import { Message } from '@/typings/message'
+import { Message } from '@/types/message'
 import { isTypeField, newSelectionWord } from './helper'
 import { isTagName } from '@/_helpers/dom'
 

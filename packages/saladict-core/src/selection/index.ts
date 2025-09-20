@@ -81,24 +81,24 @@ if (!window.__SALADICT_SELECTION_LOADED__) {
    * Escape key pressed
    */
   whenKeyPressed(isEscapeKey).subscribe(() =>
-    message.self.send({ type: 'ESCAPE_KEY' })
+    message.self.send({ type: 'ESCAPE_KEY', payload: '' })
   )
 
   config$$.pipe(switchMap(createQuickSearchStream)).subscribe(() => {
-    message.self.send({ type: 'TRIPLE_CTRL' })
+    message.self.send({ type: 'TRIPLE_CTRL', payload: '' })
   })
 
   config$$.pipe(switchMap(createSelectTextStream)).subscribe(async result => {
     if (result.word) {
       sendMessage({
-        dbClick: false,
         altKey: false,
         shiftKey: false,
         ctrlKey: false,
         metaKey: false,
-        self: false,
         instant: false,
         force: false,
+        self: false,
+        dbClick: false,
         ...result,
         word: await newSelectionWord(result.word)
       })

@@ -49,8 +49,8 @@ const noop = () => {
  * values: {Map} listeners, key: message type, values: generated or user's callback functions
  */
 const messageListeners: WeakMap<
-  Function,
-  Map<MsgType | '__DEFAULT_MSGTYPE__', Function>
+  any,
+  Map<MsgType | '__DEFAULT_MSGTYPE__', any>
 > = new WeakMap()
 
 /**
@@ -59,8 +59,8 @@ const messageListeners: WeakMap<
  * values: {Map} listeners, key: message type, values: generated or user's callback functions
  */
 const messageSelfListeners: WeakMap<
-  Function,
-  Map<MsgType | '__DEFAULT_MSGTYPE__', Function>
+  any,
+  Map<MsgType | '__DEFAULT_MSGTYPE__', any>
 > = new WeakMap()
 
 /**

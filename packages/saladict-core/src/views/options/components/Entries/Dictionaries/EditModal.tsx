@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react'
 import { shallowEqual } from 'react-redux'
-import { Translator } from '@opentranslate/translator'
+import { Translator } from '@P/open-trans/translator'
 import { Switch, Select, Checkbox, Button, Modal } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Rule } from 'antd/lib/form'
@@ -156,14 +156,14 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
             if (optKey === 'tl' || optKey === 'tl2') {
               const getTranslator:
                   | undefined
-                  | (() => Translator) = require(`@/components/dictionaries/${dictID}/engine`)
+                  | (() => Translator) = import(`@/components/Dictionaries/${dictID}/engine`)
                     .getTranslator
 
               const langs = getTranslator
                 ? getTranslator()
                   .getSupportLanguages()
                   .map(lang => (lang === 'auto' ? 'default' : lang))
-                : allDicts[dictID].options_sel[optKey]
+                : allDicts[dictID].optionsSel[optKey]
 
               item.children = (
                 <Select>
@@ -178,7 +178,7 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
             } else {
               item.children = (
                 <Select>
-                  {allDicts[dictID].options_sel[optKey].map(
+                  {allDicts[dictID].optionsSel[optKey].map(
                     (option: string) => (
                       <Select.Option value={option} key={option}>
                         {t(`dicts:${dictID}.options.${optKey}-${option}`)}

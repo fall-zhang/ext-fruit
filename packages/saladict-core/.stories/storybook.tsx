@@ -3,8 +3,7 @@ import classNames from 'classnames'
 import root from 'react-shadow'
 import i18next from 'i18next'
 import { number, boolean } from '@storybook/addon-knobs'
-import SinonChrome from 'sinon-chrome'
-import { Message } from '@/typings/message'
+import { Message } from '@/types/message'
 import { I18nContext, Namespace } from './i18n'
 
 interface StyleWrapProps {
@@ -12,7 +11,7 @@ interface StyleWrapProps {
   children:ReactElement
 }
 
-export const browser: typeof SinonChrome = window.browser as any
+export const browser = window.browser as any
 
 export const StyleWrap: FC<StyleWrapProps> = props => {
   return (
@@ -123,8 +122,8 @@ export function withSaladictPanel (options: WithSaladictPanelOptions) {
             darkMode
           })}
         >
-          <style>{require('@/_sass_shared/_reset.scss').toString()}</style>
-          <style>{require('@/_sass_shared/_theme.scss').toString()}</style>
+          <style>{require('@/styles/_reset.scss').toString()}</style>
+          <style>{require('@/styles/_theme.scss').toString()}</style>
           <div
             className="dictPanel-Root saladict-theme"
             style={{

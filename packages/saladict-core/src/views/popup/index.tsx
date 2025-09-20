@@ -8,7 +8,7 @@ import { getConfig } from '@/_helpers/config-manager'
 import { message, openUrl } from '@/_helpers/browser-api'
 import { saveWord, Word } from '@/_helpers/record-manager'
 import { translateCtxs, genCtxText } from '@/_helpers/translateCtx'
-import { Message } from '@/typings/message'
+import { Message } from '@/types/message'
 
 import { Provider as ProviderRedux } from 'react-redux'
 import { createStore } from '@/content/redux'

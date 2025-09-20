@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { FC, useRef } from 'react'
 import { shallowEqual } from 'react-redux'
 import { useUpdateEffect } from 'react-use'

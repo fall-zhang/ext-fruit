@@ -1,0 +1,72 @@
+import fs from 'fs-extra'
+import path from 'path'
+import fg from 'fast-glo'
+import ejs from 'ejs'
+import { argv } from 'yargs'
+import packageJSON from '../package.json'
+import { __dirname } from 'node:fs'
+import console from 'node:console'
+import process from 'node:process'
+const packagePath = path.join(__dirname, '../../packages')
+
+async function checkExistingTranslator (engine) {
+  const list = await fs.readdir(packagePath)
+
+  if (list.some(name => name === 'service-' + engine)) {
+    console.error(`\nTranslator ${engine} exists.\n`)
+    process.exit(1)
+  }
+}
+
+function checkTempalteFiles (entries) {
+  const invalidFile = entries.find(entry => !entry.endsWith('ejs'))
+  if (invalidFile) {
+    console.error(
+      `\nFile ${path.resolve(__dirname, invalidFile)} is not a template.\n`
+    )
+    process.exit(1)
+  }
+}
+
+async function main () {
+  if (!argv._[0]) {
+    console.error(
+      '\nTranslator name is required.\n\nyarn create-translator <name>\n'
+    )
+    process.exit(1)
+  }
+
+  const engine = argv._[0].toLowerCase()
+  await checkExistingTranslator(engine)
+
+  const templatePath = path.join(__dirname, 'template')
+
+  const entries = await fg(['**/*'], {
+    cwd: templatePath,
+    dot: true
+  })
+  checkTempalteFiles(entries)
+
+  entries.forEach(async entry => {
+    const data = {
+      version: packageJSON.version,
+      engine,
+      engineTitled: engine[0].toUpperCase() + engine.slice(1)
+    }
+
+    const result = await ejs.renderFile(path.join(templatePath, entry), data, {
+      async: true
+    })
+
+    await fs.outputFile(
+      path.join(
+        packagePath,
+        `service-${engine}`,
+        entry.replace(/{([^}]*)}/g, (m, key) => data[key]).slice(0, -4)
+      ),
+      result
+    )
+  })
+}
+
+main()

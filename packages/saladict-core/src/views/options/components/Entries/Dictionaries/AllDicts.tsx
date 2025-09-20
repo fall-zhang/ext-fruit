@@ -2,7 +2,6 @@ import React, { FC, useMemo } from 'react'
 import { Card, List, Switch } from 'antd'
 import { DictID } from '@/app-config'
 import { useSelector } from '@/content/redux'
-import { objectKeys } from '@/typings/helpers'
 import { DictTitle } from './DictTitle'
 
 export interface AllDictsProps {
@@ -15,7 +14,7 @@ export interface AllDictsProps {
  */
 export const AllDicts: FC<AllDictsProps> = props => {
   const allDicts = useSelector(state => state.activeProfile.dicts.all)
-  const allDictIds = useMemo(() => objectKeys(allDicts), [allDicts])
+  const allDictIds = useMemo(() => Object.keys(allDicts), [allDicts])
   const selected = useMemo(() => new Set(props.value || []), [props.value])
 
   return (

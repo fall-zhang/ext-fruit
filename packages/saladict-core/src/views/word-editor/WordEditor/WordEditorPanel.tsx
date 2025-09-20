@@ -1,6 +1,10 @@
 import React, { FC, ReactNode } from 'react'
+<<<<<<< HEAD:packages/saladict-core/src/views/word-editor/WordEditor/WordEditorPanel.tsx
 // import { isInternalPage } from '@/_helpers/saladict'
 import { isInternalPage } from '@P/saladict-core/src/core/saladict-state'
+=======
+import { isInternalPage } from '@/_helpers/saladict'
+>>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2:packages/saladict-core/src/content/components/WordEditor/WordEditorPanel.tsx
 
 export type WordEditorPanelBtns = Array<{
   type?: 'normal' | 'primary'
@@ -9,6 +13,7 @@ export type WordEditorPanelBtns = Array<{
 }>
 
 export interface WordEditorPanelProps {
+  children:ReactNode
   containerWidth: number
   title: React.ReactNode
   btns?: WordEditorPanelBtns

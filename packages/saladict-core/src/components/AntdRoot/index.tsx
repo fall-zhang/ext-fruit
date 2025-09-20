@@ -31,9 +31,19 @@ export const initAntdRoot = async (
   root.render(<I18nContextProvider>
     <ReduxProvider store={store}>
       <AntdRootContainer gaPath={gaPath} render={render} />
-      <SaladBowlContainer />
-      <DictPanelContainer />
-      <WordEditorContainer />
+      <SaladBowlContainer panelCSS={''} x={0} y={0} enableHover={false} onActive={ () => {} } show={false} withAnimation={false} />
+      <DictPanelContainer darkMode={false} panelCSS={''} fontSize={0} show={false} withAnimation={false} coord={{
+        x: 0,
+        y: 0
+      }} takeCoordSnapshot={false} width={0} height={0} maxHeight={0} menuBar={undefined} mtaBox={undefined} dictList={undefined} waveformBox={undefined} dragStartCoord={null} onDragEnd={function (): void {
+        throw new Error('Function not implemented.')
+      } } />
+      <WordEditorContainer darkMode={false} ctxTrans={undefined} show={false} withAnimation={false} onClose={function (): void {
+        throw new Error('Function not implemented.')
+      } } containerWidth={0} wordEditor={{
+        word: undefined,
+        translateCtx: false
+      }} />
     </ReduxProvider>
   </I18nContextProvider>)
 }
@@ -73,9 +83,9 @@ async function switchAntdTheme (darkMode: boolean): Promise<void> {
 
     let loaded = false
 
-    // @ts-ignore
+    // @ts-expect-error
     $link.onreadystatechange = function () {
-      // @ts-ignore
+      // @ts-expect-error
       if (this.readyState === 'complete' || this.readyState === 'loaded') {
         if (loaded === false) {
           resolve()
