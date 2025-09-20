@@ -27,11 +27,7 @@ export const DictPanelPortal: FC<DictPanelPortalProps> = props => {
   const [show, setShow] = useState(showProps)
 
   const panelStyle = useRefFn(() => (
-<<<<<<< HEAD:packages/saladict-core/src/views/content/components/DictPanel/DictPanel.portal.tsx
     <style>{import('./DictPanel.shadow.scss').toString()}</style>
-=======
-    <style>{styleText}</style>
->>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2:packages/saladict-core/src/content/components/DictPanel/DictPanel.portal.tsx
   )).current
 
   useUpdateEffect(() => {

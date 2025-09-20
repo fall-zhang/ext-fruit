@@ -1,5 +1,5 @@
 import Dexie from 'dexie'
-import { Word } from '@/_helpers/record-manager'
+import { Word } from '../../store/selection/types'
 
 export class SaladictDB extends Dexie {
   // "@ts-expect-error"

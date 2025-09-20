@@ -11,8 +11,6 @@ const Services = reqServices.keys().reduce((map, path) => {
 
 const activeServices: Map<string, SyncService> = new Map()
 
-<<<<<<< HEAD
-=======
 export function startSyncServiceInterval () {
   concat(
     from(storage.sync.get('syncConfig')).pipe(pluck('syncConfig')),
@@ -63,7 +61,6 @@ export function startSyncServiceInterval () {
     })
 }
 
->>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2
 export async function syncServiceUpload (
   options:
     | {

@@ -158,7 +158,6 @@ export const DictPanel: FC<DictPanelProps> = props => {
 
 function reconcileX (width: number, x: number): number {
   const winWidth = window.innerWidth
-<<<<<<< HEAD:packages/saladict-core/src/views/content/components/DictPanel/DictPanel.tsx
   let newX:number = 10
   // also counted scrollbar width
   if (x + width + 25 > winWidth) {
@@ -166,15 +165,6 @@ function reconcileX (width: number, x: number): number {
   }
 
   if (x < 10) {
-=======
-  let newX = x
-  // also counted scrollbar width
-  if (newX + width + 25 > winWidth) {
-    newX = winWidth - 25 - width
-  }
-
-  if (newX < 10) {
->>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2:packages/saladict-core/src/content/components/DictPanel/DictPanel.tsx
     newX = 10
   }
 

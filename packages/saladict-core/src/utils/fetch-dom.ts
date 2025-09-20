@@ -1,9 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios'
 
-<<<<<<< HEAD
-=======
-
->>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2
 /** about 6 time faster as it typically takes less than 5ms to parse a DOM */
 export function fetchDirtyDOM (
   url: string,

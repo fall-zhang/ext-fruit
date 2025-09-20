@@ -40,17 +40,6 @@ export function deflate (profile: Profile): ProfileCompressed {
   }
 }
 
-<<<<<<< HEAD:apps/platform-extension/src/utils/profile-manager.ts
-export function inflate (profile: Profile | ProfileCompressed): Profile
-export function inflate (profile: undefined): undefined
-export function inflate (
-  profile?: Profile | ProfileCompressed
-): Profile | undefined
-export function inflate (
-  profile?: Profile | ProfileCompressed
-): Profile | undefined {
-  if (profile && profile.v === 1) {
-=======
 type InflateFn = {
   (profile: Profile | ProfileCompressed): Profile
   (profile: undefined): undefined
@@ -61,7 +50,6 @@ export const inflate:InflateFn = (
   profile
 ) => {
   if (profile?.v === 1) {
->>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2:packages/saladict-core/src/_helpers/profile-manager.ts
     return JSON.parse(
       pako.inflate((profile as ProfileCompressed).d, { to: 'string' })
     )

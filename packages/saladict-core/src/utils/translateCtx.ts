@@ -1,6 +1,6 @@
 import { DictID, AppConfig } from '@/app-config'
 import { MachineTranslateResult } from '@/components/MachineTrans/engine'
-import { message } from './browser-api'
+// import { message } from './browser-api'
 import { isPDFPage } from './saladict'
 
 export type CtxTranslatorId = keyof AppConfig['ctxTrans']
