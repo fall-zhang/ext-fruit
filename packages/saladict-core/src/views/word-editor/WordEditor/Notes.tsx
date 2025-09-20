@@ -1,4 +1,4 @@
-/* eslint-disable max-lines-per-function */
+
 import React, { FC, useState, useEffect } from 'react'
 import { useUpdateEffect } from 'react-use'
 import {
@@ -22,7 +22,7 @@ import {
 //   deleteWords,
 //   saveWord
 // } from '@/_helpers/record-manager'
-import { getWordsByText, deleteWords, saveWord } from '@P/saladict-core/src/background/database'
+import { getWordsByText, deleteWords, saveWord } from '@P/saladict-core/src/core/database'
 import { AppConfig } from '@P/saladict-core/src/app-config'
 // import {
 //   translateCtxs,

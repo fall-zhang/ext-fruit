@@ -57,16 +57,16 @@ export type ExtractOptionsFromConfig<Config> = Config extends MachineDictItem<
   : never
 
 type SelOptionType = {
-    options: {
-      tl: 'default' | Language
-      tl2: 'default' | Language
-      keepLF: 'none' | 'all' | 'webpage' | 'pdf'
-    }
-    optionsSel: {
-      tl: ReadonlyArray<'default' | Language>
-      tl2: ReadonlyArray<'default' | Language>
-    }
+  options: {
+    tl: 'default' | Language
+    tl2: 'default' | Language
+    keepLF: 'none' | 'all' | 'webpage' | 'pdf'
   }
+  optionsSel: {
+    tl: ReadonlyArray<'default' | Language>
+    tl2: ReadonlyArray<'default' | Language>
+  }
+}
 /**
  * Get Machine Translate arguments
  */
@@ -81,13 +81,12 @@ export async function getMTArgs (
   payload: {
     sl?: Language
     tl?: Language
-    isPDF?: boolean
   }
 ): Promise<{ sl: Language; tl: Language; text: string }> {
   if (
     options.keepLF === 'none' ||
-    (options.keepLF === 'pdf' && !payload.isPDF) ||
-    (options.keepLF === 'webpage' && payload.isPDF)
+    (options.keepLF === 'pdf') ||
+    (options.keepLF === 'webpage')
   ) {
     text = text.replace(/\n+/g, ' ')
   }
@@ -182,7 +181,7 @@ export function machineConfig<Config extends MachineDictItem<Language>> (
     preferredHeight: 320,
     selectionWC: {
       min: 1,
-      max: 999999999999999
+      max: 9999999
     },
     ...config,
     options: {

@@ -9,7 +9,6 @@ import {
   isOptionsPage,
   isStandalonePage
 } from '@/_helpers/saladict'
-import { message } from '@/_helpers/browser-api'
 import { Word, newWord } from '@/_helpers/record-manager'
 import { timer } from '@/_helpers/promise-more'
 import { MessageResponse } from '@/types/message'
@@ -52,19 +51,6 @@ export const init = (dispatch: StoreDispatch, getState: () => StoreState) => {
       case 'TEMP_DISABLED_STATE':
         if (msg.payload.op === 'set') {
           dispatch({ type: 'TEMP_DISABLED_STATE', payload: msg.payload.value })
-          setTimeout(() => {
-            const state = getState()
-            message.send({
-              type: 'SEND_TAB_BADGE_INFO',
-              payload: {
-                active: state.config.active,
-                tempDisable: state.isTempDisabled,
-                unsupported: isStandalonePage()
-                  ? false
-                  : !isTagName(document.body, 'body')
-              }
-            })
-          }, 0)
           return Promise.resolve(true)
         }
         return Promise.resolve(getState().isTempDisabled)
@@ -225,12 +211,6 @@ export const init = (dispatch: StoreDispatch, getState: () => StoreState) => {
     initPopup(dispatch, getState())
   } else if (isQuickSearchPage()) {
     initStandaloneQuickSearch(dispatch, getState())
-  } else {
-    message
-      .send<'QUERY_QS_PANEL'>({ type: 'QUERY_QS_PANEL' })
-      .then(response =>
-        dispatch({ type: 'QS_PANEL_CHANGED', payload: response })
-      )
   }
 }
 
@@ -260,14 +240,7 @@ async function initStandaloneQuickSearch (
   }
 
   if (!word) {
-    if (state.config.qsPreload === 'selection') {
-      const lastTab = Number(searchParams.get('lastTab'))
-      if (lastTab) {
-        word = await message.send<'PRELOAD_SELECTION'>(lastTab, {
-          type: 'PRELOAD_SELECTION'
-        })
-      }
-    } else if (state.config.qsPreload === 'clipboard') {
+    if (state.config.qsPreload === 'clipboard') {
       word = newWord({
         text: await message.send<'GET_CLIPBOARD'>({ type: 'GET_CLIPBOARD' }),
         title: 'From Clipboard'
@@ -287,19 +260,7 @@ async function initStandaloneQuickSearch (
 async function initPopup (dispatch: StoreDispatch, state: StoreState) {
   let word: Word | null = null
 
-  if (state.config.baPreload === 'selection') {
-    const tab = (
-      await browser.tabs.query({
-        active: true,
-        currentWindow: true
-      })
-    )[0]
-    if (tab && tab.id != null) {
-      word = await message.send<'PRELOAD_SELECTION'>(tab.id, {
-        type: 'PRELOAD_SELECTION'
-      })
-    }
-  } else if (state.config.baPreload === 'clipboard') {
+  if (state.config.baPreload === 'clipboard') {
     word = newWord({
       text: await message.send<'GET_CLIPBOARD'>({ type: 'GET_CLIPBOARD' }),
       title: 'From Clipboard'

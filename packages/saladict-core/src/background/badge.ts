@@ -47,17 +47,7 @@ onUpdated$
 
     if (options.unsupported) {
       setIcon(true, tabId)
-
     }
 
     return setDefault(tabId)
   })
-
-export function initBadge () {
-  /** Sent when content script loaded */
-  message.addListener('SEND_TAB_BADGE_INFO', ({ payload }, sender) => {
-    if (sender.tab && sender.tab.id) {
-      onUpdated$.next({ tabId: sender.tab.id, options: payload })
-    }
-  })
-}

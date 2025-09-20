@@ -21,23 +21,23 @@ if (langUI === 'zh-CN') {
 }
 
 
- type DictConfigsMutable = ReturnType<typeof getAllDicts>
+type DictConfigsMutable = ReturnType<typeof getAllDicts>
 export type DictConfigs = ReadonlyDeep<DictConfigsMutable>
 export type DictID = keyof DictConfigsMutable
 export type MtaAutoUnfold = _MtaAutoUnfold
 
 export type TCDirection =
-  | 'CENTER'
-  | 'TOP'
-  | 'RIGHT'
-  | 'BOTTOM'
-  | 'LEFT'
-  | 'TOP_LEFT'
-  | 'TOP_RIGHT'
-  | 'BOTTOM_LEFT'
-  | 'BOTTOM_RIGHT'
+  | 'CENTER' |
+  'TOP' |
+  'RIGHT' |
+  'BOTTOM' |
+  'LEFT' |
+  'TOP_LEFT' |
+  'TOP_RIGHT' |
+  'BOTTOM_LEFT' |
+  'BOTTOM_RIGHT'
 
- type InstantSearchKey = 'direct' | 'ctrl' | 'alt' | 'shift'
+type InstantSearchKey = 'direct' | 'ctrl' | 'alt' | 'shift'
 
 /** '' means no preload */
 type PreloadSource = '' | 'clipboard' | 'selection'
@@ -48,7 +48,6 @@ export type AppConfigMutable = ReturnType<typeof _getDefaultConfig>
 export type AppConfig = ReadonlyDeep<AppConfigMutable>
 
 export const getDefaultConfig: () => AppConfig = _getDefaultConfig
-export default getDefaultConfig
 
 function _getDefaultConfig () {
   return {

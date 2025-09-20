@@ -31,9 +31,9 @@ function deflate (config: AppConfig): AppConfigCompressed {
   }
 }
 
-function inflate(config: AppConfig & AppConfigCompressed): AppConfig
-function inflate(config: undefined): undefined
-function inflate(
+function inflate (config: AppConfig & AppConfigCompressed): AppConfig
+function inflate (config: undefined): undefined
+function inflate (
   config?: AppConfig & AppConfigCompressed
 ): AppConfig | undefined
 function inflate (

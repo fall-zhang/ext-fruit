@@ -145,12 +145,6 @@ export class BackgroundServer {
 
     let word: Word | undefined
 
-    if (tabs.length > 0 && tabs[0].id != null) {
-      word = await message.send<'PRELOAD_SELECTION'>(tabs[0].id, {
-        type: 'PRELOAD_SELECTION'
-      })
-    }
-
     const hasCreated = await this.qsPanelManager.hasCreated()
 
     if (hasCreated) {

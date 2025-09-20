@@ -1,4 +1,4 @@
-import { DictItem } from '@/app-config/dicts'
+import { DictItem } from '@P/saladict-core/src/app-config/dicts'
 
 export type BingConfig = DictItem<{
   tense: boolean
