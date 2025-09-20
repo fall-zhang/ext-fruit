@@ -20,7 +20,7 @@ describe('Dict/Bing/engine', () => {
       sentence: 4
     }
     return retry(() =>
-      search('love', getDefaultConfig(), profile, { isPDF: false }).then(
+      search('love', getDefaultConfig(), profile).then(
         searchResult => {
           expect(searchResult.audio).toHaveProperty(
             'us',
@@ -47,8 +47,7 @@ describe('Dict/Bing/engine', () => {
       search(
         'lose yourself in the dark',
         getDefaultConfig(),
-        getDefaultProfile(),
-        { isPDF: false }
+        getDefaultProfile()
       ).then(searchResult => {
         expect(searchResult.audio).toBeUndefined()
 
@@ -62,15 +61,14 @@ describe('Dict/Bing/engine', () => {
 
   it('should parse related result correctly', () => {
     return retry(() =>
-      search('lovxx', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(searchResult => {
-        expect(searchResult.audio).toBeUndefined()
+      search('lovxx', getDefaultConfig(), getDefaultProfile())
+        .then(searchResult => {
+          expect(searchResult.audio).toBeUndefined()
 
-        const result = searchResult.result as BingResultRelated
-        expect(result.type).toBe('related')
-        expect(result.defs.length).toBeGreaterThan(0)
-      })
+          const result = searchResult.result as BingResultRelated
+          expect(result.type).toBe('related')
+          expect(result.defs.length).toBeGreaterThan(0)
+        })
     )
   })
 })

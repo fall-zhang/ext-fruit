@@ -38,13 +38,13 @@ export class ContextMenus {
 
       const contextMenusChanged$ = createConfigStream().pipe(
         distinctUntilChanged(
-          (config1, config2) =>
-            config1 &&
-            config2 &&
-            isEqual(
+          (config1, config2) => {
+            const hasConf = config1 && config2
+            return hasConf && isEqual(
               config1.contextMenus.selected,
               config2.contextMenus.selected
             )
+          }
         ),
         filter(config => !!config)
       )
@@ -155,60 +155,60 @@ export class ContextMenus {
     const selectionText = info.selectionText || ''
     const linkUrl = info.linkUrl || ''
     switch (menuItemId) {
-    case 'google_page_translate':
-      ContextMenus.openGoogle()
-      break
-    case 'caiyuntrs':
-      ContextMenus.openCaiyunTrs()
-      break
-    case 'google_cn_page_translate':
-      ContextMenus.openGoogle()
-      break
-    case 'youdao_page_translate':
-      ContextMenus.openYoudao()
-      break
-    case 'baidu_page_translate':
-      ContextMenus.openBaiduPage()
-      break
-    case 'sogou_page_translate':
-      ContextMenus.openSogouPage()
-      break
-    case 'microsoft_page_translate':
-      ContextMenus.openMicrosoftPage()
-      break
-    case 'view_as_pdf':
-      openPDF(linkUrl, info.menuItemId !== 'view_as_pdf_ba')
-      break
-    case 'copy_pdf_url': {
-      const url = extractPDFUrl(info.pageUrl)
-      if (url) {
-        copyTextToClipboard(url)
+      case 'google_page_translate':
+        ContextMenus.openGoogle()
+        break
+      case 'caiyuntrs':
+        ContextMenus.openCaiyunTrs()
+        break
+      case 'google_cn_page_translate':
+        ContextMenus.openGoogle()
+        break
+      case 'youdao_page_translate':
+        ContextMenus.openYoudao()
+        break
+      case 'baidu_page_translate':
+        ContextMenus.openBaiduPage()
+        break
+      case 'sogou_page_translate':
+        ContextMenus.openSogouPage()
+        break
+      case 'microsoft_page_translate':
+        ContextMenus.openMicrosoftPage()
+        break
+      case 'view_as_pdf':
+        openPDF(linkUrl, info.menuItemId !== 'view_as_pdf_ba')
+        break
+      case 'copy_pdf_url': {
+        const url = extractPDFUrl(info.pageUrl)
+        if (url) {
+          copyTextToClipboard(url)
+        }
+        break
       }
-      break
-    }
-    case 'saladict':
-      ContextMenus.requestSelection()
-      break
-    case 'saladict_standalone':
-      BackgroundServer.getInstance().searchPageSelection()
-      break
-    case 'search_history':
-      openUrl(browser.runtime.getURL('history.html'))
-      break
-    case 'notebook':
-      openUrl(browser.runtime.getURL('notebook.html'))
-      break
-    default:
-      {
-        const item = window.appConfig.contextMenus.all[menuItemId]
-        if (item) {
-          const url = typeof item === 'string' ? item : item.url
-          if (url) {
-            openUrl(url.replace('%s', encodeURIComponent(selectionText)))
+      case 'saladict':
+        ContextMenus.requestSelection()
+        break
+      case 'saladict_standalone':
+        BackgroundServer.getInstance().searchPageSelection()
+        break
+      case 'search_history':
+        openUrl(browser.runtime.getURL('history.html'))
+        break
+      case 'notebook':
+        openUrl(browser.runtime.getURL('notebook.html'))
+        break
+      default:
+        {
+          const item = window.appConfig.contextMenus.all[menuItemId]
+          if (item) {
+            const url = typeof item === 'string' ? item : item.url
+            if (url) {
+              openUrl(url.replace('%s', encodeURIComponent(selectionText)))
+            }
           }
         }
-      }
-      break
+        break
     }
   }
 
@@ -259,29 +259,29 @@ export class ContextMenus {
     for (const id of contextMenus.selected) {
       let contexts: browser.contextMenus.ContextType[]
       switch (id) {
-      case 'caiyuntrs':
-      case 'google_page_translate':
-      case 'google_cn_page_translate':
-      case 'youdao_page_translate':
-      case 'sogou_page_translate':
-      case 'baidu_page_translate':
-      case 'microsoft_page_translate':
+        case 'caiyuntrs':
+        case 'google_page_translate':
+        case 'google_cn_page_translate':
+        case 'youdao_page_translate':
+        case 'sogou_page_translate':
+        case 'baidu_page_translate':
+        case 'microsoft_page_translate':
         // two for browser action
-        contexts = ctx
-        browserActionItems.push(id)
-        break
-      case 'view_as_pdf':
-        containerCtx.add('link')
-        containerCtx.add('page')
-        contexts = ['link', 'page']
-        break
-      case 'copy_pdf_url':
-        containerCtx.add('page')
-        contexts = ['page']
-        break
-      default:
-        contexts = ['selection']
-        break
+          contexts = ctx
+          browserActionItems.push(id)
+          break
+        case 'view_as_pdf':
+          containerCtx.add('link')
+          containerCtx.add('page')
+          contexts = ['link', 'page']
+          break
+        case 'copy_pdf_url':
+          containerCtx.add('page')
+          contexts = ['page']
+          break
+        default:
+          contexts = ['selection']
+          break
       }
       optionList.push({
         id,
@@ -422,40 +422,40 @@ function reportMenusEvent (
 ) {
   menuItemId = String(menuItemId).replace(/_ba$/, '')
   switch (menuItemId) {
-  case 'google_page_translate':
-    reportEvent({
-      category: 'Page_Translate',
-      action: 'Open_Google',
-      label
-    })
-    break
-  case 'caiyuntrs':
-    reportEvent({
-      category: 'Page_Translate',
-      action: 'Open_Caiyun',
-      label
-    })
-    break
-  case 'google_cn_page_translate':
-    reportEvent({
-      category: 'Page_Translate',
-      action: 'Open_Google',
-      label
-    })
-    break
-  case 'youdao_page_translate':
-    reportEvent({
-      category: 'Page_Translate',
-      action: 'Open_Youdao',
-      label
-    })
-    break
-  case 'view_as_pdf':
-    reportEvent({
-      category: 'PDF_Viewer',
-      action: 'Open_PDF_Viewer',
-      label
-    })
-    break
+    case 'google_page_translate':
+      reportEvent({
+        category: 'Page_Translate',
+        action: 'Open_Google',
+        label
+      })
+      break
+    case 'caiyuntrs':
+      reportEvent({
+        category: 'Page_Translate',
+        action: 'Open_Caiyun',
+        label
+      })
+      break
+    case 'google_cn_page_translate':
+      reportEvent({
+        category: 'Page_Translate',
+        action: 'Open_Google',
+        label
+      })
+      break
+    case 'youdao_page_translate':
+      reportEvent({
+        category: 'Page_Translate',
+        action: 'Open_Youdao',
+        label
+      })
+      break
+    case 'view_as_pdf':
+      reportEvent({
+        category: 'PDF_Viewer',
+        action: 'Open_PDF_Viewer',
+        label
+      })
+      break
   }
 }

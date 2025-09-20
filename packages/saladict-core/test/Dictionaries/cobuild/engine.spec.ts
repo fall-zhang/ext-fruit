@@ -8,7 +8,7 @@ describe('Dict/COBUILD/engine', () => {
   it('should parse result correctly', () => {
     const profile = getDefaultProfile() as ProfileMutable
     return retry(() =>
-      search('love', getDefaultConfig(), profile, { isPDF: false }).then(
+      search('love', getDefaultConfig(), profile).then(
         searchResult => {
           expect(searchResult.result).toBeTruthy()
         }

@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { Word } from '@/_helpers/record-manager'
+// import { Word } from '@/_helpers/record-manager'
+import { Word } from '@P/saladict-core/src/store/selection/types'
 import { parseCtxText } from '@/_helpers/translateCtx'
 import { AddConfig, SyncService } from '../../interface'
 import { getNotebook } from '../../helpers'

@@ -23,7 +23,7 @@ describe('Dict/Longman/engine', () => {
     }
 
     return retry(() =>
-      search('love', getDefaultConfig(), profile, { isPDF: false }).then(
+      search('love', getDefaultConfig(), profile).then(
         searchResult => {
           expect(searchResult.audio && typeof searchResult.audio.uk).toBe(
             'string'
@@ -79,7 +79,7 @@ describe('Dict/Longman/engine', () => {
     }
 
     return retry(() =>
-      search('profit', getDefaultConfig(), profile, { isPDF: false }).then(
+      search('profit', getDefaultConfig(), profile).then(
         searchResult => {
           expect(searchResult.audio && typeof searchResult.audio.uk).toBe(
             'string'
@@ -137,9 +137,7 @@ describe('Dict/Longman/engine', () => {
 
   it('should parse related result correctly', () => {
     return retry(() =>
-      search('jumblish', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(searchResult => {
+      search('jumblish', getDefaultConfig(), getDefaultProfile()).then(searchResult => {
         expect(searchResult.audio).toBeUndefined()
 
         const result = searchResult.result as LongmanResultRelated

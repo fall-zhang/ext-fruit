@@ -7,9 +7,7 @@ import { describe, expect, it } from 'vitest'
 describe('Dict/Eudic/engine', () => {
   it('should parse result correctly', async () => {
     return retry(() =>
-      search('love', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(searchResult => {
+      search('love', getDefaultConfig(), getDefaultProfile()).then(searchResult => {
         expect(searchResult.audio && typeof searchResult.audio.us).toBe(
           'string'
         )

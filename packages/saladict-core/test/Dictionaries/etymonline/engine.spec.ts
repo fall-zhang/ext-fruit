@@ -11,7 +11,7 @@ describe('Dict/Etymonline/engine', () => {
       resultnum: 4
     }
     return retry(() =>
-      search('love', getDefaultConfig(), profile, { isPDF: false }).then(
+      search('love', getDefaultConfig(), profile).then(
         (searchResult:any) => {
           expect(searchResult.audio).toBeUndefined()
 

@@ -1,16 +1,14 @@
 import { message, openUrl } from '@/_helpers/browser-api'
-import { timeout, timer } from '@/_helpers/promise-more'
 import { getSuggests } from '@/_helpers/getSuggests'
 import { injectDictPanel } from '@/_helpers/injectSaladictInternal'
 import { newWord, Word } from '@/_helpers/record-manager'
-import { Message, MessageResponse } from '@/types/message'
+import { Message } from '@/types/message'
 import {
   SearchFunction,
   DictSearchResult,
   GetSrcPageFunction
 } from '@/components/Dictionaries/helpers'
 import {
-  isInNotebook,
   saveWord,
   deleteWords,
   getWordsByText,
@@ -20,8 +18,7 @@ import { AudioManager } from './audio-manager'
 import { QsPanelManager } from './windows-manager'
 import { getTextFromClipboard, copyTextToClipboard } from './clipboard-manager'
 import './types'
-import { DictID } from '@/app-config'
-
+import { DictID } from '../app-config'
 /**
  * background script as transfer station
  */
@@ -37,7 +34,7 @@ export class BackgroundServer {
 
   static init = BackgroundServer.getInstance
 
-  static getDictEngine<P = {}> (
+  static getDictEngine<P = unknown> (
     id: DictID
   ): Promise<{
     search: SearchFunction<DictSearchResult<any>, P>
@@ -67,8 +64,6 @@ export class BackgroundServer {
         case 'STOP_AUDIO':
           AudioManager.getInstance().reset()
           return
-        case 'FETCH_DICT_RESULT':
-          return this.fetchDictResult(msg.payload)
         case 'DICT_ENGINE_METHOD':
           return this.callDictEngineMethod(msg.payload)
         case 'GET_CLIPBOARD':
@@ -88,9 +83,6 @@ export class BackgroundServer {
           return this.qsPanelManager.destroy()
         case 'QS_SWITCH_SIDEBAR':
           return this.qsPanelManager.toggleSidebar(msg.payload)
-
-        case 'IS_IN_NOTEBOOK':
-          return isInNotebook(msg.payload)
         case 'SAVE_WORD':
           return saveWord(msg.payload).then(response => {
             this.notifyWordSaved()
@@ -183,7 +175,6 @@ export class BackgroundServer {
       active
     })
   }
-
 
 
   async callDictEngineMethod (data: Message<'DICT_ENGINE_METHOD'>['payload']) {

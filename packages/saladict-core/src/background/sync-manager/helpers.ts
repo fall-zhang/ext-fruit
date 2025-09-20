@@ -1,12 +1,11 @@
-import { storage } from '@/_helpers/browser-api'
-import { Word } from '@/_helpers/record-manager'
-import { getWords } from '@/background/database/read'
-import { saveWords } from '@/background/database/write'
+import { Word } from '../../store/selection/types'
+import { getWords } from '../../core/database/read'
+import { saveWords } from '../../core/database/write'
 import {
   getSyncMeta,
   setSyncMeta,
   deleteSyncMeta
-} from '@/background/database/sync-meta'
+} from '../../core/database/sync-meta'
 import { I18nManager } from '../i18n-manager'
 
 export interface StorageSyncConfig {
@@ -17,28 +16,20 @@ export async function setSyncConfig<T = any> (
   serviceID: string,
   config: T
 ): Promise<void> {
-  let { syncConfig } = await storage.sync.get<StorageSyncConfig>('syncConfig')
-  if (!syncConfig) {
-    syncConfig = {}
-  }
+  const syncConfig:Record<string, any> = {}
   syncConfig[serviceID] = config
-  await storage.sync.set({ syncConfig })
 }
 
 export async function getSyncConfig<T> (
   serviceID: string
 ): Promise<T | undefined> {
-  const { syncConfig } = await storage.sync.get<StorageSyncConfig>('syncConfig')
-  if (syncConfig !== undefined) {
-    return syncConfig[serviceID]
-  }
+  const syncConfig:Record<string, any> = {}
+  return syncConfig[serviceID]
 }
 
 export async function removeSyncConfig (serviceID?: string): Promise<void> {
   if (serviceID) {
     await setSyncConfig(serviceID, null)
-  } else {
-    await storage.sync.remove('syncConfig')
   }
 }
 
@@ -68,9 +59,7 @@ export async function getMeta<T> (serviceID: string): Promise<T | undefined> {
  * Service meta data is saved with the database
  * so that it can be shared across browser vendors.
  */
-export async function deleteMeta (serviceID: string): Promise<void> {
-  await deleteSyncMeta(serviceID)
-}
+export const deleteMeta = deleteSyncMeta
 
 export async function setNotebook (words: Word[]): Promise<void> {
   await saveWords({ area: 'notebook', words })

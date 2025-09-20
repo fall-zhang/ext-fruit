@@ -7,9 +7,7 @@ import { describe, expect, it } from 'vitest'
 describe('Dict/Zdic/engine', () => {
   it('should parse word result correctly', () => {
     return retry(() =>
-      search('爱', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(({ result, audio }) => {
+      search('爱', getDefaultConfig(), getDefaultProfile()).then(({ result, audio }) => {
         expect(audio && typeof audio.py).toBeUndefined()
         expect(result.length).toBeGreaterThan(0)
       })
@@ -20,7 +18,7 @@ describe('Dict/Zdic/engine', () => {
     const profile = getDefaultProfile() as ProfileMutable
     profile.dicts.all.zdic.options.audio = true
     return retry(() =>
-      search('沙拉', getDefaultConfig(), profile, { isPDF: false }).then(
+      search('沙拉', getDefaultConfig(), profile).then(
         ({ result, audio }) => {
           expect(audio && typeof audio.py).toBe('string')
           expect(result.length).toBeGreaterThan(0)

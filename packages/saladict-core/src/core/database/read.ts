@@ -3,8 +3,10 @@ import { isContainChinese, isContainEnglish } from '../../utils/lang-check'
 // import { Message, MessageResponse } from '@/types/message'
 import { Message, MessageResponse } from '../../types/message'
 import { getDB } from './core'
+import { Word } from '../../store/selection/types'
 
-export async function isInNotebook (word: Message<'IS_IN_NOTEBOOK'>['payload']) {
+/** Is a word in Notebook */
+export async function isInNotebook (word: Word):Promise<boolean> {
   const db = await getDB()
   return db.notebook
     .where('text')

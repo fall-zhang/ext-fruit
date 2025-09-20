@@ -7,9 +7,7 @@ import { describe, expect, it } from 'vitest'
 describe('Dict/GuoYu/engine', () => {
   it('should parse result correctly', () => {
     return retry(() =>
-      search('愛', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(searchResult => {
+      search('愛', getDefaultConfig(), getDefaultProfile()).then(searchResult => {
         expect(searchResult.audio && typeof searchResult.audio.py).toBe(
           'string'
         )

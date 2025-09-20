@@ -1,13 +1,15 @@
+import { Word } from '../../store/selection/types'
 import {
   saveWord as _saveWord,
   saveWords as _saveWords,
   deleteWords as _deleteWords
 } from './write'
-import { syncServiceUpload } from '../sync-manager'
+
 export { isInNotebook, getWordsByText, getWords } from './read'
 
 // prevent circular dependencies
 
+/** Save a word to Notebook or History */
 export const saveWord: typeof _saveWord = options => {
   if (options.area === 'notebook' && options.word) {
     syncServiceUpload({
@@ -36,4 +38,21 @@ export const deleteWords: typeof _deleteWords = options => {
     })
   }
   return _deleteWords(options)
+}
+
+type OptionProp = {
+  action: 'ADD'
+  words?: Word[]
+  force?: boolean
+} |
+    {
+      action: 'DELETE'
+      dates?: number[]
+      force?: boolean
+    }
+
+async function syncServiceUpload (
+  options:OptionProp
+) {
+
 }

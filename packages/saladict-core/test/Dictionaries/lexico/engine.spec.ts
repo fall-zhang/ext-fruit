@@ -11,9 +11,7 @@ import { describe, expect, it } from 'vitest'
 describe('Dict/Lexico/engine', () => {
   it('should parse lex result correctly', () => {
     return retry(() =>
-      search('love', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(searchResult => {
+      search('love', getDefaultConfig(), getDefaultProfile()).then(searchResult => {
         expect(searchResult.audio && typeof searchResult.audio.uk).toBe(
           'string'
         )
@@ -30,9 +28,7 @@ describe('Dict/Lexico/engine', () => {
 
   it('should parse related result correctly', () => {
     return retry(() =>
-      search('jumblish', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(searchResult => {
+      search('jumblish', getDefaultConfig(), getDefaultProfile()).then(searchResult => {
         expect(searchResult.audio).toBeUndefined()
 
         const result = searchResult.result as LexicoResultRelated
