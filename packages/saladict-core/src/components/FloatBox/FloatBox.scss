@@ -9,7 +9,7 @@
   box-shadow: 0px 4px 31px -8px rgba(0, 0, 0, 0.8);
   font-size: var(--panel-font-size);
 
-  @include isDarkMode {
+  .darkMode {
     background: #2d3338;
   }
 
@@ -61,7 +61,7 @@
     border-bottom-right-radius: 8px;
   }
 
-  @include isDarkMode {
+  .darkMode {
     border: 1px solid transparent;
     border-radius: 5px;
 

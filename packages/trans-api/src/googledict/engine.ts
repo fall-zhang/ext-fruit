@@ -12,7 +12,7 @@ import {
   removeChild
 } from '../helpers'
 import { getStaticSpeaker } from '@/components/Speaker'
-import { fetchPlainText } from '@/_helpers/fetch-dom'
+import { fetchPlainText } from '@P/trans-api/utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return (

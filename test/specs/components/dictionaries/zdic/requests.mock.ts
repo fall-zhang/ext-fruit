@@ -8,7 +8,7 @@ export const mockRequest: MockRequest = mock => {
     return wordMatch
       ? [
         200,
-        require(`raw-loader!./response/${decodeURIComponent(
+        require(`./response/${decodeURIComponent(
           wordMatch[0]
         )}.html`).default
       ]

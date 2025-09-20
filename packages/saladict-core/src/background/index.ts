@@ -1,4 +1,3 @@
-import './env'
 import './initialization'
 import { getConfig, addConfigListener } from '@/_helpers/config-manager'
 import {
@@ -6,7 +5,6 @@ import {
   createProfileIDListStream
 } from '@/_helpers/profile-manager'
 import { message } from '@/_helpers/browser-api'
-import { startSyncServiceInterval } from './sync-manager'
 import { init as initPdf } from './pdf-sniffer'
 import { ContextMenus } from './context-menus'
 import { BackgroundServer } from './server'
@@ -18,7 +16,6 @@ import './types'
 // init first to recevice self messaging
 message.self.initServer()
 
-startSyncServiceInterval()
 
 ContextMenus.init()
 BackgroundServer.init()
@@ -35,6 +32,8 @@ getConfig().then(async config => {
   addConfigListener(({ newConfig }) => {
     window.appConfig = newConfig
   })
+}).catch(err => {
+  console.log('🚀 ~ err:', err)
 })
 
 createActiveProfileStream().subscribe(profile => {

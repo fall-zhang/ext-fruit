@@ -1,4 +1,4 @@
-import { genUniqueKey } from '@/_helpers/uniqueKey'
+import { v4 as uuid } from 'uuid'
 import { getAllDicts } from './dicts'
 import { ReadonlyDeep } from 'type-fest'
 
@@ -20,7 +20,7 @@ export function _getDefaultProfile (id?: string) {
   return {
     version: 1,
 
-    id: id || genUniqueKey(),
+    id: id || uuid(),
 
     /** auto unfold multiline textarea search box */
     mtaAutoUnfold: '' as MtaAutoUnfold,
@@ -55,7 +55,7 @@ export function _getDefaultProfile (id?: string) {
 
 export function getDefaultProfileID (id?: string): ProfileID {
   return {
-    id: id || genUniqueKey(),
+    id: id || uuid(),
     name: '%%_default_%%'
   }
 }
@@ -68,7 +68,7 @@ export interface ProfileStorage {
 export function genProfilesStorage (): {
   profileIDList: ProfileID[]
   profiles: Profile[]
-  } {
+} {
   const defaultID = getDefaultProfileID()
   const defaultProfile = getDefaultProfile(defaultID.id)
   const sentenceStorage = sentence()

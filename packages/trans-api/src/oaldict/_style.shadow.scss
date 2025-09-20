@@ -101,13 +101,13 @@
     color: #333333;
     margin-right: 0.25rem;
 
-    @include isDarkMode {
+    .darkMode {
       color: #9d9d9d;
     }
   }
 
   .dictOal-MeanExamples {
-    .examples > li {
+    .examples>li {
       &::before {
         content: '•';
         padding-right: 8px;
@@ -124,7 +124,7 @@
         font-style: italic;
         color: #333333;
 
-        @include isDarkMode {
+        .darkMode {
           color: #6f6f6f;
         }
       }
@@ -177,7 +177,7 @@
   }
 
   .dictOal-IdiomsExamples {
-    .examples > li {
+    .examples>li {
       padding-left: 8px;
 
       &::before {

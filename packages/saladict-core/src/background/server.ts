@@ -58,57 +58,57 @@ export class BackgroundServer {
 
     message.addListener((msg, sender: browser.runtime.MessageSender) => {
       switch (msg.type) {
-      case 'OPEN_DICT_SRC_PAGE':
-        return this.openSrcPage(msg.payload)
-      case 'OPEN_URL':
-        return openUrl(msg.payload)
-      case 'PLAY_AUDIO':
-        return AudioManager.getInstance().play(msg.payload)
-      case 'STOP_AUDIO':
-        AudioManager.getInstance().reset()
-        return
-      case 'FETCH_DICT_RESULT':
-        return this.fetchDictResult(msg.payload)
-      case 'DICT_ENGINE_METHOD':
-        return this.callDictEngineMethod(msg.payload)
-      case 'GET_CLIPBOARD':
-        return getTextFromClipboard()
-      case 'SET_CLIPBOARD':
-        return Promise.resolve(copyTextToClipboard(msg.payload))
+        case 'OPEN_DICT_SRC_PAGE':
+          return this.openSrcPage(msg.payload)
+        case 'OPEN_URL':
+          return openUrl(msg.payload)
+        case 'PLAY_AUDIO':
+          return AudioManager.getInstance().play(msg.payload)
+        case 'STOP_AUDIO':
+          AudioManager.getInstance().reset()
+          return
+        case 'FETCH_DICT_RESULT':
+          return this.fetchDictResult(msg.payload)
+        case 'DICT_ENGINE_METHOD':
+          return this.callDictEngineMethod(msg.payload)
+        case 'GET_CLIPBOARD':
+          return getTextFromClipboard()
+        case 'SET_CLIPBOARD':
+          return Promise.resolve(copyTextToClipboard(msg.payload))
 
-      case 'INJECT_DICTPANEL':
-        return injectDictPanel(sender.tab)
+        case 'INJECT_DICTPANEL':
+          return injectDictPanel(sender.tab)
 
-      case 'QUERY_QS_PANEL':
-        return this.qsPanelManager.hasCreated()
-      case 'OPEN_QS_PANEL':
-        return this.openQSPanel()
-      case 'CLOSE_QS_PANEL':
-        AudioManager.getInstance().reset()
-        return this.qsPanelManager.destroy()
-      case 'QS_SWITCH_SIDEBAR':
-        return this.qsPanelManager.toggleSidebar(msg.payload)
+        case 'QUERY_QS_PANEL':
+          return this.qsPanelManager.hasCreated()
+        case 'OPEN_QS_PANEL':
+          return this.openQSPanel()
+        case 'CLOSE_QS_PANEL':
+          AudioManager.getInstance().reset()
+          return this.qsPanelManager.destroy()
+        case 'QS_SWITCH_SIDEBAR':
+          return this.qsPanelManager.toggleSidebar(msg.payload)
 
-      case 'IS_IN_NOTEBOOK':
-        return isInNotebook(msg.payload)
-      case 'SAVE_WORD':
-        return saveWord(msg.payload).then(response => {
-          this.notifyWordSaved()
-          return response
-        })
-      case 'DELETE_WORDS':
-        return deleteWords(msg.payload).then(response => {
-          this.notifyWordSaved()
-          return response
-        })
-      case 'GET_WORDS_BY_TEXT':
-        return getWordsByText(msg.payload)
-      case 'GET_WORDS':
-        return getWords(msg.payload)
-      case 'GET_SUGGESTS':
-        return getSuggests(msg.payload)
-      case 'YOUDAO_TRANSLATE_AJAX':
-        return this.youdaoTranslateAjax(msg.payload)
+        case 'IS_IN_NOTEBOOK':
+          return isInNotebook(msg.payload)
+        case 'SAVE_WORD':
+          return saveWord(msg.payload).then(response => {
+            this.notifyWordSaved()
+            return response
+          })
+        case 'DELETE_WORDS':
+          return deleteWords(msg.payload).then(response => {
+            this.notifyWordSaved()
+            return response
+          })
+        case 'GET_WORDS_BY_TEXT':
+          return getWordsByText(msg.payload)
+        case 'GET_WORDS':
+          return getWords(msg.payload)
+        case 'GET_SUGGESTS':
+          return getSuggests(msg.payload)
+        case 'YOUDAO_TRANSLATE_AJAX':
+          return this.youdaoTranslateAjax(msg.payload)
       }
     })
 

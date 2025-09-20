@@ -1,20 +1,19 @@
-import { FC } from "react";
-import { parseLetter } from "../utils/parseLetter";
-import { DocSection } from "./doc-section/doc-section";
+import { FC } from 'react'
+import { parseLetter } from '../utils/parseLetter'
+import { DocSection } from './doc-section/doc-section'
 
-export const DocView:FC = ()=>{
-  const docText = `Let\'s do this.`
-  
+export const DocView:FC = () => {
+  const docText = 'Let\'s do this.'
   const words = docText.split(' ')
- const sectionList=  parseLetter(letter)
+  const sectionList = parseLetter(letter)
   return <div className="w-full flex items-center justify-center">
     <div className="w-3xl">
       {
-        sectionList.map(item=>{
+        sectionList.map(item => {
           return <DocSection text={item.text} no={item.no} key={item.no}></DocSection>
         })
       }
-  
+
     </div>
   </div>
 }

@@ -1,5 +1,10 @@
+import { GlobalState } from '..'
 
-export const openQSPanel = state => {
+type OpenQSFn = {
+  (state: GlobalState): GlobalState
+}
+
+export const openQSPanel:OpenQSFn = state => {
   const { panelWidth, tripleCtrl, qsLocation } = state.config
 
   if (!tripleCtrl || state.isShowDictPanel) {
@@ -10,42 +15,42 @@ export const openQSPanel = state => {
   let y = 10
 
   switch (qsLocation) {
-  case 'CENTER':
-    x = (window.innerWidth - panelWidth) / 2
-    y = window.innerHeight * 0.3
-    break
-  case 'TOP':
-    x = (window.innerWidth - panelWidth) / 2
-    y = 10
-    break
-  case 'RIGHT':
-    x = window.innerWidth - panelWidth - 30
-    y = window.innerHeight * 0.3
-    break
-  case 'BOTTOM':
-    x = (window.innerWidth - panelWidth) / 2
-    y = window.innerHeight - 10
-    break
-  case 'LEFT':
-    x = 10
-    y = window.innerHeight * 0.3
-    break
-  case 'TOP_LEFT':
-    x = 10
-    y = 10
-    break
-  case 'TOP_RIGHT':
-    x = window.innerWidth - panelWidth - 30
-    y = 10
-    break
-  case 'BOTTOM_LEFT':
-    x = 10
-    y = window.innerHeight - 10
-    break
-  case 'BOTTOM_RIGHT':
-    x = window.innerWidth - panelWidth - 30
-    y = window.innerHeight - 10
-    break
+    case 'CENTER':
+      x = (window.innerWidth - panelWidth) / 2
+      y = window.innerHeight * 0.3
+      break
+    case 'TOP':
+      x = (window.innerWidth - panelWidth) / 2
+      y = 10
+      break
+    case 'RIGHT':
+      x = window.innerWidth - panelWidth - 30
+      y = window.innerHeight * 0.3
+      break
+    case 'BOTTOM':
+      x = (window.innerWidth - panelWidth) / 2
+      y = window.innerHeight - 10
+      break
+    case 'LEFT':
+      x = 10
+      y = window.innerHeight * 0.3
+      break
+    case 'TOP_LEFT':
+      x = 10
+      y = 10
+      break
+    case 'TOP_RIGHT':
+      x = window.innerWidth - panelWidth - 30
+      y = 10
+      break
+    case 'BOTTOM_LEFT':
+      x = 10
+      y = window.innerHeight - 10
+      break
+    case 'BOTTOM_RIGHT':
+      x = window.innerWidth - panelWidth - 30
+      y = window.innerHeight - 10
+      break
   }
 
   return {

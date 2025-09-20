@@ -6,10 +6,10 @@ import React, {
   useContext
 } from 'react'
 import { useUpdateEffect } from 'react-use'
-import { timer, reflect } from '@/_helpers/promise-more'
+import { timer } from '@/_helpers/promise-more'
 import { isTagName } from '@/_helpers/dom'
 
-type StaticSpeakerType ={
+type StaticSpeakerType = {
   (src: string): Promise<void>
 }
 /** onPlayStart */
@@ -92,8 +92,10 @@ export const StaticSpeakerContainer: FC<StaticSpeakerContainerProps> = props => 
         const target = e.target as HTMLAnchorElement
         target.classList.add('isActive')
 
-        reflect([timer(1000), onPlayStart(target.href)]).then(() => {
+        Promise.allSettled([timer(1000), onPlayStart(target.href)]).then(() => {
           target.classList.remove('isActive')
+        }).catch(err => {
+          console.log('🚀 ~ StaticSpeakerContainer ~ err:', err)
         })
       }
     },

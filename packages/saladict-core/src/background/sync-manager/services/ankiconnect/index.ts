@@ -61,12 +61,12 @@ export class Service extends SyncService<SyncConfig> {
 
   handleMessage = (msg: Message) => {
     switch (msg.type) {
-    case 'ANKI_CONNECT_FIND_WORD':
-      return this.findNote(msg.payload).catch(() => '')
-    case 'ANKI_CONNECT_UPDATE_WORD':
-      return this.updateWord(msg.payload.cardId, msg.payload.word).catch(e =>
-        Promise.reject(e)
-      )
+      case 'ANKI_CONNECT_FIND_WORD':
+        return this.findNote(msg.payload).catch(() => '')
+      case 'ANKI_CONNECT_UPDATE_WORD':
+        return this.updateWord(msg.payload.cardId, msg.payload.word).catch(e =>
+          Promise.reject(e)
+        )
     }
   }
 
@@ -273,10 +273,9 @@ export class Service extends SyncService<SyncConfig> {
     const nf = await this.request<string[]>('modelFieldNames', {
       modelName: this.config.noteType
     })
-
     // Anki connect bug
-    return nf?.includes('Date.')
-      ? [
+    if (nf?.includes('Date.')) {
+      return [
         'Date.',
         'Text.',
         'Translation.',
@@ -288,31 +287,32 @@ export class Service extends SyncService<SyncConfig> {
         'Favicon.',
         'Audio.'
       ]
-      : nf?.includes('日期')
-        ? [
-          '日期',
-          '文字',
-          'Translation',
-          'Context',
-          'ContextCloze',
-          '笔记',
-          'Title',
-          'Url',
-          'Favicon',
-          'Audio'
-        ]
-        : [
-          'Date',
-          'Text',
-          'Translation',
-          'Context',
-          'ContextCloze',
-          'Note',
-          'Title',
-          'Url',
-          'Favicon',
-          'Audio'
-        ]
+    } else if (nf?.includes('日期')) {
+      return [
+        '日期',
+        '文字',
+        'Translation',
+        'Context',
+        'ContextCloze',
+        '笔记',
+        'Title',
+        'Url',
+        'Favicon',
+        'Audio'
+      ]
+    }
+    return [
+      'Date',
+      'Text',
+      'Translation',
+      'Context',
+      'ContextCloze',
+      'Note',
+      'Title',
+      'Url',
+      'Favicon',
+      'Audio'
+    ]
   }
 
   multiline (text: string, escape: boolean): string {

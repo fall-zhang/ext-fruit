@@ -36,7 +36,7 @@ export default defineConfig({
   resolve: {
     preserveSymlinks: false,
     alias: {
-      '@': pathResolve(__dirname, '../platform-web/src'),
+      'saladict-core': pathResolve(__dirname, '../../packages/saladict-core/src'),
       '@P': pathResolve(__dirname, '../../packages'),
       '@UI': pathResolve(__dirname, '../../packages/ui'),
       '@C': pathResolve(__dirname, '../platform-web/src/components'),

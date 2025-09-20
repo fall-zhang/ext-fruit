@@ -3,6 +3,8 @@
   "extends": "./tsconfig.base.json",
   "include": [
     // "example/**/*.tsx",
+    "apps/**/*.ts",
+    "apps/**/*.tsx",
     "packages/**/*.ts",
     "packages/**/*.tsx",
     "rollup.config.ts"
@@ -17,7 +19,7 @@
         "packages/*"
       ],
       "@/*": [
-        "packages/saladict-core/src/*"
+        "apps/platform-win/src/*"
       ]
     },
     "lib": [

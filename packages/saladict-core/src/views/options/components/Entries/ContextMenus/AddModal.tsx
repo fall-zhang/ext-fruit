@@ -3,11 +3,11 @@ import { List, Modal, Button, Tooltip } from 'antd'
 import { CheckOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons'
 import omit from 'lodash/omit'
 import { v4 as uuid } from 'uuid'
-import { useSelector } from '@/content/redux'
 import { getConfigPath } from '@/options/helpers/path-joiner'
 import { useUpload } from '@/options/helpers/upload'
 import { useTranslate } from '@P/saladict-core/src/locales/i18n'
 import { isFirefox } from '@P/saladict-core/src/utils/browser'
+import { useDictStore } from '@P/saladict-core/src/store'
 
 /**
  * key: menu id
@@ -26,7 +26,7 @@ export interface AddModalProps {
 
 export const AddModal: FC<AddModalProps> = ({ show, onEdit, onClose }) => {
   const { t } = useTranslate(['common', 'menus', 'options'])
-  const contextMenus = useSelector(state => state.config.contextMenus)
+  const contextMenus = useDictStore(state => state.config.contextMenus)
   const unselected = useMemo(() => {
     if (!contextMenus) {
       return []

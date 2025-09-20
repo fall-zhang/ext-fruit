@@ -1,4 +1,5 @@
 import i18next, { TFunction } from 'i18next'
+import type { i18n } from 'i18next'
 import { i18nLoader, Namespace } from '@/_helpers/i18n'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
@@ -17,9 +18,9 @@ export class I18nManager {
     return I18nManager.instance
   }
 
-  i18n: i18next.i18n
+  i18n: i18n
 
-  readonly i18n$$: BehaviorSubject<i18next.i18n>
+  readonly i18n$$: BehaviorSubject<i18n>
 
   // singleton
   private constructor () {

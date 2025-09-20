@@ -35,7 +35,7 @@ body {
 
 .qrcode-panel {
   position: fixed;
-  z-index: $global-zindex-dictpanel;
+  z-index: 2147483647;
   bottom: 10px;
   left: 10px;
   padding: 20px;

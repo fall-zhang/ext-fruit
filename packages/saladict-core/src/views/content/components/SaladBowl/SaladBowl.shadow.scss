@@ -2,7 +2,7 @@ $bowl-width: 30px;
 
 .saladbowl {
   position: fixed;
-  z-index: $global-zindex-bowl;
+  z-index: 2147483647;
   top: 0;
   left: 0;
   width: $bowl-width;

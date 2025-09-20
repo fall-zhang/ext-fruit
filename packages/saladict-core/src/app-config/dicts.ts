@@ -118,8 +118,8 @@ interface DictItemBase {
  */
 type DictItemWithOptions<
   Options extends
-    | { [option: string]: number | boolean | string }
-    | undefined = undefined
+    | { [option: string]: number | boolean | string } |
+    undefined = undefined
 > = Options extends undefined
   ? DictItemBase
   : DictItemBase & { options: Options }
@@ -127,8 +127,8 @@ type DictItemWithOptions<
 /** Infer selectable options type */
 export type SelectOptions<
   Options extends
-    | { [option: string]: number | boolean | string }
-    | undefined = undefined,
+    | { [option: string]: number | boolean | string } |
+    undefined = undefined,
   Key extends keyof Options = Options extends undefined ? never : keyof Options
 > = {
   [opt in Key extends any
@@ -144,18 +144,18 @@ export type SelectOptions<
  */
 export type DictItem<
   Options extends
-    | { [option: string]: number | boolean | string }
-    | undefined = undefined,
+    | { [option: string]: number | boolean | string } |
+    undefined = undefined,
   Key extends keyof Options = Options extends undefined ? never : keyof Options
 > = Options extends undefined
   ? DictItemWithOptions
   : DictItemWithOptions<Options> &
       ((Key extends any
-      ? Options[Key] extends string
-        ? Key
-        : never
-      : never) extends never
+        ? Options[Key] extends string
+          ? Key
+          : never
+        : never) extends never
         ? Record<string, unknown>
         : {
-            options_sel: SelectOptions<Options, Key>
-          })
+          options_sel: SelectOptions<Options, Key>
+        })

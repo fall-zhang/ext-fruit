@@ -38,143 +38,143 @@ const getText = decodeURI
 
 function onCommand (command: string) {
   switch (command) {
-  case 'toggle-active':
-    updateConfig({
-      ...window.appConfig,
-      active: !window.appConfig.active
-    })
-    break
-  case 'toggle-instant':
-    browser.tabs.query({ active: true, currentWindow: true }).then(tabs => {
-      if (tabs.length <= 0 || tabs[0].id == null) {
-        return
-      }
-      message
-        .send<'QUERY_PIN_STATE', boolean>(tabs[0].id, {
-          type: 'QUERY_PIN_STATE'
-        })
-        .then(isPinned => {
-          const config = window.appConfig
-          const { enable } = config[isPinned ? 'pinMode' : 'mode'].instant
-
-          updateConfig({
-            ...config,
-            mode: {
-              ...config.mode,
-              instant: {
-                ...config.mode.instant,
-                enable: !enable
-              }
-            },
-            pinMode: {
-              ...config.pinMode,
-              instant: {
-                ...config.pinMode.instant,
-                enable: !enable
-              }
-            }
-          })
-        })
-    })
-    break
-  case 'open-quick-search':
-    BackgroundServer.getInstance().openQSPanel()
-    break
-  case 'open-google':
-    ContextMenus.openGoogle()
-    reportEvent({
-      category: 'Page_Translate',
-      action: 'Open_Google',
-      label: 'From_Browser_Shortcut'
-    })
-    break
-  case 'open-youdao':
-    ContextMenus.openYoudao()
-    reportEvent({
-      category: 'Page_Translate',
-      action: 'Open_Youdao',
-      label: 'From_Browser_Shortcut'
-    })
-    break
-  case 'open-caiyun':
-    ContextMenus.openCaiyunTrs()
-    reportEvent({
-      category: 'Page_Translate',
-      action: 'Open_Caiyun',
-      label: 'From_Browser_Shortcut'
-    })
-    break
-  case 'open-pdf':
-    openPDF()
-    reportEvent({
-      category: 'PDF_Viewer',
-      action: 'Open_PDF_Viewer',
-      label: 'From_Browser_Shortcut'
-    })
-    break
-  case 'search-clipboard':
-    BackgroundServer.getInstance().searchClipboard()
-    break
-  case 'next-history':
-  case 'prev-history':
-    // Send to browser action panel first
-    message
-      .send<'SWITCH_HISTORY', boolean>({
-        type: 'SWITCH_HISTORY',
-        payload: command === 'next-history' ? 'next' : 'prev'
+    case 'toggle-active':
+      updateConfig({
+        ...window.appConfig,
+        active: !window.appConfig.active
       })
-      .then(received => {
-        if (received) return // browser action panel is opened
+      break
+    case 'toggle-instant':
+      browser.tabs.query({ active: true, currentWindow: true }).then(tabs => {
+        if (tabs.length <= 0 || tabs[0].id == null) {
+          return
+        }
+        message
+          .send<'QUERY_PIN_STATE', boolean>(tabs[0].id, {
+            type: 'QUERY_PIN_STATE'
+          })
+          .then(isPinned => {
+            const config = window.appConfig
+            const { enable } = config[isPinned ? 'pinMode' : 'mode'].instant
 
-        return browser.tabs
-          .query({ active: true, currentWindow: true })
-          .then(tabs => {
-            if (tabs.length <= 0 || tabs[0].id == null) {
-              return
-            }
-            return message.send<'SWITCH_HISTORY', boolean>(tabs[0].id, {
-              type: 'SWITCH_HISTORY',
-              payload: command === 'next-history' ? 'next' : 'prev'
+            updateConfig({
+              ...config,
+              mode: {
+                ...config.mode,
+                instant: {
+                  ...config.mode.instant,
+                  enable: !enable
+                }
+              },
+              pinMode: {
+                ...config.pinMode,
+                instant: {
+                  ...config.pinMode.instant,
+                  enable: !enable
+                }
+              }
             })
           })
       })
-    break
-  case 'next-profile':
-  case 'prev-profile':
-    {
-      const curID = window.activeProfile.id
-      const curIndex = window.profileIDList.findIndex(
-        ({ id }) => id === curID
-      )
-      const offset = command === 'next-profile' ? 1 : -1
-      const nextIndex =
+      break
+    case 'open-quick-search':
+      BackgroundServer.getInstance().openQSPanel()
+      break
+    case 'open-google':
+      ContextMenus.openGoogle()
+      reportEvent({
+        category: 'Page_Translate',
+        action: 'Open_Google',
+        label: 'From_Browser_Shortcut'
+      })
+      break
+    case 'open-youdao':
+      ContextMenus.openYoudao()
+      reportEvent({
+        category: 'Page_Translate',
+        action: 'Open_Youdao',
+        label: 'From_Browser_Shortcut'
+      })
+      break
+    case 'open-caiyun':
+      ContextMenus.openCaiyunTrs()
+      reportEvent({
+        category: 'Page_Translate',
+        action: 'Open_Caiyun',
+        label: 'From_Browser_Shortcut'
+      })
+      break
+    case 'open-pdf':
+      openPDF()
+      reportEvent({
+        category: 'PDF_Viewer',
+        action: 'Open_PDF_Viewer',
+        label: 'From_Browser_Shortcut'
+      })
+      break
+    case 'search-clipboard':
+      BackgroundServer.getInstance().searchClipboard()
+      break
+    case 'next-history':
+    case 'prev-history':
+    // Send to browser action panel first
+      message
+        .send<'SWITCH_HISTORY', boolean>({
+          type: 'SWITCH_HISTORY',
+          payload: command === 'next-history' ? 'next' : 'prev'
+        })
+        .then(received => {
+          if (received) return // browser action panel is opened
+
+          return browser.tabs
+            .query({ active: true, currentWindow: true })
+            .then(tabs => {
+              if (tabs.length <= 0 || tabs[0].id == null) {
+                return
+              }
+              return message.send<'SWITCH_HISTORY', boolean>(tabs[0].id, {
+                type: 'SWITCH_HISTORY',
+                payload: command === 'next-history' ? 'next' : 'prev'
+              })
+            })
+        })
+      break
+    case 'next-profile':
+    case 'prev-profile':
+      {
+        const curID = window.activeProfile.id
+        const curIndex = window.profileIDList.findIndex(
+          ({ id }) => id === curID
+        )
+        const offset = command === 'next-profile' ? 1 : -1
+        const nextIndex =
           curIndex < 0 ? 0 : (curIndex + offset) % window.profileIDList.length
 
-      updateActiveProfileID(window.profileIDList[nextIndex].id).then(
-        searchTextBox
-      )
-    }
-    break
-  case 'profile-1':
-  case 'profile-2':
-  case 'profile-3':
-  case 'profile-4':
-  case 'profile-5':
-    {
-      const index = +command.slice(-1)
-      if (
-        index < window.profileIDList.length &&
-          window.profileIDList[index].id !== window.activeProfile.id
-      ) {
-        updateActiveProfileID(window.profileIDList[index].id).then(
+        updateActiveProfileID(window.profileIDList[nextIndex].id).then(
           searchTextBox
         )
       }
-    }
-    break
-  case 'add-notebook':
-    addNotebook()
-    break
+      break
+    case 'profile-1':
+    case 'profile-2':
+    case 'profile-3':
+    case 'profile-4':
+    case 'profile-5':
+      {
+        const index = +command.slice(-1)
+        if (
+          index < window.profileIDList.length &&
+          window.profileIDList[index].id !== window.activeProfile.id
+        ) {
+          updateActiveProfileID(window.profileIDList[index].id).then(
+            searchTextBox
+          )
+        }
+      }
+      break
+    case 'add-notebook':
+      addNotebook()
+      break
   }
 }
 
@@ -339,17 +339,17 @@ function onStartup (): void {
 function genClickListener (url: string) {
   return function clickListener (notificationId: string) {
     switch (notificationId) {
-    case 'sd-install':
-    case 'sd-update':
-      openUrl(url)
-      if (browser.notifications) {
-        browser.notifications.getAll().then(notifications => {
-          Object.keys(notifications).forEach(id =>
-            browser.notifications.clear(id)
-          )
-        })
-      }
-      break
+      case 'sd-install':
+      case 'sd-update':
+        openUrl(url)
+        if (browser.notifications) {
+          browser.notifications.getAll().then(notifications => {
+            Object.keys(notifications).forEach(id =>
+              browser.notifications.clear(id)
+            )
+          })
+        }
+        break
     }
   }
 }

@@ -3,10 +3,11 @@ import { AppConfig, DictID, getDefaultConfig } from './config/get-default-conf'
 import { Profile, ProfileID } from '../app-config/profiles'
 import { getDefaultProfile } from './profile/get-default-profile'
 import { Word } from './selection/types'
-import { newWord } from '@/dict-utils/new-word'
-import { isTempDisable } from '@/dict-utils/is-temp-disable'
-import { isOptionsPage, isPopupPage, isQuickSearchPage } from '@/dict-utils/state'
-import { isStandalonePage } from '../_helpers/saladict'
+import { newWord } from '../dict-utils/new-word'
+import { isTempDisable } from '../dict-utils/is-temp-disable'
+import { isStandalonePage, isOptionsPage, isPopupPage, isQuickSearchPage } from '../core/saladict-state'
+// import { isStandalonePage } from '../_helpers/saladict'
+
 import { DictSearchResult } from '@P/trans-api/src/helpers'
 
 type RenderDictItem = {

@@ -6,15 +6,13 @@ import React, {
   useRef,
   Fragment,
   PropsWithChildren,
-  ReactElement,
   ReactNode
 } from 'react'
 import mapValues from 'lodash/mapValues'
 import i18n, { TFunction } from 'i18next'
 import type * as i18nType from 'i18next'
 
-import { getConfig, addConfigListener } from '@/_helpers/config-manager'
-import zip from 'lodash/zip'
+import { zip } from 'es-toolkit'
 
 export type LangCode = 'zh-CN' | 'zh-TW' | 'en'
 export type Namespace = 'common' | 'content' | 'langcode' | 'menus' | 'options' | 'popup' | 'wordpage' | 'dicts' | 'sync'
@@ -46,13 +44,6 @@ export interface DictLocales {
 }
 
 export async function i18nLoader () {
-  // if (i18n.language) {
-  //   // singleton
-  //   return i18n
-  // }
-
-  const { langCode } = await getConfig()
-
   await i18n
     .use({
       type: 'backend',
@@ -85,7 +76,7 @@ export async function i18nLoader () {
       }
     })
     .init({
-      lng: langCode,
+      lng: 'zh-CN',
       fallbackLng: false,
       // whitelist: ['en', 'zh-CN', 'zh-TW'],
 
@@ -100,12 +91,6 @@ export async function i18nLoader () {
         escapeValue: false // not needed for react as it escapes by default
       }
     })
-
-  addConfigListener(({ newConfig }) => {
-    if (i18n.language !== newConfig.langCode) {
-      i18n.changeLanguage(newConfig.langCode)
-    }
-  })
 
   return i18n
 }
@@ -130,6 +115,8 @@ export const I18nContextProvider: FC<{
       i18nLoader().then(() => {
         setLang(i18n.language)
         i18n.on('languageChanged', setLangCallback)
+      }).catch(err => {
+        console.log('🚀 ~ I18nContextProvider ~ err:', err)
       })
     }
 
@@ -273,7 +260,8 @@ export const Trans = React.memo<PropsWithChildren<{ message?: string }>>(
 )
 
 function extractDictLocales (lang: LangCode) {
-  const req = import('@P/saladict-core/src/locales/dictionaries/*/locales.ts')
+  const req = import.meta.glob('@P/saladict-core/src/locales/dictionaries/*/locales.ts')
+  console.log('🚀 ~ extractDictLocales ~ req:', req)
   return req.keys().reduce<{ [id: string]: DictLocales }>((o, filename) => {
     const localeModule = req(filename)
     const json: RawDictLocales = localeModule.locales || localeModule
@@ -292,7 +280,7 @@ function extractDictLocales (lang: LangCode) {
 }
 
 function extractSyncServiceLocales (lang: LangCode) {
-  const req = import('@/background/sync-manager/services/*/_locales/*.ts')
+  const req = import.meta.glob('../background/sync-manager/services/*/_locales/*.ts')
   return req.keys().reduce<{ [id: string]: DictLocales }>((o, filename) => {
     const idMatch = new RegExp(`/([^/]+)/_locales/${lang}\\.ts$`).exec(filename)
     if (idMatch) {

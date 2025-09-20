@@ -58,7 +58,7 @@
     background-color: var(--color-divider);
   }
 
-  @include isDarkMode {
+  .darkMode {
     &:hover,
     &:focus,
     &:active {

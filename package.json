@@ -40,6 +40,7 @@
     "lint-staged": "lint-staged",
     "prepare": "npx husky install",
     "prepublishOnly": "npm run build && tsc -p tsconfig.build.json",
+    "type": "tsc --noEmit",
     "commit": "czg",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -123,7 +124,6 @@
     "postcss-load-config": "^5.1.0",
     "rimraf": "^5.0.10",
     "rollup": "^4.36.0",
-    "rollup-plugin-jsx": "^1.0.3",
     "rollup-plugin-scss": "^4.0.1",
     "rollup-plugin-string": "^3.0.0",
     "storybook": "^8.6.7",

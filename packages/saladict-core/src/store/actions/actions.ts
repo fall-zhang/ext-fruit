@@ -9,10 +9,13 @@ import { newSelection } from './new-selection'
 import { openQSPanel } from './open-qs-panel'
 import { StateCreator } from 'zustand'
 import { GlobalState } from '../index'
-import { AppConfig } from '../../app-config'
+import { AppConfig, DictID } from '../../app-config'
 import { ProfileID } from '../profile/types'
 import { Profile } from '../../app-config/profiles'
 import { Message } from '../../typings/message'
+import { DictSearchResult } from '@P/trans-api/src/helpers'
+import { Word } from '../selection/types'
+
 
 export const actionHandlers:StateCreator<GlobalState> = (set) => {
   return {
@@ -86,39 +89,42 @@ export const actionHandlers:StateCreator<GlobalState> = (set) => {
      * Click or hover on salad bowl
      * 点击
      */
-    BOWL_ACTIVATED: set(state => ({
+    BOWL_ACTIVATED: () => set(state => ({
       ...state,
       isShowBowl: false,
       isShowDictPanel: true,
       isPinned: state.config.defaultPinned
     })),
 
+    /* ------------------------------------------------ *\
+     Dict Panel
+  \* ------------------------------------------------ */
     UPDATE_TEXT: (payload:string) => set((state) => ({
       ...state,
       text: payload
     })),
 
-    TOGGLE_MTA_BOX: set(state => ({
+    TOGGLE_MTA_BOX: () => set(state => ({
       ...state,
       isExpandMtaBox: !state.isExpandMtaBox
     })),
 
-    TOGGLE_PIN: state => ({
+    TOGGLE_PIN: () => set(state => ({
       ...state,
       isPinned: !state.isPinned
-    }),
-
-    TOGGLE_QS_FOCUS: state => ({
+    })),
+    /** Focus button on quick search panel */
+    TOGGLE_QS_FOCUS: () => set(state => ({
       ...state,
       isQSFocus: !state.isQSFocus
-    }),
+    })),
 
-    TOGGLE_WAVEFORM_BOX: state => ({
+    TOGGLE_WAVEFORM_BOX: () => set(state => ({
       ...state,
       isExpandWaveformBox: !state.isExpandWaveformBox
-    }),
+    })),
 
-    OPEN_PANEL: (state, { payload }) => {
+    OPEN_PANEL: (payload:{ x: number, y: number }) => set((state) => {
       if (isStandalonePage()) {
         return state
       }
@@ -131,9 +137,9 @@ export const actionHandlers:StateCreator<GlobalState> = (set) => {
           y: payload.y
         }
       }
-    },
+    }),
 
-    CLOSE_PANEL: state => {
+    CLOSE_PANEL: () => set(state => {
       if (isStandalonePage()) {
         return state
       }
@@ -144,9 +150,9 @@ export const actionHandlers:StateCreator<GlobalState> = (set) => {
         isShowDictPanel: false,
         isQSPanel: isQuickSearchPage()
       }
-    },
+    }),
 
-    SWITCH_HISTORY: (state, { payload }) => {
+    SWITCH_HISTORY: (payload:'next' | 'prev') => set((state) => {
       const historyIndex = Math.min(
         Math.max(0, state.historyIndex + (payload === 'prev' ? -1 : 1)),
         state.searchHistory.length - 1
@@ -159,25 +165,31 @@ export const actionHandlers:StateCreator<GlobalState> = (set) => {
           ? state.searchHistory[historyIndex].text
           : state.text
       }
-    },
-
-    WORD_IN_NOTEBOOK: (state, { payload }) => ({
+    }),
+    /** Is current word in Notebook */
+    WORD_IN_NOTEBOOK: (payload:boolean) => set((state) => ({
       ...state,
       isFav: payload
-    }),
-
-    ADD_TO_NOTEBOOK: state =>
+    })),
+    /**
+     * Add the latest history item to Notebook
+    */
+    ADD_TO_NOTEBOOK: () => set(state =>
       (state.config.editOnFav && !isStandalonePage()
         ? state
         : {
           ...state,
           // epic will set this back to false if transation failed
           isFav: true
-        }),
+        })),
 
-    SEARCH_START: searchStart,
+    SEARCH_START: searchStart({}, set),
 
-    SEARCH_END: (state, { payload }) => {
+    SEARCH_END: (payload:{
+      id: DictID
+      result: any
+      catalog?: DictSearchResult<DictID>['catalog']
+    }) => set((state) => {
       if (state.renderedDicts.every(({ id }) => id !== payload.id)) {
       // this dict is for auto-pronunciation only
         return state
@@ -196,9 +208,14 @@ export const actionHandlers:StateCreator<GlobalState> = (set) => {
             : d)
         )
       }
-    },
+    }),
 
-    UPDATE_PANEL_HEIGHT: (state, { payload }) => {
+    UPDATE_PANEL_HEIGHT: (payload:{
+      area: 'menubar' | 'mtabox' | 'dictlist' | 'waveformbox'
+      height: number
+      /** independent layer */
+      floatHeight?: number
+    }) => set((state) => {
       const { _panelHeightCache } = state
       const sum =
       _panelHeightCache.sum - _panelHeightCache[payload.area] + payload.height
@@ -217,31 +234,41 @@ export const actionHandlers:StateCreator<GlobalState> = (set) => {
           floatHeight
         }
       }
-    },
+    }),
 
-    USER_FOLD_DICT: (state, { payload }) => ({
+    /** User manually folds or unfolds dict item */
+    USER_FOLD_DICT: (payload:{
+      id: DictID
+      fold: boolean
+    }) => set((state) => ({
       ...state,
       userFoldedDicts: {
         ...state.userFoldedDicts,
         [payload.id]: payload.fold
       }
-    }),
+    })),
 
-    DRAG_START_COORD: (state, { payload }) => ({
+    DRAG_START_COORD: (payload: null | {
+      x: number
+      y: number
+    }) => set((state) => ({
       ...state,
       dragStartCoord: payload
-    }),
+    })),
 
-    SUMMONED_PANEL_INIT: (state, { payload }) => ({
+    /* ------------------------------------------------ *\
+        Quick Search Dict Panel
+      \* ------------------------------------------------ */
+    SUMMONED_PANEL_INIT: (payload:string) => set((state) => ({
       ...state,
       text: payload,
       historyIndex: 0,
       isPinned: state.config.defaultPinned,
       isShowDictPanel: true,
       isShowBowl: false
-    }),
+    })),
 
-    QS_PANEL_CHANGED: (state, { payload }) => {
+    QS_PANEL_CHANGED: (payload:boolean) => set((state) => {
       if (state.withQssaPanel === payload) {
         return state
       }
@@ -263,18 +290,25 @@ export const actionHandlers:StateCreator<GlobalState> = (set) => {
           withQssaPanel: payload,
           isQSPanel: isQuickSearchPage()
         }
-    },
+    }),
 
-    OPEN_QS_PANEL: openQSPanel,
+    OPEN_QS_PANEL: set(openQSPanel),
 
-    WORD_EDITOR_STATUS: (state, { payload: { word, translateCtx } }) => {
-      if (word) {
+    /* ------------------------------------------------ *\
+     Word Editor Panel
+    \* ------------------------------------------------ */
+    WORD_EDITOR_STATUS: (payload:{
+      word: Word | null
+      /** translate context when word editor shows */
+      translateCtx?: boolean
+    }) => set((state) => {
+      if (payload.word) {
         return {
           ...state,
           wordEditor: {
             isShow: true,
-            word,
-            translateCtx: !!translateCtx
+            word: payload.word,
+            translateCtx: !!payload.translateCtx
           },
           dictPanelCoord: {
             x: 50,
@@ -290,11 +324,17 @@ export const actionHandlers:StateCreator<GlobalState> = (set) => {
           translateCtx: false
         }
       }
-    },
+    }),
 
-    PLAY_AUDIO: (state, { payload }) => ({
+    /* ------------------------------------------------ *\
+     Others
+  \* ------------------------------------------------ */
+    PLAY_AUDIO: (payload:{
+      src: string
+      timestamp: number
+    }) => set((state) => ({
       ...state,
       lastPlayAudio: payload
-    })
+    }))
   }
 }

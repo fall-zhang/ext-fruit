@@ -37,7 +37,7 @@
   padding-left: 10px;
   display: inline-block;
 
-  @include isDarkMode {
+ .darkMode {
     color: #e7f0f4;
     border: 1px solid #e7f0f4;
   }

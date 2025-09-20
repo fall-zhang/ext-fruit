@@ -3,7 +3,7 @@ import type { SupportedLangs } from '@P/trans-api/types/api-types'
 import { getDefaultDictAuths } from '../auth/auth'
 import { getAllContextMenus } from '../context-menu/context-menus'
 import { InstantSearchKey, LangCode, PreloadSource, TCDirection } from './type'
-import { isFirefox } from '@/utils/browser'
+import { isFirefox } from '../../utils/browser'
 import { getAllDicts } from '../../app-config/dicts'
 
 export type DictID = keyof ReturnType<typeof getAllDicts>
