@@ -147,13 +147,11 @@ export async function getProfile (id: string): Promise<Profile | undefined> {
  * Update profile
  */
 export async function updateProfile (profile: Profile): Promise<void> {
-  if (process.env.DEBUG) {
-    const profileIDList = await getProfileIDList()
-    if (!profileIDList.find(item => item.id === profile.id)) {
-      console.error(`Update Profile: profile ${profile.id} does not exist`)
-    } else {
-      console.log('Savedd Profile', profile)
-    }
+  const profileIDList = await getProfileIDList()
+  if (!profileIDList.find(item => item.id === profile.id)) {
+    console.error(`Update Profile: profile ${profile.id} does not exist`)
+  } else {
+    console.log('Savedd Profile', profile)
   }
   return storage.sync.set({ [profile.id]: deflate(profile) })
 }
@@ -161,10 +159,8 @@ export async function updateProfile (profile: Profile): Promise<void> {
 export async function addProfile (profileID: ProfileID): Promise<void> {
   const id = profileID.id
   const profileIDList = await getProfileIDList()
-  if (process.env.DEBUG) {
-    if (profileIDList.find(item => item.id === id) || (await getProfile(id))) {
-      console.warn(`Add profile: profile ${id} exists`)
-    }
+  if (profileIDList.find(item => item.id === id) || (await getProfile(id))) {
+    console.warn(`Add profile: profile ${id} exists`)
   }
 
   return storage.sync.set({
@@ -176,13 +172,11 @@ export async function addProfile (profileID: ProfileID): Promise<void> {
 export async function removeProfile (id: string): Promise<void> {
   const activeProfileID = await getActiveProfileID()
   let profileIDList = await getProfileIDList()
-  if (process.env.DEBUG) {
-    if (
-      !profileIDList.find(item => item.id === id) ||
+  if (
+    !profileIDList.find(item => item.id === id) ||
       !(await getProfile(id))
-    ) {
-      console.warn(`Remove profile: profile ${id} does not exists`)
-    }
+  ) {
+    console.warn(`Remove profile: profile ${id} does not exists`)
   }
   profileIDList = profileIDList.filter(item => item.id !== id)
   if (activeProfileID === id) {

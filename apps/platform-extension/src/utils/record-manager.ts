@@ -99,9 +99,7 @@ export function getWords (
 
 function logError<T = any> (valPassThrough: T): (x: any) => T {
   return err => {
-    if (process.env.DEBUG) {
-      console.error(err)
-    }
+    console.error(err)
     return valPassThrough
   }
 }
