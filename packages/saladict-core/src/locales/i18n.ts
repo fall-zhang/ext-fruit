@@ -97,9 +97,7 @@ export async function i18nLoader () {
 
 
 export const I18nContext = React.createContext<string | undefined>(undefined)
-if (process.env.DEBUG) {
-  I18nContext.displayName = 'I18nContext'
-}
+I18nContext.displayName = 'I18nContext'
 
 export const I18nContextProvider: FC<{
   children:ReactNode
@@ -178,7 +176,7 @@ export function useTranslate (
 
   const [result, setResult] = useState<UseTranslateResult>(() => {
     if (!lang) {
-      return genResult(defaultT, false)
+      return genResult(() => '', false)
     }
 
     if (!namespaces) {
@@ -193,7 +191,7 @@ export function useTranslate (
       return genResult(i18n.getFixedT(lang, namespaces), true)
     }
 
-    return genResult(defaultT, false)
+    return genResult(() => '', false)
   })
 
   useLayoutEffect(() => {

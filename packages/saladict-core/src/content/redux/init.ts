@@ -192,16 +192,6 @@ export const init = (dispatch: StoreDispatch, getState: () => StoreState) => {
         }
         return Promise.resolve()
 
-      case 'UPDATE_WORD_EDITOR_WORD':
-        dispatch({ type: 'WORD_EDITOR_STATUS', payload: msg.payload })
-        return timer(100).then(() => {
-        // wait till snapshot is taken
-          dispatch({
-            type: 'SEARCH_START',
-            payload: { word: msg.payload.word }
-          })
-        })
-
       case 'LAST_PLAY_AUDIO':
         return Promise.resolve(getState().lastPlayAudio)
     }
@@ -232,9 +222,7 @@ async function initStandaloneQuickSearch (
     try {
       word = JSON.parse(decodeURIComponent(wordString))
     } catch (error) {
-      if (process.env.DEBUG) {
-        console.warn(error)
-      }
+      console.warn(error)
       word = null
     }
   }

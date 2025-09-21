@@ -1,10 +1,11 @@
 import axios from 'axios'
 // import { Word } from '@/_helpers/record-manager'
 import { Word } from '@P/saladict-core/src/store/selection/types'
-import { parseCtxText } from '@/_helpers/translateCtx'
-import { AddConfig, SyncService } from '../../interface'
-import { getNotebook } from '../../helpers'
-import { message } from '@/_helpers/browser-api'
+// import { parseCtxText } from '@/_helpers/translateCtx'
+import { parseCtxText } from '@P/saladict-core/src/utils/translateCtx'
+// import { AddConfig, SyncService } from '../../interface'
+import { AddConfig, SyncService } from '@P/saladict-core/src/background/sync-manager/interface'
+import { getNotebook } from '@P/saladict-core/src/background/sync-manager/helpers'
 import { Message } from '@/types/message'
 
 export interface SyncConfig {
@@ -65,18 +66,17 @@ export class Service extends SyncService<SyncConfig> {
       case 'ANKI_CONNECT_FIND_WORD':
         return this.findNote(msg.payload).catch(() => '')
       case 'ANKI_CONNECT_UPDATE_WORD':
-        return this.updateWord(msg.payload.cardId, msg.payload.word).catch(e =>
-          Promise.reject(e)
-        )
+        return this.updateWord(msg.payload.cardId, msg.payload.word)
+          .catch(e =>
+            console.warn(e)
+          )
     }
   }
 
   onStart () {
-    message.addListener(this.handleMessage)
   }
 
   async destroy () {
-    message.removeListener(this.handleMessage)
   }
 
   async findNote (date: number): Promise<number | undefined> {

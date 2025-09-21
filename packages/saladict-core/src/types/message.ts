@@ -261,17 +261,6 @@ export type MessageConfig = MessageConfigType<{
   }
 
   /* ------------------------------------------------ *\
-     Word Editor
-  \* ------------------------------------------------ */
-
-  UPDATE_WORD_EDITOR_WORD: {
-    payload: {
-      word: Word
-      translateCtx?: boolean
-    }
-  }
-
-  /* ------------------------------------------------ *\
      Context Menus
   \* ------------------------------------------------ */
 

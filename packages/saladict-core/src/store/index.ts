@@ -8,7 +8,7 @@ import { isTempDisable } from '../dict-utils/is-temp-disable'
 import { isStandalonePage, isOptionsPage, isPopupPage, isQuickSearchPage } from '../core/saladict-state'
 // import { isStandalonePage } from '../_helpers/saladict'
 
-import { DictSearchResult } from '@P/trans-api/src/helpers'
+import { DictSearchResult } from '@P/saladict-core/src/core/trans-api/helpers'
 
 type RenderDictItem = {
   readonly id: DictID

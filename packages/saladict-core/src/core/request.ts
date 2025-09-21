@@ -1,5 +1,5 @@
 import { DictID } from '../app-config'
-import { DictSearchResult } from '@P/trans-api/src/helpers'
+import { DictSearchResult } from '@P/saladict-core/src/core/trans-api/helpers'
 
 export async function fetchDictResult (
   data: {

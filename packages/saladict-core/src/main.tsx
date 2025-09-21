@@ -1,4 +1,4 @@
-import { ContentPage } from './content'
+import { ContentPage } from './views/content'
 
 
 export {

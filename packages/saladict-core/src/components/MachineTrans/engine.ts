@@ -1,9 +1,11 @@
-import { DictID, AppConfig } from '@/app-config'
+import { DictID, AppConfig } from '@P/saladict-core/src/app-config'
 import { Language } from '@P/open-trans/languages'
 import { Translator } from '@P/open-trans/translator'
-import { DictItem, SelectOptions } from '@/app-config/dicts'
-import { isContainJapanese, isContainKorean } from '@/_helpers/lang-check'
-import { DictSearchResult } from '@/components/Dictionaries/helpers'
+import { DictItem, SelectOptions } from '@P/saladict-core/src/app-config/dicts'
+// import { isContainJapanese, isContainKorean } from '@/_helpers/lang-check'
+import { isContainJapanese, isContainKorean } from '../../utils/lang-check'
+// import { DictSearchResult } from '@/components/Dictionaries/helpers'
+import { DictSearchResult } from '../../core/trans-api/helpers'
 
 export interface MachineTranslatePayload<Lang = string> {
   sl?: Lang
@@ -44,7 +46,6 @@ export type MachineDictItem<
 
 export type ExtractLangFromConfig<Config> = Config extends MachineDictItem<
   infer Lang,
-  infer Options
 >
   ? Lang
   : never
