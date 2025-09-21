@@ -1,5 +1,4 @@
 import React, { FC, useState, useEffect, useContext, useRef } from 'react'
-import { Helmet } from 'react-helmet'
 import { shallowEqual } from 'react-redux'
 import { Layout, Row, Col, message as antMsg } from 'antd'
 import { useSelector } from '@/content/redux'
@@ -73,9 +72,7 @@ export const MainEntry: FC = () => {
 
   return (
     <>
-      <Helmet>
-        {ready && <title>{`${t('title')} - ${t('nav.' + entry)}`}</title>}
-      </Helmet>
+      {ready && <title>{`${t('title')} - ${t('nav.' + entry)}`}</title>}
       <HeaderMemo openProfilesTab={setEntry} />
       <Layout
         style={{ maxWidth: 1400, margin: '0 auto' }}

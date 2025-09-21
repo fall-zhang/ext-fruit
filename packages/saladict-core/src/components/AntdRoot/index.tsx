@@ -1,15 +1,14 @@
 import React from 'react'
-import { Provider as ReduxProvider } from 'react-redux'
-import { createStore } from '@/content/redux'
 import SaladBowlContainer from '@/content/components/SaladBowl/SaladBowl.container'
 import DictPanelContainer from '@/content/components/DictPanel/DictPanel.container'
 import WordEditorContainer from '@/content/components/WordEditor/WordEditor.container'
-import { I18nContextProvider } from '@/_helpers/i18n'
 import { timer } from '@/_helpers/promise-more'
 import { AntdRootContainer } from './AntdRootContainer'
 
 import './_style.scss'
 import { createRoot } from 'react-dom/client'
+// import { I18nContextProvider } from '@/_helpers/i18n'
+import { I18nContextProvider } from '../../locales/i18n'
 
 export const initAntdRoot = async (
   render: () => React.ReactNode,
@@ -29,22 +28,20 @@ export const initAntdRoot = async (
   })
   const root = createRoot(document.getElementById('root')!)
   root.render(<I18nContextProvider>
-    <ReduxProvider store={store}>
-      <AntdRootContainer gaPath={gaPath} render={render} />
-      <SaladBowlContainer panelCSS={''} x={0} y={0} enableHover={false} onActive={ () => {} } show={false} withAnimation={false} />
-      <DictPanelContainer darkMode={false} panelCSS={''} fontSize={0} show={false} withAnimation={false} coord={{
-        x: 0,
-        y: 0
-      }} takeCoordSnapshot={false} width={0} height={0} maxHeight={0} menuBar={undefined} mtaBox={undefined} dictList={undefined} waveformBox={undefined} dragStartCoord={null} onDragEnd={function (): void {
-        throw new Error('Function not implemented.')
-      } } />
-      <WordEditorContainer darkMode={false} ctxTrans={undefined} show={false} withAnimation={false} onClose={function (): void {
-        throw new Error('Function not implemented.')
-      } } containerWidth={0} wordEditor={{
-        word: undefined,
-        translateCtx: false
-      }} />
-    </ReduxProvider>
+    <AntdRootContainer gaPath={gaPath} render={render} />
+    <SaladBowlContainer panelCSS={''} x={0} y={0} enableHover={false} onActive={ () => {} } show={false} withAnimation={false} />
+    <DictPanelContainer darkMode={false} panelCSS={''} fontSize={0} show={false} withAnimation={false} coord={{
+      x: 0,
+      y: 0
+    }} takeCoordSnapshot={false} width={0} height={0} maxHeight={0} menuBar={undefined} mtaBox={undefined} dictList={undefined} waveformBox={undefined} dragStartCoord={null} onDragEnd={function (): void {
+      throw new Error('Function not implemented.')
+    } } />
+    <WordEditorContainer darkMode={false} ctxTrans={undefined} show={false} withAnimation={false} onClose={function (): void {
+      throw new Error('Function not implemented.')
+    } } containerWidth={0} wordEditor={{
+      word: undefined,
+      translateCtx: false
+    }} />
   </I18nContextProvider>)
 }
 
@@ -62,7 +59,7 @@ async function switchAntdTheme (darkMode: boolean): Promise<void> {
     )
 
     if ($link && $link.getAttribute('href') === href) {
-      resolve()
+      resolve('')
       return
     }
 

@@ -66,11 +66,12 @@ export async function i18nLoader () {
           const { locale } = await import(
             /* webpackInclude: /_locales\/[^/]+\/[^/]+\.ts$/ */
             /* webpackMode: "lazy" */
-            `@/locales/${lang}/${ns}.ts`
+            `./${lang}/${ns}.ts`
           )
           cb(null, locale)
           return locale
         } catch (err) {
+          console.warn('🚀 ~ i18nLoader ~ err:', err)
           cb(err)
         }
       }

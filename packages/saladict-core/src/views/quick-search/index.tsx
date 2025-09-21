@@ -1,8 +1,7 @@
 import './env'
 import '@/selection'
 
-import React, { FC } from 'react'
-import { Helmet } from 'react-helmet'
+import { FC } from 'react'
 import { message, storage } from '@/_helpers/browser-api'
 
 import { Provider as ProviderRedux } from 'react-redux'
@@ -20,9 +19,7 @@ document.title = 'Saladict Standalone Panel'
 const Title: FC = () => {
   const { t } = useTranslate('content')
   return (
-    <Helmet>
-      <title>{t('standalone')}</title>
-    </Helmet>
+    <title>{t('standalone')}</title>
   )
 }
 

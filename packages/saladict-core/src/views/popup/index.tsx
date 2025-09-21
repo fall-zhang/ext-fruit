@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { Helmet } from 'react-helmet'
 // import { AppConfig } from '@/app-config'
 // import { getConfig } from '@/_helpers/config-manager'
 import { message, openUrl } from '@/_helpers/browser-api'
@@ -24,9 +23,7 @@ browser.runtime.connect({ name: 'popup' } as any) // wrong typing
 const Title: FC = () => {
   const { t } = useTranslate('popup')
   return (
-    <Helmet>
-      <title>{t('title')}</title>
-    </Helmet>
+    <title>{t('title')}</title>
   )
 }
 
