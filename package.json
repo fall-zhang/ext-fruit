@@ -3,25 +3,11 @@
   "version": "0.0.1",
   "type": "module",
   "main": "libs/main.js",
-  "description": "Vue table component for huge data",
   "author": "Fall Zhang",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/fall-zhang/ext-fruit"
-  },
-  "types": "./libs/main.d.ts",
-  "exports": {
-    ".": {
-      "types": "./libs/main.d.ts",
-      "import": "./libs/main.js",
-      "require": "./libs/main.cjs"
-    },
-    "./lib/*": {
-      "types": "./libs/*.d.ts",
-      "require": "./lib/*.js"
-    },
-    "./*": "./*"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -46,23 +32,16 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@vitejs/plugin-react-swc": "^3.8.1",
     "axios": "^1.8.4",
     "axios-mock-adapter": "^2.1.0",
-    "chrome-types": "^0.1.348",
-    "classnames": "^2.5.1",
     "i18next": "^24.2.3",
     "memoize-one": "^6.0.0",
     "observable-hooks": "^4.2.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "rollup-plugin-visualizer": "^6.0.3",
     "rxjs": "^7.8.2",
     "ua-parser-js": "^2.0.3",
     "uuid": "^11.1.0"
-  },
-  "peerDependencies": {
-    "react": ">= 18.0.0"
   },
   "config": {
     "commitizen": {
@@ -82,16 +61,6 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.2",
     "@rollup/pluginutils": "^5.1.4",
-    "@storybook/addon-actions": "^8.6.12",
-    "@storybook/addon-essentials": "^8.6.12",
-    "@storybook/addon-interactions": "^8.6.12",
-    "@storybook/addon-knobs": "^8.0.1",
-    "@storybook/addon-onboarding": "^8.6.12",
-    "@storybook/blocks": "^8.6.12",
-    "@storybook/builder-vite": "^8.6.12",
-    "@storybook/react": "^8.6.12",
-    "@storybook/react-vite": "^8.6.12",
-    "@storybook/test": "^8.6.12",
     "@tailwindcss/vite": "^4.1.14",
     "@types/firefox-webext-browser": "^67.0.2",
     "@types/lodash": "^4.17.16",
@@ -108,6 +77,7 @@
     "@typescript-eslint/eslint-plugin": "^8.31.0",
     "@typescript-eslint/parser": "^8.31.0",
     "@vitejs/plugin-react": "^4.4.1",
+    "@vitejs/plugin-react-swc": "^3.8.1",
     "@vitest/ui": "^3.0.1",
     "cross-env": "^7.0.3",
     "cz-git": "^1.11.1",
@@ -119,6 +89,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-storybook": "^9.0.0",
+    "rollup-plugin-visualizer": "^6.0.3",
     "husky": "^8.0.3",
     "jsdom": "^23.2.0",
     "lint-staged": "^15.5.1",
@@ -132,6 +103,7 @@
     "rollup-plugin-string": "^3.0.0",
     "sass": "^1.87.0",
     "storybook": "^8.6.12",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.31.0",
     "vite": "^6.3.2",
@@ -162,16 +134,10 @@
   ],
   "keywords": [
     "react",
-    "table",
     "grid",
     "translate",
     "chrome",
     "chrome-plugin",
     "i18n"
-  ],
-  "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
-  }
+  ]
 }
