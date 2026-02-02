@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect, useMemo } from 'react'
-import classnames from 'classnames'
+import classNames from 'clsx'
 import { DictID } from '@/app-config'
 import { useTranslate } from '@/_helpers/i18n'
 import { message } from '@/_helpers/browser-api'

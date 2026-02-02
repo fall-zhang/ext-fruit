@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect, ReactElement } from 'react'
-import classNames from 'classnames'
+import classNames from 'clsx'
 import root from 'react-shadow'
 import i18next from 'i18next'
 import { number, boolean } from '@storybook/addon-knobs'

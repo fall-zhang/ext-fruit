@@ -6,7 +6,7 @@ import React, {
   useMemo,
   useEffect
 } from 'react'
-import classnames from 'classnames'
+import classNames from 'clsx'
 import { useUpdateEffect } from 'react-use'
 // import { SALADICT_PANEL, isInternalPage } from '@/_helpers/saladict'
 import { SALADICT_PANEL, isInternalPage } from '@P/saladict-core/src/core/saladict-state'

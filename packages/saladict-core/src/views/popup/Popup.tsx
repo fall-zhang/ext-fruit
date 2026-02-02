@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useLayoutEffect
 } from 'react'
-import classNames from 'classnames'
+import classNames from 'clsx'
 import QRCode from 'qrcode.react'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import { AppConfig } from '@/app-config'

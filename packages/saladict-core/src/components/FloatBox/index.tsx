@@ -1,6 +1,6 @@
 import React, { FC, Ref, useState, useCallback } from 'react'
 import { ResizeReporter } from 'react-resize-reporter/scroll'
-import classnames from 'classnames'
+import classNames from 'clsx'
 
 export type FloatBoxItem =
   | {

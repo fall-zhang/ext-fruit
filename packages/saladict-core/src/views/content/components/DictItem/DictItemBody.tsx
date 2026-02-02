@@ -1,5 +1,5 @@
 import React, { ComponentType, FC, useMemo, Suspense } from 'react'
-import classNames from 'classnames'
+import classNames from 'clsx'
 import root from 'react-shadow'
 import { Observable } from 'rxjs'
 import { DictID } from '@/app-config'

@@ -1,5 +1,5 @@
 import React, { FC, useRef, useState, useEffect } from 'react'
-import classNames from 'classnames'
+import classNames from 'clsx'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import AutosizeTextarea from 'react-textarea-autosize'
 import { useObservableState } from 'observable-hooks'

@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import classnames from 'classnames'
+import classNames from 'clsx'
 import { useSubscription, useObservableCallback } from 'observable-hooks'
 import { hoverWithDelay } from '@/_helpers/observables'
 import { SALADICT_EXTERNAL } from '@/_helpers/saladict'

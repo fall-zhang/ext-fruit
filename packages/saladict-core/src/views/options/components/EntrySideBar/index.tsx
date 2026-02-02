@@ -20,7 +20,7 @@ import {
   KeyOutlined
 } from '@ant-design/icons'
 import { useObservableState } from 'observable-hooks'
-import classnames from 'classnames'
+import classNames from 'clsx'
 import { debounceTime, scan, distinctUntilChanged } from 'rxjs/operators'
 import { useTranslate } from '@/_helpers/i18n'
 import { setFormDirty, useFormDirty } from '@/options/helpers/use-form-dirty'

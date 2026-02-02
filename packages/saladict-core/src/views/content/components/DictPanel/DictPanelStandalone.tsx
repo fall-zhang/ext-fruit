@@ -1,5 +1,5 @@
 import React, { FC, ReactNode, useRef } from 'react'
-import classnames from 'classnames'
+import classNames from 'clsx'
 import { SALADICT_PANEL } from '@/_helpers/saladict'
 import { HoverBoxContext } from '@/components/HoverBox'
 

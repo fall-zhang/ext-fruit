@@ -1,6 +1,6 @@
 import React, { FC, useRef, useState } from 'react'
 import { useUpdateEffect } from 'react-use'
-import classnames from 'classnames'
+import classNames from 'clsx'
 import { useRefFn } from 'observable-hooks'
 import { ShadowPortal, defaultTimeout } from '@/components/ShadowPortal'
 import { DictPanel, DictPanelProps } from './DictPanel'

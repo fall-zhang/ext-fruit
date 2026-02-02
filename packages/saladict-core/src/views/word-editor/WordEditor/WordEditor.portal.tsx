@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import classnames from 'classnames'
+import classNames from 'clsx'
 import { useRefFn } from 'observable-hooks'
 import { ShadowPortal, defaultTimeout } from '@/components/ShadowPortal'
 import { WordEditor, WordEditorProps } from './WordEditor'

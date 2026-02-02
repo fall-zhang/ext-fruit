@@ -185,29 +185,6 @@ export const Notes: FC<NotesProps> = props => {
 
   const [ankiCardId, setAnkiCardId] = useState<number | undefined>()
 
-<<<<<<< HEAD:packages/saladict-core/src/views/word-editor/WordEditor/Notes.tsx
-=======
-  useEffect(() => {
-    let isRunning = true
-    storage.sync
-      .get<StorageSyncConfig>('syncConfig')
-      .then(async ({ syncConfig }) => {
-        if (syncConfig?.ankiconnect?.enable) {
-          const cardId = await message.send<'ANKI_CONNECT_FIND_WORD'>({
-            type: 'ANKI_CONNECT_FIND_WORD',
-            payload: word.date
-          })
-          if (isRunning) {
-            setAnkiCardId(cardId)
-          }
-        }
-      })
-    return () => {
-      isRunning = false
-    }
-  }, [word.date])
-
->>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2:packages/saladict-core/src/content/components/WordEditor/Notes.tsx
   if (ankiCardId) {
     panelBtns.unshift({
       type: 'normal',

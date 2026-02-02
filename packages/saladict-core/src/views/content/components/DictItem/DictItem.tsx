@@ -8,7 +8,7 @@ import React, {
   useMemo
 } from 'react'
 import { useObservableCallback, identity } from 'observable-hooks'
-import classnames from 'classnames'
+import classNames from 'clsx'
 import { ResizeReporter } from 'react-resize-reporter/scroll'
 import { DictID } from '@/app-config'
 import { message } from '@/_helpers/browser-api'
