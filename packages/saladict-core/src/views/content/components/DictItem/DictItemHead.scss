@@ -59,6 +59,7 @@
   }
 
   .darkMode {
+
     &:hover,
     &:focus,
     &:active {
@@ -87,6 +88,10 @@
   }
 }
 
+:where(.isUnfold) .dictItemHead-FoldArrow {
+  transform: rotate(-90deg);
+}
+
 .dictItemHead-FoldArrow {
   box-sizing: border-box;
   fill: var(--color-font);
@@ -95,13 +100,6 @@
   padding: 3px;
   transform-origin: center;
 
-  @include isAnimate {
-    transition: transform 400ms;
-  }
-
-  @include atRoot(".isUnfold") {
-    transform: rotate(-90deg);
-  }
 }
 
 .dictItemHead-Loader {
@@ -111,23 +109,12 @@
   height: 20px;
 }
 
-.dictItemHead-Loader > div {
+.dictItemHead-Loader>div {
   width: 8px;
   height: 8px;
   margin: 2px;
   background: #f9690e;
   border-radius: 100%;
-
-  @include isAnimate {
-    animation: dictItemHead-Loader 1.5s infinite ease-in-out;
-
-    $dictItemHead-LoaderNum: 5;
-    @for $i from 1 through $dictItemHead-LoaderNum {
-      &:nth-child(#{$dictItemHead-LoaderNum + 1 - $i}) {
-        animation-delay: -0.1s * ($i - 1);
-      }
-    }
-  }
 }
 
 @keyframes dictItemHead-Loader {

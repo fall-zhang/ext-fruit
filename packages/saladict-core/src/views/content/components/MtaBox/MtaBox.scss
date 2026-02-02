@@ -4,12 +4,10 @@
   overflow: hidden;
   height: 0; // init height transition
 
-  @include isAnimate {
-    transition: height 0.4s;
+  transition: height 0.4s;
 
-    &.isTyping {
-      transition: height 0s;
-    }
+  &.isTyping {
+    transition: height 0s;
   }
 }
 

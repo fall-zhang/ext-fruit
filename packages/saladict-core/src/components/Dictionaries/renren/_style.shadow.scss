@@ -10,10 +10,6 @@
     margin: 0;
     padding: 0;
     transition: height 0.4s;
-
-    @include isAnimate {
-      transition: height 0.4s;
-    }
   }
 
   figcaption {
@@ -38,14 +34,12 @@
   left: 0;
   max-width: 100%;
   opacity: 0;
+  transition: opacity 0.4s;
 
   &.isLoaded {
     opacity: 1;
   }
 
-  @include isAnimate {
-    transition: opacity 0.4s;
-  }
 }
 
 .dictRenren-Slide_Speaker {

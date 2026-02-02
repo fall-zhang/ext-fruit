@@ -10,7 +10,7 @@ import classnames from 'classnames'
 import { useUpdateEffect } from 'react-use'
 // import { SALADICT_PANEL, isInternalPage } from '@/_helpers/saladict'
 import { SALADICT_PANEL, isInternalPage } from '@P/saladict-core/src/core/saladict-state'
-import { HoverBoxContext } from '@/components/HoverBox'
+import { HoverBoxContext } from '@sala/core/src/components/HoverBox'
 import { getScrollbarWidth } from '@P/saladict-core/src/utils/scrollbar-width'
 
 export interface DictPanelProps {

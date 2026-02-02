@@ -12,10 +12,11 @@
   font-size: 13px;
   line-height: 1.6;
   color: var(--color-font);
+  transition: height 0.4s, opacity 0.4s;
+}
 
-  @include isAnimate {
-    transition: height 0.4s, opacity 0.4s;
-  }
+.isAnimate .dictItem-BodyMesure {
+  transition: opacity 0.4s;
 }
 
 .dictItem-BodyMesure {
@@ -26,19 +27,15 @@
   // react-resize-reporter
   position: relative;
 
-  > *:first-child {
+  >*:first-child {
     margin-top: 10px !important;
   }
 
-  > *:last-child {
+  >*:last-child {
     margin-bottom: 10px !important;
   }
 
-  @include isAnimate {
-    transition: opacity 0.4s;
-  }
-
-  @include atRoot(".isUnfold") {
+  &:where(.isUnfold) {
     opacity: 1;
   }
 }
@@ -58,31 +55,38 @@
   &:nth-child(2) {
     transform: translateX(15px);
   }
+
   &:nth-child(3) {
     transform: translateX(30px);
   }
+
   &:nth-child(4) {
     transform: translateX(45px);
   }
+
   &:nth-child(5) {
     transform: translateX(60px);
   }
 
-  @include isAnimate {
-    animation: dictItem-Loader-shift 2s linear infinite;
+}
 
-    &:nth-child(2) {
-      animation-delay: -0.4s;
-    }
-    &:nth-child(3) {
-      animation-delay: -0.8s;
-    }
-    &:nth-child(4) {
-      animation-delay: -1.2s;
-    }
-    &:nth-child(5) {
-      animation-delay: -1.6s;
-    }
+.isAnimate .dictItem-Loader_Ball {
+  animation: dictItem-Loader-shift 2s linear infinite;
+
+  &:nth-child(2) {
+    animation-delay: -0.4s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: -0.8s;
+  }
+
+  &:nth-child(4) {
+    animation-delay: -1.2s;
+  }
+
+  &:nth-child(5) {
+    animation-delay: -1.6s;
   }
 }
 
@@ -95,11 +99,9 @@
   padding: 0;
   border: none;
   // safari doesn't support transparent
-  background: linear-gradient(
-    rgba(var(--color-rgb-background), 0) 40%,
-    rgba(var(--color-rgb-background), 0.5) 60%,
-    var(--color-background) 100%
-  );
+  background: linear-gradient(rgba(var(--color-rgb-background), 0) 40%,
+      rgba(var(--color-rgb-background), 0.5) 60%,
+      var(--color-background) 100%);
   opacity: 0.6;
   cursor: pointer;
   user-select: none;
@@ -110,9 +112,8 @@
     opacity: 1;
   }
 
-  @include isAnimate {
-    transition: opacity 400ms;
-  }
+  transition: opacity 400ms;
+
 }
 
 .dictItem-FoldMaskArrow {
@@ -133,9 +134,7 @@
 
 .noHeightTransition {
   .dictItem-Body {
-    @include isAnimate {
-      transition: height 0s;
-    }
+    transition: height 0s;
   }
 }
 
@@ -144,14 +143,17 @@
     transform: translateX(0);
     opacity: 0;
   }
+
   10% {
     transform: translateX(30px);
     opacity: 1;
   }
+
   90% {
     transform: translateX(80px);
     opacity: 1;
   }
+
   100% {
     transform: translateX(110px);
     opacity: 0;

@@ -1,16 +1,8 @@
-$scrollbar-ff-width: auto; // FF-only accepts auto, thin, none
-$scrollbar-minlength: 50px; // Minimum length of scrollbar thumb
-$scrollbar-track-color: transparent;
-$scrollbar-color: rgba(138, 138, 138, 0.25);
-$scrollbar-color-hover: rgba(138, 138, 138, 0.35);
-$scrollbar-color-active: rgba(138, 138, 138, 0.6);
-
 .fancy-scrollbar {
   overscroll-behavior: contain;
   overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  scrollbar-width: $scrollbar-ff-width;
+  scroll-behavior: smooth;
+  scrollbar-width: auto;
   // Firefox has incorrect track color
   // scrollbar-color: $scrollbar-color $scrollbar-track-color;
 
@@ -20,27 +12,27 @@ $scrollbar-color-active: rgba(138, 138, 138, 0.6);
   }
 
   &::-webkit-scrollbar-track {
-    background-color: $scrollbar-track-color;
+    background-color: transparent;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: $scrollbar-color;
+    background-color: rgba(138, 138, 138, 0.25);;
     border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background-color: $scrollbar-color-hover;
+    background-color: rgba(138, 138, 138, 0.35);
   }
 
   &::-webkit-scrollbar-thumb:active {
-    background-color: $scrollbar-color-active;
+    background-color: rgba(138, 138, 138, 0.6);
   }
 
   &::-webkit-scrollbar-thumb:vertical {
-    min-height: $scrollbar-minlength;
+    min-height: 50px;
   }
 
   &::-webkit-scrollbar-thumb:horizontal {
-    min-width: $scrollbar-minlength;
+    min-width: 50px;
   }
 }

@@ -8,6 +8,7 @@
   background: transparent;
   cursor: pointer;
   user-select: none;
+    transition: background 0.2s;
 
   &:focus,
   &:hover {
@@ -31,9 +32,6 @@
     }
   }
 
-  @include isAnimate {
-    transition: background 0.2s;
-  }
 }
 
 // history back and next
@@ -68,12 +66,9 @@
 
 .menuBar-Btn_Icon-pin {
   transform-origin: center;
+  transition: transform 0.4s;
 
   &.isActive {
     transform: rotate(45deg);
-  }
-
-  @include isAnimate {
-    transition: transform 0.4s;
   }
 }

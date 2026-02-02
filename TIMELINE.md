@@ -5,3 +5,4 @@
 - [ ] 搜索 useSelector，用 zustand 的 useDictStore 替换
 - [ ] 用 zustand 的 useDictStore 替换 useDispatch
 - [ ] 使用 @tanstack/react-router 实现路由
+- [ ] 使用 css 变量替代 scss 的变量

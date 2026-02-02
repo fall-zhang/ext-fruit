@@ -1,4 +1,4 @@
-@import '@/components/FloatBox/FloatBox.scss';
+@import '../FloatBox/FloatBox.scss';
 
 .hoverBox-Container {
   display: inline-block;
@@ -10,19 +10,19 @@
   z-index: 2147483647;
 }
 
-.csst-hoverBox {
-  @include isAnimate(-enter) {
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
 
-  @include isAnimate(-enter-active, -exit) {
-    opacity: 1;
-    transition: opacity 0.4s;
-  }
+.isAnimate-enter .csst-hoverBox {
+  opacity: 0;
+  transition: opacity 0.4s;
+}
 
-  @include isAnimate(-exit-active) {
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
+:is(.isAnimate-enter-enter-active,
+  .isAnimate-enter-exit) .csst-hoverBox {
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+
+.isAnimate-enter-exit-active .csst-hoverBox {
+  opacity: 0;
+  transition: opacity 0.4s;
 }
