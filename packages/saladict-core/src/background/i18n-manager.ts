@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 import i18next, { TFunction } from 'i18next'
 import type { i18n } from 'i18next'
-=======
-import i18next, { TFunction, i18n } from 'i18next'
->>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2
-import { i18nLoader, Namespace } from '@/_helpers/i18n'
+import { i18nLoader, Namespace } from '@sala/core/locales'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 

@@ -43,11 +43,7 @@ export interface DictSearchResult<Result> {
 }
 
 /** Fetch and parse dictionary search result */
-<<<<<<< HEAD:packages/trans-api/src/helpers.ts
-export interface SearchFunction<Result, Payload = unknown> {
-=======
 export interface SearchFunction<Result, Payload = Record<string, unknown>> {
->>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2:packages/saladict-core/src/components/Dictionaries/helpers.ts
   (
     text: string,
     config: AppConfig,

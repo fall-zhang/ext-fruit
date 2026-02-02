@@ -1,12 +1,7 @@
-<<<<<<< HEAD
 // import { isContainChinese, isContainEnglish } from '@/_helpers/lang-check'
 import { isContainChinese, isContainEnglish } from '../../utils/lang-check'
 // import { Message, MessageResponse } from '@/typings/message'
-import { Message, MessageResponse } from '../../typings/message'
-=======
-import { isContainChinese, isContainEnglish } from '@/_helpers/lang-check'
-import { Message, MessageResponse } from '@/types/message'
->>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2
+import { Message, MessageResponse } from '../../types/message'
 import { getDB } from './core'
 
 export async function isInNotebook (word: Message<'IS_IN_NOTEBOOK'>['payload']) {

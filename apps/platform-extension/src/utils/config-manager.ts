@@ -31,17 +31,10 @@ function deflate (config: AppConfig): AppConfigCompressed {
   }
 }
 
-<<<<<<< HEAD:apps/platform-extension/src/utils/config-manager.ts
 function inflate (config: AppConfig | AppConfigCompressed): AppConfig
 function inflate (config: undefined): undefined
 function inflate (
   config?: AppConfig | AppConfigCompressed
-=======
-function inflate(config: AppConfig & AppConfigCompressed): AppConfig
-function inflate(config: undefined): undefined
-function inflate(
-  config?: AppConfig & AppConfigCompressed
->>>>>>> c908eaa999dbc831b8e70709cf53b61208abd9f2:packages/saladict-core/src/_helpers/config-manager.ts
 ): AppConfig | undefined
 function inflate (
   config?: AppConfig & AppConfigCompressed

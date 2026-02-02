@@ -1,4 +1,4 @@
-import { AppConfig } from '@/app-config'
+import { AppConfig } from '@sala/core/src/app-config'
 import { Observable, fromEvent, merge, of } from 'rxjs'
 import { map, mapTo, filter, distinctUntilChanged } from 'rxjs/operators'
 import { newWord, Word } from '@/_helpers/record-manager'

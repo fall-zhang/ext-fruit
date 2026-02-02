@@ -7,11 +7,7 @@
   "exports": {
     "./locales/*": "./src/locales/*.ts",
     "./components/*": "./src/components/*.ts",
-    "./virtualFileSystem/*": {
-      "types": "./virtualFileSystem/*",
-      "import": "./virtualFileSystem/*",
-      "require": "./virtualFileSystem/*"
-    }
+    "./*": "./src/*"
   },
   "scripts": {
     "build": "npm run build:pre && npm run build:js",
