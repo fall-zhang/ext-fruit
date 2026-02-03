@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/common'
+import { common as _locale } from '../zh-CN/common'
 
 export const locale: typeof _locale = {
   add: '新增',
@@ -42,14 +42,14 @@ export const locale: typeof _locale = {
     minor: '其它語言',
     matchAll: '所有的字元都必須匹配',
     others: '其它字元',
-    spanish: '西班牙文'
+    spanish: '西班牙文',
   },
 
   unit: {
     mins: '分鐘',
     ms: '毫秒',
     s: '秒',
-    word: '个'
+    word: '个',
   },
 
   note: {
@@ -61,7 +61,7 @@ export const locale: typeof _locale = {
     date: '日期',
     srcTitle: '來源標題',
     srcLink: '來源連結',
-    srcFavicon: '來源圖示'
+    srcFavicon: '來源圖示',
   },
 
   profile: {
@@ -70,6 +70,6 @@ export const locale: typeof _locale = {
     default: '預設模式',
     scholar: '學術模式',
     translation: '翻譯模式',
-    nihongo: '日語模式'
-  }
+    nihongo: '日語模式',
+  },
 }

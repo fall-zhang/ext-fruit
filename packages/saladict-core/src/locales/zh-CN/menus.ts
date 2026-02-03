@@ -1,4 +1,4 @@
-export const locale = {
+export const menus = {
   baidu_page_translate: '百度网页翻译',
   baidu_search: '百度搜索',
   bing_dict: '必应词典',
@@ -35,5 +35,5 @@ export const locale = {
   view_as_pdf: '在 PDF 阅读器中打开',
   youdao: '有道词典',
   youdao_page_translate: '有道网页翻译',
-  youglish: 'YouGlish'
+  youglish: 'YouGlish',
 }

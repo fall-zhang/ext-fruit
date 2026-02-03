@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/menus'
+import { menus as _locale } from '../zh-CN/menus'
 
 export const locale: typeof _locale = {
   baidu_page_translate: 'Traductor web de baidu',

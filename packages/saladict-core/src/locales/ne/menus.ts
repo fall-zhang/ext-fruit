@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/menus'
+import { menus as _locale } from '../zh-CN/menus'
 
 export const locale: typeof _locale = {
   baidu_page_translate: 'बाइडु पृष्ठ अनुवाद',
@@ -38,5 +38,5 @@ export const locale: typeof _locale = {
   view_as_pdf: 'पीडीएफ भिउमा खोल्नुहोस्',
   youdao: 'यौडाओ',
   youdao_page_translate: 'यौडाओ पृष्ठ अनुवाद',
-  youglish: 'यौग्लिश'
+  youglish: 'यौग्लिश',
 }

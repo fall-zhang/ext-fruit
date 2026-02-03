@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/content'
+import { content as _locale } from '../zh-CN/content'
 
 export const locale: typeof _locale = {
   chooseLang: 'अर्को भाषा छान्नुहोस्',
@@ -20,7 +20,7 @@ export const locale: typeof _locale = {
     closePanel: 'प्यानल बन्द गर्नुहोस्',
     sidebar: 'साइडबार मोडमा स्विच गर्नुहोस्। दायाँ तर्फ दायाँ क्लिक गर्नुहोस्।',
     focusPanel: 'खोज गर्दा प्यानलले फोकस गर्ने',
-    unfocusPanel: 'खोज गर्दा प्यानलले फोकस नगर्ने'
+    unfocusPanel: 'खोज गर्दा प्यानलले फोकस नगर्ने',
   },
   wordEditor: {
     title: 'नोटबुकमा जोड्नुहोस्',
@@ -29,7 +29,7 @@ export const locale: typeof _locale = {
     closeConfirm: 'परिवर्तनहरू सुरक्षित हुँदैनन्। के तपाईँ बन्द गर्न चाहानुहुन्छ?',
     chooseCtxTitle: 'अनुवाद गरिएको परिणामहरू छान्नुहोस्',
     ctxHelp:
-      'अनुवाद छान्न र एन्की तालिका उत्पन्न गर्न सलाडिकलाई निर्देशन गर्न यदि तपाईँले [:: xxx ::] र --------------- ढाँचा राख्न चाहानुहुन्छ भने।'
+      'अनुवाद छान्न र एन्की तालिका उत्पन्न गर्न सलाडिकलाई निर्देशन गर्न यदि तपाईँले [:: xxx ::] र --------------- ढाँचा राख्न चाहानुहुन्छ भने।',
   },
   machineTrans: {
     switch: 'भाषा बदल्नुहोस्',
@@ -41,11 +41,11 @@ export const locale: typeof _locale = {
     copySrc: 'स्रोत कपि गर्नुहोस्',
     copyTrans: 'अनुवाद कपि गर्नुहोस्',
     login: 'कृपया {एसेस टोकन्} प्रदान गर्नुहोस्।',
-    dictAccount: 'एसेस टोकन्'
+    dictAccount: 'एसेस टोकन्',
   },
   updateAnki: {
     title: 'एन्कीमा अद्यावधिक गर्नुहोस्',
     success: 'शब्द एन्कीमा सफलतापूर्वक अद्यावधिक गरियो।',
-    failed: 'शब्द एन्कीमा अद्यावधिक गर्न असफल भयो।'
-  }
+    failed: 'शब्द एन्कीमा अद्यावधिक गर्न असफल भयो।',
+  },
 }

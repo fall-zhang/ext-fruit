@@ -1,21 +1,10 @@
-import React, {
-  useState,
-  useLayoutEffect,
-  FC,
-  useContext,
-  useRef,
-  Fragment,
-  PropsWithChildren,
-  ReactNode
-} from 'react'
-import mapValues from 'lodash/mapValues'
-import i18n, { TFunction } from 'i18next'
-import type * as i18nType from 'i18next'
+import i18n from 'i18next'
 
-import { zip } from 'es-toolkit'
+import { initReactI18next } from 'react-i18next'
+import { zhCN } from './langMap'
 
 export type LangCode = 'zh-CN' | 'zh-TW' | 'en'
-export type Namespace = 'common' | 'content' | 'langcode' | 'menus' | 'options' | 'popup' | 'wordpage' | 'dicts' | 'sync'
+export type Namespace = 'common' | 'content' | 'langCode' | 'menus' | 'options' | 'popup' | 'wordPage' | 'dicts' | 'sync'
 
 export interface RawLocale {
   'zh-CN': string
@@ -45,247 +34,27 @@ export interface DictLocales {
 
 export async function i18nLoader () {
   await i18n
-    .use({
-      type: 'backend',
-      init: () => {},
-      create: () => {},
-      read: async (lang: LangCode, ns: Namespace, cb: any) => {
-        try {
-          if (ns === 'dicts') {
-            const dictLocals = extractDictLocales(lang)
-            cb(null, dictLocals)
-            return dictLocals
-          }
-
-          if (ns === 'sync') {
-            const syncLocales = extractSyncServiceLocales(lang)
-            cb(null, syncLocales)
-            return syncLocales
-          }
-
-          const { locale } = await import(
-            /* webpackInclude: /_locales\/[^/]+\/[^/]+\.ts$/ */
-            /* webpackMode: "lazy" */
-            `./${lang}/${ns}.ts`
-          )
-          cb(null, locale)
-          return locale
-        } catch (err) {
-          console.warn('🚀 ~ i18nLoader ~ err:', err)
-          cb(err)
-        }
-      }
-    })
+    .use(initReactI18next) // passes i18n down to react-i18next
     .init({
       lng: 'zh-CN',
       fallbackLng: false,
-      // whitelist: ['en', 'zh-CN', 'zh-TW'],
-
-      debug: process.env.NODE_ENV === 'development',
+      resources: {
+        'zh-CN': {
+          translation: {
+            ...zhCN,
+          },
+        },
+      },
       saveMissing: false,
       load: 'currentOnly',
-
+      debug: import.meta.env.DEV,
       ns: 'common',
       defaultNS: 'common',
 
       interpolation: {
-        escapeValue: false // not needed for react as it escapes by default
-      }
+        escapeValue: false, // not needed for react as it escapes by default
+      },
     })
 
   return i18n
-}
-
-
-export const I18nContext = React.createContext<string | undefined>(undefined)
-I18nContext.displayName = 'I18nContext'
-
-export const I18nContextProvider: FC<{
-  children:ReactNode
-}> = ({ children }) => {
-  const [lang, setLang] = useState<string | undefined>(undefined)
-
-  useLayoutEffect(() => {
-    const setLangCallback = () => {
-      setLang(i18n.language)
-    }
-
-    if (!i18n.language) {
-      i18nLoader().then(() => {
-        setLang(i18n.language)
-        i18n.on('languageChanged', setLangCallback)
-      }).catch(err => {
-        console.log('🚀 ~ I18nContextProvider ~ err:', err)
-      })
-    }
-
-    return () => {
-      i18n.off('languageChanged', setLangCallback)
-    }
-  }, [])
-
-  return React.createElement(I18nContext.Provider, { value: lang }, children)
-}
-
-export interface UseTranslateResult {
-  /**
-   * fixedT with the first namespace as default.
-   * It is a wrapper of the original fixedT, which
-   * keeps the same reference even after namespaces are loaded
-   */
-  t: i18nType.TFunction
-  i18n: i18nType.i18n
-  /**
-   * Are namespaces loaded?
-   * false not ready
-   * otherwise it is a non-zero positive number
-   * that changes everytime when new namespaces are loaded.
-   */
-  ready: false | number
-}
-
-/**
- * Tailored for this project.
- * The official `useTranslation` is too heavy.
- * @param namespaces will not monitor namespace changes.
- */
-export function useTranslate (
-  namespaces?: Namespace | Namespace[]
-): UseTranslateResult {
-  const ticketRef = useRef(0)
-  const innerTRef = useRef<TFunction>()
-  // keep the exposed t function always the same
-  const tRef = useRef<TFunction>((...args: Parameters<TFunction>) =>
-    innerTRef.current(...args)
-  )
-  const lang = useContext(I18nContext)
-
-  const genResult = (t: TFunction | null, ready: boolean) => {
-    if (t) {
-      innerTRef.current = t
-    }
-    if (ready) {
-      ticketRef.current = (ticketRef.current + 1) % 100000
-    }
-    const result: UseTranslateResult = {
-      t: tRef.current,
-      i18n,
-      ready: ready ? ticketRef.current : false
-    }
-    return result
-  }
-
-  const [result, setResult] = useState<UseTranslateResult>(() => {
-    if (!lang) {
-      return genResult(() => '', false)
-    }
-
-    if (!namespaces) {
-      return genResult(i18n.t, true)
-    }
-
-    if (
-      Array.isArray(namespaces)
-        ? namespaces.every(ns => i18n.hasResourceBundle(lang, ns))
-        : i18n.hasResourceBundle(lang, namespaces)
-    ) {
-      return genResult(i18n.getFixedT(lang, namespaces), true)
-    }
-
-    return genResult(() => '', false)
-  })
-
-  useLayoutEffect(() => {
-    let isEffectRunning = true
-
-    if (lang) {
-      if (namespaces) {
-        if (
-          Array.isArray(namespaces)
-            ? namespaces.every(ns => i18n.hasResourceBundle(lang, ns))
-            : i18n.hasResourceBundle(lang, namespaces)
-        ) {
-          setResult(genResult(i18n.getFixedT(lang, namespaces), true))
-        } else {
-          // keep the old t while marking not ready
-          setResult(genResult(null, false))
-
-          i18n.loadNamespaces(namespaces).then(() => {
-            if (isEffectRunning) {
-              setResult(genResult(i18n.getFixedT(lang, namespaces), true))
-            }
-          })
-        }
-      } else {
-        setResult(genResult(i18n.t, true))
-      }
-    }
-
-    return () => {
-      isEffectRunning = false
-    }
-  }, [lang])
-
-  return result
-}
-
-/**
- * <Trans message="a{b}c{d}e">
- *   <h1>b</h1>
- *   <p>d</p>
- * </Trans>
- *  ↓
- * [
- *   "a",
- *   <h1>b</h1>,
- *   "c",
- *   <p>d</p>,
- *   "e"
- * ]
- */
-export const Trans = React.memo<PropsWithChildren<{ message?: string }>>(
-  ({ message, children }) => {
-    if (!message) return null
-
-    return React.createElement(
-      Fragment,
-      null,
-      zip(
-        message.split(/{[^}]*?}/),
-        Array.isArray(children) ? children : [children]
-      )
-    )
-  }
-)
-
-function extractDictLocales (lang: LangCode) {
-  const req = import.meta.glob('@P/saladict-core/src/locales/dictionaries/*/locales.ts')
-  console.log('🚀 ~ extractDictLocales ~ req:', req)
-  return req.keys().reduce<{ [id: string]: DictLocales }>((o, filename) => {
-    const localeModule = req(filename)
-    const json: RawDictLocales = localeModule.locales || localeModule
-    const dictId = /([^/]+)\/_locales\.(json|ts)$/.exec(filename)![1]
-    o[dictId] = {
-      name: json.name[lang]
-    }
-    if (json.options) {
-      o[dictId].options = mapValues(json.options, rawLocale => rawLocale[lang])
-    }
-    if (json.helps) {
-      o[dictId].helps = mapValues(json.helps, rawLocale => rawLocale[lang])
-    }
-    return o
-  }, {})
-}
-
-function extractSyncServiceLocales (lang: LangCode) {
-  const req = import.meta.glob('../background/sync-manager/services/*/_locales/*.ts')
-  return req.keys().reduce<{ [id: string]: DictLocales }>((o, filename) => {
-    const idMatch = new RegExp(`/([^/]+)/_locales/${lang}\\.ts$`).exec(filename)
-    if (idMatch) {
-      const localeModule = req(filename)
-      o[idMatch[1]] = localeModule.locale || localeModule
-    }
-    return o
-  }, {})
 }

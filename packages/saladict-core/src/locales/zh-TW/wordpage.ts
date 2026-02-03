@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/wordpage'
+import { wordPage as _locale } from '../zh-CN/word-page'
 
 export const locale: typeof _locale = {
   title: {
@@ -6,7 +6,7 @@ export const locale: typeof _locale = {
     notebook: '沙拉查詞-生字本'
   },
 
-  localonly: '僅本機儲存',
+  localOnly: '僅本機儲存',
 
   column: {
     add: '新增',

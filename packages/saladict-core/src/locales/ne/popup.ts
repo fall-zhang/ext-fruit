@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/popup'
+import { popup as _locale } from '../zh-CN/popup'
 
 export const locale: typeof _locale = {
   title: 'सलाडिक्ट ब्राउजर एक्सन प्यानल',
@@ -10,5 +10,5 @@ export const locale: typeof _locale = {
   notebook_empty: 'हालको पृष्ठमा कुनै चयन फेला परेन',
   notebook_error: 'नोटबुकमा चयन गरिएको पाठ थप्न सकिएन',
   page_no_response: 'पृष्ठको कुनै प्रतिक्रिया छैन',
-  qrcode_title: 'पृष्ठको क्युआर कोड'
+  qrcode_title: 'पृष्ठको क्युआर कोड',
 }

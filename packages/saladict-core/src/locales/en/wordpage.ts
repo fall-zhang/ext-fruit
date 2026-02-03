@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/wordpage'
+import { wordPage as _locale } from '../zh-CN/word-page'
 
 export const locale: typeof _locale = {
   title: {
@@ -6,7 +6,7 @@ export const locale: typeof _locale = {
     notebook: 'Saladict Notebook'
   },
 
-  localonly: 'local only',
+  localOnly: 'local only',
 
   column: {
     add: 'Add',

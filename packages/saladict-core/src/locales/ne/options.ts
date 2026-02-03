@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/options'
+import { options as _locale } from '../zh-CN/options'
 
 export const locale: typeof _locale = {
   title: 'Saladict Options',
@@ -31,7 +31,7 @@ export const locale: typeof _locale = {
     BlackWhiteList: 'Black/White List',
     ImportExport: 'Import/Export',
     Privacy: 'Privacy',
-    Permissions: 'Permissions'
+    Permissions: 'Permissions',
   },
 
   config: {
@@ -84,11 +84,11 @@ export const locale: typeof _locale = {
       'Hover on the bowl icon to trigger searching instead of clicking.',
     autopron: {
       cn: {
-        dict: 'Chinese Auto-Pronounce'
+        dict: 'Chinese Auto-Pronounce',
       },
       en: {
         dict: 'English Auto-Pronounce',
-        accent: 'Accent Preference'
+        accent: 'Accent Preference',
       },
       machine: {
         dict: 'Machine Auto-Pronounce',
@@ -96,8 +96,8 @@ export const locale: typeof _locale = {
         src_help:
           'Machine Translation Dictionary needs to be added and enabled on the list below to enable auto-pronunciation.',
         src_search: 'Read Source Text',
-        src_trans: 'Read Translation Text'
-      }
+        src_trans: 'Read Translation Text',
+      },
     },
     pdfSniff: 'Enable PDF Sniffer',
     pdfSniff_help: 'If turned on， PDF links will be automatically captured.',
@@ -141,7 +141,7 @@ export const locale: typeof _locale = {
       upload_error: 'Unable to save settings.',
       accent: {
         uk: 'UK',
-        us: 'US'
+        us: 'US',
       },
       sel_blackwhitelist: 'Selection Black/White List',
       sel_blackwhitelist_help:
@@ -156,15 +156,15 @@ export const locale: typeof _locale = {
         popup_panel: 'Dict Panel',
         popup_fav: 'Add to Notebook',
         popup_options: 'Open Saladict Options',
-        popup_standalone: 'Open Saladict Standalone Panel'
+        popup_standalone: 'Open Saladict Standalone Panel',
       },
       openQsStandalone: 'Standalone Panel Options',
       pdfStandalone: {
         default: 'Never',
         always: 'Always',
-        manual: 'Manual'
-      }
-    }
+        manual: 'Manual',
+      },
+    },
   },
 
   matchPattern: {
@@ -173,7 +173,7 @@ export const locale: typeof _locale = {
     url: 'URL Match Pattern',
     url_error: 'Incorrect URL Match Pattern.',
     regex: 'Regular Expression',
-    regex_error: 'Incorrect Regular Expression.'
+    regex_error: 'Incorrect Regular Expression.',
   },
 
   searchMode: {
@@ -192,7 +192,7 @@ export const locale: typeof _locale = {
     instantKey: 'Key',
     instantKey_help:
       'If "Direct" is chosen it is also recommeded setting browser shortkey to toggle Instant Capture. Otherwise browser text selection could be unable to perform.',
-    instantDelay: 'Capture delay'
+    instantDelay: 'Capture delay',
   },
 
   profiles: {
@@ -201,8 +201,8 @@ export const locale: typeof _locale = {
       delete_confirm: 'Delete Profile "{{name}}". Confirm?',
       edit_name: 'Change Profile Name',
       help:
-        'Each profile represents an independent set of settings. Some of the settings (with {*} prefix) change according to profile. One may switch profiles by hovering on the menu icon on Dict Panel, or focus on the icon then hit {↓}.'
-    }
+        'Each profile represents an independent set of settings. Some of the settings (with {*} prefix) change according to profile. One may switch profiles by hovering on the menu icon on Dict Panel, or focus on the icon then hit {↓}.',
+    },
   },
 
   profile: {
@@ -221,10 +221,10 @@ export const locale: typeof _locale = {
         never: 'Never Unfold',
         once: 'Unfold Once',
         popup: 'Only On Browser Action',
-        hide: 'Hide'
+        hide: 'Hide',
       },
-      dict_selected: 'Selected Dicts'
-    }
+      dict_selected: 'Selected Dicts',
+    },
   },
 
   dict: {
@@ -252,8 +252,8 @@ export const locale: typeof _locale = {
       ja: 'Ja',
       kor: 'Kor',
       zhs: 'Zhs',
-      zht: 'Zht'
-    }
+      zht: 'Zht',
+    },
   },
 
   syncService: {
@@ -273,7 +273,7 @@ export const locale: typeof _locale = {
       sync_all: 'Upload all existing new words',
       sync_all_confirm:
         'Too many new words in notebook. Saladict will upload in batches. Note that uploading too many words in short period would cause account banning which is unrecoverable. Confirm?',
-      sync_last: 'Upload the last new word'
+      sync_last: 'Upload the last new word',
     },
 
     eudic: {
@@ -291,7 +291,7 @@ export const locale: typeof _locale = {
       sync_help:
         'Synchronize all existing new words in salad word book to the Eudic default word book (turn on the synchronization switch above at the same time and click save)',
       sync_all_confirm:
-        'Note that frequent synchronization in a short time may lead to lock temporarily. Are you sure to continue?'
+        'Note that frequent synchronization in a short time may lead to lock temporarily. Are you sure to continue?',
     },
 
     webdav: {
@@ -309,7 +309,7 @@ export const locale: typeof _locale = {
         'Data is guaranteed to be updated before upload. If you do not need real-time syncing across browsers, set a longer polling cycle to reduce CPU and memory footprint.',
       passwd: 'Password',
       url: 'Server Address',
-      user: 'User Account'
+      user: 'User Account',
     },
 
     ankiconnect: {
@@ -347,8 +347,8 @@ export const locale: typeof _locale = {
         'Escape HTML entities. Turn off if using HTML for manual layout.',
       syncServer: 'Sync Server',
       syncServer_help:
-        'Sync to server(e.g. AnkiWeb) after new words being added to local Anki.'
-    }
+        'Sync to server(e.g. AnkiWeb) after new words being added to local Anki.',
+    },
   },
 
   titlebarOffset: {
@@ -362,7 +362,7 @@ export const locale: typeof _locale = {
       'Saladict standalone quick search panel is a type of panel window.',
     calibrate: 'Auto-calibrate',
     calibrateSuccess: 'Calibration success',
-    calibrateError: 'Calibration failed'
+    calibrateError: 'Calibration failed',
   },
 
   headInfo: {
@@ -373,17 +373,17 @@ export const locale: typeof _locale = {
       naver: 'for helping add Naver dict',
       shanbay: 'for adding Shanbay dict',
       trans_tw: 'for traditional Chinese translation',
-      weblio: 'for helping add Weblio dict'
+      weblio: 'for helping add Weblio dict',
     },
     contact_author: 'Contact Author',
     donate: 'Donate',
     instructions: 'Instructions',
-    report_issue: 'Report Issue'
+    report_issue: 'Report Issue',
   },
 
   form: {
     url_error: 'Incorrect URL.',
-    number_error: 'Incorrect number.'
+    number_error: 'Incorrect number.',
   },
 
   preload: {
@@ -392,7 +392,7 @@ export const locale: typeof _locale = {
     auto_help: 'Search automatically when panel shows up.',
     clipboard: 'Clipboard',
     help: 'Preload content in search box when panel shows up.',
-    selection: 'Page Selection'
+    selection: 'Page Selection',
   },
 
   locations: {
@@ -404,7 +404,7 @@ export const locale: typeof _locale = {
     TOP_LEFT: 'Top Left',
     TOP_RIGHT: 'Top Right',
     BOTTOM_LEFT: 'Bottom Left',
-    BOTTOM_RIGHT: 'Bottom Right'
+    BOTTOM_RIGHT: 'Bottom Right',
   },
 
   import_export_help:
@@ -416,8 +416,8 @@ export const locale: typeof _locale = {
       title: 'Import Error',
       parse: 'Unable to parse backup. Incorrect format.',
       load: 'Unable to load backup. Browser cannot obtain the local file.',
-      empty: 'No valid data found in the backup.'
-    }
+      empty: 'No valid data found in the backup.',
+    },
   },
 
   export: {
@@ -425,15 +425,15 @@ export const locale: typeof _locale = {
     error: {
       title: 'Export Error',
       empty: 'No config to export.',
-      parse: 'Unable to parse configs.'
-    }
+      parse: 'Unable to parse configs.',
+    },
   },
 
   dictAuth: {
     description:
       'As the number of Saladict users grows, if you make heavily use of machine translation services it is recommended to register an account for better stability and accuracy. The account data will only be stored in the browser.',
     dictHelp: 'See the official website of {dict}.',
-    manage: 'Manage Translator Accounts'
+    manage: 'Manage Translator Accounts',
   },
 
   third_party_privacy: 'Third Party Privacy',
@@ -454,10 +454,10 @@ export const locale: typeof _locale = {
       'This permission is needed when clipboard preload is enable for popup panel or quick search panel.',
     clipboardWrite: 'Write Clipboard',
     clipboardWrite_help:
-      'This permission is needed when using titlebar menus to copy source/target text from machine translator.'
+      'This permission is needed when using titlebar menus to copy source/target text from machine translator.',
   },
 
   unsupportedFeatures: {
-    ff: 'Feature "{{feature}}" is not supported in Firefox.'
-  }
+    ff: 'Feature "{{feature}}" is not supported in Firefox.',
+  },
 }

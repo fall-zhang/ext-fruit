@@ -1,4 +1,4 @@
-export const locale = {
+export const options = {
   title: '沙拉查词设置',
   previewPanel: '预览查词面板',
   shortcuts: '设置快捷键',
@@ -29,7 +29,7 @@ export const locale = {
     BlackWhiteList: '黑白名单',
     ImportExport: '导入导出',
     Privacy: '隐私设置',
-    Permissions: '权限管理'
+    Permissions: '权限管理',
   },
 
   config: {
@@ -78,19 +78,19 @@ export const locale = {
     bowlHover_help: '鼠标悬停在沙拉图标上触发查词，否则需要点击。',
     autopron: {
       cn: {
-        dict: '中文自动发音'
+        dict: '中文自动发音',
       },
       en: {
         dict: '英文自动发音',
-        accent: '优先口音'
+        accent: '优先口音',
       },
       machine: {
         dict: '机器自动发音',
         src: '机器发音部分',
         src_help: '机器翻译词典需要在下方添加并启用才会自动发音。',
         src_search: '朗读原文',
-        src_trans: '朗读翻译'
-      }
+        src_trans: '朗读翻译',
+      },
     },
     pdfSniff: '嗅探 PDF 链接',
     pdfSniff_help:
@@ -132,7 +132,7 @@ export const locale = {
       upload_error: '设置保存失败',
       accent: {
         uk: '英式',
-        us: '美式'
+        us: '美式',
       },
       sel_blackwhitelist: '划词黑白名单',
       sel_blackwhitelist_help: '黑名单匹配的页面 Saladict 将不会响应鼠标划词。',
@@ -146,15 +146,15 @@ export const locale = {
         popup_panel: '显示查词面板',
         popup_fav: '添加选词到生词本',
         popup_options: '打开 Saladict 设置',
-        popup_standalone: '打开快捷查词独立窗口'
+        popup_standalone: '打开快捷查词独立窗口',
       },
       openQsStandalone: '打开独立窗口设置',
       pdfStandalone: {
         default: '从不',
         always: '总是',
-        manual: '手动'
-      }
-    }
+        manual: '手动',
+      },
+    },
   },
 
   matchPattern: {
@@ -162,7 +162,7 @@ export const locale = {
     url: '超链匹配',
     url_error: '不正确的超链接模式表达式。',
     regex: '正则匹配',
-    regex_error: '不正确的正则表达式。'
+    regex_error: '不正确的正则表达式。',
   },
 
   searchMode: {
@@ -181,7 +181,7 @@ export const locale = {
     instantKey: '按键',
     instantKey_help:
       '因技术限制，悬浮取词通过自动选择鼠标附近单词实现，不设置按键直接取词可导致无法选词，建议配合快捷键开启关闭。',
-    instantDelay: '取词延时'
+    instantDelay: '取词延时',
   },
 
   profiles: {
@@ -190,8 +190,8 @@ export const locale = {
       delete_confirm: '「{{name}}」将被删除，确认？',
       edit_name: '更改情景模式名称',
       help:
-        '每个情景模式相当于一套独立的设置，一些选项（带 {*}）会随着情景模式变化。鼠标悬浮在查词面板的菜单图标上可快速切换，或者焦点选中菜单图标然后按{↓}。'
-    }
+        '每个情景模式相当于一套独立的设置，一些选项（带 {*}）会随着情景模式变化。鼠标悬浮在查词面板的菜单图标上可快速切换，或者焦点选中菜单图标然后按{↓}。',
+    },
   },
 
   profile: {
@@ -210,10 +210,10 @@ export const locale = {
         never: '从不展开',
         once: '展开一次',
         popup: '只在右上弹框展开',
-        hide: '隐藏'
+        hide: '隐藏',
       },
-      dict_selected: '已选词典'
-    }
+      dict_selected: '已选词典',
+    },
   },
 
   dict: {
@@ -240,8 +240,8 @@ export const locale = {
       ja: '日',
       kor: '韩',
       zhs: '简',
-      zht: '繁'
-    }
+      zht: '繁',
+    },
   },
 
   syncService: {
@@ -260,7 +260,7 @@ export const locale = {
       sync_all: '上传现有的所有生词',
       sync_all_confirm:
         '生词本存在较多单词，将分批上传。注意短时间上传太多有可能会导致封号，且不可恢复，确定继续？',
-      sync_last: '上传最近的一个生词'
+      sync_last: '上传最近的一个生词',
     },
 
     eudic: {
@@ -278,7 +278,7 @@ export const locale = {
       sync_help:
         '将salad单词本中现有的所有生词，同步到欧路词典默认生词本中（需同时开启上方同步开关，点击保存）',
       sync_all_confirm:
-        '注意短时间内频繁同步有可能会导致接下来一小段时间的封停，确定继续？'
+        '注意短时间内频繁同步有可能会导致接下来一小段时间的封停，确定继续？',
     },
 
     webdav: {
@@ -295,7 +295,7 @@ export const locale = {
         '添加生词后会马上上传，数据会在上传前保证同步，所以如果不需要多个浏览器实时查看更新，可将更新检测周期调大些以减少资源占用及避免服务器拒绝响应。',
       passwd: '密码',
       url: '服务器地址',
-      user: '账户'
+      user: '账户',
     },
 
     ankiconnect: {
@@ -329,8 +329,8 @@ export const locale = {
       escapeHTML_help:
         '对笔记内容中的 HTML 字符进行转义。如手动进行 HTML 排版请关闭选项。',
       syncServer: '同步服务器',
-      syncServer_help: '单词添加到本地 Anki 后自动同步到服务器（如 AnkiWeb）。'
-    }
+      syncServer_help: '单词添加到本地 Anki 后自动同步到服务器（如 AnkiWeb）。',
+    },
   },
 
   titlebarOffset: {
@@ -343,7 +343,7 @@ export const locale = {
     panel_help: '沙拉查词的独立窗口快捷查词面板为简化窗口。',
     calibrate: '自动校准',
     calibrateSuccess: '自动校准成功',
-    calibrateError: '自动校准失败'
+    calibrateError: '自动校准失败',
   },
 
   headInfo: {
@@ -354,17 +354,17 @@ export const locale = {
       naver: '协助添加 Naver 韩国语词典',
       shanbay: '编写扇贝词典模块',
       trans_tw: '提供部分繁体中文翻译',
-      weblio: '协助添加 Weblio 辞書'
+      weblio: '协助添加 Weblio 辞書',
     },
     contact_author: '联系作者',
     donate: '支持项目',
     instructions: '使用说明',
-    report_issue: '反馈问题'
+    report_issue: '反馈问题',
   },
 
   form: {
     url_error: '不正确的超链接格式。',
-    number_error: '不正确的数字'
+    number_error: '不正确的数字',
   },
 
   preload: {
@@ -373,7 +373,7 @@ export const locale = {
     auto_help: '查词面板出现时自动搜索预加载内容。',
     clipboard: '剪贴板',
     help: '查词面板出现时预先加载内容到搜索框。',
-    selection: '页面划词'
+    selection: '页面划词',
   },
 
   locations: {
@@ -385,7 +385,7 @@ export const locale = {
     TOP_LEFT: '左上',
     TOP_RIGHT: '右上',
     BOTTOM_LEFT: '左下',
-    BOTTOM_RIGHT: '右下'
+    BOTTOM_RIGHT: '右下',
   },
 
   import_export_help:
@@ -397,8 +397,8 @@ export const locale = {
       title: '导入失败',
       parse: '备份解析失败，格式不正确。',
       load: '备份加载失败，浏览器无法获得本地备份。',
-      empty: '备份中没有发现有效数据。'
-    }
+      empty: '备份中没有发现有效数据。',
+    },
   },
 
   export: {
@@ -406,15 +406,15 @@ export const locale = {
     error: {
       title: '导出失败',
       empty: '没有设置可以导出。',
-      parse: '设置解析失败，无法导出。'
-    }
+      parse: '设置解析失败，无法导出。',
+    },
   },
 
   dictAuth: {
     description:
       '随着沙拉查词用户增多，如经常使用机器翻译，建议到官网申请帐号以获得更稳定的体验以及更准确的结果。以下帐号数据只会保留在浏览器中。',
     dictHelp: '见{词典}官网。',
-    manage: '管理私用帐号'
+    manage: '管理私用帐号',
   },
 
   third_party_privacy: '第三方隐私',
@@ -433,10 +433,10 @@ export const locale = {
       '快捷查词或者右上弹框设置预加载剪贴板时需要读取剪贴板权限。',
     clipboardWrite: '写入剪贴板',
     clipboardWrite_help:
-      '机器翻译词典标题栏菜单复制原文译文或生词本导出到剪贴板需要写入剪贴板权限。'
+      '机器翻译词典标题栏菜单复制原文译文或生词本导出到剪贴板需要写入剪贴板权限。',
   },
 
   unsupportedFeatures: {
-    ff: '火狐尚不支持「{{feature}}」功能。'
-  }
+    ff: '火狐尚不支持「{{feature}}」功能。',
+  },
 }

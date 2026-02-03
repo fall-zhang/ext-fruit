@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/background'
+import { background as _locale } from '../zh-CN/background'
 
 export const locale: typeof _locale = {
   app: {

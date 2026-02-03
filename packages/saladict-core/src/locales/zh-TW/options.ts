@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/options'
+import { options as _locale } from '../zh-CN/options'
 
 export const locale: typeof _locale = {
   title: '沙拉查詞設定',
@@ -31,7 +31,7 @@ export const locale: typeof _locale = {
     BlackWhiteList: '黑白名單',
     ImportExport: '匯入匯出',
     Privacy: '隱私設定',
-    Permissions: '許可權管理'
+    Permissions: '許可權管理',
   },
 
   config: {
@@ -80,19 +80,19 @@ export const locale: typeof _locale = {
     bowlHover_help: '滑鼠暫留在沙拉圖示上開啟字典介面，否則需要點選。',
     autopron: {
       cn: {
-        dict: '中文自動發音'
+        dict: '中文自動發音',
       },
       en: {
         dict: '英文自動發音',
-        accent: '優先口音'
+        accent: '優先口音',
       },
       machine: {
         dict: '機器自動發音',
         src: '機器發音部分',
         src_help: '機器翻譯字典需要在下方新增並啟用才會自動發音。',
         src_search: '朗讀原文',
-        src_trans: '朗讀翻譯'
-      }
+        src_trans: '朗讀翻譯',
+      },
     },
     pdfSniff: '嗅探 PDF 連結',
     pdfSniff_help:
@@ -135,7 +135,7 @@ export const locale: typeof _locale = {
       upload_error: '設定儲存失敗',
       accent: {
         uk: '英式',
-        us: '美式'
+        us: '美式',
       },
       sel_blackwhitelist: '選詞黑白名單',
       sel_blackwhitelist_help: '黑名單相符的頁面 Saladict 將不會響應滑鼠劃詞。',
@@ -149,15 +149,15 @@ export const locale: typeof _locale = {
         popup_panel: '開啟字典介面',
         popup_fav: '新增選詞到生字本',
         popup_options: '進入 Saladict 設定',
-        popup_standalone: '開啟快捷查詞獨立視窗'
+        popup_standalone: '開啟快捷查詞獨立視窗',
       },
       openQsStandalone: '獨立視窗設定',
       pdfStandalone: {
         default: '從不',
         always: '總是',
-        manual: '手動'
-      }
-    }
+        manual: '手動',
+      },
+    },
   },
 
   matchPattern: {
@@ -165,7 +165,7 @@ export const locale: typeof _locale = {
     url: '連結匹配',
     url_error: '不正確的超連結模式匹配表示式。',
     regex: '正則匹配',
-    regex_error: '不正確的正則表示式。'
+    regex_error: '不正確的正則表示式。',
   },
 
   searchMode: {
@@ -185,7 +185,7 @@ export const locale: typeof _locale = {
     instantKey: '按鍵',
     instantKey_help:
       '因技術限制，懸浮取詞通過自動選擇滑鼠附近單字實現，不設定按鍵直接取詞可能導致滑鼠無法選字，建議配合快速鍵開啟關閉。',
-    instantDelay: '取詞等待'
+    instantDelay: '取詞等待',
   },
 
   profiles: {
@@ -194,8 +194,8 @@ export const locale: typeof _locale = {
       delete_confirm: '「{{name}}」將被刪除，確認？',
       edit_name: '變更情景模式名稱',
       help:
-        '每個情景模式相當於一套獨立的設定，一些選項（帶有 {*}）會隨著情景模式變化。滑鼠懸浮在字典介面的選單圖示上可快速切換，或者焦點選中選單圖示然後按{↓}。'
-    }
+        '每個情景模式相當於一套獨立的設定，一些選項（帶有 {*}）會隨著情景模式變化。滑鼠懸浮在字典介面的選單圖示上可快速切換，或者焦點選中選單圖示然後按{↓}。',
+    },
   },
 
   profile: {
@@ -214,10 +214,10 @@ export const locale: typeof _locale = {
         never: '永遠不展開',
         once: '展開一次',
         popup: '只在右上彈框展開',
-        hide: '隱藏'
+        hide: '隱藏',
       },
-      dict_selected: '已選字典'
-    }
+      dict_selected: '已選字典',
+    },
   },
 
   dict: {
@@ -244,8 +244,8 @@ export const locale: typeof _locale = {
       ja: '日',
       kor: '韓',
       zhs: '简',
-      zht: '繁'
-    }
+      zht: '繁',
+    },
   },
 
   syncService: {
@@ -264,7 +264,7 @@ export const locale: typeof _locale = {
       sync_all: '上傳現有的所有生字',
       sync_all_confirm:
         '生詞本存在較多單詞，將分批上傳。注意短時間上傳太多有可能會導致封號，且不可恢復，確定繼續？',
-      sync_last: '上傳最近的一個生字'
+      sync_last: '上傳最近的一個生字',
     },
 
     eudic: {
@@ -282,7 +282,7 @@ export const locale: typeof _locale = {
       sync_help:
         '將salad單詞本中現有的所有生詞，同步到歐路詞典默認生詞本中（需同時開啟上方同步開關，點擊保存）',
       sync_all_confirm:
-        '注意短時間內頻繁同步有可能會導致接下來一小段時間的封停，確定繼續？'
+        '注意短時間內頻繁同步有可能會導致接下來一小段時間的封停，確定繼續？',
     },
 
     webdav: {
@@ -299,7 +299,7 @@ export const locale: typeof _locale = {
         '新增生字後會馬上上傳，資料會在上傳前保證同步，所以如果不需要多個瀏覽器即時檢視更新，可將更新檢查週期調大些以減少資源佔用及避免伺服器拒絕回應。',
       passwd: '密碼',
       url: '伺服器位址',
-      user: '帳戶'
+      user: '帳戶',
     },
 
     ankiconnect: {
@@ -333,8 +333,8 @@ export const locale: typeof _locale = {
       escapeHTML_help:
         '對筆記內容中的 HTML 字元進行轉義。如手動進行 HTML 排版請關閉選項。',
       syncServer: '同步伺服器',
-      syncServer_help: '單詞新增到本地 Anki 後自動同步到伺服器（如 AnkiWeb）。'
-    }
+      syncServer_help: '單詞新增到本地 Anki 後自動同步到伺服器（如 AnkiWeb）。',
+    },
   },
 
   titlebarOffset: {
@@ -347,7 +347,7 @@ export const locale: typeof _locale = {
     panel_help: '沙拉查詞的獨立視窗快捷查詞介面為簡化視窗。',
     calibrate: '自動校準',
     calibrateSuccess: '自動校準成功',
-    calibrateError: '自動校準失敗'
+    calibrateError: '自動校準失敗',
   },
 
   headInfo: {
@@ -358,17 +358,17 @@ export const locale: typeof _locale = {
       naver: '協助新增 Naver 韓國語字典',
       shanbay: '編寫扇貝詞典模組',
       trans_tw: '提供部分繁體中文翻譯',
-      weblio: '協助新增 Weblio 辭書'
+      weblio: '協助新增 Weblio 辭書',
     },
     contact_author: '聯絡作者',
     donate: '支援項目',
     instructions: '使用說明',
-    report_issue: '軟體使用疑問和建言'
+    report_issue: '軟體使用疑問和建言',
   },
 
   form: {
     url_error: '不正確的超連結格式。',
-    number_error: '不正確的數字'
+    number_error: '不正確的數字',
   },
 
   preload: {
@@ -377,7 +377,7 @@ export const locale: typeof _locale = {
     auto_help: '字典介面出現時自動搜尋預先載入內容。',
     clipboard: '剪貼簿',
     help: '字典介面出現時預先載入內容到搜尋框。',
-    selection: '滑鼠選字'
+    selection: '滑鼠選字',
   },
 
   locations: {
@@ -389,7 +389,7 @@ export const locale: typeof _locale = {
     TOP_LEFT: '左上',
     TOP_RIGHT: '右上',
     BOTTOM_LEFT: '左下',
-    BOTTOM_RIGHT: '右下'
+    BOTTOM_RIGHT: '右下',
   },
 
   import_export_help:
@@ -401,8 +401,8 @@ export const locale: typeof _locale = {
       title: '匯入失敗',
       parse: '備份解析失敗，格式不正確。',
       load: '備份載入失敗，瀏覽器無法獲得本地備份。',
-      empty: '備份中沒有發現有效資料。'
-    }
+      empty: '備份中沒有發現有效資料。',
+    },
   },
 
   export: {
@@ -410,15 +410,15 @@ export const locale: typeof _locale = {
     error: {
       title: '匯出失敗',
       empty: '沒有設定可以匯出。',
-      parse: '設定解析失敗，無法匯出。'
-    }
+      parse: '設定解析失敗，無法匯出。',
+    },
   },
 
   dictAuth: {
     description:
       '隨著沙拉查詞使用者增多，如經常使用機器翻譯，建議到官網申請帳號以獲得更穩定的體驗以及更準確的結果。以下帳號資料只會保留在瀏覽器中。',
     dictHelp: '見{詞典}官網。',
-    manage: '管理私用帳號'
+    manage: '管理私用帳號',
   },
 
   third_party_privacy: '第三方隱私',
@@ -437,10 +437,10 @@ export const locale: typeof _locale = {
       '快捷查詞或者右上彈框設定預載入剪貼簿時需要讀取剪貼簿許可權。',
     clipboardWrite: '寫入剪貼簿',
     clipboardWrite_help:
-      '機器翻譯詞典標題欄選單複製原文譯文或生詞本匯出到剪貼簿需要寫入剪貼簿許可權。'
+      '機器翻譯詞典標題欄選單複製原文譯文或生詞本匯出到剪貼簿需要寫入剪貼簿許可權。',
   },
 
   unsupportedFeatures: {
-    ff: '火狐尚不支援「{{feature}}」功能。'
-  }
+    ff: '火狐尚不支援「{{feature}}」功能。',
+  },
 }

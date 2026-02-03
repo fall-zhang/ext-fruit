@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/common'
+import { common as _locale } from '../zh-CN/common'
 
 export const locale: typeof _locale = {
   add: 'थप्नुहोस्',
@@ -42,14 +42,14 @@ export const locale: typeof _locale = {
     matchAll: 'सबै अक्षर मिलाउनुहोस्',
     minor: 'झिनो',
     others: 'अन्य',
-    spanish: 'स्पेनिस'
+    spanish: 'स्पेनिस',
   },
 
   unit: {
     mins: 'मिनेट',
     ms: 'मिसे',
     s: 'सेकेन्ड',
-    word: 'शब्द'
+    word: 'शब्द',
   },
 
   note: {
@@ -61,7 +61,7 @@ export const locale: typeof _locale = {
     date: 'मिति',
     srcTitle: 'स्रोत शीर्षक',
     srcLink: 'स्रोत लिंक',
-    srcFavicon: 'स्रोत फेभिकन'
+    srcFavicon: 'स्रोत फेभिकन',
   },
 
   profile: {
@@ -70,6 +70,6 @@ export const locale: typeof _locale = {
     default: 'पूर्वनिर्धारित मोड',
     scholar: 'विद्वान मोड',
     translation: 'अनुवाद मोड',
-    nihongo: 'जापानी मोड'
-  }
+    nihongo: 'जापानी मोड',
+  },
 }

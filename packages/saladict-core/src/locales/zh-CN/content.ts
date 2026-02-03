@@ -1,4 +1,4 @@
-export const locale = {
+export const content = {
   chooseLang: '-选择其它语言-',
   standalone: '沙拉查词-独立查词窗口',
   fetchLangList: '获取全部语言列表',
@@ -18,7 +18,7 @@ export const locale = {
     closePanel: '关闭查词面板',
     sidebar: '切换侧边栏模式，右键切换右侧',
     focusPanel: '查词时面板获取焦点',
-    unfocusPanel: '查词时面板不获取焦点'
+    unfocusPanel: '查词时面板不获取焦点',
   },
   wordEditor: {
     title: '保存到生词本',
@@ -27,7 +27,7 @@ export const locale = {
     closeConfirm: '记录尚未保存，确认关闭？',
     chooseCtxTitle: '选择翻译结果',
     ctxHelp:
-      '如需兼容选择翻译结果以及 Anki 生成表格请保持 [:: xxx ::] 和 --------------- 格式。'
+      '如需兼容选择翻译结果以及 Anki 生成表格请保持 [:: xxx ::] 和 --------------- 格式。',
   },
   machineTrans: {
     switch: '更改语言',
@@ -39,11 +39,11 @@ export const locale = {
     copySrc: '复制原文',
     copyTrans: '复制译文',
     login: '请登录{词典帐号}以使用。',
-    dictAccount: '词典帐号'
+    dictAccount: '词典帐号',
   },
   updateAnki: {
     title: '更新到 Anki',
     success: '更新到 Anki 成功。',
-    failed: '更新单词到 Anki 失败。'
-  }
+    failed: '更新单词到 Anki 失败。',
+  },
 }

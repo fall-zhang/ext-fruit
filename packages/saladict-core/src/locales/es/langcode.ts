@@ -1,5 +1,5 @@
 import en from '@P/open-trans/languages/locales/en.json'
-import { locale as _locale } from '../zh-CN/langcode'
+import { langCode as _locale } from '../zh-CN/lang-code'
 
 export const locale: typeof _locale = {
   ...en,

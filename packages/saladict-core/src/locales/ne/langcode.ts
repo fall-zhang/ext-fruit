@@ -1,10 +1,9 @@
 import en from '@P/open-trans/languages/locales/en.json'
-import { locale as _locale } from '../zh-CN/langcode'
+import { langCode as _locale } from '../zh-CN/lang-code'
 
 export const locale: typeof _locale = {
   ...en,
   default: 'पुर्वनिर्धारित',
-  ne_NP: 'नेपाली',
   ara: 'अरबी',
   'bs-Latn': 'बोस्नियाली (ल्याटिन)',
   bul: 'बुल्गेरियाली',
@@ -26,5 +25,5 @@ export const locale: typeof _locale = {
   vie: 'भियतनामी',
   zh: 'चिनियाँ (सरलिकृत)',
   'zh-CHS': 'चिनियाँ (सरलिकृत)',
-  'zh-CHT': 'चिनियाँ (परम्परागत)'
+  'zh-CHT': 'चिनियाँ (परम्परागत)',
 }

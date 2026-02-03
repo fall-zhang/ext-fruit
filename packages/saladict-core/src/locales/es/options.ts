@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/options'
+import { options as _locale } from '../zh-CN/options'
 
 export const locale: typeof _locale = {
   title: 'Saladict Opciones',
@@ -31,7 +31,7 @@ export const locale: typeof _locale = {
     BlackWhiteList: 'Lista negra/Blanca',
     ImportExport: 'Importar/Exportar',
     Privacy: 'Privacidad',
-    Permissions: 'Permisos'
+    Permissions: 'Permisos',
   },
 
   config: {
@@ -84,11 +84,11 @@ export const locale: typeof _locale = {
       'Pase el ratón sobre el icono del cuenco para activar la búsqueda en lugar de hacer clic.',
     autopron: {
       cn: {
-        dict: 'Autopronunciación en chino'
+        dict: 'Autopronunciación en chino',
       },
       en: {
         dict: 'Autopronunciación en inglés',
-        accent: 'Preferencia de acento'
+        accent: 'Preferencia de acento',
       },
       machine: {
         dict: 'Autopronunciación de la máquina',
@@ -96,8 +96,8 @@ export const locale: typeof _locale = {
         src_help:
           'El diccionario de traducción automática debe añadirse y activarse en la siguiente lista para activar la pronunciación automática.',
         src_search: 'Leer texto original',
-        src_trans: 'Leer el texto de la traducción'
-      }
+        src_trans: 'Leer el texto de la traducción',
+      },
     },
     pdfSniff: 'Activar PDF Sniffer',
     pdfSniff_help: 'Si está activada, los enlaces PDF se capturarán automáticamente.',
@@ -141,7 +141,7 @@ export const locale: typeof _locale = {
       upload_error: 'Error al cargar la configuración',
       accent: {
         uk: 'UK',
-        us: 'US'
+        us: 'US',
       },
       sel_blackwhitelist: 'Lista negra y blanca de selección',
       sel_blackwhitelist_help:
@@ -156,15 +156,15 @@ export const locale: typeof _locale = {
         popup_panel: 'Panel de diccionario',
         popup_fav: 'Añadir al bloc de notas',
         popup_options: 'Abrir opciones de Saladict',
-        popup_standalone: 'Panel independiente Open Saladict'
+        popup_standalone: 'Panel independiente Open Saladict',
       },
       openQsStandalone: 'Opciones de panel independiente',
       pdfStandalone: {
         default: 'Nunca',
         always: 'Siempre',
-        manual: 'Manual'
-      }
-    }
+        manual: 'Manual',
+      },
+    },
   },
 
   matchPattern: {
@@ -173,7 +173,7 @@ export const locale: typeof _locale = {
     url: 'URL Patrón de Coincidencia',
     url_error: 'Patrón de coincidencia de URL incorrecto.',
     regex: 'Expresión regular',
-    regex_error: 'Expresión regular incorrecta.'
+    regex_error: 'Expresión regular incorrecta.',
   },
 
   searchMode: {
@@ -192,7 +192,7 @@ export const locale: typeof _locale = {
     instantKey: 'Tecla',
     instantKey_help:
     'Si se elige "Directo", también se recomienda configurar la tecla de acceso directo del navegador para activar la Captura instantánea. De lo contrario, la selección de texto en el navegador podría ser imposible.',
-    instantDelay: 'Retraso de captura'
+    instantDelay: 'Retraso de captura',
   },
 
   profiles: {
@@ -201,8 +201,8 @@ export const locale: typeof _locale = {
       delete_confirm: 'Eliminar Perfil "{{name}}". ¿Confirmar?',
       edit_name: 'Cambiar el nombre del perfil',
       help:
-        'Cada perfil representa un conjunto independiente de ajustes. Algunos de los ajustes (con el prefijo {*}) cambian según el perfil. Para cambiar de perfil, sitúe el cursor sobre el icono de menú del panel de dictado, o bien sitúe el cursor sobre el icono y pulse {↓}.'
-    }
+        'Cada perfil representa un conjunto independiente de ajustes. Algunos de los ajustes (con el prefijo {*}) cambian según el perfil. Para cambiar de perfil, sitúe el cursor sobre el icono de menú del panel de dictado, o bien sitúe el cursor sobre el icono y pulse {↓}.',
+    },
   },
 
   profile: {
@@ -221,10 +221,10 @@ export const locale: typeof _locale = {
         never: 'Nunca Desplegar',
         once: 'Desplegar una vez',
         popup: 'Sólo en la acción del navegador',
-        hide: 'Ocultar'
+        hide: 'Ocultar',
       },
-      dict_selected: 'Seleccionar diccionarios'
-    }
+      dict_selected: 'Seleccionar diccionarios',
+    },
   },
 
   dict: {
@@ -252,8 +252,8 @@ export const locale: typeof _locale = {
       ja: 'Ja',
       kor: 'Kor',
       zhs: 'Zhs',
-      zht: 'Zht'
-    }
+      zht: 'Zht',
+    },
   },
 
   syncService: {
@@ -273,7 +273,7 @@ export const locale: typeof _locale = {
       sync_all: 'Cargar todas las palabras nuevas existentes',
       sync_all_confirm:
         'Demasiadas palabras nuevas en el cuaderno. Saladict cargará por lotes. Ten en cuenta que si subes demasiadas palabras en un periodo corto de tiempo, tu cuenta será bloqueada y no se podrá recuperar. ¿Confirmar?',
-      sync_last: 'Cargar la última palabra nueva'
+      sync_last: 'Cargar la última palabra nueva',
     },
 
     eudic: {
@@ -291,7 +291,7 @@ export const locale: typeof _locale = {
       sync_help:
         'Sincronice todas las palabras nuevas existentes en el libro de palabras de la ensalada con el libro de palabras predeterminado de Eudic (active el interruptor de sincronización anterior al mismo tiempo y haga clic en guardar).',
       sync_all_confirm:
-        'Tenga en cuenta que una sincronización frecuente en poco tiempo puede provocar un bloqueo temporal. ¿Está seguro de continuar?'
+        'Tenga en cuenta que una sincronización frecuente en poco tiempo puede provocar un bloqueo temporal. ¿Está seguro de continuar?',
     },
 
     webdav: {
@@ -309,7 +309,7 @@ export const locale: typeof _locale = {
       'Se garantiza que los datos se actualizan antes de cargarlos. Si no necesita sincronización en tiempo real entre navegadores, establezca un ciclo de sondeo más largo para reducir el consumo de CPU y memoria.',
       passwd: 'Contraseña',
       url: 'Dirección del servidor',
-      user: 'Usuario'
+      user: 'Usuario',
     },
 
     ankiconnect: {
@@ -347,8 +347,8 @@ export const locale: typeof _locale = {
         'Escapar entidades HTML. Desactivar si se utiliza HTML para la maquetación manual.',
       syncServer: 'Sincronizar con el servidor',
       syncServer_help:
-        'Sincronización con el servidor (p.e. AnkiWeb) después de añadir nuevas palabras al Anki local.'
-    }
+        'Sincronización con el servidor (p.e. AnkiWeb) después de añadir nuevas palabras al Anki local.',
+    },
   },
 
   titlebarOffset: {
@@ -362,7 +362,7 @@ export const locale: typeof _locale = {
       'El panel de búsqueda rápida independiente de Saladict es un tipo de ventana de panel.',
     calibrate: 'Auto-calibrate',
     calibrateSuccess: 'Calibración correcta',
-    calibrateError: 'Error de calibración'
+    calibrateError: 'Error de calibración',
   },
 
   headInfo: {
@@ -373,17 +373,17 @@ export const locale: typeof _locale = {
       naver: 'por ayudar a añadir Naver dict',
       shanbay: 'por añadir Shanbay dict',
       trans_tw: 'por la traducción al chino tradicional',
-      weblio: 'por ayudar a añadir Weblio dict'
+      weblio: 'por ayudar a añadir Weblio dict',
     },
     contact_author: 'Contactar al autor',
     donate: 'Donar',
     instructions: 'Instrucciones',
-    report_issue: 'Informar de un problema'
+    report_issue: 'Informar de un problema',
   },
 
   form: {
     url_error: 'URL incorrecta.',
-    number_error: 'Numero incorrecto.'
+    number_error: 'Numero incorrecto.',
   },
 
   preload: {
@@ -392,7 +392,7 @@ export const locale: typeof _locale = {
     auto_help: 'Búsqueda automática cuando aparece el panel.',
     clipboard: 'Clipboard',
     help: 'Precarga de contenido en el cuadro de búsqueda cuando aparece el panel.',
-    selection: 'Selección de página'
+    selection: 'Selección de página',
   },
 
   locations: {
@@ -404,7 +404,7 @@ export const locale: typeof _locale = {
     TOP_LEFT: 'Arriba a la izquierda',
     TOP_RIGHT: 'Arriba a la derecha',
     BOTTOM_LEFT: 'Abajo a la izquierda',
-    BOTTOM_RIGHT: 'Abajo a la derecha'
+    BOTTOM_RIGHT: 'Abajo a la derecha',
   },
 
   import_export_help:
@@ -416,8 +416,8 @@ export const locale: typeof _locale = {
       title: 'Error de importación',
       parse: 'No se ha podido analizar la copia de seguridad. Formato incorrecto.',
       load: 'No se puede cargar la copia de seguridad. El navegador no puede obtener el archivo local.',
-      empty: 'No se han encontrado datos válidos en la copia de seguridad.'
-    }
+      empty: 'No se han encontrado datos válidos en la copia de seguridad.',
+    },
   },
 
   export: {
@@ -425,15 +425,15 @@ export const locale: typeof _locale = {
     error: {
       title: 'Error de exportación',
       empty: 'No hay configuración para exportar.',
-      parse: 'No se pueden analizar las configuraciones.'
-    }
+      parse: 'No se pueden analizar las configuraciones.',
+    },
   },
 
   dictAuth: {
     description:
       'A medida que crece el número de usuarios de Saladict, si hace un uso intensivo de los servicios de traducción automática se recomienda registrar una cuenta para mejorar la estabilidad y la precisión. Los datos de la cuenta sólo se almacenarán en el navegador.',
     dictHelp: 'Consulte el sitio web oficial de {dict}.',
-    manage: 'Gestionar cuentas de traductor'
+    manage: 'Gestionar cuentas de traductor',
   },
 
   third_party_privacy: 'Privacidad de terceros',
@@ -454,10 +454,10 @@ export const locale: typeof _locale = {
       'Este permiso es necesario cuando la precarga del portapapeles está activada para el panel emergente o el panel de búsqueda rápida.',
     clipboardWrite: 'Escribir en el portapapeles',
     clipboardWrite_help:
-      'Este permiso es necesario cuando se utilizan los menús de la barra de títulos para copiar texto de origen/destino del traductor automático.'
+      'Este permiso es necesario cuando se utilizan los menús de la barra de títulos para copiar texto de origen/destino del traductor automático.',
   },
 
   unsupportedFeatures: {
-    ff: 'La característica "{{feature}}" no es compatible con Firefox.'
-  }
+    ff: 'La característica "{{feature}}" no es compatible con Firefox.',
+  },
 }

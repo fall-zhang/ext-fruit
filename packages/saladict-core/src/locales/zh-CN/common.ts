@@ -1,4 +1,4 @@
-export const locale = {
+export const common = {
   add: '添加',
   delete: '删除',
   save: '保存',
@@ -40,14 +40,14 @@ export const locale = {
     minor: '其它语言',
     matchAll: '所有的字符都必须匹配',
     others: '其它字符',
-    spanish: '西班牙文'
+    spanish: '西班牙文',
   },
 
   unit: {
     mins: '分钟',
     ms: '毫秒',
     s: '秒',
-    word: '个'
+    word: '个',
   },
 
   note: {
@@ -59,7 +59,7 @@ export const locale = {
     date: '日期',
     srcTitle: '来源标题',
     srcLink: '来源链接',
-    srcFavicon: '来源图标'
+    srcFavicon: '来源图标',
   },
 
   profile: {
@@ -68,6 +68,6 @@ export const locale = {
     default: '默认模式',
     scholar: '学术模式',
     translation: '翻译模式',
-    nihongo: '日语模式'
-  }
+    nihongo: '日语模式',
+  },
 }

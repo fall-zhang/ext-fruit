@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/popup'
+import { popup as _locale } from '../zh-CN/popup'
 
 export const locale: typeof _locale = {
   title: 'Panel de acciones del navegador de Saladict',

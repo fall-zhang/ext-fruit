@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/content'
+import { content as _locale } from '../zh-CN/content'
 
 export const locale: typeof _locale = {
   chooseLang: 'Choose another language',

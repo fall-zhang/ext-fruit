@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/content'
+import { content as _locale } from '../zh-CN/content'
 
 export const locale: typeof _locale = {
   chooseLang: '-選擇其它語言-',
@@ -20,7 +20,7 @@ export const locale: typeof _locale = {
     closePanel: '關閉字典視窗',
     sidebar: '切換側邊欄模式，右點選切換右側',
     focusPanel: '查詞時面板獲取焦點',
-    unfocusPanel: '查詞時面板不獲取焦點'
+    unfocusPanel: '查詞時面板不獲取焦點',
   },
   wordEditor: {
     title: '儲存到單字本',
@@ -29,7 +29,7 @@ export const locale: typeof _locale = {
     closeConfirm: '記錄尚未儲存，確定關閉？',
     chooseCtxTitle: '選擇翻譯結果',
     ctxHelp:
-      '如需相容選擇翻譯結果以及 Anki 生成表格請保持 [:: xxx ::] 和 --------------- 格式。'
+      '如需相容選擇翻譯結果以及 Anki 生成表格請保持 [:: xxx ::] 和 --------------- 格式。',
   },
   machineTrans: {
     switch: '變更語言',
@@ -41,11 +41,11 @@ export const locale: typeof _locale = {
     copySrc: '複製原文',
     copyTrans: '複製譯文',
     login: '請登入{詞典帳號}以使用。',
-    dictAccount: '詞典帳號'
+    dictAccount: '詞典帳號',
   },
   updateAnki: {
     title: '更新到 Anki',
     success: '更新到 Anki 成功。',
-    failed: '更新單詞到 Anki 失敗。'
-  }
+    failed: '更新單詞到 Anki 失敗。',
+  },
 }

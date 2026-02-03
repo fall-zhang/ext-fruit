@@ -1,12 +1,12 @@
-import { locale as _locale } from '../zh-CN/wordpage'
+import { wordPage as _locale } from '../zh-CN/word-page'
 
 export const locale: typeof _locale = {
   title: {
     history: 'सलाडिक्ट खोज इतिहास',
-    notebook: 'सलाडिक्ट नोटबुक'
+    notebook: 'सलाडिक्ट नोटबुक',
   },
 
-  localonly: 'स्थानीयमा मात्र',
+  localOnly: 'स्थानीयमा मात्र',
 
   column: {
     add: 'थप्नुहोस्',
@@ -15,7 +15,7 @@ export const locale: typeof _locale = {
     note: 'टिप्पणी',
     source: 'स्रोत',
     trans: 'अनुवाद',
-    word: 'शब्द'
+    word: 'शब्द',
   },
 
   delete: {
@@ -23,7 +23,7 @@ export const locale: typeof _locale = {
     all: 'सबै मेटाउनुहोस्',
     confirm: '. साच्चै ?',
     page: 'पृष्ठ मेटाउनुहोस्',
-    selected: 'चयन गरिएको मेटाउनुहोस्'
+    selected: 'चयन गरिएको मेटाउनुहोस्',
   },
 
   export: {
@@ -37,28 +37,28 @@ export const locale: typeof _locale = {
       n: 'लाइनब्रेकहरूलाई \\n संग स्थानान्तरण गर्नुहोस्',
       br: 'लाइनब्रेकहरूलाई <br> संग स्थानान्तरण गर्नुहोस्',
       p: 'लाइनब्रेकहरूलाई <p> संग स्थानान्तरण गर्नुहोस्',
-      space: 'लाइनब्रेकहरूलाई स्पेस संग स्थानान्तरण गर्नुहोस्'
+      space: 'लाइनब्रेकहरूलाई स्पेस संग स्थानान्तरण गर्नुहोस्',
     },
     page: 'पृष्ठ निर्यात गर्नुहोस्',
     placeholder: 'प्लेसहोल्डर',
     htmlescape: {
       title: 'टिप्पणीहरूमा HTML वर्णहरू ऐस्केप गर्नुहोस्',
-      text: 'HTML ऐस्केप गर्नुहोस्'
+      text: 'HTML ऐस्केप गर्नुहोस्',
     },
-    selected: 'चयन गरिएको निर्यात गर्नुहोस्'
+    selected: 'चयन गरिएको निर्यात गर्नुहोस्',
   },
 
   filterWord: {
     chs: 'चिनियाँ',
     eng: 'अंग्रेजी',
     word: 'शब्द',
-    phrase: 'वाक्यांश'
+    phrase: 'वाक्यांश',
   },
 
   wordCount: {
     selected: '{{count}} बस्तु चयन गरिएको',
     selected_plural: '{{count}} बस्तुहरु चयन गरिएको',
     total: '{{count}} बस्तु जम्मा',
-    total_plural: '{{count}} बस्तुहरु जम्मा'
-  }
+    total_plural: '{{count}} बस्तुहरु जम्मा',
+  },
 }

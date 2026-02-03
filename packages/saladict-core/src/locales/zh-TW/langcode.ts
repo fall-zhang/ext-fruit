@@ -1,5 +1,5 @@
 import zhTW from '@P/open-trans/languages/locales/zh-TW.json'
-import { locale as _locale } from '../zh-CN/langcode'
+import { langCode as _locale } from '../zh-CN/lang-code'
 
 export const locale: typeof _locale = {
   ...zhTW,
