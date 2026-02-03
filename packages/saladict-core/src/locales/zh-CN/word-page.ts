@@ -1,10 +1,10 @@
-export const locale = {
+export const wordPage = {
   title: {
     history: '沙拉查词-查词记录',
-    notebook: '沙拉查词-生词本'
+    notebook: '沙拉查词-生词本',
   },
 
-  localonly: '仅本地保存',
+  localOnly: '仅本地保存',
 
   column: {
     add: '添加',
@@ -13,7 +13,7 @@ export const locale = {
     note: '笔记',
     source: '来源',
     trans: '翻译',
-    word: '单词'
+    word: '单词',
   },
 
   delete: {
@@ -21,7 +21,7 @@ export const locale = {
     all: '删除所有单词',
     confirm: '，确定？',
     page: '删除本页单词',
-    selected: '删除选中单词'
+    selected: '删除选中单词',
   },
 
   export: {
@@ -35,28 +35,28 @@ export const locale = {
       n: '换行替换为 \\n',
       br: '换行替换为 <br>',
       p: '换行替换为 <p>',
-      space: '换行替换为空格'
+      space: '换行替换为空格',
     },
     page: '导出本页单词',
     placeholder: '替换符',
     htmlescape: {
       title: '对笔记内容中的 HTML 字符进行转义',
-      text: '转义 HTML'
+      text: '转义 HTML',
     },
-    selected: '导出选中单词'
+    selected: '导出选中单词',
   },
 
   filterWord: {
     chs: '中文',
     eng: '英文',
     word: '单词',
-    phrase: '词组和句子'
+    phrase: '词组和句子',
   },
 
   wordCount: {
     selected: '已选 {{count}} 项',
     selected_plural: '已选 {{count}} 项',
     total: '共 {{count}} 项',
-    total_plural: '共 {{count}} 项'
-  }
+    total_plural: '共 {{count}} 项',
+  },
 }

@@ -1,6 +1,6 @@
 import zhCN from '@P/open-trans/languages/locales/zh-CN.json'
 
-export const locale = {
+export const langCode = {
   ...zhCN,
   default: '随扩展语言',
   ara: '阿拉伯语',
@@ -24,5 +24,5 @@ export const locale = {
   vie: '越南语',
   zh: '中文（简体）',
   'zh-CHS': '中文（简体）',
-  'zh-CHT': '中文（繁体）'
+  'zh-CHT': '中文（繁体）',
 }
