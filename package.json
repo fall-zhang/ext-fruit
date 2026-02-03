@@ -34,6 +34,7 @@
   "dependencies": {
     "axios": "^1.8.4",
     "axios-mock-adapter": "^2.1.0",
+    "clsx": "^2.1.1",
     "i18next": "^24.2.3",
     "memoize-one": "^6.0.0",
     "observable-hooks": "^4.2.4",
@@ -89,7 +90,6 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-storybook": "^9.0.0",
-    "rollup-plugin-visualizer": "^6.0.3",
     "husky": "^8.0.3",
     "jsdom": "^23.2.0",
     "lint-staged": "^15.5.1",
@@ -101,6 +101,7 @@
     "rollup-plugin-jsx": "^1.0.3",
     "rollup-plugin-scss": "^4.0.1",
     "rollup-plugin-string": "^3.0.0",
+    "rollup-plugin-visualizer": "^6.0.3",
     "sass": "^1.87.0",
     "storybook": "^8.6.12",
     "tailwindcss": "^4.1.18",
