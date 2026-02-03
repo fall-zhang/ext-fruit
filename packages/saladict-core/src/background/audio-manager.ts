@@ -1,4 +1,4 @@
-import { timer } from '@/_helpers/promise-more'
+import { timer } from '../utils/promise-more'
 
 /**
  * To make sure only one audio plays at a time
