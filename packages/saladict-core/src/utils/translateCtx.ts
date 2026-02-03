@@ -1,7 +1,8 @@
 import { DictID, AppConfig } from '@/app-config'
 import { MachineTranslateResult } from '@/components/MachineTrans/engine'
-import { message } from './browser-api'
-import { isPDFPage } from './saladict'
+// import { message } from './browser-api'
+import { isPDFPage } from '../core/saladict-state'
+import { fetchDictResult } from '../core/request'
 
 export type CtxTranslatorId = keyof AppConfig['ctxTrans']
 
@@ -24,15 +25,11 @@ export async function translateCtx (
   id: CtxTranslatorId
 ): Promise<string> {
   try {
-    const response = await message.send<
-      'FETCH_DICT_RESULT',
-      FetchDictResultResponse
-    >({
+    const response = await fetchDictResult({
       type: 'FETCH_DICT_RESULT',
       payload: {
         id,
-        text,
-        payload: { isPDF: isPDFPage() }
+        text
       }
     })
 

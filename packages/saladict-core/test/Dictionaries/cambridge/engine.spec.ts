@@ -14,9 +14,7 @@ describe('Dict/Cambridge/engine', () => {
 
   it('should parse result (en) correctly', () => {
     return retry(() =>
-      search('love', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(({ result, audio }) => {
+      search('love', getDefaultConfig(), getDefaultProfile()).then(({ result, audio }) => {
         expect(audio && typeof audio.uk).toBe('string')
         expect(audio && typeof audio.us).toBe('string')
 
@@ -31,9 +29,7 @@ describe('Dict/Cambridge/engine', () => {
 
   it('should parse result (zhs) correctly', () => {
     return retry(() =>
-      search('house', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(({ result, audio }) => {
+      search('house', getDefaultConfig(), getDefaultProfile()).then(({ result, audio }) => {
         expect(audio && typeof audio.uk).toBe('string')
         expect(audio && typeof audio.us).toBe('string')
 
@@ -50,7 +46,7 @@ describe('Dict/Cambridge/engine', () => {
     const config = getDefaultConfig() as AppConfigMutable
     config.langCode = 'zh-TW'
     return retry(() =>
-      search('catch', config, getDefaultProfile(), { isPDF: false }).then(
+      search('catch', config, getDefaultProfile()).then(
         ({ result, audio }) => {
           expect(audio && typeof audio.uk).toBe('string')
           expect(audio && typeof audio.us).toBe('string')

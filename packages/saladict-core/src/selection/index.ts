@@ -34,15 +34,16 @@ if (!window.__SALADICT_SELECTION_LOADED__) {
    * Send selection to standalone page
    * Beware that this is run on every frame.
    */
-  message.addListener('PRELOAD_SELECTION', () => {
-    const text = getText()
-    if (text) {
-      return newSelectionWord({
-        text,
-        context: getSentence()
-      })
-    }
-  })
+  /** send to the current active tab for selection */
+  // message.addListener('PRELOAD_SELECTION'() => {
+  //   const text = getText()
+  //   if (text) {
+  //     return newSelectionWord({
+  //       text,
+  //       context: getSentence()
+  //     })
+  //   }
+  // })
 
   /**
    * Manually emit selection

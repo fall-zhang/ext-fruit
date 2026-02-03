@@ -8,9 +8,7 @@ import { describe, it, expect, beforeEach } from 'vitest'
 describe('Dict/Shanbay/engine', () => {
   it('should parse result correctly', () => {
     return retry(() =>
-      search('hello', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(searchResult => {
+      search('hello', getDefaultConfig(), getDefaultProfile()).then(searchResult => {
         expect(searchResult.result.title).toBe('hello')
         expect(typeof (searchResult.audio || {}).us).toBe('string')
         expect(searchResult.result.id).toBe('shanbay')

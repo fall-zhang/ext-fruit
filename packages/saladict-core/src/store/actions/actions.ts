@@ -13,7 +13,7 @@ import { AppConfig, DictID } from '../../app-config'
 import { ProfileID } from '../profile/types'
 import { Profile } from '../../app-config/profiles'
 import { Message } from '../../typings/message'
-import { DictSearchResult } from '@P/trans-api/src/helpers'
+import { DictSearchResult } from '@P/saladict-core/src/core/trans-api/helpers'
 import { Word } from '../selection/types'
 
 
@@ -85,16 +85,7 @@ export const actionHandlers:StateCreator<GlobalState> = (set) => {
         isTempDisabled: false
       }
     }),
-    /**
-     * Click or hover on salad bowl
-     * 点击
-     */
-    BOWL_ACTIVATED: () => set(state => ({
-      ...state,
-      isShowBowl: false,
-      isShowDictPanel: true,
-      isPinned: state.config.defaultPinned
-    })),
+   
 
     /* ------------------------------------------------ *\
      Dict Panel

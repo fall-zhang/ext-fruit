@@ -10,9 +10,7 @@ import { describe, it, expect } from 'vitest'
 describe('Dict/Youdao/engine', () => {
   it('should parse lex result correctly', () => {
     return retry(() =>
-      search('love', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then((searchResult:any) => {
+      search('love', getDefaultConfig(), getDefaultProfile()).then((searchResult:any) => {
         expect(searchResult.audio && typeof searchResult.audio.uk).toBe(
           'string'
         )
@@ -54,7 +52,7 @@ describe('Dict/Youdao/engine', () => {
       related: false
     }
     return retry(() =>
-      search('love', getDefaultConfig(), profile, { isPDF: false }).then(
+      search('love', getDefaultConfig(), profile).then(
         (searchResult:any) => {
           expect(searchResult.audio && typeof searchResult.audio.uk).toBe(
             'string'
@@ -88,9 +86,7 @@ describe('Dict/Youdao/engine', () => {
       'She walks in beauty, like the night Of cloudless climes and starry skies.'
 
     return retry(() =>
-      search(text, getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then((searchResult:any) => {
+      search(text, getDefaultConfig(), getDefaultProfile()).then((searchResult:any) => {
         expect(!searchResult.audio || !searchResult.audio.uk).toBeTruthy()
         expect(!searchResult.audio || !searchResult.audio.us).toBeTruthy()
 
@@ -113,9 +109,7 @@ describe('Dict/Youdao/engine', () => {
 
   it('should parse related result correctly', () => {
     return retry(() =>
-      search('jumblish', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then((searchResult:any) => {
+      search('jumblish', getDefaultConfig(), getDefaultProfile()).then((searchResult:any) => {
         expect(searchResult.audio).toBeUndefined()
 
         const result = searchResult.result as YoudaoResultRelated

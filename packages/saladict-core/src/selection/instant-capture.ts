@@ -31,9 +31,6 @@ export function createIntantCaptureStream (config: AppConfig | null) {
 
   const responseToQSPanel$ = merge(
     // When Quick Search Panel show and hide
-    from(
-      message.send<'QUERY_QS_PANEL'>({ type: 'QUERY_QS_PANEL' })
-    ),
     message.createStream('QS_PANEL_CHANGED').pipe(pluck('payload'))
   ).pipe(
     map(withQssaPanel => withQssaPanel && config.qssaPageSel),

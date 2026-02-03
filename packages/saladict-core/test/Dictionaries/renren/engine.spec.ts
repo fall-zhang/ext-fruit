@@ -7,9 +7,7 @@ import { describe, it } from 'vitest'
 describe('Dict/Renren/engine', () => {
   it('should parse result correctly', () => {
     return retry(() =>
-      search('love', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(searchResult => {})
+      search('love', getDefaultConfig(), getDefaultProfile()).then(searchResult => {})
     )
   })
 })

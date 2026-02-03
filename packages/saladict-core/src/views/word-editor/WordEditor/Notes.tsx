@@ -1,4 +1,4 @@
-/* eslint-disable max-lines-per-function */
+
 import React, { FC, useState, useEffect } from 'react'
 import { useUpdateEffect } from 'react-use'
 import {
@@ -22,7 +22,7 @@ import {
 //   deleteWords,
 //   saveWord
 // } from '@/_helpers/record-manager'
-import { getWordsByText, deleteWords, saveWord } from '@P/saladict-core/src/background/database'
+import { getWordsByText, deleteWords, saveWord } from '@P/saladict-core/src/core/database'
 import { AppConfig } from '@P/saladict-core/src/app-config'
 // import {
 //   translateCtxs,
@@ -59,7 +59,6 @@ export interface NotesProps
 const notesFadeTimeout = { enter: 400, exit: 100, appear: 400 }
 
 export const Notes: FC<NotesProps> = props => {
-  const message = new Service()
   const { t } = useTranslate(['common', 'content'])
   const [isDirty, setDirty] = useState(false)
   const [isShowCtxTransList, setShowCtxTransList] = useState(false)
@@ -157,13 +156,15 @@ export const Notes: FC<NotesProps> = props => {
       title: t('content:neverShow'),
       onClick: () => {
         if (!isOptionsPage()) {
-          message.send({
-            type: 'OPEN_URL',
-            payload: {
-              url: 'options.html?menuselected=Notebook',
-              self: true
-            }
-          })
+          console.log('jump to options page')
+
+          // message.send({
+          //   type: 'OPEN_URL',
+          //   payload: {
+          //     url: 'options.html?menuselected=Notebook',
+          //     self: true
+          //   }
+          // })
         }
       }
     },
@@ -192,10 +193,12 @@ export const Notes: FC<NotesProps> = props => {
       onClick: async () => {
         let status = 'content:updateAnki.success'
         try {
-          await message.send<'ANKI_CONNECT_UPDATE_WORD'>({
-            type: 'ANKI_CONNECT_UPDATE_WORD',
-            payload: { cardId: ankiCardId, word }
-          })
+          console.log('update anki word')
+
+          // await message.send<'ANKI_CONNECT_UPDATE_WORD'>({
+          //   type: 'ANKI_CONNECT_UPDATE_WORD',
+          //   payload: { cardId: ankiCardId, word }
+          // })
         } catch (e) {
           if (process.env.DEBUG) {
             console.error(e)

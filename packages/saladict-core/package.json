@@ -35,7 +35,7 @@
     "normalize-scss": "^8.0.0",
     "observable-hooks": "^4.2.4",
     "open-trans": "workspace:*",
-    "pako": "^2.1.0",
+    "pako": "^1.0.10",
     "react-redux": "^9.2.0",
     "react-resize-reporter": "^1.0.2",
     "react-shadow": "^20.6.0",

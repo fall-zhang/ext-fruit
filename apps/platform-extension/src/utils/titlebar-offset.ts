@@ -51,8 +51,6 @@ export async function calibrateTitlebarOffset (): Promise<
 
     return { main, panel }
   } catch (e) {
-    if (process.env.DEBUG) {
-      console.error(e)
-    }
+    console.error(e)
   }
 }

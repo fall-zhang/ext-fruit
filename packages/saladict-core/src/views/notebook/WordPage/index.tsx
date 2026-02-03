@@ -3,8 +3,8 @@ import { Layout } from 'antd'
 import { from } from 'rxjs'
 import { switchMap, startWith, debounceTime } from 'rxjs/operators'
 import { useObservable, useSubscription } from 'observable-hooks'
-import { Helmet } from 'react-helmet'
-import { DBArea, getWords, Word, deleteWords } from '@/_helpers/record-manager'
+// import { DBArea, getWords, Word, deleteWords } from '@/_helpers/record-manager'
+import { deleteWords } from '@P/saladict-core/src/core/database'
 import { useTranslate } from '@/_helpers/i18n'
 import { message } from '@/_helpers/browser-api'
 import { Header } from './Header'
@@ -131,9 +131,7 @@ export const WordPage: FC<WordPageProps> = props => {
 
   return (
     <Layout className="wordpage-Container">
-      <Helmet>
-        <title>{t(`title.${props.area}`)}</title>
-      </Helmet>
+      <title>{t(`title.${props.area}`)}</title>
       <Header
         t={t}
         area={props.area}
@@ -169,7 +167,7 @@ export const WordPage: FC<WordPageProps> = props => {
           }
         }}
         onDelete={key => {
-          let keys:number[]|undefined = []
+          let keys:number[] | undefined = []
           if (key === 'selected') {
             keys = tableInfo.rowSelection?.selectedRowKeys?.map(date =>
               Number(date)

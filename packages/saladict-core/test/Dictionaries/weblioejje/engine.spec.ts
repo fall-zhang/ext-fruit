@@ -9,9 +9,7 @@ describe('Dict/Weblioejje/engine', () => {
   ;['love', '愛'].forEach(text => {
     it(`should parse result ${text} correctly`, () => {
       return retry(() =>
-        search(text, getDefaultConfig(), getDefaultProfile(), {
-          isPDF: false
-        }).then(({ result }) => {
+        search(text, getDefaultConfig(), getDefaultProfile()).then(({ result }) => {
           expect(result.length).toBeGreaterThanOrEqual(1)
           for (const { content } of result) {
             expect(typeof content).toBe('string')

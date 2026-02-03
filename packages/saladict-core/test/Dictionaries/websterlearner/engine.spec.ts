@@ -10,9 +10,7 @@ import { describe, it, expect } from 'vitest'
 describe('Dict/WebsterLearner/engine', () => {
   it('should parse lex result correctly', () => {
     return retry(() =>
-      search('house', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(searchResult => {
+      search('house', getDefaultConfig(), getDefaultProfile()).then(searchResult => {
         expect(searchResult.audio && typeof searchResult.audio.us).toBe(
           'string'
         )

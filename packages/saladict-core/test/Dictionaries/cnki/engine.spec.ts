@@ -7,9 +7,7 @@ import { describe, it, expect } from 'vitest'
 describe('Dict/CNKI/engine', () => {
   it('should parse result correctly', () => {
     return retry(() =>
-      search('love', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(({ result, audio }) => {
+      search('love', getDefaultConfig(), getDefaultProfile()).then(({ result, audio }) => {
         expect(audio).toBeUndefined()
         expect(result.dict.length).toBeGreaterThan(0)
         expect(result.senbi.length).toBeGreaterThan(0)

@@ -7,9 +7,7 @@ import { describe, it, expect } from 'vitest'
 describe('Dict/Urban/engine', () => {
   it('should parse result correctly', () => {
     return retry(() =>
-      search('love', getDefaultConfig(), getDefaultProfile(), {
-        isPDF: false
-      }).then(searchResult => {
+      search('love', getDefaultConfig(), getDefaultProfile()).then(searchResult => {
         expect(searchResult.audio && typeof searchResult.audio.us).toBe(
           'string'
         )

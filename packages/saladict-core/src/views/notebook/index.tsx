@@ -1,9 +1,13 @@
 import './env'
-import '@/selection'
+// import '@/selection'
 
 import { WordPage } from './WordPage/index'
-import { initAntdRoot } from '@/components/AntdRoot'
+// import { initAntdRoot } from '@/components/AntdRoot'
+import { initAntdRoot } from '../../components/AntdRoot'
+import { FC } from 'react'
 
-document.title = 'Saladict Notebook'
 
-initAntdRoot(() => <WordPage area="notebook" />, '/wordpage/notebook')
+export const NoteBook:FC = () => {
+  return <WordPage area="notebook" />
+}
+

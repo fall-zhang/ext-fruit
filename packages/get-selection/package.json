@@ -1,0 +1,40 @@
+{
+  "name": "get-selection-more",
+  "version": "1.1.0",
+  "description": "Get text and context sentence from window.getSelection()",
+  "keywords": [
+    "getSelection",
+    "selection",
+    "context",
+    "sentence",
+    "text"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc && rollup -c rollup.config.js",
+    "start": "rollup -c rollup.config.js -w",
+    "test": "karma start"
+  },
+  "main": "dist/get-selection-more.umd.js",
+  "module": "dist/get-selection-more.es.js",
+  "typings": "dist/types/get-selection-more.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": "https://github.com/crimx/get-selection-more",
+  "author": "CRIMX <straybugs@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.10.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.20",
+    "chai": "^4.5.0",
+    "rimraf": "^6.0.1",
+    "rollup": "^1.32.1",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-typescript2": "^0.21.2",
+    "tsx-dom": "^0.8.3",
+    "typescript": "^5.9.2"
+  }
+}

@@ -8,7 +8,7 @@ import { SALADICT_EXTERNAL } from '@/_helpers/saladict'
 
 export const defaultTimeout = { enter: 400, exit: 100, appear: 400 }
 
-export const defaultClassNames = 'shadowPortal'
+ const defaultClassNames = 'shadowPortal'
 
 // prevent styles in shadow dom from inheriting outside rules
 const styleResetBoundary: React.CSSProperties = { all: 'initial' }

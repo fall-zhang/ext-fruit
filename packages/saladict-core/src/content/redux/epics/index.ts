@@ -17,7 +17,6 @@ export const epics = combineEpics<StoreAction, StoreAction, StoreState>(
   /** Start searching text. This will also send to Redux. */
   (action$, state$) =>
     action$.pipe(
-      ofType('BOWL_ACTIVATED'),
       map(
         () =>
           (state$.value.selection.word

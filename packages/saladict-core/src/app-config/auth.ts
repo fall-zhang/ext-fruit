@@ -1,8 +1,8 @@
-import { auth as baidu } from '@P/trans-api/src/baidu/auth'
-import { auth as caiyun } from '@P/trans-api/src/caiyun/auth'
-import { auth as sogou } from '@P/trans-api/src/sogou/auth'
-import { auth as tencent } from '@P/trans-api/src/tencent/auth'
-import { auth as youdaotrans } from '@P/trans-api/src/youdaotrans/auth'
+import { auth as baidu } from '@P/saladict-core/src/core/trans-api/baidu/auth'
+import { auth as caiyun } from '@P/saladict-core/src/core/trans-api/caiyun/auth'
+import { auth as sogou } from '@P/saladict-core/src/core/trans-api/sogou/auth'
+import { auth as tencent } from '@P/saladict-core/src/core/trans-api/tencent/auth'
+import { auth as youdaotrans } from '@P/saladict-core/src/core/trans-api/youdaotrans/auth'
 import { cloneDeep } from 'es-toolkit'
 export const defaultDictAuths = {
   baidu,

@@ -1,26 +1,16 @@
 @import '@P/saladict-core/src/assets/styles/_fancy-scrollbar.scss';
 
 .wordEditorPanel-Background {
-  position: fixed;
-  z-index: 2147483646;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
   display: flex;
   align-items: center;
   text-align: initial;
   background: rgba(0, 0, 0, 0.4);
-}
-
-.wordEditorPanel-Container {
-  width: 100% !important;
   display: flex;
   align-items: center;
-  height: 100%;
   min-width: 440px;
   margin-left: auto;
 }
+
 .wordEditorPanel {
   display: flex;
   flex-direction: column;
@@ -154,6 +144,7 @@
 }
 
 .darkMode {
+
   .wordEditorPanel-Header,
   .wordEditorPanel-Footer {
     border-color: #8b8b8b;

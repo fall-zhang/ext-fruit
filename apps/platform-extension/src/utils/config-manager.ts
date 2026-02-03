@@ -31,10 +31,10 @@ function deflate (config: AppConfig): AppConfigCompressed {
   }
 }
 
-function inflate (config: AppConfig | AppConfigCompressed): AppConfig
+function inflate (config: AppConfig & AppConfigCompressed): AppConfig
 function inflate (config: undefined): undefined
 function inflate (
-  config?: AppConfig | AppConfigCompressed
+  config?: AppConfig & AppConfigCompressed
 ): AppConfig | undefined
 function inflate (
   config?: AppConfig & AppConfigCompressed
@@ -73,9 +73,7 @@ export async function getConfig (): Promise<AppConfig> {
 }
 
 export function updateConfig (baseconfig: AppConfig): Promise<void> {
-  if (process.env.DEBUG) {
-    console.log('Saved config', baseconfig)
-  }
+  console.log('Saved config', baseconfig)
   return storage.sync.set({ baseconfig: deflate(baseconfig) })
 }
 

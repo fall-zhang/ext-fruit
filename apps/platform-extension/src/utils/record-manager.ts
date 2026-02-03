@@ -2,8 +2,6 @@
  * Abstracted layer for storing large amount of word records.
  */
 
-import { message } from '@/_helpers/browser-api'
-
 export interface Word {
   /** primary key, milliseconds elapsed since the UNIX epoch */
   date: number
@@ -50,8 +48,7 @@ export function newWord (word?: Partial<Word> | null): Word {
 }
 
 export function isInNotebook (word: Word): Promise<boolean> {
-  return message
-    .send<'IS_IN_NOTEBOOK'>({ type: 'IS_IN_NOTEBOOK', payload: word })
+  return isInNotebook(word)
     .catch(logError(false))
 }
 
@@ -102,9 +99,7 @@ export function getWords (
 
 function logError<T = any> (valPassThrough: T): (x: any) => T {
   return err => {
-    if (process.env.DEBUG) {
-      console.error(err)
-    }
+    console.error(err)
     return valPassThrough
   }
 }

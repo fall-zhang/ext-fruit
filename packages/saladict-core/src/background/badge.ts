@@ -41,92 +41,13 @@ onUpdated$
     })
   )
   .subscribe(({ tabId, options }) => {
-    if (!options.active) {
-      return setOff(tabId)
-    }
-
     if (options.tempDisable) {
       return setTempOff(tabId)
     }
 
     if (options.unsupported) {
-      return setUnsupported(tabId)
+      setIcon(true, tabId)
     }
 
     return setDefault(tabId)
   })
-
-export function initBadge () {
-  /** Sent when content script loaded */
-  message.addListener('SEND_TAB_BADGE_INFO', ({ payload }, sender) => {
-    if (sender.tab && sender.tab.id) {
-      onUpdated$.next({ tabId: sender.tab.id, options: payload })
-    }
-  })
-
-  browser.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
-    if (changeInfo.status === 'complete') {
-      onUpdated$.next({ tabId, delay: true })
-    }
-  })
-}
-
-function setOff (tabId: number) {
-  setIcon(true, tabId)
-  // browser.browserAction.setBadgeBackgroundColor({ color: '#E74C3C', tabId })
-  // browser.browserAction.setBadgeText({ text: 'off', tabId })
-  browser.browserAction.setTitle({
-    title: require('@/_locales/' + window.appConfig.langCode + '/background')
-      .locale.app.off,
-    tabId
-  })
-}
-
-function setTempOff (tabId: number) {
-  setIcon(true, tabId)
-  // browser.browserAction.setBadgeBackgroundColor({ color: '#F39C12', tabId })
-  // browser.browserAction.setBadgeText({ text: 'off', tabId })
-  browser.browserAction.setTitle({
-    title: require('@/_locales/' + window.appConfig.langCode + '/background')
-      .locale.app.tempOff,
-    tabId
-  })
-}
-
-function setUnsupported (tabId: number) {
-  setIcon(true, tabId)
-  browser.browserAction.setTitle({
-    title: require('@/_locales/' + window.appConfig.langCode + '/background')
-      .locale.app.unsupported,
-    tabId
-  })
-}
-
-function setDefault (tabId: number) {
-  setIcon(false, tabId)
-  // browser.browserAction.setBadgeText({ text: '', tabId })
-  // browser.browserAction.setTitle({ title: '', tabId })
-}
-
-function setIcon (gray: boolean, tabId: number) {
-  browser.browserAction.setIcon({
-    tabId,
-    path: gray
-      ? {
-        16: 'assets/icon-gray-16.png',
-        19: 'assets/icon-gray-19.png',
-        24: 'assets/icon-gray-24.png',
-        38: 'assets/icon-gray-38.png',
-        48: 'assets/icon-gray-48.png',
-        128: 'assets/icon-gray-128.png'
-      }
-      : {
-        16: 'assets/icon-16.png',
-        19: 'assets/icon-19.png',
-        24: 'assets/icon-24.png',
-        38: 'assets/icon-38.png',
-        48: 'assets/icon-48.png',
-        128: 'assets/icon-128.png'
-      }
-  })
-}

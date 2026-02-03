@@ -5,7 +5,7 @@ import type { GlobalConfig, MenuConfigJSON, WorkspaceConfigJSON } from '@P/commo
 import type { FileItem, FileJSON } from '@P/common/types/File'
 import { touchDir, addJSONFile } from '../bridge/file-utils'
 import { GENERAL_CONFIG_FILE } from '@P/common/virtualFileSystem/const/filsName'
-import { i18n } from '@/locales/index'
+import { i18n } from '@P/saladict-core/src/utils/i18n'
 // import i18n from 'i18next'
 
 // tauri 内容应该始终为相对路径

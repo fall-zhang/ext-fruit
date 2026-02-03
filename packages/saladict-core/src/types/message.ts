@@ -1,6 +1,5 @@
 import { Word, DBArea } from '@/_helpers/record-manager'
 import { DictID } from '@/app-config'
-import { DictSearchResult } from '@/components/Dictionaries/helpers'
 import { OpenUrlOptions } from '@/_helpers/browser-api'
 
 type MessageConfigType<
@@ -58,25 +57,6 @@ export type MessageConfig = MessageConfigType<{
       entry: string
     }>
   }
-
-  FETCH_DICT_RESULT: {
-    payload: {
-      id: DictID
-      text: string
-      /** engine search function payload */
-      payload: {
-        isPDF: boolean
-        [index: string]: any
-      }
-    }
-    response: {
-      id: DictID
-      result: any
-      catalog?: DictSearchResult<DictID>['catalog']
-      audio?: DictSearchResult<DictID>['audio']
-    }
-  }
-
   /** call any method exported from the engine */
   DICT_ENGINE_METHOD: {
     payload: {
@@ -94,13 +74,7 @@ export type MessageConfig = MessageConfigType<{
      Backend IndexedDB: Notebook or History
   \* ------------------------------------------------ */
 
-  /** Is a word in Notebook */
-  IS_IN_NOTEBOOK: {
-    payload: Word
-    response: boolean
-  }
 
-  /** Save a word to Notebook or History */
   SAVE_WORD: {
     payload: {
       area: DBArea
@@ -190,11 +164,6 @@ export type MessageConfig = MessageConfigType<{
     response?: boolean
   }
 
-  /** send to the current active tab for selection */
-  PRELOAD_SELECTION: {
-    response: Word
-  }
-
   /** Manually emit selection */
   EMIT_SELECTION: Record<string, unknown>
 
@@ -241,27 +210,18 @@ export type MessageConfig = MessageConfigType<{
   TEMP_DISABLED_STATE: {
     payload:
       | {
-          op: 'get'
-        }
-      | {
-          op: 'set'
-          value: boolean
-        }
+        op: 'get'
+      } |
+      {
+        op: 'set'
+        value: boolean
+      }
     response: boolean
   }
 
   /** Info for brwoser action badge. From background to content. */
   GET_TAB_BADGE_INFO: {
     response: {
-      active: boolean
-      tempDisable: boolean
-      unsupported: boolean
-    }
-  }
-
-  /** Info for brwoser action badge. From content to background. */
-  SEND_TAB_BADGE_INFO: {
-    payload: {
       active: boolean
       tempDisable: boolean
       unsupported: boolean
@@ -298,17 +258,6 @@ export type MessageConfig = MessageConfigType<{
   /** Switch to Sidebar */
   QS_SWITCH_SIDEBAR: {
     payload: 'left' | 'right'
-  }
-
-  /* ------------------------------------------------ *\
-     Word Editor
-  \* ------------------------------------------------ */
-
-  UPDATE_WORD_EDITOR_WORD: {
-    payload: {
-      word: Word
-      translateCtx?: boolean
-    }
   }
 
   /* ------------------------------------------------ *\
@@ -372,7 +321,7 @@ export type Message<T extends MsgType = MsgType> = T extends any
       } & ('payload' extends keyof MessageConfig[T]
         ? Pick<MessageConfig[T], Extract<'payload', keyof MessageConfig[T]>>
         : { payload?: null })
-    >
+  >
   : never
 
 export type MessageResponse<T extends MsgType> = Readonly<
