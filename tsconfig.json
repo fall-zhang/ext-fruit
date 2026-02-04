@@ -7,13 +7,19 @@
     "apps/**/*.tsx",
     "packages/**/*.ts",
     "packages/**/*.tsx",
-    "rollup.config.ts"
+    "eslint.config.mjs"
     // "tests/**/*.js",
     // "tests/**/*.jsx",
   ],
+  "exclude": [
+    "apps/**/*.mock.ts",
+    "apps/**/*.spec.ts",
+  ],
   "compilerOptions": {
     "noEmit": true,
-    "target":"ES2020",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "target": "ES2020",
     "paths": {
       "@P/*": [
         "packages/*"

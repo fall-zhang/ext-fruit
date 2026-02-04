@@ -2,8 +2,8 @@
   // Change this to match your project
   "extends": "./tsconfig.base.json",
   "include": [
-    "test/**/*.js",
-    "test/**/*.jsx",
+    "test/**/*.spec.ts",
+    "test/**/*.spec.tsx",
   ],
   "compilerOptions": {
     "paths": {

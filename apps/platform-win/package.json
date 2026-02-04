@@ -11,7 +11,9 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@tanstack/react-router": "^1.132.33",
+    "@tanstack/react-router": "^1.158.0",
+    "@tanstack/react-router-devtools": "^1.158.0",
+    "@tanstack/router-plugin": "^1.158.0",
     "@tauri-apps/api": "^2.8.0",
     "@tauri-apps/plugin-dialog": "^2.4.0",
     "@tauri-apps/plugin-fs": "^2.4.2",

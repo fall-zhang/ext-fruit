@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "exports": {
-    ".": "./"
+    ".": "./",
+    "./components/*": "./components/*.tsx",
+    "./lib/*": "./lib/*.ts"
   },
   "scripts": {},
   "dependencies": {
