@@ -1,9 +1,6 @@
-// import { isContainChinese, isContainEnglish } from '@/_helpers/lang-check'
-import { isContainChinese, isContainEnglish } from '../../utils/lang-check'
-// import { Message, MessageResponse } from '@/types/message'
-import { Message, MessageResponse } from '../../types/message'
 import { getDB } from './core'
 import { Word } from '../../store/selection/types'
+import { DBArea } from 'apps/browser-extension/src/utils/record-manager'
 
 /** Is a word in Notebook */
 export async function isInNotebook (word: Word):Promise<boolean> {
@@ -17,8 +14,11 @@ export async function isInNotebook (word: Word):Promise<boolean> {
 
 export async function getWordsByText ({
   area,
-  text
-}: Message<'GET_WORDS_BY_TEXT'>['payload']) {
+  text,
+}: {
+  area: DBArea
+  text: string
+}) {
   const db = await getDB()
   return db[area]
     .where('text')
@@ -26,53 +26,52 @@ export async function getWordsByText ({
     .toArray()
 }
 
+type WordsFilter = {
+  area: DBArea
+  itemsPerPage?: number
+  pageNum?: number
+  sortField?: string | string []
+  sortOrder?: 'ascend' | 'descend'
+  searchText?: string
+}
+
 export async function getWords ({
   area,
   itemsPerPage,
   pageNum,
-  filters = {},
   sortField = 'date',
   sortOrder = 'descend',
-  searchText
-}: Message<'GET_WORDS'>['payload']): Promise<MessageResponse<'GET_WORDS'>> {
+  searchText,
+}: WordsFilter): Promise<{
+  total: number
+  words: Word[]
+}> {
   const db = await getDB()
-  const collection = db[area].orderBy(
-    sortField
-      ? Array.isArray(sortField)
-        ? sortField.map(str => String(str))
-        : String(sortField)
-      : 'date'
-  )
+  let sortFields :string | string[]
+  if (sortField) {
+    if (Array.isArray(sortField)) {
+      sortFields = sortField.map(str => String(str))
+    } else {
+      sortFields = String(sortField)
+    }
+  } else {
+    sortFields = 'date'
+  }
+
+  const collection = db[area].orderBy(sortFields)
 
   if (!sortOrder || sortOrder === 'descend') {
     collection.reverse()
   }
 
-  const shouldFilter = Array.isArray(filters.text) && filters.text.length > 0
-  if (shouldFilter || searchText) {
-    const validLangs = shouldFilter
-      ? (filters.text as string[]).reduce((o, l) => {
-        o[l] = true
-        return o
-      }, {})
-      : {}
+  if (searchText) {
     const ls = searchText ? searchText.toLocaleLowerCase() : ''
     collection.filter(record => {
-      const rText = shouldFilter
-        ? (validLangs.en && isContainEnglish(record.text)) ||
-          (validLangs.ch && isContainChinese(record.text)) ||
-          (validLangs.word && !/\s/.test(record.text)) ||
-          (validLangs.phra && /\s/.test(record.text))
-        : true
+      const isMatch = Object.values(record).some(value =>
+        typeof value === 'string' && value.toLocaleLowerCase().includes(ls)
+      )
 
-      const rSearch = searchText
-        ? Object.values(record).some(
-          v =>
-            typeof v === 'string' && v.toLocaleLowerCase().indexOf(ls) !== -1
-        )
-        : true
-
-      return rText && rSearch
+      return isMatch
     })
   }
 

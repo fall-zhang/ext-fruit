@@ -1,5 +1,5 @@
 import axios from 'axios'
-// import { Word } from '@/_helpers/record-manager'
+// import { Word } from '@P/saladict-core/src/dict-utils/new-word'
 import { Word } from '@P/saladict-core/src/store/selection/types'
 // import { parseCtxText } from '@/_helpers/translateCtx'
 import { parseCtxText } from '@P/saladict-core/src/utils/translateCtx'
@@ -39,7 +39,7 @@ export class Service extends SyncService<SyncConfig> {
       escapeContext: true,
       escapeTrans: true,
       escapeNote: true,
-      syncServer: false
+      syncServer: false,
     }
   }
 
@@ -85,7 +85,7 @@ export class Service extends SyncService<SyncConfig> {
     }
     try {
       const notes = await this.request<number[]>('findNotes', {
-        query: `deck:${this.config.deckName} ${this.noteFileds[0]}:${date}`
+        query: `deck:${this.config.deckName} ${this.noteFileds[0]}:${date}`,
       })
       return notes[0]
     } catch (e) {
@@ -144,11 +144,11 @@ export class Service extends SyncService<SyncConfig> {
         modelName: this.config.noteType,
         options: {
           allowDuplicate: false,
-          duplicateScope: 'deck'
+          duplicateScope: 'deck',
         },
         tags: this.extractTags(),
-        fields: await this.wordToFields(word)
-      }
+        fields: await this.wordToFields(word),
+      },
     })
   }
 
@@ -156,8 +156,8 @@ export class Service extends SyncService<SyncConfig> {
     return this.request('updateNoteFields', {
       note: {
         id: noteId,
-        fields: await this.wordToFields(word)
-      }
+        fields: await this.wordToFields(word),
+      },
     })
   }
 
@@ -176,7 +176,7 @@ export class Service extends SyncService<SyncConfig> {
       'Title',
       'Url',
       'Favicon',
-      'Audio'
+      'Audio',
     ]
 
     await this.request('createModel', {
@@ -187,9 +187,9 @@ export class Service extends SyncService<SyncConfig> {
         {
           Name: 'Saladict Cloze',
           Front: cardText(true, this.noteFileds),
-          Back: cardText(false, this.noteFileds)
-        }
-      ]
+          Back: cardText(false, this.noteFileds),
+        },
+      ],
     })
 
     // Anki Connect could tranlate the field names
@@ -201,10 +201,10 @@ export class Service extends SyncService<SyncConfig> {
         templates: {
           'Saladict Cloze': {
             Front: cardText(true, this.noteFileds),
-            Back: cardText(false, this.noteFileds)
-          }
-        }
-      }
+            Back: cardText(false, this.noteFileds),
+          },
+        },
+      },
     })
   }
 
@@ -216,8 +216,8 @@ export class Service extends SyncService<SyncConfig> {
         key: this.config.key || null,
         version: 6,
         action,
-        params: params || {}
-      }
+        params: params || {},
+      },
     })
 
     if (process.env.DEBUG) {
@@ -269,13 +269,13 @@ export class Service extends SyncService<SyncConfig> {
       // Favicon
       [this.noteFileds[8]]: word.favicon || '',
       // Audio
-      [this.noteFileds[9]]: '' // @TODO
+      [this.noteFileds[9]]: '', // @TODO
     }
   }
 
   async getNotefields (): Promise<string[]> {
     const nf = await this.request<string[]>('modelFieldNames', {
-      modelName: this.config.noteType
+      modelName: this.config.noteType,
     })
     // Anki connect bug
     if (nf?.includes('Date.')) {
@@ -289,7 +289,7 @@ export class Service extends SyncService<SyncConfig> {
         'Title.',
         'Url.',
         'Favicon.',
-        'Audio.'
+        'Audio.',
       ]
     } else if (nf?.includes('日期')) {
       return [
@@ -302,7 +302,7 @@ export class Service extends SyncService<SyncConfig> {
         'Title',
         'Url',
         'Favicon',
-        'Audio'
+        'Audio',
       ]
     }
     return [
@@ -315,7 +315,7 @@ export class Service extends SyncService<SyncConfig> {
       'Title',
       'Url',
       'Favicon',
-      'Audio'
+      'Audio',
     ]
   }
 

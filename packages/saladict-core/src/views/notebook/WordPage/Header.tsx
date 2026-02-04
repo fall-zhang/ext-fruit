@@ -1,10 +1,18 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { TFunction } from 'i18next'
-import { Layout, Input, Dropdown, Menu, Button, Modal } from 'antd'
-import { MenuProps } from 'antd/lib/menu'
+import { Input, Button, Modal } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
-import { DBArea } from '@/_helpers/record-manager'
+import { DBArea } from '../../../core/database/types'
 
+import * as React from 'react'
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger
+} from '@sala/ui/components/navigation-menu'
 export interface WordPageProps {
   t: TFunction
   area: DBArea
@@ -12,15 +20,24 @@ export interface WordPageProps {
   totalCount: number
   selectedCount: number
   onSearchTextChanged: (text: string) => void
-  onExport: MenuProps['onClick']
+  onExport(ev:React.MouseEvent):void
   onDelete: (key: string) => void
 }
 
 export const Header: FC<WordPageProps> = props => {
   const { t } = props
-
+  const deleteConfirm = (key:'selected' | 'page' | 'all') => {
+    if (key) {
+      Modal.confirm({
+        title: t('delete'),
+        content: t(`delete.${key}`) + t('delete.confirm'),
+        okType: 'danger',
+        onOk: () => props.onDelete(`${key}`),
+      })
+    }
+  }
   return (
-    <Layout.Header className="wordpage-Header">
+    <div className="wordpage-Header flex z-100 w-full left-0 top-0 fixed">
       <div className="wordpage-Title">
         <h1 className="wordpage-Title_head">
           {t(`title.${props.area}`)}{' '}
@@ -39,55 +56,65 @@ export const Header: FC<WordPageProps> = props => {
           )}
         </div>
       </div>
-      <div className="wordpage-BtnGroup">
-        <Input
-          style={{ width: '15em' }}
-          placeholder="Search"
-          onChange={e => props.onSearchTextChanged(e.currentTarget.value)}
-          value={props.searchText}
-        />
-        <Dropdown
-          overlay={
-            <Menu onClick={props.onExport}>
-              {props.selectedCount > 0 && (
-                <Menu.Item key="selected">{t('export.selected')}</Menu.Item>
-              )}
-              <Menu.Item key="page">{t('export.page')}</Menu.Item>
-              <Menu.Item key="all">{t('export.all')}</Menu.Item>
-            </Menu>
-          }
-        >
-          <Button style={{ marginLeft: 8 }}>
-            {t('export.title')} <DownOutlined />
-          </Button>
-        </Dropdown>
-        <Dropdown
-          overlay={
-            <Menu
-              onClick={({ key }) => {
-                if (key) {
-                  Modal.confirm({
-                    title: t('delete'),
-                    content: t(`delete.${key}`) + t('delete.confirm'),
-                    okType: 'danger',
-                    onOk: () => props.onDelete(`${key}`)
-                  })
-                }
-              }}
-            >
-              {props.selectedCount > 0 && (
-                <Menu.Item key="selected">{t('delete.selected')}</Menu.Item>
-              )}
-              <Menu.Item key="page">{t('delete.page')}</Menu.Item>
-              <Menu.Item key="all">{t('delete.all')}</Menu.Item>
-            </Menu>
-          }
-        >
-          <Button type="primary" danger style={{ marginLeft: 8 }}>
-            {t('delete.title')} <DownOutlined />
-          </Button>
-        </Dropdown>
-      </div>
-    </Layout.Header>
+      <Input
+        style={{ width: '15em' }}
+        placeholder="Search"
+        onChange={e => props.onSearchTextChanged(e.currentTarget.value)}
+        value={props.searchText}
+      />
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>
+              <Button className='ml-2' onClick={props.onExport}>
+                {t('export.title')} <DownOutlined />
+              </Button>
+            </NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="w-96">
+                {props.selectedCount > 0 && (
+                  <ListItem key="selected">{t('export.selected')}</ListItem>
+                )}
+                <ListItem>{t('export.page')}</ListItem>
+                <ListItem>{t('export.all')}</ListItem>
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem className="hidden md:flex">
+            <NavigationMenuTrigger>
+              <Button type="primary" danger className='ml-2'>
+                {t('delete.title')} <DownOutlined />
+              </Button>
+            </NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                {props.selectedCount > 0 && (
+                  <ListItem onClick={() => deleteConfirm('selected')} key="selected" >{t('delete.selected')}</ListItem>
+                )}
+                <ListItem onClick={() => deleteConfirm('page')} key="page">{t('delete.page')}</ListItem>
+                <ListItem onClick={() => deleteConfirm('all')} key="all">{t('delete.all')}</ListItem>
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+    </div>
+  )
+}
+
+function ListItem ({
+  title,
+  children,
+  ...props
+}: React.ComponentPropsWithoutRef<'li'>) {
+  return (
+    <li {...props}>
+      <NavigationMenuLink asChild>
+        <div className="flex flex-col gap-1 text-sm">
+          <div className="leading-none font-medium">{title}</div>
+          <div className="text-muted-foreground line-clamp-2">{children}</div>
+        </div>
+      </NavigationMenuLink>
+    </li>
   )
 }

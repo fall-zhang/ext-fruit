@@ -1,4 +1,4 @@
-import { Word } from '@/_helpers/record-manager'
+import { Word } from '@P/saladict-core/src/dict-utils/new-word'
 
 export interface NotebookFile {
   timestamp: number

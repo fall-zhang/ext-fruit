@@ -6,7 +6,7 @@ import { Observable } from 'rxjs'
 import AxiosMockAdapter from 'axios-mock-adapter'
 import { DictID, AppConfig } from '@/app-config'
 import { Profile } from '@/app-config/profiles'
-import { Word } from '@/_helpers/record-manager'
+import { Word } from '@P/saladict-core/src/dict-utils/new-word'
 import { isTagName } from '@/_helpers/dom'
 import { isInternalPage } from '@/_helpers/saladict'
 

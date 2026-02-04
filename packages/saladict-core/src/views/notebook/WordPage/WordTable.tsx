@@ -2,9 +2,10 @@ import React, { FC, ReactNode, useMemo } from 'react'
 import i18next, { TFunction } from 'i18next'
 import { Button, Tooltip } from 'antd'
 import Table, { ColumnsType, TableProps } from 'antd/lib/table'
-import { Word, DBArea } from '@/_helpers/record-manager'
-import { message } from '@/_helpers/browser-api'
-import { useTranslate } from '@/_helpers/i18n'
+import { Word } from '@P/saladict-core/src/types/word'
+
+import { DBArea } from 'apps/browser-extension/src/utils/record-manager'
+import { useTranslation } from 'react-i18next'
 
 export const colSelectionWidth = 48
 const colDateWidth = 150
@@ -22,7 +23,7 @@ export interface WordTableProps
 }
 
 export const WordTable: FC<WordTableProps> = props => {
-  const { t, ready } = useTranslate('wordpage')
+  const { t, ready } = useTranslation('wordPage')
 
   const tableColumns = useMemo<ColumnsType<Word>>(
     () => [
@@ -37,8 +38,8 @@ export const WordTable: FC<WordTableProps> = props => {
           { text: t('filterWord.chs'), value: 'ch' },
           { text: t('filterWord.eng'), value: 'en' },
           { text: t('filterWord.word'), value: 'word' },
-          { text: t('filterWord.phrase'), value: 'phra' }
-        ]
+          { text: t('filterWord.phrase'), value: 'phra' },
+        ],
       },
       {
         title: t('column.source'),
@@ -46,21 +47,21 @@ export const WordTable: FC<WordTableProps> = props => {
         key: 'context',
         width: restWidth,
         align: 'center',
-        render: renderSource
+        render: renderSource,
       },
       {
         title: t('column.trans'),
         dataIndex: 'trans',
         key: 'trans',
         width: restWidth,
-        render: renderTrans
+        render: renderTrans,
       },
       {
         title: t('column.note'),
         dataIndex: 'note',
         key: 'note',
         width: restWidth,
-        render: renderNote
+        render: renderNote,
       },
       {
         title: t('column.date'),
@@ -69,14 +70,14 @@ export const WordTable: FC<WordTableProps> = props => {
         width: colDateWidth,
         align: 'center',
         sorter: true,
-        render: renderDate
+        render: renderDate,
       },
       {
         title: t(`column.${props.area === 'notebook' ? 'edit' : 'add'}`),
         key: 'edit',
         align: 'center',
-        render: (_, record) => renderEdit(t, props.area, record)
-      }
+        render: (_, record) => renderEdit(t, props.area, record),
+      },
     ],
     [ready, props.area]
   )
@@ -151,15 +152,9 @@ function renderEdit (t: TFunction, area: DBArea, record: Word): ReactNode {
         const word = {
           ...record,
           // give it a new date if it's from history
-          date: area === 'notebook' ? record.date : Date.now()
+          date: area === 'notebook' ? record.date : Date.now(),
         }
         // wait till selection ends
-        setTimeout(() => {
-          message.self.send({
-            type: 'UPDATE_WORD_EDITOR_WORD',
-            payload: { word }
-          })
-        }, 500)
       }}
     >
       {t(`column.${area === 'notebook' ? 'edit' : 'add'}`)}

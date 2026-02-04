@@ -1,11 +1,14 @@
-import { Word, DBArea } from '@/_helpers/record-manager'
-import { Message } from '@/types/message'
 import { getDB } from './core'
+import { DBArea } from './types'
+import { Word } from '../../types/word'
 
 export async function saveWord ({
   area,
   word
-}: Message<'SAVE_WORD'>['payload']) {
+}: {
+  area: DBArea
+  word: Word
+}) {
   const db = await getDB()
   return db[area].put(word)
 }
@@ -28,8 +31,11 @@ export async function saveWords ({
 
 export async function deleteWords ({
   area,
-  dates
-}: Message<'DELETE_WORDS'>['payload']) {
+  keyList
+}:{
+  area: DBArea
+  keyList?: number[]
+}) {
   const db = await getDB()
-  return Array.isArray(dates) ? db[area].bulkDelete(dates) : db[area].clear()
+  return Array.isArray(keyList) ? db[area].bulkDelete(keyList) : db[area].clear()
 }

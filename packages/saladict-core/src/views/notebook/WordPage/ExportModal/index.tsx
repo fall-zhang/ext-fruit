@@ -1,11 +1,12 @@
-import React, { FC, useState, useEffect, useContext } from 'react'
+import React, { FC, useState, useMemo } from 'react'
 import { Modal, Layout, Switch } from 'antd'
 import escapeHTML from 'lodash/escape'
-import { Word, newWord } from '@/_helpers/record-manager'
-import { useTranslate, I18nContext } from '@/_helpers/i18n'
-import { storage } from '@/_helpers/browser-api'
+import { Word } from '@P/saladict-core/src/types/word'
+import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
+
 import { LineBreakMemo, LineBreakOption } from './Linebreak'
 import { PlaceholderTableMemo } from './PlaceholderTable'
+import { useTranslation } from 'react-i18next'
 
 const keywordMatchStr = `%(${Object.keys(newWord()).join('|')}|contextCloze)%`
 
@@ -18,116 +19,93 @@ export interface ExportModalProps {
 }
 
 export const ExportModal: FC<ExportModalProps> = props => {
-  const lang = useContext(I18nContext)
-  const { t } = useTranslate(['wordpage', 'common'])
+  const { t, i18n } = useTranslation('wordPage')
+  const lang = i18n.language
   const [template, setTemplate] = useState('%text%\n%trans%\n%context%\n')
   const [lineBreak, setLineBreak] = useState<LineBreakOption>('')
   const [escape, setEscape] = useState(false)
 
-  const [output, setOutput] = useState('')
 
-  useEffect(() => {
-    setOutput(
-      props.rawWords
-        .map(word =>
-          template.replace(new RegExp(keywordMatchStr, 'g'), (match, k) => {
-            switch (k) {
-            case 'date':
-              return new Date(word.date).toLocaleDateString(lang)
-            case 'trans':
-            case 'note':
-            case 'context':
-            case 'contextCloze': {
-              let text = word[k === 'contextCloze' ? 'context' : k] || ''
-              if (escape) {
-                text = escapeHTML(text)
-              }
-              switch (lineBreak) {
-              case 'n':
-                text = text.replace(/\n|\r\n/g, '\\n')
-                break
-              case 'br':
-                text = text.replace(/\n|\r\n/g, '<br>')
-                break
-              case 'p':
-                text = text
-                  .split(/\n|\r\n/)
-                  .map(line => `<p>${line}</p>`)
-                  .join('')
-                break
-              case 'space':
-                text = text.replace(/\n|\r\n/g, ' ')
-                break
-              default:
-                break
-              }
-              if (k === 'contextCloze' && word.text) {
-                const matcher = new RegExp(
-                  word.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'),
-                  'gi'
-                )
-                text = text.replace(
-                  matcher,
-                  ''.padStart(word.text.length, '_')
-                )
-              }
-              return text
-            }
+  const output = useMemo(() => {
+    return props.rawWords.map(word =>
+      template.replace(new RegExp(keywordMatchStr, 'g'), (match, k:string) => {
+        if (k === 'date') {
+          return new Date(word.date).toLocaleDateString(lang)
+        } else if ((['trans', 'note', 'context', 'contextCloze']).includes(k)) {
+          let text
+          if (k === 'contextCloze' || k === 'context') {
+            text = word.context
+          } else {
+            text = word[k] || ''
+          }
+          if (escape) {
+            text = escapeHTML(text)
+          }
+          switch (lineBreak) {
+            case 'n':
+              text = text.replace(/\n|\r\n/g, '\\n')
+              break
+            case 'br':
+              text = text.replace(/\n|\r\n/g, '<br>')
+              break
+            case 'p':
+              text = text
+                .split(/\n|\r\n/)
+                .map((line:string) => `<p>${line}</p>`)
+                .join('')
+              break
+            case 'space':
+              text = text.replace(/\n|\r\n/g, ' ')
+              break
             default:
-              return word[k] || ''
-            }
-          })
-        )
-        .join('\n')
-    )
+              break
+          }
+          if (k === 'contextCloze' && word.text) {
+            const matcher = new RegExp(
+              word.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'),
+              'gi'
+            )
+            text = text.replace(
+              matcher,
+              ''.padStart(word.text.length, '_')
+            )
+          }
+          return text
+        }
+        return word[k] || ''
+      })
+    ).join('\n')
   }, [props.rawWords, lang, template, lineBreak, escape])
 
-  useEffect(() => {
-    storage.sync
-      .get<{
-        wordpageTemplate: string
-        wordpageLineBreak: LineBreakOption
-      }>(['wordpageTemplate', 'wordpageLineBreak'])
-      .then(({ wordpageTemplate, wordpageLineBreak }) => {
-        if (wordpageTemplate != null) {
-          setTemplate(wordpageTemplate)
-        }
-        if (wordpageLineBreak != null) {
-          setLineBreak(wordpageLineBreak)
-        }
-      })
-
-    storage.local
-      .get<{
-        wordpageHTMLEscape: boolean
-      }>('wordpageHTMLEscape')
-      .then(({ wordpageHTMLEscape }) => {
-        if (wordpageHTMLEscape != null) {
-          setEscape(wordpageHTMLEscape)
-        }
-      })
-  }, [])
+  // useEffect(() => {
+  //   const wordpageTemplate = localStorage.getItem('wordpageTemplate')
+  //   if (wordpageTemplate != null) {
+  //     setTemplate(wordpageTemplate || '')
+  //   }
+  //   const wordpageLineBreak = localStorage.getItem('wordpageLineBreak')
+  //   if (wordpageLineBreak != null) {
+  //     setLineBreak((wordpageLineBreak || '') as LineBreakOption)
+  //   }
+  // }, [])
 
   const exportWords = () => {
-    browser.runtime.getPlatformInfo().then(({ os }) => {
-      const content = os === 'win' ? output.replace(/\r\n|\n/g, '\r\n') : output
-      const file = new Blob([content], { type: 'text/plain;charset=utf-8' })
-      const a = document.createElement('a')
-      a.style.display = 'none'
-      a.href = URL.createObjectURL(file)
-      a.download = `saladict-words-${Date.now()}.txt`
-      // firefox
-      a.target = '_blank'
-      document.body.appendChild(a)
+    const content = output.replace(/\r\n|\n/g, '\r\n')
+    const file = new Blob([content], { type: 'text/plain;charset=utf-8' })
+    const a = document.createElement('a')
+    a.style.display = 'none'
+    a.href = URL.createObjectURL(file)
+    a.download = `saladict-words-${Date.now()}.txt`
+    // firefox
+    a.target = '_blank'
+    document.body.appendChild(a)
 
-      a.click()
-    })
+    a.click()
   }
 
   return (
     <Modal
       title={props.title ? t(`export.${props.title}`) : ' '}
-      visible={!!props.title}
+      open={!!props.title}
       destroyOnClose={true}
       onOk={exportWords}
       onCancel={props.onCancel}
@@ -155,7 +133,7 @@ export const ExportModal: FC<ExportModalProps> = props => {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              marginBottom: '1em'
+              marginBottom: '1em',
             }}
           >
             <LineBreakMemo
@@ -163,10 +141,10 @@ export const ExportModal: FC<ExportModalProps> = props => {
               value={lineBreak}
               onChange={value => {
                 setLineBreak(value)
-                storage.sync.set({ wordpageLineBreak: value })
+                // localStorage.setItem('wordpageLineBreak', value)
                 if (value === 'br' || value === 'p') {
                   setEscape(true)
-                  storage.local.set({ wordpageHTMLEscape: true })
+                  // localStorage.setItem('wordpageHTMLEscape', 'true')
                 }
               }}
             />
@@ -175,7 +153,7 @@ export const ExportModal: FC<ExportModalProps> = props => {
               checked={escape}
               onChange={checked => {
                 setEscape(checked)
-                storage.local.set({ wordpageHTMLEscape: checked })
+                localStorage.setItem('wordpageHTMLEscape', String(checked))
               }}
               checkedChildren={t('export.htmlescape.text')}
               unCheckedChildren={t('export.htmlescape.text')}
@@ -186,7 +164,7 @@ export const ExportModal: FC<ExportModalProps> = props => {
             value={template}
             onChange={({ currentTarget: { value } }) => {
               setTemplate(value)
-              storage.sync.set({ wordpageTemplate: value })
+              localStorage.setItem('wordpageTemplate', value)
             }}
           />
         </Layout.Content>

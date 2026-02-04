@@ -1,17 +1,15 @@
-import React, { FC, useState, useEffect } from 'react'
+import { FC, useState, useEffect } from 'react'
 import { Layout } from 'antd'
-import { from } from 'rxjs'
-import { switchMap, startWith, debounceTime } from 'rxjs/operators'
-import { useObservable, useSubscription } from 'observable-hooks'
-// import { DBArea, getWords, Word, deleteWords } from '@/_helpers/record-manager'
-import { deleteWords } from '@P/saladict-core/src/core/database'
-import { useTranslate } from '@/_helpers/i18n'
-import { message } from '@/_helpers/browser-api'
+// import { DBArea, getWords, Word, deleteWords } from '@P/saladict-core/src/dict-utils/new-word'
+import { deleteWords, getWords } from '../../../core/database'
 import { Header } from './Header'
 import { WordTableProps, colSelectionWidth, WordTable } from './WordTable'
 import { ExportModal, ExportModalTitle } from './ExportModal'
 
 import './_style.scss'
+import { useTranslation } from 'react-i18next'
+import { Word } from '@P/saladict-core/src/types/word'
+import { DBArea } from '../../../core/database/types'
 
 const ITEMS_PER_PAGE = 200
 
@@ -23,9 +21,9 @@ type TableInfo = Pick<
 interface FetchWordsConfig {
   itemsPerPage?: number
   pageNum?: number
-  filters: { [field: string]: (string | number)[] | null | undefined }
-  sortField?: string | number | (string | number)[]
-  sortOrder?: 'ascend' | 'descend' | false | null
+  filters: { [field: string]: (string | number)[] }
+  sortField?: string | (string)[]
+  sortOrder?: 'ascend' | 'descend'
   searchText: string
 }
 
@@ -33,7 +31,7 @@ const initialFetchWordsConfig: Readonly<FetchWordsConfig> = {
   searchText: '',
   itemsPerPage: ITEMS_PER_PAGE,
   pageNum: 1,
-  filters: {}
+  filters: {},
 }
 
 export interface WordPageProps {
@@ -41,7 +39,7 @@ export interface WordPageProps {
 }
 
 export const WordPage: FC<WordPageProps> = props => {
-  const { t } = useTranslate('wordpage')
+  const { t } = useTranslation('wordPage')
   const [searchText, setSearchText] = useState('')
   const [selectedRows, setSelectedRows] = useState<Word[]>([])
   const [tableInfo, setTableInfo] = useState<TableInfo>(() => ({
@@ -53,7 +51,7 @@ export const WordPage: FC<WordPageProps> = props => {
       current: 1,
       pageSize: ITEMS_PER_PAGE,
       defaultPageSize: ITEMS_PER_PAGE,
-      total: 0
+      total: 0,
     },
     rowSelection: {
       selectedRowKeys: [],
@@ -63,74 +61,41 @@ export const WordPage: FC<WordPageProps> = props => {
           ...lastInfo,
           rowSelection: {
             ...lastInfo.rowSelection,
-            selectedRowKeys
-          }
+            selectedRowKeys,
+          },
         }))
         setSelectedRows(selectedRows)
-      }
+      },
     },
-    loading: false
+    loading: false,
   }))
 
   const [exportModalTitle, setExportModalTitle] = useState<ExportModalTitle>('')
   const [exportModalWords, setExportModalWords] = useState<Word[]>([])
 
-  const [fetchWordsConfig, setFetchWordsConfig] = useState(
+  const [fetchWordsConfig] = useState(
     initialFetchWordsConfig
   )
-  const fetchWords = (config: Partial<FetchWordsConfig>) =>
-    setFetchWordsConfig(lastConfig => ({
-      ...lastConfig,
-      ...config
-    }))
-
-  const fetchWords$ = useObservable<
-    { total: number; words: Word[] } | null,
-    [FetchWordsConfig]
-  >(
-    inputs$ =>
-      inputs$.pipe(
-        debounceTime(200),
-        switchMap(([config]) =>
-          from(
-            getWords(props.area, config).catch(e => {
-              console.error(e)
-              return { total: 0, words: [] }
-            })
-          ).pipe(startWith(null))
-        )
-      ),
-    [fetchWordsConfig]
-  )
-
-  useSubscription(fetchWords$, response => {
-    setTableInfo(lastInfo => ({
-      ...lastInfo,
-      ...(response
-        ? {
-          pagination: {
-            ...lastInfo.pagination,
-            total: response.total
-          },
-          dataSource: response.words,
-          loading: false
-        }
-        : { loading: true })
-    }))
-    setSelectedRows([])
-  })
+  const fetchWords = async (config: Partial<FetchWordsConfig>) => {
+    const res = await getWords({
+      area: props.area,
+      ...config,
+    }).catch(e => {
+      console.error(e)
+      return { total: 0, words: [] }
+    })
+    setExportModalWords(res.words)
+  }
 
   useEffect(() => {
     const handler = (): void => {
       fetchWords({})
     }
-    message.addListener('WORD_SAVED', handler)
-
-    return () => message.removeListener('WORD_SAVED', handler)
+    handler()
   }, [])
 
   return (
-    <Layout className="wordpage-Container">
+    <div className="wordPage-Container">
       <title>{t(`title.${props.area}`)}</title>
       <Header
         t={t}
@@ -144,10 +109,11 @@ export const WordPage: FC<WordPageProps> = props => {
         }}
         onExport={async ({ key }) => {
           if (key === 'all') {
-            const { total, words } = await getWords(props.area, {
+            const { total, words } = await getWords({
+              area: props.area,
               ...fetchWordsConfig,
               itemsPerPage: undefined,
-              pageNum: undefined
+              pageNum: undefined,
             })
             if (process.env.DEBUG) {
               console.assert(words.length === total, 'get all words')
@@ -177,18 +143,16 @@ export const WordPage: FC<WordPageProps> = props => {
           } else {
             keys = undefined
           }
-          // const keys =
-          //   key === 'selected'
-          //     ? tableInfo.rowSelection?.selectedRowKeys?.map(date =>
-          //       Number(date)
-          //     )
-          //     : key === 'page'
-          //       ? tableInfo.dataSource?.map(({ date }) => date)
-          //       : undefined
-          deleteWords(props.area, keys).then(() => fetchWords({}))
+
+          deleteWords({
+            area: props.area,
+            keyList: keys,
+          }).then(() => fetchWords({})).catch(err => {
+            console.warn(err)
+          })
         }}
       />
-      <Layout.Content>
+      <div>
         <WordTable
           area={props.area}
           {...tableInfo}
@@ -199,8 +163,8 @@ export const WordPage: FC<WordPageProps> = props => {
               ...lastInfo,
               pagination: {
                 ...lastInfo.pagination,
-                current: pagination.current || 1
-              }
+                current: pagination.current || 1,
+              },
             }))
 
             const realSorter = Array.isArray(sorter) ? sorter[0] : sorter
@@ -211,11 +175,11 @@ export const WordPage: FC<WordPageProps> = props => {
               filters,
               sortField: realSorter?.field,
               sortOrder: realSorter?.order,
-              searchText
+              searchText,
             })
           }}
         />
-      </Layout.Content>
+      </div>
       <ExportModal
         title={exportModalTitle}
         rawWords={exportModalWords}
@@ -223,6 +187,6 @@ export const WordPage: FC<WordPageProps> = props => {
           setExportModalTitle('')
         }}
       />
-    </Layout>
+    </div>
   )
 }

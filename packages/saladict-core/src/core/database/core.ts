@@ -2,11 +2,8 @@ import Dexie from 'dexie'
 import { Word } from '../../store/selection/types'
 
 export class SaladictDB extends Dexie {
-  // "@ts-expect-error"
   notebook: Dexie.Table<Word, number>
-  // "@ts-expect-error"
   history: Dexie.Table<Word, number>
-  // "@ts-expect-error"
   syncmeta: Dexie.Table<{ id: string; json: string }, string>
 
   constructor () {
