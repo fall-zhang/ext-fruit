@@ -13,6 +13,7 @@
     "allowJs": false,
     "jsx": "react-jsx",
     "jsxImportSource": "react",
+    "skipLibCheck": true,
     // Generate d.ts files
     "declaration": false,
     "emitDeclarationOnly": false,

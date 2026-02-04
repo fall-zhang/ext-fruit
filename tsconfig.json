@@ -18,6 +18,12 @@
       "@P/*": [
         "packages/*"
       ],
+      "@sala/core/*": [
+        "packages/saladict-core/*"
+      ],
+      "@sala/ui/*": [
+        "packages/ui/*"
+      ],
       "@/*": [
         "apps/platform-win/src/*"
       ]
