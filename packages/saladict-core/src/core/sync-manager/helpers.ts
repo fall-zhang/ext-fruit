@@ -6,7 +6,6 @@ import {
   setSyncMeta,
   deleteSyncMeta
 } from '../../core/database/sync-meta'
-import { I18nManager } from '../i18n-manager'
 
 export interface StorageSyncConfig {
   syncConfig: { [id: string]: any }
@@ -69,26 +68,3 @@ export async function getNotebook (): Promise<Word[]> {
   return (await getWords({ area: 'notebook' })).words || []
 }
 
-export async function notifyError (
-  id: string,
-  error: Error | string,
-  msgPrefix = '',
-  msgPostfix = ''
-): Promise<void> {
-  const { i18n } = await I18nManager.getInstance()
-  await i18n.loadNamespaces('sync')
-  const errorText = typeof error === 'string' ? error : error.message
-  const msgPath = `sync:${id}.error.${errorText}`
-  const msg = i18n.exists(msgPath)
-    ? i18n.t(msgPath)
-    : `Unknown error: ${errorText}`
-
-  browser.notifications.create({
-    type: 'basic',
-    iconUrl: browser.runtime.getURL('assets/icon-128.png'),
-    title: `Saladict ${i18n.t(`sync:${id}.title`)}`,
-    message: msgPrefix + msg + msgPostfix,
-    eventTime: Date.now() + 20000,
-    priority: 2
-  })
-}

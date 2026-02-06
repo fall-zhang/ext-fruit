@@ -1,4 +1,4 @@
-import { Word } from '@P/saladict-core/src/dict-utils/new-word'
+import { Word } from '@P/saladict-core/src/types/word'
 
 export interface NotebookFile {
   timestamp: number
@@ -60,9 +60,9 @@ export abstract class SyncService<
   }
 
   /** Called when user updates config. Check env, save config etc */
-  abstract init(): Promise<void>
+  abstract init (): Promise<void>
   /** add words */
-  abstract add(config: AddConfig): Promise<void>
+  abstract add (config: AddConfig): Promise<void>
   /** delete words */
   async delete (config: DeleteConfig): Promise<void> {}
   /** Clean up side-effects */
@@ -72,6 +72,3 @@ export abstract class SyncService<
   /** Called on browser start or config changes */
   onStart () {}
 }
-
-type SyncServiceAbstractClass = typeof SyncService
-export interface SyncServiceConstructor extends SyncServiceAbstractClass {}

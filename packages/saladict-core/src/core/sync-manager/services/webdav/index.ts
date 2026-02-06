@@ -9,12 +9,12 @@ import {
   getNotebook,
   setNotebook,
   setMeta,
-  getMeta,
-  notifyError
+  getMeta
 } from '../../helpers'
 
 import { Mutable } from '@/types/helpers'
 import { storage } from '@/_helpers/browser-api'
+import { Writable } from 'type-fest'
 
 export interface SyncConfig extends SyncServiceConfigBase {
   /** Server address. Ends with '/'. */
@@ -39,7 +39,7 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
       url: '',
       user: '',
       passwd: '',
-      duration: 15
+      duration: 15,
     }
   }
 
@@ -64,7 +64,7 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
     browser.alarms.onAlarm.addListener(this.handleSyncAlarm)
 
     if (typeof this.config.url === 'string' && !this.config.url.endsWith('/')) {
-      ;(this.config as Mutable<SyncConfig>).url += '/'
+      ;(this.config as Writable<SyncConfig>).url += '/'
     }
 
     if (this.config.url) {
@@ -82,7 +82,7 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
       await storage.local.set({ webdavInterval: nextInterval })
       browser.alarms.create('webdav', {
         when: nextInterval,
-        periodInMinutes: duration
+        periodInMinutes: duration,
       })
     } else {
       await storage.local.set({ webdavInterval: 0 })
@@ -118,8 +118,8 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
           Authorization:
             'Basic ' + window.btoa(`${this.config.user}:${this.config.passwd}`),
           'Content-Type': 'application/xml; charset="utf-8"',
-          Depth: '1'
-        }
+          Depth: '1',
+        },
       })
       if (!response.ok) {
         if (response.status === 401) {
@@ -173,8 +173,8 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
         method: 'MKCOL',
         headers: {
           Authorization:
-            'Basic ' + window.btoa(`${this.config.user}:${this.config.passwd}`)
-        }
+            'Basic ' + window.btoa(`${this.config.user}:${this.config.passwd}`),
+        },
       })
       if (!response.ok) {
         // cannot create directory
@@ -228,9 +228,9 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
         method: 'PUT',
         headers: {
           Authorization:
-            'Basic ' + window.btoa(`${this.config.user}:${this.config.passwd}`)
+            'Basic ' + window.btoa(`${this.config.user}:${this.config.passwd}`),
         },
-        body
+        body,
       })
       if (!response.ok) {
         throw new Error('network')
@@ -261,7 +261,7 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
     }
 
     const headers: { [name: string]: string } = {
-      Authorization: 'Basic ' + window.btoa(`${config.user}:${config.passwd}`)
+      Authorization: 'Basic ' + window.btoa(`${config.user}:${config.passwd}`),
     }
     if (!testConfig && !noCache && this.meta.etag != null) {
       headers['If-None-Match'] = this.meta.etag
@@ -275,7 +275,7 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
           'Saladict/notebook.json',
         {
           method: 'GET',
-          headers
+          headers,
         }
       )
 
@@ -332,7 +332,7 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
     if (!oldMeta.timestamp || json.timestamp >= oldMeta.timestamp) {
       await this.setMeta({
         timestamp: json.timestamp,
-        etag: response.headers.get('ETag') || oldMeta.etag || ''
+        etag: response.headers.get('ETag') || oldMeta.etag || '',
       })
     }
 
