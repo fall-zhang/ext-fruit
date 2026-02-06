@@ -1,4 +1,7 @@
-import { NoteBook } from '@P/saladict-core/src/views/notebook'
+import { NoteBook } from '@P/saladict-core/main'
+export {
+  NoteBook
+}
 
 /**
  * 保存到生词本
