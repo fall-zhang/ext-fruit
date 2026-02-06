@@ -12,8 +12,9 @@
     // "tests/**/*.jsx",
   ],
   "exclude": [
-    "apps/**/*.mock.ts",
-    "apps/**/*.spec.ts",
+    "packages/**/*.mock.ts",
+    "packages/**/*.spec.ts",
+    "**/__mock__/**/*.spec.ts",
   ],
   "compilerOptions": {
     "noEmit": true,

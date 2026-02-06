@@ -8,6 +8,7 @@
     // Removing this would place the .d.ts files
     // next to the .js files
     // 类型必须明确使用 type 导入
+    "verbatimModuleSyntax": true,
     // Tells TypeScript to read JS files, as
     // normally they are ignored as source files
     "allowJs": false,
