@@ -5,9 +5,9 @@
 import { MachineDictItem, machineConfig } from '@P/saladict-core/src/components/MachineTrans/engine'
 
 import { Language } from '@P/open-trans/translator'
-// import { Subunion } from '@/typings/helpers'
-import { Subunion } from '@P/saladict-core/src/types/helpers'
-export type GoogleLanguage = Subunion<
+// import { SubUnion } from '@/typings/helpers'
+import { SubUnion } from '@P/saladict-core/src/types/helpers'
+export type GoogleLanguage = SubUnion<
   Language,
   'zh-CN' | 'zh-TW' | 'en' | 'ja' | 'ko' | 'fr' | 'de' | 'es' | 'ru' | 'nl'
 >

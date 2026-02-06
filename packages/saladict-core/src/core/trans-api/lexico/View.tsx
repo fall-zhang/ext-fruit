@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { LexicoResult, LexicoResultLex, LexicoResultRelated } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictLexico: FC<ViewPorps<LexicoResult>> = ({ result }) => {
+export const DictLexico: FC<ViewProps<LexicoResult>> = ({ result }) => {
   switch (result.type) {
     case 'lex':
       return renderLex(result)

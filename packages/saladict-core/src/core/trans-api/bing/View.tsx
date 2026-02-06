@@ -6,10 +6,10 @@ import {
   BingResultMachine,
   BingResultRelated
 } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictBing: FC<ViewPorps<BingResult>> = ({ result }) => {
+export const DictBing: FC<ViewProps<BingResult>> = ({ result }) => {
   switch (result.type) {
     case 'lex':
       return renderLex(result)

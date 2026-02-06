@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
 import { JukuuResult, JukuuPayload, JukuuLang } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
-import { useTranslate } from '@/_helpers/i18n'
+import { ViewProps } from '@/components/dictionaries/helpers'
+import { useTranslation } from 'react-i18next'
 import { StrElm } from '@/components/StrElm'
 
-export const DictJukuu: FC<ViewPorps<JukuuResult>> = props => {
+export const DictJukuu: FC<ViewProps<JukuuResult>> = props => {
   const { result, searchText } = props
-  const { t } = useTranslate('dicts')
+  const { t } = useTranslation('dicts')
   return (
     <>
       <select

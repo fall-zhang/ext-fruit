@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { EudicResult } from './engine'
 import Speaker from '@/components/Speaker'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 
-export const DictEudic: FC<ViewPorps<EudicResult>> = ({ result }) => (
+export const DictEudic: FC<ViewProps<EudicResult>> = ({ result }) => (
   <ul className="dictEudic-List">
     {result.map(item => (
       <li key={item.chs} className="dictEudic-Item">

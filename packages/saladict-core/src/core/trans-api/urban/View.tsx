@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 import Speaker from '@/components/Speaker'
 import { UrbanResult } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictUrban: FC<ViewPorps<UrbanResult>> = ({ result }) => (
+export const DictUrban: FC<ViewProps<UrbanResult>> = ({ result }) => (
   <ul className="dictUrban-List">
     {result.map(def => (
       <li key={def.meaning} className="dictUrban-Item">

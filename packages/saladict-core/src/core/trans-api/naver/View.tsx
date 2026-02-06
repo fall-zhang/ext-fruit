@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 import Speaker from '@/components/Speaker'
 import { NaverResult } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictNaver: FC<ViewPorps<NaverResult>> = props => {
+export const DictNaver: FC<ViewProps<NaverResult>> = props => {
   const ListMap = props.result.entry
 
   return (

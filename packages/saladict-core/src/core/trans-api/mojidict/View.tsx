@@ -1,12 +1,10 @@
-import React, { FC } from 'react'
-import { PromiseType } from 'utility-types'
-import Speaker from '@/components/Speaker'
-import EntryBox from '@/components/EntryBox'
-import { ViewPorps } from '@/components/dictionaries/helpers'
-import { message } from '@/_helpers/browser-api'
-import { MojidictResult, GetTTS } from './engine'
+import type { FC } from 'react'
+import { type MojidictResult, getTTS } from './engine'
+import Speaker from '@P/saladict-core/src/components/Speaker'
+import EntryBox from '@P/saladict-core/src/components/EntryBox'
+import type { ViewProps } from '../helpers'
 
-export const DictMojidict: FC<ViewPorps<MojidictResult>> = ({ result }) => (
+export const DictMojidict: FC<ViewProps<MojidictResult>> = ({ result }) => (
   <>
     {result.word && (
       <div>
@@ -15,18 +13,9 @@ export const DictMojidict: FC<ViewPorps<MojidictResult>> = ({ result }) => (
         <Speaker
           src={
             result.word.tts ||
-            (() =>
-              message.send<
-                'DICT_ENGINE_METHOD',
-                PromiseType<ReturnType<GetTTS>>
-              >({
-                type: 'DICT_ENGINE_METHOD',
-                payload: {
-                  id: 'mojidict',
-                  method: 'getTTS',
-                  args: [result.word?.tarId, 102]
-                }
-              }))
+            (() => {
+              return getTTS(result.word?.tarId || '', 102)
+            })
           }
         />
       </div>
@@ -50,17 +39,7 @@ export const DictMojidict: FC<ViewPorps<MojidictResult>> = ({ result }) => (
                             {example.title}
                             <Speaker
                               src={() =>
-                                message.send<
-                                  'DICT_ENGINE_METHOD',
-                                  PromiseType<ReturnType<GetTTS>>
-                                >({
-                                  type: 'DICT_ENGINE_METHOD',
-                                  payload: {
-                                    id: 'mojidict',
-                                    method: 'getTTS',
-                                    args: [example.objectId, 103]
-                                  }
-                                })
+                                getTTS(example.objectId, 103)
                               }
                             />
                           </p>

@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 import { WeblioejjeResult } from './engine'
 import EntryBox from '@/components/EntryBox'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictWeblioejje: FC<ViewPorps<WeblioejjeResult>> = ({ result }) => (
+export const DictWeblioejje: FC<ViewProps<WeblioejjeResult>> = ({ result }) => (
   <div>
     {result.map((entry, i) =>
       entry.title ? (

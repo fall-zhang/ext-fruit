@@ -6,10 +6,10 @@ import { MachineDictItem, machineConfig } from '@P/saladict-core/src/components/
 
 import { Language } from '@P/open-trans/translator'
 
-// import { Subunion } from '@/typings/helpers'
-import { Subunion } from '@P/saladict-core/src/types/helpers'
+// import { SubUnion } from '@/typings/helpers'
+import { SubUnion } from '@P/saladict-core/src/types/helpers'
 
-export type CaiyunLanguage = Subunion<Language, 'zh-CN' | 'en' | 'ja'>
+export type CaiyunLanguage = SubUnion<Language, 'zh-CN' | 'en' | 'ja'>
 
 export type CaiyunConfig = MachineDictItem<CaiyunLanguage>
 

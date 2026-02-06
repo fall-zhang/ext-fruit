@@ -1,14 +1,16 @@
-import { SearchFunction, GetSrcPageFunction } from '../helpers'
+import type { SearchFunction, GetSrcPageFunction } from '../helpers'
 import memoizeOne from 'memoize-one'
-import { Google } from '@opentranslate/google'
-import {
+import type {
   MachineTranslateResult,
-  MachineTranslatePayload,
+  MachineTranslatePayload
+} from '@/components/MachineTrans/engine'
+import {
   getMTArgs,
   machineResult
 } from '@/components/MachineTrans/engine'
-import { GoogleLanguage } from './config'
-import { Language } from '@opentranslate/languages'
+import type { GoogleLanguage } from './config'
+import { Google } from '@P/open-trans/service-google'
+import type { Language } from '@P/open-trans/languages'
 
 export const getTranslator = memoizeOne(() => new Google({ env: 'ext' }))
 
@@ -44,7 +46,7 @@ export const search: SearchFunction<
     const result = await translator.translate(text, sl, tl, {
       token: process.env.GOOGLE_TOKEN || '',
       concurrent: options.concurrent,
-      apiAsFallback: true
+      apiAsFallback: true,
     })
     return machineResult(
       {
@@ -54,12 +56,12 @@ export const search: SearchFunction<
           tl: result.to,
           slInitial: profile.dicts.all.google.options.slInitial,
           searchText: result.origin,
-          trans: result.trans
+          trans: result.trans,
         },
         audio: {
           py: result.trans.tts,
-          us: result.trans.tts
-        }
+          us: result.trans.tts,
+        },
       },
       translator.getSupportLanguages()
     )
@@ -72,14 +74,14 @@ export const search: SearchFunction<
           tl,
           slInitial: 'hide',
           searchText: { paragraphs: [''] },
-          trans: { paragraphs: [''] }
-        }
+          trans: { paragraphs: [''] },
+        },
       },
       translator.getSupportLanguages()
     )
   }
 }
 
-export async function getTTS(text: string, lang: Language): Promise<string> {
+export async function getTTS (text: string, lang: Language): Promise<string> {
   return (await getTranslator().textToSpeech(text, lang)) || ''
 }

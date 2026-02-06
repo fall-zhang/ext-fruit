@@ -18,7 +18,7 @@ const translators = translatorReq
     ).default
     const trans = new Trans({
       env: 'ext',
-      config: env[/service-([^/\\]+)/.exec(path)![1]]
+      config: env[/service-([^/\\]+)/.exec(path)![1]],
     })
     o[trans.name] = trans
     return o
@@ -26,11 +26,11 @@ const translators = translatorReq
 
 browser.runtime.onMessage.addListener(message => {
   switch (message.type) {
-  case 'TRANSLATE':
-    return translators[message.name].translate(
-      message.text,
-      message.from,
-      message.to
-    )
+    case 'TRANSLATE':
+      return translators[message.name].translate(
+        message.text,
+        message.from,
+        message.to
+      )
   }
 })

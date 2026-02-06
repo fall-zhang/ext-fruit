@@ -7,10 +7,10 @@ import {
   LongmanResultRelated,
   LongmanResultEntry
 } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictLongman: FC<ViewPorps<LongmanResult>> = ({ result }) =>
+export const DictLongman: FC<ViewProps<LongmanResult>> = ({ result }) =>
   result.type === 'lex'
     ? renderLex(result)
     : result.type === 'related'

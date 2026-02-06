@@ -2,11 +2,11 @@ import React, { FC, useState } from 'react'
 import Speaker from '@/components/Speaker'
 import StarRates from '@/components/StarRates'
 import { YoudaoResult } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import EntryBox from '@/components/EntryBox'
 import { StrElm } from '@/components/StrElm'
 
-export const DictYoudao: FC<ViewPorps<YoudaoResult>> = ({ result }) => {
+export const DictYoudao: FC<ViewProps<YoudaoResult>> = ({ result }) => {
   const [collinsEntry, setCollinsEntry] = useState<string | number>(0)
 
   if (result.type === 'related') {

@@ -1,21 +1,24 @@
-import React, { FC, useState, ReactNode, useEffect } from 'react'
-import {
+import type { FC, ReactNode } from 'react'
+import type React from 'react'
+import { useState, useEffect } from 'react'
+import type {
   WikipediaResult,
   WikipediaPayload,
-  fetchLangList,
   LangList
 } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
-import { message } from '@/_helpers/browser-api'
-import { useTranslate } from '@/_helpers/i18n'
-import { StrElm } from '@/components/StrElm'
+import {
+  fetchLangList
+} from './engine'
+import type { ViewProps } from '../helpers'
+import { useTranslation } from 'react-i18next'
+import { StrElm } from '@P/saladict-core/src/components/StrElm'
 
-export const DictWikipedia: FC<ViewPorps<WikipediaResult>> = ({
+export const DictWikipedia: FC<ViewProps<WikipediaResult>> = ({
   result,
-  searchText
+  searchText,
 }) => {
   const [langList, setLangList] = useState<LangList>()
-  const { t } = useTranslate('content')
+  const { t } = useTranslation('content')
 
   useEffect(() => {
     setLangList([])
@@ -26,8 +29,8 @@ export const DictWikipedia: FC<ViewPorps<WikipediaResult>> = ({
       searchText<WikipediaPayload>({
         id: 'wikipedia',
         payload: {
-          url: e.target.value
-        }
+          url: e.target.value,
+        },
       })
     }
   }
@@ -52,17 +55,7 @@ export const DictWikipedia: FC<ViewPorps<WikipediaResult>> = ({
         className="dictWikipedia-LangSelectorBtn"
         onClick={async () => {
           setLangList(
-            await message.send<
-              'DICT_ENGINE_METHOD',
-              ReturnType<typeof fetchLangList>
-            >({
-              type: 'DICT_ENGINE_METHOD',
-              payload: {
-                id: 'wikipedia',
-                method: 'fetchLangList',
-                args: [result.langSelector]
-              }
-            })
+            await fetchLangList(result.langSelector)
           )
         }}
       >
@@ -82,12 +75,13 @@ export const DictWikipedia: FC<ViewPorps<WikipediaResult>> = ({
   )
 }
 
-function handleEntryClick(e: React.MouseEvent<HTMLDivElement>) {
-  if (!e.target['classList']) {
+function handleEntryClick (e: React.MouseEvent<HTMLDivElement>) {
+  const targetDOM = e.target as HTMLElement
+  if (!targetDOM.classList) {
     return
   }
 
-  let $header = e.target as HTMLElement
+  let $header = targetDOM
   if (!$header.classList.contains('section-heading')) {
     $header = $header.parentElement as HTMLElement
     if (!$header || !$header.classList.contains('section-heading')) {

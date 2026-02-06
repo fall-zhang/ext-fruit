@@ -5,10 +5,10 @@ import {
   WebsterLearnerResultLex,
   WebsterLearnerResultRelated
 } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictWebsterLearner: FC<ViewPorps<WebsterLearnerResult>> = ({
+export const DictWebsterLearner: FC<ViewProps<WebsterLearnerResult>> = ({
   result
 }) => {
   switch (result.type) {

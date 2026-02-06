@@ -5,10 +5,10 @@
 import { MachineDictItem, machineConfig } from '@P/saladict-core/src/components/MachineTrans/engine'
 // import { Language } from '@opentranslate/translator'
 import { Language } from '@P/open-trans/languages'
-// import { Subunion } from '@/typings/helpers'
-import { Subunion } from '@P/saladict-core/src/types/helpers'
+// import { SubUnion } from '@/typings/helpers'
+import { SubUnion } from '@P/saladict-core/src/types/helpers'
 
-export type YoudaotransLanguage = Subunion<
+export type YoudaotransLanguage = SubUnion<
   Language,
   'zh-CN' | 'en' | 'pt' | 'es' | 'ja' | 'ko' | 'fr' | 'ru'
 >

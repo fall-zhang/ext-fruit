@@ -37,7 +37,7 @@ const langMap: [Language, string][] = [
   ['sl', 'slo'],
   ['sv', 'swe'],
   ['hu', 'hu'],
-  ['vi', 'vie']
+  ['vi', 'vie'],
 ]
 
 export interface AliyunConfig {
@@ -62,7 +62,7 @@ export class Aliyun extends Translator<AliyunConfig> {
       .reduce(
         (acc, key) => ({
           ...acc,
-          [key]: params[key]
+          [key]: params[key],
         }),
         {} as Record<string, string>
       )
@@ -79,7 +79,7 @@ export class Aliyun extends Translator<AliyunConfig> {
     const stringToSign = [
       method,
       this.percentEncode('/'),
-      this.percentEncode(canonicalizedQueryString)
+      this.percentEncode(canonicalizedQueryString),
     ].join('&')
 
     // 4. 计算签名
@@ -106,7 +106,7 @@ export class Aliyun extends Translator<AliyunConfig> {
     type AliyunTranslateError = {
       Code: '200' | string;
       Message: 'Invalid Sign' | string;
-    };
+    }
 
     type AliyunTranslateResult = {
       RequestId: string;
@@ -116,7 +116,7 @@ export class Aliyun extends Translator<AliyunConfig> {
         WordCount: string;
         Translated: string;
       };
-    };
+    }
 
     const { accessKeyId, accessKeySecret } = config
 
@@ -129,7 +129,7 @@ export class Aliyun extends Translator<AliyunConfig> {
       SignatureNonce: Date.now().toString(),
       Timestamp: new Date().toISOString(),
       SignatureMethod: 'HMAC-SHA1',
-      SignatureVersion: '1.0'
+      SignatureVersion: '1.0',
     }
 
     // 表单参数
@@ -138,7 +138,7 @@ export class Aliyun extends Translator<AliyunConfig> {
       Scene: 'general',
       SourceLanguage: Aliyun.langMap.get(from) || '',
       TargetLanguage: Aliyun.langMap.get(to) || '',
-      SourceText: text
+      SourceText: text,
     }
 
     // 计算签名
@@ -153,32 +153,32 @@ export class Aliyun extends Translator<AliyunConfig> {
       url: config.endpoint || this.endpoint,
       params: {
         ...urlParams,
-        Signature: signature
+        Signature: signature,
       },
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      data: new URLSearchParams(formParams).toString()
+      data: new URLSearchParams(formParams).toString(),
     }).catch(error => {
       console.error(new Error('[Aliyun service]' + error))
       if (error && error.response && error.response.status) {
         switch (error.response.status) {
-        case 400: // AccessKeyId is mandatory for this action.
-        case 404: // Specified access key is not found.
-          throw new TranslateError(
-            'AUTH_ERROR',
-            (error.response.data as AliyunTranslateError)?.Message
-          )
-        case 113: // never happen now , need to check
-          throw new TranslateError(
-            'USEAGE_LIMIT',
-            (error.response.data as AliyunTranslateError)?.Message
-          )
-        default:
-          throw new TranslateError(
-            'UNKNOWN',
-            (error.response.data as AliyunTranslateError)?.Message
-          )
+          case 400: // AccessKeyId is mandatory for this action.
+          case 404: // Specified access key is not found.
+            throw new TranslateError(
+              'AUTH_ERROR',
+              (error.response.data as AliyunTranslateError)?.Message
+            )
+          case 113: // never happen now , need to check
+            throw new TranslateError(
+              'USEAGE_LIMIT',
+              (error.response.data as AliyunTranslateError)?.Message
+            )
+          default:
+            throw new TranslateError(
+              'UNKNOWN',
+              (error.response.data as AliyunTranslateError)?.Message
+            )
         }
       }
     })
@@ -192,11 +192,11 @@ export class Aliyun extends Translator<AliyunConfig> {
       from,
       to,
       origin: {
-        paragraphs: text.split(/\n+/)
+        paragraphs: text.split(/\n+/),
       },
       trans: {
-        paragraphs: [res.data.Data.Translated]
-      }
+        paragraphs: [res.data.Data.Translated],
+      },
     }
   }
 

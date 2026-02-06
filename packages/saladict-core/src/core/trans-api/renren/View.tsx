@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react'
 import Speaker from '@/components/Speaker'
 import { RenrenResult, RenrenSlide } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { message } from '@/_helpers/browser-api'
 import { StrElm } from '@/components/StrElm'
 
@@ -40,7 +40,7 @@ const Slide: FC<RenrenSlideProps> = ({ slide }) => {
   )
 }
 
-export const DictRenren: FC<ViewPorps<RenrenResult>> = ({ result }) => {
+export const DictRenren: FC<ViewProps<RenrenResult>> = ({ result }) => {
   const [slide, setSlide] = useState(0)
   const [details, setDetails] = useState<{ [k: string]: RenrenSlide[] }>({})
 

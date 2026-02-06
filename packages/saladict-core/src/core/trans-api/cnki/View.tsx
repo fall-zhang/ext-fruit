@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 import { CNKIResult } from './engine'
 import EntryBox from '@/components/EntryBox'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictCambridge: FC<ViewPorps<CNKIResult>> = ({ result }) => (
+export const DictCambridge: FC<ViewProps<CNKIResult>> = ({ result }) => (
   <div className="dictCNKI">
     {result.dict.length > 0 && (
       <EntryBox title="英汉汉英词典">

@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { EtymonlineResult } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictEtymonline: FC<ViewPorps<EtymonlineResult>> = ({ result }) => (
+export const DictEtymonline: FC<ViewProps<EtymonlineResult>> = ({ result }) => (
   <ul className="dictEtymonline-List">
     {result.map(item => (
       <li key={item.title} className="dictEtymonline-Item">

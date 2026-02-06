@@ -1,10 +1,13 @@
-import {
+import type {
   SearchFunction,
-  GetSrcPageFunction,
+  GetSrcPageFunction
+} from '../helpers'
+import {
   handleNoResult,
   handleNetWorkError
 } from '../helpers'
-import axios, { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
+import axios from 'axios'
 
 export const getSrcPage: GetSrcPageFunction = async text => {
   const suggests = await getSuggests(text).catch(() => null)
@@ -118,14 +121,14 @@ export const search: SearchFunction<MojidictResult> = async (
   }
 
   const {
-    data: { result: wordResult }
+    data: { result: wordResult },
   }: AxiosResponse<{ result: FetchWordResult }> = await axios({
     method: 'post',
     url: 'https://api.mojidict.com/parse/functions/fetchWord_v2',
     headers: {
-      'content-type': 'text/plain'
+      'content-type': 'text/plain',
     },
-    data: requestPayload({ wordId: tarId })
+    data: requestPayload({ wordId: tarId }),
   })
 
   const result: MojidictResult = {}
@@ -135,7 +138,7 @@ export const search: SearchFunction<MojidictResult> = async (
       result.word = {
         tarId,
         spell: wordResult.word.spell,
-        pron: `${wordResult.word.pron || ''} ${wordResult.word.accent || ''}`
+        pron: `${wordResult.word.pron || ''} ${wordResult.word.accent || ''}`,
       }
     }
 
@@ -150,8 +153,8 @@ export const search: SearchFunction<MojidictResult> = async (
             title: subdetail.title,
             examples: wordResult?.examples?.filter(
               example => example.subdetailsId === subdetail.objectId
-            )
-          }))
+            ),
+          })),
       }))
     }
 
@@ -159,7 +162,7 @@ export const search: SearchFunction<MojidictResult> = async (
       result.releated = suggests.words
         .map(word => ({
           title: `${word.spell} | ${word.pron || ''} ${word.accent || ''}`,
-          excerpt: word.excerpt
+          excerpt: word.excerpt,
         }))
         .slice(1)
     }
@@ -175,21 +178,21 @@ export const search: SearchFunction<MojidictResult> = async (
   return handleNoResult()
 }
 
-async function getSuggests(text: string): Promise<SuggestsResult> {
+async function getSuggests (text: string): Promise<SuggestsResult> {
   try {
     const {
-      data: { result }
+      data: { result },
     }: AxiosResponse<{ result?: SuggestsResult }> = await axios({
       method: 'post',
       url: 'https://api.mojidict.com/parse/functions/search_v3',
       headers: {
-        'content-type': 'text/plain'
+        'content-type': 'text/plain',
       },
       data: requestPayload({
         langEnv: 'zh-CN_ja',
         needWords: true,
-        searchText: text
-      })
+        searchText: text,
+      }),
     })
 
     return result || handleNoResult()
@@ -199,10 +202,11 @@ async function getSuggests(text: string): Promise<SuggestsResult> {
 }
 
 /**
+ * 文字转语音生成
  * @param tarId word id
  * @param tarType 102 word, 103 sentence
  */
-export async function getTTS(
+export async function getTTS (
   tarId: string,
   tarType: 102 | 103
 ): Promise<string> {
@@ -211,9 +215,9 @@ export async function getTTS(
       method: 'post',
       url: 'https://api.mojidict.com/parse/functions/fetchTts_v2',
       headers: {
-        'content-type': 'text/plain'
+        'content-type': 'text/plain',
       },
-      data: requestPayload({ tarId, tarType })
+      data: requestPayload({ tarId, tarType }),
     })
 
     return data.result?.result?.url || ''
@@ -227,20 +231,20 @@ export async function getTTS(
 
 export type GetTTS = typeof getTTS
 
-function requestPayload(data: object) {
+function requestPayload (data: object) {
   return JSON.stringify({
     _ApplicationId: process.env.MOJI_ID,
     _ClientVersion: 'js2.12.0',
     _InstallationId: getInstallationId(),
-    ...data
+    ...data,
   })
 }
 
-function getInstallationId() {
+function getInstallationId () {
   return s() + s() + '-' + s() + '-' + s() + '-' + s() + '-' + s() + s() + s()
 }
 
-function s() {
+function s () {
   return Math.floor(65536 * (1 + Math.random()))
     .toString(16)
     .substring(1)

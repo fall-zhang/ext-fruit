@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { GoogleDictResult } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictGoogleDict: FC<ViewPorps<GoogleDictResult>> = ({ result }) => (
+export const DictGoogleDict: FC<ViewProps<GoogleDictResult>> = ({ result }) => (
   <div>
     {result.styles.map((style, i) => (
       <style key={i}>{style}</style>

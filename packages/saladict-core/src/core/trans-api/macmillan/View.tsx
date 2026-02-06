@@ -6,10 +6,10 @@ import {
   MacmillanResultLex,
   MacmillanResultRelated
 } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictMacmillan: FC<ViewPorps<MacmillanResult>> = ({
+export const DictMacmillan: FC<ViewProps<MacmillanResult>> = ({
   result,
   searchText
 }) => {
@@ -27,7 +27,7 @@ export default DictMacmillan
 
 function renderSelect(
   result: MacmillanResultLex,
-  searchText: ViewPorps<MacmillanResultLex>['searchText']
+  searchText: ViewProps<MacmillanResultLex>['searchText']
 ) {
   return result.relatedEntries.length > 0 ? (
     <select

@@ -1,14 +1,11 @@
 import DOMPurify from 'dompurify'
-import { useEffect, useRef } from 'react'
-import { useSubscription, useObservableCallback } from 'observable-hooks'
-import { debounceTime, map, tap } from 'rxjs/operators'
 import { Observable } from 'rxjs'
 import AxiosMockAdapter from 'axios-mock-adapter'
 import { DictID, AppConfig } from '@/app-config'
 import { Profile } from '@/app-config/profiles'
-import { Word } from '@P/saladict-core/src/dict-utils/new-word'
+import { Word } from '@P/saladict-core/src/types/word'
 import { isTagName } from '@/_helpers/dom'
-import { isInternalPage } from '@/_helpers/saladict'
+import { isInternalPage } from '../saladict-state'
 
 /** Fetch and parse dictionary search result */
 export interface SearchFunction<Result, Payload = {}> {
@@ -67,7 +64,7 @@ export interface MockRequest {
 
 export type HTMLString = string
 
-export interface ViewPorps<T> {
+export interface ViewProps<T> {
   result: T
   searchText: <P = { [index: string]: any }>(arg?: {
     id?: DictID
@@ -164,7 +161,7 @@ export interface GetHTMLConfig {
 
 const defaultDOMPurifyConfig: DOMPurify.Config = {
   FORBID_TAGS: ['style'],
-  FORBID_ATTR: ['style']
+  FORBID_ATTR: ['style'],
 }
 
 export function getHTML (
@@ -174,7 +171,7 @@ export function getHTML (
     selector,
     transform,
     host,
-    config = defaultDOMPurifyConfig
+    config = defaultDOMPurifyConfig,
   }: GetHTMLConfig = {}
 ): string {
   const node = selector
@@ -211,7 +208,7 @@ export function getHTML (
 
   const fragment = DOMPurify.sanitize(node, {
     ...config,
-    RETURN_DOM_FRAGMENT: true
+    RETURN_DOM_FRAGMENT: true,
   })
 
   const content = fragment.firstChild ? fragment.firstChild[mode] : ''
@@ -280,7 +277,8 @@ export function externalLink ($a: HTMLElement) {
   $a.setAttribute('rel', 'nofollow noopener noreferrer')
 }
 
-export function getFullLink (host: string, el: Element, attr: string): string {
+export function getFullLink (hostStr: string, el: Element, attr: string): string {
+  let host = hostStr
   if (host.endsWith('/')) {
     host = host.slice(0, -1)
   }
@@ -305,43 +303,4 @@ export function getFullLink (host: string, el: Element, attr: string): string {
   }
 
   return host + '/' + link
-}
-
-/**
- * Horizontally scroll a list of items
- * React event listener doesn't support passive arguemnt.
- */
-export const useHorizontalScroll = <T extends HTMLElement>() => {
-  const [onWheel, onWHeel$] = useObservableCallback(_useHorizontalScrollOnWheel)
-  useSubscription(onWHeel$)
-
-  const tabsRef = useRef<T>(null)
-  useEffect(() => {
-    if (tabsRef.current) {
-      // take the node out for cleaning up
-      const node = tabsRef.current
-      node.addEventListener('wheel', onWheel, { passive: false })
-      return () => {
-        node.removeEventListener('wheel', onWheel)
-      }
-    }
-  }, [tabsRef.current])
-
-  return tabsRef
-}
-function _useHorizontalScrollOnWheel (event$: Observable<WheelEvent>) {
-  return event$.pipe(
-    map(e => {
-      e.stopPropagation()
-      e.preventDefault()
-      return [e.currentTarget, e.deltaY] as [HTMLElement, number]
-    }),
-    debounceTime(80),
-    tap(([node, deltaY]) => {
-      node.scrollBy({
-        left: deltaY > 0 ? 250 : -250,
-        behavior: 'smooth'
-      })
-    })
-  )
 }

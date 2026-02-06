@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { JikipediaResult } from './engine'
 import { StrElm } from '@/components/StrElm'
 
-export const Jikipedia: FC<ViewPorps<JikipediaResult>> = ({ result }) => (
+export const Jikipedia: FC<ViewProps<JikipediaResult>> = ({ result }) => (
   <ul className="dictJikipedia-List">
     {result.map(item => (
       <li key={item.title + item.url} className="dictJikipedia-Item">

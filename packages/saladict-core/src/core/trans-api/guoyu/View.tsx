@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { GuoYuResult } from './engine'
 import Speaker from '@/components/Speaker'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 
-export const DictGuoyu: FC<ViewPorps<GuoYuResult>> = ({ result }) => (
+export const DictGuoyu: FC<ViewProps<GuoYuResult>> = ({ result }) => (
   <>
     {result.h &&
       result.h.map(h => (

@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 import { HjdictResult, HjdictResultLex, HjdictResultRelated } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
-import { useTranslate } from '@/_helpers/i18n'
+import { ViewProps } from '@/components/dictionaries/helpers'
+import { useTranslation } from 'react-i18next'
 import { StrElm } from '@/components/StrElm'
 
-export const DictHjDict: FC<ViewPorps<HjdictResult>> = props =>
+export const DictHjDict: FC<ViewProps<HjdictResult>> = props =>
   props.result.type === 'lex' ? (
     <Lex {...props} />
   ) : props.result.type === 'related' ? (
@@ -13,7 +13,7 @@ export const DictHjDict: FC<ViewPorps<HjdictResult>> = props =>
 
 export default DictHjDict
 
-function Lex(props: ViewPorps<HjdictResult>) {
+function Lex(props: ViewProps<HjdictResult>) {
   const { header, entries } = props.result as HjdictResultLex
   return (
     <div className="dictHjdict-Entry" onClick={handleClick}>
@@ -28,7 +28,7 @@ function Lex(props: ViewPorps<HjdictResult>) {
   )
 }
 
-function Related(props: ViewPorps<HjdictResult>) {
+function Related(props: ViewProps<HjdictResult>) {
   const { content } = props.result as HjdictResultRelated
   return (
     <div>
@@ -40,9 +40,9 @@ function Related(props: ViewPorps<HjdictResult>) {
 
 const langSelectList = ['w', 'jp/cj', 'jp/jc', 'kr', 'fr', 'de', 'es']
 
-function LangSelect(props: ViewPorps<HjdictResult>) {
+function LangSelect(props: ViewProps<HjdictResult>) {
   const { langCode } = props.result
-  const { t } = useTranslate('dicts')
+  const { t } = useTranslation('dicts')
 
   return (
     <select

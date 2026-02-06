@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 import Speaker from '@/components/Speaker'
 import { ShanbayResult } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictShanbay: FC<ViewPorps<ShanbayResult>> = ({ result }) => (
+export const DictShanbay: FC<ViewProps<ShanbayResult>> = ({ result }) => (
   <>
     {result.title && (
       <div className="dictShanbay-HeaderContainer">

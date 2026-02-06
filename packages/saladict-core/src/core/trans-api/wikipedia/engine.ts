@@ -1,17 +1,19 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
 import { isContainJapanese, isContainChinese } from '@/_helpers/lang-check'
+import type {
+  SearchFunction,
+  HTMLString,
+  GetSrcPageFunction,
+  DictSearchResult
+} from '../helpers'
 import {
   handleNoResult,
   handleNetWorkError,
   getOuterHTML,
-  SearchFunction,
-  HTMLString,
-  GetSrcPageFunction,
   getText,
-  DictSearchResult,
   getFullLink
 } from '../helpers'
-import { AllDicts } from '@/app-config'
+import type { AllDicts } from '@/app-config'
+import { fetchDirtyDOM } from '@P/saladict-core/src/utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
   const { lang } = profile.dicts.all.wikipedia.options
@@ -71,16 +73,16 @@ export const search: SearchFunction<WikipediaResult, WikipediaPayload> = (
     .then(doc => handleDOM(doc, subdomain))
 }
 
-export function fetchLangList(langSelector: string) {
+export function fetchLangList (langSelector: string) {
   return fetchDirtyDOM(langSelector)
     .then(getLangList)
-    .catch(e => {
-      console.error('dict wikipedia: fetch langlist failed', e)
+    .catch((e:unknown) => {
+      console.error('Dict wikipedia: fetch langList failed', e)
       return [] as LangList
     })
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document,
   subdomain: string
 ): WikipediaSearchResult | Promise<WikipediaSearchResult> {
@@ -89,8 +91,8 @@ function handleDOM(
     $bs.some($b => {
       const textContent = $b.textContent
       return (
-        textContent === `The article that you're looking for doesn't exist.` ||
-        textContent === `维基百科目前还没有与上述标题相同的条目。`
+        textContent === 'The article that you\'re looking for doesn\'t exist.' ||
+        textContent === '维基百科目前还没有与上述标题相同的条目。'
       )
     })
   ) {
@@ -104,7 +106,7 @@ function handleDOM(
 
   doc.querySelectorAll('#bodyContent .section-heading').forEach($header => {
     $header.classList.add('collapsible-heading')
-    $header.setAttribute("role", "button")
+    $header.setAttribute('role', 'button')
     const $icon = $header.querySelector('.mw-ui-icon')
     if ($icon) {
       $icon.classList.add('mw-ui-icon-mf-arrow')
@@ -114,7 +116,7 @@ function handleDOM(
 
   const content = getOuterHTML(`https://${subdomain}.wikipedia.org/`, doc, {
     selector: '#bodyContent',
-    config: {}
+    config: {},
   })
   if (!content) {
     return handleNoResult<WikipediaSearchResult>()
@@ -136,7 +138,7 @@ function handleDOM(
   return { result: { title, content, langSelector } }
 }
 
-function getSubdomain(
+function getSubdomain (
   text: string,
   lang: AllDicts['wikipedia']['options']['lang']
 ): string {
@@ -151,7 +153,7 @@ function getSubdomain(
   return lang
 }
 
-function getLangList(doc: Document): LangList {
+function getLangList (doc: Document): LangList {
   return [...doc.querySelectorAll('#mw-content-text li a')]
     .map<LangListItem | undefined>($a => {
       const url = $a.getAttribute('href')

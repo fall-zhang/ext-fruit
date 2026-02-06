@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import { CambridgeResult } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
-export const DictCambridge: FC<ViewPorps<CambridgeResult>> = props => (
+export const DictCambridge: FC<ViewProps<CambridgeResult>> = props => (
   <>
     {props.result.map(entry => (
       <section

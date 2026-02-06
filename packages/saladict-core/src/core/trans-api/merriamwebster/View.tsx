@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 import Speaker from '@/components/Speaker'
 import { MerriamWebsterResultV2 } from './engine'
-import { ViewPorps } from '@/components/dictionaries/helpers'
+import { ViewProps } from '@/components/dictionaries/helpers'
 
-export const DictMerriamWebster: FC<ViewPorps<MerriamWebsterResultV2>> = ({
+export const DictMerriamWebster: FC<ViewProps<MerriamWebsterResultV2>> = ({
   result
 }) => (
   // <ul className="mw-list">
