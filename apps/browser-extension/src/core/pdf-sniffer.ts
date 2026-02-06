@@ -4,7 +4,7 @@
 
 import { AppConfig } from '@/app-config'
 import { addConfigListener } from '@/_helpers/config-manager'
-import { openUrl } from '@/_helpers/browser-api'
+import { openUrl } from '../utils/browser-api'
 
 export function init (config: AppConfig) {
   if (browser.webRequest.onBeforeRequest.hasListener(otherPdfListener)) {
@@ -78,9 +78,9 @@ function startListening () {
           'ftp://*/*.pdf',
           'ftp://*/*.PDF',
           'file://*/*.pdf',
-          'file://*/*.PDF'
+          'file://*/*.PDF',
         ],
-        types: ['main_frame', 'sub_frame']
+        types: ['main_frame', 'sub_frame'],
       },
       ['blocking']
     )
@@ -91,7 +91,7 @@ function startListening () {
       httpPdfListener,
       {
         urls: ['https://*/*', 'https://*/*', 'http://*/*', 'http://*/*'],
-        types: ['main_frame', 'sub_frame']
+        types: ['main_frame', 'sub_frame'],
       },
       ['blocking', 'responseHeaders']
     )
@@ -105,7 +105,7 @@ function stopListening () {
 
 function otherPdfListener ({
   tabId,
-  url
+  url,
 }: Parameters<
   Parameters<typeof browser.webRequest.onBeforeRequest.removeListener>[0]
 >[0]) {
@@ -133,7 +133,7 @@ function otherPdfListener ({
 function httpPdfListener ({
   tabId,
   responseHeaders,
-  url
+  url,
 }: Parameters<
   Parameters<typeof browser.webRequest.onHeadersReceived.removeListener>[0]
 >[0]) {

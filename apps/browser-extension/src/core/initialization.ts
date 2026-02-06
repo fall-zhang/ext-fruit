@@ -1,5 +1,4 @@
 import mapValues from 'lodash/mapValues'
-import { message, storage, openUrl } from '@/_helpers/browser-api'
 import { isExtTainted } from '@/_helpers/integrity'
 import { checkUpdate } from '@/_helpers/check-update'
 import { updateConfig, initConfig } from '@/_helpers/config-manager'
@@ -41,7 +40,7 @@ function onCommand (command: string) {
     case 'toggle-active':
       updateConfig({
         ...window.appConfig,
-        active: !window.appConfig.active
+        active: !window.appConfig.active,
       })
       break
     case 'toggle-instant':
@@ -51,7 +50,7 @@ function onCommand (command: string) {
         }
         message
           .send<'QUERY_PIN_STATE', boolean>(tabs[0].id, {
-            type: 'QUERY_PIN_STATE'
+            type: 'QUERY_PIN_STATE',
           })
           .then(isPinned => {
             const config = window.appConfig
@@ -63,16 +62,16 @@ function onCommand (command: string) {
                 ...config.mode,
                 instant: {
                   ...config.mode.instant,
-                  enable: !enable
-                }
+                  enable: !enable,
+                },
               },
               pinMode: {
                 ...config.pinMode,
                 instant: {
                   ...config.pinMode.instant,
-                  enable: !enable
-                }
-              }
+                  enable: !enable,
+                },
+              },
             })
           })
       })
@@ -85,7 +84,7 @@ function onCommand (command: string) {
       reportEvent({
         category: 'Page_Translate',
         action: 'Open_Google',
-        label: 'From_Browser_Shortcut'
+        label: 'From_Browser_Shortcut',
       })
       break
     case 'open-youdao':
@@ -93,7 +92,7 @@ function onCommand (command: string) {
       reportEvent({
         category: 'Page_Translate',
         action: 'Open_Youdao',
-        label: 'From_Browser_Shortcut'
+        label: 'From_Browser_Shortcut',
       })
       break
     case 'open-caiyun':
@@ -101,7 +100,7 @@ function onCommand (command: string) {
       reportEvent({
         category: 'Page_Translate',
         action: 'Open_Caiyun',
-        label: 'From_Browser_Shortcut'
+        label: 'From_Browser_Shortcut',
       })
       break
     case 'open-pdf':
@@ -109,7 +108,7 @@ function onCommand (command: string) {
       reportEvent({
         category: 'PDF_Viewer',
         action: 'Open_PDF_Viewer',
-        label: 'From_Browser_Shortcut'
+        label: 'From_Browser_Shortcut',
       })
       break
     case 'search-clipboard':
@@ -121,7 +120,7 @@ function onCommand (command: string) {
       message
         .send<'SWITCH_HISTORY', boolean>({
           type: 'SWITCH_HISTORY',
-          payload: command === 'next-history' ? 'next' : 'prev'
+          payload: command === 'next-history' ? 'next' : 'prev',
         })
         .then(received => {
           if (received) return // browser action panel is opened
@@ -134,7 +133,7 @@ function onCommand (command: string) {
               }
               return message.send<'SWITCH_HISTORY', boolean>(tabs[0].id, {
                 type: 'SWITCH_HISTORY',
-                payload: command === 'next-history' ? 'next' : 'prev'
+                payload: command === 'next-history' ? 'next' : 'prev',
               })
             })
         })
@@ -180,7 +179,7 @@ function onCommand (command: string) {
 
 async function onInstalled ({
   reason,
-  previousVersion
+  previousVersion,
 }: {
   reason: string
   previousVersion?: string
@@ -227,7 +226,7 @@ async function onInstalled ({
                 .map((line, i) => `${i + 1}. ${line}`)
                 .join('\n'),
               priority: 2,
-              eventTime: Date.now() + 5000
+              eventTime: Date.now() + 5000,
             } as any
 
             if (!isFirefox) {
@@ -277,11 +276,11 @@ function onStartup (): void {
                 title: getText('%E6%B2%99%E6%8B%89%E6%9F%A5%E8%AF%8D'),
                 message: `${getText('%E5%8F%AF%E6%9B%B4%E6%96%B0%E8%87%B3')}【${
                   data.version
-                }】`
+                }】`,
               }
               if (!isFirefox) {
                 options.buttons = [
-                  { title: getText('%E6%9F%A5%E7%9C%8B%E6%9B%B4%E6%96%B0') }
+                  { title: getText('%E6%9F%A5%E7%9C%8B%E6%9B%B4%E6%96%B0') },
                 ]
               }
               if (browser.notifications) {
@@ -311,15 +310,15 @@ function onStartup (): void {
               'C%E8%AF%B7%E5%9C%A8%E5%AE%98%E6%96%B9%E5%BB%BA%' +
               'E8%AE%AE%E7%9A%84%E5%B9%B3%E5%8F%B0%E5%AE%89%E8' +
               '%A3%85%E3%80%82'
-          )
+          ),
         }
         if (!isFirefox) {
           options.buttons = [
             {
               title: getText(
                 '%E6%9F%A5%E7%9C%8B%E5%8F%AF%E9%9D%A0%E7%9A%84%E5%B9%B3%E5%8F%B0'
-              )
-            }
+              ),
+            },
           ]
         }
         if (browser.notifications) {
@@ -376,7 +375,7 @@ async function searchTextBox () {
 
   const tabs = await browser.tabs.query({
     active: true,
-    currentWindow: true
+    currentWindow: true,
   })
   if (tabs.length <= 0 || tabs[0].id == null) {
     return
@@ -388,7 +387,7 @@ async function addNotebook () {
   if (
     await message.send<'ADD_NOTEBOOK'>({
       type: 'ADD_NOTEBOOK',
-      payload: { popup: true }
+      payload: { popup: true },
     })
   ) {
     return // popup page received
@@ -396,7 +395,7 @@ async function addNotebook () {
 
   const tabs = await browser.tabs.query({
     active: true,
-    currentWindow: true
+    currentWindow: true,
   })
   if (tabs.length <= 0 || tabs[0].id == null) {
     return

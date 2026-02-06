@@ -1,5 +1,5 @@
 import { message, storage } from '@/_helpers/browser-api'
-import { Word } from '@/_helpers/record-manager'
+import { Word } from '@P/saladict-core/src/dict-utils/new-word'
 import { isFirefox } from '@/_helpers/saladict'
 import { getTitlebarOffset } from '@/_helpers/titlebar-offset'
 

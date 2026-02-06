@@ -22,10 +22,10 @@ export default {
           type: 'content_scripts',
           manifest: {
             css: ['assets/content.css'],
-            matches: ['<all_urls>']
+            matches: ['<all_urls>'],
           },
-          setup: 'content/__fake__/env.ts'
-        }
+          setup: 'content/__fake__/env.ts',
+        },
       },
 
       selection: {
@@ -35,9 +35,9 @@ export default {
           manifest: {
             match_about_blank: true,
             all_frames: true,
-            matches: ['<all_urls>']
-          }
-        }
+            matches: ['<all_urls>'],
+          },
+        },
       },
 
       popup: {
@@ -51,11 +51,11 @@ export default {
               24: 'assets/icon-24.png',
               38: 'assets/icon-38.png',
               48: 'assets/icon-48.png',
-              128: 'assets/icon-128.png'
-            }
+              128: 'assets/icon-128.png',
+            },
           },
-          setup: 'popup/__fake__/env.ts'
-        }
+          setup: 'popup/__fake__/env.ts',
+        },
       },
 
       options: {
@@ -63,45 +63,45 @@ export default {
         webext: {
           type: 'options_ui',
           manifest: {
-            open_in_tab: true
+            open_in_tab: true,
           },
-          setup: 'options/__fake__/env.ts'
-        }
+          setup: 'options/__fake__/env.ts',
+        },
       },
 
       background: {
         entry: 'background',
         webext: {
           type: 'background',
-          setup: 'background/__fake__/env.ts'
-        }
+          setup: 'background/__fake__/env.ts',
+        },
       },
 
       notebook: {
-        entry: 'notebook'
+        entry: 'notebook',
       },
 
       history: {
-        entry: 'history'
+        entry: 'history',
       },
 
       'quick-search': {
-        entry: 'quick-search'
+        entry: 'quick-search',
       },
 
       'word-editor': {
-        entry: 'word-editor'
+        entry: 'word-editor',
       },
 
       'audio-control': {
-        entry: 'audio-control'
-      }
-    }
+        entry: 'audio-control',
+      },
+    },
   },
   use: [
     react({
       html: {
-        title: 'Saladict'
+        title: 'Saladict',
       },
       image: false,
       style: {
@@ -114,13 +114,13 @@ export default {
           {
             loader: 'postcss-loader',
             options: {
-              plugins: [require('autoprefixer')]
+              plugins: [require('autoprefixer')],
             },
-            useId: 'postcss'
+            useId: 'postcss',
           },
           {
             loader: 'sass-loader',
-            useId: 'scss'
+            useId: 'scss',
           },
           {
             loader: 'sass-resources-loader',
@@ -133,11 +133,11 @@ export default {
                   .readdirSync(path.join(__dirname, 'src/_sass_shared/_global/'))
                   .map(filename =>
                     path.join(__dirname, 'src/_sass_shared/_global/', filename)
-                  )
-              ]
-            }
-          }
-        ]
+                  ),
+              ],
+            },
+          },
+        ],
       },
       babel: {
         presets: [
@@ -145,23 +145,23 @@ export default {
             '@babel/preset-env',
             {
               /* remove targets set by neutrino web preset preferring browserslistrc */
-            }
+            },
           ],
           [
             '@babel/preset-typescript',
             {
               isTSX: true,
-              allExtensions: true
-            }
-          ]
+              allExtensions: true,
+            },
+          ],
         ],
         plugins: [
           [
             'import',
             {
-              libraryName: 'antd'
+              libraryName: 'antd',
             },
-            'antd'
+            'antd',
           ],
           [
             'import',
@@ -169,12 +169,12 @@ export default {
               libraryName: '@ant-design/icons',
               libraryDirectory: '',
               camel2DashComponentName: false,
-              style: false
+              style: false,
             },
-            '@ant-design/icons'
-          ]
-        ]
-      }
+            '@ant-design/icons',
+          ],
+        ],
+      },
     }),
     copy({
       patterns: [
@@ -183,22 +183,22 @@ export default {
           context: 'src/_locales/manifest',
           from: '**/*',
           to: '_locales/',
-          toType: 'dir'
+          toType: 'dir',
         },
         {
           context: 'node_modules/antd/dist/',
           from: '+(antd|antd.dark).min.css',
           to: 'assets/',
-          toType: 'dir'
+          toType: 'dir',
         },
         // caiyunapp
         {
           context: 'node_modules/trsjs/build/sala',
           from: 'trs.js',
           to: 'assets/',
-          toType: 'dir'
-        }
-      ]
+          toType: 'dir',
+        },
+      ],
     }),
     neutrino => {
       // images
@@ -214,7 +214,7 @@ export default {
           // remove `default` when `require` image
           // due to legacy code
           esModule: false,
-          generator: content => svgToMiniDataURI(content.toString())
+          generator: content => svgToMiniDataURI(content.toString()),
         })
         .end()
         .end()
@@ -239,7 +239,7 @@ export default {
             return 'assets/[name].[contenthash:8].[ext]'
           },
           limit: 0,
-          esModule: false
+          esModule: false,
         })
 
       // avoid collision
@@ -260,7 +260,7 @@ export default {
         .after('css')
         .loader('clean-css-loader')
         .options({
-          level: 1
+          level: 1,
         })
         .end()
       // copy loaders from normal to shadow
@@ -307,7 +307,7 @@ export default {
           'process.env': JSON.stringify(Object.assign(
             { DEBUG: !!argv.debug },
             dotenv.config().parsed
-          ))
+          )),
         }])
 
 
@@ -325,34 +325,34 @@ export default {
                   test: /[\\/]node_modules[\\/](react|react-dom|i18next)[\\/]/,
                   name: 'view-vendor',
                   chunks: 'all',
-                  priority: 100
+                  priority: 100,
                 },
                 franc: {
                   test: /[\\/]node_modules[\\/]franc/,
                   name: 'franc',
                   chunks: 'all',
-                  priority: 100
+                  priority: 100,
                 },
                 dexie: {
                   test: /[\\/]node_modules[\\/]dexie/,
                   name: 'dexie',
                   chunks: 'all',
-                  priority: 100
+                  priority: 100,
                 },
                 wordpage: {
                   test: (module, chunks) => module.resource &&
-                      module.resource.includes(`${path.sep}src${path.sep}`) &&
-                      !module.resource.includes(`${path.sep}node_modules${path.sep}`),
+                    module.resource.includes(`${path.sep}src${path.sep}`) &&
+                    !module.resource.includes(`${path.sep}node_modules${path.sep}`),
                   name: 'wordpage',
-                  chunks: ({ name }) => /^(notebook|history)$/.test(name)
+                  chunks: ({ name }) => /^(notebook|history)$/.test(name),
                 },
                 antd: {
                   test: /[\\/]node_modules[\\/]/,
                   name: 'antd',
-                  chunks: ({ name }) => /^(options|notebook|history)$/.test(name)
-                }
-              }
-            }
+                  chunks: ({ name }) => /^(options|notebook|history)$/.test(name),
+                },
+              },
+            },
           })
       }
 
@@ -375,23 +375,23 @@ export default {
       testRegex: ['test/specs/.*\\.spec\\.(ts|tsx|js|jsx)'],
       setupFilesAfterEnv: ['<rootDir>/config/jest/setupTests.js'],
       moduleNameMapper: {
-        '^@/(.*)$': '<rootDir>/src/$1'
+        '^@/(.*)$': '<rootDir>/src/$1',
       },
       transform: {
         '\\.(mjs|jsx|js|ts|tsx)$': require.resolve(
           '@neutrinojs/jest/src/transformer'
-        )
+        ),
       },
-      testTimeout: 20000
+      testTimeout: 20000,
     }),
     wext({
-      polyfill: true
+      polyfill: true,
     }),
     neutrino => {
       // prettier-ignore
       neutrino.config
         .plugin('after-build')
         .use(AfterBuildPlugin)
-    }
-  ]
+    },
+  ],
 }

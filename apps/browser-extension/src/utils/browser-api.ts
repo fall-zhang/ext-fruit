@@ -2,11 +2,11 @@
  * @file Wraps some of the extension apis
  */
 
-import { Observable, fromEventPattern } from 'rxjs'
+import type { Observable } from 'rxjs'
+import { fromEventPattern } from 'rxjs'
 import { map, filter } from 'rxjs/operators'
 
-import { Message, MessageResponse, MsgType } from '@/typings/message'
-import { Mutable } from '@/typings/helpers'
+import type { Message, MessageResponse, MsgType } from '@/typings/message'
 
 /* --------------------------------------- *\
  * #Types
@@ -89,7 +89,7 @@ export const storage = {
     createStream: storageCreateStream,
     get __storageArea__ (): 'sync' {
       return 'sync'
-    }
+    },
   },
   local: {
     clear: storageClear,
@@ -103,7 +103,7 @@ export const storage = {
     createStream: storageCreateStream,
     get __storageArea__ (): 'local' {
       return 'local'
-    }
+    },
   },
   /** Clear all area */
   clear: storageClear,
@@ -112,7 +112,7 @@ export const storage = {
   createStream: storageCreateStream,
   get __storageArea__ (): 'all' {
     return 'all'
-  }
+  },
 } as const
 
 /**
@@ -137,8 +137,8 @@ export const message = {
     createStream: messageCreateStream,
     get __self__ (): true {
       return true
-    }
-  }
+    },
+  },
 } as const
 
 export interface OpenUrlOptions {
@@ -182,7 +182,7 @@ export async function openUrl (
 
   await browser.tabs.create({
     url,
-    active: options.active !== false
+    active: options.active !== false,
   })
 }
 
@@ -197,7 +197,7 @@ function storageClear (this: StorageThisThree): Promise<void> {
   return this.__storageArea__ === 'all'
     ? Promise.all([
       browser.storage.local.clear(),
-      browser.storage.sync.clear()
+      browser.storage.sync.clear(),
     ]).then(noop)
     : browser.storage[this.__storageArea__].clear()
 }
@@ -363,7 +363,7 @@ async function messageSendSelf<T extends MsgType, R = undefined> (
     .sendMessage(
       Object.assign({}, message, {
         __pageId__: window.pageId,
-        type: `[[${message.type}]]`
+        type: `[[${message.type}]]`,
       })
     )
     .catch(err => {
@@ -512,7 +512,7 @@ function initServer (): void {
 
       const selfMsg = selfMsgTester.exec((message as Message).type)
       if (selfMsg) {
-        ;(message as Mutable<Message>).type = selfMsg[1] as MsgType
+        ;(message as Message).type = selfMsg[1] as MsgType
         const tabId = sender.tab && sender.tab.id
         if (tabId) {
           return messageSend(tabId, message as Message)
@@ -528,7 +528,7 @@ function _getPageInfo (sender: browser.runtime.MessageSender) {
     pageId: '' as string | number,
     faviconURL: '',
     pageTitle: '',
-    pageURL: ''
+    pageURL: '',
   }
   const tab = sender.tab
   if (tab) {

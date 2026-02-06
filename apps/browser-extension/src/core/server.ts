@@ -1,9 +1,10 @@
 import { message, openUrl } from '@/_helpers/browser-api'
 import { getSuggests } from '@/_helpers/getSuggests'
 import { injectDictPanel } from '@/_helpers/injectSaladictInternal'
-import { newWord, Word } from '@/_helpers/record-manager'
-import { Message } from '@/types/message'
-import {
+import type { Word } from '@P/saladict-core/src/dict-utils/new-word'
+import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
+import type { Message } from '@/types/message'
+import type {
   SearchFunction,
   DictSearchResult,
   GetSrcPageFunction
@@ -18,7 +19,7 @@ import { AudioManager } from './audio-manager'
 import { QsPanelManager } from './windows-manager'
 import { getTextFromClipboard, copyTextToClipboard } from './clipboard-manager'
 import './types'
-import { DictID } from '../app-config'
+import type { DictID } from '../app-config'
 /**
  * background script as transfer station
  */
@@ -64,8 +65,6 @@ export class BackgroundServer {
         case 'STOP_AUDIO':
           AudioManager.getInstance().reset()
           return
-        case 'DICT_ENGINE_METHOD':
-          return this.callDictEngineMethod(msg.payload)
         case 'GET_CLIPBOARD':
           return getTextFromClipboard()
         case 'SET_CLIPBOARD':
@@ -129,7 +128,7 @@ export class BackgroundServer {
     if (await this.qsPanelManager.hasCreated()) {
       await message.send({
         type: 'QS_PANEL_SEARCH_TEXT',
-        payload: word
+        payload: word,
       })
       return
     }
@@ -140,7 +139,7 @@ export class BackgroundServer {
   async searchPageSelection (): Promise<void> {
     const tabs = await browser.tabs.query({
       active: true,
-      lastFocusedWindow: true
+      lastFocusedWindow: true,
     })
 
     let word: Word | undefined
@@ -157,7 +156,7 @@ export class BackgroundServer {
   async openSrcPage ({
     id,
     text,
-    active
+    active,
   }: Message<'OPEN_DICT_SRC_PAGE'>['payload']): Promise<void> {
     const engine = await BackgroundServer.getDictEngine(id)
     return openUrl({
@@ -166,14 +165,8 @@ export class BackgroundServer {
         window.appConfig,
         window.activeProfile
       ),
-      active
+      active,
     })
-  }
-
-
-  async callDictEngineMethod (data: Message<'DICT_ENGINE_METHOD'>['payload']) {
-    const engine = await BackgroundServer.getDictEngine(data.id)
-    return engine[data.method](...(data.args || []))
   }
 
   notifyWordSaved () {
@@ -199,7 +192,7 @@ export class BackgroundServer {
           const data = xhr.status === 200 ? xhr.responseText : null
           resolve({
             response: data,
-            index: request.index
+            index: request.index,
           })
         }
       }

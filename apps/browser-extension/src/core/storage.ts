@@ -1,3 +1,5 @@
+import type { Writable } from 'type-fest'
+
 export const storage = {
   sync: {
     clear: storageClear,
@@ -11,7 +13,7 @@ export const storage = {
     createStream: storageCreateStream,
     get __storageArea__ (): 'sync' {
       return 'sync'
-    }
+    },
   },
   local: {
     clear: storageClear,
@@ -25,7 +27,7 @@ export const storage = {
     createStream: storageCreateStream,
     get __storageArea__ (): 'local' {
       return 'local'
-    }
+    },
   },
   /** Clear all area */
   clear: storageClear,
@@ -34,14 +36,14 @@ export const storage = {
   createStream: storageCreateStream,
   get __storageArea__ (): 'all' {
     return 'all'
-  }
+  },
 } as const
 
 function storageClear (this: StorageThisThree): Promise<void> {
   return this.__storageArea__ === 'all'
     ? Promise.all([
       browser.storage.local.clear(),
-      browser.storage.sync.clear()
+      browser.storage.sync.clear(),
     ]).then(() => {
       /* do nothing */
     })
@@ -49,7 +51,7 @@ function storageClear (this: StorageThisThree): Promise<void> {
 }
 
 
-function storageRemove(keys: string | string[]): Promise<void>
+function storageRemove (keys: string | string[]): Promise<void>
 function storageRemove (
   this: StorageThisTwo,
   keys: string | string[]
@@ -58,23 +60,23 @@ function storageRemove (
 }
 
 
-function storageGet<T = any>(
+function storageGet<T = any> (
   key?: string | string[] | null
 ): Promise<Partial<T>>
-function storageGet<T extends object>(key: T | any): Promise<Partial<T>>
+function storageGet<T extends object> (key: T | any): Promise<Partial<T>>
 function storageGet<T = any> (this: StorageThisTwo, ...args) {
   return browser.storage[this.__storageArea__].get(...args) as Promise<
     Partial<T>
   >
 }
 
-function storageSet(keys: any): Promise<void>
+function storageSet (keys: any): Promise<void>
 function storageSet (this: StorageThisTwo, keys: any): Promise<void> {
   return browser.storage[this.__storageArea__].set(keys)
 }
 
-function storageAddListener<T = any>(cb: StorageListenerCb<T>): void
-function storageAddListener<T = any, K extends string = string>(
+function storageAddListener<T = any> (cb: StorageListenerCb<T>): void
+function storageAddListener<T = any, K extends string = string> (
   key: K,
   cb: StorageListenerCb<T, K>
 ): void
@@ -112,8 +114,8 @@ function storageAddListener (this: StorageThisThree, ...args): void {
   return browser.storage.onChanged.addListener(listener)
 }
 
-function storageRemoveListener(key: string, cb: StorageListenerCb): void
-function storageRemoveListener(cb: StorageListenerCb): void
+function storageRemoveListener (key: string, cb: StorageListenerCb): void
+function storageRemoveListener (cb: StorageListenerCb): void
 function storageRemoveListener (this: StorageThisThree, ...args): void {
   let key: string
   let cb: StorageListenerCb
@@ -153,7 +155,7 @@ function storageRemoveListener (this: StorageThisThree, ...args): void {
   browser.storage.onChanged.removeListener(cb)
 }
 
-function storageCreateStream<T = any>(key: string): Observable<StorageChange<T>>
+function storageCreateStream<T = any> (key: string): Observable<StorageChange<T>>
 function storageCreateStream<T = any> (
   this: StorageThisThree,
   key: string
@@ -180,10 +182,10 @@ function storageCreateStream<T = any> (
 \* --------------------------------------- */
 type MessageThis = typeof message | typeof message.self
 
-function messageSend<T extends MsgType, R = MessageResponse<T>>(
+function messageSend<T extends MsgType, R = MessageResponse<T>> (
   message: Message<T>
 ): Promise<R>
-function messageSend<T extends MsgType, R = MessageResponse<T>>(
+function messageSend<T extends MsgType, R = MessageResponse<T>> (
   tabId: number,
   message: Message<T>
 ): Promise<R>
@@ -219,7 +221,7 @@ async function messageSendSelf<T extends MsgType, R = undefined> (
     .sendMessage(
       Object.assign({}, message, {
         __pageId__: window.pageId,
-        type: `[[${message.type}]]`
+        type: `[[${message.type}]]`,
       })
     )
     .catch(err => {
@@ -229,11 +231,11 @@ async function messageSendSelf<T extends MsgType, R = undefined> (
     })
 }
 
-function messageAddListener<T extends MsgType>(
+function messageAddListener<T extends MsgType> (
   messageType: T,
   cb: onMessageEvent<Message<T>>
 ): void
-function messageAddListener<T extends MsgType>(
+function messageAddListener<T extends MsgType> (
   cb: onMessageEvent<Message>
 ): void
 function messageAddListener<T extends MsgType> (
@@ -271,11 +273,11 @@ function messageAddListener<T extends MsgType> (
   return browser.runtime.onMessage.addListener(listener as any)
 }
 
-function messageRemoveListener(
+function messageRemoveListener (
   messageType: Message['type'],
   cb: onMessageEvent
 ): void
-function messageRemoveListener(cb: onMessageEvent): void
+function messageRemoveListener (cb: onMessageEvent): void
 function messageRemoveListener (
   this: MessageThis,
   ...args: [Message['type'], onMessageEvent] | [onMessageEvent]
@@ -310,7 +312,7 @@ function messageRemoveListener (
   browser.runtime.onMessage.removeListener(cb)
 }
 
-function messageCreateStream<T extends MsgType>(
+function messageCreateStream<T extends MsgType> (
   messageType?: T
 ): Observable<Message<T>>
 function messageCreateStream<T extends MsgType> (
@@ -373,7 +375,7 @@ function initServer (): void {
 
       const selfMsg = selfMsgTester.exec((message as Message).type)
       if (selfMsg) {
-        ;(message as Mutable<Message>).type = selfMsg[1] as MsgType
+        ;(message as Writable<Message>).type = selfMsg[1] as MsgType
         const tabId = sender.tab && sender.tab.id
         if (tabId) {
           return messageSend(tabId, message as Message)
@@ -389,7 +391,7 @@ function _getPageInfo (sender: browser.runtime.MessageSender) {
     pageId: '' as string | number,
     faviconURL: '',
     pageTitle: '',
-    pageURL: ''
+    pageURL: '',
   }
   const tab = sender.tab
   if (tab) {

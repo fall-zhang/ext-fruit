@@ -1,19 +1,19 @@
-import { message, openUrl } from '@/_helpers/browser-api'
-import { AppConfig } from '@/app-config'
+import type { AppConfig } from '@/app-config'
 import isEqual from 'lodash/isEqual'
 import { createConfigStream } from '@/_helpers/config-manager'
 import { isFirefox } from '@/_helpers/saladict'
 import { reportEvent } from '@/_helpers/analytics'
 import './types'
 
-import { TFunction } from 'i18next'
-import { I18nManager } from './i18n-manager'
+import type { TFunction } from 'i18next'
 
 import { combineLatest } from 'rxjs'
 import { concatMap, filter, distinctUntilChanged } from 'rxjs/operators'
 import { openPDF, extractPDFUrl } from './pdf-sniffer'
 import { copyTextToClipboard } from './clipboard-manager'
 import { BackgroundServer } from './server'
+import { I18nManager } from '@P/saladict-core/src/background/i18n-manager'
+
 
 interface CreateMenuOptions {
   type?: browser.contextMenus.ItemType
@@ -88,7 +88,7 @@ export class ContextMenus {
         title: 'Saladict',
         message: (await I18nManager.getInstance()).i18n.t(
           'menus:notification_youdao_err'
-        )
+        ),
       })
     }
   }
@@ -244,12 +244,12 @@ export class ContextMenus {
       'link',
       'selection',
       'page',
-      'video'
+      'video',
     ]
 
     // top level context menus item
     const containerCtx = new Set<browser.contextMenus.ContextType>([
-      'selection'
+      'selection',
     ])
 
     const optionList: CreateMenuOptions[] = []
@@ -286,7 +286,7 @@ export class ContextMenus {
       optionList.push({
         id,
         title: getTitle(id),
-        contexts
+        contexts,
       })
     }
 
@@ -298,7 +298,7 @@ export class ContextMenus {
       await createContextMenu({
         id: 'saladict_container',
         title: t('saladict'),
-        contexts: [...containerCtx]
+        contexts: [...containerCtx],
       })
 
       for (const opt of optionList) {
@@ -313,14 +313,14 @@ export class ContextMenus {
     await createContextMenu({
       id: 'view_as_pdf_ba',
       title: t('view_as_pdf'),
-      contexts: ['browser_action', 'page_action']
+      contexts: ['browser_action', 'page_action'],
     })
 
     if (browserActionItems.length > 2) {
       await createContextMenu({
         id: 'saladict_ba_container',
         title: t('page_translations'),
-        contexts: ['browser_action', 'page_action']
+        contexts: ['browser_action', 'page_action'],
       })
 
       for (const id of browserActionItems) {
@@ -328,7 +328,7 @@ export class ContextMenus {
           id: id + '_ba',
           parentId: 'saladict_ba_container',
           title: getTitle(id),
-          contexts: ['browser_action', 'page_action']
+          contexts: ['browser_action', 'page_action'],
         })
       }
     } else if (browserActionItems.length > 0) {
@@ -336,7 +336,7 @@ export class ContextMenus {
         await createContextMenu({
           id: id + '_ba',
           title: getTitle(id),
-          contexts: ['browser_action', 'page_action']
+          contexts: ['browser_action', 'page_action'],
         })
       }
     } else {
@@ -344,19 +344,19 @@ export class ContextMenus {
       await createContextMenu({
         id: 'google_cn_page_translate_ba',
         title: t('google_cn_page_translate'),
-        contexts: ['browser_action', 'page_action']
+        contexts: ['browser_action', 'page_action'],
       })
       await createContextMenu({
         id: 'youdao_page_translate_ba',
         title: t('youdao_page_translate'),
-        contexts: ['browser_action', 'page_action']
+        contexts: ['browser_action', 'page_action'],
       })
     }
 
     await createContextMenu({
       type: 'separator',
       id: Date.now().toString(),
-      contexts: ['browser_action']
+      contexts: ['browser_action'],
     })
 
     if (searchHistory) {
@@ -364,7 +364,7 @@ export class ContextMenus {
       await createContextMenu({
         id: 'search_history',
         title: t('history_title'),
-        contexts: ['browser_action']
+        contexts: ['browser_action'],
       })
     }
 
@@ -372,7 +372,7 @@ export class ContextMenus {
     await createContextMenu({
       id: 'notebook',
       title: t('notebook_title'),
-      contexts: ['browser_action']
+      contexts: ['browser_action'],
     })
 
     function getTitle (id: string): string {
@@ -409,8 +409,8 @@ async function tryExecuteScript (
       iconUrl: browser.runtime.getURL('assets/icon-128.png'),
       title: 'Saladict',
       message: i18n.t('menus:page_permission_err', {
-        name: i18n.t(`menus:${nameKey}`)
-      })
+        name: i18n.t(`menus:${nameKey}`),
+      }),
     })
     return error
   }
@@ -426,35 +426,35 @@ function reportMenusEvent (
       reportEvent({
         category: 'Page_Translate',
         action: 'Open_Google',
-        label
+        label,
       })
       break
     case 'caiyuntrs':
       reportEvent({
         category: 'Page_Translate',
         action: 'Open_Caiyun',
-        label
+        label,
       })
       break
     case 'google_cn_page_translate':
       reportEvent({
         category: 'Page_Translate',
         action: 'Open_Google',
-        label
+        label,
       })
       break
     case 'youdao_page_translate':
       reportEvent({
         category: 'Page_Translate',
         action: 'Open_Youdao',
-        label
+        label,
       })
       break
     case 'view_as_pdf':
       reportEvent({
         category: 'PDF_Viewer',
         action: 'Open_PDF_Viewer',
-        label
+        label,
       })
       break
   }
