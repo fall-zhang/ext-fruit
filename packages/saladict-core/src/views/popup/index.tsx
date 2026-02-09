@@ -2,7 +2,7 @@ import { FC } from 'react'
 // import { AppConfig } from '@/app-config'
 // import { getConfig } from '@/_helpers/config-manager'
 import { message, openUrl } from '@/_helpers/browser-api'
-import { saveWord, Word } from '@/_helpers/record-manager'
+import { saveWord, Word } from '@P/saladict-core/src/dict-utils/new-word'
 import { translateCtxs, genCtxText } from '@/_helpers/translateCtx'
 import { Message } from '@/types/message'
 
@@ -21,7 +21,7 @@ import { AppConfig, getDefaultConfig } from '../../app-config'
 browser.runtime.connect({ name: 'popup' } as any) // wrong typing
 
 const Title: FC = () => {
-  const { t } = useTranslate('popup')
+  const { t } = useTranslation('popup')
   return (
     <title>{t('title')}</title>
   )

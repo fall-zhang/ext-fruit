@@ -8,7 +8,7 @@ import { AppConfig } from '@P/saladict-core/src/app-config'
 // } from '@/_helpers/translateCtx'
 import { CtxTranslateResults, CtxTranslatorId, translateCtx } from '@P/saladict-core/src/utils/translateCtx'
 import { Word } from '@P/saladict-core/src/store/selection/types'
-// import { Word } from '@/_helpers/record-manager'
+// import { Word } from '@P/saladict-core/src/dict-utils/new-word'
 
 export interface CtxTransListProps {
   word: Word

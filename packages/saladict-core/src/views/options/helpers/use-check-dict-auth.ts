@@ -1,12 +1,12 @@
 import { useContext } from 'react'
 import { message } from 'antd'
 import { updateConfig } from '@/_helpers/config-manager'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { useStore } from '@/content/redux'
 import { ChangeEntryContext } from './change-entry'
 
 export const useCheckDictAuth = () => {
-  const { t } = useTranslate('options')
+  const { t } = useTranslation('options')
   const changeEntry = useContext(ChangeEntryContext)
   const store = useStore()
 

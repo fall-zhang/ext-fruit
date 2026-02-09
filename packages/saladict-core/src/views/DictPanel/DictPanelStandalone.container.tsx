@@ -1,10 +1,11 @@
-import React from 'react'
 import { connect } from 'react-redux'
-import {
-  DictPanelStandalone,
+import type {
   DictPanelStandaloneProps
 } from './DictPanelStandalone'
-import { StoreState } from '@/content/redux/modules'
+import {
+  DictPanelStandalone
+} from './DictPanelStandalone'
+import type { StoreState } from '@/content/redux/modules'
 import { MenuBarContainer } from '../MenuBar/MenuBar.container'
 import { MtaBoxContainer } from '../MtaBox/MtaBox.container'
 import { DictListContainer } from '../DictList/DictList.container'
@@ -30,7 +31,7 @@ const mapStateToProps = (
     dictList,
     waveformBox: state.activeProfile.waveform ? waveformBox : null,
     width: ownProps.width,
-    height: ownProps.height
+    height: ownProps.height,
   }
 }
 

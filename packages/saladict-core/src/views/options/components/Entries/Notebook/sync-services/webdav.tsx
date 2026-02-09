@@ -16,7 +16,7 @@ import {
   removeSyncConfig,
   setSyncConfig
 } from '@/background/sync-manager/helpers'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { InputNumberGroup } from '@/options/components/InputNumberGroup'
 
 export interface WebdavModalProps {

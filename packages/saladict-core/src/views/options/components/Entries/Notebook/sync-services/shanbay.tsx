@@ -2,8 +2,8 @@ import React, { FC, useState, useEffect } from 'react'
 import { Modal, Button, Switch, message as AntdMsg, notification } from 'antd'
 import { Service, SyncConfig } from '@/background/sync-manager/services/shanbay'
 import { setSyncConfig as uploadSyncConfig } from '@/background/sync-manager/helpers'
-import { getWords, Word } from '@/_helpers/record-manager'
-import { useTranslate } from '@/_helpers/i18n'
+import { getWords, Word } from '@P/saladict-core/src/dict-utils/new-word'
+import { useTranslation } from 'react-i18next'
 
 export interface WebdavModalProps {
   syncConfig?: SyncConfig

@@ -1,6 +1,6 @@
 import React, { FC, useState, useLayoutEffect } from 'react'
 import { Row, Col } from 'antd'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from '@/content/redux'
 import { SortableList, reorder } from '@/options/components/SortableList'
 import { getConfigPath } from '@/options/helpers/path-joiner'
@@ -10,7 +10,7 @@ import { AddModal } from './AddModal'
 import { EditModal } from './EditeModal'
 
 export const ContextMenus: FC = () => {
-  const { t } = useTranslate(['options', 'common', 'menus'])
+  const { t } = useTranslation(['options', 'common', 'menus'])
   const upload = useUpload()
   const [showAddModal, setShowAddModal] = useState(false)
   const [editingMenu, setEditingMenu] = useState<string | null>(null)

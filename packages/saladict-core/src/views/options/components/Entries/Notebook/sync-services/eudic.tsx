@@ -12,8 +12,8 @@ import { FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Service, SyncConfig } from '@/background/sync-manager/services/eudic'
 import { setSyncConfig } from '@/background/sync-manager/helpers'
-import { getWords } from '@/_helpers/record-manager'
-import { useTranslate } from '@/_helpers/i18n'
+import { getWords } from '@P/saladict-core/src/dict-utils/new-word'
+import { useTranslation } from 'react-i18next'
 
 export interface EudicModalProps {
   syncConfig?: SyncConfig

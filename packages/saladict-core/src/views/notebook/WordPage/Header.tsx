@@ -1,10 +1,10 @@
-import { FC } from 'react'
-import { TFunction } from 'i18next'
+import type { FC } from 'react'
+import type { TFunction } from 'i18next'
 import { Input, Button, Modal } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
-import { DBArea } from '../../../core/database/types'
+import type { DBArea } from '../../../core/database/types'
 
-import * as React from 'react'
+import type * as React from 'react'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -66,9 +66,11 @@ export const Header: FC<WordPageProps> = props => {
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuTrigger>
-              <Button className='ml-2' onClick={props.onExport}>
-                {t('export.title')} <DownOutlined />
-              </Button>
+              <div>
+                <div className='ml-2' onClick={props.onExport}>
+                  {t('export.title')} <DownOutlined />
+                </div>
+              </div>
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="w-96">
@@ -81,10 +83,10 @@ export const Header: FC<WordPageProps> = props => {
             </NavigationMenuContent>
           </NavigationMenuItem>
           <NavigationMenuItem className="hidden md:flex">
-            <NavigationMenuTrigger>
-              <Button type="primary" danger className='ml-2'>
+            <NavigationMenuTrigger className='ml-2'>
+              <div >
                 {t('delete.title')} <DownOutlined />
-              </Button>
+              </div>
             </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">

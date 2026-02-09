@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Switch, Select, Slider } from 'antd'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { isFirefox } from '@/_helpers/saladict'
 import { useSelector } from '@/content/redux'
 import { getConfigPath } from '@/options/helpers/path-joiner'
@@ -10,7 +10,7 @@ import {
 } from '@/options/components/SaladictForm'
 
 export const Popup: FC = () => {
-  const { t } = useTranslate(['options', 'menus'])
+  const { t } = useTranslation(['options', 'menus'])
   const menusIds = useSelector(state => {
     const ids = Object.keys(state.config.contextMenus.all)
     if (isFirefox) {

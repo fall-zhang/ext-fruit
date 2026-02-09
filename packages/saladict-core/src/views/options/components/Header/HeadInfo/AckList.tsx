@@ -1,10 +1,10 @@
 import React from 'react'
 import { List } from 'antd'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { acknowledgement } from '@/options/acknowledgement'
 
 export const AckList = React.memo(() => {
-  const { t } = useTranslate('options')
+  const { t } = useTranslation('options')
   return (
     <List
       dataSource={acknowledgement.map((ack, i) => (

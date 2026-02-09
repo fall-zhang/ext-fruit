@@ -25,7 +25,7 @@ export interface AddModalProps {
 }
 
 export const AddModal: FC<AddModalProps> = ({ show, onEdit, onClose }) => {
-  const { t } = useTranslate(['common', 'menus', 'options'])
+  const { t } = useTranslation(['common', 'menus', 'options'])
   const contextMenus = useDictStore(state => state.config.contextMenus)
   const unselected = useMemo(() => {
     if (!contextMenus) {

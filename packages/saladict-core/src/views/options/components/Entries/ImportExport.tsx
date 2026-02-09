@@ -8,7 +8,7 @@ import { AppConfig } from '@/app-config'
 import mergeConfig from '@/app-config/merge-config'
 import { ProfileIDList, Profile } from '@/app-config/profiles'
 import { mergeProfile } from '@/app-config/merge-profile'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { storage } from '@/_helpers/browser-api'
 import { updateConfig, getConfig } from '@/_helpers/config-manager'
 import { updateProfile, getProfile } from '@/_helpers/profile-manager'
@@ -24,7 +24,7 @@ export type ConfigStorage = {
 }
 
 export const ImportExport: FC = () => {
-  const { t } = useTranslate('options')
+  const { t } = useTranslation('options')
   const layout = useListLayout()
 
   return (

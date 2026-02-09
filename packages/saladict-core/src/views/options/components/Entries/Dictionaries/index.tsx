@@ -2,7 +2,7 @@ import React, { FC, useState, useLayoutEffect } from 'react'
 import { Tooltip, Row, Col } from 'antd'
 import { BlockOutlined } from '@ant-design/icons'
 import { DictID } from '@/app-config'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from '@/content/redux'
 import { SortableList, reorder } from '@/options/components/SortableList'
 import { SaladictModalForm } from '@/options/components/SaladictModalForm'
@@ -15,7 +15,7 @@ import { EditModal } from './EditModal'
 import { AllDicts } from './AllDicts'
 
 export const Dictionaries: FC = () => {
-  const { t } = useTranslate(['options', 'common', 'dicts'])
+  const { t } = useTranslation(['options', 'common', 'dicts'])
   const checkDictAuth = useCheckDictAuth()
   const [editingDict, setEditingDict] = useState<DictID | null>(null)
   const [showAddModal, setShowAddModal] = useState(false)

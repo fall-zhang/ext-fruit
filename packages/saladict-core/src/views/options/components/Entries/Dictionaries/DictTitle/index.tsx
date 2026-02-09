@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { message } from '@/_helpers/browser-api'
 import { DictID } from '@/app-config'
 
@@ -13,7 +13,7 @@ export interface DictTitleProps {
 const langCodes = ['en', 'zhs', 'zht', 'ja', 'kor', 'fr', 'de', 'es'] as const
 
 export const DictTitle: FC<DictTitleProps> = ({ dictID, dictLangs }) => {
-  const { t } = useTranslate(['options', 'dicts'])
+  const { t } = useTranslation(['options', 'dicts'])
   const title = t(`dicts:${dictID}.name`)
 
   return (

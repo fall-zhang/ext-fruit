@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Select, Switch, Input, Slider } from 'antd'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { getProfilePath, getConfigPath } from '@/options/helpers/path-joiner'
 import {
   SaladictForm,
@@ -9,7 +9,7 @@ import {
 } from '@/options/components/SaladictForm'
 
 export const DictPanel: FC = () => {
-  const { t } = useTranslate('options')
+  const { t } = useTranslation('options')
   const { availWidth } = window.screen
   return (
     <SaladictForm

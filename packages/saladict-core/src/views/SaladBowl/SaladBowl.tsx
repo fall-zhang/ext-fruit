@@ -1,8 +1,6 @@
-import React, { FC } from 'react'
-import classNames from 'clsx'
-import { useSubscription, useObservableCallback } from 'observable-hooks'
-import { hoverWithDelay } from '@/_helpers/observables'
-import { SALADICT_EXTERNAL } from '@/_helpers/saladict'
+import { useState, type FC } from 'react'
+import clsx from 'clsx'
+import { SALADICT_EXTERNAL } from '../../core/saladict-state'
 
 export interface SaladBowlProps {
   /** Viewport based coordinate. */
@@ -20,30 +18,25 @@ export interface SaladBowlProps {
  * Cute little icon that pops up near the selection.
  */
 export const SaladBowl: FC<SaladBowlProps> = props => {
-  const [onMouseOverOut, mouseOverOut$] = useObservableCallback<
-    boolean,
-    React.MouseEvent<HTMLDivElement>
-  >(hoverWithDelay)
-
-  useSubscription(mouseOverOut$, active => {
-    props.onHover(active)
-    if (active) {
-      props.onActive()
-    }
-  })
-
+  const [isMouseOut, setMouseOut] = useState< boolean >(false)
   return (
     <div
       role="img"
-      className={classnames('saladbowl', SALADICT_EXTERNAL, {
-        enableHover: props.enableHover
+      className={clsx('saladbowl', SALADICT_EXTERNAL, {
+        enableHover: props.enableHover,
       })}
       style={{ transform: `translate(${props.x}px, ${props.y}px)` }}
-      onMouseOver={props.enableHover ? onMouseOverOut : undefined}
-      onMouseOut={onMouseOverOut}
+      onMouseOver={() => {
+        props.enableHover && setMouseOut(true)
+        props.onHover(true)
+        props.onActive()
+      } }
+      onMouseOut={() => {
+        props.onHover(false)
+        setMouseOut(false)
+      }}
       onClick={() => props.onActive()}
     >
-      {/* prettier-ignore */}
       <svg viewBox='0 0 612 612' width='30' height='30'>
         <g className='saladbowl-leaf'>
           <path fill='#6bbc57' d='M 577.557 184.258 C 560.417 140.85 519.54 59.214 519.54 59.214 L 519.543 59.204 C 519.543 59.204 436.903 97.626 396.441 120.878 C 366.171 138.274 354.981 169.755 352.221 177.621 C 349.001 186.851 339.891 228.811 358.341 268.481 C 382.271 319.921 409.201 374.521 409.201 374.521 L 409.201 374.531 C 409.201 374.531 464.511 348.701 515.291 323.401 C 554.451 303.891 573.591 265.441 576.821 256.221 C 579.571 248.356 590.398 216.746 577.574 184.271 Z'/>

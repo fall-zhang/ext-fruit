@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from 'react'
 import { shallowEqual } from 'react-redux'
 import { Layout } from 'antd'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { getProfileName } from '@/_helpers/profile-manager'
 import { useSelector } from '@/content/redux'
 import { HeadInfoMemo } from './HeadInfo'

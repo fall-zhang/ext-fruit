@@ -9,7 +9,7 @@ import {
 import { useTranslate, Trans } from '@/_helpers/i18n'
 
 export const DictAuths: FC = () => {
-  const { t } = useTranslate(['options', 'dicts'])
+  const { t } = useTranslation(['options', 'dicts'])
   const dictAuths = useSelector(state => state.config.dictAuth)
 
   if (dictAuths === null || dictAuths === undefined) return null

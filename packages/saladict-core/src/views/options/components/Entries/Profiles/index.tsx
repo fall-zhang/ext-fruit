@@ -21,7 +21,7 @@ import { useCheckDictAuth } from '@/options/helpers/use-check-dict-auth'
 import { EditNameModal } from './EditNameModal'
 
 export const Profiles: FC = () => {
-  const { t } = useTranslate('options')
+  const { t } = useTranslation('options')
   const checkDictAuth = useCheckDictAuth()
   const activeProfileID = useSelector(state => state.activeProfile.id)
   const [showAddProfileModal, setShowAddProfileModal] = useState(false)

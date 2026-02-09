@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react'
-import { Word } from '@/_helpers/record-manager'
+import { Word } from '@P/saladict-core/src/dict-utils/new-word'
 import { TFunction } from 'i18next'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 
 interface NotebookProps {
   word?: Word
@@ -21,7 +21,7 @@ export const Notebook: FC<NotebookProps> = ({ word, hasError }) => {
     }, 3000)
   }, [])
 
-  const { t } = useTranslate('popup')
+  const { t } = useTranslation('popup')
 
   if (hasError) {
     return renderError(t)

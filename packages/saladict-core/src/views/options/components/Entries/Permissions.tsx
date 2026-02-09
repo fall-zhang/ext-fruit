@@ -1,13 +1,12 @@
-import React, { FC, useState, useEffect } from 'react'
+import type { FC } from 'react'
+import { useState, useEffect } from 'react'
 import { Form, Switch, message as antdMsg } from 'antd'
-import { useTranslate } from '@/_helpers/i18n'
-import { useFormItemLayout } from '@/options/helpers/layout'
+import { useTranslation } from 'react-i18next'
 
 const permissions = ['clipboardRead', 'clipboardWrite'] as const
 
 export const Permissions: FC = () => {
-  const formItemLayout = useFormItemLayout()
-  const { t } = useTranslate(['options', 'common'])
+  const { t } = useTranslation(['options', 'common'])
 
   const [status, setStatus] = useState(() =>
     permissions.reduce((status, permission) => {
@@ -21,7 +20,7 @@ export const Permissions: FC = () => {
       permissions.map(async permission => {
         try {
           return await browser.permissions.contains({
-            permissions: [permission]
+            permissions: [permission],
           })
         } catch (e) {
           console.error(e)
@@ -35,11 +34,13 @@ export const Permissions: FC = () => {
           return status
         }, {} as { [p in typeof permissions[number]]: boolean })
       )
+    }).catch(err => {
+      console.warn(err)
     })
   }, [])
 
   return (
-    <Form {...formItemLayout}>
+    <Form>
       {permissions.map(permission => (
         <Form.Item
           key={permission}
@@ -53,16 +54,16 @@ export const Permissions: FC = () => {
                 try {
                   if (
                     !(await browser.permissions.request({
-                      permissions: [permission]
+                      permissions: [permission],
                     }))
                   ) {
-                    antdMsg.warn(t('permissions.cancelled'))
+                    antdMsg.warning(t('permissions.cancelled'))
                     return
                   }
                   antdMsg.success(t('permissions.success'))
                   setStatus(status => ({
                     ...status,
-                    [permission]: true
+                    [permission]: true,
                   }))
                 } catch (e) {
                   console.error(e)
@@ -70,12 +71,12 @@ export const Permissions: FC = () => {
                 }
               } else {
                 await browser.permissions.remove({
-                  permissions: [permission]
+                  permissions: [permission],
                 })
                 antdMsg.success(t('permissions.cancel_success'))
                 setStatus(status => ({
                   ...status,
-                  [permission]: false
+                  [permission]: false,
                 }))
               }
             }}

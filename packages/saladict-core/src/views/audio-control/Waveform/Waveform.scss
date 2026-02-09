@@ -1,6 +1,7 @@
 #waveform-container {
   min-height: 128px;
   background: var(--color-background);
+  --half-waveform-width: 2;
 }
 
 .saladict-waveformWrap {
@@ -13,23 +14,6 @@
   justify-content: center;
   align-items: center;
   font-size: 16px;
-}
-
-$waveformPlayWidth: 1.3em;
-$halfWaveformPlayWidth: math.div($waveformPlayWidth, 2);
-
-%palyFGBlock {
-  content: '';
-  position: absolute;
-  top: 0;
-  width: 0;
-  height: 0;
-  border: $halfWaveformPlayWidth solid transparent;
-  border-width: $halfWaveformPlayWidth $waveformPlayWidth;
-  border-left-color: var(--color-font);
-  transition-property: border, height, right;
-  transition-duration: 0.25s;
-  transition-timing-function: ease;
 }
 
 .saladict-waveformPlay {
@@ -46,29 +30,49 @@ $halfWaveformPlayWidth: math.div($waveformPlayWidth, 2);
 
 .saladict-waveformPlay_FG {
   position: relative;
-  width: $waveformPlayWidth;
-  height: $waveformPlayWidth;
+  width: 1.3em;
+  height: 1.3em;
   overflow: hidden;
 
   &:before {
-    @extend %palyFGBlock;
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border: var(--half-waveform-width) solid transparent;
+    border-width: var(--half-waveform-width) 1.3em;
+    border-left-color: var(--color-font);
+    transition-property: border, height, right;
+    transition-duration: 0.25s;
+    transition-timing-function: ease;
     left: 0;
   }
 
   &.isPlaying:before {
-    height: $waveformPlayWidth;
-    border-width: 0 ($halfWaveformPlayWidth - 0.05em);
+    height: 1.3em;
+    border-width: 0 var((--half-waveform-width) - 0.05em);
   }
 
   &:after {
-    @extend %palyFGBlock;
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border: var(--half-waveform-width) solid transparent;
+    border-width: var(--half-waveform-width) 1.3em;
+    border-left-color: var(--color-font);
+    transition-property: border, height, right;
+    transition-duration: 0.25s;
+    transition-timing-function: ease;
     right: 0;
   }
 
   &.isPlaying:after {
-    right: -($halfWaveformPlayWidth - 0.05em);
-    height: $waveformPlayWidth;
-    border-width: 0 ($halfWaveformPlayWidth - 0.05em);
+    right: var(-(--half-waveform-width) - 0.05em);
+    height: 1.3em;
+    border-width: 0 var((--half-waveform-width) - 0.05em);
   }
 }
 
@@ -86,7 +90,7 @@ $halfWaveformPlayWidth: math.div($waveformPlayWidth, 2);
   cursor: pointer;
 }
 
-.saladict-waveformBtn_label > input {
+.saladict-waveformBtn_label>input {
   display: inline-block;
   position: absolute;
   width: 0;

@@ -2,10 +2,9 @@ import * as React from 'react'
 import classNames from 'clsx'
 import WaveSurfer from 'wavesurfer.js'
 import RegionsPlugin from 'wavesurfer.js/dist/plugins/regions'
-// import NumberEditor from 'react-number-editor'
 import { InputNumber as NumberEditor } from 'antd'
 import { message, storage } from '@/_helpers/browser-api'
-import { isFirefox } from '@/_helpers/saladict'
+import { isFirefox } from '@P/saladict-core/src/utils/browser'
 import { SoundTouch, SimpleFilter, getWebAudioNode } from 'soundtouchjs'
 
 interface AnyObject {
@@ -44,7 +43,7 @@ export class Waveform extends React.PureComponent<
     isPlaying: false,
     speed: 1,
     loop: false,
-    pitchStretch: !isFirefox
+    pitchStretch: !isFirefox,
   }
 
   initSoundTouch = (wavesurfer: WaveSurfer) => {
@@ -71,7 +70,7 @@ export class Waveform extends React.PureComponent<
         }
 
         return Math.min(numFrames, bufferLength - position)
-      }
+      },
     }
 
     this.soundTouch = new SoundTouch(wavesurfer.backend.ac.sampleRate)
@@ -87,7 +86,7 @@ export class Waveform extends React.PureComponent<
       container: this.containerRef.current!,
       waveColor: '#f9690e',
       progressColor: '#B71C0C',
-      plugins: [RegionsPlugin.create()]
+      plugins: [RegionsPlugin.create()],
     })
 
     this.wavesurfer = wavesurfer
@@ -160,7 +159,7 @@ export class Waveform extends React.PureComponent<
     this.state.loop ? this.play() : this.pause()
   }
 
-  updateSpeed = (speed: number|null) => {
+  updateSpeed = (speed: number | null) => {
     if (speed === null) return
     this.setState({ speed })
 

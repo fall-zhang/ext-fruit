@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import { Input, Select } from 'antd'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 
 export interface PatternItemProps {
   value?: [string, string]
@@ -8,7 +8,7 @@ export interface PatternItemProps {
 }
 
 export const PatternItem: FC<PatternItemProps> = ({ value, onChange }) => {
-  const { t } = useTranslate('options')
+  const { t } = useTranslation('options')
   const [patternType, setPatternType] = useState<'0' | '1'>(
     value?.[1] ? '1' : '0'
   )

@@ -1,17 +1,5 @@
-/* eslint-disable max-nested-callbacks */
-import React, { FC } from 'react'
-import { useObservable, useObservableState } from 'observable-hooks'
-import { from } from 'rxjs'
-import {
-  map,
-  filter,
-  distinctUntilChanged,
-  switchMap,
-  debounceTime,
-  startWith
-} from 'rxjs/operators'
-import { message } from '@/_helpers/browser-api'
-import { FloatBox, FloatBoxProps } from '@/components/FloatBox'
+import type { FloatBoxProps } from '@P/saladict-core/src/components/FloatBox'
+import type { FC } from 'react'
 
 export interface SuggestItem {
   explain: string
@@ -23,64 +11,24 @@ export type SuggestProps = {
   text: string
 } & Pick<
   FloatBoxProps,
-  | 'ref'
-  | 'onFocus'
-  | 'onBlur'
-  | 'onSelect'
-  | 'onArrowUpFirst'
-  | 'onClose'
-  | 'onHeightChanged'
+  'onFocus' |
+  'onBlur' |
+  'onSelect' |
+  'onArrowUpFirst' |
+  'onClose' |
+  'onHeightChanged'
 >
 
 /**
  * Suggest panel offering similar words.
  */
-export const Suggest: FC<SuggestProps> = React.forwardRef(
-  (props: SuggestProps, ref: React.Ref<HTMLDivElement>) => {
-    return useObservableState(
-      useObservable(
-        inputs$ =>
-          inputs$.pipe(
-            map(([text]) => text),
-            filter<string>(Boolean),
-            distinctUntilChanged(),
-            debounceTime(750),
-            switchMap(text =>
-              from(
-                message
-                  .send<'GET_SUGGESTS'>({
-                    type: 'GET_SUGGESTS',
-                    payload: text
-                  })
-                  .catch(() => [] as readonly SuggestItem[])
-              ).pipe(
-                map(suggests => (
-                  <FloatBox
-                    ref={ref}
-                    list={suggests.map(s => ({
-                      key: s.entry,
-                      value: s.entry,
-                      label: (
-                        <>
-                          <span className="menuBar-SuggestsEntry">
-                            {s.entry}
-                          </span>
-                          <span className="menuBar-SuggestsExplain">
-                            {s.explain}
-                          </span>
-                        </>
-                      )
-                    }))}
-                    {...props}
-                  />
-                )),
-                startWith(<FloatBox {...props} />)
-              )
-            )
-          ),
-        [props.text]
-      ),
-      () => <FloatBox {...props} />
-    )
-  }
-)
+export const SuggestWord: FC<SuggestProps> = (props) => {
+  return <>
+    <span className="menuBar-SuggestsEntry" style={{}}>
+      {props.word}
+    </span>
+    <span className="menuBar-SuggestsExplain">
+      {props.explain}
+    </span>
+  </>
+}

@@ -1,5 +1,4 @@
 import React, { FC, useState, useEffect, useContext, useRef } from 'react'
-import { shallowEqual } from 'react-redux'
 import { Layout, Row, Col, message as antMsg } from 'antd'
 import { useSelector } from '@/content/redux'
 import { reportPageView } from '@/_helpers/analytics'
@@ -27,9 +26,8 @@ export const MainEntry: FC = () => {
   const { analytics, darkMode } = useSelector(
     state => ({
       analytics: state.config.analytics,
-      darkMode: state.config.darkMode
-    }),
-    shallowEqual
+      darkMode: state.config.darkMode,
+    })
   )
 
   useEffect(() => {
@@ -62,7 +60,7 @@ export const MainEntry: FC = () => {
       if (permission) {
         antMsg.warn(
           t('permissions.missing', {
-            permission: t(`permissions.${permission}`)
+            permission: t(`permissions.${permission}`),
           }),
           20
         )
@@ -88,7 +86,7 @@ export const MainEntry: FC = () => {
                 data-option-content={entry} // for utools hiding unused options
                 style={{
                   padding: 24,
-                  backgroundColor: 'var(--opt-background-color)'
+                  backgroundColor: 'var(--opt-background-color)',
                 }}
               >
                 <ChangeEntryContext.Provider value={setEntry}>

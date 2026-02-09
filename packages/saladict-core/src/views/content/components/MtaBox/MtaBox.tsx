@@ -1,14 +1,11 @@
-import React, { FC, useRef, useState, useEffect } from 'react'
+import type { FC, ChangeEvent, KeyboardEvent } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import classNames from 'clsx'
-import CSSTransition from 'react-transition-group/CSSTransition'
 import AutosizeTextarea from 'react-textarea-autosize'
-import { useObservableState } from 'observable-hooks'
-import { switchMap, mapTo, startWith } from 'rxjs/operators'
-import { timer, Observable } from 'rxjs'
+import { useDictStore } from '@P/saladict-core/src/store'
+import { isPopupPage, isQuickSearchPage } from '@P/saladict-core/src/core/saladict-state'
 
 export interface MtaBoxProps {
-  expand: boolean
-  text: string
   shouldFocus: boolean
   searchText: (text: string) => any
   onInput: (text: string) => void
@@ -21,11 +18,22 @@ export interface MtaBoxProps {
  * Multiline Textarea Drawer. With animation on Expanding and Shrinking.
  */
 export const MtaBox: FC<MtaBoxProps> = props => {
+  const { text } = useDictStore(state => {
+    const shouldFocus = !state.activeProfile.mtaAutoUnfold ||
+        state.activeProfile.mtaAutoUnfold !== 'hide' ||
+        ((state.isQSPanel || isQuickSearchPage()) && state.config.qsFocus) ||
+        isPopupPage()
+    return {
+      text: state.text,
+      expand: state.isExpandMtaBox,
+      shouldFocus,
+    }
+  })
   const isTypedRef = useRef(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [height, setHeight] = useState(0)
 
-  const [isTyping, onKeyDown] = useObservableState(transformTyping, false)
+  const [isTyping, setIsTyping] = useState(false)
 
   const firstExpandRef = useRef(true)
   useEffect(() => {
@@ -38,7 +46,7 @@ export const MtaBox: FC<MtaBoxProps> = props => {
       }
       firstExpandRef.current = false
     }
-  }, [props.expand])
+  }, [props.expand, props.shouldFocus])
 
   useEffect(() => {
     // could be from clipboard with delay
@@ -63,39 +71,29 @@ export const MtaBox: FC<MtaBoxProps> = props => {
         className={classNames('mtaBox-TextArea-Wrap', { isTyping })}
         style={{ height: props.expand ? height : 0 }}
       >
-        <CSSTransition
-          in={props.expand}
-          timeout={400}
-          classNames="mtaBox-TextArea-Wrap"
-          appear
-          mountOnEnter
-          unmountOnExit
-        >
-          {() => (
-            <AutosizeTextarea
-              autoFocus
-              inputRef={textareaRef}
-              className="mtaBox-TextArea"
-              value={props.text}
-              onChange={e => {
-                isTypedRef.current = true
-                props.onInput(e.currentTarget.value)
-              }}
-              onKeyDown={e => {
-                // prevent page shortkeys
-                e.nativeEvent.stopPropagation()
+        <AutosizeTextarea
+          autoFocus
+          ref={textareaRef}
+          className="mtaBox-TextArea"
+          value={props.text}
+          onChange={(e:ChangeEvent<HTMLTextAreaElement>) => {
+            isTypedRef.current = true
+            props.onInput(e.currentTarget.value)
+          }}
+          onFocus={() => {
+            setIsTyping(true)
+          }}
+          onKeyDown={(e:KeyboardEvent) => {
+            // prevent page shortkeys
+            e.nativeEvent.stopPropagation()
 
-                if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-                  props.searchText(props.text)
-                }
-
-                onKeyDown(e)
-              }}
-              minRows={2}
-              onHeightChange={height => setHeight(height)}
-            />
-          )}
-        </CSSTransition>
+            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+              props.searchText(props.text)
+            }
+          }}
+          minRows={2}
+          onHeightChange={height => setHeight(height)}
+        />
       </div>
       <button className="mtaBox-DrawerBtn" onClick={props.onDrawerToggle}>
         <svg
@@ -103,7 +101,7 @@ export const MtaBox: FC<MtaBoxProps> = props => {
           height="10"
           viewBox="0 0 59.414 59.414"
           className={classNames('mtaBox-DrawerBtn_Arrow', {
-            isExpand: props.expand
+            isExpand: props.expand,
           })}
         >
           <path d="M58 14.146L29.707 42.44 1.414 14.145 0 15.56 29.707 45.27 59.414 15.56" />
@@ -114,12 +112,3 @@ export const MtaBox: FC<MtaBoxProps> = props => {
 }
 
 export default MtaBox
-
-function transformTyping (event$: Observable<React.KeyboardEvent>) {
-  return event$.pipe(
-    switchMap(event => {
-      event.stopPropagation()
-      return timer(1000).pipe(mapTo(false), startWith(true))
-    })
-  )
-}

@@ -17,7 +17,7 @@ import { createRoot } from 'react-dom/client'
 document.title = 'Saladict Standalone Panel'
 
 const Title: FC = () => {
-  const { t } = useTranslate('content')
+  const { t } = useTranslation('content')
   return (
     <title>{t('standalone')}</title>
   )

@@ -1,19 +1,20 @@
-import {
-  connect,
+import type {
   MapStateToProps,
   MapDispatchToPropsFunction
 } from 'react-redux'
+import {
+  connect
+} from 'react-redux'
 
-import { StoreState, StoreDispatch } from '@/content/redux/modules'
-import { updateActiveProfileID } from '@/_helpers/profile-manager'
 import {
   isStandalonePage,
   isPopupPage,
   isQuickSearchPage
 } from '@/_helpers/saladict'
-import { newWord } from '@/_helpers/record-manager'
+import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
 import { message } from '@/_helpers/browser-api'
-import { MenuBar, MenuBarProps } from './MenuBar'
+import type { MenuBarProps } from './MenuBar'
+import { MenuBar } from './MenuBar'
 import { updateConfig } from '@/_helpers/config-manager'
 import { timer } from '@/_helpers/promise-more'
 
@@ -39,7 +40,7 @@ const mapStateToProps: MapStateToProps<
   profiles: state.profiles,
   activeProfileId: state.activeProfile.id,
   isPinned: state.isPinned,
-  isQSFocus: state.isQSFocus
+  isQSFocus: state.isQSFocus,
 })
 
 const mapDispatchToProps: MapDispatchToPropsFunction<
@@ -53,9 +54,9 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
         word: newWord({
           text,
           title: 'Saladict',
-          favicon: 'https://saladict.crimx.com/favicon.ico'
-        })
-      }
+          favicon: 'https://saladict.crimx.com/favicon.ico',
+        }),
+      },
     })
   },
   updateText: (text: unknown) => {
@@ -89,8 +90,8 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
       payload: {
         area: 'menubar',
         height: 30,
-        floatHeight: height
-      }
+        floatHeight: height,
+      },
     })
   },
   onDragAreaMouseDown: event => {
@@ -98,8 +99,8 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
       type: 'DRAG_START_COORD',
       payload: {
         x: event.clientX,
-        y: event.clientY
-      }
+        y: event.clientY,
+      },
     })
   },
   onDragAreaTouchStart: event => {
@@ -107,8 +108,8 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
       type: 'DRAG_START_COORD',
       payload: {
         x: event.changedTouches[0].clientX,
-        y: event.changedTouches[0].clientY
-      }
+        y: event.changedTouches[0].clientY,
+      },
     })
   },
   onSelectProfile: id => {
@@ -120,7 +121,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
       if (!showedDictAuth && !isPopupPage()) {
         await updateConfig({
           ...state.config,
-          showedDictAuth: true
+          showedDictAuth: true,
         })
 
         if (
@@ -128,18 +129,17 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
             Object.keys(dictAuth[id]).every(k => !dictAuth[id]?.[k])
           )
         ) {
-          message.send({
-            type: 'OPEN_URL',
-            payload: {
-              url: 'options.html?menuselected=DictAuths',
-              self: true
-            }
-          })
+          // message.send({
+          //   type: 'OPEN_URL',
+          //   payload: {
+          //     url: 'options.html?menuselected=DictAuths',
+          //     self: true,
+          //   },
+          // })
           return
         }
       }
 
-      await updateActiveProfileID(id)
       await timer(10)
       dispatch({
         type: 'SEARCH_START',
@@ -150,12 +150,12 @@ const mapDispatchToProps: MapDispatchToPropsFunction<
               : newWord({
                 text: state.text,
                 title: 'Saladict',
-                favicon: 'https://saladict.crimx.com/favicon.ico'
-              })
-        }
+                favicon: 'https://saladict.crimx.com/favicon.ico',
+              }),
+        },
       })
     })
-  }
+  },
 })
 
 export const MenuBarContainer = connect(

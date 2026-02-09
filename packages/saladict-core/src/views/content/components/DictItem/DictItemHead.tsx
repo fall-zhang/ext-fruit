@@ -1,9 +1,10 @@
-import React, { FC, useState, useEffect, useMemo } from 'react'
-import classNames from 'clsx'
-import { DictID } from '@/app-config'
-import { useTranslate } from '@/_helpers/i18n'
-import { message } from '@/_helpers/browser-api'
-import { HoverBox, HoverBoxItem } from '@/components/HoverBox'
+import type { FC } from 'react'
+import type React from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import type { DictID } from '@P/saladict-core/src/app-config'
+import clsx from 'clsx'
+import { HoverBox, type HoverBoxItem } from '@P/saladict-core/src/components/HoverBox'
+import { useTranslation } from 'react-i18next'
 
 export interface DictItemHeadProps {
   dictID: DictID
@@ -13,27 +14,27 @@ export interface DictItemHeadProps {
   onCatalogSelect: (item: { key: string; value: string }) => void
   catalog?: Array<
     | {
-        // <button>
-        key: string
+      // <button>
+      key: string
+      value: string
+      label: string
+      options?: undefined
+    } |
+    {
+      // <select>
+      key: string
+      value: string
+      options: Array<{
         value: string
         label: string
-        options?: undefined
-      }
-    | {
-        // <select>
-        key: string
-        value: string
-        options: Array<{
-          value: string
-          label: string
-        }>
-        title?: string
-      }
+      }>
+      title?: string
+    }
   >
 }
 
 export const DictItemHead: FC<DictItemHeadProps> = props => {
-  const { t, ready } = useTranslate(['dicts', 'content', 'langcode'])
+  const { t, ready } = useTranslation(['dicts', 'content', 'langcode'])
 
   const [showLoader, setShowLoader] = useState(false)
   useEffect(() => {
@@ -62,14 +63,14 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
             title: item.title && localedLabel(item.title),
             options: item.options.map(opt => ({
               value: opt.value,
-              label: localedLabel(opt.label)
-            }))
+              label: localedLabel(opt.label),
+            })),
           })
         } else {
           menuItems.push({
             key: item.key,
             value: item.value,
-            label: localedLabel(item.label)
+            label: localedLabel(item.label),
           })
         }
       }
@@ -78,7 +79,7 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
     menuItems.push({
       key: '_options',
       value: '_options',
-      label: t('content:tip.openOptions')
+      label: t('content:tip.openOptions'),
     })
 
     return menuItems
@@ -86,8 +87,8 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
 
   return (
     <header
-      className={classnames('dictItemHead', {
-        isSearching: props.isSearching
+      className={clsx('dictItemHead', {
+        isSearching: props.isSearching,
       })}
     >
       <img className="dictItemHead-Logo" src={'@/components/Dictionaries/' + props.dictID + '/favicon.png'} alt="dict logo" />
@@ -110,13 +111,10 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
         top={25}
         onSelect={(key, value) => {
           if (key === '_options') {
-            message.send({
-              type: 'OPEN_URL',
-              payload: {
-                url: 'options.html?menuselected=Dictionaries',
-                self: true
-              }
-            })
+            // openUrl({
+            //   url: 'options.html?menuselected=Dictionaries',
+            //   self: true,
+            // })
           } else {
             props.onCatalogSelect({ key, value })
           }
@@ -124,10 +122,6 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
       />
       {showLoader && (
         <div className="dictItemHead-Loader">
-          <div />
-          <div />
-          <div />
-          <div />
           <div />
         </div>
       )}

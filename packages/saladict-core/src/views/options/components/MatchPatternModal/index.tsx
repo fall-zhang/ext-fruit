@@ -1,17 +1,16 @@
 /* eslint-disable no-param-reassign */
 import React, { FC, useRef } from 'react'
-import { shallowEqual } from 'react-redux'
 import { useUpdateEffect } from 'react-use'
 import { useObservableState } from 'observable-hooks'
 import { Form, Modal, Button } from 'antd'
 import { FormInstance, Rule } from 'antd/lib/form'
 import { ExclamationCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import { useTranslate, Trans } from '@P/saladict-core/src/locales/i18n'
 import { matchPatternToRegExpStr } from '@P/saladict-core/src/utils/matchPatternToRegExpStr'
-import { useSelector } from '@/content/redux'
-import { getConfigPath } from '@/options/helpers/path-joiner'
-import { useUpload, uploadStatus$ } from '@/options/helpers/upload'
 import { PatternItem } from './ PatternItem'
+import { useTranslation } from 'react-i18next'
+import { getConfigPath } from '../../helpers/path-joiner'
+import { uploadStatus$, useUpload } from '../../helpers/upload'
+
 
 export interface MatchPatternModalProps {
   area: null | 'pdfWhitelist' | 'pdfBlacklist' | 'whitelist' | 'blacklist'
@@ -20,20 +19,12 @@ export interface MatchPatternModalProps {
 
 export const MatchPatternModal: FC<MatchPatternModalProps> = ({
   area,
-  onClose
+  onClose,
 }) => {
-  const { t } = useTranslate(['options', 'common'])
+  const { t } = useTranslation()
   const formRef = useRef<FormInstance>(null)
   const uploadStatus = useObservableState(uploadStatus$, 'idle')
-  const patterns = useSelector(
-    state => ({
-      pdfWhitelist: state.config.pdfWhitelist,
-      pdfBlacklist: state.config.pdfBlacklist,
-      whitelist: state.config.whitelist,
-      blacklist: state.config.blacklist
-    }),
-    shallowEqual
-  )
+
   const upload = useUpload()
 
   useUpdateEffect(() => {
@@ -80,7 +71,7 @@ export const MatchPatternModal: FC<MatchPatternModalProps> = ({
             title: t('unsave_confirm'),
             icon: <ExclamationCircleOutlined />,
             okType: 'danger',
-            onOk: onClose
+            onOk: onClose,
           })
         } else {
           onClose()
@@ -88,32 +79,30 @@ export const MatchPatternModal: FC<MatchPatternModalProps> = ({
       }}
     >
       <p>
-        <Trans message={t('matchPattern.description')}>
-          <a
-            href="https://developer.mozilla.org/zh-CN/Add-ons/WebExtensions/Match_patterns#范例"
-            target="_blank"
-            rel="nofollow noopener noreferrer"
-          >
-            {t('matchPattern.url')}
-          </a>
-          <a
-            href="https://deerchao.cn/tutorials/regex/regex.htm"
-            target="_blank"
-            rel="nofollow noopener noreferrer"
-          >
-            {t('matchPattern.regex')}
-          </a>
-        </Trans>
+        <a
+          href="https://developer.mozilla.org/zh-CN/Add-ons/WebExtensions/Match_patterns#范例"
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+        >
+          {t('matchPattern.url')}
+        </a>
+        <a
+          href="https://deerchao.cn/tutorials/regex/regex.htm"
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+        >
+          {t('matchPattern.regex')}
+        </a>
       </p>
       <Form
         ref={formRef}
         wrapperCol={{ span: 24 }}
-        initialValues={area ? { patterns: patterns[area] } : {}}
+        initialValues={{}}
         onFinish={values => {
           if (area) {
             const patterns: [string, string][] | undefined = values.patterns
             upload({
-              [getConfigPath(area)]: (patterns || []).filter(p => p[0])
+              [getConfigPath(area)]: (patterns || []).filter(p => p[0]),
             })
           }
         }}

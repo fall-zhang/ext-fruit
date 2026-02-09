@@ -1,16 +1,14 @@
-import React, { FC } from 'react'
+import { useState, type FC } from 'react'
 import { Button } from 'antd'
-import { useObservableState } from 'observable-hooks'
-import { useTranslate } from '@/_helpers/i18n'
-import { uploadStatus$ } from '@/options/helpers/upload'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Move the button out as independent component to reduce
  * re-rendering of the whole component.
  */
 export const SaveBtn: FC = () => {
-  const { t } = useTranslate('common')
-  const uploadStatus = useObservableState(uploadStatus$, 'idle')
+  const { t } = useTranslation('common')
+  const [uploadStatus] = useState<'idle' | 'uploading' | 'error'>('idle')
 
   return (
     <Button

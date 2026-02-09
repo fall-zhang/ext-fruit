@@ -6,7 +6,7 @@ import { useTranslate, Trans } from '@/_helpers/i18n'
 import { MatchPatternModal } from '../MatchPatternModal'
 
 export const PDF: FC = () => {
-  const { t } = useTranslate(['options', 'common'])
+  const { t } = useTranslation(['options', 'common'])
   const [editingArea, setEditingArea] = useState<
     'pdfBlacklist' | 'pdfWhitelist' | null
   >(null)

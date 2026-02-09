@@ -19,7 +19,7 @@ const locLocale: Readonly<TCDirection[]> = [
 ]
 
 export const QuickSearch: FC = () => {
-  const { t } = useTranslate(['options', 'menus'])
+  const { t } = useTranslation(['options', 'menus'])
   const [showStandaloneModal, setShowStandaloneModal] = useState(false)
 
   return (

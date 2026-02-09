@@ -22,7 +22,7 @@ import {
 import { useObservableState } from 'observable-hooks'
 import classNames from 'clsx'
 import { debounceTime, scan, distinctUntilChanged } from 'rxjs/operators'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { setFormDirty, useFormDirty } from '@/options/helpers/use-form-dirty'
 
 import './_style.scss'
@@ -33,7 +33,7 @@ export interface EntrySideBarProps {
 }
 
 export const EntrySideBar: FC<EntrySideBarProps> = props => {
-  const { t } = useTranslate('options')
+  const { t } = useTranslation('options')
   const formDirtyRef = useFormDirty()
   // trigger affix rerendering on collapse state changes to update width
   const [affixKey, onCollapse] = useObservableState<number, boolean>(event$ =>

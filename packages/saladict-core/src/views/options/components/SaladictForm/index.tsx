@@ -1,27 +1,20 @@
-import React, { ReactNode, useMemo, Ref } from 'react'
+import type { ReactNode, Ref } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Form, Button, Modal, Tooltip } from 'antd'
-import { FormItemProps, Rule, FormProps, FormInstance } from 'antd/lib/form'
+import type { FormItemProps, Rule, FormProps, FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined, BlockOutlined } from '@ant-design/icons'
-import { map, distinctUntilChanged } from 'rxjs/operators'
 import get from 'lodash/get'
-import mapValues from 'lodash/mapValues'
-import shallowEqual from 'shallowequal'
-import { useObservableState } from 'observable-hooks'
 import { resetConfig } from '@/_helpers/config-manager'
 import { resetAllProfiles } from '@/_helpers/profile-manager'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { isFirefox } from '@/_helpers/saladict'
 import { openUrl } from '@/_helpers/browser-api'
-import { useSelector } from '@/content/redux'
-import {
-  useFormItemLayout,
-  formItemFooterLayout
-} from '@/options/helpers/layout'
 import { useUpload } from '@/options/helpers/upload'
-import { setFormDirty } from '@/options/helpers/use-form-dirty'
 import { SaveBtn } from './SaveBtn'
 
 import './_style.scss'
+import { useDictStore } from '@P/saladict-core/src/store'
+import { setFormDirty } from '../../helpers/use-form-dirty'
 
 interface FieldValues {
   [name: string]: any
@@ -54,15 +47,13 @@ export interface SaladictFormProps
 export const SaladictForm = React.forwardRef(
   (props: SaladictFormProps, ref: Ref<FormInstance>) => {
     const { items, hideFooter, ...restProps } = props
-    const formItemLayout = useFormItemLayout()
-    const { t, i18n, ready } = useTranslate(['options', 'common'])
-    const data = useSelector(
-      state => ({
+    const { t, i18n, ready } = useTranslation(['options', 'common'])
+    const store = useDictStore(state => {
+      return {
         config: state.config,
-        profile: state.activeProfile
-      }),
-      shallowEqual
-    )
+        profile: state.activeProfile,
+      }
+    })
     const upload = useUpload()
 
     function extractInitial (
@@ -73,7 +64,7 @@ export const SaladictForm = React.forwardRef(
       } = { initialValues: {}, hideFieldFns: {} }
     ): { [index: string]: any } {
       const newResult = {
-        ...result
+        ...result,
       }
       for (const item of items) {
         if (item.items) {
@@ -84,8 +75,8 @@ export const SaladictForm = React.forwardRef(
           }
 
           if (item.name) {
-            const value = get(data, item.name, data)
-            if (value !== data) {
+            const value = get(store, item.name, store)
+            if (value !== store) {
               newResult.initialValues[item.name] = value
             } else if (process.env.DEBUG) {
               console.warn(
@@ -103,17 +94,7 @@ export const SaladictForm = React.forwardRef(
       [items]
     )
 
-    const [hideFields, setHideFields] = useObservableState<
-      FieldShow,
-      FieldValues
-    >(
-      input$ =>
-        input$.pipe(
-          map(values => mapValues(hideFieldFns, hide => hide(values))),
-          distinctUntilChanged(shallowEqual)
-        ),
-      () => mapValues(hideFieldFns, hide => hide(initialValues))
-    )
+    const [hideFields, setHideFields] = useState< FieldShow >()
 
     function genFormItems (items: SaladictFormItem[]) {
       return items.map(item => {
@@ -155,7 +136,7 @@ export const SaladictForm = React.forwardRef(
         }
 
         let { className, children, items: subItems, ...itemProps } = item
-        if (hideFields[name]) {
+        if (hideFields?.[name]) {
           className = className ? className + ' saladict-hide' : 'saladict-hide'
         }
 
@@ -171,12 +152,12 @@ export const SaladictForm = React.forwardRef(
 
     return (
       <Form
-        {...formItemLayout}
         {...restProps}
         initialValues={initialValues}
         onFinish={upload}
         onValuesChange={(_, values) => {
           setFormDirty(true)
+          //  values => hideFieldFns.map(hide => hide(values))
           setHideFields(values)
           if (props.onValuesChange) {
             props.onValuesChange(_, values)
@@ -186,7 +167,7 @@ export const SaladictForm = React.forwardRef(
       >
         {formItems}
         {!hideFooter && (
-          <Form.Item {...formItemFooterLayout} className="saladict-form-btns">
+          <Form.Item wrapperCol={ { offset: 6, span: 18 } } className="saladict-form-btns">
             <SaveBtn />
             <Button
               onClick={() => {
@@ -211,7 +192,7 @@ export const SaladictForm = React.forwardRef(
                     await resetConfig()
                     await resetAllProfiles()
                     setFormDirty(false)
-                  }
+                  },
                 })
               }}
             >
@@ -225,7 +206,7 @@ export const SaladictForm = React.forwardRef(
 )
 
 export const NUMBER_RULES: Rule[] = [
-  { type: 'number', whitespace: true, required: true }
+  { type: 'number', whitespace: true, required: true },
 ]
 
 export const percentageSlideFormatter = (v?: number) => `${v || 0}%`

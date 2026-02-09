@@ -1,5 +1,6 @@
-import { FC } from 'react'
-import { Notes, NotesProps } from './Notes'
+import type { FC } from 'react'
+import type { NotesProps } from './Notes'
+import { Notes } from './Notes'
 import { SALADICT_EXTERNAL } from '@P/saladict-core/src/core/saladict-state'
 
 

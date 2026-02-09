@@ -1,39 +1,7 @@
-import {
-  connect,
-  ExtractDispatchers,
-  MapStateToProps,
-  MapDispatchToProps
-} from 'react-redux'
+import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
+import { MtaBox } from './MtaBox'
 
-import { StoreState, StoreAction } from '@/content/redux/modules'
-import { newWord } from '@/_helpers/record-manager'
-import { isQuickSearchPage, isPopupPage } from '@/_helpers/saladict'
-import { MtaBox, MtaBoxProps } from './MtaBox'
-
-type Dispatchers = ExtractDispatchers<
-  MtaBoxProps,
-  'searchText' | 'onInput' | 'onDrawerToggle' | 'onHeightChanged'
->
-
-const mapStateToProps: MapStateToProps<
-  StoreState,
-  MtaBoxProps,
-  Dispatchers
-> = state => ({
-  expand: state.isExpandMtaBox,
-  text: state.text,
-  shouldFocus:
-    !state.activeProfile.mtaAutoUnfold ||
-    state.activeProfile.mtaAutoUnfold !== 'hide' ||
-    ((state.isQSPanel || isQuickSearchPage()) && state.config.qsFocus) ||
-    isPopupPage()
-})
-
-const mapDispatchToProps: MapDispatchToProps<
-  StoreAction,
-  MtaBoxProps,
-  Dispatchers
-> = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   searchText: text => {
     dispatch({ type: 'SEARCH_START', payload: { word: newWord({ text }) } })
   },
@@ -46,13 +14,12 @@ const mapDispatchToProps: MapDispatchToProps<
   onHeightChanged: height => {
     dispatch({
       type: 'UPDATE_PANEL_HEIGHT',
-      payload: { area: 'mtabox', height }
+      payload: { area: 'mtabox', height },
     })
-  }
+  },
 })
 
 export const MtaBoxContainer = connect(
-  mapStateToProps,
   mapDispatchToProps
 )(MtaBox)
 

@@ -16,7 +16,7 @@ import {
   SyncConfig
 } from '@/background/sync-manager/services/ankiconnect'
 import { setSyncConfig } from '@/background/sync-manager/helpers'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 
 export interface AnkiConnectModalProps {
   syncConfig?: SyncConfig

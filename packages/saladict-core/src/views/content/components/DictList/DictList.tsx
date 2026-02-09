@@ -1,19 +1,19 @@
-import React, { FC, useEffect, useRef, useMemo } from 'react'
-import { DictItem, DictItemProps } from '../DictItem/DictItem'
-import { DictID, AppConfig } from '@/app-config'
-import { useObservableCallback, useSubscription } from 'observable-hooks'
-import { debounceTime } from 'rxjs/operators'
-import { useInPanelSelect } from '@/selection/select-text'
-import { Word } from '@/_helpers/record-manager'
+import type { FC } from 'react'
+import React, { useEffect, useRef, useMemo, useState } from 'react'
+import type { DictItemProps } from '../DictItem/DictItem'
+import { DictItem } from '../DictItem/DictItem'
+import type { AppConfig, DictID } from '@P/saladict-core/src/app-config'
+import type { Word } from '@P/saladict-core/src/types/word'
+import { useInPanelSelect } from '@P/saladict-core/src/selection/select-text'
 
 const MemoDictItem = React.memo(DictItem)
 
 type DictListItemKeys =
-  | 'dictID'
-  | 'preferredHeight'
-  | 'searchStatus'
-  | 'searchResult'
-  | 'TestComp'
+  | 'dictID' |
+  'preferredHeight' |
+  'searchStatus' |
+  'searchResult' |
+  'TestComp'
 
 export interface DictListProps
   extends Omit<
@@ -58,43 +58,41 @@ export const DictList: FC<DictListProps> = props => {
   } = props
 
   const heightRef = useRef<Height>({ dicts: {}, sum: 0 })
+  const [updateHeight, setUpdateHeight] = useState<number>()
 
-  const [updateHeight, iupdateHeight$] = useObservableCallback<number>(event$ =>
-    debounceTime<number>(10)(event$)
-  )
-
-  useSubscription(iupdateHeight$, onHeightChanged)
+  function onUpdateHeight (height:number) {
+    onHeightChanged(height)
+    setUpdateHeight(height)
+  }
 
   const onItemHeightChanged = useRef((id: DictID, height: number) => {
     heightRef.current.sum =
       heightRef.current.sum - (heightRef.current.dicts[id] || 0) + height
     heightRef.current.dicts[id] = height
-    updateHeight(heightRef.current.sum)
+    onUpdateHeight(heightRef.current.sum)
   }).current
 
-  const dictIds = useMemo(
-    () => dicts.reduce((idStr, { dictID }) => idStr + dictID + ',', ''),
-    [dicts]
-  )
+  // const dictIds = useMemo(
+  //   () => dicts.reduce((idStr, { dictID }) => idStr + dictID + ',', ''),
+  //   [dicts]
+  // )
 
   useEffect(() => {
     const oldHeight = heightRef.current
     heightRef.current = dicts.reduce(
-      (height, { dictID }) => {
+      (height, { dictID }:{ dictID:DictID }) => {
         height.dicts[dictID] = oldHeight.dicts[dictID] || 30
         height.sum += height.dicts[dictID] || 30
         return height
       },
       { dicts: {}, sum: 0 } as Height
     )
-    updateHeight(heightRef.current.sum)
-  }, [dictIds])
+    onUpdateHeight(heightRef.current.sum)
+  }, [dicts])
 
   const onInPanelSelect = useInPanelSelect(
     touchMode,
-    language,
-    doubleClickDelay,
-    newSelection
+    language
   )
 
   return (

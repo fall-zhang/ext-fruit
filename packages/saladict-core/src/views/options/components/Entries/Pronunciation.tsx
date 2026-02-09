@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
 import { Switch, Select } from 'antd'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from '@/content/redux'
 import { getConfigPath, getProfilePath } from '@/options/helpers/path-joiner'
 import { SaladictForm } from '@/options/components/SaladictForm'
 
 export const Pronunciation: FC = () => {
-  const { t } = useTranslate(['options', 'common', 'dicts'])
+  const { t } = useTranslation(['options', 'common', 'dicts'])
   const autopronLists = useSelector(state => ({
     cn: state.activeProfile.dicts.all.zdic.options.audio
       ? state.config.autopron.cn.list

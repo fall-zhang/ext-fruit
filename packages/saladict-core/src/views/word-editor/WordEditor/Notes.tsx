@@ -1,51 +1,30 @@
 
-import React, { FC, useState, useEffect } from 'react'
+import type { FC } from 'react'
+import type React from 'react'
+import { useState, useEffect } from 'react'
 import { useUpdateEffect } from 'react-use'
-import {
-  useObservable,
-  useObservableState,
-  useObservableCallback,
-  useSubscription,
-  pluckFirst
-} from 'observable-hooks'
-import { of } from 'rxjs'
-import {
-  withLatestFrom,
-  switchMap,
-  debounceTime,
-  startWith
-} from 'rxjs/operators'
 
-// import {
-//   Word,
-//   getWordsByText,
-//   deleteWords,
-//   saveWord
-// } from '@/_helpers/record-manager'
 import { getWordsByText, deleteWords, saveWord } from '@P/saladict-core/src/core/database'
-import { AppConfig } from '@P/saladict-core/src/app-config'
-// import {
-//   translateCtxs,
-//   genCtxText,
-//   CtxTranslateResults
-// } from '@/_helpers/translateCtx'
-import { genCtxText, translateCtxs, CtxTranslateResults } from '@P/saladict-core/src/utils/translateCtx'
-import { useTranslate } from '@P/saladict-core/src/locales/i18n'
-// import { isOptionsPage } from '@/_helpers/saladict'
+import type { AppConfig } from '@P/saladict-core/src/app-config'
+
+import type { CtxTranslateResults } from '@P/saladict-core/src/utils/translateCtx'
+import { genCtxText, translateCtxs } from '@P/saladict-core/src/utils/translateCtx'
 import { isOptionsPage } from '@P/saladict-core/src/core/saladict-state'
 
 import { WordCards } from './WordCards'
-import {
-  WordEditorPanel,
+import type {
   WordEditorPanelProps,
   WordEditorPanelBtns
 } from './WordEditorPanel'
-import { CSSTransition } from 'react-transition-group'
+import {
+  WordEditorPanel
+} from './WordEditorPanel'
 import { CtxTransList } from './CtxTransList'
-import { Word } from '@P/saladict-core/src/store/selection/types'
+import type { Word } from '@P/saladict-core/src/store/selection/types'
+import { useTranslation } from 'react-i18next'
 
-export interface NotesProps
-  extends Pick<WordEditorPanelProps, 'containerWidth'> {
+export interface NotesProps {
+  containerWidth:WordEditorPanelProps['containerWidth']
   wordEditor: {
     word: Word
     translateCtx: boolean
@@ -56,15 +35,14 @@ export interface NotesProps
   onClose: () => void
 }
 
-const notesFadeTimeout = { enter: 400, exit: 100, appear: 400 }
 
 export const Notes: FC<NotesProps> = props => {
-  const { t } = useTranslate(['common', 'content'])
+  const { t } = useTranslation(['common', 'content'])
   const [isDirty, setDirty] = useState(false)
   const [isShowCtxTransList, setShowCtxTransList] = useState(false)
 
   const [word, setWord] = useState(props.wordEditor.word)
-  const word$ = useObservable(pluckFirst, [word])
+  const [relatedWords, setRelatedWords] = useState<Word[]>([])
 
   const [ctxTransConfig, setCtxTransConfig] = useState(props.ctxTrans)
   useUpdateEffect(() => {
@@ -77,55 +55,31 @@ export const Notes: FC<NotesProps> = props => {
       return result
     }, {} as CtxTranslateResults)
   )
-
-  const [getRelatedWords, relatedWords$] = useObservableCallback<
-    Word[],
-    unknown,
-    []
-  >(event$ =>
-    event$.pipe(
-      debounceTime(200),
-      withLatestFrom(word$),
-      switchMap(([, word]) => {
-        if (!word.text) {
-          return of([])
-        }
-
-        return getWordsByText('notebook', word.text)
-          .then(words => words.filter(({ date }) => date !== word.date))
-          .catch(() => [])
-      }),
-      startWith([])
-    ), () => undefined
-  )
-
-  const relatedWords = useObservableState(relatedWords$)
-
-  const [onTranslateCtx, translateCtx$] = useObservableCallback<
-    CtxTranslateResults,
-    typeof ctxTransConfig
-  >(event$ =>
-    event$.pipe(
-      withLatestFrom(word$),
-      switchMap(([ctxTransConfig, word]) => {
-        return translateCtxs(word.context || word.text, ctxTransConfig)
+  function getRelatedWords (word:Word) {
+    getWordsByText({
+      area: 'notebook',
+      text: word.text,
+    })
+      .then(words => {
+        setRelatedWords (words.filter(({ date }) => date !== word.date))
       })
-    )
-  )
-  useSubscription(translateCtx$, setCtxTransResult)
+      .catch(() => [])
+  }
 
   useEffect(() => {
     if (props.wordEditor.translateCtx) {
-      onTranslateCtx(ctxTransConfig)
+      translateCtxs(word.context || word.text, ctxTransConfig)
     }
-  }, [])
+  }, [ctxTransConfig, props.wordEditor.translateCtx, word])
 
-  useEffect(getRelatedWords, [word.text, word.context])
+  useEffect(() => {
+    getRelatedWords(word)
+  }, [word])
 
   useUpdateEffect(() => {
     setWord({
       ...word,
-      trans: genCtxText(word.trans, ctxTransResult)
+      trans: genCtxText(word.trans, ctxTransResult),
     })
   }, [ctxTransResult])
 
@@ -136,12 +90,12 @@ export const Notes: FC<NotesProps> = props => {
   }
 
   const formChanged = ({
-    currentTarget
+    currentTarget,
   }: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setDirty(true)
     setWord({
       ...word,
-      [currentTarget.name]: currentTarget.value
+      [currentTarget.name]: currentTarget.value,
     })
   }
 
@@ -149,7 +103,7 @@ export const Notes: FC<NotesProps> = props => {
     {
       type: 'normal',
       title: t('content:transContext'),
-      onClick: () => onTranslateCtx(ctxTransConfig)
+      onClick: () => translateCtxs(word.context || word.text, ctxTransConfig),
     },
     {
       type: 'normal',
@@ -166,22 +120,25 @@ export const Notes: FC<NotesProps> = props => {
           //   }
           // })
         }
-      }
+      },
     },
     {
       type: 'normal',
       title: t('cancel'),
-      onClick: closeEditor
+      onClick: closeEditor,
     },
     {
       type: 'primary',
       title: t('save'),
       onClick: () => {
-        saveWord('notebook', word)
+        saveWord({
+          area: 'notebook',
+          word,
+        })
           .then(props.onClose)
           .catch(console.error)
-      }
-    }
+      },
+    },
   ]
 
   const [ankiCardId, setAnkiCardId] = useState<number | undefined>()
@@ -193,7 +150,7 @@ export const Notes: FC<NotesProps> = props => {
       onClick: async () => {
         let status = 'content:updateAnki.success'
         try {
-          console.log('update anki word')
+          console.log('update anki word', { cardId: ankiCardId, word })
 
           // await message.send<'ANKI_CONNECT_UPDATE_WORD'>({
           //   type: 'ANKI_CONNECT_UPDATE_WORD',
@@ -210,9 +167,9 @@ export const Notes: FC<NotesProps> = props => {
           eventTime: Date.now() + 2000,
           iconUrl: browser.runtime.getURL('assets/icon-128.png'),
           title: 'Saladict',
-          message: t(status)
+          message: t(status),
         })
-      }
+      },
     })
   }
 
@@ -326,7 +283,14 @@ export const Notes: FC<NotesProps> = props => {
               words={relatedWords}
               onCardDelete={word => {
                 if (window.confirm(t('content:wordEditor.deleteConfirm'))) {
-                  deleteWords('notebook', [word.date]).then(getRelatedWords)
+                  deleteWords({
+                    area: 'notebook',
+                    keyList: [word.date],
+                  }).then(res => {
+                    getRelatedWords(word)
+                  }).catch(err => {
+                    console.warn('delete word failed')
+                  })
                 }
               }}
             />
@@ -334,46 +298,36 @@ export const Notes: FC<NotesProps> = props => {
         </div>
       </WordEditorPanel>
 
-      <CSSTransition
-        classNames="notes-fade"
-        mountOnEnter
-        unmountOnExit
-        timeout={notesFadeTimeout}
-        in={isShowCtxTransList}
+      <WordEditorPanel
+        containerWidth={props.containerWidth - 100}
+        title={t('content:wordEditor.chooseCtxTitle')}
+        onClose={() => setShowCtxTransList(false)}
+        btns={[
+          {
+            type: 'normal',
+            title: t('content:transContext'),
+            onClick: () => translateCtxs(word.context || word.text, ctxTransConfig),
+          },
+        ]}
       >
-        {() => (
-          <WordEditorPanel
-            containerWidth={props.containerWidth - 100}
-            title={t('content:wordEditor.chooseCtxTitle')}
-            onClose={() => setShowCtxTransList(false)}
-            btns={[
-              {
-                type: 'normal',
-                title: t('content:transContext'),
-                onClick: () => onTranslateCtx(ctxTransConfig)
-              }
-            ]}
-          >
-            <CtxTransList
-              word={word}
-              ctxTransConfig={ctxTransConfig}
-              ctxTransResult={ctxTransResult}
-              onNewCtxTransConfig={(id, enabled) => {
-                setCtxTransConfig(ctxTransConfig => ({
-                  ...ctxTransConfig,
-                  [id]: enabled
-                }))
-              }}
-              onNewCtxTransResult={(id, content) => {
-                setCtxTransResult(ctxTransResult => ({
-                  ...ctxTransResult,
-                  [id]: content
-                }))
-              }}
-            />
-          </WordEditorPanel>
-        )}
-      </CSSTransition>
+        <CtxTransList
+          word={word}
+          ctxTransConfig={ctxTransConfig}
+          ctxTransResult={ctxTransResult}
+          onNewCtxTransConfig={(id, enabled) => {
+            setCtxTransConfig(ctxTransConfig => ({
+              ...ctxTransConfig,
+              [id]: enabled,
+            }))
+          }}
+          onNewCtxTransResult={(id, content) => {
+            setCtxTransResult(ctxTransResult => ({
+              ...ctxTransResult,
+              [id]: content,
+            }))
+          }}
+        />
+      </WordEditorPanel>
     </>
   )
 }

@@ -1,6 +1,7 @@
-import React, { useEffect, FC } from 'react'
+import { SALADICT_EXTERNAL } from '@sala/core/src/core/saladict-state'
+import type { FC } from 'react'
+import { useEffect } from 'react'
 import CSSTransition from 'react-transition-group/CSSTransition'
-import { SALADICT_EXTERNAL } from '@/_helpers/saladict'
 
 export interface WaveformBoxProps {
   darkMode: boolean
@@ -9,10 +10,13 @@ export interface WaveformBoxProps {
   onHeightChanged: (height: number) => void
 }
 
-export const WaveformBox: FC<WaveformBoxProps> = props => {
+export const WaveformBox: FC<WaveformBoxProps> = ({
+  onHeightChanged,
+  ...props
+}) => {
   useEffect(() => {
-    props.onHeightChanged((props.isExpand ? 165 : 0) + 12)
-  }, [props.isExpand])
+    onHeightChanged((props.isExpand ? 165 : 0) + 12)
+  }, [onHeightChanged, props.isExpand])
 
   return (
     <div

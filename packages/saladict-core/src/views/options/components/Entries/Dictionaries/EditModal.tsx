@@ -5,7 +5,7 @@ import { Switch, Select, Checkbox, Button, Modal } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { Rule } from 'antd/lib/form'
 import { DictID } from '@/app-config'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { supportedLangs } from '@/_helpers/lang-check'
 import { useSelector } from '@/content/redux'
 import { getProfilePath } from '@/options/helpers/path-joiner'
@@ -144,54 +144,54 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
           }
 
           switch (typeof value) {
-          case 'number':
-            item.rules = NUMBER_RULES
-            item.children = (
-              <InputNumberGroup
-                suffix={t(`dicts:${dictID}.options.${optKey}_unit`)}
-              />
-            )
-            break
-          case 'string':
-            if (optKey === 'tl' || optKey === 'tl2') {
-              const getTranslator:
-                  | undefined
-                  | (() => Translator) = import(`@/components/Dictionaries/${dictID}/engine`)
+            case 'number':
+              item.rules = NUMBER_RULES
+              item.children = (
+                <InputNumberGroup
+                  suffix={t(`dicts:${dictID}.options.${optKey}_unit`)}
+                />
+              )
+              break
+            case 'string':
+              if (optKey === 'tl' || optKey === 'tl2') {
+                const getTranslator:
+                  | undefined |
+                  (() => Translator) = import(`@/components/Dictionaries/${dictID}/engine`)
                     .getTranslator
 
-              const langs = getTranslator
-                ? getTranslator()
-                  .getSupportLanguages()
-                  .map(lang => (lang === 'auto' ? 'default' : lang))
-                : allDicts[dictID].optionsSel[optKey]
+                const langs = getTranslator
+                  ? getTranslator()
+                    .getSupportLanguages()
+                    .map(lang => (lang === 'auto' ? 'default' : lang))
+                  : allDicts[dictID].optionsSel[optKey]
 
-              item.children = (
-                <Select>
-                  {langs.map((option: string) => (
-                    <Select.Option value={option} key={option}>
-                      {option === 'default' ? '' : option + ' '}
-                      {t(`langcode:${option}`)}
-                    </Select.Option>
-                  ))}
-                </Select>
-              )
-            } else {
-              item.children = (
-                <Select>
-                  {allDicts[dictID].optionsSel[optKey].map(
-                    (option: string) => (
+                item.children = (
+                  <Select>
+                    {langs.map((option: string) => (
                       <Select.Option value={option} key={option}>
-                        {t(`dicts:${dictID}.options.${optKey}-${option}`)}
+                        {option === 'default' ? '' : option + ' '}
+                        {t(`langcode:${option}`)}
                       </Select.Option>
-                    )
-                  )}
-                </Select>
-              )
-            }
-            break
-          default:
-            item.valuePropName = 'checked'
-            item.children = <Switch />
+                    ))}
+                  </Select>
+                )
+              } else {
+                item.children = (
+                  <Select>
+                    {allDicts[dictID].optionsSel[optKey].map(
+                      (option: string) => (
+                        <Select.Option value={option} key={option}>
+                          {t(`dicts:${dictID}.options.${optKey}-${option}`)}
+                        </Select.Option>
+                      )
+                    )}
+                  </Select>
+                )
+              }
+              break
+            default:
+              item.valuePropName = 'checked'
+              item.children = <Switch />
           }
           return item
         })

@@ -1,22 +1,22 @@
 import { BehaviorSubject } from 'rxjs'
 import { notification, message as antMsg } from 'antd'
-import { TFunction } from 'i18next'
+import type { TFunction } from 'i18next'
 import set from 'lodash/set'
-import { AppConfig } from '@/app-config'
-import { Profile } from '@/app-config/profiles'
-import { useTranslate } from '@/_helpers/i18n'
+import type { Profile } from '@/app-config/profiles'
+import { useTranslation } from 'react-i18next'
 import { updateConfig } from '@/_helpers/config-manager'
 import { updateProfile } from '@/_helpers/profile-manager'
 import { checkBackgroundPermission } from '@/_helpers/permission-manager'
 import { useDispatch } from '@/content/redux'
 import { setFormDirty } from './use-form-dirty'
+import type { AppConfig } from '@P/saladict-core/src/app-config'
 
 export const uploadStatus$ = new BehaviorSubject<
   'idle' | 'uploading' | 'error'
 >('idle')
 
 export const useUpload = () => {
-  const { t } = useTranslate('options')
+  const { t } = useTranslation('options')
   const dispatch = useDispatch()
 
   return (values: { [stateObjectPaths: string]: any }) =>
@@ -70,7 +70,7 @@ export const useUpload = () => {
       } catch (e) {
         notification.error({
           message: t('config.opt.upload_error'),
-          description: e.message
+          description: e.message,
         })
         uploadStatus$.next('error')
       }

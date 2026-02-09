@@ -1,13 +1,13 @@
 import React, { FC } from 'react'
 import { Switch, Checkbox, Slider } from 'antd'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { getConfigPath, getProfilePath } from '@/options/helpers/path-joiner'
 import { SaladictForm } from '@/options/components/SaladictForm'
 import { supportedLangs } from '@/_helpers/lang-check'
 import { searchMode } from './searchMode'
 
 export const SearchModes: FC = () => {
-  const { t } = useTranslate(['options', 'common'])
+  const { t } = useTranslation(['options', 'common'])
   return (
     <SaladictForm
       items={[

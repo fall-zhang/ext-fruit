@@ -4,7 +4,7 @@ import { useObservableState } from 'observable-hooks'
 import { Input, Modal, Form } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { FormInstance } from 'antd/lib/form/Form'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from '@/content/redux'
 import { useUpload, uploadStatus$ } from '@/options/helpers/upload'
 
@@ -14,7 +14,7 @@ export interface EditModalProps {
 }
 
 export const EditModal: FC<EditModalProps> = ({ menuID, onClose }) => {
-  const { t } = useTranslate(['options', 'dicts', 'common', 'langcode'])
+  const { t } = useTranslation(['options', 'dicts', 'common', 'langcode'])
   const formRef = useRef<FormInstance>(null)
   const allMenus = useSelector(state => state.config.contextMenus.all)
   const uploadStatus = useObservableState(uploadStatus$, 'idle')

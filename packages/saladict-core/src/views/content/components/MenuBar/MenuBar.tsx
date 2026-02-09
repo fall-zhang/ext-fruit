@@ -1,20 +1,11 @@
-import React, { FC } from 'react'
-import {
-  useObservableCallback,
-  useObservable,
-  useSubscription
-} from 'observable-hooks'
-import { Observable, combineLatest } from 'rxjs'
-import { startWith, debounceTime, map } from 'rxjs/operators'
-import { Word } from '@/_helpers/record-manager'
-import { useTranslate } from '@/_helpers/i18n'
-import { message } from '@/_helpers/browser-api'
+import { useEffect, useState, type FC } from 'react'
+import type React from 'react'
 import {
   isStandalonePage,
   isOptionsPage,
   isPopupPage,
   isQuickSearchPage
-} from '@/_helpers/saladict'
+} from '@P/saladict-core/src/core/saladict-state'
 import {
   HistoryBackBtn,
   HistoryNextBtn,
@@ -26,8 +17,12 @@ import {
   SidebarBtn,
   FocusBtn
 } from './MenubarBtns'
-import { SearchBox, SearchBoxProps } from './SearchBox'
-import { Profiles, ProfilesProps } from './Profiles'
+import type { SearchBoxProps } from './SearchBox'
+import { SearchBox } from './SearchBox'
+import type { ProfilesProps } from './Profiles'
+import { Profiles } from './Profiles'
+import type { Word } from '@P/saladict-core/src/types/word'
+import { useTranslation } from 'react-i18next'
 
 export interface MenuBarProps {
   text: string
@@ -65,31 +60,18 @@ export interface MenuBarProps {
   onDragAreaTouchStart: (e: React.TouchEvent<HTMLDivElement>) => any
 }
 
-export const MenuBar: FC<MenuBarProps> = props => {
-  const { t } = useTranslate(['content', 'common'])
+export const MenuBar: FC<MenuBarProps> = ({
+  onHeightChanged,
+  ...props
+}) => {
+  const { t } = useTranslation(['content', 'common'])
+  const [profileHeight, setProfileHeight] = useState<number>()
+  const [searchBoxHeight, setSearchBoxHeight] = useState<number>()
 
-  const [updateProfileHeight, profileHeight$] = useObservableCallback<number>(
-    heightChangeTransform
-  )
-
-  const [updateSBHeight, searchBoxHeight$] = useObservableCallback<number>(
-    heightChangeTransform
-  )
-
-  // update panel min height
-  useSubscription(
-    useObservable(() =>
-      combineLatest(profileHeight$, searchBoxHeight$).pipe(
-        // a little delay for organic feeling
-        debounceTime(100),
-        map(heights => {
-          const max = Math.max(...heights)
-          return max > 0 ? max + 72 : 0
-        })
-      )
-    ),
-    props.onHeightChanged
-  )
+  useEffect(() => {
+    const max = Math.max(profileHeight || 0, searchBoxHeight || 0)
+    onHeightChanged(max > 0 ? max + 72 : 0)
+  }, [profileHeight, onHeightChanged, searchBoxHeight])
   let renderType = 'QuickSearchPage'
   if (isQuickSearchPage()) {
     renderType = 'QuickSearchPage'
@@ -118,7 +100,7 @@ export const MenuBar: FC<MenuBarProps> = props => {
         enableSuggest={props.enableSuggest}
         onInput={props.updateText}
         onSearch={props.searchText}
-        onHeightChanged={updateSBHeight}
+        onHeightChanged={(height) => setSearchBoxHeight(height)}
       />
       {isStandalonePage() || (
         <div
@@ -132,7 +114,9 @@ export const MenuBar: FC<MenuBarProps> = props => {
         profiles={props.profiles}
         activeProfileId={props.activeProfileId}
         onSelectProfile={props.onSelectProfile}
-        onHeightChanged={updateProfileHeight}
+        onHeightChanged={(height) => {
+          setProfileHeight(height)
+        }}
       />
       <FavBtn
         t={t}
@@ -143,13 +127,13 @@ export const MenuBar: FC<MenuBarProps> = props => {
             e.preventDefault()
             e.stopPropagation()
             e.currentTarget.blur()
-            message.send({
-              type: 'OPEN_URL',
-              payload: {
-                url: 'notebook.html',
-                self: true
-              }
-            })
+            // message.send({
+            //   type: 'OPEN_URL',
+            //   payload: {
+            //     url: 'notebook.html',
+            //     self: true,
+            //   },
+            // })
           }
         }}
       />
@@ -157,22 +141,23 @@ export const MenuBar: FC<MenuBarProps> = props => {
         ? (
           <HistoryBtn
             t={t}
-            onClick={() =>
-              message.send({
-                type: 'OPEN_URL',
-                payload: { url: 'history.html', self: true }
-              })
-            }
+            onClick={() => {
+              // message.send({
+              //   type: 'OPEN_URL',
+              //   payload: { url: 'history.html', self: true },
+              // })
+            }}
           />
         )
         : (
           <NotebookBtn
             t={t}
-            onClick={() =>
-              message.send({
-                type: 'OPEN_URL',
-                payload: { url: 'notebook.html', self: true }
-              })
+            onClick={() => {
+              // message.send({
+              //   type: 'OPEN_URL',
+              //   payload: { url: 'notebook.html', self: true },
+              // })
+            }
             }
           />
         )}
@@ -238,10 +223,4 @@ export const MenuBar: FC<MenuBarProps> = props => {
       )}
     </header>
   )
-}
-
-function heightChangeTransform (
-  height$: Observable<number>
-): Observable<number> {
-  return startWith<number>(0)(height$)
 }

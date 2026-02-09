@@ -1,11 +1,11 @@
-import React, { FC } from 'react'
-import { TFunction } from 'i18next'
-import { getProfileName } from '@/_helpers/profile-manager'
-import { message } from '@/_helpers/browser-api'
-import { useTranslate } from '@/_helpers/i18n'
-import { isOptionsPage } from '@/_helpers/saladict'
-import { HoverBox, HoverBoxItem } from '@/components/HoverBox'
+import type { FC } from 'react'
+import type React from 'react'
+import type { TFunction } from 'i18next'
+import { useTranslation } from 'react-i18next'
 import { OptionsBtn } from './MenubarBtns'
+import { HoverBox, type HoverBoxItem } from '@P/saladict-core/src/components/HoverBox'
+import { isOptionsPage } from '@P/saladict-core/src/core/saladict-state'
+import { getProfileName } from 'apps/browser-extension/src/utils/profile-manager'
 
 export interface ProfilesProps {
   t: TFunction
@@ -19,7 +19,7 @@ export interface ProfilesProps {
  * Pick and choose profiles
  */
 export const Profiles: FC<ProfilesProps> = props => {
-  const { t } = useTranslate(['common'])
+  const { t } = useTranslation(['common'])
 
   const listItems: HoverBoxItem[] = props.profiles.map(p => {
     return {
@@ -33,7 +33,7 @@ export const Profiles: FC<ProfilesProps> = props => {
         >
           {getProfileName(p.name, t)}
         </span>
-      )
+      ),
     }
   })
 
@@ -42,10 +42,10 @@ export const Profiles: FC<ProfilesProps> = props => {
       Button={ProfilesBtn}
       items={listItems}
       onBtnClick={() => {
-        message.send({
-          type: 'OPEN_URL',
-          payload: { url: 'options.html', self: true }
-        })
+        // message.send({
+        //   type: 'OPEN_URL',
+        //   payload: { url: 'options.html', self: true },
+        // })
         return false
       }}
       onSelect={props.onSelectProfile}
@@ -55,6 +55,6 @@ export const Profiles: FC<ProfilesProps> = props => {
 }
 
 function ProfilesBtn (props: React.ComponentProps<'button'>) {
-  const { t } = useTranslate(['content'])
+  const { t } = useTranslation(['content'])
   return <OptionsBtn {...props} t={t} disabled={isOptionsPage()} />
 }

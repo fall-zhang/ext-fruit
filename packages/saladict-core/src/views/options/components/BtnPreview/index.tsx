@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux'
 import { CSSTransition } from 'react-transition-group'
 import { Button } from 'antd'
 import { StoreAction } from '@/content/redux/modules'
-import { useTranslate } from '@/_helpers/i18n'
-import { newWord } from '@/_helpers/record-manager'
+import { useTranslation } from 'react-i18next'
+import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
 import { getWordOfTheDay } from '@/_helpers/wordoftheday'
 import { useIsShowDictPanel } from '@/options/helpers/panel-store'
 import { PreviewIcon } from './PreviewIcon'
@@ -16,7 +16,7 @@ import './_style.scss'
 const pWordOfTheDay = getWordOfTheDay()
 
 export const BtnPreview: FC = () => {
-  const { t } = useTranslate('options')
+  const { t } = useTranslation('options')
   const show = !useIsShowDictPanel()
   const dispatch = useDispatch<Dispatch<StoreAction>>()
 

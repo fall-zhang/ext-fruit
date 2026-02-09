@@ -3,7 +3,7 @@ import { Switch, Checkbox, Button } from 'antd'
 import { concat, from } from 'rxjs'
 import { pluck, map } from 'rxjs/operators'
 import { useObservableState, useObservable, useRefFn } from 'observable-hooks'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { storage } from '@/_helpers/browser-api'
 import { useSelector } from '@/content/redux'
 import { getConfigPath } from '@/options/helpers/path-joiner'
@@ -15,7 +15,7 @@ import {
 const reqSyncService = require.context('./sync-services', false, /\.tsx$/)
 
 export const Notebook: FC = () => {
-  const { t } = useTranslate(['options', 'dicts', 'common', 'sync'])
+  const { t } = useTranslation(['options', 'dicts', 'common', 'sync'])
   const ctxTrans = useSelector(state => state.config.ctxTrans)
   const syncServiceIds = useRefFn(() =>
     reqSyncService.keys().map(path => /([^/]+)\.tsx$/.exec(path)![1])

@@ -10,7 +10,7 @@ import {
 } from '@/_helpers/titlebar-offset'
 import { formItemModalLayout } from '@/options/helpers/layout'
 import { pixelSlideFormatter } from '@/options/components/SaladictForm'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 
 export interface TitlebarOffsetModalProps {
   show: boolean
@@ -18,7 +18,7 @@ export interface TitlebarOffsetModalProps {
 }
 
 export const TitlebarOffsetModal: FC<TitlebarOffsetModalProps> = props => {
-  const { t } = useTranslate(['options', 'common'])
+  const { t } = useTranslation(['options', 'common'])
   const [offset, setOffset] = useState<TitlebarOffset>()
   const formRef = useRef<FormInstance>(null)
 

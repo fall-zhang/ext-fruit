@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-// import { Word } from '@/_helpers/record-manager'
-// import { useTranslate } from '@/_helpers/i18n'
+// import { Word } from '@P/saladict-core/src/dict-utils/new-word'
+// import { useTranslation } from 'react-i18next'
 import { useTranslate } from '@P/saladict-core/src/locales/i18n'
 import { Word } from '@P/saladict-core/src/store/selection/types'
 
@@ -10,7 +10,7 @@ export interface WordCardsProps {
 }
 
 export const WordCards: FC<WordCardsProps> = ({ words, onCardDelete }) => {
-  const { t } = useTranslate(['common', 'content'])
+  const { t } = useTranslation(['common', 'content'])
 
   return (
     <aside className="wordCards">

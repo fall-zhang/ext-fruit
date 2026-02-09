@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react'
 import { Select, Slider, Switch, Button } from 'antd'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { getConfigPath } from '@/options/helpers/path-joiner'
 import { SaladictModalForm } from '@/options/components/SaladictModalForm'
 import { pixelSlideFormatter } from '@/options/components/SaladictForm'
@@ -16,7 +16,7 @@ export const StandaloneModal: FC<StandaloneModalProps> = ({
   show,
   onClose
 }) => {
-  const { t } = useTranslate(['options', 'common'])
+  const { t } = useTranslation(['options', 'common'])
   const { availHeight } = window.screen
   const [showTitlebarOffsetModal, setTitlebarOffsetModal] = useState(false)
 

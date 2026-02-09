@@ -1,6 +1,7 @@
-import React, { FC, useRef, useLayoutEffect, useMemo, useEffect } from 'react'
+import type { FC } from 'react'
+import { useRef, useLayoutEffect, useMemo, useEffect } from 'react'
 import CSSTransition from 'react-transition-group/CSSTransition'
-import { TFunction } from 'i18next'
+import type { TFunction } from 'i18next'
 import {
   useObservableCallback,
   useObservableState,
@@ -8,11 +9,11 @@ import {
   identity
 } from 'observable-hooks'
 import { merge, combineLatest } from 'rxjs'
-import { filter, map, distinctUntilChanged, mapTo, delay } from 'rxjs/operators'
-import { focusBlur } from '@/_helpers/observables'
+import { filter, map, distinctUntilChanged, delay } from 'rxjs/operators'
 import { message } from '@/_helpers/browser-api'
-import { Suggest } from './Suggest'
+import { SuggestWord } from './Suggest'
 import { SearchBtn } from './MenubarBtns'
+import { focusBlur } from '@P/saladict-core/src/utils/observables'
 
 export interface SearchBoxProps {
   t: TFunction
@@ -58,8 +59,8 @@ export const SearchBox: FC<SearchBoxProps> = props => {
             searchBoxFocusBlur$.pipe(filter(isFocus => !isFocus)),
             suggestFocusBlur$,
             onShowSuggest$.pipe(delay(0)), // Prevent input method conflict on first input #1149
-            message.createStream('SEARCH_TEXT_BOX').pipe(mapTo(false))
-          )
+            message.createStream('SEARCH_TEXT_BOX').pipe(map(() => false))
+          ),
         ]).pipe(
           map(([[enableSuggest, text], shouldShowSuggest]) =>
             Boolean(enableSuggest && text && shouldShowSuggest)
@@ -143,30 +144,19 @@ export const SearchBox: FC<SearchBoxProps> = props => {
           onBlur={onSearchBoxFocusBlur}
           value={text}
         />
-
-        <CSSTransition
-          classNames="csst-menuBar-SearchBox_Suggests"
-          in={isShowSuggest}
-          timeout={100}
-          mountOnEnter={true}
-          unmountOnExit={true}
-          onExited={() => props.onHeightChanged(0)}
-        >
-          {() => (
-            <div className="menuBar-SearchBox_Suggests">
-              <Suggest
-                ref={suggestRef}
-                text={text}
-                onSelect={searchText}
-                onFocus={onSuggestFocusBlur}
-                onBlur={onSuggestFocusBlur}
-                onArrowUpFirst={focusInput}
-                onClose={focusInput}
-                onHeightChanged={props.onHeightChanged}
-              />
-            </div>
-          )}
-        </CSSTransition>
+        {isShowSuggest && (
+          <div className="menuBar-SearchBox_Suggests">
+            <SuggestWord
+              text={text}
+              onSelect={searchText}
+              onFocus={onSuggestFocusBlur}
+              onBlur={onSuggestFocusBlur}
+              onArrowUpFirst={focusInput}
+              onClose={focusInput}
+              onHeightChanged={props.onHeightChanged}
+            />
+          </div>
+        )}
       </div>
       <SearchBtn t={props.t} onClick={searchText} />
     </>

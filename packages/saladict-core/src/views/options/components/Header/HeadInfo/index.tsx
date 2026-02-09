@@ -1,13 +1,13 @@
 import React, { FC } from 'react'
 import { Tooltip, Popover } from 'antd'
 import { WarningOutlined } from '@ant-design/icons'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { AckList } from './AckList'
 
 import './_style.scss'
 
 export const HeadInfo: FC = () => {
-  const { t } = useTranslate('options')
+  const { t } = useTranslation('options')
   return (
     <ul className="head-info">
       {process.env.DEBUG || process.env.SDAPP_VETTED

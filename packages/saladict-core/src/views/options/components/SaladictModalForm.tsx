@@ -4,7 +4,7 @@ import { useObservableState } from 'observable-hooks'
 import { Modal } from 'antd'
 import { FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import {
   SaladictForm,
   SaladictFormItem,
@@ -25,7 +25,7 @@ export interface SaladictModalFormProps
 
 export const SaladictModalForm: FC<SaladictModalFormProps> = props => {
   const { visible, title, zIndex, onClose, ...restProps } = props
-  const { t } = useTranslate('options')
+  const { t } = useTranslation('options')
   const uploadStatus = useObservableState(uploadStatus$, 'idle')
   const formDirtyRef = useFormDirty()
   const formRef = useRef<FormInstance>(null)

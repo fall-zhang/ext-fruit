@@ -1,5 +1,5 @@
+import type { FC } from 'react'
 import React, {
-  FC,
   useState,
   useEffect,
   useCallback,
@@ -8,18 +8,19 @@ import React, {
 import classNames from 'clsx'
 import QRCode from 'qrcode.react'
 import CSSTransition from 'react-transition-group/CSSTransition'
-import { AppConfig } from '@/app-config'
 import { updateConfig, addConfigListener } from '@/_helpers/config-manager'
 import { message } from '@/_helpers/browser-api'
-import { useTranslate } from '@/_helpers/i18n'
-import { DictPanelStandaloneContainer } from '@/content/components/DictPanel/DictPanelStandalone.container'
+import { useTranslation } from 'react-i18next'
+import type { AppConfig } from '../../app-config'
+import DictPanelStandaloneContainer from '../DictPanel/DictPanelStandalone.container'
 
 interface PopupProps {
   config: AppConfig
 }
 
 export const Popup: FC<PopupProps> = props => {
-  const { t } = useTranslate('popup')
+  const { t } = useTranslation('popup')
+
 
   const [config, setConfig] = useState(props.config)
 
@@ -60,10 +61,11 @@ export const Popup: FC<PopupProps> = props => {
       .query({ active: true, currentWindow: true })
       .then(tabs => {
         if (tabs.length > 0 && tabs[0].id != null) {
+          isTempDisabled
           message
             .send<'TEMP_DISABLED_STATE'>(tabs[0].id, {
               type: 'TEMP_DISABLED_STATE',
-              payload: { op: 'get' }
+              payload: { op: 'get' },
             })
             .then(flag => {
               setTempOff(flag)
@@ -71,7 +73,7 @@ export const Popup: FC<PopupProps> = props => {
 
           message
             .send<'QUERY_PIN_STATE', boolean>(tabs[0].id, {
-              type: 'QUERY_PIN_STATE'
+              type: 'QUERY_PIN_STATE',
             })
             .then(isPinned => {
               setInsCapMode(isPinned ? 'pinMode' : 'mode')
@@ -211,8 +213,8 @@ export const Popup: FC<PopupProps> = props => {
             type: 'TEMP_DISABLED_STATE',
             payload: {
               op: 'set',
-              value: newTempOff
-            }
+              value: newTempOff,
+            },
           })
         }
         return false
@@ -233,16 +235,16 @@ export const Popup: FC<PopupProps> = props => {
         ...config[insCapMode],
         instant: {
           ...config[insCapMode].instant,
-          enable: !config[insCapMode].instant.enable
-        }
-      }
+          enable: !config[insCapMode].instant.enable,
+        },
+      },
     })
   }
 
   function toggleAppActive () {
     updateConfig({
       ...config,
-      active: !config.active
+      active: !config.active,
     })
   }
 

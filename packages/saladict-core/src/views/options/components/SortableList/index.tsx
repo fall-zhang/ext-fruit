@@ -1,5 +1,4 @@
-import React from 'react'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import type React from 'react'
 import { List, Radio, Button, Card } from 'antd'
 import {
   PlusOutlined,
@@ -7,11 +6,10 @@ import {
   EditOutlined,
   CloseOutlined
 } from '@ant-design/icons'
-import { RadioChangeEvent } from 'antd/lib/radio'
-import { Omit } from '@/types/helpers'
-import { useTranslate } from '@/_helpers/i18n'
+import type { RadioChangeEvent } from 'antd/lib/radio'
 
 import './_style.scss'
+import { useTranslation } from 'react-i18next'
 
 export { reorder } from './reorder'
 
@@ -43,7 +41,7 @@ export interface SortableListProps
 }
 
 export function SortableList (props: SortableListProps) {
-  const { t } = useTranslate('common')
+  const { t } = useTranslation('common')
 
   return (
     <Card
@@ -61,95 +59,53 @@ export function SortableList (props: SortableListProps) {
         value={props.selected}
         onChange={props.onSelect}
       >
-        <DragDropContext
-          onDragEnd={result => {
-            if (
-              props.onOrderChanged &&
-              result.destination &&
-              result.source.index !== result.destination.index
-            ) {
-              props.onOrderChanged(
-                result.source.index,
-                result.destination.index
-              )
-            }
-          }}
-        >
-          <Droppable droppableId="droppable">
-            {({ innerRef: droppableRef, droppableProps, placeholder }) => (
-              <div ref={droppableRef} {...droppableProps}>
-                <List size="large">
-                  {props.list.map((item, index) => (
-                    <Draggable
-                      key={item.value}
-                      draggableId={item.value}
-                      index={index}
-                      disableInteractiveElementBlocking
-                    >
-                      {({
-                        innerRef: draggableRef,
-                        draggableProps,
-                        dragHandleProps
-                      }) => (
-                        <div ref={draggableRef} {...draggableProps}>
-                          <List.Item key={item.value}>
-                            <div className="sortable-list-item">
-                              {props.selected == null
-                                ? (
-                                  item.title
-                                )
-                                : (
-                                  <Radio value={item.value}>{item.title}</Radio>
-                                )}
-                              <div className="sortable-list-item-btns">
-                                <SwapOutlined
-                                  rotate={90}
-                                  title={t('sort')}
-                                  style={{ cursor: 'move' }}
-                                  {...dragHandleProps}
-                                />
-                                <Button
-                                  className="sortable-list-item-btn"
-                                  title={t('edit')}
-                                  shape="circle"
-                                  size="small"
-                                  icon={<EditOutlined />}
-                                  disabled={
-                                    props.disableEdit != null &&
+        <List size="large">
+          {props.list.map((item, index) => (
+            <List.Item key={item.value}>
+              <div className="sortable-list-item">
+                {props.selected == null
+                  ? (
+                    item.title
+                  )
+                  : (
+                    <Radio value={item.value}>{item.title}</Radio>
+                  )}
+                <div className="sortable-list-item-btns">
+                  <SwapOutlined
+                    rotate={90}
+                    title={t('sort')}
+                    style={{ cursor: 'move' }}
+                  />
+                  <Button
+                    className="sortable-list-item-btn"
+                    title={t('edit')}
+                    shape="circle"
+                    size="small"
+                    icon={<EditOutlined />}
+                    disabled={
+                      props.disableEdit != null &&
                                     props.disableEdit(index, item)
-                                  }
-                                  onClick={() =>
-                                    props.onEdit && props.onEdit(index, item)
-                                  }
-                                />
-                                <Button
-                                  title={t('delete')}
-                                  className="sortable-list-item-btn"
-                                  shape="circle"
-                                  size="small"
-                                  icon={<CloseOutlined />}
-                                  disabled={
-                                    props.selected != null &&
-                                    item.value === props.selected
-                                  }
-                                  onClick={() =>
-                                    props.onDelete &&
-                                    props.onDelete(index, item)
-                                  }
-                                />
-                              </div>
-                            </div>
-                          </List.Item>
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {placeholder}
-                </List>
+                    }
+                    onClick={() =>
+                      props.onEdit && props.onEdit(index, item)
+                    }
+                  />
+                  <Button
+                    title={t('delete')}
+                    className="sortable-list-item-btn"
+                    shape="circle"
+                    size="small"
+                    disabled={ props.selected != null && item.value === props.selected }
+                    onClick={() =>
+                      props.onDelete?.(index, item)
+                    }
+                  ><CloseOutlined /></Button>
+                </div>
               </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+            </List.Item>
+          ))}
+        </List>
+
       </Radio.Group>
       {(props.isShowAdd == null || props.isShowAdd) && (
         <Button type="dashed" style={{ width: '100%' }} onClick={props.onAdd}>

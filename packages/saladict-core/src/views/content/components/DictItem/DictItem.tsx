@@ -1,33 +1,34 @@
-import React, {
+import type {
   ComponentType,
-  FC,
+  FC
+} from 'react'
+import React, {
   useState,
   useEffect,
   useCallback,
   useRef,
   useMemo
 } from 'react'
-import { useObservableCallback, identity } from 'observable-hooks'
-import classNames from 'clsx'
-import { ResizeReporter } from 'react-resize-reporter/scroll'
-import { DictID } from '@/app-config'
-import { message } from '@/_helpers/browser-api'
-import { newWord } from '@/_helpers/record-manager'
-import { timer } from '@/_helpers/promise-more'
-import { ViewPorps } from '@/components/Dictionaries/helpers'
-import { DictItemHead, DictItemHeadProps } from './DictItemHead'
-import { DictItemBody, DictItemBodyProps } from './DictItemBody'
-import { isTagName } from '@/_helpers/dom'
+import clsx from 'clsx'
+import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
+import type { DictItemHeadProps } from './DictItemHead'
+import { DictItemHead } from './DictItemHead'
+import type { DictItemBodyProps } from './DictItemBody'
+import { DictItemBody } from './DictItemBody'
+import type { DictID } from '@P/saladict-core/src/app-config'
+import { timer } from '@P/saladict-core/src/utils/promise-more'
+import type { ViewProps } from '@P/saladict-core/src/core/trans-api/helpers'
+import { isTagName } from '@P/saladict-core/src/utils/dom'
 
 const DICT_ITEM_HEAD_HEIGHT = 20
 
 export interface DictItemProps
-  extends Omit<DictItemBodyProps, 'catalogSelect$' | 'dictRootRef'> {
+  extends Omit<DictItemBodyProps, 'dictRootRef'> {
   /** default height when search result is received */
   preferredHeight: number
   withAnimation: boolean
   /** Inject dict component. Mainly for testing */
-  TestComp?: ComponentType<ViewPorps<any>>
+  TestComp?: ComponentType<ViewProps<any>>
 
   catalog?: DictItemHeadProps['catalog']
   openDictSrcPage: DictItemHeadProps['openDictSrcPage']
@@ -39,12 +40,11 @@ export interface DictItemProps
 }
 
 export const DictItem: FC<DictItemProps> = props => {
-  const [onCatalogSelect, catalogSelect$] = useObservableCallback<{
+  const [selectedCatalog, setSelectedCatalog] = useState<{
     key: string
     value: string
-  }>(identity)
+  }>()
 
-  /** Expand/collapse transition */
   const [noHeightTransition, setNoHeightTransition] = useState(false)
 
   const [foldState, setFoldState] = useState<'COLLAPSE' | 'HALF' | 'FULL'>(
@@ -72,8 +72,7 @@ export const DictItem: FC<DictItemProps> = props => {
       //       : Math.min(offsetHeight, props.preferredHeight)
       // )
       return Math.max(10, compareNum)
-    }
-    ,
+    },
     [foldState, offsetHeight, props.preferredHeight]
   )
 
@@ -95,7 +94,7 @@ export const DictItem: FC<DictItemProps> = props => {
 
   const preCatalogSelect = useCallback(
     async (item: { key: string; value: string }) => {
-      if (item.key[0] !== '#') return onCatalogSelect(item)
+      if (item.key[0] !== '#') return setSelectedCatalog(item)
 
       // handle anchor jump
       if (!dictRootRef.current) return
@@ -122,7 +121,7 @@ export const DictItem: FC<DictItemProps> = props => {
                 anchor.getBoundingClientRect().y -
                 scrollParent.firstElementChild!.getBoundingClientRect().y -
                 30, // plus the sticky title bar
-              behavior: props.withAnimation ? 'smooth' : 'auto'
+              behavior: props.withAnimation ? 'smooth' : 'auto',
             })
             return
           }
@@ -132,7 +131,7 @@ export const DictItem: FC<DictItemProps> = props => {
       // Fallback to scrollIntoView
       // The topmost area may scroll beyond dict header due to sticky layout
       anchor.scrollIntoView({
-        behavior: props.withAnimation ? 'smooth' : 'auto'
+        behavior: props.withAnimation ? 'smooth' : 'auto',
       })
     },
     [foldState, props.withAnimation]
@@ -141,9 +140,9 @@ export const DictItem: FC<DictItemProps> = props => {
   return (
     <section
       ref={dictItemRef}
-      className={classnames('dictItem', {
+      className={clsx('dictItem', {
         isUnfold: foldState !== 'COLLAPSE',
-        noHeightTransition
+        noHeightTransition,
       })}
     >
       <DictItemHead
@@ -161,7 +160,7 @@ export const DictItem: FC<DictItemProps> = props => {
         onClick={searchLinkText}
       >
         <article className="dictItem-BodyMesure">
-          <ResizeReporter reportInit onHeightChanged={setOffsetHeight} />
+          {/* <ResizeReporter reportInit onHeightChanged={setOffsetHeight} /> */}
           {props.TestComp
             ? (
               props.searchStatus === 'FINISH' &&
@@ -169,13 +168,11 @@ export const DictItem: FC<DictItemProps> = props => {
             React.createElement(props.TestComp, {
               result: props.searchResult,
               searchText: props.searchText,
-              catalogSelect$
             })
             )
             : (
               <DictItemBody
                 {...props}
-                catalogSelect$={catalogSelect$}
                 dictRootRef={dictRootRef}
               />
             )}
@@ -225,19 +222,19 @@ export const DictItem: FC<DictItemProps> = props => {
 
         const $a = el as HTMLAnchorElement
         if (/nofollow|noopener|noreferrer/.test($a.rel)) {
-          message.send({
-            type: 'OPEN_URL',
-            payload: {
-              url: $a.href
-            }
-          })
+          // message.send({
+          //   type: 'OPEN_URL',
+          //   payload: {
+          //     url: $a.href,
+          //   },
+          // })
         } else {
           props.searchText({
             word: newWord({
               text: $a.textContent || '',
               title: 'Saladict',
-              favicon: 'https://saladict.crimx.com/favicon.ico'
-            })
+              favicon: 'https://saladict.crimx.com/favicon.ico',
+            }),
           })
         }
 

@@ -1,4 +1,6 @@
-$waveform-height: 165px;
+.waveformBox {
+  --waveform-height: 165px;
+}
 
 .waveformBox-DrawerBtn {
   display: block;
@@ -30,7 +32,7 @@ $waveform-height: 165px;
 
 .waveformBox.isExpand {
   .waveformBox-FrameWrap {
-    height: $waveform-height;
+    height: var(--waveform-height);
   }
 
   .waveformBox-DrawerBtn {
@@ -44,7 +46,7 @@ $waveform-height: 165px;
 
 .waveformBox-Frame {
   width: 100%;
-  height: $waveform-height;
+  height: var(--waveform-height);
   border: none;
   transition: opacity 0.4s;
 }

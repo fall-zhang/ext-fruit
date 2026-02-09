@@ -1,30 +1,30 @@
-import { useRefFn } from 'observable-hooks'
-import { AppConfig } from '@/app-config'
-import { Profile } from '@/app-config/profiles'
+import type { AppConfig } from '@P/saladict-core/src/app-config'
+import type { Profile } from '@P/saladict-core/src/app-config/profiles'
+import { useRef } from 'react'
 
-export function getConfigPath<A extends keyof AppConfig>(pA: A): string
+export function getConfigPath<A extends keyof AppConfig> (pA: A): string
 export function getConfigPath<
   A extends keyof AppConfig,
   B extends keyof AppConfig[A]
->(pA: A, pB: B): string
+> (pA: A, pB: B): string
 export function getConfigPath<
   A extends keyof AppConfig,
   B extends keyof AppConfig[A],
   C extends keyof AppConfig[A][B]
->(pA: A, pB: B, pC: C): string
+> (pA: A, pB: B, pC: C): string
 export function getConfigPath<
   A extends keyof AppConfig,
   B extends keyof AppConfig[A],
   C extends keyof AppConfig[A][B],
   D extends keyof AppConfig[A][B][C]
->(pA: A, pB: B, pC: C, pD: D): string
+> (pA: A, pB: B, pC: C, pD: D): string
 export function getConfigPath<
   A extends keyof AppConfig,
   B extends keyof AppConfig[A],
   C extends keyof AppConfig[A][B],
   D extends keyof AppConfig[A][B][C],
   E extends keyof AppConfig[A][B][C][D]
->(pA: A, pB: B, pC: C, pD: D, pE: E): string
+> (pA: A, pB: B, pC: C, pD: D, pE: E): string
 export function getConfigPath<
   A extends keyof AppConfig,
   B extends keyof AppConfig[A],
@@ -32,7 +32,7 @@ export function getConfigPath<
   D extends keyof AppConfig[A][B][C],
   E extends keyof AppConfig[A][B][C][D],
   F extends keyof AppConfig[A][B][C][D][E]
->(pA: A, pB: B, pC: C, pD: D, pE: E, pF: F): string
+> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F): string
 export function getConfigPath<
   A extends keyof AppConfig,
   B extends keyof AppConfig[A],
@@ -41,7 +41,7 @@ export function getConfigPath<
   E extends keyof AppConfig[A][B][C][D],
   F extends keyof AppConfig[A][B][C][D][E],
   G extends keyof AppConfig[A][B][C][D][E][F]
->(pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G): string
+> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G): string
 export function getConfigPath<
   A extends keyof AppConfig,
   B extends keyof AppConfig[A],
@@ -51,7 +51,7 @@ export function getConfigPath<
   F extends keyof AppConfig[A][B][C][D][E],
   G extends keyof AppConfig[A][B][C][D][E][F],
   H extends keyof AppConfig[A][B][C][D][E][F][G]
->(pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H): string
+> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H): string
 export function getConfigPath<
   A extends keyof AppConfig,
   B extends keyof AppConfig[A],
@@ -62,7 +62,7 @@ export function getConfigPath<
   G extends keyof AppConfig[A][B][C][D][E][F],
   H extends keyof AppConfig[A][B][C][D][E][F][G],
   I extends keyof AppConfig[A][B][C][D][E][F][G][H]
->(pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H, pI: I): string
+> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H, pI: I): string
 export function getConfigPath<
   A extends keyof AppConfig,
   B extends keyof AppConfig[A],
@@ -74,7 +74,7 @@ export function getConfigPath<
   H extends keyof AppConfig[A][B][C][D][E][F][G],
   I extends keyof AppConfig[A][B][C][D][E][F][G][H],
   J extends keyof AppConfig[A][B][C][D][E][F][G][H][I]
->(pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H, pI: I, pJ: J): string
+> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H, pI: I, pJ: J): string
 export function getConfigPath<
   A extends keyof AppConfig,
   B extends keyof AppConfig[A],
@@ -87,7 +87,7 @@ export function getConfigPath<
   I extends keyof AppConfig[A][B][C][D][E][F][G][H],
   J extends keyof AppConfig[A][B][C][D][E][F][G][H][I],
   K extends keyof AppConfig[A][B][C][D][E][F][G][H][I][J]
->(
+> (
   pA: A,
   pB: B,
   pC: C,
@@ -107,32 +107,32 @@ export function getConfigPath (...args: string[]): string {
 export const useConfigPath: typeof getConfigPath = (
   ...args: string[]
 ): string => {
-  return useRefFn(() => 'config.' + args.join('.')).current
+  return useRef('config.' + args.join('.')).current
 }
 
-export function getProfilePath<A extends keyof Profile>(pA: A): string
+export function getProfilePath<A extends keyof Profile> (pA: A): string
 export function getProfilePath<
   A extends keyof Profile,
   B extends keyof Profile[A]
->(pA: A, pB: B): string
+> (pA: A, pB: B): string
 export function getProfilePath<
   A extends keyof Profile,
   B extends keyof Profile[A],
   C extends keyof Profile[A][B]
->(pA: A, pB: B, pC: C): string
+> (pA: A, pB: B, pC: C): string
 export function getProfilePath<
   A extends keyof Profile,
   B extends keyof Profile[A],
   C extends keyof Profile[A][B],
   D extends keyof Profile[A][B][C]
->(pA: A, pB: B, pC: C, pD: D): string
+> (pA: A, pB: B, pC: C, pD: D): string
 export function getProfilePath<
   A extends keyof Profile,
   B extends keyof Profile[A],
   C extends keyof Profile[A][B],
   D extends keyof Profile[A][B][C],
   E extends keyof Profile[A][B][C][D]
->(pA: A, pB: B, pC: C, pD: D, pE: E): string
+> (pA: A, pB: B, pC: C, pD: D, pE: E): string
 export function getProfilePath<
   A extends keyof Profile,
   B extends keyof Profile[A],
@@ -140,7 +140,7 @@ export function getProfilePath<
   D extends keyof Profile[A][B][C],
   E extends keyof Profile[A][B][C][D],
   F extends keyof Profile[A][B][C][D][E]
->(pA: A, pB: B, pC: C, pD: D, pE: E, pF: F): string
+> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F): string
 export function getProfilePath<
   A extends keyof Profile,
   B extends keyof Profile[A],
@@ -149,7 +149,7 @@ export function getProfilePath<
   E extends keyof Profile[A][B][C][D],
   F extends keyof Profile[A][B][C][D][E],
   G extends keyof Profile[A][B][C][D][E][F]
->(pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G): string
+> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G): string
 export function getProfilePath<
   A extends keyof Profile,
   B extends keyof Profile[A],
@@ -159,7 +159,7 @@ export function getProfilePath<
   F extends keyof Profile[A][B][C][D][E],
   G extends keyof Profile[A][B][C][D][E][F],
   H extends keyof Profile[A][B][C][D][E][F][G]
->(pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H): string
+> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H): string
 export function getProfilePath<
   A extends keyof Profile,
   B extends keyof Profile[A],
@@ -170,7 +170,7 @@ export function getProfilePath<
   G extends keyof Profile[A][B][C][D][E][F],
   H extends keyof Profile[A][B][C][D][E][F][G],
   I extends keyof Profile[A][B][C][D][E][F][G][H]
->(pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H, pI: I): string
+> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H, pI: I): string
 export function getProfilePath<
   A extends keyof Profile,
   B extends keyof Profile[A],
@@ -182,7 +182,7 @@ export function getProfilePath<
   H extends keyof Profile[A][B][C][D][E][F][G],
   I extends keyof Profile[A][B][C][D][E][F][G][H],
   J extends keyof Profile[A][B][C][D][E][F][G][H][I]
->(pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H, pI: I, pJ: J): string
+> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H, pI: I, pJ: J): string
 export function getProfilePath<
   A extends keyof Profile,
   B extends keyof Profile[A],
@@ -195,7 +195,7 @@ export function getProfilePath<
   I extends keyof Profile[A][B][C][D][E][F][G][H],
   J extends keyof Profile[A][B][C][D][E][F][G][H][I],
   K extends keyof Profile[A][B][C][D][E][F][G][H][I][J]
->(
+> (
   pA: A,
   pB: B,
   pC: C,
@@ -215,5 +215,5 @@ export function getProfilePath (...args: string[]): string {
 export const useProfilePath: typeof getProfilePath = (
   ...args: string[]
 ): string => {
-  return useRefFn(() => 'profile.' + args.join('.')).current
+  return useRef('profile.' + args.join('.')).current
 }

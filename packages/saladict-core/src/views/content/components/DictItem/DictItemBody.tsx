@@ -1,15 +1,16 @@
-import React, { ComponentType, FC, useMemo, Suspense } from 'react'
+import type { ComponentType, FC } from 'react'
+import React, { useMemo, Suspense } from 'react'
 import classNames from 'clsx'
 import root from 'react-shadow'
-import { Observable } from 'rxjs'
-import { DictID } from '@/app-config'
-import { Word } from '@/_helpers/record-manager'
+import type { Observable } from 'rxjs'
+import type { DictID } from '@/app-config'
 import { SALADICT_PANEL } from '@/_helpers/saladict'
-import { ViewPorps } from '@/components/Dictionaries/helpers'
+import type { ViewProps } from '@/components/Dictionaries/helpers'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { StaticSpeakerContainer } from '@/components/Speaker'
 
 import dictContentStyles from './DictItemContent.shadow.scss?raw'
+import type { Word } from '@P/saladict-core/src/types/word'
 
 export interface DictItemBodyProps {
   dictID: DictID
@@ -22,9 +23,8 @@ export interface DictItemBodyProps {
   searchStatus: 'IDLE' | 'SEARCHING' | 'FINISH'
   searchResult?: object | null
 
-  catalogSelect$: Observable<{ key: string; value: string }>
 
-  dictRootRef: React.MutableRefObject<HTMLDivElement | null>
+  dictRootRef: React.RefObject<HTMLDivElement | null>
 
   searchText: (arg?: {
     id?: DictID
@@ -40,10 +40,8 @@ export interface DictItemBodyProps {
 export const DictItemBody: FC<DictItemBodyProps> = props => {
   const Dict = useMemo(
     () =>
-      React.lazy<ComponentType<ViewPorps<any>>>(() =>
+      React.lazy<ComponentType<ViewProps<any>>>(() =>
         import(
-          /* webpackInclude: /View\.tsx$/ */
-          /* webpackMode: "lazy" */
           `@/components/Dictionaries/${props.dictID}/View.tsx`
         )
       ),
@@ -61,7 +59,7 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
         return {
           default: () => (
             <style>{(styleModule.default || styleModule).toString()}</style>
-          )
+          ),
         }
       }),
     [props.dictID]
@@ -92,7 +90,6 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
                 <Dict
                   result={props.searchResult}
                   searchText={props.searchText}
-                  catalogSelect$={props.catalogSelect$}
                 />
               </StaticSpeakerContainer>
             </div>

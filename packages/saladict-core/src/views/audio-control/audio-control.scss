@@ -6,5 +6,5 @@ body {
   padding: 0;
 }
 
-@use '@/styles/_theme.scss';
+@use '../../assets/styles/theme';
 @use '@/components/Waveform/Waveform.scss';

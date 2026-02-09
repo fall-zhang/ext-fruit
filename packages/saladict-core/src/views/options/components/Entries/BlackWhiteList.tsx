@@ -1,11 +1,11 @@
 import React, { FC, useState } from 'react'
 import { Button } from 'antd'
 import { SaladictForm } from '@/options/components/SaladictForm'
-import { useTranslate } from '@/_helpers/i18n'
+import { useTranslation } from 'react-i18next'
 import { MatchPatternModal } from '../MatchPatternModal'
 
 export const BlackWhiteList: FC = () => {
-  const { t } = useTranslate(['options', 'common'])
+  const { t } = useTranslation(['options', 'common'])
   const [editingArea, setEditingArea] = useState<
     'pdfWhitelist' | 'pdfBlacklist' | 'whitelist' | 'blacklist' | null
   >(null)
