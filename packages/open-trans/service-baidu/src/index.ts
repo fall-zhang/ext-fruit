@@ -1,8 +1,10 @@
-import {
+import type {
   Language,
-  Translator,
-  TranslateError,
   TranslateQueryResult
+} from '../../translator'
+import {
+  Translator,
+  TranslateError
 } from '../../translator'
 import md5 from 'md5'
 import qs from 'qs'
@@ -36,7 +38,7 @@ const langMap: [Language, string][] = [
   ['sl', 'slo'],
   ['sv', 'swe'],
   ['hu', 'hu'],
-  ['vi', 'vie']
+  ['vi', 'vie'],
 ]
 
 export interface BaiduConfig {
@@ -53,7 +55,7 @@ type BaiduTranslateResult = {
     src: string;
   }>;
   lan?: Language;
-};
+}
 
 export class Baidu extends Translator<BaiduConfig> {
   readonly name = 'baidu'
@@ -70,7 +72,7 @@ export class Baidu extends Translator<BaiduConfig> {
     type BaiduTranslateError = {
       error_code: '54001' | string;
       error_msg: 'Invalid Sign' | string;
-    };
+    }
 
 
     const salt = Date.now()
@@ -85,8 +87,8 @@ export class Baidu extends Translator<BaiduConfig> {
         q: text,
         salt,
         appid,
-        sign: md5(appid + text + salt + key)
-      }
+        sign: md5(appid + text + salt + key),
+      },
     }).catch(e => {
       console.error(new Error('[Baidu service]' + e))
       throw e
@@ -100,19 +102,19 @@ export class Baidu extends Translator<BaiduConfig> {
       // https://api.fanyi.baidu.com/api/trans/product/apidoc#joinFile
       console.error(new Error('[Baidu service]' + error))
       switch (error) {
-      case '52003':
-      case '54000':
-        throw new TranslateError('AUTH_ERROR', translateError.error_msg)
-      case '54004':
-        throw new TranslateError('USEAGE_LIMIT', translateError.error_msg)
-      default:
-        throw new TranslateError('UNKNOWN', translateError.error_msg)
+        case '52003':
+        case '54000':
+          throw new TranslateError('AUTH_ERROR', translateError.error_msg)
+        case '54004':
+          throw new TranslateError('USEAGE_LIMIT', translateError.error_msg)
+        default:
+          throw new TranslateError('UNKNOWN', translateError.error_msg)
       }
     }
 
     const {
       trans_result: transResult,
-      from: langDetected
+      from: langDetected,
     } = data as BaiduTranslateResult
     const transParagraphs = transResult.map(({ dst }) => dst)
     const detectedFrom = Baidu.langMapReverse.get(langDetected) as Language
@@ -123,12 +125,12 @@ export class Baidu extends Translator<BaiduConfig> {
       to,
       origin: {
         paragraphs: transResult.map(({ src }) => src),
-        tts: await this.textToSpeech(text, detectedFrom)
+        tts: await this.textToSpeech(text, detectedFrom),
       },
       trans: {
         paragraphs: transParagraphs,
-        tts: await this.textToSpeech(transParagraphs.join(' '), to)
-      }
+        tts: await this.textToSpeech(transParagraphs.join(' '), to),
+      },
     }
   }
 
@@ -148,7 +150,7 @@ export class Baidu extends Translator<BaiduConfig> {
     return `https://fanyi.baidu.com/gettts?${qs.stringify({
       lan: Baidu.langMap.get(lang !== 'auto' ? lang : 'zh-CN') || 'zh',
       text,
-      spd: 5
+      spd: 5,
     })}`
   }
 
@@ -158,11 +160,11 @@ export class Baidu extends Translator<BaiduConfig> {
         url: 'https://fanyi.baidu.com/langdetect',
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
         data: qs.stringify({
-          query: text
-        })
+          query: text,
+        }),
       })
       const result = res.data
       return result.lan as Language

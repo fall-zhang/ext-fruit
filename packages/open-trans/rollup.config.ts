@@ -17,7 +17,7 @@ const libConfig = defineConfig({
   input: './src/main.tsx',
   // input: 'example/index.tsx',
   jsx: 'react-jsx',
-  external: ['react', 'react-dom', 'react-redux'],
+  external: ['react', 'react-dom'],
   output: [{
     format: 'es',
     sourcemap: 'inline',

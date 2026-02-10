@@ -1,10 +1,10 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState } from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import en from 'open-trans/languages/locales/en.json'
 import zhCN from 'open-trans/languages/locales/zh-CN.json'
 import zhTW from 'open-trans/languages/locales/zh-TW.json'
-import { TranslateResult, Language } from '@P/open-trans/translator'
+import type { TranslateResult, Language } from '@P/open-trans/translator'
 
 import '@fortawesome/fontawesome-free/css/all.css'
 import 'bulma/css/bulma.css'
@@ -14,15 +14,8 @@ import { Speaker } from './Speaker'
 const locales = {
   en,
   'zh-CN': zhCN,
-  'zh-TW': zhTW
+  'zh-TW': zhTW,
 }
-
-const translatorReq = require.context(
-  '../../../../packages/',
-  true,
-  /service-.*index\.ts$/,
-  'sync'
-)
 
 function App () {
   const [locale, setLocale] = useState<keyof typeof locales>('zh-CN')
@@ -35,7 +28,7 @@ function App () {
   >(() =>
     translatorReq.keys().map(path => ({
       name: /service-([^/\\]+)/.exec(path)![1],
-      loading: false
+      loading: false,
     }))
   )
 
@@ -118,19 +111,19 @@ function App () {
                 updateServices(
                   services.map(service => ({
                     name: service.name,
-                    loading: true
+                    loading: true,
                   }))
                 )
                 services.forEach(async (service, i) => {
                   let result: undefined | TranslateResult
                   try {
-                    result = await browser.runtime.sendMessage({
-                      type: 'TRANSLATE',
-                      name: service.name,
-                      text,
-                      from,
-                      to
-                    })
+                    // result = await browser.runtime.sendMessage({
+                    //   type: 'TRANSLATE',
+                    //   name: service.name,
+                    //   text,
+                    //   from,
+                    //   to,
+                    // })
                   } catch (e) {
                     console.warn(service.name, e)
                   }
@@ -142,7 +135,7 @@ function App () {
                 })
               }}
             >
-                Search
+              Search
             </button>
           </p>
         </div>
@@ -203,4 +196,5 @@ function App () {
   )
 }
 
-ReactDOM.render(<App />, document.getElementById('root'))
+const root = createRoot(document.getElementById('root')!)
+root.render(<App />)

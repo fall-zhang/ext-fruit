@@ -15,7 +15,7 @@
     "jsx": "react-jsx",
     "types": ["node"],
     "paths": {
-      "open-trans/*": ["./"]
+      "@sala/trans/*": ["./"]
     }
   },
   "exclude": ["node_modules", "dist"]
