@@ -32,29 +32,25 @@ export interface DictLocales {
   }
 }
 
-export async function i18nLoader () {
-  await i18n
-    .use(initReactI18next) // passes i18n down to react-i18next
-    .init({
-      lng: 'zh-CN',
-      fallbackLng: false,
-      resources: {
-        'zh-CN': {
-          translation: {
-            ...zhCN,
-          },
-        },
+i18n
+  .use(initReactI18next) // passes i18n down to react-i18next
+  .init({
+    lng: 'zh-CN',
+    fallbackLng: false,
+    resources: {
+      'zh-CN': {
+        ...zhCN,
       },
-      saveMissing: false,
-      load: 'currentOnly',
-      debug: import.meta.env.DEV,
-      ns: 'common',
-      defaultNS: 'common',
+    },
+    saveMissing: false,
+    load: 'currentOnly',
+    debug: import.meta.env.DEV,
+    ns: 'common',
+    defaultNS: 'common',
 
-      interpolation: {
-        escapeValue: false, // not needed for react as it escapes by default
-      },
-    })
+    interpolation: {
+      escapeValue: false, // not needed for react as it escapes by default
+    },
+  })
 
-  return i18n
-}
+export default i18n
