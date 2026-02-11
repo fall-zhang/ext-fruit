@@ -5,7 +5,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "module": "ES2020",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
@@ -15,7 +15,6 @@
     "jsx": "react-jsx",
     "types": ["node"],
     "paths": {
-      "@sala/trans/*": ["./"]
     }
   },
   "exclude": ["node_modules", "dist"]

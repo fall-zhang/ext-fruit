@@ -1,7 +1,9 @@
-import {
+import type {
   Language,
+  TranslateQueryResult
+} from '../../translator'
+import {
   Translator,
-  TranslateQueryResult,
   TranslateError
 } from '../../translator'
 import sha256 from 'crypto-js/sha256'
@@ -29,7 +31,7 @@ const langMap: [Language, string][] = [
   ['ar', 'ar'],
   ['id', 'id'],
   ['vi', 'vi'],
-  ['it', 'it']
+  ['it', 'it'],
 ]
 
 export interface YoudaoConfig {
@@ -76,9 +78,9 @@ export class Youdao extends Translator<YoudaoConfig> {
         signType: 'v3',
         curtime: curTime,
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      })
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }),
     }).catch(() => {
       throw new TranslateError('NETWORK_ERROR')
     })
@@ -86,15 +88,15 @@ export class Youdao extends Translator<YoudaoConfig> {
     // https://ai.youdao.com/DOCSIRMA/html/trans/api/wbfy/index.html
     if (res.data.errorCode) {
       switch (res.data.errorCode) {
-      case '0':
-        break // means success
-      case '101': // params error
-      case '108':
-        throw new TranslateError('AUTH_ERROR', res.data.errorCode)
-      case '401':
-        throw new TranslateError('USEAGE_LIMIT', res.data.errorCode)
-      default:
-        throw new TranslateError('UNKNOWN', res.data.errorCode)
+        case '0':
+          break // means success
+        case '101': // params error
+        case '108':
+          throw new TranslateError('AUTH_ERROR', res.data.errorCode)
+        case '401':
+          throw new TranslateError('USEAGE_LIMIT', res.data.errorCode)
+        default:
+          throw new TranslateError('UNKNOWN', res.data.errorCode)
       }
     }
 
@@ -105,14 +107,14 @@ export class Youdao extends Translator<YoudaoConfig> {
       to,
       origin: {
         paragraphs: text.split(/\n+/),
-        tts: (await this.textToSpeech(text, from)) || undefined
+        tts: (await this.textToSpeech(text, from)) || undefined,
       },
       trans: {
         paragraphs: result.translation,
         tts:
           (await this.textToSpeech(result.translation.join('\n'), to)) ||
-          undefined
-      }
+          undefined,
+      },
     }
   }
 
@@ -127,7 +129,7 @@ export class Youdao extends Translator<YoudaoConfig> {
       en: 'eng',
       ja: 'jap',
       ko: 'ko',
-      fr: 'fr'
+      fr: 'fr',
     }
     const voiceLang = standard2custom[lang]
     if (!voiceLang) return null
@@ -139,7 +141,7 @@ export class Youdao extends Translator<YoudaoConfig> {
         audio: text,
         type: 0,
         le: voiceLang,
-        keyfrom: 'speaker-target'
+        keyfrom: 'speaker-target',
       })
     )
   }

@@ -1,20 +1,18 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import en from 'open-trans/languages/locales/en.json'
-import zhCN from 'open-trans/languages/locales/zh-CN.json'
-import zhTW from 'open-trans/languages/locales/zh-TW.json'
+import en from '../../languages/locales/en.json'
+import zhCN from '../../languages/locales/zh-CN.json'
 import type { TranslateResult, Language } from '@P/open-trans/translator'
 
 import '@fortawesome/fontawesome-free/css/all.css'
 import 'bulma/css/bulma.css'
 import './style.css'
-import { Speaker } from './Speaker'
+import { Speaker } from './components/Speaker'
 
 const locales = {
   en,
   'zh-CN': zhCN,
-  'zh-TW': zhTW,
 }
 
 function App () {

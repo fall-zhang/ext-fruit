@@ -1,7 +1,9 @@
-import {
+import type {
   Language,
+  TranslateQueryResult
+} from '../../translator'
+import {
   Translator,
-  TranslateQueryResult,
   TranslateError
 } from '../../translator'
 
@@ -9,14 +11,14 @@ type CaiyunTranslateResult = {
   confidence: number;
   target: string[];
   rc: number;
-};
+}
 
 // https://docs.caiyunapp.com/lingocloud-api/#%E6%94%AF%E6%8C%81%E7%9A%84%E8%AF%AD%E8%A8%80
 const langMap: [Language, string][] = [
   ['auto', 'auto'],
   ['zh-CN', 'zh'],
   ['en', 'en'],
-  ['ja', 'ja']
+  ['ja', 'ja'],
 ]
 
 export interface CaiyunConfig {
@@ -50,27 +52,27 @@ export class Caiyun extends Translator<CaiyunConfig> {
       url: 'https://api.interpreter.caiyunai.com/v1/translator',
       headers: {
         'content-type': 'application/json',
-        'x-authorization': 'token ' + config.token
+        'x-authorization': 'token ' + config.token,
       },
       method: 'POST',
       data: JSON.stringify({
         source,
         trans_type: `${Caiyun.langMap.get(from)}2${Caiyun.langMap.get(to)}`,
-        detect
-      })
+        detect,
+      }),
     }).catch(error => {
       // https://api.interpreter.caiyunai.com/v1/translator
       if (error && error.response && error.response.status) {
         switch (error.response.status) {
-        case 401:
-          throw new TranslateError('AUTH_ERROR', error.response.data.message)
-        case 500: // never happen now , need to check
-          throw new TranslateError(
-            'USEAGE_LIMIT',
-            error.response.data.message
-          )
-        default:
-          throw new TranslateError('UNKNOWN', error.response.data.message)
+          case 401:
+            throw new TranslateError('AUTH_ERROR', error.response.data.message)
+          case 500: // never happen now , need to check
+            throw new TranslateError(
+              'USEAGE_LIMIT',
+              error.response.data.message
+            )
+          default:
+            throw new TranslateError('UNKNOWN', error.response.data.message)
         }
       } else {
         throw new TranslateError('UNKNOWN')
@@ -83,11 +85,11 @@ export class Caiyun extends Translator<CaiyunConfig> {
       from: detect ? await this.detect(text) : from,
       to,
       origin: {
-        paragraphs: source
+        paragraphs: source,
       },
       trans: {
-        paragraphs: result.target
-      }
+        paragraphs: result.target,
+      },
     }
   }
 }

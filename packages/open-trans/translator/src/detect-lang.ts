@@ -1,4 +1,4 @@
-import { Language } from 'open-trans/languages'
+import type { Language } from 'open-trans/languages'
 import franc from 'franc-min'
 
 // improve accuracy but narrowing down language set
@@ -85,7 +85,7 @@ const langMap = new Map<string, Language>([
   // ["xho", "xh"],
   // ["ydd", "yi"],
   // ["yor", "yo"],
-  ['cmn', 'zh-CN']
+  ['cmn', 'zh-CN'],
   // ["zul", "zu"]
 ])
 

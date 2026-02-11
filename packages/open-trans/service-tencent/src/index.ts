@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
+import type {
   Language,
+  TranslateQueryResult
+} from '../../translator'
+import {
   Translator,
-  TranslateQueryResult,
   TranslateError
 } from '../../translator'
 import SHA256 from 'crypto-js/sha256'
 import HMACSHA256 from 'crypto-js/hmac-sha256'
 import EncHEX from 'crypto-js/enc-hex'
-import { AxiosPromise } from 'axios'
+import type { AxiosPromise } from 'axios'
 import { decodeHTMLEntities } from './html-entities'
 
 declare const browser: any
@@ -31,7 +33,7 @@ const langMap: [Language, string][] = [
   ['ru', 'ru'],
   ['th', 'th'],
   ['tr', 'tr'],
-  ['vi', 'vi']
+  ['vi', 'vi'],
 ]
 
 export interface TencentConfig {
@@ -114,7 +116,7 @@ export class Tencent extends Translator<TencentConfig> {
     action,
     payload,
     service,
-    version
+    version,
   }: {
     secretId: string;
     secretKey: string;
@@ -138,7 +140,7 @@ export class Tencent extends Translator<TencentConfig> {
       `host:${host}`,
       '',
       'content-type;host',
-      SHA256(payload).toString(EncHEX)
+      SHA256(payload).toString(EncHEX),
     ].join('\n')
 
     const datestamp = Tencent.getUTCDate(now)
@@ -147,7 +149,7 @@ export class Tencent extends Translator<TencentConfig> {
       'TC3-HMAC-SHA256',
       timestamp,
       `${datestamp}/${service}/tc3_request`,
-      SHA256(CanonicalRequest).toString(EncHEX)
+      SHA256(CanonicalRequest).toString(EncHEX),
     ].join('\n')
 
     const SecretDate = HMACSHA256(datestamp, `TC3${secretKey}`)
@@ -170,9 +172,9 @@ export class Tencent extends Translator<TencentConfig> {
         'X-TC-Timestamp': timestamp,
         'X-TC-Region': 'ap-beijing',
         'X-TC-Version': version,
-        Authorization: `TC3-HMAC-SHA256 Credential=${secretId}/${datestamp}/${service}/tc3_request, SignedHeaders=content-type;host, Signature=${Signature}`
+        Authorization: `TC3-HMAC-SHA256 Credential=${secretId}/${datestamp}/${service}/tc3_request, SignedHeaders=content-type;host, Signature=${Signature}`,
       },
-      data: payload
+      data: payload,
     })
   }
 
@@ -186,7 +188,7 @@ export class Tencent extends Translator<TencentConfig> {
       ProjectId: 0,
       Source: Tencent.langMap.get(from),
       SourceText: text,
-      Target: Tencent.langMap.get(to)
+      Target: Tencent.langMap.get(to),
     })
 
     const { data } = await this.signedRequest<{
@@ -205,7 +207,7 @@ export class Tencent extends Translator<TencentConfig> {
       action: 'TextTranslate',
       payload: RequestPayload,
       service: 'tmt',
-      version: '2018-03-21'
+      version: '2018-03-21',
     }).catch(() => {
       throw new TranslateError('NETWORK_ERROR')
     })
@@ -213,15 +215,15 @@ export class Tencent extends Translator<TencentConfig> {
     // https://cloud.tencent.com/document/product/551/14403
     if (data.Response.Error && data.Response.Error.Code) {
       switch (data.Response.Error.Code) {
-      case 'AuthFailure.SecretIdNotFound':
-      case 'AuthFailure.InvalidSecretId':
-        throw new TranslateError('AUTH_ERROR', data.Response.Error.Code)
-      case 'FailedOperation.NoFreeAmount':
-      case 'FailedOperation.UserHasNoFreeAmount':
-      case 'FailedOperation.ServiceIsolate':
-        throw new TranslateError('USEAGE_LIMIT', data.Response.Error.Code)
-      default:
-        throw new TranslateError('UNKNOWN', data.Response.Error.Code)
+        case 'AuthFailure.SecretIdNotFound':
+        case 'AuthFailure.InvalidSecretId':
+          throw new TranslateError('AUTH_ERROR', data.Response.Error.Code)
+        case 'FailedOperation.NoFreeAmount':
+        case 'FailedOperation.UserHasNoFreeAmount':
+        case 'FailedOperation.ServiceIsolate':
+          throw new TranslateError('USEAGE_LIMIT', data.Response.Error.Code)
+        default:
+          throw new TranslateError('UNKNOWN', data.Response.Error.Code)
       }
     }
 
@@ -230,11 +232,11 @@ export class Tencent extends Translator<TencentConfig> {
       from: Tencent.langMapReverse.get(data.Response.Source) || from,
       to: Tencent.langMapReverse.get(data.Response.Target) || to,
       origin: {
-        paragraphs: text.split(/\n+/)
+        paragraphs: text.split(/\n+/),
       },
       trans: {
-        paragraphs: decodeHTMLEntities(data.Response.TargetText).split(/\n+/)
-      }
+        paragraphs: decodeHTMLEntities(data.Response.TargetText).split(/\n+/),
+      },
     }
   }
 
@@ -247,7 +249,7 @@ export class Tencent extends Translator<TencentConfig> {
   async detect (text: string): Promise<Language> {
     const RequestPayload: string = JSON.stringify({
       ProjectId: 0,
-      Text: text
+      Text: text,
     })
 
     const { data } = await this.signedRequest<{
@@ -261,7 +263,7 @@ export class Tencent extends Translator<TencentConfig> {
       action: 'LanguageDetect',
       payload: RequestPayload,
       service: 'tmt',
-      version: '2018-03-21'
+      version: '2018-03-21',
     })
 
     return Tencent.langMapReverse.get(data.Response.Lang) || 'auto'
@@ -274,7 +276,7 @@ export class Tencent extends Translator<TencentConfig> {
       SessionId: `${Date.now()}`,
       ModelType: -1,
       PrimaryLanguage: lang.startsWith('zh') ? 1 : 2,
-      Codec: 'mp3'
+      Codec: 'mp3',
     })
 
     const { data } = await this.signedRequest<{
@@ -289,7 +291,7 @@ export class Tencent extends Translator<TencentConfig> {
       action: 'TextToVoice',
       payload: RequestPayload,
       service: 'tts',
-      version: '2019-08-23'
+      version: '2019-08-23',
     })
 
     return data.Response.Audio || null

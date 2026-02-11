@@ -1,12 +1,13 @@
-import {
+import type {
   Languages,
   TranslatorEnv,
   TranslatorInit,
   TranslateResult,
   TranslateQueryResult
 } from './type'
-import { Language } from 'open-trans/languages'
-import Axios, { AxiosInstance, AxiosRequestConfig, AxiosPromise } from 'axios'
+import type { Language } from '../../languages'
+import type { AxiosInstance, AxiosRequestConfig, AxiosPromise } from 'axios'
+import Axios from 'axios'
 import { detectLang } from './detect-lang'
 
 export abstract class Translator<Config extends object = object> {
@@ -22,7 +23,7 @@ export abstract class Translator<Config extends object = object> {
   /**
    * 翻译源标识符
    */
-  abstract readonly name: string;
+  abstract readonly name: string
 
   /**
    * 可选的axios实例
@@ -36,7 +37,7 @@ export abstract class Translator<Config extends object = object> {
   /**
    * 获取翻译器所支持的语言列表： 语言标识符数组
    */
-  abstract getSupportLanguages(): Languages;
+  abstract getSupportLanguages (): Languages
 
   /**
    * 下游应用调用的接口
@@ -49,29 +50,29 @@ export abstract class Translator<Config extends object = object> {
   ): Promise<TranslateResult> {
     const queryResult = await this.query(text, from, to, {
       ...this.config,
-      ...config
+      ...config,
     })
 
     return {
       ...queryResult,
-      engine: this.name
+      engine: this.name,
     }
   }
 
   /**
    * 更新 token 的方法
    */
-  updateToken?(): Promise<void>;
+  updateToken? (): Promise<void>
 
   /**
    * 翻译源需要实现的方法
    */
-  protected abstract query(
+  protected abstract query (
     text: string,
     from: Language,
     to: Language,
     config: Config
-  ): Promise<TranslateQueryResult>;
+  ): Promise<TranslateQueryResult>
 
   protected request<R = object> (config: AxiosRequestConfig): AxiosPromise<R> {
     return this.axios(config)

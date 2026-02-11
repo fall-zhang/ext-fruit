@@ -1,2 +1,4 @@
+import type { Language } from './src/languages'
 export * from './src/languages'
-export * from './src/locales'
+
+export type Locale = { [key in Language]: string }

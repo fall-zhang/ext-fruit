@@ -1,10 +1,8 @@
-import {
-  Language,
-  Translator,
-  TranslateError,
-  TranslateQueryResult
-} from 'open-trans/translator'
+
+import type { Language } from '../../languages'
 import qs from 'qs'
+import type { TranslateQueryResult } from '../../translator'
+import { Translator, TranslateError } from '../../translator'
 
 function truncate (q: string): string {
   const len = q.length
@@ -27,7 +25,7 @@ const langMap: [Language, string][] = [
   ['ar', 'ar'],
   ['id', 'id'],
   ['vi', 'vi'],
-  ['it', 'it']
+  ['it', 'it'],
 ]
 
 interface YandexTranslateResult {
@@ -61,23 +59,23 @@ export class Yandex extends Translator {
         text,
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          ...config.headers
-        }
-      })
+          ...config.headers,
+        },
+      }),
     }).catch(error => {
       console.log('Yandex translate error', error)
       if (error?.response?.status) {
         switch (error.response.status) {
-        case 403: // user-agent is needed else it will return 403
-          throw new TranslateError(
-            'AUTH_ERROR',
-            error.response.data?.message
-          )
-        default:
-          throw new TranslateError(
-            'UNKNOWN',
-            error.response.data?.message
-          )
+          case 403: // user-agent is needed else it will return 403
+            throw new TranslateError(
+              'AUTH_ERROR',
+              error.response.data?.message
+            )
+          default:
+            throw new TranslateError(
+              'UNKNOWN',
+              error.response.data?.message
+            )
         }
       }
       throw error
@@ -96,11 +94,11 @@ export class Yandex extends Translator {
       to,
       origin: {
         paragraphs: text.split(/\n+/),
-        tts: tts || undefined
+        tts: tts || undefined,
       },
       trans: {
-        paragraphs: result.text
-      }
+        paragraphs: result.text,
+      },
     }
   }
 

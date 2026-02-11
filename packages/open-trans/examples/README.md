@@ -1,11 +1,9 @@
-Examples of running OpenTranslate translators on browser extension.
+使用 @sala/trans 的介绍
 
 ## Installation
 
 ```
-git clone git@github.com:OpenTranslate/OpenTranslate.git
-cd OpenTranslate/examples/extension
-yarn
+pnpm
 ```
 
 Add `env.json` with config of each translator:
@@ -21,7 +19,7 @@ Add `env.json` with config of each translator:
 }
 ```
 
-Build project with `yarn build` and load extension at `OpenTranslate/examples/extension/build`.
+Build project with `pnpm build` and load extension at `OpenTranslate/examples/extension/build`.
 
 Click the browser action icon.
 
