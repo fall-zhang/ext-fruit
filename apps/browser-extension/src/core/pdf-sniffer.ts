@@ -2,31 +2,7 @@
  * Open pdf link directly
  */
 
-import { AppConfig } from '@/app-config'
-import { addConfigListener } from '@/_helpers/config-manager'
 import { openUrl } from '../utils/browser-api'
-
-export function init (config: AppConfig) {
-  if (browser.webRequest.onBeforeRequest.hasListener(otherPdfListener)) {
-    return
-  }
-
-  if (config.pdfSniff) {
-    startListening()
-  }
-
-  addConfigListener(({ newConfig, oldConfig }) => {
-    if (newConfig) {
-      if (!oldConfig || newConfig.pdfSniff !== oldConfig.pdfSniff) {
-        if (newConfig.pdfSniff) {
-          startListening()
-        } else {
-          stopListening()
-        }
-      }
-    }
-  })
-}
 
 /**
  * @param url provide a url
@@ -42,23 +18,14 @@ export async function openPDF (url?: string, force?: boolean) {
     if (tabs.length > 0 && tabs[0].url) {
       const curURL = tabs[0].url
       if (curURL.startsWith(pdfURL)) {
-        if (window.appConfig.pdfStandalone) {
-          if (tabs[0].id != null) {
-            await browser.tabs.remove(tabs[0].id)
-          }
-          pdfURL = curURL
-        } else {
-          return // ignore pdf viewer url
-        }
+        return // ignore pdf viewer url
       } else if (force || curURL.endsWith('pdf')) {
         pdfURL += '?file=' + encodeURIComponent(curURL)
       }
     }
   }
 
-  return window.appConfig.pdfStandalone
-    ? openPDFStandalone(pdfURL)
-    : openUrl({ url: pdfURL, unique: false })
+  return openUrl({ url: pdfURL, unique: false })
 }
 
 export function extractPDFUrl (fullurl?: string): string | void {
@@ -109,23 +76,9 @@ function otherPdfListener ({
 }: Parameters<
   Parameters<typeof browser.webRequest.onBeforeRequest.removeListener>[0]
 >[0]) {
-  const matchURL = ([r]: ReadonlyArray<string>) => new RegExp(r).test(url)
-  if (
-    window.appConfig.pdfBlacklist.some(matchURL) &&
-    !window.appConfig.pdfWhitelist.some(matchURL)
-  ) {
-    return
-  }
-
   const redirectUrl = browser.runtime.getURL(
     `assets/pdf/web/viewer.html?file=${encodeURIComponent(url)}`
   )
-
-  if (tabId !== -1 && window.appConfig.pdfStandalone === 'always') {
-    browser.tabs.remove(tabId)
-    openPDFStandalone(redirectUrl)
-    return { cancel: true }
-  }
 
   return { redirectUrl }
 }
@@ -138,13 +91,6 @@ function httpPdfListener ({
   Parameters<typeof browser.webRequest.onHeadersReceived.removeListener>[0]
 >[0]) {
   if (!responseHeaders) {
-    return
-  }
-  const matchURL = ([r]: ReadonlyArray<string>) => new RegExp(r).test(url)
-  if (
-    window.appConfig.pdfBlacklist.some(matchURL) &&
-    !window.appConfig.pdfWhitelist.some(matchURL)
-  ) {
     return
   }
 
@@ -160,12 +106,6 @@ function httpPdfListener ({
       const redirectUrl = browser.runtime.getURL(
         `assets/pdf/web/viewer.html?file=${encodeURIComponent(url)}`
       )
-
-      if (tabId !== -1 && window.appConfig.pdfStandalone === 'always') {
-        browser.tabs.remove(tabId)
-        openPDFStandalone(redirectUrl)
-        return { cancel: true }
-      }
 
       return { redirectUrl }
     }

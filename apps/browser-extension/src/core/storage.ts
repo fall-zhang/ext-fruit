@@ -368,11 +368,6 @@ function initServer (): void {
       if (!message || !message.type) {
         return
       }
-
-      if ((message as Message).type === 'PAGE_INFO') {
-        return Promise.resolve(_getPageInfo(sender))
-      }
-
       const selfMsg = selfMsgTester.exec((message as Message).type)
       if (selfMsg) {
         ;(message as Writable<Message>).type = selfMsg[1] as MsgType
@@ -386,31 +381,3 @@ function initServer (): void {
   )
 }
 
-function _getPageInfo (sender: browser.runtime.MessageSender) {
-  const result = {
-    pageId: '' as string | number,
-    faviconURL: '',
-    pageTitle: '',
-    pageURL: '',
-  }
-  const tab = sender.tab
-  if (tab) {
-    result.pageId = tab.id || ''
-    if (tab.favIconUrl) {
-      result.faviconURL = tab.favIconUrl
-    }
-    if (tab.url) {
-      result.pageURL = tab.url
-    }
-    if (tab.title) {
-      result.pageTitle = tab.title
-    }
-  } else {
-    // FRAGILE: Assume only browser action page is tabless
-    result.pageId = 'popup'
-    if (sender.url && !sender.url.startsWith('http')) {
-      result.faviconURL = 'https://saladict.crimx.com/favicon.ico'
-    }
-  }
-  return result
-}

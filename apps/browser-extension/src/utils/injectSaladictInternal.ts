@@ -10,7 +10,7 @@ export async function injectDictPanel (tab: browser.tabs.Tab | undefined) {
               file: js[0] === '/' ? js : `/${js}`,
               allFrames: script.all_frames,
               matchAboutBlank: script.match_about_blank,
-              runAt: script.run_at
+              runAt: script.run_at,
             })
           }
         }
@@ -20,7 +20,7 @@ export async function injectDictPanel (tab: browser.tabs.Tab | undefined) {
               file: css[0] === '/' ? css : `/${css}`,
               allFrames: script.all_frames,
               matchAboutBlank: script.match_about_blank,
-              runAt: script.run_at
+              runAt: script.run_at,
             })
           }
         }

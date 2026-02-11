@@ -33,7 +33,7 @@ export function newWord (word?: Partial<Word> | null): Word {
       url: word.url || '',
       favicon: word.favicon || '',
       trans: word.trans || '',
-      note: word.note || ''
+      note: word.note || '',
     }
     : {
       date: Date.now(),
@@ -43,7 +43,7 @@ export function newWord (word?: Partial<Word> | null): Word {
       url: '',
       favicon: '',
       trans: '',
-      note: ''
+      note: '',
     }
 }
 
@@ -72,8 +72,8 @@ export function getWordsByText (
     type: 'GET_WORDS_BY_TEXT',
     payload: {
       area,
-      text
-    }
+      text,
+    },
   })
 }
 
@@ -92,8 +92,8 @@ export function getWords (
     type: 'GET_WORDS',
     payload: {
       area,
-      ...config
-    }
+      ...config,
+    },
   })
 }
 

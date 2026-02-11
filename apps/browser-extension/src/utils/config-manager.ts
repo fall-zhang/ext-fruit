@@ -1,9 +1,11 @@
 import pako from 'pako'
-import { getDefaultConfig, AppConfig } from '@/app-config'
+import type { AppConfig } from '@/app-config'
+import { getDefaultConfig } from '@/app-config'
 import { mergeConfig } from '@/app-config/merge-config'
 import { storage } from './browser-api'
 
-import { Observable, from, concat, fromEventPattern } from 'rxjs'
+import type { Observable } from 'rxjs'
+import { from, concat, fromEventPattern } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 export interface StorageChanged<T> {
@@ -27,7 +29,7 @@ interface AppConfigCompressed {
 function deflate (config: AppConfig): AppConfigCompressed {
   return {
     v: 1,
-    d: pako.deflate(JSON.stringify(config), { to: 'string' })
+    d: pako.deflate(JSON.stringify(config), { to: 'string' }),
   }
 }
 

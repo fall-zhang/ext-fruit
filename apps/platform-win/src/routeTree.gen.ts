@@ -10,33 +10,84 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DictViewIndexRouteImport } from './routes/dict-view/index'
+import { Route as ContentViewIndexRouteImport } from './routes/content-view/index'
+import { Route as ConfigsIndexRouteImport } from './routes/configs/index'
+import { Route as ConfigsPdfRouteImport } from './routes/configs/pdf'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DictViewIndexRoute = DictViewIndexRouteImport.update({
+  id: '/dict-view/',
+  path: '/dict-view/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContentViewIndexRoute = ContentViewIndexRouteImport.update({
+  id: '/content-view/',
+  path: '/content-view/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfigsIndexRoute = ConfigsIndexRouteImport.update({
+  id: '/configs/',
+  path: '/configs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfigsPdfRoute = ConfigsPdfRouteImport.update({
+  id: '/configs/pdf',
+  path: '/configs/pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/configs/pdf': typeof ConfigsPdfRoute
+  '/configs/': typeof ConfigsIndexRoute
+  '/content-view/': typeof ContentViewIndexRoute
+  '/dict-view/': typeof DictViewIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/configs/pdf': typeof ConfigsPdfRoute
+  '/configs': typeof ConfigsIndexRoute
+  '/content-view': typeof ContentViewIndexRoute
+  '/dict-view': typeof DictViewIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/configs/pdf': typeof ConfigsPdfRoute
+  '/configs/': typeof ConfigsIndexRoute
+  '/content-view/': typeof ContentViewIndexRoute
+  '/dict-view/': typeof DictViewIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/configs/pdf'
+    | '/configs/'
+    | '/content-view/'
+    | '/dict-view/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/configs/pdf' | '/configs' | '/content-view' | '/dict-view'
+  id:
+    | '__root__'
+    | '/'
+    | '/configs/pdf'
+    | '/configs/'
+    | '/content-view/'
+    | '/dict-view/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConfigsPdfRoute: typeof ConfigsPdfRoute
+  ConfigsIndexRoute: typeof ConfigsIndexRoute
+  ContentViewIndexRoute: typeof ContentViewIndexRoute
+  DictViewIndexRoute: typeof DictViewIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +99,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dict-view/': {
+      id: '/dict-view/'
+      path: '/dict-view'
+      fullPath: '/dict-view/'
+      preLoaderRoute: typeof DictViewIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/content-view/': {
+      id: '/content-view/'
+      path: '/content-view'
+      fullPath: '/content-view/'
+      preLoaderRoute: typeof ContentViewIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/': {
+      id: '/configs/'
+      path: '/configs'
+      fullPath: '/configs/'
+      preLoaderRoute: typeof ConfigsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/pdf': {
+      id: '/configs/pdf'
+      path: '/configs/pdf'
+      fullPath: '/configs/pdf'
+      preLoaderRoute: typeof ConfigsPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConfigsPdfRoute: ConfigsPdfRoute,
+  ConfigsIndexRoute: ConfigsIndexRoute,
+  ContentViewIndexRoute: ContentViewIndexRoute,
+  DictViewIndexRoute: DictViewIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

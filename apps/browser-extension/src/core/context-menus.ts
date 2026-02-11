@@ -176,9 +176,6 @@ export class ContextMenus {
       case 'microsoft_page_translate':
         ContextMenus.openMicrosoftPage()
         break
-      case 'view_as_pdf':
-        openPDF(linkUrl, info.menuItemId !== 'view_as_pdf_ba')
-        break
       case 'copy_pdf_url': {
         const url = extractPDFUrl(info.pageUrl)
         if (url) {
@@ -270,11 +267,7 @@ export class ContextMenus {
           contexts = ctx
           browserActionItems.push(id)
           break
-        case 'view_as_pdf':
-          containerCtx.add('link')
-          containerCtx.add('page')
-          contexts = ['link', 'page']
-          break
+
         case 'copy_pdf_url':
           containerCtx.add('page')
           contexts = ['page']
@@ -447,13 +440,6 @@ function reportMenusEvent (
       reportEvent({
         category: 'Page_Translate',
         action: 'Open_Youdao',
-        label,
-      })
-      break
-    case 'view_as_pdf':
-      reportEvent({
-        category: 'PDF_Viewer',
-        action: 'Open_PDF_Viewer',
         label,
       })
       break

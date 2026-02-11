@@ -20,14 +20,14 @@ const langLib = defineConfig({
   // clean: true,
   // sourcemap: 'inline',
   input: supportLanguages.map((lang:string) => langLocation(lang)),
-  external: ['react', 'react-dom', 'react-redux'],
+  external: ['react', 'react-dom'],
   output: [{
     format: 'es',
     dir: './libs/lang',
     entryFileNames: '[name].ts',
     chunkFileNames: '[name]-[hash].ts',
     exports: 'named',
-    plugins: []
+    plugins: [],
     // manualChunks: []
   }],
   // acornInjectPlugins: [jsx()],
@@ -38,7 +38,7 @@ const langLib = defineConfig({
     typescript({ compilerOptions: { jsx: 'preserve' } }),
     string({
       // Required to be specified
-      include: '**/*.html'
+      include: '**/*.html',
       // Undefined by default
       // exclude: ['**/index.html']
     }),
@@ -46,15 +46,15 @@ const langLib = defineConfig({
       entries: [
         // { find: 'packages/', replacement: '@/' },
         { find: '@P/', replacement: path.join(__dirname + '../') },
-        { find: '@/', replacement: path.join(__dirname + '../packages/saladict-core') }
-      ]
+        { find: '@/', replacement: path.join(__dirname + '../packages/saladict-core') },
+      ],
     }),
     // 让 Rollup 查找到外部模块，打包到产物内
     resolve({
       // 将自定义选项传递给解析插件
-      moduleDirectories: ['node_modules']
-    })
-  ]
+      moduleDirectories: ['node_modules'],
+    }),
+  ],
 })
 
 const libConfig = defineConfig({
@@ -62,7 +62,7 @@ const libConfig = defineConfig({
   input: 'packages/content/index.tsx',
   // input: 'example/index.tsx',
   jsx: 'react-jsx',
-  external: ['react', 'react-dom', 'react-redux'],
+  external: ['react', 'react-dom'],
   output: [{
     format: 'es',
     sourcemap: 'inline',
@@ -70,7 +70,7 @@ const libConfig = defineConfig({
     entryFileNames: 'main.js',
     chunkFileNames: '[name].ts',
     exports: 'named',
-    plugins: []
+    plugins: [],
   }],
   // acornInjectPlugins: [jsx()],
   plugins: [
@@ -85,31 +85,31 @@ const libConfig = defineConfig({
         // 因为并非提供调用，所以打包后，不需要生成 .d.ts 文件
         // declaration: true
         // emitDeclarationOnly: false
-      }
+      },
     }),
     string({
       // Required to be specified
-      include: '**/*.html'
+      include: '**/*.html',
       // Undefined by default
       // exclude: ['**/index.html']
     }),
     // terser(),
     alias({
       entries: [
-        { find: '@/', replacement: path.join(__dirname + 'packages/') }
-      ]
+        { find: '@/', replacement: path.join(__dirname + 'packages/') },
+      ],
     }),
     // 让 Rollup 查找到外部模块，打包到产物内
     resolve({
       // 将自定义选项传递给解析插件
-      moduleDirectories: ['node_modules']
-    })
-  ]
+      moduleDirectories: ['node_modules'],
+    }),
+  ],
 })
 
 export default () => {
   return defineConfig([
-    libConfig
+    libConfig,
     // langDist
   ])
 }

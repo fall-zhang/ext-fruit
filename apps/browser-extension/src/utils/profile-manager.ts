@@ -2,17 +2,20 @@
  * Profiles are switchable profiles
  */
 import pako from 'pako'
+import type {
+  Profile,
+  ProfileID
+} from '@/app-config/profiles'
 import {
   getDefaultProfile,
-  Profile,
-  genProfilesStorage,
-  ProfileID
+  genProfilesStorage
 } from '@/app-config/profiles'
 import { mergeProfile } from '@/app-config/merge-profile'
 import { storage } from './browser-api'
-import { TFunction } from 'i18next'
+import type { TFunction } from 'i18next'
 
-import { Observable, from, concat, fromEventPattern } from 'rxjs'
+import type { Observable } from 'rxjs'
+import { from, concat, fromEventPattern } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 export interface StorageChanged<T> {
@@ -36,7 +39,7 @@ interface ProfileCompressed {
 export function deflate (profile: Profile): ProfileCompressed {
   return {
     v: 1,
-    d: pako.deflate(JSON.stringify(profile), { to: 'string' })
+    d: pako.deflate(JSON.stringify(profile), { to: 'string' }),
   }
 }
 
@@ -133,7 +136,7 @@ export async function resetAllProfiles () {
       'activeProfileID',
       // legacy
       'configProfileIDs',
-      'activeConfigID'
+      'activeConfigID',
     ])
   }
   return initProfiles()
@@ -165,7 +168,7 @@ export async function addProfile (profileID: ProfileID): Promise<void> {
 
   return storage.sync.set({
     profileIDList: [...profileIDList, profileID],
-    [id]: deflate(getDefaultProfile(id))
+    [id]: deflate(getDefaultProfile(id)),
   })
 }
 
@@ -263,7 +266,7 @@ export async function addActiveProfileListener (
             if (obj[newID]) {
               cb({
                 newProfile: inflate(obj[newID]),
-                oldProfile: inflate(obj[oldID])
+                oldProfile: inflate(obj[oldID]),
               })
             }
           })

@@ -17,9 +17,8 @@ import {
 } from './database'
 import { AudioManager } from './audio-manager'
 import { QsPanelManager } from './windows-manager'
-import { getTextFromClipboard, copyTextToClipboard } from './clipboard-manager'
 import './types'
-import type { DictID } from '../app-config'
+import type { DictID } from '@P/saladict-core/src/app-config'
 /**
  * background script as transfer station
  */
@@ -56,27 +55,12 @@ export class BackgroundServer {
 
     message.addListener((msg, sender: browser.runtime.MessageSender) => {
       switch (msg.type) {
-        case 'OPEN_DICT_SRC_PAGE':
-          return this.openSrcPage(msg.payload)
         case 'OPEN_URL':
           return openUrl(msg.payload)
-        case 'PLAY_AUDIO':
-          return AudioManager.getInstance().play(msg.payload)
-        case 'STOP_AUDIO':
-          AudioManager.getInstance().reset()
-          return
-        case 'GET_CLIPBOARD':
-          return getTextFromClipboard()
-        case 'SET_CLIPBOARD':
-          return Promise.resolve(copyTextToClipboard(msg.payload))
-
         case 'INJECT_DICTPANEL':
           return injectDictPanel(sender.tab)
-
         case 'QUERY_QS_PANEL':
           return this.qsPanelManager.hasCreated()
-        case 'OPEN_QS_PANEL':
-          return this.openQSPanel()
         case 'CLOSE_QS_PANEL':
           AudioManager.getInstance().reset()
           return this.qsPanelManager.destroy()
@@ -98,8 +82,6 @@ export class BackgroundServer {
           return getWords(msg.payload)
         case 'GET_SUGGESTS':
           return getSuggests(msg.payload)
-        case 'YOUDAO_TRANSLATE_AJAX':
-          return this.youdaoTranslateAjax(msg.payload)
       }
     })
 
@@ -151,62 +133,5 @@ export class BackgroundServer {
     } else {
       await this.qsPanelManager.create(word)
     }
-  }
-
-  async openSrcPage ({
-    id,
-    text,
-    active,
-  }: Message<'OPEN_DICT_SRC_PAGE'>['payload']): Promise<void> {
-    const engine = await BackgroundServer.getDictEngine(id)
-    return openUrl({
-      url: await engine.getSrcPage(
-        text,
-        window.appConfig,
-        window.activeProfile
-      ),
-      active,
-    })
-  }
-
-  notifyWordSaved () {
-    browser.tabs.query({}).then(tabs => {
-      tabs.forEach(async tab => {
-        if (tab.id && tab.url) {
-          try {
-            await message.send(tab.id, { type: 'WORD_SAVED' })
-          } catch (e) {
-            console.warn(e)
-          }
-        }
-      })
-    })
-  }
-
-  /** Bypass http restriction */
-  youdaoTranslateAjax (request: any): Promise<any> {
-    return new Promise(resolve => {
-      const xhr = new XMLHttpRequest()
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          const data = xhr.status === 200 ? xhr.responseText : null
-          resolve({
-            response: data,
-            index: request.index,
-          })
-        }
-      }
-      xhr.open(request.type, request.url, true)
-
-      if (request.type === 'POST') {
-        xhr.setRequestHeader(
-          'Content-Type',
-          'application/x-www-form-urlencoded'
-        )
-        xhr.send(request.data)
-      } else {
-        xhr.send(null as any)
-      }
-    })
   }
 }
