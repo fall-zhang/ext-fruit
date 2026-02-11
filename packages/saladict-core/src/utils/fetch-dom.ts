@@ -1,7 +1,8 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import type { AxiosRequestConfig } from 'axios'
+import axios from 'axios'
 
 /** about 6 time faster as it typically takes less than 5ms to parse a DOM */
-export function fetchDirtyDOM (
+export async function fetchDirtyDOM (
   url: string,
   config: AxiosRequestConfig = {}
 ): Promise<Document> {
@@ -9,7 +10,7 @@ export function fetchDirtyDOM (
     withCredentials: false,
     ...config,
     transformResponse: [data => data],
-    responseType: 'document'
+    responseType: 'document',
   }).then(({ data }) =>
     (process.env.NODE_ENV !== 'production'
       ? new DOMParser().parseFromString(data, 'text/html')
@@ -17,7 +18,7 @@ export function fetchDirtyDOM (
   )
 }
 
-export function fetchPlainText (
+export async function fetchPlainText (
   url: string,
   config: AxiosRequestConfig = {}
 ): Promise<string> {
@@ -26,6 +27,6 @@ export function fetchPlainText (
     ...config,
     // axios bug https://github.com/axios/axios/issues/907
     transformResponse: [data => data],
-    responseType: 'text'
+    responseType: 'text',
   }).then(({ data }) => data)
 }

@@ -2635,7 +2635,7 @@ const charMap = new Map([
   ['龙', '龍'],
   ['龚', '龔'],
   ['龛', '龕'],
-  ['龟', '龜']
+  ['龟', '龜'],
 ])
 
 export function chsToChz (text: string): string {

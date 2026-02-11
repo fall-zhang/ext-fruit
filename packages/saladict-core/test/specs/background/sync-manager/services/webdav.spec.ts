@@ -1,12 +1,10 @@
 /* eslint-disable max-lines-per-function */
-import * as helpersMock from '@/background/sync-manager/__mocks__/helpers'
 import { NotebookFile } from '@/background/sync-manager/interface'
 import {
   Service,
-  SyncConfig,
-  SyncMeta
+  SyncConfig
 } from '@/background/sync-manager/services/webdav'
-import { Word, newWord } from '@/_helpers/record-manager'
+import { Word, newWord } from '@P/saladict-core/src/dict-utils/new-word'
 import { describe, beforeEach, it, expect } from 'vitest'
 import * as jest from 'vitest'
 
@@ -22,9 +20,9 @@ const fetchArgs = {
           Authorization:
             'Basic ' + window.btoa(`${config.user}:${config.passwd}`),
           'Content-Type': 'application/xml; charset="utf-8"',
-          Depth: '1'
-        }
-      }
+          Depth: '1',
+        },
+      },
     ]
   },
 
@@ -35,9 +33,9 @@ const fetchArgs = {
         method: 'MKCOL',
         headers: {
           Authorization:
-            'Basic ' + window.btoa(`${config.user}:${config.passwd}`)
-        }
-      }
+            'Basic ' + window.btoa(`${config.user}:${config.passwd}`),
+        },
+      },
     ]
   },
 
@@ -48,10 +46,10 @@ const fetchArgs = {
         method: 'PUT',
         headers: {
           Authorization:
-            'Basic ' + window.btoa(`${config.user}:${config.passwd}`)
+            'Basic ' + window.btoa(`${config.user}:${config.passwd}`),
         },
-        body
-      }
+        body,
+      },
     ]
   },
 
@@ -63,11 +61,11 @@ const fetchArgs = {
         headers: {
           Authorization:
             'Basic ' + window.btoa(`${config.user}:${config.passwd}`),
-          ...headers
-        }
-      }
+          ...headers,
+        },
+      },
     ]
-  }
+  },
 }
 
 function mockFetch (
@@ -90,7 +88,7 @@ function mockFetch (
     const key = args[0] + ((args[1] && args[1].method) || '')
     const result = {
       ...o,
-      [key]: key
+      [key]: key,
     }
     return result
   }, {})
@@ -118,11 +116,11 @@ describe('Sync service WebDAV', () => {
       url: 'https://example.com/dav/',
       user: 'user',
       passwd: 'passwd',
-      duration: 0
+      duration: 0,
     }
 
     const fetchInit = {
-      upload: jest.fn(() => new Response())
+      upload: jest.fn(() => new Response()),
     }
     mockFetch(config, fetchInit)
 
@@ -149,14 +147,14 @@ describe('Sync service WebDAV', () => {
         url: 'https://example.com/dav/',
         user: 'user',
         passwd: 'passwd',
-        duration: 0
+        duration: 0,
       }
 
       const words = [
         getWord({
           ...newWord({ text: 'test' }),
-          date: Date.now()
-        })
+          date: Date.now(),
+        }),
       ]
       const timestamp = Date.now()
       const file: NotebookFile = { timestamp, words }
@@ -168,10 +166,10 @@ describe('Sync service WebDAV', () => {
           () =>
             new Response(JSON.stringify(file), {
               headers: {
-                etag
-              }
+                etag,
+              },
             })
-        )
+        ),
       }
 
       mockFetch(config, fetchInit)
@@ -192,14 +190,14 @@ describe('Sync service WebDAV', () => {
         url: 'https://example.com/dav/',
         user: 'user',
         passwd: 'passwd',
-        duration: 0
+        duration: 0,
       }
 
       const words = [
         getWord({
           ...newWord({ text: 'test' }),
-          date: Date.now()
-        })
+          date: Date.now(),
+        }),
       ]
       const timestamp = Date.now()
       const file: NotebookFile = { timestamp, words }
@@ -212,10 +210,10 @@ describe('Sync service WebDAV', () => {
           () =>
             new Response(JSON.stringify(file), {
               headers: {
-                etag
-              }
+                etag,
+              },
             })
-        )
+        ),
       }
 
       mockFetch(config, fetchInit)
@@ -231,7 +229,7 @@ describe('Sync service WebDAV', () => {
       expect(fetchInit.download).lastCalledWith(
         ...fetchArgs.download(config, {
           'If-None-Match': etagOrigin,
-          'If-Modified-Since': etagOrigin
+          'If-Modified-Since': etagOrigin,
         })
       )
     })
@@ -242,7 +240,7 @@ describe('Sync service WebDAV', () => {
         url: 'https://example.com/dav/',
         user: 'user',
         passwd: 'passwd',
-        duration: 0
+        duration: 0,
       }
 
       const etag = 'etag222'
@@ -253,10 +251,10 @@ describe('Sync service WebDAV', () => {
             new Response(null, {
               status: 304,
               headers: {
-                etag
-              }
+                etag,
+              },
             })
-        )
+        ),
       }
 
       mockFetch(config, fetchInit)
@@ -272,7 +270,7 @@ describe('Sync service WebDAV', () => {
       expect(fetchInit.download).lastCalledWith(
         ...fetchArgs.download(config, {
           'If-None-Match': etag,
-          'If-Modified-Since': etag
+          'If-Modified-Since': etag,
         })
       )
     })
@@ -283,7 +281,7 @@ describe('Sync service WebDAV', () => {
         url: 'https://example.com/dav/',
         user: 'user',
         passwd: 'passwd',
-        duration: 0
+        duration: 0,
       }
 
       const file: NotebookFile = {
@@ -291,9 +289,9 @@ describe('Sync service WebDAV', () => {
         words: [
           {
             ...newWord({ text: 'test' }),
-            date: Date.now()
-          }
-        ]
+            date: Date.now(),
+          },
+        ],
       }
 
       const etagOrigin = 'etag12345'
@@ -304,10 +302,10 @@ describe('Sync service WebDAV', () => {
           () =>
             new Response(JSON.stringify(file), {
               headers: {
-                etag
-              }
+                etag,
+              },
             })
-        )
+        ),
       }
 
       mockFetch(config, fetchInit)
@@ -315,7 +313,7 @@ describe('Sync service WebDAV', () => {
       const service = new Service(config)
       service.meta = {
         etag: etagOrigin,
-        timestamp: file.timestamp
+        timestamp: file.timestamp,
       }
 
       await service.download({})
@@ -326,7 +324,7 @@ describe('Sync service WebDAV', () => {
       expect(fetchInit.download).lastCalledWith(
         ...fetchArgs.download(config, {
           'If-None-Match': etagOrigin,
-          'If-Modified-Since': etagOrigin
+          'If-Modified-Since': etagOrigin,
         })
       )
     })
@@ -337,7 +335,7 @@ describe('Sync service WebDAV', () => {
         url: 'https://example.com/dav/',
         user: 'user',
         passwd: 'passwd',
-        duration: 0
+        duration: 0,
       }
 
       const file: NotebookFile = {
@@ -345,9 +343,9 @@ describe('Sync service WebDAV', () => {
         words: [
           getWord({
             ...newWord({ text: 'test' }),
-            date: Date.now()
-          })
-        ]
+            date: Date.now(),
+          }),
+        ],
       }
 
       const etagOrigin = 'etag12345'
@@ -358,10 +356,10 @@ describe('Sync service WebDAV', () => {
           () =>
             new Response(JSON.stringify(file), {
               headers: {
-                etag
-              }
+                etag,
+              },
             })
-        )
+        ),
       }
 
       mockFetch(config, fetchInit)
@@ -369,7 +367,7 @@ describe('Sync service WebDAV', () => {
       const service = new Service(config)
       service.meta = {
         etag: etagOrigin,
-        timestamp: file.timestamp
+        timestamp: file.timestamp,
       }
 
       await service.download({})
@@ -380,7 +378,7 @@ describe('Sync service WebDAV', () => {
       expect(fetchInit.download).lastCalledWith(
         ...fetchArgs.download(config, {
           'If-None-Match': etagOrigin,
-          'If-Modified-Since': etagOrigin
+          'If-Modified-Since': etagOrigin,
         })
       )
     })
@@ -391,12 +389,12 @@ describe('Sync service WebDAV', () => {
         url: 'https://example.com/dav/',
         user: 'user',
         passwd: 'passwd',
-        duration: 0
+        duration: 0,
       }
 
       const file: NotebookFile = {
         timestamp: Date.now(),
-        words: ['corrupted format'] as any
+        words: ['corrupted format'] as any,
       }
 
       const etag = 'etag222'
@@ -406,10 +404,10 @@ describe('Sync service WebDAV', () => {
           () =>
             new Response(JSON.stringify(file), {
               headers: {
-                etag
-              }
+                etag,
+              },
             })
-        )
+        ),
       }
 
       mockFetch(config, fetchInit)
@@ -434,16 +432,16 @@ describe('Sync service WebDAV', () => {
         url: 'https://example.com/dav/',
         user: 'user',
         passwd: 'passwd',
-        duration: 0
+        duration: 0,
       }
 
       const fetchInit = {
         download: jest.fn(
           () =>
             new Response(null, {
-              status: 404
+              status: 404,
             })
-        )
+        ),
       }
 
       mockFetch(config, fetchInit)
@@ -470,7 +468,7 @@ describe('Sync service WebDAV', () => {
         url: 'https://example.com/dav/',
         user: 'user',
         passwd: 'passwd',
-        duration: 0
+        duration: 0,
       }
 
       const file: NotebookFile = {
@@ -478,9 +476,9 @@ describe('Sync service WebDAV', () => {
         words: [
           {
             ...newWord({ text: 'test' }),
-            date: Date.now()
-          }
-        ]
+            date: Date.now(),
+          },
+        ],
       }
       const fileText = JSON.stringify(file)
 
@@ -493,11 +491,11 @@ describe('Sync service WebDAV', () => {
           () =>
             new Response(fileText, {
               headers: {
-                etag
-              }
+                etag,
+              },
             })
         ),
-        createDir: jest.fn(() => new Response())
+        createDir: jest.fn(() => new Response()),
       }
 
       mockFetch(config, fetchInit)
@@ -526,7 +524,7 @@ describe('Sync service WebDAV', () => {
         url: 'https://example.com/dav/',
         user: 'user',
         passwd: 'passwd',
-        duration: 0
+        duration: 0,
       }
 
       const file: NotebookFile = {
@@ -534,9 +532,9 @@ describe('Sync service WebDAV', () => {
         words: [
           {
             ...newWord({ text: 'test' }),
-            date: Date.now()
-          }
-        ]
+            date: Date.now(),
+          },
+        ],
       }
       const fileText = JSON.stringify(file)
 
@@ -550,20 +548,13 @@ describe('Sync service WebDAV', () => {
           () =>
             new Response(fileText, {
               headers: {
-                etag
-              }
+                etag,
+              },
             })
         ),
-        createDir: jest.fn(() => new Response())
+        createDir: jest.fn(() => new Response()),
       }
 
-      helpers.getMeta.mockImplementationOnce(
-        (): Promise<SyncMeta> =>
-          Promise.resolve({
-            timestamp: file.timestamp - 100,
-            etag: etagLocal
-          })
-      )
       mockFetch(config, fetchInit)
 
       const service = new Service(config)
@@ -590,14 +581,14 @@ describe('Sync service WebDAV', () => {
         url: 'https://example.com/dav/',
         user: 'user',
         passwd: 'passwd',
-        duration: 0
+        duration: 0,
       }
 
       const fetchInit = {
         checkServer: jest.fn(() => new Response(null, { status: 404 })),
         upload: jest.fn(() => new Response()),
         download: jest.fn(() => new Response()),
-        createDir: jest.fn(() => new Response())
+        createDir: jest.fn(() => new Response()),
       }
 
       mockFetch(config, fetchInit)
@@ -630,14 +621,14 @@ describe('Sync service WebDAV', () => {
         url: 'https://example.com/dav/',
         user: 'user',
         passwd: 'passwd',
-        duration: 0
+        duration: 0,
       }
 
       const fetchInit = {
         checkServer: jest.fn(() => new Response(genXML(true))),
         upload: jest.fn(() => new Response()),
         download: jest.fn(() => new Response()),
-        createDir: jest.fn(() => new Response(null, { status: 504 }))
+        createDir: jest.fn(() => new Response(null, { status: 504 })),
       }
 
       mockFetch(config, fetchInit)
@@ -663,62 +654,6 @@ describe('Sync service WebDAV', () => {
       expect(helpers.setMeta).toHaveBeenCalledTimes(0)
       expect(helpers.setNotebook).toHaveBeenCalledTimes(0)
     })
-
-    // @upstream JSDOM missing namespace selector support
-    // it('should reject with "exist" if local has a newer file', async () => {
-    //   const config: SyncConfig = {
-    //     enable: true,
-    //     url: 'https://example.com/dav/',
-    //     user: 'user',
-    //     passwd: 'passwd',
-    //     duration: 0,
-    //   }
-
-    //   const file: NotebookFile = {
-    //     timestamp: Date.now(),
-    //     words: [
-    //       {
-    //         ...newWord({ text: 'test' }),
-    //         date: Date.now(),
-    //       }
-    //     ],
-    //   }
-    //   const fileText = JSON.stringify(file)
-
-    //   const etagLocal = 'etag12345'
-    //   const etag = 'etag222'
-
-    //   const fetchInit = {
-    //     checkServer: jest.fn(() => new Response(genXML(true))),
-    //     upload: jest.fn(() => new Response()),
-    //     download: jest.fn(() => new Response(
-    //       fileText,
-    //       {
-    //         headers: {
-    //           etag,
-    //         }
-    //       }
-    //     )),
-    //     createDir: jest.fn(() => new Response())
-    //   }
-
-    //   helpers.getMeta.mockImplementationOnce((): Promise<Meta> => Promise.resolve({
-    //     timestamp: file.timestamp + 100,
-    //     etag: etagLocal
-    //   }))
-    //   mockFetch(config, fetchInit)
-
-    //   c{ onsor t} err = await initServer(config)
-    //   exerrort(err).toBe('exist')
-    //   expect(fetchInit.checkServer).toHaveBeenCalledTimes(1)
-    //   expect(fetchInit.checkServer).lastCalledWith(...fetchArgs.checkServer(config))
-    //   // @upstream JSDOM missing namespace selector support
-    //   // expect(fetchInit.createDir).toHaveBeenCalledTimes(0)
-    //   expect(fetchInit.upload).toHaveBeenCalledTimes(0)
-    //   expect(fetchInit.download).toHaveBeenCalledTimes(0)
-    //   expect(helpers.setMeta).toHaveBeenCalledTimes(0)
-    //   expect(helpers.setNotebook).toHaveBeenCalledTimes(0)
-    // })
   })
 })
 
@@ -794,6 +729,6 @@ function getWord (word: Partial<Word> = {}): Word {
     favicon: '',
     trans: '',
     note: '',
-    ...word
+    ...word,
   }
 }

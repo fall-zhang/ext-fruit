@@ -7,7 +7,7 @@ const languages = [
   'korean',
   'french',
   'spanish',
-  'deutsch'
+  'deutsch',
 ] as const
 
 type Languages = typeof languages[number]
@@ -24,7 +24,7 @@ const matchers: { [key in Languages]: RegExp } = {
   /** Spanish, no English áéíóúñü¡¿ */
   spanish: /[\u00e1\u00e9\u00ed\u00f3\u00fa\u00f1\u00fc\u00a1\u00bf]/i,
   /** Deutsch, no English äöüÄÖÜß */
-  deutsch: /[\u00E4\u00F6\u00FC\u00C4\u00D6\u00DC\u00df]/i
+  deutsch: /[\u00E4\u00F6\u00FC\u00C4\u00D6\u00DC\u00df]/i,
 }
 
 export const isContainChinese = (text: string): boolean =>
@@ -65,11 +65,11 @@ const isContain: { [key in Languages]: (text: string) => boolean } = {
   /** Spanish, no English áéíóúñü¡¿ */
   spanish: memoizeOne(isContainSpanish),
   /** Deutsch, no English äöüÄÖÜß */
-  deutsch: memoizeOne(isContainDeutsch)
+  deutsch: memoizeOne(isContainDeutsch),
 }
 
-const matcherPunct = /[/[\]{}$^*+|?.\-~!@#%&()_='";:><,。？！，、；：“”﹃﹄「」﹁﹂‘’『』（）—［］〔〕【】…－～·‧《》〈〉﹏＿]/
-const matchAllMeaningless = new RegExp(`^(\\d|\\s|${matcherPunct.source})+$`)
+const matcherSign = /[/[\]{}$^*+|?.\-~!@#%&()_='";:><,。？！，、；：“”﹃﹄「」﹁﹂‘’『』（）—［］〔〕【】…－～·‧《》〈〉﹏＿]/
+const matchAllMeaningless = new RegExp(`^(\\d|\\s|${matcherSign.source})+$`)
 
 const matcherCJK = new RegExp(
   `${matchers.chinese.source}|${matchers.japanese.source}|${matchers.korean.source}`
@@ -78,7 +78,7 @@ const matcherCJK = new RegExp(
 export const countWords = memoizeOne((text: string): number => {
   return (
     text
-      .replace(new RegExp(matcherPunct, 'g'), ' ')
+      .replace(new RegExp(matcherSign, 'g'), ' ')
       .replace(new RegExp(matcherCJK, 'g'), ' x ')
       .match(/\S+/g) || ''
   ).length
@@ -90,7 +90,7 @@ export type SupportedLangs = {
 export const supportedLangs: ReadonlyArray<keyof SupportedLangs> = [
   ...languages,
   'others',
-  'matchAll'
+  'matchAll',
 ]
 
 export function checkSupportedLangs (
@@ -155,7 +155,7 @@ export function checkSupportedLangs (
     .filter(l => !langs[l])
     .map(l => matchers[l])
 
-  uncheckedMatchers.push(new RegExp(`${matcherPunct.source}|\\d|\\s`))
+  uncheckedMatchers.push(new RegExp(`${matcherSign.source}|\\d|\\s`))
 
   for (let i = text.length - 1; i >= 0; i--) {
     if (uncheckedMatchers.every(m => !m.test(text[i]))) {

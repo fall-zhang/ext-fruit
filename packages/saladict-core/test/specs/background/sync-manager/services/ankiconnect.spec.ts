@@ -7,7 +7,7 @@ import {
   // SyncConfig
 } from '@/background/sync-manager/services/ankiconnect'
 import { describe, afterAll, beforeEach, expect, it } from 'vitest'
-// import { Word, newWord } from '@/_helpers/record-manager'
+// import { Word, newWord } from '@P/saladict-core/src/dict-utils/new-word'
 
 jest.mock('@/background/sync-manager/helpers')
 // const helpers: typeof helpersMock = require('@/background/sync-manager/helpers')

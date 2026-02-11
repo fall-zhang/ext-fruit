@@ -1,9 +1,7 @@
 import { UAParser } from 'ua-parser-js'
 import axios from 'axios'
 import { v4 as uuid } from 'uuid'
-import { message, storage } from '@/_helpers/browser-api'
-import { GAEvent, GAEventBase } from './events'
-import { isBackgroundPage } from '../saladict'
+import type { GAEvent, GAEventBase } from './events'
 
 export type GAParams = { [key: string]: string }
 
@@ -36,7 +34,7 @@ export async function reportPageView (page: string): Promise<void> {
       // Screen Resolution
       sr: screen.width + 'x' + screen.height,
       // User Language
-      ul: 'zh-cn'
+      ul: 'zh-cn',
     })
   } catch (error) {
     if (!process.env.DEBUG) {
@@ -49,7 +47,7 @@ export async function reportEvent (event: GAEvent) {
   const params: GAParams = {
     t: 'event',
     ec: event.category,
-    ea: event.action
+    ea: event.action,
   }
 
   if ((event as GAEventBase).label != null) {
@@ -69,18 +67,16 @@ export async function reportEvent (event: GAEvent) {
   }
 }
 
+/**
+ * google Analytics 谷歌数据分析
+ * @param extraParams
+ * @returns
+ */
 async function requestGA (extraParams: GAParams) {
-  if (!isBackgroundPage()) {
-    return message.send({
-      type: 'REQUEST_GA',
-      payload: extraParams
-    })
-  }
-
   if (
-    process.env.DEBUG ||
-    process.env.NODE_ENV === 'test' ||
-    process.env.NODE_ENV === 'development'
+    import.meta.env.DEBUG ||
+    import.meta.env.NODE_ENV === 'test' ||
+    import.meta.env.NODE_ENV === 'development'
   ) {
     console.log('requestGA', extraParams)
     return
@@ -96,7 +92,7 @@ async function requestGA (extraParams: GAParams) {
     url: 'https://www.google-analytics.com/collect',
     method: 'post',
     headers: {
-      'content-type': 'text/plain;charset=UTF-8'
+      'content-type': 'text/plain;charset=UTF-8',
     },
     data: new URLSearchParams({
       // required
@@ -105,13 +101,7 @@ async function requestGA (extraParams: GAParams) {
       cid,
       // Cache Buster
       z: uuid(),
-      ...extraParams
-    })
-  })
-}
-
-export function setupRequestGAListener () {
-  message.addListener('REQUEST_GA', ({ payload }) => {
-    requestGA(payload)
+      ...extraParams,
+    }),
   })
 }

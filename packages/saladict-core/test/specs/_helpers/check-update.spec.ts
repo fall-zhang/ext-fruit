@@ -1,5 +1,6 @@
 import { checkUpdate } from '@/_helpers/check-update'
-import _fetchMock, { FetchMock } from 'jest-fetch-mock'
+import type { FetchMock } from 'jest-fetch-mock'
+import _fetchMock from 'jest-fetch-mock'
 import getDefaultConfig from '@/app-config'
 
 const fetchMock = _fetchMock as FetchMock
@@ -21,7 +22,7 @@ describe('Check Update', () => {
     ['Newer Major', 'v2.1.1', 'v0.1.1', 3],
     ['Older Patch', 'v1.1.0', 'v1.1.2', -1],
     ['Older Minor', 'v1.0.1', 'v1.2.1', -2],
-    ['Older Major', 'v0.1.1', 'v2.1.1', -3]
+    ['Older Major', 'v0.1.1', 'v2.1.1', -3],
   ] as const
 
   tests.forEach(([title, newerVersion, olderVersion, diff]) => {
@@ -43,7 +44,7 @@ describe('Check Update', () => {
       expect(catchSpy).toHaveBeenCalledTimes(0)
       expect(resolveSpy).toBeCalledWith({
         diff,
-        data: responseObj
+        data: responseObj,
       })
     })
   })

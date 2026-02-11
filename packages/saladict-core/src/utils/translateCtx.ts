@@ -1,8 +1,6 @@
-import { DictID, AppConfig } from '@/app-config'
-import { MachineTranslateResult } from '@/components/MachineTrans/engine'
-// import { message } from './browser-api'
-import { isPDFPage } from '../core/saladict-state'
-import { fetchDictResult } from '../core/request'
+import type { AppConfig, DictID } from '../app-config'
+import type { MachineTranslateResult } from '../components/MachineTrans/engine'
+import { fetchDictResult } from './request'
 
 export type CtxTranslatorId = keyof AppConfig['ctxTrans']
 
@@ -29,8 +27,8 @@ export async function translateCtx (
       type: 'FETCH_DICT_RESULT',
       payload: {
         id,
-        text
-      }
+        text,
+      },
     })
 
     return (
@@ -72,7 +70,7 @@ export async function translateCtxs (
     // result[id] = content
     return {
       ...result,
-      [id]: content
+      [id]: content,
     }
   }, {} as CtxTranslateResults)
 }
@@ -102,7 +100,7 @@ export function genCtxText (
   ctxTransResult: CtxTranslateResults
 ): string {
   const enginesWithResult = Object.keys(ctxTransResult).filter(
-    id => ctxTransResult[id]
+    (id) => ctxTransResult[id as keyof CtxTranslateResults]
   )
 
   if (enginesWithResult.length <= 0) {
@@ -111,7 +109,7 @@ export function genCtxText (
 
   const ctxResults =
     enginesWithResult
-      .map(id => `[:: ${id} ::]\n` + ctxTransResult[id])
+      .map(id => `[:: ${id} ::]\n` + ctxTransResult[id as keyof CtxTranslateResults])
       .join('\n\n') + `\n${''.padEnd(15, '-')}\n`
 
   if (!text) {

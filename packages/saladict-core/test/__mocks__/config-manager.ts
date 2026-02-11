@@ -1,6 +1,8 @@
-import { AppConfig, getDefaultConfig } from '@/app-config'
+import type { AppConfig } from '@/app-config'
+import { getDefaultConfig } from '@/app-config'
 
-import { Observable, fromEventPattern, of, concat } from 'rxjs'
+import type { Observable } from 'rxjs'
+import { fromEventPattern, of, concat } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 export interface AppConfigChanged {

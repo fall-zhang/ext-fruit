@@ -23,7 +23,7 @@ function getCiba (text: string): Promise<Suggest[]> {
             explain:
               Array.isArray(x.means) && x.means.length > 0
                 ? x.means[0].part + ' ' + x.means[0].means.join(' ')
-                : ''
+                : '',
           }))
       }
       if (process.env.DEBUG) {

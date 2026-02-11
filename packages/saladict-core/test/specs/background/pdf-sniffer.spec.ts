@@ -135,59 +135,24 @@ describe('PDF Sniffer', () => {
     await timer(0)
     const handler = browser.webRequest.onBeforeRequest._listeners[0]
     expect(handler({ url: urlPdf })).toEqual({
-      redirectUrl: expect.stringMatching(urlPdfEncoded)
+      redirectUrl: expect.stringMatching(urlPdfEncoded),
     })
     expect(handler({ url: urlTxt })).toEqual({
-      redirectUrl: expect.stringMatching(urlTxtEncoded)
+      redirectUrl: expect.stringMatching(urlTxtEncoded),
     })
   })
 
   it('should not intercept ftp/file pdf request if the url matches blacklist', async () => {
     ;(window.appConfig as AppConfigMutable).pdfSniff = true
     ;(window.appConfig as AppConfigMutable).pdfBlacklist = [
-      [matchPatternToRegExpStr(urlPdf), urlPdf]
+      [matchPatternToRegExpStr(urlPdf), urlPdf],
     ]
     initPdf(window.appConfig)
     await timer(0)
     const handler = browser.webRequest.onBeforeRequest._listeners[0]
     expect(handler({ url: urlPdf })).toBeUndefined()
     expect(handler({ url: urlTxt })).toEqual({
-      redirectUrl: expect.stringMatching(urlTxtEncoded)
-    })
-  })
-
-  it('should intercept ftp/file pdf request if the url matches whitelist', async () => {
-    ;(window.appConfig as AppConfigMutable).pdfSniff = true
-    ;(window.appConfig as AppConfigMutable).pdfWhitelist = [
-      [matchPatternToRegExpStr(urlPdf), urlPdf]
-    ]
-    initPdf(window.appConfig)
-    await timer(0)
-    const handler = browser.webRequest.onBeforeRequest._listeners[0]
-    expect(handler({ url: urlPdf })).toEqual({
-      redirectUrl: expect.stringMatching(urlPdfEncoded)
-    })
-    expect(handler({ url: urlTxt })).toEqual({
-      redirectUrl: expect.stringMatching(urlTxtEncoded)
-    })
-  })
-
-  it('should intercept ftp/file pdf request if the url matches both blacklist and whitelist', async () => {
-    ;(window.appConfig as AppConfigMutable).pdfSniff = true
-    ;(window.appConfig as AppConfigMutable).pdfBlacklist = [
-      [matchPatternToRegExpStr(urlPdf), urlPdf]
-    ]
-    ;(window.appConfig as AppConfigMutable).pdfWhitelist = [
-      [matchPatternToRegExpStr(urlPdf), urlPdf]
-    ]
-    initPdf(window.appConfig)
-    await timer(0)
-    const handler = browser.webRequest.onBeforeRequest._listeners[0]
-    expect(handler({ url: urlPdf })).toEqual({
-      redirectUrl: expect.stringMatching(urlPdfEncoded)
-    })
-    expect(handler({ url: urlTxt })).toEqual({
-      redirectUrl: expect.stringMatching(urlTxtEncoded)
+      redirectUrl: expect.stringMatching(urlTxtEncoded),
     })
   })
 
@@ -211,13 +176,13 @@ describe('PDF Sniffer', () => {
       await timer(0)
       const handler = browser.webRequest.onHeadersReceived._listeners[0]
       const responseHeaders = [
-        { name: 'content-type', value: 'application/pdf' }
+        { name: 'content-type', value: 'application/pdf' },
       ]
       expect(handler({ responseHeaders, url: urlPdf })).toEqual({
-        redirectUrl: expect.stringMatching(urlPdfEncoded)
+        redirectUrl: expect.stringMatching(urlPdfEncoded),
       })
       expect(handler({ responseHeaders, url: urlTxt })).toEqual({
-        redirectUrl: expect.stringMatching(urlTxtEncoded)
+        redirectUrl: expect.stringMatching(urlTxtEncoded),
       })
     })
 
@@ -227,10 +192,10 @@ describe('PDF Sniffer', () => {
       await timer(0)
       const handler = browser.webRequest.onHeadersReceived._listeners[0]
       const responseHeaders = [
-        { name: 'content-type', value: 'application/octet-stream' }
+        { name: 'content-type', value: 'application/octet-stream' },
       ]
       expect(handler({ responseHeaders, url: urlPdf })).toEqual({
-        redirectUrl: expect.stringMatching(urlPdfEncoded)
+        redirectUrl: expect.stringMatching(urlPdfEncoded),
       })
       expect(handler({ responseHeaders, url: urlTxt })).toBeUndefined()
     })
@@ -238,57 +203,52 @@ describe('PDF Sniffer', () => {
     it('should not intercept if the url matches blacklist', () => {
       ;(window.appConfig as AppConfigMutable).pdfSniff = true
       ;(window.appConfig as AppConfigMutable).pdfBlacklist = [
-        [matchPatternToRegExpStr(urlPdf), urlPdf]
+        [matchPatternToRegExpStr(urlPdf), urlPdf],
       ]
       initPdf(window.appConfig)
       const handler = browser.webRequest.onHeadersReceived._listeners[0]
       const responseHeaders = [
-        { name: 'content-type', value: 'application/pdf' }
+        { name: 'content-type', value: 'application/pdf' },
       ]
       expect(handler({ responseHeaders, url: urlPdf })).toBeUndefined()
       expect(handler({ responseHeaders, url: urlTxt })).toEqual({
-        redirectUrl: expect.stringMatching(urlTxtEncoded)
+        redirectUrl: expect.stringMatching(urlTxtEncoded),
       })
     })
 
     it('should intercept if the url matches whitelist', async () => {
       ;(window.appConfig as AppConfigMutable).pdfSniff = true
-      ;(window.appConfig as AppConfigMutable).pdfWhitelist = [
-        [matchPatternToRegExpStr(urlPdf), urlPdf]
-      ]
+
       initPdf(window.appConfig)
       await timer(0)
       const handler = browser.webRequest.onHeadersReceived._listeners[0]
       const responseHeaders = [
-        { name: 'content-type', value: 'application/pdf' }
+        { name: 'content-type', value: 'application/pdf' },
       ]
       expect(handler({ responseHeaders, url: urlPdf })).toEqual({
-        redirectUrl: expect.stringMatching(urlPdfEncoded)
+        redirectUrl: expect.stringMatching(urlPdfEncoded),
       })
       expect(handler({ responseHeaders, url: urlTxt })).toEqual({
-        redirectUrl: expect.stringMatching(urlTxtEncoded)
+        redirectUrl: expect.stringMatching(urlTxtEncoded),
       })
     })
 
     it('should intercept if the url matches both blacklist and whitelist', async () => {
       ;(window.appConfig as AppConfigMutable).pdfSniff = true
       ;(window.appConfig as AppConfigMutable).pdfBlacklist = [
-        [matchPatternToRegExpStr(urlPdf), urlPdf]
-      ]
-      ;(window.appConfig as AppConfigMutable).pdfWhitelist = [
-        [matchPatternToRegExpStr(urlPdf), urlPdf]
+        [matchPatternToRegExpStr(urlPdf), urlPdf],
       ]
       initPdf(window.appConfig)
       await timer(0)
       const handler = browser.webRequest.onHeadersReceived._listeners[0]
       const responseHeaders = [
-        { name: 'content-type', value: 'application/pdf' }
+        { name: 'content-type', value: 'application/pdf' },
       ]
       expect(handler({ responseHeaders, url: urlPdf })).toEqual({
-        redirectUrl: expect.stringMatching(urlPdfEncoded)
+        redirectUrl: expect.stringMatching(urlPdfEncoded),
       })
       expect(handler({ responseHeaders, url: urlTxt })).toEqual({
-        redirectUrl: expect.stringMatching(urlTxtEncoded)
+        redirectUrl: expect.stringMatching(urlTxtEncoded),
       })
     })
   })

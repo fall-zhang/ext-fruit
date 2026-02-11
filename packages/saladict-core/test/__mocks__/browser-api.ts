@@ -140,10 +140,8 @@ message.self.createStream = _messageCreateStream(true)
 /**
  * Open a url on new tab or highlight a existing tab if already opened
  */
-export const openUrl = jest.fn(() => Promise.resolve())
 
 export default {
-  openUrl,
   storage,
   message
 }
@@ -152,16 +150,12 @@ export default {
  * #Storage
 \* --------------------------------------- */
 function _storageClear () {
-  return jest.fn(storageClear)
-
   function storageClear (): Promise<void> {
     return Promise.resolve()
   }
 }
 
 function _storageRemove () {
-  return jest.fn(storageRemove)
-
   function storageRemove (keys: string | string[]): Promise<void> {
     return Promise.resolve()
   }
