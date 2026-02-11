@@ -1,25 +1,25 @@
-import React, { FC, Ref, useState, useCallback } from 'react'
+import type { FC, Ref } from 'react'
+import React, { useState, useCallback } from 'react'
 import { ResizeReporter } from 'react-resize-reporter/scroll'
-import classNames from 'clsx'
 
 export type FloatBoxItem =
   | {
-      // <button>
-      key: string
+    // <button>
+    key: string
+    value: string
+    label: React.ReactNode
+    options?: undefined
+  } |
+  {
+    // <select>
+    key: string
+    value: string
+    options: Array<{
       value: string
-      label: React.ReactNode
-      options?: undefined
-    }
-  | {
-      // <select>
-      key: string
-      value: string
-      options: Array<{
-        value: string
-        label: string
-      }>
-      title?: string
-    }
+      label: string
+    }>
+    title?: string
+  }
 
 export interface FloatBoxProps {
   list?: FloatBoxItem[]
@@ -68,7 +68,7 @@ export const FloatBox: FC<FloatBoxProps> = React.forwardRef(
     return (
       <div
         className={classnames('floatBox-Container', {
-          'floatBox-compact': props.compact
+          'floatBox-compact': props.compact,
         })}
         style={{ width, height }}
         onMouseOver={props.onMouseOver}
@@ -80,9 +80,6 @@ export const FloatBox: FC<FloatBoxProps> = React.forwardRef(
           {!props.list
             ? (
               <div key="loading" className="lds-ellipsis">
-                <div></div>
-                <div></div>
-                <div></div>
                 <div></div>
               </div>
             )
@@ -137,7 +134,7 @@ export const FloatBox: FC<FloatBoxProps> = React.forwardRef(
       if (props.onSelect) {
         const {
           dataset: { key },
-          value
+          value,
         } = e.currentTarget
         props.onSelect(key!, value)
       }

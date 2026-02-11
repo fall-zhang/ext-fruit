@@ -1,14 +1,17 @@
-import React, { useMemo, useEffect, ReactNode } from 'react'
+import type { ReactNode } from 'react'
+import type React from 'react'
+import { useMemo, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import CSSTransition, {
+import type {
   CSSTransitionProps
 } from 'react-transition-group/CSSTransition'
+import CSSTransition from 'react-transition-group/CSSTransition'
 import root from 'react-shadow'
-import { SALADICT_EXTERNAL } from '@/_helpers/saladict'
+import { SALADICT_EXTERNAL } from '../../core/saladict-state'
 
 export const defaultTimeout = { enter: 400, exit: 100, appear: 400 }
 
- const defaultClassNames = 'shadowPortal'
+const defaultClassNames = 'shadowPortal'
 
 // prevent styles in shadow dom from inheriting outside rules
 const styleResetBoundary: React.CSSProperties = { all: 'initial' }
@@ -51,7 +54,7 @@ export const ShadowPortal = (props: ShadowPortalProps) => {
         SALADICT_EXTERNAL}`
     }
     return $root
-  }, [shadowRootClassName])
+  }, [id, shadowRootClassName])
 
   // unmout element when React node unmounts
   useEffect(

@@ -7,8 +7,6 @@ import { AntdRootContainer } from './AntdRootContainer'
 
 import './_style.scss'
 import { createRoot } from 'react-dom/client'
-// import { I18nContextProvider } from '@/_helpers/i18n'
-import { I18nContextProvider } from '../../locales/i18n'
 
 export const initAntdRoot = async (
   render: () => React.ReactNode,
@@ -27,12 +25,12 @@ export const initAntdRoot = async (
     }
   })
   const root = createRoot(document.getElementById('root')!)
-  root.render(<I18nContextProvider>
+  root.render(<>
     <AntdRootContainer gaPath={gaPath} render={render} />
     <SaladBowlContainer panelCSS={''} x={0} y={0} enableHover={false} onActive={ () => {} } show={false} withAnimation={false} />
     <DictPanelContainer darkMode={false} panelCSS={''} fontSize={0} show={false} withAnimation={false} coord={{
       x: 0,
-      y: 0
+      y: 0,
     }} takeCoordSnapshot={false} width={0} height={0} maxHeight={0} menuBar={undefined} mtaBox={undefined} dictList={undefined} waveformBox={undefined} dragStartCoord={null} onDragEnd={function (): void {
       throw new Error('Function not implemented.')
     } } />
@@ -40,9 +38,9 @@ export const initAntdRoot = async (
       throw new Error('Function not implemented.')
     } } containerWidth={0} wordEditor={{
       word: undefined,
-      translateCtx: false
+      translateCtx: false,
     }} />
-  </I18nContextProvider>)
+  </>)
 }
 
 async function switchAntdTheme (darkMode: boolean): Promise<void> {
@@ -80,9 +78,7 @@ async function switchAntdTheme (darkMode: boolean): Promise<void> {
 
     let loaded = false
 
-    // @ts-expect-error
     $link.onreadystatechange = function () {
-      // @ts-expect-error
       if (this.readyState === 'complete' || this.readyState === 'loaded') {
         if (loaded === false) {
           resolve()

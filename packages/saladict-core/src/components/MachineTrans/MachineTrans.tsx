@@ -1,17 +1,16 @@
+import type { FC } from 'react'
 import React, {
-  FC,
   useState,
   useCallback,
   useLayoutEffect,
   useRef
 } from 'react'
-import { useSubscription } from 'observable-hooks'
-import Speaker from '@/components/Speaker'
-import { ViewPorps } from '@/components/Dictionaries/helpers'
-import { DictID } from '@/app-config'
-import { message } from '@/_helpers/browser-api'
-import { MachineTranslateResult } from './engine'
-import { Trans, useTranslate } from '@/_helpers/i18n'
+import type { MachineTranslateResult } from './engine'
+import { Trans, useTranslation } from 'react-i18next'
+import { getTTS } from '../../core/trans-api/google/engine'
+import Speaker from '../Speaker'
+import type { DictID } from '../../app-config'
+import type { ViewProps } from '../../core/trans-api/helpers'
 
 const rtlLangs = new Set([
   'ar', // Arabic
@@ -22,7 +21,7 @@ const rtlLangs = new Set([
   'iw', // Hebrew
   'ku', // Kurdish
   'ug', // Uighur
-  'ur' // Urdu
+  'ur', // Urdu
 ])
 
 const TSpeaker = React.memo<{
@@ -33,28 +32,8 @@ const TSpeaker = React.memo<{
     src={
       result[source].tts === '#'
         ? () => {
-          console.log({
-            type: 'DICT_ENGINE_METHOD',
-            payload: {
-              id: result.id,
-              method: 'getTTS',
-              args: [
-                result[source].paragraphs.join(' '),
-                source === 'trans' ? result.tl : result.sl
-              ]
-            }
-          })
-          return message.send<'DICT_ENGINE_METHOD', string>({
-            type: 'DICT_ENGINE_METHOD',
-            payload: {
-              id: result.id,
-              method: 'getTTS',
-              args: [
-                result[source].paragraphs.join(' '),
-                source === 'trans' ? result.tl : result.sl
-              ]
-            }
-          })
+          const lang = source === 'trans' ? result.tl : result.sl
+          return getTTS(result[source].paragraphs.join(' '), lang)
         }
         : result[source].tts
     }
@@ -129,7 +108,7 @@ const TTextCollapsable = React.memo<{
   )
 })
 
-export type MachineTransProps = ViewPorps<MachineTranslateResult<DictID>>
+export type MachineTransProps = ViewProps<MachineTranslateResult<DictID>>
 
 /** Template for machine translations */
 export const MachineTrans: FC<MachineTransProps> = props => {
@@ -138,41 +117,8 @@ export const MachineTrans: FC<MachineTransProps> = props => {
     MachineTransProps['result']['slInitial']
   >(props.result.slInitial)
 
-  useSubscription(props.catalogSelect$, ({ key, value }) => {
-    switch (key) {
-    case 'showSl':
-      setSlState('full')
-      break
-    case 'sl':
-    case 'tl':
-      props.searchText({
-        id: props.result.id,
-        payload: {
-          sl,
-          tl,
-          [key]: value
-        }
-      })
-      break
-    case 'copySrc':
-      message.send({
-        type: 'SET_CLIPBOARD',
-        payload: props.result.searchText.paragraphs.join('\n')
-      })
-      break
-    case 'copyTrans':
-      message.send({
-        type: 'SET_CLIPBOARD',
-        payload: props.result.trans.paragraphs.join('\n')
-      })
-      break
-    default:
-      break
-    }
-  })
-
   if (props.result.requireCredential) {
-    return renderCredential()
+    return <RenderCredential />
   }
 
   return (
@@ -201,9 +147,9 @@ export const MachineTrans: FC<MachineTransProps> = props => {
   )
 }
 
-function renderCredential () {
-  const { t } = useTranslate('content')
-  return (
+const RenderCredential:FC = (props) => {
+  const { t } = useTranslation('content')
+  return (<>
     <Trans message={t('machineTrans.login')}>
       <a
         href={browser.runtime.getURL('options.html?menuselected=DictAuths')}
@@ -213,5 +159,6 @@ function renderCredential () {
         {t('machineTrans.dictAccount')}
       </a>
     </Trans>
+  </>
   )
 }

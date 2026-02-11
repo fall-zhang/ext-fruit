@@ -1,12 +1,12 @@
-import { DictID, AppConfig } from '@P/saladict-core/src/app-config'
-import { Language } from '@P/open-trans/languages'
-import { Translator } from '@P/open-trans/translator'
-import { DictItem, SelectOptions } from '@P/saladict-core/src/app-config/dicts'
+import type { DictID, AppConfig } from '@P/saladict-core/src/app-config'
+import type { Language } from '@P/open-trans/languages'
+import type { Translator } from '@P/open-trans/translator'
+import type { DictItem, SelectOptions } from '@P/saladict-core/src/app-config/dicts'
 // import { isContainJapanese, isContainKorean } from '@/_helpers/lang-check'
 import { isContainJapanese, isContainKorean } from '../../utils/lang-check'
 // import { DictSearchResult } from '@/components/Dictionaries/helpers'
-import { DictSearchResult } from '../../core/trans-api/helpers'
-
+import type { DictSearchResult } from '../../core/trans-api/helpers'
+import type { AppConfigMutable } from '../../store/config/get-default-conf'
 export interface MachineTranslatePayload<Lang = string> {
   sl?: Lang
   tl?: Lang
@@ -45,17 +45,11 @@ export type MachineDictItem<
 > = DictItem<Options & DefaultMachineOptions<Lang>>
 
 export type ExtractLangFromConfig<Config> = Config extends MachineDictItem<
-  infer Lang,
+  infer Lang
 >
   ? Lang
   : never
 
-export type ExtractOptionsFromConfig<Config> = Config extends MachineDictItem<
-  infer Lang,
-  infer Options
->
-  ? Omit<Options, keyof DefaultMachineOptions<Lang>>
-  : never
 
 type SelOptionType = {
   options: {
@@ -76,7 +70,7 @@ export async function getMTArgs (
   text: string,
   {
     options,
-    optionsSel
+    optionsSel,
   }:SelOptionType,
   config: AppConfig,
   payload: {
@@ -151,12 +145,10 @@ export async function getMTArgs (
 export function machineConfig<Config extends MachineDictItem<Language>> (
   langs: ExtractLangFromConfig<Config>[],
   /** overwrite configs */
-  config: Partial<Config>,
-  options: ExtractOptionsFromConfig<Config>,
-  optionsSel: SelectOptions<ExtractOptionsFromConfig<Config>>
+  config: Partial<Config>
 ): Config {
-  const setting:Config = {
-    lang: '11111111',
+  const setting:AppConfigMutable = {
+    lang: 'zh-CN',
     selectionLang: {
       english: true,
       chinese: true,
@@ -166,7 +158,7 @@ export function machineConfig<Config extends MachineDictItem<Language>> (
       spanish: true,
       deutsch: true,
       others: true,
-      matchAll: false
+      matchAll: false,
     },
     defaultUnfold: {
       english: true,
@@ -177,12 +169,12 @@ export function machineConfig<Config extends MachineDictItem<Language>> (
       spanish: true,
       deutsch: true,
       others: true,
-      matchAll: false
+      matchAll: false,
     },
     preferredHeight: 320,
     selectionWC: {
       min: 1,
-      max: 9999999
+      max: 9999999,
     },
     ...config,
     options: {
@@ -190,15 +182,13 @@ export function machineConfig<Config extends MachineDictItem<Language>> (
       slInitial: 'collapse',
       tl: 'default',
       tl2: 'default',
-      ...(options as any)
     },
     optionsSel: {
       keepLF: ['none', 'all', 'webpage', 'pdf'],
       slInitial: ['collapse', 'hide', 'full'],
       tl: ['default', ...langs],
       tl2: ['default', ...langs],
-      ...optionsSel
-    }
+    },
   }
   return setting
 }
@@ -211,13 +201,13 @@ export function machineResult<ID extends DictID> (
   const langCodesOptions = [
     {
       value: 'auto',
-      label: '%t(content:machineTrans.auto)'
-    }
+      label: '%t(content:machineTrans.auto)',
+    },
   ]
   for (const lang of langcodes) {
     langCodesOptions.push({
       value: lang,
-      label: `${lang} %t(langcode:${lang})`
+      label: `${lang} %t(langcode:${lang})`,
     })
   }
 
@@ -226,36 +216,36 @@ export function machineResult<ID extends DictID> (
       key: 'sl',
       value: data.result.sl,
       title: '%t(content:machineTrans.sl)',
-      options: langCodesOptions
+      options: langCodesOptions,
     },
     {
       key: 'tl',
       value: data.result.tl,
       title: '%t(content:machineTrans.tl)',
-      options: langCodesOptions
+      options: langCodesOptions,
     },
     {
       key: 'copySrc',
       value: 'copySrc',
-      label: '%t(content:machineTrans.copySrc)'
+      label: '%t(content:machineTrans.copySrc)',
     },
     {
       key: 'copyTrans',
       value: 'copyTrans',
-      label: '%t(content:machineTrans.copyTrans)'
-    }
+      label: '%t(content:machineTrans.copyTrans)',
+    },
   ]
 
   if (data.result.slInitial === 'hide') {
     catalog.push({
       key: 'showSl',
       value: '',
-      label: '%t(content:machineTrans.showSl)'
+      label: '%t(content:machineTrans.showSl)',
     })
   }
 
   return {
     ...data,
-    catalog
+    catalog,
   }
 }

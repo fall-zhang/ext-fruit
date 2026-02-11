@@ -1,5 +1,7 @@
-import React, { PropsWithChildren, useMemo, useState } from 'react'
+import type { FC } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useIsomorphicLayoutEffect } from 'react-use'
+import DOMPurify from 'dompurify'
 
 export type StrElmProps<
   T extends keyof JSX.IntrinsicElements = keyof JSX.IntrinsicElements
@@ -7,17 +9,18 @@ export type StrElmProps<
   tag?: T
   html: string
 } & JSX.IntrinsicElements[T]
-
-export const StrElm = <
-  T extends keyof JSX.IntrinsicElements = keyof JSX.IntrinsicElements
->(
-    props: PropsWithChildren<StrElmProps<T>>
-  ) => {
+export const StrElm:FC< Partial<HTMLElement> & {
+  tag?:'div' | 'span'
+  html:string
+}> = (
+  props
+) => {
   const { tag = 'div', html, ...restProps } = props
   const child = useMemo<DocumentFragment | null>(() => {
     try {
       const fragment = document.createDocumentFragment()
-      const doc = new DOMParser().parseFromString(html, 'text/html')
+      const trusted = DOMPurify.sanitize(html)
+      const doc = new DOMParser().parseFromString((trusted), 'text/html')
       Array.from(doc.body.childNodes).forEach(el => {
         fragment.appendChild(el)
       })

@@ -1,20 +1,21 @@
-import React, { FC, useEffect, useMemo } from 'react'
-import { shallowEqual } from 'react-redux'
+import type { FC } from 'react'
+import type React from 'react'
+import { useEffect, useMemo } from 'react'
 import { ConfigProvider as AntdConfigProvider } from 'antd'
 import langZhCN from 'antd/lib/locale/zh_CN'
 import langZhTW from 'antd/lib/locale/zh_TW'
 import langEnUS from 'antd/lib/locale/en_US'
-import { useSelector } from '@/content/redux'
-import { reportPageView } from '@/_helpers/analytics'
+import { useDictStore } from '../../store'
+import { reportPageView } from '../../utils/analytics'
 
 const antdLocales = (saladictLocale: string) => {
   switch (saladictLocale) {
-  case 'zh-CN':
-    return langZhCN
-  case 'zh-TW':
-    return langZhTW
-  default:
-    return langEnUS
+    case 'zh-CN':
+      return langZhCN
+    case 'zh-TW':
+      return langZhTW
+    default:
+      return langEnUS
   }
 }
 
@@ -27,10 +28,10 @@ export interface AntdRootContainerProps {
 
 /** Inner Component so that it can access Redux store */
 export const AntdRootContainer: FC<AntdRootContainerProps> = props => {
-  const { langCode, analytics, darkMode } = useSelector(state => {
+  const { langCode, analytics, darkMode } = useDictStore(state => {
     const { langCode, analytics, darkMode } = state.config
     return { langCode, analytics, darkMode }
-  }, shallowEqual)
+  })
 
   const locale = useMemo(() => antdLocales(langCode), [langCode])
 
