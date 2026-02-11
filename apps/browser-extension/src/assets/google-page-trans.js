@@ -1,7 +1,6 @@
-;(function () {
+(function () {
   const $script = document.createElement('script')
   $script.type = 'text/javascript'
-  $script.charset = 'UTF-8'
   $script.text = `
 ;(function (){
   if (typeof google === 'undefined') {
@@ -81,6 +80,6 @@
     }
   `
 
-  ;(document.head || document.body).appendChild($script)
-  ;(document.head || document.body).appendChild($style)
+    ; (document.head || document.body).appendChild($script)
+    ; (document.head || document.body).appendChild($style)
 }())

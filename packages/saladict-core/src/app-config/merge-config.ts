@@ -1,5 +1,3 @@
-import type { AppConfig, AppConfigMutable } from '@/app-config'
-import { getDefaultConfig } from '@/app-config'
 import { defaultAllDicts } from './dicts'
 
 import forEach from 'lodash/forEach'
@@ -8,6 +6,7 @@ import isString from 'lodash/isString'
 import isBoolean from 'lodash/isBoolean'
 import get from 'lodash/get'
 import set from 'lodash/set'
+import { getDefaultConfig, type AppConfig, type AppConfigMutable } from '.'
 
 export default mergeConfig
 
@@ -108,7 +107,7 @@ export function mergeConfig (
         )
         break
       case 'ctxTrans':
-        forEach(base.ctxTrans, (value, key) => {
+        Object.keys(base.ctxTrans).forEach((key) => {
           mergeBoolean(`ctxTrans.${key}`)
         })
         break

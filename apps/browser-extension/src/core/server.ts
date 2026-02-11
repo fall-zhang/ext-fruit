@@ -1,9 +1,6 @@
 import { message, openUrl } from '@/_helpers/browser-api'
-import { getSuggests } from '@/_helpers/getSuggests'
 import { injectDictPanel } from '@/_helpers/injectSaladictInternal'
-import type { Word } from '@P/saladict-core/src/dict-utils/new-word'
 import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
-import type { Message } from '@/types/message'
 import type {
   SearchFunction,
   DictSearchResult,
@@ -55,33 +52,25 @@ export class BackgroundServer {
 
     message.addListener((msg, sender: browser.runtime.MessageSender) => {
       switch (msg.type) {
-        case 'OPEN_URL':
-          return openUrl(msg.payload)
-        case 'INJECT_DICTPANEL':
-          return injectDictPanel(sender.tab)
-        case 'QUERY_QS_PANEL':
-          return this.qsPanelManager.hasCreated()
-        case 'CLOSE_QS_PANEL':
-          AudioManager.getInstance().reset()
-          return this.qsPanelManager.destroy()
-        case 'QS_SWITCH_SIDEBAR':
-          return this.qsPanelManager.toggleSidebar(msg.payload)
-        case 'SAVE_WORD':
-          return saveWord(msg.payload).then(response => {
-            this.notifyWordSaved()
-            return response
-          })
-        case 'DELETE_WORDS':
-          return deleteWords(msg.payload).then(response => {
-            this.notifyWordSaved()
-            return response
-          })
-        case 'GET_WORDS_BY_TEXT':
-          return getWordsByText(msg.payload)
-        case 'GET_WORDS':
-          return getWords(msg.payload)
-        case 'GET_SUGGESTS':
-          return getSuggests(msg.payload)
+        // case 'OPEN_URL':
+        //   return openUrl(msg.payload)
+        // case 'INJECT_DICTPANEL':
+        //   return injectDictPanel(sender.tab)
+        // case 'QUERY_QS_PANEL':
+        //   return this.qsPanelManager.hasCreated()
+        // case 'CLOSE_QS_PANEL':
+        //   AudioManager.getInstance().reset()
+        //   return this.qsPanelManager.destroy()
+        // case 'QS_SWITCH_SIDEBAR':
+        //   return this.qsPanelManager.toggleSidebar(msg.payload)
+        // case 'DELETE_WORDS':
+        //   return deleteWords(msg.payload).then(response => {
+        //     return response
+        //   })
+        // case 'GET_WORDS_BY_TEXT':
+        //   return getWordsByText(msg.payload)
+        // case 'GET_WORDS':
+        //   return getWords(msg.payload)
       }
     })
 

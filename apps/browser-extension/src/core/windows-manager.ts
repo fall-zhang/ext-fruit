@@ -1,5 +1,5 @@
 import { message, storage } from '@/_helpers/browser-api'
-import { Word } from '@P/saladict-core/src/dict-utils/new-word'
+import type { Word } from '@P/saladict-core/src/dict-utils/new-word'
 import { isFirefox } from '@/_helpers/saladict'
 import { getTitlebarOffset } from '@/_helpers/titlebar-offset'
 
@@ -40,7 +40,7 @@ export class MainWindowsManager {
 
     try {
       const win = await browser.windows.getLastFocused({
-        windowTypes: ['normal']
+        windowTypes: ['normal'],
       })
       if (win.focused && win.type === 'normal' && win.state !== 'minimized') {
         this.snapshot = win
@@ -93,21 +93,21 @@ export class MainWindowsManager {
           left: side === 'right' ? mainWin.left : mainWin.left + sidebarWidth,
           width: mainWin.width - sidebarWidth,
           height: mainWin.height,
-          state: 'normal' as const
+          state: 'normal' as const,
         }
         : {
           top: 0,
           left: side === 'right' ? 0 : sidebarWidth,
           width: window.screen.availWidth - sidebarWidth,
           height: window.screen.availHeight,
-          state: 'normal' as const
+          state: 'normal' as const,
         }
 
     if (side === 'right') {
       // fix a chrome bug by moving 1 extra pixal then to 0
       await safeUpdateWindow(mainWin.id, {
         ...updateInfo,
-        left: updateInfo.left + 1
+        left: updateInfo.left + 1,
       })
     }
 
@@ -123,7 +123,7 @@ export class MainWindowsManager {
             top: await this.correctTop(this.snapshot.top),
             left: this.snapshot.left,
             width: this.snapshot.width,
-            height: this.snapshot.height
+            height: this.snapshot.height,
           }
           : { state: this.snapshot.state }
       )
@@ -171,7 +171,7 @@ export class QsPanelManager {
         const tab = (
           await browser.tabs.query({
             active: true,
-            lastFocusedWindow: true
+            lastFocusedWindow: true,
           })
         )[0]
         if (tab && tab.id) {
@@ -195,7 +195,7 @@ export class QsPanelManager {
         type: 'popup',
         url: browser.runtime.getURL(
           `quick-search.html?sidebar=${window.appConfig.qssaSidebar}${wordString}${lastTabString}`
-        )
+        ),
       })
     } catch (err) {
       browser.notifications.create({
@@ -204,7 +204,7 @@ export class QsPanelManager {
         title: 'Saladict',
         message: err.message,
         priority: 2,
-        eventTime: Date.now() + 5000
+        eventTime: Date.now() + 5000,
       })
     }
 
@@ -231,10 +231,10 @@ export class QsPanelManager {
       // notify all tabs
       ;(await browser.tabs.query({})).forEach(tab => {
         if (tab.id && tab.windowId !== this.qsPanelId) {
-          message.send(tab.id, {
-            type: 'QS_PANEL_CHANGED',
-            payload: this.qsPanelId != null
-          })
+          // message.send(tab.id, {
+          //   type: 'QS_PANEL_CHANGED',
+          //   payload: this.qsPanelId != null,
+          // })
         }
       })
     }
@@ -250,10 +250,10 @@ export class QsPanelManager {
   async destroy (): Promise<void> {
     ;(await browser.tabs.query({})).forEach(tab => {
       if (tab.id && tab.windowId !== this.qsPanelId) {
-        message.send(tab.id, {
-          type: 'QS_PANEL_CHANGED',
-          payload: false
-        })
+        // message.send(tab.id, {
+        //   type: 'QS_PANEL_CHANGED',
+        //   payload: false,
+        // })
       }
     })
 
@@ -306,12 +306,12 @@ export class QsPanelManager {
         top: await this.correctTop(this.snapshot.top),
         left: this.snapshot.left,
         width: this.snapshot.width,
-        height: this.snapshot.height
+        height: this.snapshot.height,
       })
     } else if (this.qsPanelId != null) {
       await safeUpdateWindow(this.qsPanelId, {
         focused: true,
-        ...this.getDefaultRect()
+        ...this.getDefaultRect(),
       })
     }
     this.destroySnapshot()
@@ -392,7 +392,7 @@ export class QsPanelManager {
       top: Math.round(qsPanelTop + (window.screen.availTop || 0)),
       left: Math.round(qsPanelLeft + (window.screen.availLeft || 0)),
       width: Math.round(qsPanelWidth),
-      height: Math.round(qsPanelHeight)
+      height: Math.round(qsPanelHeight),
     }
   }
 
@@ -404,7 +404,7 @@ export class QsPanelManager {
     if (!qssaRect) return null
     return {
       ...qssaRect,
-      top: (await this.correctTop(qssaRect.top)) || 0
+      top: (await this.correctTop(qssaRect.top)) || 0,
     }
   }
 
@@ -429,7 +429,7 @@ export class QsPanelManager {
             : mainWin.left
         ),
         width: Math.round(panelWidth),
-        height: Math.round(mainWin.height)
+        height: Math.round(mainWin.height),
       }
       : {
         top: 0,
@@ -437,7 +437,7 @@ export class QsPanelManager {
           side === 'right' ? window.screen.availWidth - panelWidth : 0
         ),
         width: Math.round(panelWidth),
-        height: Math.round(window.screen.availHeight)
+        height: Math.round(window.screen.availHeight),
       }
   }
 }

@@ -53,28 +53,29 @@ export function isInNotebook (word: Word): Promise<boolean> {
 }
 
 export async function saveWord (area: DBArea, word: Word): Promise<void> {
-  await message.send({ type: 'SAVE_WORD', payload: { area, word } })
+  // await message.send({ type: 'SAVE_WORD', payload: { area, word } })
 }
 
 export async function deleteWords (
   area: DBArea,
   dates?: number[]
 ): Promise<void> {
-  await message.send({ type: 'SYNC_SERVICE_DOWNLOAD' })
-  await message.send({ type: 'DELETE_WORDS', payload: { area, dates } })
+  // await message.send({ type: 'SYNC_SERVICE_DOWNLOAD' })
+  // await message.send({ type: 'DELETE_WORDS', payload: { area, dates } })
 }
 
-export function getWordsByText (
+export async function getWordsByText (
   area: DBArea,
   text: string
 ): Promise<readonly Word[]> {
-  return message.send<'GET_WORDS_BY_TEXT'>({
-    type: 'GET_WORDS_BY_TEXT',
-    payload: {
-      area,
-      text,
-    },
-  })
+  // return message.send<'GET_WORDS_BY_TEXT'>({
+  //   type: 'GET_WORDS_BY_TEXT',
+  //   payload: {
+  //     area,
+  //     text,
+  //   },
+  // })
+  return []
 }
 
 export function getWords (
@@ -88,13 +89,13 @@ export function getWords (
     searchText?: string
   }
 ) {
-  return message.send<'GET_WORDS'>({
-    type: 'GET_WORDS',
-    payload: {
-      area,
-      ...config,
-    },
-  })
+  // return message.send<'GET_WORDS'>({
+  //   type: 'GET_WORDS',
+  //   payload: {
+  //     area,
+  //     ...config,
+  //   },
+  // })
 }
 
 function logError<T = any> (valPassThrough: T): (x: any) => T {

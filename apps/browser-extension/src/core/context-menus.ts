@@ -144,9 +144,11 @@ export class ContextMenus {
 
   static requestSelection () {
     browser.tabs.query({ active: true, currentWindow: true }).then(tabs => {
-      if (tabs.length > 0 && tabs[0].id != null) {
-        message.send(tabs[0].id as number, { type: 'EMIT_SELECTION' })
-      }
+      // if (tabs.length > 0 && tabs[0].id != null) {
+      //   message.send(tabs[0].id as number, { type: 'EMIT_SELECTION' })
+      // }
+    }).catch(err => {
+      console.warn(err)
     })
   }
 
