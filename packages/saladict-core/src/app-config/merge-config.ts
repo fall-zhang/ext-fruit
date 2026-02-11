@@ -1,4 +1,5 @@
-import { getDefaultConfig, AppConfig, AppConfigMutable } from '@/app-config'
+import type { AppConfig, AppConfigMutable } from '@/app-config'
+import { getDefaultConfig } from '@/app-config'
 import { defaultAllDicts } from './dicts'
 
 import forEach from 'lodash/forEach'
@@ -50,53 +51,46 @@ export function mergeConfig (
 
   Object.keys(base).forEach(key => {
     switch (key) {
-    case 'langCode':
-      merge('langCode', val => /^(zh-CN|zh-TW|en)$/.test(val))
-      break
-    case 'pdfWhitelist':
-    case 'pdfBlacklist':
-    case 'whitelist':
-    case 'blacklist':
-      merge(key, val => Array.isArray(val))
-      break
-    case 'searhHistory':
-    case 'searchHistory':
-      base.searchHistory = oldConfig[key]
-      break
-    case 'searhHistoryInco':
-    case 'searchHistoryInco':
-      base.searchHistoryInco = oldConfig[key]
-      break
-    case 'mode':
-    case 'pinMode':
-    case 'panelMode':
-    case 'qsPanelMode':
-      if (key === 'mode') {
-        mergeBoolean('mode.icon')
-      }
-      mergeBoolean(`${key}.direct`)
-      mergeBoolean(`${key}.double`)
-      mergeBoolean(`${key}.holding.alt`)
-      mergeBoolean(`${key}.holding.shift`)
-      mergeBoolean(`${key}.holding.ctrl`)
-      mergeBoolean(`${key}.holding.meta`)
-      mergeBoolean(`${key}.instant.enable`)
-      merge(`${key}.instant.key`, val =>
-        /^(direct|ctrl|alt|shift)$/.test(val)
-      )
-      mergeNumber(`${key}.instant.delay`)
-      break
-    case 'qsPreload':
-      merge(
-        'qsPreload',
-        val => val === '' || val === 'clipboard' || val === 'selection'
-      )
-      break
-    case 'qsLocation':
-      merge(
-        'qsLocation',
-        val =>
-          val === 'CENTER' ||
+      case 'langCode':
+        merge('langCode', val => /^(zh-CN|zh-TW|en)$/.test(val))
+        break
+      case 'whitelist':
+      case 'blacklist':
+        merge(key, val => Array.isArray(val))
+        break
+      case 'searhHistory':
+      case 'searchHistory':
+        base.searchHistory = oldConfig[key]
+        break
+      case 'searhHistoryInco':
+        break
+      case 'mode':
+      case 'pinMode':
+      case 'panelMode':
+      case 'qsPanelMode':
+        mergeBoolean(`${key}.direct`)
+        mergeBoolean(`${key}.double`)
+        mergeBoolean(`${key}.holding.alt`)
+        mergeBoolean(`${key}.holding.shift`)
+        mergeBoolean(`${key}.holding.ctrl`)
+        mergeBoolean(`${key}.holding.meta`)
+        mergeBoolean(`${key}.instant.enable`)
+        merge(`${key}.instant.key`, val =>
+          /^(direct|ctrl|alt|shift)$/.test(val)
+        )
+        mergeNumber(`${key}.instant.delay`)
+        break
+      case 'qsPreload':
+        merge(
+          'qsPreload',
+          val => val === '' || val === 'clipboard' || val === 'selection'
+        )
+        break
+      case 'qsLocation':
+        merge(
+          'qsLocation',
+          val =>
+            val === 'CENTER' ||
             val === 'TOP' ||
             val === 'RIGHT' ||
             val === 'BOTTOM' ||
@@ -105,69 +99,69 @@ export function mergeConfig (
             val === 'TOP_RIGHT' ||
             val === 'BOTTOM_LEFT' ||
             val === 'BOTTOM_RIGHT'
-      )
-      break
-    case 'baPreload':
-      merge(
-        'baPreload',
-        val => val === '' || val === 'clipboard' || val === 'selection'
-      )
-      break
-    case 'ctxTrans':
-      forEach(base.ctxTrans, (value, key) => {
-        mergeBoolean(`ctxTrans.${key}`)
-      })
-      break
-    case 'language':
-      forEach(base.language, (value, key) => {
-        mergeBoolean(`language.${key}`)
-      })
-      break
-    case 'autopron':
-      merge('autopron.cn.dict', id => defaultAllDicts[id])
-      merge('autopron.en.dict', id => defaultAllDicts[id])
-      merge('autopron.en.accent', val => val === 'us' || val === 'uk')
-      merge('autopron.machine.dict', id => defaultAllDicts[id])
-      merge(
-        'autopron.machine.src',
-        val => val === 'trans' || val === 'searchText'
-      )
-      break
-    case 'contextMenus':
-      forEach(oldConfig.contextMenus.all, (dict, id) => {
-        if (typeof dict === 'string') {
+        )
+        break
+      case 'baPreload':
+        merge(
+          'baPreload',
+          val => val === '' || val === 'clipboard' || val === 'selection'
+        )
+        break
+      case 'ctxTrans':
+        forEach(base.ctxTrans, (value, key) => {
+          mergeBoolean(`ctxTrans.${key}`)
+        })
+        break
+      case 'language':
+        forEach(base.language, (value, key) => {
+          mergeBoolean(`language.${key}`)
+        })
+        break
+      case 'autopron':
+        merge('autopron.cn.dict', id => defaultAllDicts[id])
+        merge('autopron.en.dict', id => defaultAllDicts[id])
+        merge('autopron.en.accent', val => val === 'us' || val === 'uk')
+        merge('autopron.machine.dict', id => defaultAllDicts[id])
+        merge(
+          'autopron.machine.src',
+          val => val === 'trans' || val === 'searchText'
+        )
+        break
+      case 'contextMenus':
+        forEach(oldConfig.contextMenus.all, (dict, id) => {
+          if (typeof dict === 'string') {
           // default menus
-          if (base.contextMenus.all[id]) {
-            mergeString(`contextMenus.all.${id}`)
-          }
-        } else {
+            if (base.contextMenus.all[id]) {
+              mergeString(`contextMenus.all.${id}`)
+            }
+          } else {
           // custom menus
-          mergeString(`contextMenus.all.${id}.name`)
-          mergeString(`contextMenus.all.${id}.url`)
-        }
-      })
-      mergeSelectedContextMenus('contextMenus')
-      break
-    case 'dictAuth':
-      merge('dictAuth', Boolean)
-      break
-    default:
-      switch (typeof base[key]) {
-      case 'string':
-        mergeString(key)
+            mergeString(`contextMenus.all.${id}.name`)
+            mergeString(`contextMenus.all.${id}.url`)
+          }
+        })
+        mergeSelectedContextMenus('contextMenus')
         break
-      case 'boolean':
-        mergeBoolean(key)
-        break
-      case 'number':
-        mergeNumber(key)
+      case 'dictAuth':
+        merge('dictAuth', Boolean)
         break
       default:
-        console.error(
-          new Error(`merge config: missing handler for '${key}'`)
-        )
-      }
-      break
+        switch (typeof base[key]) {
+          case 'string':
+            mergeString(key)
+            break
+          case 'boolean':
+            mergeBoolean(key)
+            break
+          case 'number':
+            mergeNumber(key)
+            break
+          default:
+            console.error(
+              new Error(`merge config: missing handler for '${key}'`)
+            )
+        }
+        break
     }
   })
 
@@ -178,13 +172,13 @@ export function mergeConfig (
 
   if (oldVersion <= 10) {
     oldVersion = 11
-    base.contextMenus.selected.unshift('view_as_pdf')
   }
+
   if (oldVersion <= 11) {
     oldVersion = 12
     base.blacklist.push([
       '^https://stackedit.io(/.*)?$',
-      'https://stackedit.io/*'
+      'https://stackedit.io/*',
     ])
   }
 

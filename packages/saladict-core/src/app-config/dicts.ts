@@ -78,7 +78,7 @@ export const defaultAllDicts = {
   wikipedia: wikipedia(),
   youdao: youdao(),
   youdaotrans: youdaotrans(),
-  zdic: zdic()
+  zdic: zdic(),
 }
 
 export type AllDicts = typeof defaultAllDicts

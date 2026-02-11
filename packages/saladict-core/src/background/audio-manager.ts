@@ -46,7 +46,7 @@ export class AudioManager {
       new Promise(resolve => {
         audio.onended = resolve
       }),
-      timer(20000)
+      timer(20000),
     ])
 
     await audio.play()

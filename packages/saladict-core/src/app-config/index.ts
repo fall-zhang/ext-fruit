@@ -1,24 +1,9 @@
 import type { ReadonlyDeep } from 'type-fest'
-import type { SupportedLangs } from '@P/trans-api/types/api-types'
-import { getAllDicts } from './dicts'
 import { getAllContextMenus } from './context-menus'
-import { MtaAutoUnfold as _MtaAutoUnfold } from './profiles'
+import type { MtaAutoUnfold as _MtaAutoUnfold } from './profiles'
 import { getDefaultDictAuths } from './auth'
-import { isFirefox } from '../utils/browser'
-
-export type LangCode = 'zh-CN' | 'zh-TW' | 'en'
-
-const langUI = browser.i18n.getUILanguage()
-
-
-let langCode: LangCode
-if (langUI === 'zh-CN') {
-  langCode = 'zh-CN'
-} else if (langUI === 'zh-TW' || langUI === 'zh-HK') {
-  langCode = 'zh-TW'
-} else {
-  langCode = 'en'
-}
+import type { getAllDicts } from './dicts'
+import type { ConfigType } from './config-type'
 
 
 type DictConfigsMutable = ReturnType<typeof getAllDicts>
@@ -26,133 +11,48 @@ export type DictConfigs = ReadonlyDeep<DictConfigsMutable>
 export type DictID = keyof DictConfigsMutable
 export type MtaAutoUnfold = _MtaAutoUnfold
 
-export type TCDirection =
-  | 'CENTER' |
-  'TOP' |
-  'RIGHT' |
-  'BOTTOM' |
-  'LEFT' |
-  'TOP_LEFT' |
-  'TOP_RIGHT' |
-  'BOTTOM_LEFT' |
-  'BOTTOM_RIGHT'
-
-type InstantSearchKey = 'direct' | 'ctrl' | 'alt' | 'shift'
-
-/** '' means no preload */
-type PreloadSource = '' | 'clipboard' | 'selection'
 
 export type AllDicts = ReturnType<typeof getAllDicts>
 
-export type AppConfigMutable = ReturnType<typeof _getDefaultConfig>
-export type AppConfig = ReadonlyDeep<AppConfigMutable>
+export type AppConfigMutable = ConfigType
+export type AppConfig = ReadonlyDeep<ConfigType>
 
-export const getDefaultConfig: () => AppConfig = _getDefaultConfig
-
-function _getDefaultConfig () {
+export function getDefaultConfig ():ConfigType {
   return {
     version: 14,
-
-    /** activate app, won't affect triple-ctrl setting */
     active: true,
-
-    /** Run extension in background */
     runInBg: false,
-
-    /** enable Google analytics */
     analytics: true,
-
-    /** enable update check */
     updateCheck: true,
-
-    /** disable selection on type fields, like input and textarea */
     noTypeField: false,
-
-    /** use animation for transition */
     animation: true,
-
-    /** language code for locales */
-    langCode,
-
-    /** panel width */
+    langCode: 'zh-CN',
     panelWidth: 450,
-
-    /** panel max height in percentage, 0 < n < 100 */
     panelMaxHeightRatio: 80,
-
     bowlOffsetX: 15,
-
     bowlOffsetY: -45,
-
     darkMode: false,
-
-    /** custom panel css */
     panelCSS: '',
-
-    /** panel font-size */
     fontSize: 13,
-
-    /** sniff pdf request */
-    pdfSniff: false,
-    /**
-     * Open PDF viewer in standalone panel.
-     * 'manual': do not redirect on web requests
-     */
-    pdfStandalone: '' as '' | 'always' | 'manual',
-    /** URLs, [regexp.source, match_pattern] */
-    pdfWhitelist: [] as [string, string][],
-    /** URLs, [regexp.source, match_pattern] */
-    // tslint:disable-next-line: no-unnecessary-type-assertion
-    pdfBlacklist: [
-      ['^(http|https)://[^/]*?cnki\\.net(/.*)?$', '*://*.cnki.net/*'],
-      [
-        '^(http|https)://[^/]*?googleusercontent\\.com(/.*)?$',
-        '*://*.googleusercontent.com/*'
-      ],
-      [
-        '^(http|https)://sh-download\\.weiyun\\.com(/.*)?$',
-        '*://sh-download.weiyun.com/*'
-      ]
-    ] as [string, string][],
-
-    /** track search history */
     searchHistory: false,
-    /** incognito mode */
-    searchHistoryInco: false,
-
-    /** open word editor when adding a word to notebook */
     editOnFav: true,
-
-    /** Show suggestions when typing on search box */
     searchSuggests: true,
-
-    /** Enable touch related support */
     touchMode: false,
-
-    /** when and how to search text */
     mode: {
-      /** show pop icon first */
-      icon: true,
-      /** how panel directly */
       direct: false,
-      /** double click */
       double: false,
-      /** holding a key */
       holding: {
         alt: false,
         shift: false,
         ctrl: false,
-        meta: false
+        meta: false,
       },
-      /** cursor instant capture */
       instant: {
         enable: false,
-        key: 'alt' as InstantSearchKey,
-        delay: 600
-      }
+        key: 'alt',
+        delay: 600,
+      },
     },
-
-    /** when and how to search text if the panel is pinned */
     pinMode: {
       /** direct: on mouseup */
       direct: true,
@@ -163,14 +63,14 @@ function _getDefaultConfig () {
         alt: false,
         shift: false,
         ctrl: false,
-        meta: false
+        meta: false,
       },
       /** cursor instant capture */
       instant: {
         enable: false,
-        key: 'alt' as InstantSearchKey,
-        delay: 600
-      }
+        key: 'alt',
+        delay: 600,
+      },
     },
 
     /** when and how to search text inside dict panel */
@@ -184,14 +84,14 @@ function _getDefaultConfig () {
         alt: false,
         shift: false,
         ctrl: false,
-        meta: false
+        meta: false,
       },
       /** cursor instant capture */
       instant: {
         enable: false,
-        key: 'alt' as InstantSearchKey,
-        delay: 600
-      }
+        key: 'alt',
+        delay: 600,
+      },
     },
 
     /** when this is a quick search standalone panel running */
@@ -205,14 +105,14 @@ function _getDefaultConfig () {
         alt: false,
         shift: false,
         ctrl: true,
-        meta: false
+        meta: false,
       },
       /** cursor instant capture */
       instant: {
         enable: false,
-        key: 'alt' as InstantSearchKey,
-        delay: 600
-      }
+        key: 'alt',
+        delay: 600,
+      },
     },
 
     /** hover instead of click */
@@ -225,13 +125,13 @@ function _getDefaultConfig () {
     tripleCtrl: true,
 
     /** preload content on quick search panel */
-    qsPreload: 'selection' as PreloadSource,
+    qsPreload: 'selection',
 
     /** auto search when quick search panel opens */
     qsAuto: false,
 
     /** where should the dict appears */
-    qsLocation: 'CENTER' as TCDirection,
+    qsLocation: 'CENTER',
 
     /** focus quick search panel when shows up */
     qsFocus: true,
@@ -246,7 +146,7 @@ function _getDefaultConfig () {
     qssaHeight: 600,
 
     /** resize main widnow to leave space to standalone window */
-    qssaSidebar: '' as '' | 'left' | 'right',
+    qssaSidebar: '',
 
     /** should standalone panel response to page selection */
     qssaPageSel: true,
@@ -260,19 +160,11 @@ function _getDefaultConfig () {
     baHeight: 550,
 
     /** browser action panel preload source */
-    baPreload: 'selection' as PreloadSource,
+    baPreload: 'selection',
 
     /** auto search when browser action panel shows */
     baAuto: false,
 
-    /**
-     * browser action behavior
-     * 'popup_panel' - show dict panel
-     * 'popup_fav' - add selection to notebook
-     * 'popup_options' - opten options
-     * 'popup_standalone' - open standalone panel
-     * others are same as context menus
-     */
     baOpen: 'popup_panel',
 
     /** context tranlate engines */
@@ -282,7 +174,7 @@ function _getDefaultConfig () {
       baidu: true,
       tencent: false,
       caiyun: false,
-      sogou: false
+      sogou: false,
     },
 
     /** start searching when source containing the languages */
@@ -295,17 +187,17 @@ function _getDefaultConfig () {
       spanish: true,
       deutsch: true,
       others: false,
-      matchAll: false
-    } as SupportedLangs,
+      matchAll: false,
+    },
 
     /** auto pronunciation */
     autopron: {
       cn: {
-        dict: '' as DictID | '',
-        list: ['zdic', 'guoyu'] as DictID[]
+        dict: '',
+        list: ['zdic', 'guoyu'],
       },
       en: {
-        dict: '' as DictID | '',
+        dict: '',
         list: [
           'bing',
           'cambridge',
@@ -316,38 +208,36 @@ function _getDefaultConfig () {
           'lexico',
           'urban',
           'websterlearner',
-          'youdao'
-        ] as DictID[],
-        accent: 'uk' as 'us' | 'uk'
+          'youdao',
+        ],
+        accent: 'uk',
       },
       machine: {
-        dict: '' as DictID | '',
+        dict: '',
         list: ['google', 'sogou', 'tencent', 'baidu', 'caiyun'],
         // play translation or source
-        src: 'trans' as 'trans' | 'searchText'
-      }
+        src: 'trans',
+      },
     },
 
     /** URLs, [regexp.source, match_pattern] */
-    whitelist: [] as [string, string][],
+    whitelist: [],
     /** URLs, [regexp.source, match_pattern] */
     // tslint:disable-next-line: no-unnecessary-type-assertion
     blacklist: [
       ['^https://stackedit\\.io(/.*)?$', 'https://stackedit.io/*'],
       ['^https://docs\\.google\\.com(/.*)?$', 'https://docs.google.com/*'],
-      ['^https://docs\\.qq\\.com(/.*)?$', 'https://docs.qq.com/*']
-    ] as [string, string][],
+      ['^https://docs\\.qq\\.com(/.*)?$', 'https://docs.qq.com/*'],
+    ],
 
     contextMenus: {
-      selected:
-        isFirefox || !langCode.startsWith('zh-')
-          ? ['view_as_pdf', 'google_translate', 'saladict']
-          : ['view_as_pdf', 'caiyuntrs', 'google_translate', 'saladict'],
-      all: getAllContextMenus()
+      selected: ['google_translate', 'saladict'],
+      // : ['view_as_pdf', 'caiyuntrs', 'google_translate', 'saladict'],
+      all: getAllContextMenus(),
     },
 
     /** Open settings on first switching "translation" profile */
     showedDictAuth: false,
-    dictAuth: getDefaultDictAuths()
+    dictAuth: getDefaultDictAuths(),
   }
 }

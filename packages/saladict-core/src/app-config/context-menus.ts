@@ -1,11 +1,4 @@
-export interface CustomContextItem {
-  name: string
-  url: string
-}
-
-export type ContextItem = string | CustomContextItem
-
-export function getAllContextMenus (): { [id: string]: ContextItem } {
+export function getAllContextMenus (): { [id: string]: string } {
   return {
     baidu_page_translate: 'x',
     baidu_search: 'https://www.baidu.com/s?ie=utf-8&wd=%s',
@@ -37,6 +30,6 @@ export function getAllContextMenus (): { [id: string]: ContextItem } {
     view_as_pdf: 'x',
     youdao_page_translate: 'x',
     youdao: 'http://dict.youdao.com/w/%s',
-    youglish: 'https://youglish.com/search/%s'
+    youglish: 'https://youglish.com/search/%s',
   }
 }
