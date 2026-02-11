@@ -82,10 +82,10 @@ async function requestGA (extraParams: GAParams) {
     return
   }
 
-  let cid = (await storage.sync.get<{ gacid: string }>('gacid')).gacid
+  let cid = localStorage.getItem('gacid')
   if (!cid) {
     cid = uuid()
-    storage.sync.set({ gacid: cid })
+    localStorage.setItem('gacid', cid)
   }
 
   return axios({

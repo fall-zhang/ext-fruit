@@ -6,7 +6,7 @@ export async function getWordOfTheDay (): Promise<string> {
     try {
       return await Promise.any([
         getWebsterWordOfTheDay(),
-        getDictionaryWordOfTheDay()
+        getDictionaryWordOfTheDay(),
       ])
     } catch (e) {
       console.warn(e)
