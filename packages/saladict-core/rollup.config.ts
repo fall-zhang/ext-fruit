@@ -20,7 +20,7 @@ const langLib = defineConfig({
   // clean: true,
   // sourcemap: 'inline',
   input: supportLanguages.map((lang:string) => langLocation(lang)),
-  external: ['react', 'react-dom', 'react-redux'],
+  external: ['react', 'react-dom'],
   output: [{
     format: 'es',
     dir: './libs/lang',
@@ -61,7 +61,7 @@ const libConfig = defineConfig({
   input: './src/main.tsx',
   // input: 'example/index.tsx',
   jsx: 'react-jsx',
-  external: ['react', 'react-dom', 'react-redux'],
+  external: ['react', 'react-dom'],
   output: [{
     format: 'es',
     sourcemap: 'inline',
