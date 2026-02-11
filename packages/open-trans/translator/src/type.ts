@@ -1,25 +1,25 @@
-import { Language } from 'open-trans/languages'
-import { AxiosInstance } from 'axios'
+import type { Language } from '../../languages'
+import type { AxiosInstance } from 'axios'
 
-export type Languages = Array<Language>;
+export type Languages = Array<Language>
 
-export type TranslatorEnv = 'node' | 'ext';
+export type TranslatorEnv = 'node' | 'ext'
 
-export interface TranslatorInit<Config extends {}> {
+export interface TranslatorInit<Config extends object> {
   env?: TranslatorEnv;
   axios?: AxiosInstance;
   config?: Config;
 }
 
-export type TranslateErrorType =
-  | 'NETWORK_ERROR'
-  | 'NETWORK_TIMEOUT'
-  | 'API_SERVER_ERROR'
-  | 'UNSUPPORTED_LANG'
-  | 'USEAGE_LIMIT'
-  | 'AUTH_ERROR'
-  | 'UNKNOWN'
-  | 'TOO_MANY_REQUESTS';
+export type TranslateErrorType = |
+  'NETWORK_ERROR' |
+  'NETWORK_TIMEOUT' |
+  'API_SERVER_ERROR' |
+  'UNSUPPORTED_LANG' |
+  'USEAGE_LIMIT' |
+  'AUTH_ERROR' |
+  'UNKNOWN' |
+  'TOO_MANY_REQUESTS'
 
 export class TranslateError extends Error {
   constructor (message: TranslateErrorType, cause?: string) {
@@ -45,4 +45,4 @@ export interface TranslateResult {
   };
 }
 
-export type TranslateQueryResult = Omit<TranslateResult, 'engine'>;
+export type TranslateQueryResult = Omit<TranslateResult, 'engine'>

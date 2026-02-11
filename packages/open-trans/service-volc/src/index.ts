@@ -1,8 +1,10 @@
-import {
+import type {
   Language,
-  Translator,
-  TranslateError,
   TranslateQueryResult
+} from '../../translator'
+import {
+  Translator,
+  TranslateError
 } from '../../translator'
 import ApiInfo from './ApiInfo'
 import API from './base/API'
@@ -40,7 +42,7 @@ const langMap: [Language, string][] = [
   ['sl', 'slo'],
   ['sv', 'swe'],
   ['hu', 'hu'],
-  ['vi', 'vie']
+  ['vi', 'vie'],
 ]
 
 export interface VolcConfig {
@@ -62,7 +64,7 @@ export class VolcTranslator extends Translator<VolcConfig> {
     type VolcTranslateError = {
       Code: '200' | string;
       Message: 'Invalid Sign' | string;
-    };
+    }
 
     type VolcTranslateResult = {
       ResponseMetadata: {
@@ -78,7 +80,7 @@ export class VolcTranslator extends Translator<VolcConfig> {
         Extra?: string;
         Translation: string;
       }>;
-    };
+    }
 
     const { accessKeyId, accessKeySecret } = config
     if (!accessKeyId || !accessKeySecret) {
@@ -99,28 +101,28 @@ export class VolcTranslator extends Translator<VolcConfig> {
 
     // 设置请求的 header、query、body
     const header = new Header({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     })
     const query = new Query({
       Action: 'TranslateText',
-      Version: '2020-06-01'
+      Version: '2020-06-01',
     })
     const body = new Body({
       TargetLanguage: toLang,
-      TextList: textList
+      TextList: textList,
     })
 
     const apiInfo = new ApiInfo({
       method: 'POST',
       path: '/',
       query,
-      body
+      body,
     })
     // 设置 service、api信息
     const serviceInfo = new ServiceInfo({
       host: this.endpoint,
       header,
-      credentials
+      credentials,
     })
     // 生成 API
     const api = API(serviceInfo, apiInfo)
@@ -130,7 +132,7 @@ export class VolcTranslator extends Translator<VolcConfig> {
       method: 'POST',
       url: api.url,
       data: api.params,
-      headers: api.config.headers
+      headers: api.config.headers,
     }).catch(e => {
       console.error(new Error('[Volc service]' + e))
       throw e
@@ -142,21 +144,21 @@ export class VolcTranslator extends Translator<VolcConfig> {
       // https://www.volcengine.com/docs/4640/65067
       console.error(new Error('[Volc service]' + code))
       switch (code) {
-      case 100009:
-        throw new TranslateError(
-          'AUTH_ERROR',
-          res.data.ResponseMetadata.Error?.Message
-        )
-      case 100018: // todo docs is not mentioned
-        throw new TranslateError(
-          'USEAGE_LIMIT',
-          res.data.ResponseMetadata.Error?.Message
-        )
-      default:
-        throw new TranslateError(
-          'UNKNOWN',
-          res.data.ResponseMetadata.Error?.Message
-        )
+        case 100009:
+          throw new TranslateError(
+            'AUTH_ERROR',
+            res.data.ResponseMetadata.Error?.Message
+          )
+        case 100018: // todo docs is not mentioned
+          throw new TranslateError(
+            'USEAGE_LIMIT',
+            res.data.ResponseMetadata.Error?.Message
+          )
+        default:
+          throw new TranslateError(
+            'UNKNOWN',
+            res.data.ResponseMetadata.Error?.Message
+          )
       }
     }
 
@@ -165,11 +167,11 @@ export class VolcTranslator extends Translator<VolcConfig> {
       from,
       to,
       origin: {
-        paragraphs: text.split(/\n+/)
+        paragraphs: text.split(/\n+/),
       },
       trans: {
-        paragraphs: [res.data.TranslationList[0].Translation]
-      }
+        paragraphs: [res.data.TranslationList[0].Translation],
+      },
     }
   }
 

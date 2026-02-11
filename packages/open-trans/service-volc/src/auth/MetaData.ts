@@ -1,24 +1,24 @@
 class MetaData {
-  algorithm: string;
-  service: string;
-  region: string;
-  date: string;
+  algorithm: string
+  service: string
+  region: string
+  date: string
 
-  constructor(
+  constructor (
     algorithm: string,
     service: string,
     region: string,
     date: string
   ) {
-    this.algorithm = algorithm;
-    this.service = service;
-    this.region = region;
-    this.date = date;
+    this.algorithm = algorithm
+    this.service = service
+    this.region = region
+    this.date = date
   }
 
-  getCredentialScope(): string {
-    return `${this.date}/${this.region}/${this.service}/request`;
+  getCredentialScope (): string {
+    return `${this.date}/${this.region}/${this.service}/request`
   }
 }
 
-export default MetaData;
+export default MetaData

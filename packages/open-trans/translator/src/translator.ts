@@ -92,7 +92,7 @@ export abstract class Translator<Config extends object = object> {
   textToSpeech (
     text: string,
     lang: Language,
-    meta?: any // eslint-disable-line @typescript-eslint/no-explicit-any
+    meta?: any
   ): Promise<string | null> {
     return Promise.resolve(null)
   }

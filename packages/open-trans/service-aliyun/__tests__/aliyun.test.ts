@@ -5,8 +5,8 @@ describe('Dict Baidu', () => {
   const aliyun = new Aliyun({
     config: {
       accessKeyId: process.env.APP_ID as string,
-      key: process.env.KEY as string
-    }
+      key: process.env.KEY as string,
+    },
   })
 
   it('should translate en2zh successfully', async () => {
@@ -20,13 +20,13 @@ describe('Dict Baidu', () => {
       /** 原文 */
       origin: {
         paragraphs: ['I love you'],
-        tts: expect.any(String)
+        tts: expect.any(String),
       },
       /** 译文 */
       trans: {
         paragraphs: [expect.stringContaining('爱')],
-        tts: expect.any(String)
-      }
+        tts: expect.any(String),
+      },
     })
   }, 9000)
 
@@ -41,13 +41,13 @@ describe('Dict Baidu', () => {
       /** 原文 */
       origin: {
         paragraphs: ['我爱你'],
-        tts: expect.any(String)
+        tts: expect.any(String),
       },
       /** 译文 */
       trans: {
         paragraphs: [expect.stringContaining('I love you')],
-        tts: expect.any(String)
-      }
+        tts: expect.any(String),
+      },
     })
   }, 9000)
 

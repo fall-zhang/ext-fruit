@@ -18,11 +18,7 @@ export default defineConfig({
     strictPort: true,
     open: false,
   },
-  // optimizeDeps: {
-  //   include: []
-  // },
   resolve: {
     preserveSymlinks: false,
   },
-}
-)
+})

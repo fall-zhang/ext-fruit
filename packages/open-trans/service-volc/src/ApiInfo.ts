@@ -21,7 +21,7 @@ class ApiInfo {
     path,
     query = {},
     body = null,
-    header = {}
+    header = {},
   }: ApiInfoParams) {
     this.method = method
     this.path = path

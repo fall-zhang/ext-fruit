@@ -21,7 +21,7 @@ function getXDate (): string {
     leftPad(now.getUTCHours()),
     leftPad(now.getUTCMinutes()),
     leftPad(now.getUTCSeconds()),
-    'Z'
+    'Z',
   ]
   return format.join('')
 }

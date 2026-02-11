@@ -1,4 +1,4 @@
-import type { Language } from 'open-trans/languages'
+import type { Language } from '../../languages'
 import franc from 'franc-min'
 
 // improve accuracy but narrowing down language set

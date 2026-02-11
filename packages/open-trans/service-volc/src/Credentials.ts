@@ -2,7 +2,7 @@
  * Credentials class for storing authentication information
  */
 export class Credentials {
-  constructor(
+  constructor (
     public readonly ak: string,
     public readonly sk: string,
     public readonly service: string,
@@ -10,4 +10,4 @@ export class Credentials {
   ) {}
 }
 
-export default Credentials;
+export default Credentials

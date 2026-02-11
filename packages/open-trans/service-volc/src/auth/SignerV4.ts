@@ -1,9 +1,9 @@
 import MetaData from './MetaData'
 import { getXDate } from '../utils/util'
 import CryptoJS from 'crypto-js'
-import ServiceInfo from '../ServiceInfo'
-import ApiInfo from '../ApiInfo'
-import { Header } from '../base/Request'
+import type ServiceInfo from '../ServiceInfo'
+import type ApiInfo from '../ApiInfo'
+import type { Header } from '../base/Request'
 
 class SignerV4 {
   static sign (serviceInfo: ServiceInfo, apiInfo: ApiInfo): Header {
@@ -33,7 +33,7 @@ class SignerV4 {
         credentials.ak
       }/${metaData.getCredentialScope()}`,
       'SignedHeaders=' + header.getSignedHeaders(),
-      `Signature=${sign}`
+      `Signature=${sign}`,
     ].join(', ')
 
     header.Authorization = authorization
@@ -51,7 +51,7 @@ class SignerV4 {
       apiInfo.query.toString(),
       header.toString(),
       header.getSignedHeaders(),
-      header['X-Content-Sha256']
+      header['X-Content-Sha256'],
     ].join('\n')
     const hashCanonicalRequest = CryptoJS.SHA256(canonicalRequest).toString(
       CryptoJS.enc.Hex
@@ -60,7 +60,7 @@ class SignerV4 {
       metaData.algorithm,
       metaData.date,
       metaData.getCredentialScope(),
-      hashCanonicalRequest
+      hashCanonicalRequest,
     ].join('\n')
     return signingStr
   }

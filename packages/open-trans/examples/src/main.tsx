@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import en from '../../languages/locales/en.json'
 import zhCN from '../../languages/locales/zh-CN.json'
-import type { TranslateResult, Language } from '@P/open-trans/translator'
+import type { TranslateResult, Language } from '../../translator'
 
 import '@fortawesome/fontawesome-free/css/all.css'
 import 'bulma/css/bulma.css'
@@ -14,6 +14,7 @@ const locales = {
   en,
   'zh-CN': zhCN,
 }
+const serviceSourceMap = import.meta.glob('../../service-*/index.ts')
 
 function App () {
   const [locale, setLocale] = useState<keyof typeof locales>('zh-CN')

@@ -1,8 +1,10 @@
-import {
+import type {
   Language,
-  Translator,
-  TranslateError,
   TranslateQueryResult
+} from '../../translator'
+import {
+  Translator,
+  TranslateError
 } from '../../translator'
 import { HmacSHA1 } from 'crypto-js'
 import Base64 from 'crypto-js/enc-base64'
