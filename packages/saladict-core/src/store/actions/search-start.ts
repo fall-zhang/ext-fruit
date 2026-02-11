@@ -1,8 +1,8 @@
-import { checkSupportedLangs, countWords } from '@/_helpers/lang-check'
-import { isPopupPage } from '@/_helpers/saladict'
-import { Word } from '@/_helpers/record-manager'
-import { DictID } from '../../app-config'
-import { GlobalState } from '..'
+import type { DictID } from '../../app-config'
+import type { GlobalState } from '..'
+import type { Word } from '../selection/types'
+import { isPopupPage } from '../../core/saladict-state'
+import { checkSupportedLangs, countWords } from '../../utils/lang-check'
 
 export const searchStart = (payload:{
   /** Search with specific dict */
@@ -23,9 +23,9 @@ export const searchStart = (payload:{
 
     let word: Word
     const newSearchHistory: Word[] =
-    payload && payload.noHistory
-      ? searchHistory
-      : searchHistory.slice(0, historyIndex + 1)
+      payload && payload.noHistory
+        ? searchHistory
+        : searchHistory.slice(0, historyIndex + 1)
     let newHistoryIndex = historyIndex
 
     if (payload && payload.word) {
@@ -64,7 +64,7 @@ export const searchStart = (payload:{
             ? {
               id: d.id,
               searchStatus: 'SEARCHING',
-              searchResult: null
+              searchResult: null,
             }
             : d)
         )
@@ -92,9 +92,9 @@ export const searchStart = (payload:{
                     !state.userFoldedDicts[id])
                     ? 'SEARCHING'
                     : 'IDLE',
-              searchResult: null
+              searchResult: null,
             }
-          })
+          }),
     }
   })
 }

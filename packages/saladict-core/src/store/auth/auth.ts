@@ -9,7 +9,7 @@ export const defaultDictAuths = {
   caiyun,
   sogou,
   tencent,
-  youdaotrans
+  youdaotrans,
 }
 
 export type DictAuths = typeof defaultDictAuths

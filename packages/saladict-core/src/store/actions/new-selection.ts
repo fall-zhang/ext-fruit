@@ -1,21 +1,36 @@
-import { isStandalonePage, isOptionsPage } from '@/_helpers/saladict'
-import { Mutable } from '@/typings/helpers'
-import { GlobalState } from '..'
-import { Message } from '../../typings/message'
-import { newWord } from '../../_helpers/record-manager'
+import type { GlobalState } from '../global-state'
+import type { Writable } from 'type-fest'
+import { newWord } from '../../dict-utils/new-word'
+import { isOptionsPage, isStandalonePage } from '../../core/saladict-state'
+import type { Word } from '../../types/word'
 
-export const newSelection = (state:GlobalState, selection:Message<'SELECTION'>['payload']) => {
+export const newSelection = (state:GlobalState, selection:{
+  word: Word | null
+  mouseX: number
+  mouseY: number
+  dbClick: boolean
+  altKey: boolean
+  shiftKey: boolean
+  ctrlKey: boolean
+  metaKey: boolean
+  /** inside panel? */
+  self: boolean
+  /** skip salad bowl and show panel directly */
+  instant: boolean
+  /** force panel to skip reconciling position */
+  force: boolean
+}) => {
   // Skip selection inside panel
   if (selection.self) return state
 
   const { config } = state
 
-  const newState: Mutable<typeof state> = {
+  const newState: Writable<typeof state> = {
     ...state,
     selection: {
       ...selection,
-      word: newWord(selection.word)
-    }
+      word: newWord(selection.word),
+    },
   }
 
   if (isOptionsPage()) {
@@ -26,7 +41,7 @@ export const newSelection = (state:GlobalState, selection:Message<'SELECTION'>['
     if (selection.force) {
       newState.dictPanelCoord = {
         x: selection.mouseX,
-        y: selection.mouseY
+        y: selection.mouseY,
       }
     } else if (!state.isPinned) {
       // icon position       10px  panel position
@@ -43,7 +58,7 @@ export const newSelection = (state:GlobalState, selection:Message<'SELECTION'>['
 
       newState.bowlCoord = {
         x: selection.mouseX + config.bowlOffsetX,
-        y: selection.mouseY + config.bowlOffsetY
+        y: selection.mouseY + config.bowlOffsetY,
       }
 
       if (newState.bowlCoord.x < 30) {
@@ -64,7 +79,7 @@ export const newSelection = (state:GlobalState, selection:Message<'SELECTION'>['
 
       newState.dictPanelCoord = {
         x: newState.bowlCoord.x + iconWidth + 10,
-        y: newState.bowlCoord.y
+        y: newState.bowlCoord.y,
       }
 
       if (

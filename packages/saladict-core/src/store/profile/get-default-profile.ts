@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid'
-import { MtaAutoUnfold } from './types'
-import { AllDicts } from '../../app-config'
+import type { MtaAutoUnfold } from './types'
+import type { AllDicts } from '../../app-config'
 import { getAllDicts } from '../../app-config/dicts'
 
 
@@ -33,10 +33,10 @@ export function getDefaultProfile (id?: string) {
         'zdic',
         'guoyu',
         'liangan',
-        'googledict'
+        'googledict',
       ] as Array<keyof AllDicts>,
       // settings of each dict will be auto-generated
-      all: getAllDicts()
-    }
+      all: getAllDicts(),
+    },
   }
 }

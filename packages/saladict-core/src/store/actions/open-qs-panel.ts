@@ -1,4 +1,4 @@
-import { GlobalState } from '..'
+import type { GlobalState } from '../global-state'
 
 type OpenQSFn = {
   (state: GlobalState): GlobalState
@@ -57,6 +57,6 @@ export const openQSPanel:OpenQSFn = state => {
     ...state,
     isQSPanel: true,
     isShowDictPanel: true,
-    dictPanelCoord: { x, y }
+    dictPanelCoord: { x, y },
   }
 }
