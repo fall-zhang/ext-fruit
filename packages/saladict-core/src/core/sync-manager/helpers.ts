@@ -1,4 +1,4 @@
-import { Word } from '../../store/selection/types'
+import type { Word } from '../../store/selection/types'
 import { getWords } from '../../core/database/read'
 import { saveWords } from '../../core/database/write'
 import {

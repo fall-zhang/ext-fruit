@@ -1,9 +1,10 @@
 import DOMPurify from 'dompurify'
+import type { Config } from 'dompurify'
 import { Observable } from 'rxjs'
-import AxiosMockAdapter from 'axios-mock-adapter'
-import { DictID, AppConfig } from '@/app-config'
-import { Profile } from '@/app-config/profiles'
-import { Word } from '@P/saladict-core/src/types/word'
+import type AxiosMockAdapter from 'axios-mock-adapter'
+import type { DictID, AppConfig } from '@/app-config'
+import type { Profile } from '@/app-config/profiles'
+import type { Word } from '@P/saladict-core/src/types/word'
 import { isTagName } from '@/_helpers/dom'
 import { isInternalPage } from '../saladict-state'
 
@@ -71,8 +72,6 @@ export interface ViewProps<T> {
     word?: Word
     payload?: P
   }) => any
-  /** Emit catalog key and value when selected */
-  catalogSelect$: Observable<{ key: string; value: string }>
 }
 
 export type SearchErrorType = 'NO_RESULT' | 'NETWORK_ERROR'
@@ -156,10 +155,10 @@ export interface GetHTMLConfig {
   /** Give url and src a host */
   host?: string
   /** DOM Purify config */
-  config?: DOMPurify.Config
+  config?: Config
 }
 
-const defaultDOMPurifyConfig: DOMPurify.Config = {
+const defaultDOMPurifyConfig: Config = {
   FORBID_TAGS: ['style'],
   FORBID_ATTR: ['style'],
 }

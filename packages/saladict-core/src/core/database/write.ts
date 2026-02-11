@@ -1,10 +1,10 @@
 import { getDB } from './core'
-import { DBArea } from './types'
-import { Word } from '../../types/word'
+import type { DBArea } from './types'
+import type { Word } from '../../types/word'
 
 export async function saveWord ({
   area,
-  word
+  word,
 }: {
   area: DBArea
   word: Word
@@ -15,7 +15,7 @@ export async function saveWord ({
 
 export async function saveWords ({
   area,
-  words
+  words,
 }: {
   area: DBArea
   words: Word[]
@@ -31,7 +31,7 @@ export async function saveWords ({
 
 export async function deleteWords ({
   area,
-  keyList
+  keyList,
 }:{
   area: DBArea
   keyList?: number[]

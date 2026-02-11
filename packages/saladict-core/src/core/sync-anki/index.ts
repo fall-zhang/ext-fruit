@@ -1,12 +1,9 @@
 import axios from 'axios'
-// import { Word } from '@P/saladict-core/src/dict-utils/new-word'
-import { Word } from '@P/saladict-core/src/store/selection/types'
-// import { parseCtxText } from '@/_helpers/translateCtx'
+import type { Word } from '@P/saladict-core/src/store/selection/types'
 import { parseCtxText } from '@P/saladict-core/src/utils/translateCtx'
-// import { AddConfig, SyncService } from '../../interface'
-import { AddConfig, SyncService } from '@P/saladict-core/src/background/sync-manager/interface'
-import { getNotebook } from '@P/saladict-core/src/background/sync-manager/helpers'
-import { Message } from '@/types/message'
+import type { Message } from '../../types/message'
+import { SyncService, type AddConfig } from '../sync-manager/interface'
+import { getNotebook } from './utils'
 
 export interface SyncConfig {
   enable: boolean
@@ -60,22 +57,6 @@ export class Service extends SyncService<SyncConfig> {
       throw new Error('notetype')
     }
   }
-
-  handleMessage = (msg: Message) => {
-    switch (msg.type) {
-      case 'ANKI_CONNECT_FIND_WORD':
-        return this.findNote(msg.payload).catch(() => '')
-      case 'ANKI_CONNECT_UPDATE_WORD':
-        return this.updateWord(msg.payload.cardId, msg.payload.word)
-          .catch(e =>
-            console.warn(e)
-          )
-    }
-  }
-
-  onStart () {
-  }
-
   async destroy () {
   }
 
@@ -319,8 +300,8 @@ export class Service extends SyncService<SyncConfig> {
     ]
   }
 
-  multiline (text: string, escape: boolean): string {
-    text = text.trim()
+  multiline (recText: string, escape: boolean): string {
+    let text = recText.trim()
     if (!text) return ''
     if (escape) {
       text = this.escapeHTML(text)
@@ -328,8 +309,8 @@ export class Service extends SyncService<SyncConfig> {
     return text.trim().replace(/\n/g, '<br/>')
   }
 
-  parseTrans (text: string, escape: boolean): string {
-    text = text.trim()
+  parseTrans (recText: string, escape: boolean): string {
+    const text = recText.trim()
     if (!text) return ''
     const ctx = parseCtxText(text)
     const ids = Object.keys(ctx)
