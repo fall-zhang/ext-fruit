@@ -1,4 +1,5 @@
-import React, { ComponentType, ReactNode } from 'react'
+import type { ComponentType, ReactNode } from 'react'
+import React from 'react'
 
 interface ErrorBoundaryProps {
   /** Reanders on error */
@@ -15,7 +16,7 @@ export class ErrorBoundary extends React.PureComponent<
   ErrorBoundaryState
 > {
   state: ErrorBoundaryState = {
-    hasError: false
+    hasError: false,
   }
 
   static getDerivedStateFromError () {

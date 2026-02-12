@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import SaladBowlContainer from '@/content/components/SaladBowl/SaladBowl.container'
 import DictPanelContainer from '@/content/components/DictPanel/DictPanel.container'
 import WordEditorContainer from '@/content/components/WordEditor/WordEditor.container'
@@ -7,12 +7,14 @@ import { AntdRootContainer } from './AntdRootContainer'
 
 import './_style.scss'
 import { createRoot } from 'react-dom/client'
+import { createStore } from 'zustand'
+import { useDictStore } from '../../store'
 
 export const initAntdRoot = async (
   render: () => React.ReactNode,
   gaPath?: string
 ): Promise<void> => {
-  const store = await createStore()
+  const store = useDictStore(state => state)
 
   // update theme as quickly as possible
   let { darkMode } = store.getState().config
