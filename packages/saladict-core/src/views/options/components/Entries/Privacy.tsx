@@ -1,4 +1,5 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
+import React from 'react'
 import { Switch } from 'antd'
 import { getConfigPath } from '@/options/helpers/path-joiner'
 import { SaladictForm } from '@/options/components/SaladictForm'
@@ -10,28 +11,23 @@ export const Privacy: FC = () => {
         {
           name: getConfigPath('updateCheck'),
           valuePropName: 'checked',
-          children: <Switch />
+          children: <Switch />,
         },
         {
           name: getConfigPath('analytics'),
           valuePropName: 'checked',
-          children: <Switch />
+          children: <Switch />,
         },
         {
           name: getConfigPath('searchHistory'),
           valuePropName: 'checked',
-          children: <Switch />
+          children: <Switch />,
         },
-        {
-          name: getConfigPath('searchHistoryInco'),
-          hide: values => !values[getConfigPath('searchHistory')],
-          valuePropName: 'checked',
-          children: <Switch />
-        },
+
         {
           key: 'third_party_privacy',
-          children: <Switch disabled checked />
-        }
+          children: <Switch disabled checked />,
+        },
       ]}
     />
   )

@@ -1,4 +1,5 @@
-import React, { FC, useState, useRef } from 'react'
+import type { FC } from 'react'
+import { useState, useRef } from 'react'
 import {
   Modal,
   Button,
@@ -8,12 +9,13 @@ import {
   message as AntdMsg,
   notification
 } from 'antd'
-import { FormInstance } from 'antd/lib/form'
+import type { FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { Service, SyncConfig } from '@/background/sync-manager/services/eudic'
+import type { SyncConfig } from '@/background/sync-manager/services/eudic'
+import { Service } from '@/background/sync-manager/services/eudic'
 import { setSyncConfig } from '@/background/sync-manager/helpers'
-import { getWords } from '@P/saladict-core/src/dict-utils/new-word'
 import { useTranslation } from 'react-i18next'
+import { getWords } from '@P/saladict-core/src/core/database'
 
 export interface EudicModalProps {
   syncConfig?: SyncConfig
@@ -22,13 +24,13 @@ export interface EudicModalProps {
 }
 
 export const EuDicModal: FC<EudicModalProps> = props => {
-  const { t, i18n } = useTranslate(['options', 'common', 'sync'])
+  const { t, i18n } = useTranslation(['options', 'common', 'sync'])
   const [serviceChecking, setServiceChecking] = useState(false)
   const formRef = useRef<FormInstance>(null)
 
   return (
     <Modal
-      visible={props.show}
+      open={props.show}
       title={t('sync:eudic.title')}
       destroyOnClose
       onOk={submitForm}
@@ -52,7 +54,7 @@ export const EuDicModal: FC<EudicModalProps> = props => {
         </Button>,
         <Button key="cancel" onClick={closeModal}>
           {t('common:cancel')}
-        </Button>
+        </Button>,
       ]}
     >
       <p>
@@ -113,7 +115,7 @@ export const EuDicModal: FC<EudicModalProps> = props => {
         title: t('syncService.close_confirm'),
         icon: <ExclamationCircleOutlined />,
         okType: 'danger',
-        onOk: props.onClose
+        onOk: props.onClose,
       })
     } else {
       props.onClose()
@@ -183,7 +185,7 @@ export const EuDicModal: FC<EudicModalProps> = props => {
       }
       notification.error({
         message: 'Error',
-        description: t('sync:eudic.error.internal')
+        description: t('sync:eudic.error.internal'),
       })
       return
     }
@@ -192,9 +194,9 @@ export const EuDicModal: FC<EudicModalProps> = props => {
   }
 
   async function onSyncAll (service: Service) {
-    const { total } = await getWords('notebook', {
+    const { total } = await getWords({
+      area: 'notebook',
       itemsPerPage: 1,
-      filters: {}
     })
     if (total > 50 && !confirm(t('syncService.eudic.sync_all_confirm'))) {
       return
@@ -210,7 +212,7 @@ export const EuDicModal: FC<EudicModalProps> = props => {
     try {
       await service.addWordOrPatch({
         words: [],
-        force: true
+        force: true,
       })
       AntdMsg.destroy()
       AntdMsg.success(t('syncService.success'))

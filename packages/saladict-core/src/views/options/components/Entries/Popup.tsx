@@ -1,24 +1,22 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
 import { Switch, Select, Slider } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { isFirefox } from '@/_helpers/saladict'
-import { useSelector } from '@/content/redux'
-import { getConfigPath } from '@/options/helpers/path-joiner'
-import {
-  SaladictForm,
-  pixelSlideFormatter
-} from '@/options/components/SaladictForm'
+
+import { useDictStore } from '@P/saladict-core/src/store'
+import { isFirefox } from '@P/saladict-core/src/utils/browser'
+import { getConfigPath } from '../../helpers/path-joiner'
+import { SaladictForm } from '../SaladictForm'
 
 export const Popup: FC = () => {
   const { t } = useTranslation(['options', 'menus'])
-  const menusIds = useSelector(state => {
+  const menusIds = useDictStore(state => {
     const ids = Object.keys(state.config.contextMenus.all)
     if (isFirefox) {
       return ids.filter(id => {
         switch (id) {
-        case 'youdao_page_translate':
-        case 'caiyuntrs':
-          return false
+          case 'youdao_page_translate':
+          case 'caiyuntrs':
+            return false
         }
         return true
       })
@@ -52,39 +50,37 @@ export const Popup: FC = () => {
                 </Select.Option>
               ))}
             </Select>
-          )
+          ),
         },
         {
           name: getConfigPath('baWidth'),
           hide: values => values[getConfigPath('baOpen')] !== 'popup_panel',
           children: (
             <Slider
-              tipFormatter={pixelSlideFormatter}
               min={-1}
               max={availWidth}
               marks={{
                 '-1': '-1',
                 450: '450px',
-                [availWidth]: `${availWidth}px`
+                [availWidth]: `${availWidth}px`,
               }}
             />
-          )
+          ),
         },
         {
           name: getConfigPath('baHeight'),
           hide: values => values[getConfigPath('baOpen')] !== 'popup_panel',
           children: (
             <Slider
-              tipFormatter={pixelSlideFormatter}
               min={250}
               max={availWidth}
               marks={{
                 250: '250px',
                 550: '550px',
-                [availWidth]: `${availWidth}px`
+                [availWidth]: `${availWidth}px`,
               }}
             />
-          )
+          ),
         },
         {
           name: getConfigPath('baPreload'),
@@ -101,7 +97,7 @@ export const Popup: FC = () => {
                 {t('preload.selection')}
               </Select.Option>
             </Select>
-          )
+          ),
         },
         {
           name: getConfigPath('baAuto'),
@@ -111,8 +107,8 @@ export const Popup: FC = () => {
             values[getConfigPath('baOpen')] !== 'popup_panel' ||
             !values[getConfigPath('baPreload')],
           valuePropName: 'checked',
-          children: <Switch />
-        }
+          children: <Switch />,
+        },
       ]}
     />
   )

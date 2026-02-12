@@ -1,11 +1,12 @@
-import './env'
-import '@/selection'
-
-import { initAntdRoot } from '@/components/AntdRoot'
-import { MainEntry } from './components/MainEntry'
 
 import './_style.scss'
+import { MainEntry } from './components/MainEntry'
 
-document.title = 'Saladict Options'
+export const MainConfigPage = MainEntry
 
-initAntdRoot(() => <MainEntry />)
+
+export const ConfPage = () => {
+  return <div>
+
+  </div>
+}

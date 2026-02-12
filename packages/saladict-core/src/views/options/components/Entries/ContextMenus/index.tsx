@@ -1,13 +1,14 @@
-import React, { FC, useState, useLayoutEffect } from 'react'
+import type { FC } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import { Row, Col } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from '@/content/redux'
 import { SortableList, reorder } from '@/options/components/SortableList'
 import { getConfigPath } from '@/options/helpers/path-joiner'
 import { useListLayout } from '@/options/helpers/layout'
 import { useUpload } from '@/options/helpers/upload'
 import { AddModal } from './AddModal'
 import { EditModal } from './EditeModal'
+import { useDictStore } from '@P/saladict-core/src/store'
 
 export const ContextMenus: FC = () => {
   const { t } = useTranslation(['options', 'common', 'menus'])
@@ -15,7 +16,7 @@ export const ContextMenus: FC = () => {
   const [showAddModal, setShowAddModal] = useState(false)
   const [editingMenu, setEditingMenu] = useState<string | null>(null)
   const listLayout = useListLayout()
-  const contextMenus = useSelector(state => state.config.contextMenus)
+  const contextMenus = useDictStore(state => state.config.contextMenus)
   // make a local copy to avoid flickering on drag end
   const [selectedMenus, setSelectedMenus] = useState<ReadonlyArray<string>>(
     contextMenus.selected
@@ -34,7 +35,7 @@ export const ContextMenus: FC = () => {
             const item = contextMenus.all[id]
             return {
               value: id,
-              title: typeof item === 'string' ? t(`menus:${id}`) : item.name
+              title: typeof item === 'string' ? t(`menus:${id}`) : item.name,
             }
           })}
           disableEdit={(index, item) => contextMenus.all[item.value] === 'x'}
@@ -46,14 +47,14 @@ export const ContextMenus: FC = () => {
             const newList = selectedMenus.slice()
             newList.splice(index, 1)
             upload({
-              [getConfigPath('contextMenus', 'selected')]: newList
+              [getConfigPath('contextMenus', 'selected')]: newList,
             })
             setSelectedMenus(newList)
           }}
           onOrderChanged={(oldIndex, newIndex) => {
             const newList = reorder(selectedMenus, oldIndex, newIndex)
             upload({
-              [getConfigPath('contextMenus', 'selected')]: newList
+              [getConfigPath('contextMenus', 'selected')]: newList,
             })
             setSelectedMenus(newList)
           }}

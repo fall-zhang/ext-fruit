@@ -1,12 +1,10 @@
 import { BehaviorSubject } from 'rxjs'
 import { notification, message as antMsg } from 'antd'
-import type { TFunction } from 'i18next'
 import set from 'lodash/set'
 import type { Profile } from '@/app-config/profiles'
 import { useTranslation } from 'react-i18next'
 import { updateConfig } from '@/_helpers/config-manager'
 import { updateProfile } from '@/_helpers/profile-manager'
-import { checkBackgroundPermission } from '@/_helpers/permission-manager'
 import { useDispatch } from '@/content/redux'
 import { setFormDirty } from './use-form-dirty'
 import type { AppConfig } from '@P/saladict-core/src/app-config'
@@ -51,9 +49,6 @@ export const useUpload = () => {
       const requests: Promise<void>[] = []
 
       if (data.config) {
-        if (!(await checkOptionalPermissions(data.config, t))) {
-          return
-        }
         requests.push(updateConfig(data.config))
       }
 
@@ -79,20 +74,4 @@ export const useUpload = () => {
         console.log('saved setting', data)
       }
     })
-}
-
-async function checkOptionalPermissions (
-  config: AppConfig,
-  t: TFunction
-): Promise<boolean> {
-  try {
-    await checkBackgroundPermission(config)
-  } catch (e) {
-    console.error(e)
-    antMsg.destroy()
-    antMsg.error(t('msg_err_permission', { permission: 'background' }))
-    return false
-  }
-
-  return true
 }

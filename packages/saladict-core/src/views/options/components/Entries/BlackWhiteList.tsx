@@ -1,14 +1,13 @@
-import React, { FC, useState } from 'react'
+import type { FC } from 'react'
+import React, { useState } from 'react'
 import { Button } from 'antd'
-import { SaladictForm } from '@/options/components/SaladictForm'
 import { useTranslation } from 'react-i18next'
 import { MatchPatternModal } from '../MatchPatternModal'
+import { SaladictForm } from '../SaladictForm'
 
 export const BlackWhiteList: FC = () => {
   const { t } = useTranslation(['options', 'common'])
-  const [editingArea, setEditingArea] = useState<
-    'pdfWhitelist' | 'pdfBlacklist' | 'whitelist' | 'blacklist' | null
-  >(null)
+  const [editingArea, setEditingArea] = useState< 'whitelist' | 'blacklist' | null >(null)
 
   return (
     <>
@@ -31,26 +30,8 @@ export const BlackWhiteList: FC = () => {
                   {t('common:whitelist')}
                 </Button>
               </>
-            )
+            ),
           },
-          {
-            key: 'PDFBlackWhiteList',
-            label: 'PDF ' + t('nav.BlackWhiteList'),
-            help: t('config.opt.pdf_blackwhitelist_help'),
-            children: (
-              <>
-                <Button
-                  style={{ marginRight: 10 }}
-                  onClick={() => setEditingArea('pdfBlacklist')}
-                >
-                  PDF {t('common:blacklist')}
-                </Button>
-                <Button onClick={() => setEditingArea('pdfWhitelist')}>
-                  PDF {t('common:whitelist')}
-                </Button>
-              </>
-            )
-          }
         ]}
       />
       <MatchPatternModal

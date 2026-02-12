@@ -1,12 +1,9 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
 import { Select, Switch, Input, Slider } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { getProfilePath, getConfigPath } from '@/options/helpers/path-joiner'
-import {
-  SaladictForm,
-  percentageSlideFormatter,
-  pixelSlideFormatter
-} from '@/options/components/SaladictForm'
+
+import { getConfigPath, getProfilePath } from '../../helpers/path-joiner'
+import { SaladictForm } from '../SaladictForm'
 
 export const DictPanel: FC = () => {
   const { t } = useTranslation('options')
@@ -34,91 +31,86 @@ export const DictPanel: FC = () => {
                 {t('profile.opt.mtaAutoUnfold.hide')}
               </Select.Option>
             </Select>
-          )
+          ),
         },
         {
           name: getProfilePath('waveform'),
           valuePropName: 'checked',
-          children: <Switch />
+          children: <Switch />,
         },
         {
           name: getConfigPath('searchSuggests'),
           valuePropName: 'checked',
-          children: <Switch />
+          children: <Switch />,
         },
         {
           name: getConfigPath('defaultPinned'),
           valuePropName: 'checked',
-          children: <Switch />
+          children: <Switch />,
         },
         {
           name: getConfigPath('animation'),
           valuePropName: 'checked',
-          children: <Switch />
+          children: <Switch />,
         },
         {
           name: getConfigPath('darkMode'),
           valuePropName: 'checked',
-          children: <Switch />
+          children: <Switch />,
         },
         {
           name: getConfigPath('panelMaxHeightRatio'),
           children: (
             <Slider
-              tipFormatter={percentageSlideFormatter}
               min={0}
               max={100}
               marks={{ 0: '0%', 80: '80%', 100: '100%' }}
             />
-          )
+          ),
         },
         {
           name: getConfigPath('panelWidth'),
           children: (
             <Slider
-              tipFormatter={pixelSlideFormatter}
               min={250}
               max={availWidth}
               marks={{
                 250: '250px',
                 450: '450px',
-                [availWidth]: `${availWidth}px`
+                [availWidth]: `${availWidth}px`,
               }}
             />
-          )
+          ),
         },
         {
           name: getConfigPath('fontSize'),
           children: (
             <Slider
-              tipFormatter={pixelSlideFormatter}
               min={8}
               max={30}
               marks={{ 8: '8px', 30: '30px' }}
             />
-          )
+          ),
         },
         {
           name: getConfigPath('bowlOffsetX'),
           children: (
             <Slider
-              tipFormatter={pixelSlideFormatter}
               min={-100}
               max={100}
               marks={{ '-100': '-100px', 0: '0px', 100: '100px' }}
             />
-          )
+          ),
         },
         {
           name: getConfigPath('bowlOffsetY'),
           children: (
             <Slider
-              tipFormatter={pixelSlideFormatter}
               min={-100}
               max={100}
               marks={{ '-100': '-100px', 0: '0px', 100: '100px' }}
             />
-          )
+          ),
         },
         {
           name: getConfigPath('panelCSS'),
@@ -136,8 +128,8 @@ export const DictPanel: FC = () => {
               placeholder=".dictPanel-Root { }"
               autoSize={{ minRows: 4, maxRows: 15 }}
             />
-          )
-        }
+          ),
+        },
       ]}
     />
   )

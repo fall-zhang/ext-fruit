@@ -1,9 +1,10 @@
 /* eslint-disable no-param-reassign */
-import React, { FC, useRef } from 'react'
+import type { FC } from 'react'
+import React, { useRef } from 'react'
 import { useUpdateEffect } from 'react-use'
 import { useObservableState } from 'observable-hooks'
 import { Form, Modal, Button } from 'antd'
-import { FormInstance, Rule } from 'antd/lib/form'
+import type { FormInstance, Rule } from 'antd/lib/form'
 import { ExclamationCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { matchPatternToRegExpStr } from '@P/saladict-core/src/utils/matchPatternToRegExpStr'
 import { PatternItem } from './ PatternItem'
@@ -13,7 +14,7 @@ import { uploadStatus$, useUpload } from '../../helpers/upload'
 
 
 export interface MatchPatternModalProps {
-  area: null | 'pdfWhitelist' | 'pdfBlacklist' | 'whitelist' | 'blacklist'
+  area: null | 'whitelist' | 'blacklist'
   onClose: () => void
 }
 

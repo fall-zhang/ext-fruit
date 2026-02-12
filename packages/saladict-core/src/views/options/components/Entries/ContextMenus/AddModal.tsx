@@ -1,13 +1,14 @@
-import React, { FC, useMemo } from 'react'
+import type { FC } from 'react'
+import React, { useMemo } from 'react'
 import { List, Modal, Button, Tooltip } from 'antd'
 import { CheckOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons'
 import omit from 'lodash/omit'
 import { v4 as uuid } from 'uuid'
-import { getConfigPath } from '@/options/helpers/path-joiner'
-import { useUpload } from '@/options/helpers/upload'
-import { useTranslate } from '@P/saladict-core/src/locales/i18n'
 import { isFirefox } from '@P/saladict-core/src/utils/browser'
 import { useDictStore } from '@P/saladict-core/src/store'
+import { useTranslation } from 'react-i18next'
+import { getConfigPath } from '../../../helpers/path-joiner'
+import { useUpload } from '../../../helpers/upload'
 
 /**
  * key: menu id
@@ -15,7 +16,7 @@ import { useDictStore } from '@P/saladict-core/src/store'
  */
 const unsupportedFeatures: Readonly<{ [id: string]: 'ff' | '' }> = {
   caiyuntrs: isFirefox ? 'ff' : '',
-  youdao_page_translate: isFirefox ? 'ff' : ''
+  youdao_page_translate: isFirefox ? 'ff' : '',
 }
 
 export interface AddModalProps {
@@ -41,7 +42,6 @@ export const AddModal: FC<AddModalProps> = ({ show, onEdit, onClose }) => {
     <Modal
       open={show}
       title={t('common:add')}
-      destroyOnHidden
       onOk={onClose}
       onCancel={onClose}
       footer={null}
@@ -117,8 +117,8 @@ export const AddModal: FC<AddModalProps> = ({ show, onEdit, onClose }) => {
       upload({
         [getConfigPath('contextMenus', 'selected')]: [
           ...contextMenus.selected,
-          menuID
-        ]
+          menuID,
+        ],
       })
     }
 
@@ -134,11 +134,11 @@ export const AddModal: FC<AddModalProps> = ({ show, onEdit, onClose }) => {
               [getConfigPath('contextMenus')]: {
                 ...contextMenus,
                 selected: contextMenus.selected.filter(id => id !== menuID),
-                all: omit(contextMenus.all, [menuID])
-              }
+                all: omit(contextMenus.all, [menuID]),
+              },
             })
           }
-        }
+        },
       })
     }
   }

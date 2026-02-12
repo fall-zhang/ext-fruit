@@ -1,5 +1,5 @@
 const formDirty = {
-  value: false
+  value: false,
 }
 
 export const setFormDirty = (value: boolean) => {
@@ -7,3 +7,4 @@ export const setFormDirty = (value: boolean) => {
 }
 
 export const useFormDirty = (): Readonly<typeof formDirty> => formDirty
+

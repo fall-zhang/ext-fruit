@@ -1,10 +1,12 @@
-import React, { FC, useState, useLayoutEffect } from 'react'
+import type { FC } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import { Row, Col, Modal, notification, message as antdMsg } from 'antd'
 import { BlockOutlined } from '@ant-design/icons'
-import { useTranslate, Trans } from '@/_helpers/i18n'
-import {
+import type {
   ProfileID,
-  ProfileIDList,
+  ProfileIDList
+} from '@/app-config/profiles'
+import {
   getDefaultProfileID
 } from '@/app-config/profiles'
 import {
@@ -14,24 +16,28 @@ import {
   updateProfileIDList,
   addProfile
 } from '@/_helpers/profile-manager'
-import { useSelector } from '@/content/redux'
 import { SortableList, reorder } from '@/options/components/SortableList'
 import { useListLayout } from '@/options/helpers/layout'
 import { useCheckDictAuth } from '@/options/helpers/use-check-dict-auth'
 import { EditNameModal } from './EditNameModal'
+import { useDictStore } from '@P/saladict-core/src/store'
+import { Trans, useTranslation } from 'react-i18next'
 
 export const Profiles: FC = () => {
   const { t } = useTranslation('options')
   const checkDictAuth = useCheckDictAuth()
-  const activeProfileID = useSelector(state => state.activeProfile.id)
+  const { activeProfileID, storeProfileIDList } = useDictStore(state => {
+    return {
+      activeProfileID: state.activeProfile.id,
+      storeProfileIDList: state.profiles,
+    }
+  })
   const [showAddProfileModal, setShowAddProfileModal] = useState(false)
   const [showEditNameModal, setShowEditNameModal] = useState(false)
   const [editingProfileID, setEditingProfileID] = useState<ProfileID | null>(
     null
   )
   const listLayout = useListLayout()
-
-  const storeProfileIDList = useSelector(state => state.profiles)
   // make a local copy to avoid flickering on drag end
   const [profileIDList, setProfileIDList] = useState<ProfileIDList>(
     storeProfileIDList
@@ -48,7 +54,7 @@ export const Profiles: FC = () => {
     } catch (error) {
       notification.error({
         message: 'Error',
-        description: error.message
+        description: error.message,
       })
     }
   }
@@ -85,7 +91,7 @@ export const Profiles: FC = () => {
           selected={activeProfileID}
           list={profileIDList.map(({ id, name }) => ({
             value: id,
-            title: getProfileName(name, t)
+            title: getProfileName(name, t),
           }))}
           onSelect={async ({ target: { value } }) => {
             if (await checkDictAuth()) {
@@ -95,7 +101,7 @@ export const Profiles: FC = () => {
           onAdd={() => {
             setEditingProfileID({
               ...getDefaultProfileID(),
-              name: ''
+              name: '',
             })
             setShowAddProfileModal(true)
           }}
@@ -104,7 +110,7 @@ export const Profiles: FC = () => {
               profileIDList[index]
                 ? {
                   ...profileIDList[index],
-                  name: getProfileName(profileIDList[index].name, t)
+                  name: getProfileName(profileIDList[index].name, t),
                 }
                 : getDefaultProfileID()
             )
@@ -114,9 +120,9 @@ export const Profiles: FC = () => {
             const { id, name } = profileIDList[index]
             Modal.confirm({
               title: t('profiles.opt.delete_confirm', {
-                name: getProfileName(name, t)
+                name: getProfileName(name, t),
               }),
-              onOk: () => tryTo(() => removeProfile(id))
+              onOk: () => tryTo(() => removeProfile(id)),
             })
           }}
           onOrderChanged={(oldIndex, newIndex) => {

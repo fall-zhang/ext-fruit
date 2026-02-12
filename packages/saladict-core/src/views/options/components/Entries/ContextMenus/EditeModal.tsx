@@ -1,12 +1,13 @@
-import React, { FC, useMemo, useRef } from 'react'
+import type { FC } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { useUpdateEffect } from 'react-use'
 import { useObservableState } from 'observable-hooks'
 import { Input, Modal, Form } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { FormInstance } from 'antd/lib/form/Form'
+import type { FormInstance } from 'antd/lib/form/Form'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from '@/content/redux'
 import { useUpload, uploadStatus$ } from '@/options/helpers/upload'
+import { useDictStore } from '@P/saladict-core/src/store'
 
 export interface EditModalProps {
   menuID?: string | null
@@ -16,7 +17,7 @@ export interface EditModalProps {
 export const EditModal: FC<EditModalProps> = ({ menuID, onClose }) => {
   const { t } = useTranslation(['options', 'dicts', 'common', 'langcode'])
   const formRef = useRef<FormInstance>(null)
-  const allMenus = useSelector(state => state.config.contextMenus.all)
+  const allMenus = useDictStore(state => state.config.contextMenus.all)
   const uploadStatus = useObservableState(uploadStatus$, 'idle')
   const upload = useUpload()
 
@@ -29,19 +30,19 @@ export const EditModal: FC<EditModalProps> = ({ menuID, onClose }) => {
       if (typeof item === 'string') {
         return {
           [namePath]: t(`menus:${menuID}`),
-          [urlPath]: item
+          [urlPath]: item,
         }
       }
       if (item) {
         return {
           [namePath]: item.name,
-          [urlPath]: item.url
+          [urlPath]: item.url,
         }
       }
     }
     return {
       [namePath]: '',
-      [urlPath]: ''
+      [urlPath]: '',
     }
   }, [allMenus, menuID])
 
@@ -53,7 +54,7 @@ export const EditModal: FC<EditModalProps> = ({ menuID, onClose }) => {
 
   return (
     <Modal
-      visible={!!menuID}
+      open={!!menuID}
       zIndex={1001}
       title={t('config.opt.contextMenus_edit')}
       destroyOnClose
@@ -84,7 +85,7 @@ export const EditModal: FC<EditModalProps> = ({ menuID, onClose }) => {
         title: t('syncService.close_confirm'),
         icon: <ExclamationCircleOutlined />,
         okType: 'danger',
-        onOk: onClose
+        onOk: onClose,
       })
     } else {
       onClose()

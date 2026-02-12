@@ -1,55 +1,38 @@
-import React, { FC } from 'react'
-import { Dispatch } from 'redux'
-import { useDispatch } from 'react-redux'
-import { CSSTransition } from 'react-transition-group'
+import type { FC } from 'react'
+import React from 'react'
 import { Button } from 'antd'
-import { StoreAction } from '@/content/redux/modules'
 import { useTranslation } from 'react-i18next'
 import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
-import { getWordOfTheDay } from '@/_helpers/wordoftheday'
-import { useIsShowDictPanel } from '@/options/helpers/panel-store'
 import { PreviewIcon } from './PreviewIcon'
 
 import './_style.scss'
+import { useDictStore } from '@P/saladict-core/src/store'
+import { getWordOfTheDay } from '@P/saladict-core/src/utils/everyday-word'
 
 // pre-fetch the word
 const pWordOfTheDay = getWordOfTheDay()
 
 export const BtnPreview: FC = () => {
   const { t } = useTranslation('options')
-  const show = !useIsShowDictPanel()
-  const dispatch = useDispatch<Dispatch<StoreAction>>()
-
+  const store = useDictStore((state) => state)
   return (
-    <CSSTransition
-      classNames="btn-preview-fade"
-      mountOnEnter
-      unmountOnExit
-      appear
-      in={show}
-      timeout={500}
-    >
-      <div>
-        <Button
-          className="btn-preview"
-          title={t('previewPanel')}
-          shape="circle"
-          size="large"
-          icon={<PreviewIcon />}
-          onClick={async e => {
-            const { x, width } = e.currentTarget.getBoundingClientRect()
-            // panel will adjust the position itself
-            dispatch({ type: 'OPEN_PANEL', payload: { x: x + width, y: 80 } })
-            dispatch({
-              type: 'SEARCH_START',
-              payload: {
-                word: newWord({ text: await pWordOfTheDay })
-              }
-            })
-          }}
-        />
-      </div>
-    </CSSTransition>
+    <div>
+      <Button
+        className="btn-preview"
+        title={t('previewPanel')}
+        shape="circle"
+        size="large"
+        icon={<PreviewIcon />}
+        onClick={async e => {
+          // const { x, width } = e.currentTarget.getBoundingClientRect()
+          // panel will adjust the position itself
+          // store.OPEN_PANEL({ x: x + width, y: 80 })
+          store.SEARCH_START({
+            word: newWord({ text: await pWordOfTheDay }),
+          })
+        }}
+      />
+    </div>
   )
 }
 

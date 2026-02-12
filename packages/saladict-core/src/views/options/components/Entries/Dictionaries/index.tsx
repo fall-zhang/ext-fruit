@@ -1,9 +1,9 @@
-import React, { FC, useState, useLayoutEffect } from 'react'
+import type { FC } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import { Tooltip, Row, Col } from 'antd'
 import { BlockOutlined } from '@ant-design/icons'
-import { DictID } from '@/app-config'
+import type { DictID } from '@/app-config'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from '@/content/redux'
 import { SortableList, reorder } from '@/options/components/SortableList'
 import { SaladictModalForm } from '@/options/components/SaladictModalForm'
 import { getProfilePath } from '@/options/helpers/path-joiner'
@@ -13,6 +13,7 @@ import { useUpload } from '@/options/helpers/upload'
 import { DictTitleMemo } from './DictTitle'
 import { EditModal } from './EditModal'
 import { AllDicts } from './AllDicts'
+import { useDictStore } from '@P/saladict-core/src/store'
 
 export const Dictionaries: FC = () => {
   const { t } = useTranslation(['options', 'common', 'dicts'])
@@ -20,7 +21,7 @@ export const Dictionaries: FC = () => {
   const [editingDict, setEditingDict] = useState<DictID | null>(null)
   const [showAddModal, setShowAddModal] = useState(false)
   const listLayout = useListLayout()
-  const dicts = useSelector(state => state.activeProfile.dicts)
+  const dicts = useDictStore(state => state.activeProfile.dicts)
   const upload = useUpload()
 
   // make a local copy to avoid flickering on drag end
@@ -48,7 +49,7 @@ export const Dictionaries: FC = () => {
           }
           list={selectedDicts.map(id => ({
             value: id,
-            title: <DictTitleMemo dictID={id} dictLangs={dicts.all[id].lang} />
+            title: <DictTitleMemo dictID={id} dictLangs={dicts.all[id].lang} />,
           }))}
           onAdd={async () => {
             if (await checkDictAuth()) {
@@ -62,14 +63,14 @@ export const Dictionaries: FC = () => {
             const newList = selectedDicts.slice()
             newList.splice(index, 1)
             upload({
-              [getProfilePath('dicts', 'selected')]: newList
+              [getProfilePath('dicts', 'selected')]: newList,
             })
             setSelectedDicts(newList)
           }}
           onOrderChanged={(oldIndex, newIndex) => {
             const newList = reorder(selectedDicts, oldIndex, newIndex)
             upload({
-              [getProfilePath('dicts', 'selected')]: newList
+              [getProfilePath('dicts', 'selected')]: newList,
             })
             setSelectedDicts(newList)
           }}
@@ -86,8 +87,8 @@ export const Dictionaries: FC = () => {
             label: null,
             help: null,
             extra: null,
-            children: <AllDicts />
-          }
+            children: <AllDicts />,
+          },
         ]}
       />
       <EditModal dictID={editingDict} onClose={() => setEditingDict(null)} />

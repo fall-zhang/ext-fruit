@@ -1,19 +1,19 @@
-import React, { FC, useContext } from 'react'
-import { shallowEqual } from 'react-redux'
-import { Translator } from '@P/open-trans/translator'
+import type { FC } from 'react'
+import { useContext } from 'react'
+import type { Translator } from '@P/open-trans/translator'
 import { Switch, Select, Checkbox, Button, Modal } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { Rule } from 'antd/lib/form'
-import { DictID } from '@/app-config'
-import { useTranslation } from 'react-i18next'
+import type { Rule } from 'antd/lib/form'
+import type { DictID } from '@/app-config'
 import { supportedLangs } from '@/_helpers/lang-check'
-import { useSelector } from '@/content/redux'
 import { getProfilePath } from '@/options/helpers/path-joiner'
-import { SaladictFormItem } from '@/options/components/SaladictForm'
+import type { SaladictFormItem } from '@/options/components/SaladictForm'
 import { InputNumberGroup } from '@/options/components/InputNumberGroup'
 import { SaladictModalForm } from '@/options/components/SaladictModalForm'
 import { ChangeEntryContext } from '@/options/helpers/change-entry'
-import { useFormDirty, setFormDirty } from '@/options/helpers/use-form-dirty'
+import { useTranslation } from 'react-i18next'
+import { useDictStore } from '@P/saladict-core/src/store'
+import { useFormDirty } from '../../../helpers/use-form-dirty'
 
 export interface EditModalProps {
   dictID?: DictID | null
@@ -21,20 +21,19 @@ export interface EditModalProps {
 }
 
 export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
-  const { t, i18n } = useTranslate(['options', 'dicts', 'common', 'langcode'])
+  const { t, i18n } = useTranslation(['options', 'dicts', 'common', 'langcode'])
   const changeEntry = useContext(ChangeEntryContext)
   const formDirtyRef = useFormDirty()
-  const { dictAuth, allDicts } = useSelector(
+  const { dictAuth, allDicts } = useDictStore(
     state => ({
       dictAuth: state.config.dictAuth,
-      allDicts: state.activeProfile.dicts.all
-    }),
-    shallowEqual
+      allDicts: state.activeProfile.dicts.all,
+    })
   )
   const formItems: SaladictFormItem[] = []
 
   const NUMBER_RULES: Rule[] = [
-    { type: 'number', message: t('form.number_error'), required: true }
+    { type: 'number', message: t('form.number_error'), required: true },
   ]
 
   if (dictID) {
@@ -49,8 +48,8 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
           name: getProfilePath('dicts', 'all', dictID, 'selectionLang', lang),
           className: 'form-item-inline',
           valuePropName: 'checked',
-          children: <Checkbox>{t(`common:lang.${lang}`)}</Checkbox>
-        }))
+          children: <Checkbox>{t(`common:lang.${lang}`)}</Checkbox>,
+        })),
       },
       {
         key: getProfilePath('dicts', 'all', dictID, 'defaultUnfold'),
@@ -62,8 +61,8 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
           name: getProfilePath('dicts', 'all', dictID, 'defaultUnfold', lang),
           className: 'form-item-inline',
           valuePropName: 'checked',
-          children: <Checkbox>{t(`common:lang.${lang}`)}</Checkbox>
-        }))
+          children: <Checkbox>{t(`common:lang.${lang}`)}</Checkbox>,
+        })),
       },
       {
         key: getProfilePath('dicts', 'all', dictID, 'selectionWC'),
@@ -75,23 +74,23 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
             label: null,
             style: { marginBottom: 5 },
             rules: NUMBER_RULES,
-            children: <InputNumberGroup suffix={t('common:min')} />
+            children: <InputNumberGroup suffix={t('common:min')} />,
           },
           {
             name: getProfilePath('dicts', 'all', dictID, 'selectionWC', 'max'),
             label: null,
             style: { marginBottom: 5 },
             rules: NUMBER_RULES,
-            children: <InputNumberGroup suffix={t('common:max')} />
-          }
-        ]
+            children: <InputNumberGroup suffix={t('common:max')} />,
+          },
+        ],
       },
       {
         name: getProfilePath('dicts', 'all', dictID, 'preferredHeight'),
         label: t('dict.preferredHeight'),
         help: t('dict.preferredHeight_help'),
         rules: NUMBER_RULES,
-        children: <InputNumberGroup suffix={t('common:max')} />
+        children: <InputNumberGroup suffix={t('common:max')} />,
       }
     )
 
@@ -114,7 +113,7 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
                   onOk: () => {
                     setFormDirty(false)
                     changeEntry('DictAuths')
-                  }
+                  },
                 })
               } else {
                 changeEntry('DictAuths')
@@ -123,7 +122,7 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
           >
             {t('dictAuth.manage')}
           </Button>
-        )
+        ),
       })
     }
 
@@ -140,7 +139,7 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
             label: t(`dicts:${dictID}.options.${optKey}`),
             help: i18n.exists(`dicts:${dictID}.helps.${optKey}`)
               ? t(`dicts:${dictID}.helps.${optKey}`)
-              : null
+              : null,
           }
 
           switch (typeof value) {

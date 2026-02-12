@@ -1,6 +1,7 @@
-import React, { FC, useState } from 'react'
+import type { FC } from 'react'
+import React, { useState } from 'react'
 import { Switch, Select, Button } from 'antd'
-import { TCDirection } from '@/app-config'
+import type { TCDirection } from '@/app-config'
 import { useTranslate, Trans } from '@/_helpers/i18n'
 import { getConfigPath } from '@/options/helpers/path-joiner'
 import { SaladictForm } from '@/options/components/SaladictForm'
@@ -15,7 +16,7 @@ const locLocale: Readonly<TCDirection[]> = [
   'TOP_LEFT',
   'TOP_RIGHT',
   'BOTTOM_LEFT',
-  'BOTTOM_RIGHT'
+  'BOTTOM_RIGHT',
 ]
 
 export const QuickSearch: FC = () => {
@@ -35,7 +36,7 @@ export const QuickSearch: FC = () => {
               </Trans>
             ),
             valuePropName: 'checked',
-            children: <Switch />
+            children: <Switch />,
           },
           {
             name: getConfigPath('qsLocation'),
@@ -47,7 +48,7 @@ export const QuickSearch: FC = () => {
                   </Select.Option>
                 ))}
               </Select>
-            )
+            ),
           },
           {
             name: getConfigPath('qsPreload'),
@@ -63,7 +64,7 @@ export const QuickSearch: FC = () => {
                   {t('preload.selection')}
                 </Select.Option>
               </Select>
-            )
+            ),
           },
           {
             name: getConfigPath('qsAuto'),
@@ -71,12 +72,12 @@ export const QuickSearch: FC = () => {
             help: t('preload.auto_help'),
             hide: values => !values[getConfigPath('qsPreload')],
             valuePropName: 'checked',
-            children: <Switch />
+            children: <Switch />,
           },
           {
             name: getConfigPath('qsFocus'),
             valuePropName: 'checked',
-            children: <Switch />
+            children: <Switch />,
           },
           {
             name: getConfigPath('qsStandalone'),
@@ -92,7 +93,7 @@ export const QuickSearch: FC = () => {
               </Trans>
             ),
             valuePropName: 'checked',
-            children: <Switch />
+            children: <Switch />,
           },
           {
             key: 'config.opt.openQsStandalone',
@@ -100,8 +101,8 @@ export const QuickSearch: FC = () => {
               <Button onClick={() => setShowStandaloneModal(true)}>
                 {t('config.opt.openQsStandalone')}
               </Button>
-            )
-          }
+            ),
+          },
         ]}
       />
       <StandaloneModal

@@ -1,28 +1,46 @@
-import React, { FC, useState } from 'react'
+import type { FC } from 'react'
+import React, { useState } from 'react'
 import { Switch, Checkbox, Button } from 'antd'
-import { concat, from } from 'rxjs'
-import { pluck, map } from 'rxjs/operators'
 import { useObservableState, useObservable, useRefFn } from 'observable-hooks'
 import { useTranslation } from 'react-i18next'
 import { storage } from '@/_helpers/browser-api'
-import { useSelector } from '@/content/redux'
 import { getConfigPath } from '@/options/helpers/path-joiner'
-import {
-  SaladictForm,
+import type {
   SaladictFormItem
 } from '@/options/components/SaladictForm'
+import {
+  SaladictForm
+} from '@/options/components/SaladictForm'
+import { useDictStore } from '@P/saladict-core/src/store'
 
 const reqSyncService = require.context('./sync-services', false, /\.tsx$/)
 
 export const Notebook: FC = () => {
   const { t } = useTranslation(['options', 'dicts', 'common', 'sync'])
-  const ctxTrans = useSelector(state => state.config.ctxTrans)
+  const ctxTrans = useDictStore(state => state.config.ctxTrans)
   const syncServiceIds = useRefFn(() =>
     reqSyncService.keys().map(path => /([^/]+)\.tsx$/.exec(path)![1])
   ).current
   const [showSyncServices, setShowSyncServices] = useState<{
     [id: string]: boolean
   }>({})
+
+
+  function syncConfig (config:any) {
+    const oldConfig = storage.sync.get('syncConfig')
+    const newConfig = {
+      ...config,
+    }
+    // legacy fix
+    if (
+      config?.webdav &&
+            !Object.prototype.hasOwnProperty.call(config.webdav, 'enable')
+    ) {
+      newConfig.webdav.enable = !!config.webdav.url
+    }
+    return newConfig
+  }
+
   const syncConfigs = useObservableState(
     useObservable(() =>
       concat(
@@ -31,7 +49,7 @@ export const Notebook: FC = () => {
       ).pipe(
         map(syncConfig => {
           const newConfig = {
-            ...syncConfig
+            ...syncConfig,
           }
           // legacy fix
           if (
@@ -50,18 +68,12 @@ export const Notebook: FC = () => {
     {
       name: getConfigPath('editOnFav'),
       valuePropName: 'checked',
-      children: <Switch />
+      children: <Switch />,
     },
     {
       name: getConfigPath('searchHistory'),
       valuePropName: 'checked',
-      children: <Switch />
-    },
-    {
-      name: getConfigPath('searchHistoryInco'),
-      hide: values => !values[getConfigPath('searchHistory')],
-      valuePropName: 'checked',
-      children: <Switch />
+      children: <Switch />,
     },
     {
       key: getConfigPath('ctxTrans'),
@@ -70,9 +82,9 @@ export const Notebook: FC = () => {
         name: getConfigPath('ctxTrans', id),
         valuePropName: 'checked',
         style: { marginBottom: 0 },
-        children: <Checkbox>{t(`dicts:${id}.name`)}</Checkbox>
-      }))
-    }
+        children: <Checkbox>{t(`dicts:${id}.name`)}</Checkbox>,
+      })),
+    },
   ]
 
   syncServiceIds.forEach(id => {
@@ -86,13 +98,13 @@ export const Notebook: FC = () => {
           onClick={() =>
             setShowSyncServices(showSyncServices => ({
               ...showSyncServices,
-              [id]: true
+              [id]: true,
             }))
           }
         >{`${title} (${t(
             syncConfigs?.[id]?.enable ? 'common:enabled' : 'common:disabled'
           )})`}</Button>
-      )
+      ),
     })
   })
 
@@ -107,8 +119,8 @@ export const Notebook: FC = () => {
           onClose: () =>
             setShowSyncServices(showSyncServices => ({
               ...showSyncServices,
-              [id]: false
-            }))
+              [id]: false,
+            })),
         })
       )}
     </>

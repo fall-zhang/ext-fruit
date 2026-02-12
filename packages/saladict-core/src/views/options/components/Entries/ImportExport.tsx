@@ -1,18 +1,18 @@
 /* eslint-disable no-await-in-loop */
-import React, { FC } from 'react'
-import { TFunction } from 'i18next'
+import type { FC } from 'react'
+import type { TFunction } from 'i18next'
 import { Row, Col, Upload, notification } from 'antd'
-import { RcFile } from 'antd/lib/upload'
+import type { RcFile } from 'antd/lib/upload'
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons'
-import { AppConfig } from '@/app-config'
-import mergeConfig from '@/app-config/merge-config'
-import { ProfileIDList, Profile } from '@/app-config/profiles'
+import type { ProfileIDList, Profile } from '@/app-config/profiles'
 import { mergeProfile } from '@/app-config/merge-profile'
 import { useTranslation } from 'react-i18next'
 import { storage } from '@/_helpers/browser-api'
 import { updateConfig, getConfig } from '@/_helpers/config-manager'
 import { updateProfile, getProfile } from '@/_helpers/profile-manager'
 import { useListLayout } from '@/options/helpers/layout'
+import type { AppConfig } from '@P/saladict-core/src/app-config'
+import mergeConfig from '@P/saladict-core/src/app-config/merge-config'
 
 export type ConfigStorage = {
   baseconfig: AppConfig
@@ -77,7 +77,7 @@ async function importConfig (file: RcFile, t: TFunction) {
       } catch (err) {
         notification.error({
           message: t('import.error.title'),
-          description: t('import.error.parse')
+          description: t('import.error.parse'),
         })
       }
       resolve()
@@ -85,7 +85,7 @@ async function importConfig (file: RcFile, t: TFunction) {
     fr.onerror = () => {
       notification.error({
         message: t('import.error.title'),
-        description: t('import.error.parse')
+        description: t('import.error.parse'),
       })
       resolve()
     }
@@ -101,7 +101,7 @@ async function importConfig (file: RcFile, t: TFunction) {
     activeProfileID,
     hasInstructionsShown,
     profileIDList,
-    syncConfig
+    syncConfig,
   } = result
 
   if (
@@ -112,12 +112,12 @@ async function importConfig (file: RcFile, t: TFunction) {
   ) {
     notification.error({
       message: t('import.error.title'),
-      description: t('import.error.empty')
+      description: t('import.error.empty'),
     })
     return
   }
 
-  await storage.sync.clear()
+  localStorage.clear()
 
   if (baseconfig) {
     await updateConfig(mergeConfig(baseconfig))
@@ -154,7 +154,7 @@ async function exportConfig (t: TFunction) {
     'activeProfileID',
     'hasInstructionsShown',
     'profileIDList',
-    'syncConfig'
+    'syncConfig',
   ])
 
   result.baseconfig = await getConfig()
@@ -162,7 +162,7 @@ async function exportConfig (t: TFunction) {
   if (!result.baseconfig || !result.activeProfileID || !result.profileIDList) {
     notification.error({
       message: t('export.error.title'),
-      description: t('export.error.empty')
+      description: t('export.error.empty'),
     })
     return
   }
@@ -190,7 +190,7 @@ async function exportConfig (t: TFunction) {
   } catch (err) {
     notification.error({
       message: t('export.error.title'),
-      description: t('export.error.parse')
+      description: t('export.error.parse'),
     })
   }
 }

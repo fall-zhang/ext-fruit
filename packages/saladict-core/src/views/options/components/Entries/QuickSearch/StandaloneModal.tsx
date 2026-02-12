@@ -1,11 +1,11 @@
-import React, { FC, useState } from 'react'
+import type { FC } from 'react'
+import { useState } from 'react'
 import { Select, Slider, Switch, Button } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { getConfigPath } from '@/options/helpers/path-joiner'
-import { SaladictModalForm } from '@/options/components/SaladictModalForm'
-import { pixelSlideFormatter } from '@/options/components/SaladictForm'
 import { searchMode } from '../SearchModes/searchMode'
 import { TitlebarOffsetModal } from './TitlebarOffsetModal'
+import { getConfigPath } from '../../../helpers/path-joiner'
+import { SaladictModalForm } from '../../SaladictModalForm'
 
 export interface StandaloneModalProps {
   show: boolean
@@ -14,7 +14,7 @@ export interface StandaloneModalProps {
 
 export const StandaloneModal: FC<StandaloneModalProps> = ({
   show,
-  onClose
+  onClose,
 }) => {
   const { t } = useTranslation(['options', 'common'])
   const { availHeight } = window.screen
@@ -39,24 +39,23 @@ export const StandaloneModal: FC<StandaloneModalProps> = ({
                   {t('locations.RIGHT')}
                 </Select.Option>
               </Select>
-            )
+            ),
           },
           {
             name: getConfigPath('qssaHeight'),
             hide: values => values[getConfigPath('qssaSidebar')],
             children: (
               <Slider
-                tipFormatter={pixelSlideFormatter}
                 min={250}
                 max={availHeight}
                 marks={{ 250: '250px', [availHeight]: `${availHeight}px` }}
               />
-            )
+            ),
           },
           {
             name: getConfigPath('qssaRectMemo'),
             valuePropName: 'checked',
-            children: <Switch />
+            children: <Switch />,
           },
           {
             key: 'titlebar-offset',
@@ -66,17 +65,17 @@ export const StandaloneModal: FC<StandaloneModalProps> = ({
               <Button onClick={() => setTitlebarOffsetModal(true)}>
                 {t('titlebarOffset.title')}
               </Button>
-            )
+            ),
           },
           {
             name: getConfigPath('qssaPageSel'),
             valuePropName: 'checked',
-            children: <Switch />
+            children: <Switch />,
           },
           {
             ...searchMode('qsPanelMode', t),
-            label: t('page_selection')
-          }
+            label: t('page_selection'),
+          },
         ]}
       />
       <TitlebarOffsetModal

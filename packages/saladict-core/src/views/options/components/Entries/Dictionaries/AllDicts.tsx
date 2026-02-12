@@ -1,8 +1,9 @@
-import React, { FC, useMemo } from 'react'
+import type { FC } from 'react'
+import { useMemo } from 'react'
 import { Card, List, Switch } from 'antd'
-import { DictID } from '@/app-config'
-import { useSelector } from '@/content/redux'
 import { DictTitle } from './DictTitle'
+import { useDictStore } from '@P/saladict-core/src/store'
+import type { DictID } from '@P/saladict-core/src/app-config'
 
 export interface AllDictsProps {
   value?: DictID[]
@@ -13,8 +14,8 @@ export interface AllDictsProps {
  * Antd form item compatible list
  */
 export const AllDicts: FC<AllDictsProps> = props => {
-  const allDicts = useSelector(state => state.activeProfile.dicts.all)
-  const allDictIds = useMemo(() => Object.keys(allDicts), [allDicts])
+  const allDicts = useDictStore(state => state.activeProfile.dicts.all)
+  const allDictIds = useMemo<DictID[]>(() => Object.keys(allDicts) as DictID[], [allDicts])
   const selected = useMemo(() => new Set(props.value || []), [props.value])
 
   return (

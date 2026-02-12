@@ -1,18 +1,18 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
 import { Switch, Select } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from '@/content/redux'
 import { getConfigPath, getProfilePath } from '@/options/helpers/path-joiner'
 import { SaladictForm } from '@/options/components/SaladictForm'
+import { useDictStore } from '@P/saladict-core/src/store'
 
 export const Pronunciation: FC = () => {
   const { t } = useTranslation(['options', 'common', 'dicts'])
-  const autopronLists = useSelector(state => ({
+  const autopronLists = useDictStore(state => ({
     cn: state.activeProfile.dicts.all.zdic.options.audio
       ? state.config.autopron.cn.list
       : state.config.autopron.cn.list.filter(id => id !== 'zdic'),
     en: state.config.autopron.en.list,
-    machine: state.config.autopron.machine.list
+    machine: state.config.autopron.machine.list,
   }))
 
   return (
@@ -29,7 +29,7 @@ export const Pronunciation: FC = () => {
                 </Select.Option>
               ))}
             </Select>
-          )
+          ),
         },
         {
           name: getConfigPath('autopron', 'en', 'dict'),
@@ -42,7 +42,7 @@ export const Pronunciation: FC = () => {
                 </Select.Option>
               ))}
             </Select>
-          )
+          ),
         },
         {
           name: getConfigPath('autopron', 'en', 'accent'),
@@ -56,7 +56,7 @@ export const Pronunciation: FC = () => {
                 {t('config.opt.accent.us')}
               </Select.Option>
             </Select>
-          )
+          ),
         },
         {
           name: getConfigPath('autopron', 'machine', 'dict'),
@@ -69,7 +69,7 @@ export const Pronunciation: FC = () => {
                 </Select.Option>
               ))}
             </Select>
-          )
+          ),
         },
         {
           name: getConfigPath('autopron', 'machine', 'src'),
@@ -83,13 +83,13 @@ export const Pronunciation: FC = () => {
                 {t('config.autopron.machine.src_search')}
               </Select.Option>
             </Select>
-          )
+          ),
         },
         {
           name: getProfilePath('waveform'),
           valuePropName: 'checked',
-          children: <Switch />
-        }
+          children: <Switch />,
+        },
       ]}
     />
   )

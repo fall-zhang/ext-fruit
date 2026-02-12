@@ -1,12 +1,7 @@
-import React, { FC, useEffect } from 'react'
+import type { FC } from 'react'
 import { FrownOutlined } from '@ant-design/icons'
-import { message } from '@/_helpers/browser-api'
 
 export const EntryError: FC = () => {
-  useEffect(() => {
-    message.self.send({ type: 'CLOSE_PANEL' })
-  }, [])
-
   return (
     <div
       style={{
@@ -14,7 +9,7 @@ export const EntryError: FC = () => {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
       }}
     >
       <FrownOutlined

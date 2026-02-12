@@ -1,20 +1,22 @@
-import React, { FC, useState, useEffect, useRef } from 'react'
+import type { FC } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Modal, Form, Slider, Button, message as antdMsg } from 'antd'
-import { FormInstance } from 'antd/lib/form'
+import type { FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import {
-  setTitlebarOffset,
-  TitlebarOffset,
-  getTitlebarOffset,
-  calibrateTitlebarOffset
-} from '@/_helpers/titlebar-offset'
-import { formItemModalLayout } from '@/options/helpers/layout'
-import { pixelSlideFormatter } from '@/options/components/SaladictForm'
+
 import { useTranslation } from 'react-i18next'
+import { getTitlebarOffset } from 'apps/browser-extension/src/utils/titlebar-offset'
+import { formItemModalLayout } from '../../../helpers/layout'
 
 export interface TitlebarOffsetModalProps {
   show: boolean
   onClose: () => void
+}
+type TitlebarOffset = {
+  // main window title bar height
+  main: number
+  // panel window title bar height
+  panel: number
 }
 
 export const TitlebarOffsetModal: FC<TitlebarOffsetModalProps> = props => {
@@ -27,15 +29,17 @@ export const TitlebarOffsetModal: FC<TitlebarOffsetModalProps> = props => {
 
     let stale = false
 
-    getTitlebarOffset().then(titlebarOffset => {
+    getTitlebarOffset().then(res => {
       if (!stale) {
         setOffset(
-          titlebarOffset || {
+          res || {
             main: 0,
-            panel: 0
+            panel: 0,
           }
         )
       }
+    }).catch((err:Error) => {
+      console.warn('⚡️ line:40 ~ err: ', err)
     })
 
     return () => {
@@ -55,7 +59,7 @@ export const TitlebarOffsetModal: FC<TitlebarOffsetModalProps> = props => {
         title: t('unsave_confirm'),
         icon: <ExclamationCircleOutlined />,
         okType: 'danger',
-        onOk: props.onClose
+        onOk: props.onClose,
       })
     } else {
       props.onClose()
@@ -66,14 +70,15 @@ export const TitlebarOffsetModal: FC<TitlebarOffsetModalProps> = props => {
     if (process.env.DEBUG) {
       console.log(values)
     }
-    await setTitlebarOffset(values as TitlebarOffset)
+    // 保存配置
+    // await setTitlebarOffset(values as TitlebarOffset)
     antdMsg.destroy()
     antdMsg.success(t('msg_updated'))
     props.onClose()
   }
 
   const onCalibrate = async () => {
-    const offset = await calibrateTitlebarOffset()
+    // const offset = await calibrateTitlebarOffset()
 
     if (offset && formRef.current) {
       formRef.current.setFieldsValue(offset)
@@ -88,7 +93,7 @@ export const TitlebarOffsetModal: FC<TitlebarOffsetModalProps> = props => {
   return (
     <Modal
       title={t('titlebarOffset.title')}
-      visible={props.show && !!offset}
+      open={props.show && !!offset}
       onOk={onSubmit}
       onCancel={onCancel}
       footer={[
@@ -100,7 +105,7 @@ export const TitlebarOffsetModal: FC<TitlebarOffsetModalProps> = props => {
         </Button>,
         <Button key="submit" type="primary" onClick={onSubmit}>
           {t('common:save')}
-        </Button>
+        </Button>,
       ]}
     >
       <p>{t('titlebarOffset.help')}</p>
@@ -116,7 +121,6 @@ export const TitlebarOffsetModal: FC<TitlebarOffsetModalProps> = props => {
           help={t('titlebarOffset.main_help')}
         >
           <Slider
-            tipFormatter={pixelSlideFormatter}
             min={0}
             max={100}
             marks={{ 0: '0px', 100: '100px' }}
@@ -128,7 +132,6 @@ export const TitlebarOffsetModal: FC<TitlebarOffsetModalProps> = props => {
           help={t('titlebarOffset.panel_help')}
         >
           <Slider
-            tipFormatter={pixelSlideFormatter}
             min={0}
             max={100}
             marks={{ 0: '0px', 100: '100px' }}

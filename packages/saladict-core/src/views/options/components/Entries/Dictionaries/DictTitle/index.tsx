@@ -1,9 +1,9 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { message } from '@/_helpers/browser-api'
-import { DictID } from '@/app-config'
 
 import './_style.scss'
+import type { DictID } from '@P/saladict-core/src/app-config'
 export interface DictTitleProps {
   dictID: DictID
   /** Supported languages */
@@ -38,7 +38,7 @@ export const DictTitle: FC<DictTitleProps> = ({ dictID, dictLangs }) => {
       </span>
       <span>
         {dictLangs.split('').map((c, i) =>
-          (+c
+          (c
             ? (
               <span className="saladict-dict-langs-char" key={langCodes[i]}>
                 {t(`dict.lang.${langCodes[i]}`)}
@@ -73,11 +73,4 @@ function openDictSrcPage (dictID: DictID, dictLangs: string) {
   } else if (+dictLangs[4]) {
     text = '샐러드'
   }
-  message.send({
-    type: 'OPEN_DICT_SRC_PAGE',
-    payload: {
-      id: dictID,
-      text
-    }
-  })
 }

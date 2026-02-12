@@ -4,17 +4,14 @@ import { Form, Button, Modal, Tooltip } from 'antd'
 import type { FormItemProps, Rule, FormProps, FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined, BlockOutlined } from '@ant-design/icons'
 import get from 'lodash/get'
-import { resetConfig } from '@/_helpers/config-manager'
-import { resetAllProfiles } from '@/_helpers/profile-manager'
 import { useTranslation } from 'react-i18next'
-import { isFirefox } from '@/_helpers/saladict'
-import { openUrl } from '@/_helpers/browser-api'
-import { useUpload } from '@/options/helpers/upload'
 import { SaveBtn } from './SaveBtn'
 
 import './_style.scss'
 import { useDictStore } from '@P/saladict-core/src/store'
 import { setFormDirty } from '../../helpers/use-form-dirty'
+import { isFirefox } from '@P/saladict-core/src/utils/browser'
+import { useUpload } from '../../helpers/upload'
 
 interface FieldValues {
   [name: string]: any
@@ -174,7 +171,7 @@ export const SaladictForm = React.forwardRef(
                 if (isFirefox) {
                   Modal.info({ content: t('firefox_shortcuts') })
                 } else {
-                  openUrl('chrome://extensions/shortcuts')
+                  // openUrl('chrome://extensions/shortcuts')
                 }
               }}
             >
@@ -189,8 +186,8 @@ export const SaladictForm = React.forwardRef(
                   icon: <ExclamationCircleOutlined />,
                   okType: 'danger',
                   onOk: async () => {
-                    await resetConfig()
-                    await resetAllProfiles()
+                    // await resetConfig()
+                    // await resetAllProfiles()
                     setFormDirty(false)
                   },
                 })

@@ -1,10 +1,12 @@
-import React, { FC, useState } from 'react'
+import type { FC } from 'react'
+import React, { useState } from 'react'
 import { Switch, Button, Select } from 'antd'
 import { getConfigPath } from '@/options/helpers/path-joiner'
 import { SaladictForm } from '@/options/components/SaladictForm'
-import { useTranslate, Trans } from '@/_helpers/i18n'
 import { MatchPatternModal } from '../MatchPatternModal'
+import { Trans, useTranslation } from 'react-i18next'
 
+// 不再使用该组件，不再对 PDF 进行单独配置
 export const PDF: FC = () => {
   const { t } = useTranslation(['options', 'common'])
   const [editingArea, setEditingArea] = useState<
@@ -29,7 +31,7 @@ export const PDF: FC = () => {
                 </a>
               </Trans>
             ),
-            children: <Switch />
+            children: <Switch />,
           },
           {
             name: getConfigPath('pdfStandalone'),
@@ -45,7 +47,7 @@ export const PDF: FC = () => {
                   {t('config.opt.pdfStandalone.manual')}
                 </Select.Option>
               </Select>
-            )
+            ),
           },
           {
             key: 'BlackWhiteList',
@@ -63,8 +65,8 @@ export const PDF: FC = () => {
                   PDF {t('common:whitelist')}
                 </Button>
               </>
-            )
-          }
+            ),
+          },
         ]}
       />
       <MatchPatternModal

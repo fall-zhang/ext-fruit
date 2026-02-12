@@ -1,16 +1,15 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
 import { Input } from 'antd'
-import { useSelector } from '@/content/redux'
 import { getConfigPath } from '@/options/helpers/path-joiner'
-import {
-  SaladictForm,
-  SaladictFormItem
-} from '@/options/components/SaladictForm'
-import { useTranslate, Trans } from '@/_helpers/i18n'
+
+
+import { Trans, useTranslation } from 'react-i18next'
+import { useDictStore } from '@P/saladict-core/src/store'
+import { SaladictForm, type SaladictFormItem } from '../SaladictForm'
 
 export const DictAuths: FC = () => {
   const { t } = useTranslation(['options', 'dicts'])
-  const dictAuths = useSelector(state => state.config.dictAuth)
+  const dictAuths = useDictStore(state => state.config.dictAuth)
 
   if (dictAuths === null || dictAuths === undefined) return null
 
@@ -20,12 +19,12 @@ export const DictAuths: FC = () => {
       label: t('nav.DictAuths'),
       children: (
         <span className="ant-form-text">{t('dictAuth.description')}</span>
-      )
-    }
+      ),
+    },
   ]
 
-  Object.keys(dictAuths).forEach(dictID => {
-    const auth = dictAuths[dictID]!
+  Object.keys(dictAuths).forEach((dictID:any) => {
+    const auth = dictAuths[dictID]
     const configPath = getConfigPath('dictAuth', dictID)
     const title = t(`dicts:${dictID}.name`)
 
@@ -53,7 +52,7 @@ export const DictAuths: FC = () => {
           )
           : null,
         style: { marginBottom: isLast ? 10 : 5 },
-        children: <Input autoComplete="off" />
+        children: <Input autoComplete="off" />,
       })
     })
   })
