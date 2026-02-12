@@ -10,9 +10,9 @@ import { useTranslation } from 'react-i18next'
 import { storage } from '@/_helpers/browser-api'
 import { updateConfig, getConfig } from '@/_helpers/config-manager'
 import { updateProfile, getProfile } from '@/_helpers/profile-manager'
-import { useListLayout } from '@/options/helpers/layout'
 import type { AppConfig } from '@P/saladict-core/src/app-config'
-import mergeConfig from '@P/saladict-core/src/app-config/merge-config'
+import { mergeConfig } from '@P/saladict-core/src/app-config/merge-config'
+import { useListLayout } from '../../helpers/layout'
 
 export type ConfigStorage = {
   baseconfig: AppConfig

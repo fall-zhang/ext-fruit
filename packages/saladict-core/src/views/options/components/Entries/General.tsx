@@ -1,11 +1,9 @@
 import type { FC } from 'react'
-import React from 'react'
 import { Switch, Select } from 'antd'
-import { getConfigPath } from '@/options/helpers/path-joiner'
 
-
-import { isFirefox, isOpera } from '@/_helpers/saladict'
 import { SaladictForm, type SaladictFormItem } from '../SaladictForm'
+import { getConfigPath } from '../../helpers/path-joiner'
+import { isFirefox, isOpera } from '@P/saladict-core/src/utils/browser'
 
 export const General: FC = () => {
   const formItems: SaladictFormItem[] = [

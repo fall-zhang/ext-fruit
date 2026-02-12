@@ -8,7 +8,7 @@ import { useDictStore } from '../../store'
 const waveformBox = <WaveformBoxContainer />
 
 export const DictPanelPortalContainer = () => {
-  const props = useDictStore()
+  const props = useDictStore(state => state)
   const state = {
     show: props.isShowDictPanel,
     coord: props.dictPanelCoord,

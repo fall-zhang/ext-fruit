@@ -1,77 +1,72 @@
-import { BehaviorSubject } from 'rxjs'
 import { notification, message as antMsg } from 'antd'
 import set from 'lodash/set'
-import type { Profile } from '@/app-config/profiles'
 import { useTranslation } from 'react-i18next'
-import { updateConfig } from '@/_helpers/config-manager'
-import { updateProfile } from '@/_helpers/profile-manager'
-import { useDispatch } from '@/content/redux'
 import { setFormDirty } from './use-form-dirty'
 import type { AppConfig } from '@P/saladict-core/src/app-config'
+import type { Profile } from '@P/saladict-core/src/app-config/profiles'
+import { updateProfile } from 'apps/browser-extension/src/utils/profile-manager'
+import { useConfContext } from '@P/saladict-core/src/context/conf-context'
+import { useDictStore } from '@P/saladict-core/src/store'
+import { cloneDeep } from 'es-toolkit'
 
-export const uploadStatus$ = new BehaviorSubject<
-  'idle' | 'uploading' | 'error'
->('idle')
 
 export const useUpload = () => {
   const { t } = useTranslation('options')
-  const dispatch = useDispatch()
+  const confContext = useConfContext()
+  const dictStore = useDictStore(state => state.config)
+  // [stateObjectPaths: string]
+  return async (values: Record<string, any>) => {
+    const data: { config?: AppConfig; profile?: Profile } = {}
+    const paths = Object.keys(values)
 
-  return (values: { [stateObjectPaths: string]: any }) =>
-    dispatch(async (dispatch, getState) => {
-      uploadStatus$.next('uploading')
+    if (process.env.DEBUG) {
+      if (paths.length <= 0) {
+        console.warn('Saving empty fields.', values)
+      }
+    }
 
-      const data: { config?: AppConfig; profile?: Profile } = {}
-      const paths = Object.keys(values)
-
-      if (process.env.DEBUG) {
-        if (paths.length <= 0) {
-          console.warn('Saving empty fields.', values)
+    for (const path of paths) {
+      if (path.startsWith('config.')) {
+        if (!data.config) {
+          data.config = cloneDeep(dictStore)
         }
-      }
-
-      for (const path of paths) {
-        if (path.startsWith('config.')) {
-          if (!data.config) {
-            data.config = JSON.parse(JSON.stringify(getState().config))
-          }
-          set(data, path, values[path])
-        } else if (path.startsWith('profile.')) {
-          if (!data.profile) {
-            data.profile = JSON.parse(JSON.stringify(getState().activeProfile))
-          }
-          set(data, path, values[path])
-        } else {
-          console.error(new Error(`Saving unknown path: ${path}`))
+        set(data, path, values[path])
+      } else if (path.startsWith('profile.')) {
+        if (!data.profile) {
+          data.profile = cloneDeep(dictStore.activeProfile)
         }
+        set(data, path, values[path])
+      } else {
+        console.error(new Error(`Saving unknown path: ${path}`))
       }
+    }
 
-      const requests: Promise<void>[] = []
+    const requests: Promise<void>[] = []
 
-      if (data.config) {
-        requests.push(updateConfig(data.config))
-      }
+    // if (data.config) {
+    //   requests.push(updateConfig(data.config))
+    // }
 
-      if (data.profile) {
-        requests.push(updateProfile(data.profile))
-      }
+    // if (data.profile) {
+    //   requests.push(updateProfile(data.profile))
+    // }
 
-      try {
-        await Promise.all(requests)
-        setFormDirty(false)
-        antMsg.destroy()
-        antMsg.success(t('msg_updated'))
-        uploadStatus$.next('idle')
-      } catch (e) {
-        notification.error({
-          message: t('config.opt.upload_error'),
-          description: e.message,
-        })
-        uploadStatus$.next('error')
-      }
+    try {
+      await Promise.all(requests)
+      setFormDirty(false)
 
-      if (process.env.DEBUG) {
-        console.log('saved setting', data)
-      }
-    })
+      antMsg.destroy()
+      antMsg.success(t('msg_updated'))
+    } catch (e) {
+      notification.error({
+        message: t('config.opt.upload_error'),
+        description: e.message,
+      })
+      console.error(e)
+    }
+
+    if (process.env.DEBUG) {
+      console.log('saved setting', data)
+    }
+  }
 }

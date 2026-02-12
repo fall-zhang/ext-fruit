@@ -19,6 +19,7 @@ import type { DictID } from '@P/saladict-core/src/app-config'
 import { timer } from '@P/saladict-core/src/utils/promise-more'
 import type { ViewProps } from '@P/saladict-core/src/core/trans-api/helpers'
 import { isTagName } from '@P/saladict-core/src/utils/dom'
+import { useOptContext } from '../../../../context/opt-context'
 
 const DICT_ITEM_HEAD_HEIGHT = 20
 
@@ -44,7 +45,7 @@ export const DictItem: FC<DictItemProps> = props => {
     key: string
     value: string
   }>()
-
+  const optContext = useOptContext()
   const [noHeightTransition, setNoHeightTransition] = useState(false)
 
   const [foldState, setFoldState] = useState<'COLLAPSE' | 'HALF' | 'FULL'>(
@@ -136,7 +137,64 @@ export const DictItem: FC<DictItemProps> = props => {
     },
     [foldState, props.withAnimation]
   )
+  /** Search the content of an <a> instead of jumping unless it's external */
+  function searchLinkText (e: React.MouseEvent<HTMLElement>) {
+    if (e.ctrlKey || e.metaKey || e.altKey) {
+      // ignore if extra key is pressed
+      return
+    }
 
+    if (!(e.target as HTMLElement).tagName) {
+      return
+    }
+
+    const $dictItemRoot = e.currentTarget
+    for (
+      let el: HTMLElement | null = e.target as HTMLElement;
+      el && el !== $dictItemRoot;
+      el = el.parentElement
+    ) {
+      if (isTagName(el, 'a') || el.getAttribute('role') === 'link') {
+        e.preventDefault()
+        e.stopPropagation()
+
+        const $a = el as HTMLAnchorElement
+        if (/nofollow|noopener|noreferrer/.test($a.rel)) {
+          optContext.navigate($a.href)
+        } else {
+          props.searchText({
+            word: newWord({
+              text: $a.textContent || '',
+              title: 'Saladict',
+              favicon: 'https://saladict.crimx.com/favicon.ico',
+            }),
+          })
+        }
+
+        return
+      }
+    }
+  }
+
+  function toggleFold () {
+    if (props.searchStatus === 'SEARCHING') {
+      return
+    }
+
+    if (foldState !== 'COLLAPSE') {
+      setFoldState('COLLAPSE')
+      props.onUserFold(props.dictID, true)
+      return
+    }
+
+    props.onUserFold(props.dictID, false)
+
+    if (props.searchResult) {
+      setFoldState('HALF')
+    } else {
+      props.searchText({ id: props.dictID })
+    }
+  }
   return (
     <section
       ref={dictItemRef}
@@ -198,68 +256,4 @@ export const DictItem: FC<DictItemProps> = props => {
       </div>
     </section>
   )
-
-  /** Search the content of an <a> instead of jumping unless it's external */
-  function searchLinkText (e: React.MouseEvent<HTMLElement>) {
-    if (e.ctrlKey || e.metaKey || e.altKey) {
-      // ignore if extra key is pressed
-      return
-    }
-
-    if (!(e.target as HTMLElement).tagName) {
-      return
-    }
-
-    const $dictItemRoot = e.currentTarget
-    for (
-      let el: HTMLElement | null = e.target as HTMLElement;
-      el && el !== $dictItemRoot;
-      el = el.parentElement
-    ) {
-      if (isTagName(el, 'a') || el.getAttribute('role') === 'link') {
-        e.preventDefault()
-        e.stopPropagation()
-
-        const $a = el as HTMLAnchorElement
-        if (/nofollow|noopener|noreferrer/.test($a.rel)) {
-          // message.send({
-          //   type: 'OPEN_URL',
-          //   payload: {
-          //     url: $a.href,
-          //   },
-          // })
-        } else {
-          props.searchText({
-            word: newWord({
-              text: $a.textContent || '',
-              title: 'Saladict',
-              favicon: 'https://saladict.crimx.com/favicon.ico',
-            }),
-          })
-        }
-
-        return
-      }
-    }
-  }
-
-  function toggleFold () {
-    if (props.searchStatus === 'SEARCHING') {
-      return
-    }
-
-    if (foldState !== 'COLLAPSE') {
-      setFoldState('COLLAPSE')
-      props.onUserFold(props.dictID, true)
-      return
-    }
-
-    props.onUserFold(props.dictID, false)
-
-    if (props.searchResult) {
-      setFoldState('HALF')
-    } else {
-      props.searchText({ id: props.dictID })
-    }
-  }
 }

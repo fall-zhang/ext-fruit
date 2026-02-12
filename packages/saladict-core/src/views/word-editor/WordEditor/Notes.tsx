@@ -22,6 +22,7 @@ import {
 import { CtxTransList } from './CtxTransList'
 import type { Word } from '@P/saladict-core/src/store/selection/types'
 import { useTranslation } from 'react-i18next'
+import { useOptContext } from '@P/saladict-core/src/context/opt-context'
 
 export interface NotesProps {
   containerWidth:WordEditorPanelProps['containerWidth']
@@ -40,6 +41,7 @@ export const Notes: FC<NotesProps> = props => {
   const { t } = useTranslation(['common', 'content'])
   const [isDirty, setDirty] = useState(false)
   const [isShowCtxTransList, setShowCtxTransList] = useState(false)
+  const optContext = useOptContext()
 
   const [word, setWord] = useState(props.wordEditor.word)
   const [relatedWords, setRelatedWords] = useState<Word[]>([])
@@ -51,6 +53,7 @@ export const Notes: FC<NotesProps> = props => {
 
   const [ctxTransResult, setCtxTransResult] = useState(() =>
     Object.keys(props.ctxTrans).reduce((result, id) => {
+      // eslint-disable-next-line no-param-reassign
       result[id] = ''
       return result
     }, {} as CtxTranslateResults)
@@ -111,14 +114,11 @@ export const Notes: FC<NotesProps> = props => {
       onClick: () => {
         if (!isOptionsPage()) {
           console.log('jump to options page')
-
-          // message.send({
-          //   type: 'OPEN_URL',
-          //   payload: {
-          //     url: 'options.html?menuselected=Notebook',
-          //     self: true
-          //   }
-          // })
+          optContext.openURL({
+            type: 'navigate',
+            url: 'options.html',
+            query: 'menuSelected=Notebook',
+          })
         }
       },
     },
@@ -151,11 +151,9 @@ export const Notes: FC<NotesProps> = props => {
         let status = 'content:updateAnki.success'
         try {
           console.log('update anki word', { cardId: ankiCardId, word })
-
-          // await message.send<'ANKI_CONNECT_UPDATE_WORD'>({
-          //   type: 'ANKI_CONNECT_UPDATE_WORD',
-          //   payload: { cardId: ankiCardId, word }
-          // })
+          // if(ankiSyncEnable){
+          // this.updateWord(ankiCardId, word)
+          // }
         } catch (e) {
           if (process.env.DEBUG) {
             console.error(e)

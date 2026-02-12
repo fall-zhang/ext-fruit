@@ -10,7 +10,7 @@ import { useDictStore } from '@P/saladict-core/src/store'
 import { getWordOfTheDay } from '@P/saladict-core/src/utils/everyday-word'
 
 // pre-fetch the word
-const pWordOfTheDay = getWordOfTheDay()
+// const pWordOfTheDay = getWordOfTheDay()
 
 export const BtnPreview: FC = () => {
   const { t } = useTranslation('options')

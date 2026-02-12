@@ -23,7 +23,7 @@ export const SaladBowl: FC<SaladBowlProps> = props => {
     <div
       role="img"
       className={clsx('saladbowl', SALADICT_EXTERNAL, {
-        enableHover: props.enableHover,
+        enableHover: props.enableHover && !isMouseOut,
       })}
       style={{ transform: `translate(${props.x}px, ${props.y}px)` }}
       onMouseOver={() => {

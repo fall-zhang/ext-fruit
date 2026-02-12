@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import React, { useState, useEffect, useContext, useRef, Suspense } from 'react'
 import { Layout, Row, Col, message as antMsg } from 'antd'
 import { ChangeEntryContext } from '../helpers/change-entry'
 import { EntrySideBarMemo } from './EntrySideBar'
@@ -13,15 +13,21 @@ import { I18nContext, useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 
 const dataInfo = import.meta.glob('./Entries/*')
+const compoInfo = import.meta.glob('./Entries/**/index.tsx')
+console.log('⚡️ line:15 ~ dataInfo: ', compoInfo)
 
-const EntryComponent = ({ entry }: { entry: string }) => {
-  console.log('⚡️ line:17 ~ entry: ', entry)
-  const element = dataInfo[`./Entries/${entry}`]
+const EntryComponent = async (entry: string) => {
+  let element = dataInfo[`./Entries/${entry}.tsx`]
+  if (!element) {
+    element = compoInfo[`./Entries/${entry}/index.tsx`]
+  }
+  console.log('⚡️ line:17 ~ entry: ', (await element()))
+  console.log('⚡️ line:88 ~ entry: ', Object.keys(element))
   if (!element) {
     console.error('no element')
     return React.createElement('div', <div></div>)
   }
-  return React.createElement(entry)
+  return element
 }
 // React.createElement(dataInfo[`./Entries/${entry}`])
 
@@ -75,7 +81,9 @@ export const MainEntry: FC = () => {
         <div className="flex w-7xl p-6">
           <ChangeEntryContext.Provider value={setEntry}>
             <ErrorBoundary key={entry + lang} error={EntryError}>
-              {ready && <EntryComponent entry={entry} />}
+              <Suspense fallback={<>Loading</>}>
+                {EntryComponent(entry)}
+              </Suspense>
             </ErrorBoundary>
           </ChangeEntryContext.Provider>
           <BtnPreviewMemo />

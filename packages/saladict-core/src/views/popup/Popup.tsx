@@ -9,7 +9,6 @@ import classNames from 'clsx'
 import QRCode from 'qrcode.react'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import { updateConfig, addConfigListener } from '@/_helpers/config-manager'
-import { message } from '@/_helpers/browser-api'
 import { useTranslation } from 'react-i18next'
 import type { AppConfig } from '../../app-config'
 import DictPanelStandaloneContainer from '../DictPanel/DictPanelStandalone.container'
@@ -56,33 +55,6 @@ export const Popup: FC<PopupProps> = props => {
     addConfigListener(({ newConfig }) => {
       setConfig(newConfig)
     })
-
-    browser.tabs
-      .query({ active: true, currentWindow: true })
-      .then(tabs => {
-        if (tabs.length > 0 && tabs[0].id != null) {
-          isTempDisabled
-          message
-            .send<'TEMP_DISABLED_STATE'>(tabs[0].id, {
-              type: 'TEMP_DISABLED_STATE',
-              payload: { op: 'get' },
-            })
-            .then(flag => {
-              setTempOff(flag)
-            })
-
-          message
-            .send<'QUERY_PIN_STATE', boolean>(tabs[0].id, {
-              type: 'QUERY_PIN_STATE',
-            })
-            .then(isPinned => {
-              setInsCapMode(isPinned ? 'pinMode' : 'mode')
-            })
-        }
-      })
-      .catch(err =>
-        console.warn('Error when receiving MsgTempDisabled response', err)
-      )
   }, [])
 
   return (
@@ -204,28 +176,6 @@ export const Popup: FC<PopupProps> = props => {
     const newTempOff = !isTempOff
 
     setTempOff(newTempOff)
-
-    browser.tabs
-      .query({ active: true, currentWindow: true })
-      .then(tabs => {
-        if (tabs.length > 0 && tabs[0].id != null) {
-          return message.send<'TEMP_DISABLED_STATE'>(tabs[0].id, {
-            type: 'TEMP_DISABLED_STATE',
-            payload: {
-              op: 'set',
-              value: newTempOff,
-            },
-          })
-        }
-        return false
-      })
-      .then(isSuccess => {
-        if (!isSuccess) {
-          setTempOff(!newTempOff)
-          throw new Error('Set tempOff failed')
-        }
-      })
-      .catch(() => setShowPageNoResponse(true))
   }
 
   function toggleInsCap () {

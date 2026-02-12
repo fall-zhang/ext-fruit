@@ -1,15 +1,17 @@
-import { FC, useState, useEffect } from 'react'
-import { Layout } from 'antd'
+import type { FC } from 'react'
+import { useState, useEffect } from 'react'
 // import { DBArea, getWords, Word, deleteWords } from '@P/saladict-core/src/dict-utils/new-word'
 import { deleteWords, getWords } from '../../../core/database'
 import { Header } from './Header'
-import { WordTableProps, colSelectionWidth, WordTable } from './WordTable'
-import { ExportModal, ExportModalTitle } from './ExportModal'
+import type { WordTableProps } from './WordTable'
+import { colSelectionWidth, WordTable } from './WordTable'
+import type { ExportModalTitle } from './ExportModal'
+import { ExportModal } from './ExportModal'
 
 import './_style.scss'
 import { useTranslation } from 'react-i18next'
-import { Word } from '@P/saladict-core/src/types/word'
-import { DBArea } from '../../../core/database/types'
+import type { Word } from '@P/saladict-core/src/types/word'
+import type { DBArea } from '../../../core/database/types'
 
 const ITEMS_PER_PAGE = 200
 

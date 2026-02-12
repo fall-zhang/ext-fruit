@@ -1,5 +1,5 @@
 import { WordPage } from './WordPage/index'
-import { FC } from 'react'
+import type { FC } from 'react'
 
 
 export const NoteBook:FC = () => {

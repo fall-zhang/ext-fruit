@@ -1,12 +1,12 @@
-import React, { FC, useRef, useState } from 'react'
+import type { FC } from 'react'
+import { useRef, useState } from 'react'
 import { useUpdateEffect } from 'react-use'
-import classNames from 'clsx'
-import { useRefFn } from 'observable-hooks'
-import { ShadowPortal, defaultTimeout } from '@/components/ShadowPortal'
-import { DictPanel, DictPanelProps } from './DictPanel'
+import type { DictPanelProps } from './DictPanel'
+import { DictPanel } from './DictPanel'
 import { SALADICT_PANEL } from '@P/saladict-core/src/core/saladict-state'
 
-import styleText from './DictPanel.shadow.scss?raw'
+import clsx from 'clsx'
+import ShadowPortal, { defaultTimeout } from '../../components/ShadowPortal'
 
 export interface DictPanelPortalProps extends DictPanelProps {
   show: boolean
@@ -26,10 +26,6 @@ export const DictPanelPortal: FC<DictPanelPortalProps> = props => {
   const showRef = useRef(showProps)
   const [show, setShow] = useState(showProps)
 
-  const panelStyle = useRefFn(() => (
-    <style>{import('./DictPanel.shadow.scss').toString()}</style>
-  )).current
-
   useUpdateEffect(() => {
     setShow(showProps)
   }, [showProps])
@@ -47,9 +43,9 @@ export const DictPanelPortal: FC<DictPanelPortalProps> = props => {
   return (
     <ShadowPortal
       id="saladict-dictpanel-root"
-      head={panelStyle}
+      head={<style>{import('./DictPanel.shadow.scss?raw').toString()}</style>}
       shadowRootClassName={SALADICT_PANEL}
-      innerRootClassName={classnames({ isAnimate: withAnimation, darkMode })}
+      innerRootClassName={clsx({ isAnimate: withAnimation, darkMode })}
       panelCSS={panelCSS}
       in={show}
       timeout={props.withAnimation ? defaultTimeout : 0}

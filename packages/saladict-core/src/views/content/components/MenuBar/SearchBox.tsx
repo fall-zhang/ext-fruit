@@ -1,19 +1,9 @@
 import type { FC } from 'react'
-import { useRef, useLayoutEffect, useMemo, useEffect } from 'react'
-import CSSTransition from 'react-transition-group/CSSTransition'
+import { useRef, useLayoutEffect, useMemo, useEffect, useState } from 'react'
 import type { TFunction } from 'i18next'
-import {
-  useObservableCallback,
-  useObservableState,
-  useObservable,
-  identity
-} from 'observable-hooks'
-import { merge, combineLatest } from 'rxjs'
-import { filter, map, distinctUntilChanged, delay } from 'rxjs/operators'
-import { message } from '@/_helpers/browser-api'
+
 import { SuggestWord } from './Suggest'
 import { SearchBtn } from './MenubarBtns'
-import { focusBlur } from '@P/saladict-core/src/utils/observables'
 
 export interface SearchBoxProps {
   t: TFunction
@@ -37,42 +27,13 @@ export const SearchBox: FC<SearchBoxProps> = props => {
   // Textarea also shares the text so only replace here
   const text = useMemo(() => props.text.replace(/\s+/g, ' '), [props.text])
 
-  const [onSearchBoxFocusBlur, searchBoxFocusBlur$] = useObservableCallback(
-    focusBlur
-  )
+  const [isExpand, setIsExpand] = useState<boolean>(false)
 
-  const [onSuggestFocusBlur, suggestFocusBlur$] = useObservableCallback(
-    focusBlur
-  )
 
-  const [onShowSuggest, onShowSuggest$] = useObservableCallback<boolean>(
-    identity
-  )
-
-  const isShowSuggest = useObservableState(
-    useObservable(
-      inputs$ =>
-        combineLatest([
-          inputs$,
-          merge(
-            // only show suggest when start typing
-            searchBoxFocusBlur$.pipe(filter(isFocus => !isFocus)),
-            suggestFocusBlur$,
-            onShowSuggest$.pipe(delay(0)), // Prevent input method conflict on first input #1149
-            message.createStream('SEARCH_TEXT_BOX').pipe(map(() => false))
-          ),
-        ]).pipe(
-          map(([[enableSuggest, text], shouldShowSuggest]) =>
-            Boolean(enableSuggest && text && shouldShowSuggest)
-          ),
-          distinctUntilChanged()
-        ),
-      [props.enableSuggest, props.text]
-    ),
-    false
-  )
-
-  const isExpand = useObservableState(searchBoxFocusBlur$)
+  const [isShowSuggest, setIsShowSuggest] = useState<boolean>()
+  function onShowSuggest (state:boolean) {
+    setIsShowSuggest(Boolean(props.enableSuggest && text && state))
+  }
 
   const hasTypedRef = useRef(false)
 
@@ -139,9 +100,9 @@ export const SearchBox: FC<SearchBoxProps> = props => {
           }}
           onFocus={event => {
             event.currentTarget.select()
-            onSearchBoxFocusBlur(event)
+            setIsExpand(true)
           }}
-          onBlur={onSearchBoxFocusBlur}
+          onBlur={() => setIsExpand(false)}
           value={text}
         />
         {isShowSuggest && (
@@ -149,8 +110,8 @@ export const SearchBox: FC<SearchBoxProps> = props => {
             <SuggestWord
               text={text}
               onSelect={searchText}
-              onFocus={onSuggestFocusBlur}
-              onBlur={onSuggestFocusBlur}
+              onFocus={() => onShowSuggest(true)}
+              onBlur={() => onShowSuggest(false)}
               onArrowUpFirst={focusInput}
               onClose={focusInput}
               onHeightChanged={props.onHeightChanged}

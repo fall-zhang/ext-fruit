@@ -1,10 +1,13 @@
-import React, { FC, useState, useMemo } from 'react'
+import type { FC } from 'react'
+import type React from 'react'
+import { useState, useMemo } from 'react'
 import { Modal, Layout, Switch } from 'antd'
 import escapeHTML from 'lodash/escape'
-import { Word } from '@P/saladict-core/src/types/word'
+import type { Word } from '@P/saladict-core/src/types/word'
 import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
 
-import { LineBreakMemo, LineBreakOption } from './Linebreak'
+import type { LineBreakOption } from './Linebreak'
+import { LineBreakMemo } from './Linebreak'
 import { PlaceholderTableMemo } from './PlaceholderTable'
 import { useTranslation } from 'react-i18next'
 
