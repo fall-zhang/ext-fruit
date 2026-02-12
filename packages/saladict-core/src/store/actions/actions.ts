@@ -2,13 +2,11 @@ import { isStandalonePage, isPopupPage, isQuickSearchPage, isOptionsPage } from 
 
 import { searchStart } from './search-start'
 import { newSelection } from './new-selection'
-import { openQSPanel } from './open-qs-panel'
 import type { StateCreator } from 'zustand'
 import type { AppConfig, DictID } from '../../app-config'
 import type { ProfileID } from '../profile/types'
 import type { Profile } from '../../app-config/profiles'
 import type { DictSearchResult } from '@P/saladict-core/src/core/trans-api/helpers'
-import type { DBArea } from '../../core/database/types'
 import { AudioManager } from '../../background/audio-manager'
 import { newWord } from '../../dict-utils/new-word'
 import type { Word } from '../../types/word'
@@ -225,7 +223,7 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
       )
     },
 
-    SEARCH_START: searchStart({}, set),
+    SEARCH_START: () => searchStart({}, set),
 
     SEARCH_END: (payload:{
       id: DictID

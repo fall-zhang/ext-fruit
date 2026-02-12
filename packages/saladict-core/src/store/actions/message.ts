@@ -3,10 +3,12 @@ import type { DBArea } from '../../core/database/types'
 import type { DictID } from '../../app-config'
 import { openQSPanel } from './open-qs-panel'
 import type { Word } from '../../types/word'
-import { isQuickSearchPage } from '../../core/saladict-state'
+import { isInDictPanel, isQuickSearchPage } from '../../core/saladict-state'
 import type { GlobalState } from '../global-state'
 import type { DictActionSlice } from './actions'
-import { getTextFromSelection } from '../../utils/get-selection-more'
+import { getSentenceFromSelection, getTextFromSelection } from '../../utils/get-selection-more'
+import { newSelectionWord } from '../../utils/selection/helper'
+import { getWords, getWordsByText } from '../../core/database'
 
 type DictMessageSlice = {
   /** Open the source page of a dictionary */
@@ -37,18 +39,17 @@ type DictMessageSlice = {
     area: DBArea
     itemsPerPage?: number
     pageNum?: number
-    filters?: { [field: string]: (string | number)[] | null | undefined }
-    sortField?: string | number | (string | number)[]
-    sortOrder?: 'ascend' | 'descend' | false | null
+    sortField?: string | string []
+    sortOrder?: 'ascend' | 'descend'
     searchText?: string
   }):{
     total: number
     words: Word[]
   }
 
-  LAST_PLAY_AUDIO: {
-    response?: null | { src: string; timestamp: number }
-  }
+  // LAST_PLAY_AUDIO: {
+  //   response?: null | { src: string; timestamp: number }
+  // }
 
   /* ------------------------------------------------ *\
      Text Selection
@@ -56,7 +57,7 @@ type DictMessageSlice = {
 
   /** To dict panel */
   SELECTION(payload: {
-    word: Word | null
+    word: Word
     mouseX: number
     mouseY: number
     dbClick: boolean
@@ -74,41 +75,6 @@ type DictMessageSlice = {
 
   /** Manually emit selection */
   EMIT_SELECTION: Record<string, unknown>
-
-  ESCAPE_KEY: Record<string, unknown>
-
-  /** Ctrl/Command has been hit 3 times */
-  TRIPLE_CTRL: Record<string, unknown>
-
-  /* ------------------------------------------------ *\
-     Dict Panel
-  \* ------------------------------------------------ */
-
-  /** From dict panel when it is pinned or unpinned */
-  PIN_STATE: {
-    payload: boolean
-  }
-
-  /** From other pages or frames query for active panel pin state */
-  QUERY_PIN_STATE: {
-    response: boolean
-  }
-
-  /** request searching */
-  SEARCH_TEXT: {
-    payload: Word
-  }
-
-
-  /** Info for brwoser action badge. From background to content. */
-  GET_TAB_BADGE_INFO: {
-    response: {
-      active: boolean
-      tempDisable: boolean
-      unsupported: boolean
-    }
-  }
-
   /* ------------------------------------------------ *\
     Quick Search Dict Panel
   \* ------------------------------------------------ */
@@ -116,11 +82,9 @@ type DictMessageSlice = {
   OPEN_QS_PANEL():void
 
   /** Send new words to standalone panel */
-  QS_PANEL_SEARCH_TEXT: {
-    payload: Word
-  }
+  QS_PANEL_SEARCH_TEXT(payload: Word):void
 
-  CLOSE_QS_PANEL: Record<string, unknown>
+  CLOSE_QS_PANEL():void
 
   /** query backend for standalone panel appearance */
   QUERY_QS_PANEL():boolean
@@ -188,8 +152,8 @@ export const messageActionSlice:StateCreator<DictMessageSlice & DictActionSlice 
     OPEN_QS_PANEL: () => set(openQSPanel),
 
     CLOSE_QS_PANEL: () => {
-      AudioManager.getInstance().reset()
-      return qsPanelManager.destroy()
+      // AudioManager.getInstance().reset()
+      // return qsPanelManager.destroy()
     },
     QS_PANEL_SEARCH_TEXT: (word) => {
       const state = get()
@@ -203,13 +167,20 @@ export const messageActionSlice:StateCreator<DictMessageSlice & DictActionSlice 
       }
       return Promise.resolve()
     },
-    EMIT_SELECTION: () => {
+    SELECTION: (payload) => {
+      set(state => ({
+        ...state,
+        selection: payload,
+      }))
+    },
+    EMIT_SELECTION: async () => {
       const selection = window.getSelection()
+      const state = get()
       if (selection && selection.rangeCount > 0) {
         const text = getTextFromSelection(selection)
         const rect = selection.getRangeAt(0).getBoundingClientRect()
         if (text) {
-          sendMessage({
+          state.SELECTION({
             mouseX: rect.right,
             mouseY: rect.top,
             instant: true,
@@ -227,6 +198,27 @@ export const messageActionSlice:StateCreator<DictMessageSlice & DictActionSlice 
           })
         }
       }
+    },
+    GET_WORDS_BY_TEXT: (payload) => {
+      return getWordsByText(payload)
+    },
+    GET_WORDS: (payload) => {
+      return getWords(payload)
+    },
+    QS_PANEL_FOCUSED: () => {
+      const isExpandMtaBox = get().isExpandMtaBox
+      if (isQuickSearchPage()) {
+        const input = document.querySelector< HTMLTextAreaElement | HTMLInputElement >(
+          isExpandMtaBox
+            ? '.mtaBox-TextArea'
+            : '.menuBar-SearchBox'
+        )
+        if (input) {
+          input.focus()
+          input.select()
+        }
+      }
+      return Promise.resolve()
     },
   }
 }

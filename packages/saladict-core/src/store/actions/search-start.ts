@@ -1,8 +1,8 @@
 import type { DictID } from '../../app-config'
-import type { GlobalState } from '..'
-import type { Word } from '../selection/types'
+import type { GlobalState } from '../global-state'
 import { isPopupPage } from '../../core/saladict-state'
 import { checkSupportedLangs, countWords } from '../../utils/lang-check'
+import type { Word } from '../../types/word'
 
 export const searchStart = (payload:{
   /** Search with specific dict */

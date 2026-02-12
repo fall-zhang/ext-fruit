@@ -1,4 +1,4 @@
-import { Word } from '../store/selection/types'
+import type { Word } from '../types/word'
 
 export function newWord (word?: Partial<Word>): Word {
   return {
@@ -9,6 +9,7 @@ export function newWord (word?: Partial<Word>): Word {
     url: word?.url ?? '',
     favicon: word?.favicon ?? '',
     trans: word?.trans ?? '',
-    note: word?.note ?? ''
+    note: word?.note ?? '',
   }
 }
+

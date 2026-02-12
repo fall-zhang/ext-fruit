@@ -5,7 +5,7 @@ import { isOptionsPage, isStandalonePage } from '../../core/saladict-state'
 import type { Word } from '../../types/word'
 
 export const newSelection = (state:GlobalState, selection:{
-  word: Word | null
+  word: Word
   mouseX: number
   mouseY: number
   dbClick: boolean
@@ -99,7 +99,7 @@ export const newSelection = (state:GlobalState, selection:{
 
   const isActive = config.active && !state.isTempDisabled
 
-  const { direct, holding, double, icon } = config.mode
+  const { direct, holding, double } = config.mode
 
   newState.isShowDictPanel = Boolean(
     state.isPinned ||
@@ -121,7 +121,6 @@ export const newSelection = (state:GlobalState, selection:{
     isActive &&
       selection.word &&
       selection.word.text &&
-      icon &&
       !newState.isShowDictPanel &&
       !direct &&
       !(double && selection.dbClick) &&

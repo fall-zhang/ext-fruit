@@ -1,11 +1,9 @@
 import type { StateCreator } from 'zustand'
-import { create } from 'zustand'
 import { getDefaultConfig, type AppConfig, type DictID } from '../app-config'
 import { getDefaultProfile, type Profile, type ProfileID } from '../app-config/profiles'
 import type { Word } from '../types/word'
 import { isOptionsPage, isPopupPage, isQuickSearchPage, isStandalonePage } from '../core/saladict-state'
 import type { DictSearchResult } from '../core/trans-api/helpers'
-import { isTempDisable } from '../dict-utils/is-temp-disable'
 import { newWord } from '../dict-utils/new-word'
 type RenderDictItem = {
   readonly id: DictID
@@ -56,6 +54,9 @@ export interface GlobalState {
   isShowMtaBox: boolean
   isExpandMtaBox: boolean
   isExpandWaveformBox: boolean
+  /**
+   * 当前面板是否固定
+   */
   isPinned: boolean
   /**
    * Is current word in Notebook
@@ -130,7 +131,7 @@ export const createSharedSlice: StateCreator<
       force: false,
     },
     activeProfile: profile,
-    isTempDisabled: isTempDisable(config),
+    isTempDisabled: true,
     isQSPanel: isQuickSearchPage(),
     isQSFocus: config.qsFocus,
     withQssaPanel: false,
