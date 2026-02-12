@@ -280,9 +280,9 @@ export class QsPanelManager {
     if (this.qsPanelId != null) {
       await safeUpdateWindow(this.qsPanelId, { focused: true })
       const [tab] = await browser.tabs.query({ windowId: this.qsPanelId })
-      if (tab && tab.id) {
-        await message.send(tab.id, { type: 'QS_PANEL_FOCUSED' })
-      }
+      // if (tab && tab.id) {
+      //   await message.send(tab.id, { type: 'QS_PANEL_FOCUSED' })
+      // }
     }
   }
 

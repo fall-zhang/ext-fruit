@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SystemTrayIndexRouteImport } from './routes/system-tray/index'
 import { Route as DictViewIndexRouteImport } from './routes/dict-view/index'
 import { Route as ContentViewIndexRouteImport } from './routes/content-view/index'
 import { Route as ConfigsIndexRouteImport } from './routes/configs/index'
@@ -24,6 +25,11 @@ const R404Route = R404RouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SystemTrayIndexRoute = SystemTrayIndexRouteImport.update({
+  id: '/system-tray/',
+  path: '/system-tray/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DictViewIndexRoute = DictViewIndexRouteImport.update({
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/configs/': typeof ConfigsIndexRoute
   '/content-view/': typeof ContentViewIndexRoute
   '/dict-view/': typeof DictViewIndexRoute
+  '/system-tray/': typeof SystemTrayIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/configs': typeof ConfigsIndexRoute
   '/content-view': typeof ContentViewIndexRoute
   '/dict-view': typeof DictViewIndexRoute
+  '/system-tray': typeof SystemTrayIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/configs/': typeof ConfigsIndexRoute
   '/content-view/': typeof ContentViewIndexRoute
   '/dict-view/': typeof DictViewIndexRoute
+  '/system-tray/': typeof SystemTrayIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/configs/'
     | '/content-view/'
     | '/dict-view/'
+    | '/system-tray/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/configs'
     | '/content-view'
     | '/dict-view'
+    | '/system-tray'
   id:
     | '__root__'
     | '/'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/configs/'
     | '/content-view/'
     | '/dict-view/'
+    | '/system-tray/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   ConfigsIndexRoute: typeof ConfigsIndexRoute
   ContentViewIndexRoute: typeof ContentViewIndexRoute
   DictViewIndexRoute: typeof DictViewIndexRoute
+  SystemTrayIndexRoute: typeof SystemTrayIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -122,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/system-tray/': {
+      id: '/system-tray/'
+      path: '/system-tray'
+      fullPath: '/system-tray/'
+      preLoaderRoute: typeof SystemTrayIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dict-view/': {
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConfigsIndexRoute: ConfigsIndexRoute,
   ContentViewIndexRoute: ContentViewIndexRoute,
   DictViewIndexRoute: DictViewIndexRoute,
+  SystemTrayIndexRoute: SystemTrayIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

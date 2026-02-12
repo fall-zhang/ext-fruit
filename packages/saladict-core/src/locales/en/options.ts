@@ -1,4 +1,4 @@
-import { options as _locale } from '../zh-CN/options'
+import type { options as _locale } from '../zh-CN/options'
 
 export const locale: typeof _locale = {
   title: 'Saladict Options',

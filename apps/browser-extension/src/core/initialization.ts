@@ -44,37 +44,37 @@ function onCommand (command: string) {
       })
       break
     case 'toggle-instant':
-      browser.tabs.query({ active: true, currentWindow: true }).then(tabs => {
-        if (tabs.length <= 0 || tabs[0].id == null) {
-          return
-        }
-        message
-          .send<'QUERY_PIN_STATE', boolean>(tabs[0].id, {
-            type: 'QUERY_PIN_STATE',
-          })
-          .then(isPinned => {
-            const config = window.appConfig
-            const { enable } = config[isPinned ? 'pinMode' : 'mode'].instant
+      // browser.tabs.query({ active: true, currentWindow: true }).then(tabs => {
+      //   if (tabs.length <= 0 || tabs[0].id == null) {
+      //     return
+      //   }
+      // message
+      //   .send<'QUERY_PIN_STATE', boolean>(tabs[0].id, {
+      //     type: 'QUERY_PIN_STATE',
+      //   })
+      //   .then(isPinned => {
+      //     const config = window.appConfig
+      //     const { enable } = config[isPinned ? 'pinMode' : 'mode'].instant
 
-            updateConfig({
-              ...config,
-              mode: {
-                ...config.mode,
-                instant: {
-                  ...config.mode.instant,
-                  enable: !enable,
-                },
-              },
-              pinMode: {
-                ...config.pinMode,
-                instant: {
-                  ...config.pinMode.instant,
-                  enable: !enable,
-                },
-              },
-            })
-          })
-      })
+      //     updateConfig({
+      //       ...config,
+      //       mode: {
+      //         ...config.mode,
+      //         instant: {
+      //           ...config.mode.instant,
+      //           enable: !enable,
+      //         },
+      //       },
+      //       pinMode: {
+      //         ...config.pinMode,
+      //         instant: {
+      //           ...config.pinMode.instant,
+      //           enable: !enable,
+      //         },
+      //       },
+      //     })
+      //   })
+      // })
       break
     case 'open-quick-search':
       BackgroundServer.getInstance().openQSPanel()
