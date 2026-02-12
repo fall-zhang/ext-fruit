@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as R404RouteImport } from './routes/404'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DictViewIndexRouteImport } from './routes/dict-view/index'
 import { Route as ContentViewIndexRouteImport } from './routes/content-view/index'
 import { Route as ConfigsIndexRouteImport } from './routes/configs/index'
 import { Route as ConfigsPdfRouteImport } from './routes/configs/pdf'
 
+const R404Route = R404RouteImport.update({
+  id: '/404',
+  path: '/404',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,6 +49,7 @@ const ConfigsPdfRoute = ConfigsPdfRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/404': typeof R404Route
   '/configs/pdf': typeof ConfigsPdfRoute
   '/configs/': typeof ConfigsIndexRoute
   '/content-view/': typeof ContentViewIndexRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/404': typeof R404Route
   '/configs/pdf': typeof ConfigsPdfRoute
   '/configs': typeof ConfigsIndexRoute
   '/content-view': typeof ContentViewIndexRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/404': typeof R404Route
   '/configs/pdf': typeof ConfigsPdfRoute
   '/configs/': typeof ConfigsIndexRoute
   '/content-view/': typeof ContentViewIndexRoute
@@ -67,15 +76,23 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/404'
     | '/configs/pdf'
     | '/configs/'
     | '/content-view/'
     | '/dict-view/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/configs/pdf' | '/configs' | '/content-view' | '/dict-view'
+  to:
+    | '/'
+    | '/404'
+    | '/configs/pdf'
+    | '/configs'
+    | '/content-view'
+    | '/dict-view'
   id:
     | '__root__'
     | '/'
+    | '/404'
     | '/configs/pdf'
     | '/configs/'
     | '/content-view/'
@@ -84,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  R404Route: typeof R404Route
   ConfigsPdfRoute: typeof ConfigsPdfRoute
   ConfigsIndexRoute: typeof ConfigsIndexRoute
   ContentViewIndexRoute: typeof ContentViewIndexRoute
@@ -92,6 +110,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/404': {
+      id: '/404'
+      path: '/404'
+      fullPath: '/404'
+      preLoaderRoute: typeof R404RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -132,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  R404Route: R404Route,
   ConfigsPdfRoute: ConfigsPdfRoute,
   ConfigsIndexRoute: ConfigsIndexRoute,
   ContentViewIndexRoute: ContentViewIndexRoute,
