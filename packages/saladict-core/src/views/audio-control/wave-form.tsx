@@ -4,16 +4,91 @@ import { useEffect, useRef, useState, type FC, type ChangeEvent } from 'react'
 import { InputNumber as NumberEditor } from 'antd'
 import WaveSurfer from 'wavesurfer.js'
 import RegionsPlugin from 'wavesurfer.js/dist/plugins/regions.js'
-
+import { useDictStore } from '@P/saladict-core/src/store'
+// import { SoundTouch, SimpleFilter, getWebAudioNode } from 'soundtouchjs'
 export const WaveFormView:FC<{
   darkMode:boolean
-}> = ({ darkMode }) => {
+  src:string
+}> = ({ darkMode, src }) => {
   const containerRef = useRef(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [speed, setSpeed] = useState(1)
   const [loop, setLoop] = useState(false)
-
   const wavesurfer = useRef<WaveSurfer | null>(null)
+  const state = useDictStore()
+  useEffect(() => {
+    loadAudio(src)
+  }, [src])
+  const loadAudio = (src: string) => {
+    if (src) {
+      if (wavesurfer.current) {
+        resetAudio()
+      } else {
+        initWavesurfer()
+      }
+
+      if (wavesurfer.current) {
+        wavesurfer.current.load(src)
+        // https://github.com/katspaugh/wavesurfer.js/issues/1657
+        wavesurfer.current.play()
+        // fallback
+      }
+    } else {
+      resetAudio()
+    }
+  }
+  const resetAudio = () => {
+    removeRegion()
+    onUpdateSpeed(1)
+    if (wavesurfer.current) {
+      wavesurfer.current.pause()
+      wavesurfer.current.empty()
+    }
+  }
+  const initWavesurfer = () => {
+    wavesurfer.current = WaveSurfer.create({
+      container: containerRef.current!,
+      waveColor: '#f9690e',
+      progressColor: '#B71C0C',
+      // 划分区域功能
+      plugins: [RegionsPlugin.create()],
+    })
+
+    wavesurfer.current.on('region-created', region => {
+      removeRegion()
+    })
+    wavesurfer.current.on('region-update-end', this.play)
+    wavesurfer.current.on('region-out', this.onPlayEnd)
+
+    wavesurfer.current.on('seek', () => {
+      if (!this.isInRegion()) {
+        removeRegion()
+      }
+      this.shouldSTSync = true
+    })
+
+    wavesurfer.current.on('ready', this.onLoad)
+
+    wavesurfer.current.on('finish', this.onPlayEnd)
+  }
+  const removeRegion = () => {
+    if (this.region) {
+      this.region.remove()
+    }
+    this.region = null
+  }
+  useEffect(() => {
+    const lastPlayVideo = state.lastPlayAudio
+    if (lastPlayVideo && lastPlayVideo.src && lastPlayVideo.timestamp - Date.now() < 10000) {
+      loadAudio(lastPlayVideo.src)
+    } else {
+      // Nothing to play
+      loadAudio('https://fanyi.sogou.com/reventondc/synthesis?text=Nothing%20to%20play&speed=1&lang=en&from=translateweb')
+    }
+
+    const waveformPitch = localStorage.getItem('waveform_pitch')
+    updatePitchStretch(Boolean(waveformPitch))
+  }, [])
 
   useEffect(() => {
     wavesurfer.current = WaveSurfer.create({
@@ -39,19 +114,14 @@ export const WaveFormView:FC<{
     if (flag) {
       if (
         speed !== 1 &&
-        this.soundTouchNode &&
         wavesurfer.current &&
-        wavesurfer.current.getFilters().length <= 0
+        wavesurfer.current.get.length <= 0
       ) {
-        this.wavesurfer.backend.setFilter(this.soundTouchNode)
         this.shouldSTSync = true
       }
     } else {
-      if (this.soundTouchNode) {
-        this.soundTouchNode.disconnect()
-      }
-      if (this.wavesurfer) {
-        this.wavesurfer.backend.disconnectFilters()
+      if (wavesurfer.current) {
+        wavesurfer.current.backend.disconnectFilters()
       }
     }
   }
@@ -59,17 +129,14 @@ export const WaveFormView:FC<{
   const audioPlay = () => {
     setIsPlaying(true)
     if (wavesurfer.current) {
-      if (
-        pitchStretch &&
-        this.soundTouchNode &&
-        this.wavesurfer.getFilters().length <= 0
+      if (pitchStretch && soundTouchNode && wavesurfer.current.getFilters().length <= 0
       ) {
-        this.wavesurfer.backend.setFilter(this.soundTouchNode)
+        wavesurfer.current.backend.setFilter(soundTouchNode)
       }
       if (this.region && !this.isInRegion()) {
-        this.wavesurfer.play(this.region.start)
+        wavesurfer.current.play(this.region.start)
       } else {
-        this.wavesurfer.play()
+        wavesurfer.current.play()
       }
     }
     this.shouldSTSync = true
@@ -77,12 +144,12 @@ export const WaveFormView:FC<{
 
   const videoPause = () => {
     setIsPlaying(false)
-    if (this.soundTouchNode) {
-      this.soundTouchNode.disconnect()
+    if (soundTouchNode) {
+      soundTouchNode.disconnect()
     }
-    if (this.wavesurfer) {
-      this.wavesurfer.pause()
-      this.wavesurfer.backend.disconnectFilters()
+    if (wavesurfer.current) {
+      wavesurfer.current.pause()
+      wavesurfer.current.backend.disconnectFilters()
     }
   }
   const onUpdateSpeed = (speed: number | null) => {
@@ -93,13 +160,10 @@ export const WaveFormView:FC<{
       return
     }
 
-    if (this.wavesurfer) {
-      this.wavesurfer.setPlaybackRate(speed)
+    if (wavesurfer.current) {
+      wavesurfer.current.setPlaybackRate(speed)
       if (speed !== 1 && pitchStretch && !this.soundTouch) {
-        this.initSoundTouch(this.wavesurfer)
-      }
-      if (this.soundTouch) {
-        this.soundTouch.tempo = speed
+        this.initSoundTouch(wavesurfer.current)
       }
     }
 

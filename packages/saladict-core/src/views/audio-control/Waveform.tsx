@@ -3,7 +3,6 @@ import classNames from 'clsx'
 import WaveSurfer from 'wavesurfer.js'
 import RegionsPlugin from 'wavesurfer.js/dist/plugins/regions'
 import { InputNumber as NumberEditor } from 'antd'
-import { message, storage } from '@/_helpers/browser-api'
 import { isFirefox } from '@P/saladict-core/src/utils/browser'
 import { SoundTouch, SimpleFilter, getWebAudioNode } from 'soundtouchjs'
 
@@ -189,7 +188,7 @@ export class Waveform extends React.PureComponent<
 
   togglePitchStretch = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.updatePitchStretch(e.currentTarget.checked)
-    storage.local.set({ waveform_pitch: e.currentTarget.checked })
+    localStorage.setItem('waveform_pitch', String(e.currentTarget.checked))
   }
 
   updatePitchStretch = (flag: boolean) => {
@@ -274,35 +273,35 @@ export class Waveform extends React.PureComponent<
     }
   }
 
-  async componentDidMount () {
-    message.self.addListener('PLAY_AUDIO', async ({ payload: src }) => {
-      this.load(src)
-    })
+  // async componentDidMount () {
+  //   message.self.addListener('PLAY_AUDIO', async ({ payload: src }) => {
+  //     this.load(src)
+  //   })
+  //   const lastPlayVideo
+  //   message.self
+  //     .send<'LAST_PLAY_AUDIO'>({ type: 'LAST_PLAY_AUDIO' })
+  //     .then(response => {
+  //       if (
+  //         response &&
+  //         response.src &&
+  //         response.timestamp - Date.now() < 10000
+  //       ) {
+  //         this.load(response.src)
+  //       } else {
+  //         this.playOnLoad = false
+  //         this.load(
+  //           // Nothing to play
+  //           'https://fanyi.sogou.com/reventondc/synthesis?text=Nothing%20to%20play&speed=1&lang=en&from=translateweb'
+  //         )
+  //       }
+  //     })
 
-    message.self
-      .send<'LAST_PLAY_AUDIO'>({ type: 'LAST_PLAY_AUDIO' })
-      .then(response => {
-        if (
-          response &&
-          response.src &&
-          response.timestamp - Date.now() < 10000
-        ) {
-          this.load(response.src)
-        } else {
-          this.playOnLoad = false
-          this.load(
-            // Nothing to play
-            'https://fanyi.sogou.com/reventondc/synthesis?text=Nothing%20to%20play&speed=1&lang=en&from=translateweb'
-          )
-        }
-      })
-
-    storage.local.get('waveform_pitch').then(({ waveformPitch }) => {
-      if (waveformPitch != null) {
-        this.updatePitchStretch(Boolean(waveformPitch))
-      }
-    })
-  }
+  //   storage.local.get('waveform_pitch').then(({ waveformPitch }) => {
+  //     if (waveformPitch != null) {
+  //       this.updatePitchStretch(Boolean(waveformPitch))
+  //     }
+  //   })
+  // }
 
   componentWillUnmount () {
     this.reset()
