@@ -2,9 +2,8 @@ import type { MachineDictItem } from '@P/saladict-core/src/components/MachineTra
 import { machineConfig } from '@P/saladict-core/src/components/MachineTrans/engine'
 
 import type { Language } from '@P/open-trans/translator'
-import {} from 'type-fest'
+import type { SubUnion } from '@P/saladict-core/src/types/utils'
 // import { SubUnion } from '@/typings/helpers'
-import type { SubUnion } from '@P/saladict-core/src/types/helpers'
 export type BaiduLanguage = SubUnion<
   Language,
   'zh-CN' | 'zh-TW' | 'en' | 'ja' | 'ko' | 'fr' | 'de' | 'es' | 'ru' | 'nl'

@@ -1,12 +1,12 @@
 import DOMPurify from 'dompurify'
 import type { Config } from 'dompurify'
-import { Observable } from 'rxjs'
 import type AxiosMockAdapter from 'axios-mock-adapter'
 import type { DictID, AppConfig } from '@/app-config'
 import type { Profile } from '@/app-config/profiles'
 import type { Word } from '@P/saladict-core/src/types/word'
-import { isTagName } from '@/_helpers/dom'
 import { isInternalPage } from '../saladict-state'
+import { isTagName } from '../../utils/dom'
+import chsToChz from '../../utils/chs-to-chz'
 
 /** Fetch and parse dictionary search result */
 export interface SearchFunction<Result, Payload = {}> {
@@ -97,7 +97,7 @@ export async function getChsToChz (
   langCode?: string
 ): Promise<null | ((text: string) => string)> {
   return langCode == null || /zh-TW|zh-HK/i.test(langCode)
-    ? (await import('@/_helpers/chs-to-chz')).chsToChz
+    ? chsToChz
     : null
 }
 

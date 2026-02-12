@@ -2,20 +2,18 @@ import { fetchDirtyDOM } from './fetch-dom'
 import { handleNoResult, getText } from '@P/saladict-core/src/core/trans-api/helpers'
 
 export async function getWordOfTheDay (): Promise<string> {
-  if (!process.env.DEBUG) {
-    try {
-      return await Promise.any([
-        getWebsterWordOfTheDay(),
-        getDictionaryWordOfTheDay(),
-      ])
-    } catch (e) {
-      console.warn(e)
-    }
+  try {
+    return await Promise.any([
+      getWebsterWordOfTheDay(),
+      getDictionaryWordOfTheDay(),
+    ])
+  } catch (e) {
+    console.warn(e)
   }
   return 'salad'
 }
 
-export async function getWebsterWordOfTheDay (): Promise<string> {
+async function getWebsterWordOfTheDay (): Promise<string> {
   const doc = await fetchDirtyDOM(
     'https://www.merriam-webster.com/word-of-the-day'
   )
@@ -24,7 +22,7 @@ export async function getWebsterWordOfTheDay (): Promise<string> {
   return (matchResult && matchResult[1]) || handleNoResult()
 }
 
-export async function getDictionaryWordOfTheDay (): Promise<string> {
+async function getDictionaryWordOfTheDay (): Promise<string> {
   const doc = await fetchDirtyDOM('https://www.dictionary.com/wordoftheday/')
   const text = getText(doc, 'title')
   const matchResult = text.match(
