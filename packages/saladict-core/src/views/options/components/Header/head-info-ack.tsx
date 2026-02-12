@@ -1,7 +1,7 @@
 import React from 'react'
 import { List } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { acknowledgement } from '@/options/acknowledgement'
+import { acknowledgement } from '../../acknowledgement'
 
 export const AckList = React.memo(() => {
   const { t } = useTranslation('options')
