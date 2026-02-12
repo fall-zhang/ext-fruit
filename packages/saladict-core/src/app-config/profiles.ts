@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid'
 import { getAllDicts } from './dicts'
-import { ReadonlyDeep } from 'type-fest'
+import type { ReadonlyDeep } from 'type-fest'
 
 export type MtaAutoUnfold = '' | 'once' | 'always' | 'popup' | 'hide'
 
@@ -45,18 +45,18 @@ export function _getDefaultProfile (id?: string) {
         'zdic',
         'guoyu',
         'liangan',
-        'googledict'
+        'googledict',
       ] as Array<keyof ReturnType<typeof getAllDicts>>,
       // settings of each dict will be auto-generated
-      all: getAllDicts()
-    }
+      all: getAllDicts(),
+    },
   }
 }
 
 export function getDefaultProfileID (id?: string): ProfileID {
   return {
     id: id || uuid(),
-    name: '%%_default_%%'
+    name: '%%_default_%%',
   }
 }
 
@@ -82,15 +82,15 @@ export function genProfilesStorage (): {
       sentenceStorage.idItem,
       translationStorage.idItem,
       scholarStorage.idItem,
-      nihongoStorage.idItem
+      nihongoStorage.idItem,
     ],
     profiles: [
       defaultProfile,
       sentenceStorage.profile,
       translationStorage.profile,
       scholarStorage.profile,
-      nihongoStorage.profile
-    ]
+      nihongoStorage.profile,
+    ],
   }
 }
 
@@ -108,7 +108,7 @@ export function sentence (): ProfileStorage {
     'cobuild',
     'cambridge',
     'longman',
-    'macmillan'
+    'macmillan',
   ]
 
   const allDict = profile.dicts.all
@@ -149,7 +149,7 @@ export function scholar (): ProfileStorage {
     'youdaotrans',
     'zdic',
     'guoyu',
-    'liangan'
+    'liangan',
   ]
 
   const allDict = profile.dicts.all
@@ -162,7 +162,7 @@ export function scholar (): ProfileStorage {
     french: false,
     spanish: false,
     deutsch: false,
-    others: false
+    others: false,
   }
   allDict.lexico.defaultUnfold = {
     matchAll: false,
@@ -173,7 +173,7 @@ export function scholar (): ProfileStorage {
     french: false,
     spanish: false,
     deutsch: false,
-    others: false
+    others: false,
   }
   allDict.websterlearner.defaultUnfold = {
     matchAll: false,
@@ -184,7 +184,7 @@ export function scholar (): ProfileStorage {
     french: false,
     spanish: false,
     deutsch: false,
-    others: false
+    others: false,
   }
   allDict.google.selectionWC.min = 5
   allDict.youdaotrans.selectionWC.min = 5
@@ -205,7 +205,7 @@ export function translation (): ProfileStorage {
     'youdaotrans',
     'zdic',
     'guoyu',
-    'liangan'
+    'liangan',
   ]
   profile.mtaAutoUnfold = 'always'
 
@@ -226,7 +226,7 @@ export function nihongo (): ProfileStorage {
     'tencent',
     'caiyun',
     'googledict',
-    'wikipedia'
+    'wikipedia',
   ]
   profile.dicts.all.wikipedia.options.lang = 'ja'
   profile.waveform = false
