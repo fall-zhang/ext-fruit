@@ -36,6 +36,8 @@
     "axios-mock-adapter": "^2.1.0",
     "clsx": "^2.1.1",
     "i18next": "^25.8.1",
+    "lucide": "^0.563.0",
+    "lucide-react": "^0.563.0",
     "memoize-one": "^6.0.0",
     "observable-hooks": "^4.2.4",
     "react": "^19.2.4",

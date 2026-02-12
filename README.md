@@ -1,16 +1,8 @@
-# 沙拉查词 （个人版，非官方）
+# 水果沙拉查词 （个人版，非官方）
 
-[【官网】](https://www.crimx.com/ext-saladict/)Chrome/Firefox 浏览器插件，网页划词翻译。
+水果沙拉查词为沙拉查词重构版本。更新了项目架构，以及依赖升级，并进一步支持更多平台。
 
-<p align="center">
-  <a href="https://github.com/crimx/ext-saladict/releases/" target="_blank"><img src="https://raw.githubusercontent.com/wiki/crimx/ext-saladict/images/notebook.gif" /></a>
-</p>
-
-水果沙拉查词为沙拉查词重构版本。更新了项目架构，以及依赖升级。
-
-## 下载
-
-见[下载页面](https://saladict.crimx.com/download.html)。
+甚至可以将沙拉查词作为组件插入到对应代码中
 
 ## 改动日志
 
@@ -19,14 +11,6 @@
 ## 从源码构建
 
 > 确保运行环境 node 版本至少为 20
-```bash
-git clone git@github.com:crimx/ext-saladict.git
-cd ext-saladict
-pnpm install
-yarn pdf
-```
-
-在项目根添加 `.env` 文件，参考 `.env.example` 格式（可留空如果你不需要这些词典）。
 
 ```bash
 yarn build
@@ -44,7 +28,7 @@ yarn build
 
 ## 声明
 
-声明：本应用基于沙拉查词的源代码，7.20.0 版本进行重构，仅供学习交流，任何人均可免费获取产品与源码。如果认为你的合法权益收到侵犯请联系我，原作者为[crimx](https://github.com/crimx)。
+声明：本应用基于沙拉查词的源代码，7.20.0 版本进行重构，仅供学习交流，任何第三方链接以及对应的服务均未有任何商业行为。如果认为你的合法权益收到侵犯请联系我，原作者为[crimx](https://github.com/crimx)。
 
 沙拉查词项目为 [MIT](https://github.com/crimx/ext-saladict/blob/dev/LICENSE) 许可，因此，重构后的项目也为 MIT 协议，你可以随意使用源码，但必须附带该许可与版权声明。请勿用于任何违法犯罪行为，沙拉查词强烈谴责并会尽可能配合追究责任。对于照搬源码二次发布的套壳项目沙拉查词有责任对平台和用户发出相应的举报和提醒。
 
@@ -66,7 +50,7 @@ yarn build
 
 ## 目标浏览器
 
-目标浏览器同 vite
+
 
 ## 待更新功能
 
