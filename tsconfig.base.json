@@ -24,6 +24,7 @@
     "strict": true,
     "sourceMap": true,
     "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   }
 }

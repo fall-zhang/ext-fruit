@@ -11,6 +11,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@tanstack/react-router": "^1.158.0",
     "@tanstack/react-router-devtools": "^1.158.0",
     "@tanstack/router-plugin": "^1.158.0",
@@ -18,7 +19,12 @@
     "@tauri-apps/plugin-dialog": "^2.4.0",
     "@tauri-apps/plugin-fs": "^2.4.2",
     "@tauri-apps/plugin-shell": "^2.3.1",
-    "react-error-boundary": "^5.0.0"
+    "date-fns": "^4.1.0",
+    "react-day-picker": "^9.13.2",
+    "react-error-boundary": "^5.0.0",
+    "react-hook-form": "^7.71.1",
+    "sonner": "^2.0.7",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2.8.4"
