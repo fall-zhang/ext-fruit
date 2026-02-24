@@ -5,14 +5,12 @@ import { Row, Col, Upload, notification } from 'antd'
 import type { RcFile } from 'antd/lib/upload'
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons'
 import type { ProfileIDList, Profile } from '@/app-config/profiles'
-import { mergeProfile } from '@/app-config/merge-profile'
 import { useTranslation } from 'react-i18next'
-import { storage } from '@/_helpers/browser-api'
-import { updateConfig, getConfig } from '@/_helpers/config-manager'
 import { updateProfile, getProfile } from '@/_helpers/profile-manager'
 import type { AppConfig } from '@P/saladict-core/src/app-config'
 import { mergeConfig } from '@P/saladict-core/src/app-config/merge-config'
 import { useListLayout } from '../../helpers/layout'
+import { mergeProfile } from '@P/saladict-core/src/app-config/merge-profile'
 
 export type ConfigStorage = {
   baseconfig: AppConfig
@@ -26,7 +24,88 @@ export type ConfigStorage = {
 export const ImportExport: FC = () => {
   const { t } = useTranslation('options')
   const layout = useListLayout()
+  async function importConfig (file: RcFile, t: TFunction) {
+    const result = await new Promise<Partial<ConfigStorage> | null>(resolve => {
+      const fr = new FileReader()
+      fr.onload = () => {
+        try {
+          const json = JSON.parse(fr.result as string)
+          resolve(json)
+        } catch (err) {
+          notification.error({
+            message: t('import.error.title'),
+            description: t('import.error.parse'),
+          })
+        }
+        resolve(null)
+      }
+      fr.onerror = () => {
+        notification.error({
+          message: t('import.error.title'),
+          description: t('import.error.parse'),
+        })
+        resolve(null)
+      }
+      fr.readAsText(file)
+    })
 
+    if (!result) {
+      return
+    }
+
+    let {
+      baseconfig,
+      activeProfileID,
+      hasInstructionsShown,
+      profileIDList,
+      syncConfig,
+    } = result
+
+    if (
+      !baseconfig &&
+    !activeProfileID &&
+    !profileIDList &&
+    hasInstructionsShown == null
+    ) {
+      notification.error({
+        message: t('import.error.title'),
+        description: t('import.error.empty'),
+      })
+      return
+    }
+
+    localStorage.clear()
+
+    if (baseconfig) {
+      await updateConfig(mergeConfig(baseconfig))
+    }
+
+    if (syncConfig) {
+      localStorage.setItem('syncConfig', syncConfig)
+    }
+
+    if (hasInstructionsShown != null) {
+      localStorage.setItem('hasInstructionsShown', JSON.stringify(hasInstructionsShown))
+    }
+
+    if (profileIDList) {
+      profileIDList = profileIDList.filter(({ id }) => result[id])
+      if (profileIDList.length > 0) {
+        for (const { id } of profileIDList) {
+          await updateProfile(mergeProfile(result[id] as Profile))
+        }
+        if (
+          !activeProfileID ||
+        profileIDList.every(({ id }) => id !== activeProfileID)
+        ) {
+        // use first item instead
+          activeProfileID = profileIDList[0].id
+        }
+        await localStorage.setItem('activeProfileID', JSON.stringify(activeProfileID))
+        await localStorage.setItem('profileIDList', profileIDList)
+      }
+    }
+  }
   return (
     <Row>
       <Col {...layout}>
@@ -67,90 +146,9 @@ export const ImportExport: FC = () => {
   )
 }
 
-async function importConfig (file: RcFile, t: TFunction) {
-  const result = await new Promise<Partial<ConfigStorage> | null>(resolve => {
-    const fr = new FileReader()
-    fr.onload = () => {
-      try {
-        const json = JSON.parse(fr.result as string)
-        resolve(json)
-      } catch (err) {
-        notification.error({
-          message: t('import.error.title'),
-          description: t('import.error.parse'),
-        })
-      }
-      resolve()
-    }
-    fr.onerror = () => {
-      notification.error({
-        message: t('import.error.title'),
-        description: t('import.error.parse'),
-      })
-      resolve()
-    }
-    fr.readAsText(file)
-  })
-
-  if (!result) {
-    return
-  }
-
-  let {
-    baseconfig,
-    activeProfileID,
-    hasInstructionsShown,
-    profileIDList,
-    syncConfig,
-  } = result
-
-  if (
-    !baseconfig &&
-    !activeProfileID &&
-    !profileIDList &&
-    hasInstructionsShown == null
-  ) {
-    notification.error({
-      message: t('import.error.title'),
-      description: t('import.error.empty'),
-    })
-    return
-  }
-
-  localStorage.clear()
-
-  if (baseconfig) {
-    await updateConfig(mergeConfig(baseconfig))
-  }
-
-  if (syncConfig) {
-    await storage.sync.set({ syncConfig })
-  }
-
-  if (hasInstructionsShown != null) {
-    await storage.sync.set({ hasInstructionsShown })
-  }
-
-  if (profileIDList) {
-    profileIDList = profileIDList.filter(({ id }) => result[id])
-    if (profileIDList.length > 0) {
-      for (const { id } of profileIDList) {
-        await updateProfile(mergeProfile(result[id] as Profile))
-      }
-      if (
-        !activeProfileID ||
-        profileIDList.every(({ id }) => id !== activeProfileID)
-      ) {
-        // use first item instead
-        activeProfileID = profileIDList[0].id
-      }
-      await storage.sync.set({ activeProfileID, profileIDList })
-    }
-  }
-}
 
 async function exportConfig (t: TFunction) {
-  const result = await storage.sync.get([
+  const result = await localStorage.get([
     'activeProfileID',
     'hasInstructionsShown',
     'profileIDList',

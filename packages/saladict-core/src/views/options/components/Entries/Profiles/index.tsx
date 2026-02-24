@@ -2,13 +2,7 @@ import type { FC } from 'react'
 import { useState, useLayoutEffect } from 'react'
 import { Row, Col, Modal, notification, message as antdMsg } from 'antd'
 import { BlockOutlined } from '@ant-design/icons'
-import type {
-  ProfileID,
-  ProfileIDList
-} from '@/app-config/profiles'
-import {
-  getDefaultProfileID
-} from '@/app-config/profiles'
+
 import {
   getProfileName,
   updateActiveProfileID,
@@ -17,11 +11,12 @@ import {
   addProfile
 } from '@/_helpers/profile-manager'
 import { SortableList, reorder } from '@/options/components/SortableList'
-import { useListLayout } from '@/options/helpers/layout'
-import { useCheckDictAuth } from '@/options/helpers/use-check-dict-auth'
 import { EditNameModal } from './EditNameModal'
 import { useDictStore } from '@P/saladict-core/src/store'
 import { Trans, useTranslation } from 'react-i18next'
+import { getDefaultProfileID, type ProfileID } from '@P/saladict-core/src/app-config/profiles'
+import { useListLayout } from '../../../helpers/layout'
+import { useCheckDictAuth } from '../../../helpers/use-check-dict-auth'
 
 export const Profiles: FC = () => {
   const { t } = useTranslation('options')

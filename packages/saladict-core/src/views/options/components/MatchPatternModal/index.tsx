@@ -10,7 +10,7 @@ import { matchPatternToRegExpStr } from '@P/saladict-core/src/utils/matchPattern
 import { PatternItem } from './ PatternItem'
 import { useTranslation } from 'react-i18next'
 import { getConfigPath } from '../../helpers/path-joiner'
-import { uploadStatus$, useUpload } from '../../helpers/upload'
+import { useUpload } from '../../helpers/upload'
 
 
 export interface MatchPatternModalProps {
@@ -24,7 +24,7 @@ export const MatchPatternModal: FC<MatchPatternModalProps> = ({
 }) => {
   const { t } = useTranslation()
   const formRef = useRef<FormInstance>(null)
-  const uploadStatus = useObservableState(uploadStatus$, 'idle')
+  const uploadStatus = 'idle'
 
   const upload = useUpload()
 

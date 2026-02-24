@@ -27,7 +27,7 @@ export const Notebook: FC = () => {
 
 
   function syncConfig (config:any) {
-    const oldConfig = storage.sync.get('syncConfig')
+    // const oldConfig = localStorage.getItem('syncConfig')
     const newConfig = {
       ...config,
     }

@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react'
+import type { FC } from 'react'
 
 export const PreviewIcon: FC = (props) => {
   return (

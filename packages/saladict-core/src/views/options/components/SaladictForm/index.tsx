@@ -1,4 +1,4 @@
-import type { ReactNode, Ref } from 'react'
+import type { FC, ReactNode, Ref, RefObject } from 'react'
 import React, { useMemo, useState } from 'react'
 import { Form, Button, Modal, Tooltip } from 'antd'
 import type { FormItemProps, Rule, FormProps, FormInstance } from 'antd/lib/form'
@@ -38,21 +38,18 @@ export interface SaladictFormItem
 export interface SaladictFormProps
   extends Omit<FormProps, 'initialValues' | 'onFinish'> {
   items: SaladictFormItem[]
+  ref: RefObject<any>
   hideFooter?: boolean
 }
 
-export const SaladictForm = React.forwardRef(
-  (props: SaladictFormProps, ref: Ref<FormInstance>) => {
-    const { items, hideFooter, ...restProps } = props
-    const { t, i18n, ready } = useTranslation(['options', 'common'])
-    const store = useDictStore(state => {
-      return {
-        config: state.config,
-        profile: state.activeProfile,
-      }
-    })
-    const upload = useUpload()
+export const SaladictForm:FC<SaladictFormProps> = (props) => {
+  const { items, hideFooter, ...restProps } = props
+  const { t, i18n, ready } = useTranslation(['options', 'common'])
+  const store = useDictStore()
+  const upload = useUpload()
 
+
+  const { initialValues } = useMemo(() => {
     function extractInitial (
       items: SaladictFormItem[],
       result: {
@@ -75,10 +72,6 @@ export const SaladictForm = React.forwardRef(
             const value = get(store, item.name, store)
             if (value !== store) {
               newResult.initialValues[item.name] = value
-            } else if (process.env.DEBUG) {
-              console.warn(
-                new Error('Missing value for form key: ' + item.name)
-              )
             }
           }
         }
@@ -86,121 +79,116 @@ export const SaladictForm = React.forwardRef(
       return result
     }
 
-    const { initialValues, hideFieldFns } = useMemo(
-      () => extractInitial(items),
-      [items]
-    )
+    return extractInitial(items)
+  },
+  [items])
 
-    const [hideFields, setHideFields] = useState< FieldShow >()
+  const [hideFields, setHideFields] = useState< FieldShow >()
 
-    function genFormItems (items: SaladictFormItem[]) {
-      return items.map(item => {
-        const name = (item.key || item.name)!
-        const isProfile = name.startsWith('profile.')
-        const newItem = { ...item }
-        if (
-          newItem.label === undefined &&
-          ready &&
-          i18n.exists(`options:${name}`)
-        ) {
-          newItem.label = isProfile
-            ? (
-              <Tooltip
-                title={t('profile.opt.item_extra')}
-                className="saladict-form-profile-title"
-              >
-                <span>
-                  <BlockOutlined />
-                  {t(name)}
-                </span>
-              </Tooltip>
-            )
-            : (t(name))
-        }
-
-        if (newItem.help === undefined) {
-          const help = `options:${name}_help`
-          if (ready && i18n.exists(help)) {
-            newItem.help = t(help)
-          }
-        }
-
-        if (newItem.extra === undefined) {
-          const extra = `options:${name}_extra`
-          if (ready && i18n.exists(extra)) {
-            newItem.extra = t(extra)
-          }
-        }
-
-        let { className, children, items: subItems, ...itemProps } = item
-        if (hideFields?.[name]) {
-          className = className ? className + ' saladict-hide' : 'saladict-hide'
-        }
-
-        return (
-          <Form.Item key={name} {...itemProps} className={className}>
-            {subItems ? genFormItems(subItems) : children!}
-          </Form.Item>
-        )
-      })
-    }
-
-    const formItems = genFormItems(items)
-
-    return (
-      <Form
-        {...restProps}
-        initialValues={initialValues}
-        onFinish={upload}
-        onValuesChange={(_, values) => {
-          setFormDirty(true)
-          //  values => hideFieldFns.map(hide => hide(values))
-          setHideFields(values)
-          if (props.onValuesChange) {
-            props.onValuesChange(_, values)
-          }
-        }}
-        ref={ref}
-      >
-        {formItems}
-        {!hideFooter && (
-          <Form.Item wrapperCol={ { offset: 6, span: 18 } } className="saladict-form-btns">
-            <SaveBtn />
-            <Button
-              onClick={() => {
-                if (isFirefox) {
-                  Modal.info({ content: t('firefox_shortcuts') })
-                } else {
-                  // openUrl('chrome://extensions/shortcuts')
-                }
-              }}
+  function genFormItems (items: SaladictFormItem[]) {
+    return items.map(item => {
+      const name = (item.key || item.name)!
+      const isProfile = name.startsWith('profile.')
+      const newItem = { ...item }
+      if (newItem.label === undefined) {
+        newItem.label = isProfile
+          ? (
+            <Tooltip
+              title={t('profile.opt.item_extra')}
+              className="saladict-form-profile-title"
             >
-              {t('shortcuts')}
-            </Button>
-            <Button
-              type="primary"
-              danger
-              onClick={() => {
-                Modal.confirm({
-                  title: t('config.opt.reset_confirm'),
-                  icon: <ExclamationCircleOutlined />,
-                  okType: 'danger',
-                  onOk: async () => {
-                    // await resetConfig()
-                    // await resetAllProfiles()
-                    setFormDirty(false)
-                  },
-                })
-              }}
-            >
-              {t('config.opt.reset')}
-            </Button>
-          </Form.Item>
-        )}
-      </Form>
-    )
+              <span>
+                <BlockOutlined />
+                {t(name)}
+              </span>
+            </Tooltip>
+          )
+          : (t(name))
+      }
+
+      if (newItem.help === undefined) {
+        const help = `options:${name}_help`
+        if (ready && i18n.exists(help)) {
+          newItem.help = t(help)
+        }
+      }
+
+      if (newItem.extra === undefined) {
+        const extra = `options:${name}_extra`
+        if (ready && i18n.exists(extra)) {
+          newItem.extra = t(extra)
+        }
+      }
+
+      let { className, children, items: subItems, ...itemProps } = newItem
+      if (hideFields?.[name]) {
+        className = className ? className + ' saladict-hide' : 'saladict-hide'
+      }
+
+      return (
+        <Form.Item key={name} {...itemProps} className={className}>
+          {subItems ? genFormItems(subItems) : children!}
+        </Form.Item>
+      )
+    })
   }
-)
+
+  const formItems = genFormItems(items)
+
+  return (
+    <Form
+      {...restProps}
+      initialValues={initialValues}
+      onFinish={upload}
+      onValuesChange={(_, values) => {
+        setFormDirty(true)
+        //  values => hideFieldFns.map(hide => hide(values))
+        setHideFields(values)
+        if (props.onValuesChange) {
+          props.onValuesChange(_, values)
+        }
+      }}
+      labelAlign='left'
+      ref={props.ref}
+    >
+      {formItems}
+      {!hideFooter && (
+        <Form.Item wrapperCol={ { offset: 6, span: 18 } } className="saladict-form-btns">
+          <SaveBtn />
+          <Button
+            onClick={() => {
+              if (isFirefox) {
+                Modal.info({ content: t('firefox_shortcuts') })
+              } else {
+                // openUrl('chrome://extensions/shortcuts')
+              }
+            }}
+          >
+            {t('shortcuts')}
+          </Button>
+          <Button
+            type="primary"
+            danger
+            onClick={() => {
+              Modal.confirm({
+                title: t('config.opt.reset_confirm'),
+                icon: <ExclamationCircleOutlined />,
+                okType: 'danger',
+                onOk: async () => {
+                  // await resetConfig()
+                  // await resetAllProfiles()
+                  setFormDirty(false)
+                },
+              })
+            }}
+          >
+            {t('config.opt.reset')}
+          </Button>
+        </Form.Item>
+      )}
+    </Form>
+  )
+}
 
 export const NUMBER_RULES: Rule[] = [
   { type: 'number', whitespace: true, required: true },

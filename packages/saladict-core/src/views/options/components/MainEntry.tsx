@@ -1,6 +1,5 @@
 import type { FC } from 'react'
 import React, { useState, useEffect, useContext, useRef, Suspense } from 'react'
-import { Layout, Row, Col, message as antMsg } from 'antd'
 import { ChangeEntryContext } from '../helpers/change-entry'
 import { EntrySideBarMemo } from './EntrySideBar'
 import { HeaderMemo } from './Header'
@@ -14,20 +13,19 @@ import clsx from 'clsx'
 
 const dataInfo = import.meta.glob('./Entries/*')
 const compoInfo = import.meta.glob('./Entries/**/index.tsx')
-console.log('⚡️ line:15 ~ dataInfo: ', compoInfo)
 
 const EntryComponent = async (entry: string) => {
   let element = dataInfo[`./Entries/${entry}.tsx`]
   if (!element) {
     element = compoInfo[`./Entries/${entry}/index.tsx`]
   }
-  console.log('⚡️ line:17 ~ entry: ', (await element()))
-  console.log('⚡️ line:88 ~ entry: ', Object.keys(element))
+  const Compo = (await element())[entry]
+  console.log('⚡️ line:24 ~ Compo: ', Compo)
   if (!element) {
     console.error('no element')
     return React.createElement('div', <div></div>)
   }
-  return element
+  return <Compo />
 }
 // React.createElement(dataInfo[`./Entries/${entry}`])
 
@@ -74,14 +72,15 @@ export const MainEntry: FC = () => {
   return (
     <>
       <HeaderMemo />
-      <div className={clsx('flex w-full justify-center', 'main-entry dark-mode')} >
+      <div className={clsx('flex w-full justify-center', 'main-entry')} >
         <div className="w-40">
           <EntrySideBarMemo entry={entry} onChange={setEntry} />
         </div>
-        <div className="flex w-7xl p-6">
+        <div className="flex w-5xl p-6">
           <ChangeEntryContext.Provider value={setEntry}>
             <ErrorBoundary key={entry + lang} error={EntryError}>
               <Suspense fallback={<>Loading</>}>
+                {/* <EntryComponent /> */}
                 {EntryComponent(entry)}
               </Suspense>
             </ErrorBoundary>

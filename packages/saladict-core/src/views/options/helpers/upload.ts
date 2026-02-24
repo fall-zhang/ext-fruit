@@ -12,7 +12,7 @@ import { cloneDeep } from 'es-toolkit'
 
 export const useUpload = () => {
   const { t } = useTranslation('options')
-  const confContext = useConfContext()
+  // const confContext = useConfContext()
   const dictStore = useDictStore(state => state.config)
   // [stateObjectPaths: string]
   return async (values: Record<string, any>) => {

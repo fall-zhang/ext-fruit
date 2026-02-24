@@ -11,13 +11,14 @@ export const Header: FC = props => {
 
 
   return (
-    <div className='h-16 bg-[#001529] flex justify-between items-center text-neutral-50'>
-      <div className="options-header-title">
-        <h1>{t('title')}</h1>
-        <span>{version}</span>
+    <div className='h-16 bg-[#001529] flex  items-center text-neutral-50 justify-center'>
+      <div className="w-5xl flex  justify-between">
+        <div className="options-header-title">
+          <h1>{t('title')}</h1>
+          <span>{version}</span>
+        </div>
+        <HeadInfoMemo />
       </div>
-
-      <HeadInfoMemo />
     </div>
   )
 }
