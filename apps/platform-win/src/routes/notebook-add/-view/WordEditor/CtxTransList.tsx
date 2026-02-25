@@ -1,14 +1,16 @@
-import React, { FC, useState } from 'react'
+import type { FC } from 'react'
+import type React from 'react'
+import { useState } from 'react'
 // import { AppConfig } from '@/app-config'
-import { AppConfig } from '@P/saladict-core/src/app-config'
+import type { AppConfig } from '@P/saladict-core/src/app-config'
 // import {
 //   CtxTranslatorId,
 //   CtxTranslateResults,
 //   translateCtx
 // } from '@/_helpers/translateCtx'
-import { CtxTranslateResults, CtxTranslatorId, translateCtx } from '@P/saladict-core/src/utils/translateCtx'
-import { Word } from '@P/saladict-core/src/store/selection/types'
-// import { Word } from '@P/saladict-core/src/dict-utils/new-word'
+import type { CtxTranslateResults, CtxTranslatorId } from '@P/saladict-core/src/utils/translateCtx'
+import { translateCtx } from '@P/saladict-core/src/utils/translateCtx'
+import type { Word } from '@P/saladict-core/src/types/word'
 
 export interface CtxTransListProps {
   word: Word
@@ -26,7 +28,7 @@ export const CtxTransList: FC<CtxTransListProps> = props => {
       google: false,
       sogou: false,
       tencent: false,
-      youdaotrans: false
+      youdaotrans: false,
     }
     Object.keys(props.ctxTransConfig).forEach((key, index) => {
       result[key as keyof AppConfig['ctxTrans']] = false
@@ -51,14 +53,14 @@ export const CtxTransList: FC<CtxTransListProps> = props => {
       if (evt.currentTarget.checked && text) {
         setIsLoading(isLoading => ({
           ...isLoading,
-          [name]: true
+          [name]: true,
         }))
 
         const result = await translateCtx(text, name as CtxTranslatorId)
 
         setIsLoading(isLoading => ({
           ...isLoading,
-          [name]: false
+          [name]: false,
         }))
 
         props.onNewCtxTransResult(name as CtxTranslatorId, result)

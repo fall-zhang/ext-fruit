@@ -46,13 +46,6 @@
     border-radius: 100%;
 
     animation: ctxTrans-Loader 1.5s infinite ease-in-out;
-
-    $ctxTrans-LoaderNum: 5;
-    @for $i from 1 through $ctxTrans-LoaderNum {
-      &:nth-child(#{$ctxTrans-LoaderNum + 1 - $i}) {
-        animation-delay: -0.1s * ($i - 1);
-      }
-    }
   }
 }
 

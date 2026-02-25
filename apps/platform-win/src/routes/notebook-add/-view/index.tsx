@@ -13,16 +13,6 @@ export const WordEditorView = () => {
     caiyun: false,
     sogou: false,
   }
-  // const globalState = useDictStore()
-  // const state = {
-  //   darkMode: globalState.config.darkMode,
-  //   containerWidth: window.innerWidth,
-  //   ctxTrans: globalState.config.ctxTrans,
-  //   wordEditor: globalState.wordEditor,
-  //   onClose(){
-  //    window.close()
-  //   }
-  // }
   return <WordEditor
     wordEditor={{
       word: newWord(),
