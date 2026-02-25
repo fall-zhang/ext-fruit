@@ -1,10 +1,13 @@
-import React, { FC, ReactNode, useMemo } from 'react'
-import i18next, { TFunction } from 'i18next'
+import type { FC, ReactNode } from 'react'
+import React, { useMemo } from 'react'
+import type { TFunction } from 'i18next'
+import i18next from 'i18next'
 import { Button, Tooltip } from 'antd'
-import Table, { ColumnsType, TableProps } from 'antd/lib/table'
-import { Word } from '@P/saladict-core/src/types/word'
+import type { ColumnsType, TableProps } from 'antd/lib/table'
+import Table from 'antd/lib/table'
+import type { Word } from '@P/saladict-core/src/types/word'
 
-import { DBArea } from 'apps/browser-extension/src/utils/record-manager'
+import type { DBArea } from 'apps/browser-extension/src/utils/record-manager'
 import { useTranslation } from 'react-i18next'
 
 export const colSelectionWidth = 48

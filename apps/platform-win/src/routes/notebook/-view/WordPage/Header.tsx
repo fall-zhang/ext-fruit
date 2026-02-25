@@ -4,7 +4,6 @@ import { Input, Button, Modal } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
 import type { DBArea } from '../../../core/database/types'
 
-import type * as React from 'react'
 import {
   NavigationMenu,
   NavigationMenuContent,
