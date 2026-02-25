@@ -1,0 +1,248 @@
+import type {
+  ComponentType,
+  FC
+} from 'react'
+import type React from 'react'
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useMemo
+} from 'react'
+import clsx from 'clsx'
+import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
+import type { DictItemHeadProps } from './DictItemHead'
+import { DictItemHead } from './DictItemHead'
+import type { DictItemBodyProps } from './DictItemBody'
+import { DictItemBody } from './DictItemBody'
+import type { DictID } from '@P/saladict-core/src/app-config'
+import { timer } from '@P/saladict-core/src/utils/promise-more'
+import type { ViewProps } from '@P/saladict-core/src/core/trans-api/helpers'
+import { isTagName } from '@P/saladict-core/src/utils/dom'
+import { useOptContext } from '@P/saladict-core/src/context/opt-context'
+
+const DICT_ITEM_HEAD_HEIGHT = 20
+
+export interface DictItemProps
+  extends Omit<DictItemBodyProps, 'dictRootRef'> {
+  /** default height when search result is received */
+  preferredHeight: number
+  withAnimation: boolean
+  /** Inject dict component. Mainly for testing */
+
+  catalog?: DictItemHeadProps['catalog']
+  openDictSrcPage: DictItemHeadProps['openDictSrcPage']
+
+  onHeightChanged: (id: DictID, height: number) => void
+
+  /** User manually folds or unfolds */
+  onUserFold: (id: DictID, fold: boolean) => void
+}
+
+export const DictItem: FC<DictItemProps> = props => {
+  const [selectedCatalog, setSelectedCatalog] = useState<{
+    key: string
+    value: string
+  }>()
+  const optContext = useOptContext()
+  const [noHeightTransition, setNoHeightTransition] = useState(false)
+
+  const [foldState, setFoldState] = useState<'COLLAPSE' | 'HALF' | 'FULL'>(
+    'COLLAPSE'
+  )
+  /** Rendered height */
+  const [offsetHeight, setOffsetHeight] = useState(10)
+
+  const visibleHeight = useMemo(
+    () => {
+      let compareNum = 10
+      if (foldState === 'COLLAPSE') {
+        compareNum = 10
+      } else if (foldState === 'FULL') {
+        compareNum = offsetHeight
+      } else {
+        compareNum = Math.min(offsetHeight, props.preferredHeight)
+      }
+      // const max = Math.max(
+      //   10,
+      //   foldState === 'COLLAPSE'
+      //     ? 10
+      //     : foldState === 'FULL'
+      //       ? offsetHeight
+      //       : Math.min(offsetHeight, props.preferredHeight)
+      // )
+      return Math.max(10, compareNum)
+    },
+    [foldState, offsetHeight, props.preferredHeight]
+  )
+
+  useEffect(() => {
+    if (props.searchStatus === 'FINISH') {
+      setFoldState('HALF')
+    } else {
+      setFoldState('COLLAPSE')
+    }
+  }, [props.searchStatus])
+
+  useEffect(() => {
+    props.onHeightChanged(props.dictID, visibleHeight + DICT_ITEM_HEAD_HEIGHT)
+  }, [visibleHeight])
+
+  const dictItemRef = useRef<HTMLDivElement | null>(null)
+  // container element in shadow dom
+  const dictRootRef = useRef<HTMLDivElement | null>(null)
+
+  const preCatalogSelect = useCallback(
+    async (item: { key: string; value: string }) => {
+      if (item.key[0] !== '#') return setSelectedCatalog(item)
+
+      // handle anchor jump
+      if (!dictRootRef.current) return
+
+      const anchor = dictRootRef.current.querySelector<HTMLElement>(
+        `#${item.value}`
+      )
+      if (!anchor) return
+
+      if (foldState !== 'FULL') {
+        setNoHeightTransition(true)
+        setFoldState('FULL')
+        await timer(0)
+        setNoHeightTransition(false)
+      }
+
+      if (dictItemRef.current) {
+        const rootNode = dictItemRef.current.getRootNode() as HTMLDivElement
+        if (rootNode.querySelector) {
+          const scrollParent = rootNode.querySelector('.dictPanel-Body')
+          if (scrollParent) {
+            scrollParent.scrollTo({
+              top:
+                anchor.getBoundingClientRect().y -
+                scrollParent.firstElementChild!.getBoundingClientRect().y -
+                30, // plus the sticky title bar
+              behavior: props.withAnimation ? 'smooth' : 'auto',
+            })
+            return
+          }
+        }
+      }
+
+      // Fallback to scrollIntoView
+      // The topmost area may scroll beyond dict header due to sticky layout
+      anchor.scrollIntoView({
+        behavior: props.withAnimation ? 'smooth' : 'auto',
+      })
+    },
+    [foldState, props.withAnimation]
+  )
+  /** Search the content of an <a> instead of jumping unless it's external */
+  function searchLinkText (e: React.MouseEvent<HTMLElement>) {
+    if (e.ctrlKey || e.metaKey || e.altKey) {
+      // ignore if extra key is pressed
+      return
+    }
+
+    if (!(e.target as HTMLElement).tagName) {
+      return
+    }
+
+    const $dictItemRoot = e.currentTarget
+    for (
+      let el: HTMLElement | null = e.target as HTMLElement;
+      el && el !== $dictItemRoot;
+      el = el.parentElement
+    ) {
+      if (isTagName(el, 'a') || el.getAttribute('role') === 'link') {
+        e.preventDefault()
+        e.stopPropagation()
+
+        const $a = el as HTMLAnchorElement
+        if (/nofollow|noopener|noreferrer/.test($a.rel)) {
+          optContext.navigate($a.href)
+        } else {
+          props.searchText({
+            word: newWord({
+              text: $a.textContent || '',
+              title: 'Saladict',
+              favicon: 'https://saladict.crimx.com/favicon.ico',
+            }),
+          })
+        }
+
+        return
+      }
+    }
+  }
+
+  function toggleFold () {
+    if (props.searchStatus === 'SEARCHING') {
+      return
+    }
+
+    if (foldState !== 'COLLAPSE') {
+      setFoldState('COLLAPSE')
+      props.onUserFold(props.dictID, true)
+      return
+    }
+
+    props.onUserFold(props.dictID, false)
+
+    if (props.searchResult) {
+      setFoldState('HALF')
+    } else {
+      props.searchText({ id: props.dictID })
+    }
+  }
+  return (
+    <section
+      ref={dictItemRef}
+      className={clsx('dictItem', {
+        isUnfold: foldState !== 'COLLAPSE',
+        noHeightTransition,
+      })}
+    >
+      <DictItemHead
+        dictID={props.dictID}
+        catalog={props.catalog}
+        isSearching={props.searchStatus === 'SEARCHING'}
+        toggleFold={toggleFold}
+        openDictSrcPage={props.openDictSrcPage}
+        onCatalogSelect={preCatalogSelect}
+      />
+      <div
+        className="dictItem-Body"
+        key={props.dictID}
+        style={{ height: visibleHeight }}
+        onClick={searchLinkText}
+      >
+        <article className="dictItem-BodyMesure">
+          {/* <ResizeReporter reportInit onHeightChanged={setOffsetHeight} /> */}
+          <DictItemBody
+            {...props}
+            dictRootRef={dictRootRef}
+          />
+        </article>
+        {foldState === 'HALF' &&
+          visibleHeight < offsetHeight &&
+          props.searchResult && (
+          <button
+            className="dictItem-FoldMask"
+            onClick={() => setFoldState('FULL')}
+          >
+            <svg
+              className="dictItem-FoldMaskArrow"
+              width="15"
+              height="15"
+              viewBox="0 0 59.414 59.414"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M58 14.146L29.707 42.44 1.414 14.145 0 15.56 29.707 45.27 59.414 15.56" />
+            </svg>
+          </button>
+        )}
+      </div>
+    </section>
+  )
+}

@@ -1,0 +1,21 @@
+@import './MenubarBtns.scss';
+@import './Profiles.scss';
+
+.menuBar {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 30px;
+  padding: 0 3px;
+  font-size: 14px;
+  background-color: var(--color-brand);
+}
+
+.menuBar-DragArea {
+  flex: 3;
+  align-self: stretch;
+  user-select: none;
+  // prevent scrolling
+  touch-action: none;
+  cursor: move;
+}
