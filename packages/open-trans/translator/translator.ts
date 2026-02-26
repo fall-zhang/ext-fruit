@@ -5,7 +5,7 @@ import type {
   TranslateResult,
   TranslateQueryResult
 } from './type'
-import type { Language } from '../../languages'
+import type { Language } from '../languages'
 import type { AxiosInstance, AxiosRequestConfig, AxiosPromise } from 'axios'
 import Axios from 'axios'
 import { detectLang } from './detect-lang'

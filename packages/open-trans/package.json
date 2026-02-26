@@ -12,23 +12,23 @@
     "create-translator": "node scripts/create-translator",
     "commit": "git-cz"
   },
+  "dependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "crypto-js": "^4.2.0",
+    "md5": "^2.3.0",
+    "qs": "^6.14.0"
+  },
   "devDependencies": {
     "@types/md5": "^2.3.5",
     "@types/qs": "^6.9.18",
+    "franc-min": "^6.2.0",
     "axios-mock-adapter": "^1.17.0",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.0.2",
     "dotenv": "^8.2.0",
     "fast-glob": "^3.0.4",
     "fs-extra": "^8.1.0",
-    "lodash": "^4.17.15",
     "ts-jest": "^24.1.0",
     "yargs": "^14.0.0"
-  },
-  "dependencies": {
-    "@types/crypto-js": "^4.2.2",
-    "crypto-js": "^4.2.0",
-    "md5": "^2.3.0",
-    "qs": "^6.14.0"
   }
 }

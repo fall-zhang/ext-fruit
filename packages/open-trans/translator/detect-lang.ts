@@ -1,5 +1,5 @@
-import type { Language } from '../../languages'
-import franc from 'franc-min'
+import type { Language } from '../languages'
+import { franc } from 'franc-min'
 
 // improve accuracy but narrowing down language set
 const langMap = new Map<string, Language>([
@@ -89,11 +89,10 @@ const langMap = new Map<string, Language>([
   // ["zul", "zu"]
 ])
 
-const options = { minLength: 1, whitelist: [...langMap.keys()] }
-
 /**
  * Naive fallback language detection
  */
 export function detectLang (text: string): Language {
-  return langMap.get(franc(text, options)) || 'auto'
+  const detected = franc(text, { minLength: 1 })
+  return langMap.get(detected) || 'auto'
 }

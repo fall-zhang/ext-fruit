@@ -1,7 +1,9 @@
-import {
+import type {
   Language,
-  Translator,
   TranslateQueryResult
+} from '../../translator'
+import {
+  Translator
 } from '../../translator'
 import { getTK, fetchScheduled } from './api'
 import qs from 'qs'
@@ -112,7 +114,7 @@ const langMap: [Language, string][] = [
   ['xh', 'xh'],
   ['yi', 'yi'],
   ['yo', 'yo'],
-  ['zu', 'zu']
+  ['zu', 'zu'],
 ]
 
 interface GoogleDataResult {
@@ -172,7 +174,7 @@ export class Google extends Translator<GoogleConfig> {
             tsel: '0',
             kc: '1',
             tk: await getTK(text, tld),
-            q: text
+            q: text,
           },
           { indices: false }
         )
@@ -193,7 +195,7 @@ export class Google extends Translator<GoogleConfig> {
           dt: 't',
           sl: from,
           tl: to,
-          q: text
+          q: text,
         })
     )
     return { base: 'https://translate.google.com', data }
@@ -202,7 +204,7 @@ export class Google extends Translator<GoogleConfig> {
   config: GoogleConfig = {
     order: ['cn', 'com'],
     concurrent: true,
-    apiAsFallback: true
+    apiAsFallback: true,
   }
 
   protected async query (
@@ -246,17 +248,17 @@ export class Google extends Translator<GoogleConfig> {
         tts:
           (await this.textToSpeech(text, from, {
             base: result.base,
-            token: this.token.value
-          })) || ''
+            token: this.token.value,
+          })) || '',
       },
       trans: {
         paragraphs: transText.split(/(\n ?)+/),
         tts:
           (await this.textToSpeech(transText, to, {
             base: result.base,
-            token: this.token.value
-          })) || ''
-      }
+            token: this.token.value,
+          })) || '',
+      },
     }
   }
 
@@ -301,7 +303,7 @@ export class Google extends Translator<GoogleConfig> {
       qs.stringify({
         q: text,
         tl: Google.langMapReverse.get(lang) || 'en',
-        tk: await getTK(text, tld)
+        tk: await getTK(text, tld),
       })
     )
   }
