@@ -1,10 +1,30 @@
 import { v4 as uuid } from 'uuid'
-import { getAllDicts } from './dicts'
+import { getAllDicts, type AllDicts } from './dicts'
 import type { ReadonlyDeep } from 'type-fest'
 
 export type MtaAutoUnfold = '' | 'once' | 'always' | 'popup' | 'hide'
 
-export type ProfileMutable = ReturnType<typeof _getDefaultProfile>
+export type ProfileMutable = {
+  version: number
+
+  id:string
+
+  /** auto unfold multiline textarea search box */
+  mtaAutoUnfold: MtaAutoUnfold,
+
+  /** show waveform control panel */
+  waveform: boolean,
+
+  /** remember user manual dict folding on the same page */
+  stickyFold: boolean,
+
+  dicts: {
+    /** default selected dictionaries */
+    selected: Array<keyof AllDicts>,
+    // settings of each dict will be auto-generated
+    all: AllDicts,
+  },
+}
 export type Profile = ReadonlyDeep<ProfileMutable>
 
 export interface ProfileID {
@@ -12,11 +32,24 @@ export interface ProfileID {
   name: string
 }
 
-export const getDefaultProfile: (id?: string) => Profile = _getDefaultProfile
+export function getDefaultSelectDict ():Array<keyof AllDicts> {
+  return [
+    'bing',
+    'cobuild',
+    'cambridge',
+    'youdao',
+    'urban',
+    'vocabulary',
+    'caiyun',
+    'youdaotrans',
+    'zdic',
+    'guoyu',
+    'liangan',
+    'googledict',
+  ]
+}
 
-export default getDefaultProfile
-
-export function _getDefaultProfile (id?: string) {
+export function getDefaultProfile (id?: string):Profile {
   return {
     version: 1,
 
@@ -33,25 +66,13 @@ export function _getDefaultProfile (id?: string) {
 
     dicts: {
       /** default selected dictionaries */
-      selected: [
-        'bing',
-        'cobuild',
-        'cambridge',
-        'youdao',
-        'urban',
-        'vocabulary',
-        'caiyun',
-        'youdaotrans',
-        'zdic',
-        'guoyu',
-        'liangan',
-        'googledict',
-      ] as Array<keyof ReturnType<typeof getAllDicts>>,
+      selected: getDefaultSelectDict(),
       // settings of each dict will be auto-generated
       all: getAllDicts(),
     },
   }
 }
+export default getDefaultProfile
 
 export function getDefaultProfileID (id?: string): ProfileID {
   return {

@@ -1,24 +1,30 @@
 import type { ReactNode } from 'react'
-import { createContext, useContext, useState } from 'react'
-import type { Profile } from '../app-config/profiles'
-import type { AppConfig } from '../app-config'
-import { getSyncConfig } from '../core/sync-manager/helpers'
+import { createContext, useContext } from 'react'
+import { getDefaultProfile, type Profile } from '../app-config/profiles'
+import { getDefaultConfig, type AppConfig } from '../app-config'
 
-interface CalendarContextType {
+interface ConfContextType {
   config:AppConfig
   profile:Profile
   // Date management
   // appDisable: boolean;
-  onUpdateConfig():void
-  onUpdateProfile():void
+  updateConfig(config:AppConfig):void
+  updateProfile(profile:Profile):void
   // // Etiquette visibility management
   // visibleColors: string[];
   // toggleColorVisibility: (color: string) => void;
   // isColorVisible: (color: string | undefined) => boolean;
 }
 
-const ConfContext = createContext<CalendarContextType >({
-  config:getSyncConfig
+const ConfContext = createContext<ConfContextType >({
+  config: getDefaultConfig(),
+  profile: getDefaultProfile(),
+  updateConfig: function (config: AppConfig): void {
+    throw new Error('Function not implemented.')
+  },
+  updateProfile: function (profile: Profile): void {
+    throw new Error('Function not implemented.')
+  },
 })
 
 export function useConfContext () {
@@ -33,30 +39,21 @@ export function useConfContext () {
   return context
 }
 
-interface CalendarProviderProps {
+type ConfProviderProps = ConfContextType & {
   children: ReactNode;
 }
 
-export function ConfProvider ({ children }: CalendarProviderProps) {
+export function ConfProvider ({ children, config, profile, updateConfig, updateProfile }: ConfProviderProps) {
   // Initialize visibleColors based on the isActive property in etiquettes
-  const [visibleColors, setVisibleColors] = useState<string[]>([])
-
-  // Toggle visibility of a color
-  const toggleColorVisibility = (color: string) => {
-    setVisibleColors([])
-  }
-
-  // Check if a color is visible
-  const isColorVisible = (color: string | undefined) => {
-    if (!color) return true // Events without a color are always visible
-    return visibleColors.includes(color)
-  }
-
-  const value:CalendarContextType = {
-    appDisable: false,
-    visibleColors,
-    toggleColorVisibility,
-    isColorVisible,
+  const value:ConfContextType = {
+    config,
+    profile,
+    updateConfig: function (config: AppConfig): void {
+      throw new Error('Function not implemented.')
+    },
+    updateProfile: function (profile: Profile): void {
+      throw new Error('Function not implemented.')
+    },
   }
 
   return (
