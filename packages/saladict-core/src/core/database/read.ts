@@ -1,6 +1,6 @@
+import type { Word } from '../../types/word'
 import { getDB } from './core'
-import { Word } from '../../store/selection/types'
-import { DBArea } from 'apps/browser-extension/src/utils/record-manager'
+import type { DBArea } from 'apps/browser-extension/src/utils/record-manager'
 
 /** Is a word in Notebook */
 export async function isInNotebook (word: Word):Promise<boolean> {

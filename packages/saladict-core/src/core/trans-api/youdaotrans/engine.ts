@@ -1,13 +1,11 @@
-import { SearchFunction, GetSrcPageFunction } from '../helpers'
+import type { SearchFunction, GetSrcPageFunction } from '../types'
 import memoizeOne from 'memoize-one'
-import { Youdao } from '@opentranslate/youdao'
-import {
-  MachineTranslateResult,
-  MachineTranslatePayload,
-  getMTArgs,
-  machineResult
-} from '@/components/MachineTrans/engine'
-import { YoudaotransLanguage } from './config'
+import { Youdao } from '@sala/trans/service-youdao'
+
+
+import type { YoudaotransLanguage } from './config'
+import { getMTArgs, machineResult } from '@P/saladict-core/src/components/MachineTrans/engine'
+import type { MachineTranslatePayload, MachineTranslateResult } from '@P/saladict-core/src/components/MachineTrans/engine'
 
 export const getTranslator = memoizeOne(
   () =>
@@ -16,15 +14,15 @@ export const getTranslator = memoizeOne(
       config:
         process.env.YOUDAO_APPKEY && process.env.YOUDAO_KEY
           ? {
-              appKey: process.env.YOUDAO_APPKEY,
-              key: process.env.YOUDAO_KEY
-            }
-          : undefined
+            appKey: process.env.YOUDAO_APPKEY,
+            key: process.env.YOUDAO_KEY,
+          }
+          : undefined,
     })
 )
 
 export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
-  return `http://fanyi.youdao.com`
+  return 'http://fanyi.youdao.com'
 }
 
 export type YoudaotransResult = MachineTranslateResult<'youdaotrans'>
@@ -57,12 +55,12 @@ export const search: SearchFunction<
           tl: result.to,
           slInitial: profile.dicts.all.youdaotrans.options.slInitial,
           searchText: result.origin,
-          trans: result.trans
+          trans: result.trans,
         },
         audio: {
           py: result.trans.tts,
-          us: result.trans.tts
-        }
+          us: result.trans.tts,
+        },
       },
       translator.getSupportLanguages()
     )
@@ -75,8 +73,8 @@ export const search: SearchFunction<
           tl,
           slInitial: 'hide',
           searchText: { paragraphs: [''] },
-          trans: { paragraphs: [''] }
-        }
+          trans: { paragraphs: [''] },
+        },
       },
       translator.getSupportLanguages()
     )

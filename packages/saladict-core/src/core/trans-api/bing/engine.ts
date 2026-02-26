@@ -3,7 +3,7 @@ import type {
   SearchFunction,
   GetSrcPageFunction,
   DictSearchResult
-} from '../helpers'
+} from '../types'
 import {
   handleNoResult,
   handleNetWorkError,

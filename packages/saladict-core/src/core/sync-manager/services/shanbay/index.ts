@@ -1,4 +1,5 @@
-import { AddConfig, SyncService } from '../../interface'
+import type { AddConfig } from '../../interface'
+import { SyncService } from '../../interface'
 import { getNotebook, notifyError } from '../../helpers'
 import { openUrl } from '@/_helpers/browser-api'
 import { timer } from '@/_helpers/promise-more'
@@ -14,7 +15,7 @@ export class Service extends SyncService<SyncConfig> {
 
   static getDefaultConfig (): SyncConfig {
     return {
-      enable: false
+      enable: false,
     }
   }
 
@@ -99,12 +100,12 @@ export class Service extends SyncService<SyncConfig> {
         {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             vocab_id: word.id,
-            business_id: 6
-          })
+            business_id: 6,
+          }),
         }
       ).then(r => r.json())
     } catch (e) {
@@ -123,7 +124,7 @@ export class Service extends SyncService<SyncConfig> {
     return Boolean(
       await browser.cookies.get({
         url: 'http://www.shanbay.com',
-        name: 'auth_token'
+        name: 'auth_token',
       })
     )
   }
@@ -147,7 +148,7 @@ export class Service extends SyncService<SyncConfig> {
         title: `Saladict ${i18n.t('sync:shanbay.title')}`,
         message: i18n.t('sync:shanbay.error.login'),
         eventTime: Date.now() + 10000,
-        priority: 2
+        priority: 2,
       }
 
       if (!isFirefox) {

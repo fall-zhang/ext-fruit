@@ -1,18 +1,20 @@
-import {
+import type {
   HTMLString,
+  SearchFunction,
+  GetSrcPageFunction,
+  DictSearchResult
+} from '../types'
+import {
   handleNoResult,
   getInnerHTML,
   removeChildren,
   handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult,
   getFullLink,
   getText,
   removeChild
 } from '../helpers'
-import { getStaticSpeaker } from '@/components/Speaker'
-import { fetchPlainText } from '@/_helpers/fetch-dom'
+import { fetchPlainText } from '@P/saladict-core/src/utils/fetch-dom'
+import { getStaticSpeaker } from '@P/saladict-core/src/components/Speaker'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return (
@@ -56,7 +58,7 @@ export const search: SearchFunction<GoogleDictResult> = async (
       .then(handleDOM)
   }
 
-  function handleDOM(
+  function handleDOM (
     bodyText: string
   ): GoogleDictSearchResult | Promise<GoogleDictSearchResult> {
     const doc = new DOMParser().parseFromString(bodyText, 'text/html')
@@ -147,8 +149,8 @@ export const search: SearchFunction<GoogleDictResult> = async (
       const cleanText = getInnerHTML('https://www.google.com', $obcontainer, {
         config: {
           ADD_TAGS: ['g-img'],
-          ADD_ATTR: ['jsname', 'jsaction']
-        }
+          ADD_ATTR: ['jsname', 'jsaction'],
+        },
       })
         .replace(/synonyms:/g, 'syn:')
         .replace(/antonyms:/g, 'ant:')
@@ -168,7 +170,7 @@ export const search: SearchFunction<GoogleDictResult> = async (
   }
 }
 
-function extFragements(text: string): Array<{ id: string; innerHTML: string }> {
+function extFragements (text: string): Array<{ id: string; innerHTML: string }> {
   const result: Array<{ id: string; innerHTML: string }> = []
   const matcher = /\(function\(\)\{window\.jsl\.dh\('([^']+)','([^']+)'\);\}\)\(\);/g
   let match: RegExpExecArray | null | undefined
@@ -179,13 +181,13 @@ function extFragements(text: string): Array<{ id: string; innerHTML: string }> {
         // escape \x
         .replace(/\\x([\da-f]{2})/gi, decodeHex)
         // escape \u
-        .replace(/\\[u]([\da-f]{4})/gi, decodeHex)
+        .replace(/\\[u]([\da-f]{4})/gi, decodeHex),
     })
   }
   return result
 }
 
-function extractImg(text: string): Array<{ id: string; src: string }> {
+function extractImg (text: string): Array<{ id: string; src: string }> {
   const kvPairMatch = /google.ldi={([^}]+)}/.exec(text)
   if (kvPairMatch) {
     try {
@@ -198,6 +200,6 @@ function extractImg(text: string): Array<{ id: string; src: string }> {
   return []
 }
 
-function decodeHex(m: string, code: string): string {
+function decodeHex (m: string, code: string): string {
   return String.fromCharCode(parseInt(code, 16))
 }

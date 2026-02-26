@@ -1,4 +1,3 @@
-import type { Word } from '../../store/selection/types'
 import { getWords } from '../../core/database/read'
 import { saveWords } from '../../core/database/write'
 import {
@@ -6,6 +5,7 @@ import {
   setSyncMeta,
   deleteSyncMeta
 } from '../../core/database/sync-meta'
+import type { Word } from '../../types/word'
 
 export interface StorageSyncConfig {
   syncConfig: { [id: string]: any }

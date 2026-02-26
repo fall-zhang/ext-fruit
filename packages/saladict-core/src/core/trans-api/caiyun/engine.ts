@@ -1,15 +1,11 @@
-import { SearchFunction, GetSrcPageFunction } from '../helpers'
+import type { SearchFunction, GetSrcPageFunction } from '../types'
 import memoizeOne from 'memoize-one'
-import { Caiyun } from '@opentranslate/caiyun'
-import { TranslateResult } from '@opentranslate/translator'
-import {
-  MachineTranslateResult,
-  MachineTranslatePayload,
-  getMTArgs,
-  machineResult
-} from '@/components/MachineTrans/engine'
+import { Caiyun } from '@sala/trans/service-caiyun'
+import type { TranslateResult } from '@sala/trans/translator'
+
 import { getTranslator as getBaiduTranslator } from '../baidu/engine'
-import { CaiyunLanguage } from './config'
+import type { CaiyunLanguage } from './config'
+import { getMTArgs, machineResult, type MachineTranslatePayload, type MachineTranslateResult } from '@P/saladict-core/src/components/MachineTrans/engine'
 
 export const getTranslator = memoizeOne(
   () =>
@@ -17,9 +13,9 @@ export const getTranslator = memoizeOne(
       env: 'ext',
       config: process.env.CAIYUN_TOKEN
         ? {
-            token: process.env.CAIYUN_TOKEN
-          }
-        : undefined
+          token: process.env.CAIYUN_TOKEN,
+        }
+        : undefined,
     })
 )
 
@@ -77,12 +73,12 @@ export const search: SearchFunction<
           tl: result.to,
           slInitial: profile.dicts.all.caiyun.options.slInitial,
           searchText: result.origin,
-          trans: result.trans
+          trans: result.trans,
         },
         audio: {
           py: result.trans.tts,
-          us: result.trans.tts
-        }
+          us: result.trans.tts,
+        },
       },
       langcodes
     )
@@ -95,8 +91,8 @@ export const search: SearchFunction<
           tl,
           slInitial: 'hide',
           searchText: { paragraphs: [''] },
-          trans: { paragraphs: [''] }
-        }
+          trans: { paragraphs: [''] },
+        },
       },
       translator.getSupportLanguages()
     )

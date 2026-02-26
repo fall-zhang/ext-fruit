@@ -1,5 +1,5 @@
 import Dexie from 'dexie'
-import { Word } from '../../store/selection/types'
+import type { Word } from '../../types/word'
 
 export class SaladictDB extends Dexie {
   notebook: Dexie.Table<Word, number>
@@ -12,7 +12,7 @@ export class SaladictDB extends Dexie {
     this.version(1).stores({
       notebook: 'date,text,context,url',
       history: 'date,text,context,url',
-      syncmeta: 'id'
+      syncmeta: 'id',
     })
 
     // The following lines are needed if your typescript
