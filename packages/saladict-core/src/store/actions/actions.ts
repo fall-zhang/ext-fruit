@@ -10,12 +10,13 @@ import type { DictSearchResult } from '@P/saladict-core/src/core/trans-api/helpe
 import { AudioManager } from '../../background/audio-manager'
 import { newWord } from '../../dict-utils/new-word'
 import type { Word } from '../../types/word'
-import { saveWord } from '../../core/database'
 import type { GlobalState } from '../global-state'
 
 export type DictActionSlice = {
   NEW_CONFIG(payload:AppConfig):void
-  SEARCH_START:any
+  SEARCH_START(payload:{
+    word:Word
+  }):void
   /* ------------------------------------------------ *\
      Audio Playing
   \* ------------------------------------------------ */
@@ -83,7 +84,7 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
     }),
 
     NEW_SELECTION: (payload:{
-      word: Word | null
+      word: Word
       mouseX: number
       mouseY: number
       dbClick: boolean
@@ -119,13 +120,12 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
       }
     }),
 
-
     /* ------------------------------------------------ *\
      Dict Panel
   \* ------------------------------------------------ */
-    UPDATE_TEXT: (payload:string) => set((state) => ({
+    UPDATE_TEXT: (newText:string) => set((state) => ({
       ...state,
-      text: payload,
+      text: newText,
     })),
 
     TOGGLE_MTA_BOX: () => set(state => ({
@@ -194,86 +194,6 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
       })
       return true
     },
-    /** Is current word in Notebook */
-    WORD_IN_NOTEBOOK: (payload:boolean) => set((state) => ({
-      ...state,
-      isFav: payload,
-    })),
-    /**
-     * Add the latest history item to Notebook
-    */
-    ADD_TO_NOTEBOOK: () => {
-      set(state => {
-        (state.config.editOnFav && !isStandalonePage()
-          ? state
-          : {
-            ...state,
-            // epic will set this back to false if transation failed
-            isFav: true,
-          })
-        const word = state.searchHistory[state.historyIndex]
-
-        saveWord({
-          area: 'notebook',
-          word,
-        })
-
-        return state
-      }
-      )
-    },
-
-    SEARCH_START: () => searchStart({}, set),
-
-    SEARCH_END: (payload:{
-      id: DictID
-      result: any
-      catalog?: DictSearchResult<DictID>['catalog']
-    }) => set((state) => {
-      if (state.renderedDicts.every(({ id }) => id !== payload.id)) {
-      // this dict is for auto-pronunciation only
-        return state
-      }
-
-      return {
-        ...state,
-        renderedDicts: state.renderedDicts.map(d =>
-          (d.id === payload.id
-            ? {
-              id: d.id,
-              searchStatus: 'FINISH',
-              searchResult: payload.result,
-              catalog: payload.catalog,
-            }
-            : d)
-        ),
-      }
-    }),
-
-    UPDATE_PANEL_HEIGHT: (payload:{
-      area: 'menubar' | 'mtabox' | 'dictlist' | 'waveformbox'
-      height: number
-      /** independent layer */
-      floatHeight?: number
-    }) => set((state) => {
-      const { _panelHeightCache } = state
-      const sum =
-        _panelHeightCache.sum - _panelHeightCache[payload.area] + payload.height
-      const floatHeight =
-        payload.floatHeight == null
-          ? _panelHeightCache.floatHeight
-          : payload.floatHeight
-
-      return {
-        ...state,
-        _panelHeightCache: {
-          ..._panelHeightCache,
-          [payload.area]: payload.height,
-          sum,
-          floatHeight,
-        },
-      }
-    }),
 
     /** User manually folds or unfolds dict item */
     USER_FOLD_DICT: (payload:{

@@ -3,7 +3,7 @@ import { getDefaultConfig, type AppConfig, type DictID } from '../app-config'
 import { getDefaultProfile, type Profile, type ProfileID } from '../app-config/profiles'
 import type { Word } from '../types/word'
 import { isOptionsPage, isPopupPage, isQuickSearchPage, isStandalonePage } from '../core/saladict-state'
-import type { DictSearchResult } from '../core/trans-api/helpers'
+import type { DictSearchResult } from '../core/trans-api/types'
 import { newWord } from '../dict-utils/new-word'
 type RenderDictItem = {
   readonly id: DictID
@@ -75,15 +75,7 @@ export interface GlobalState {
     y: number
   }
   panelHeight: number,
-  _panelHeightCache: {
-    menubar: number,
-    mtabox: number,
-    dictlist: number,
-    waveformbox: number,
-    sum: number,
-    /** independent layer */
-    floatHeight: number
-  },
+
   panelMaxHeight: number
   /** Dicts that will be rendered to dict panel */
   renderedDicts: RenderDictItem[],
@@ -155,23 +147,10 @@ export const createSharedSlice: StateCreator<
       ? { x: window.innerWidth - config.panelWidth - 20, y: 80 }
       : { x: 0, y: 0 },
     panelHeight: 30,
-    _panelHeightCache: {
-      menubar: 30,
-      mtabox: 0,
-      dictlist: 0,
-      waveformbox: 0,
-      sum: 30,
-      /** independent layer */
-      floatHeight: 0,
-    },
+
     panelMaxHeight: (window.innerHeight * config.panelMaxHeightRatio) / 100,
     /** Dicts that will be rendered to dict panel */
-    renderedDicts: [] as {
-      readonly id: DictID
-      readonly searchStatus: 'IDLE' | 'SEARCHING' | 'FINISH'
-      readonly searchResult: any
-      readonly catalog?: DictSearchResult<DictID>['catalog']
-    }[],
+    renderedDicts: [],
     /** User manually folded or unfolded */
     userFoldedDicts: {
       baidu: false,
