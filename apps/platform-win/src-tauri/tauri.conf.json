@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "less-process",
-  "mainBinaryName": "less-process",
-  "identifier": "less-process",
+  "productName": "fruit-saladict",
+  "mainBinaryName": "fruit-saladict",
+  "identifier": "fruit-saladict",
   "version": "0.3.0",
   "build": {
     "beforeDevCommand": "pnpm dev",
@@ -28,21 +28,23 @@
     },
     "windows": [
       {
-        "title": "less-process",
+        "title": "fruit-saladict",
         "label": "main-page",
-        "width": 1080,
-        "height": 780,
+        "decorations": false,
+        "width": 420,
+        "height": 680,
         "visible": true,
+        "url": "/search-view",
         "useHttpsScheme": true
       },
       {
-        "title": "less-process",
+        "title": "fruit-saladict",
         "label": "splash-screen",
         "visible": false,
         "url": "/splash-screen"
       },
       {
-        "title": "less-process",
+        "title": "fruit-saladict",
         "label": "new-window",
         "visible": false,
         "url": "/new-window"
