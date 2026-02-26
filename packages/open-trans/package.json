@@ -3,9 +3,7 @@
   "private": true,
   "license": "MIT",
   "exports": {
-    "./locales/*": "./src/locales/*.ts",
-    "./components/*": "./src/components/*.ts",
-    "./*": "./src/*"
+    "./*": "./*.ts"
   },
   "scripts": {
     "lint": "eslint --no-eslintrc -c .eslintrc.js ./*.js ./scripts/**/*.js ./packages/**/*.ts",

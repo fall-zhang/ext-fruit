@@ -1,11 +1,11 @@
 import type {
   Language,
   TranslateQueryResult
-} from '../../translator'
+} from '../translator'
 import {
   Translator,
   TranslateError
-} from '../../translator'
+} from '../translator'
 import sha256 from 'crypto-js/sha256'
 import qs from 'qs'
 
