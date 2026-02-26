@@ -1,13 +1,12 @@
 import type { FC } from 'react'
-import React, { useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { useUpdateEffect } from 'react-use'
-import { useObservableState } from 'observable-hooks'
 import { Input, Modal, Form } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import type { FormInstance } from 'antd/lib/form/Form'
 import { useTranslation } from 'react-i18next'
-import { useUpload, uploadStatus$ } from '@/options/helpers/upload'
 import { useDictStore } from '@P/saladict-core/src/store'
+import { useUpload } from '../../../helpers/upload'
 
 export interface EditModalProps {
   menuID?: string | null
@@ -18,7 +17,7 @@ export const EditModal: FC<EditModalProps> = ({ menuID, onClose }) => {
   const { t } = useTranslation(['options', 'dicts', 'common', 'langcode'])
   const formRef = useRef<FormInstance>(null)
   const allMenus = useDictStore(state => state.config.contextMenus.all)
-  const uploadStatus = useObservableState(uploadStatus$, 'idle')
+  const uploadStatus = 'idle'
   const upload = useUpload()
 
   const namePath = `config.contextMenus.all.${menuID}.name`
@@ -57,7 +56,7 @@ export const EditModal: FC<EditModalProps> = ({ menuID, onClose }) => {
       open={!!menuID}
       zIndex={1001}
       title={t('config.opt.contextMenus_edit')}
-      destroyOnClose
+      destroyOnHidden
       onOk={submitForm}
       onCancel={closeModal}
     >

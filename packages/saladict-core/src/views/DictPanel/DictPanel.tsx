@@ -1,12 +1,15 @@
-import React, {
+import type {
+  CSSProperties,
   FC,
-  ReactNode,
+  ReactNode
+} from 'react'
+import {
   useRef,
   useState,
   useMemo,
   useEffect
 } from 'react'
-import classNames from 'clsx'
+import clsx from 'clsx'
 import { useUpdateEffect } from 'react-use'
 // import { SALADICT_PANEL, isInternalPage } from '@/_helpers/saladict'
 import { SALADICT_PANEL, isInternalPage } from '@P/saladict-core/src/core/saladict-state'
@@ -44,7 +47,7 @@ export const DictPanel: FC<DictPanelProps> = props => {
 
   const userDraggedRef = useRef(false)
 
-  const coordSnapshotRef = useRef<{ x: number; y: number }>()
+  const coordSnapshotRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
 
   useUpdateEffect(() => {
     if (props.takeCoordSnapshot) {
@@ -88,8 +91,8 @@ export const DictPanel: FC<DictPanelProps> = props => {
       className="dictPanel-FloatBox-Container saladict-theme"
     >
       <div
-        className={classnames('dictPanel-Root', SALADICT_PANEL, {
-          isDragging: props.dragStartCoord
+        className={clsx('dictPanel-Root', SALADICT_PANEL, {
+          isDragging: props.dragStartCoord,
         })}
         style={{
           left: x,
@@ -99,8 +102,8 @@ export const DictPanel: FC<DictPanelProps> = props => {
           height: props.height,
           '--panel-width': props.width + 'px',
           '--panel-max-height': props.maxHeight + 'px',
-          '--panel-font-size': props.fontSize + 'px'
-        }}
+          '--panel-font-size': props.fontSize + 'px',
+        } as CSSProperties}
       >
         <div className="dictPanel-Head">{props.menuBar}</div>
         <HoverBoxContext.Provider value={rootElRef}>

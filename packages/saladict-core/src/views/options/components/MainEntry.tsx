@@ -20,7 +20,6 @@ const EntryComponent = async (entry: string) => {
     element = compoInfo[`./Entries/${entry}/index.tsx`]
   }
   const Compo = (await element())[entry]
-  console.log('⚡️ line:24 ~ Compo: ', Compo)
   if (!element) {
     console.error('no element')
     return React.createElement('div', <div></div>)

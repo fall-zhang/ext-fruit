@@ -11,6 +11,7 @@ import { getWordOfTheDay } from '@P/saladict-core/src/utils/everyday-word'
 
 // pre-fetch the word
 // const pWordOfTheDay = getWordOfTheDay()
+const pWordOfTheDay = 'awesome'
 
 export const BtnPreview: FC = () => {
   const { t } = useTranslation('options')
@@ -28,7 +29,7 @@ export const BtnPreview: FC = () => {
           // panel will adjust the position itself
           // store.OPEN_PANEL({ x: x + width, y: 80 })
           store.SEARCH_START({
-            word: newWord({ text: await pWordOfTheDay }),
+            word: newWord({ text: pWordOfTheDay }),
           })
         }}
       />

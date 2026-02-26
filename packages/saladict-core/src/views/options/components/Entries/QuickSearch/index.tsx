@@ -1,11 +1,11 @@
 import type { FC } from 'react'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Switch, Select, Button } from 'antd'
-import type { TCDirection } from '@/app-config'
-import { useTranslate, Trans } from '@/_helpers/i18n'
-import { getConfigPath } from '@/options/helpers/path-joiner'
-import { SaladictForm } from '@/options/components/SaladictForm'
 import { StandaloneModal } from './StandaloneModal'
+import { Trans, useTranslation } from 'react-i18next'
+import type { TCDirection } from '@P/saladict-core/src/app-config/config-type'
+import { getConfigPath } from '../../../helpers/path-joiner'
+import { SaladictForm } from '../../SaladictForm'
 
 const locLocale: Readonly<TCDirection[]> = [
   'CENTER',
@@ -41,7 +41,7 @@ export const QuickSearch: FC = () => {
           {
             name: getConfigPath('qsLocation'),
             children: (
-              <Select>
+              <Select >
                 {locLocale.map(locale => (
                   <Select.Option key={locale} value={locale}>
                     {t(`locations.${locale}`)}

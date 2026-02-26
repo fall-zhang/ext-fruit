@@ -1,21 +1,19 @@
 import type { FC } from 'react'
 import type React from 'react'
-import type { TFunction } from 'i18next'
 
-export interface MenubarBtnProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  t: TFunction
+export interface MenubarBtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  title?: string
 }
 
 /**
  * History Back Button
  */
 export const HistoryBackBtn: FC<MenubarBtnProps> = props => {
-  const { t, ...restProps } = props
+  const { ...restProps } = props
   return (
     <button
       className="menuBar-Btn-dir"
-      title={t('tip.historyBack')}
+      // title={t('tip.historyBack')}
       {...restProps}
     >
       <svg
@@ -35,11 +33,11 @@ export const HistoryBackBtn: FC<MenubarBtnProps> = props => {
  * History Back Button
  */
 export const HistoryNextBtn: FC<MenubarBtnProps> = props => {
-  const { t, ...restProps } = props
+  const { ...restProps } = props
   return (
     <button
       className="menuBar-Btn-dir"
-      title={props.t('tip.historyNext')}
+      // title={props.t('tip.historyNext')}
       {...restProps}
     >
       <svg
@@ -59,9 +57,11 @@ export const HistoryNextBtn: FC<MenubarBtnProps> = props => {
  * Search Button
  */
 export const SearchBtn: FC<MenubarBtnProps> = props => {
-  const { t, ...restProps } = props
+  const { ...restProps } = props
   return (
-    <button className="menuBar-Btn" title={t('tip.searchText')} {...restProps}>
+    <button className="menuBar-Btn"
+    //  title={t('tip.searchText')}
+      {...restProps}>
       <svg
         className="menuBar-Btn_Icon"
         width="30"
@@ -79,9 +79,11 @@ export const SearchBtn: FC<MenubarBtnProps> = props => {
  * Options Button
  */
 export const OptionsBtn: FC<MenubarBtnProps> = props => {
-  const { t, ...restProps } = props
+  const { ...restProps } = props
   return (
-    <button className="menuBar-Btn" title={t('tip.openOptions')} {...restProps}>
+    <button className="menuBar-Btn"
+    //  title={t('tip.openOptions')}
+      {...restProps}>
       <svg
         className="menuBar-Btn_Icon"
         width="30"
@@ -104,11 +106,11 @@ export interface FavBtnProps extends MenubarBtnProps {
  * Add to Notebook
  */
 export const FavBtn: FC<FavBtnProps> = props => {
-  const { t, isFav, ...restProps } = props
+  const { isFav, ...restProps } = props
   return (
     <button
       className="menuBar-Btn"
-      title={t('tip.addToNotebook')}
+      // title={t('tip.addToNotebook')}
       {...restProps}
     >
       <svg
@@ -128,9 +130,11 @@ export const FavBtn: FC<FavBtnProps> = props => {
  * Open History page
  */
 export const HistoryBtn: FC<MenubarBtnProps> = props => {
-  const { t, ...restProps } = props
+  const { ...restProps } = props
   return (
-    <button className="menuBar-Btn" title={t('tip.openHistory')} {...restProps}>
+    <button className="menuBar-Btn"
+      // title={t('tip.openHistory')}
+      {...restProps}>
       <svg
         className="menuBar-Btn_Icon-history"
         width="30"
@@ -146,11 +150,11 @@ export const HistoryBtn: FC<MenubarBtnProps> = props => {
 }
 
 export const NotebookBtn: FC<MenubarBtnProps> = props => {
-  const { t, ...restProps } = props
+  const { ...restProps } = props
   return (
     <button
       className="menuBar-Btn"
-      title={t('tip.openNotebook')}
+      // title={t('tip.openNotebook')}
       {...restProps}
     >
       <svg
@@ -179,9 +183,11 @@ export interface PinBtnProps extends MenubarBtnProps {
  * - Standalone dict panel will stay on top of other windows.
  */
 export const PinBtn: FC<PinBtnProps> = props => {
-  const { t, isPinned, ...restProps } = props
+  const { isPinned, ...restProps } = props
   return (
-    <button className="menuBar-Btn" title={t('tip.pinPanel')} {...restProps}>
+    <button className="menuBar-Btn"
+    //  title={t('tip.pinPanel')}
+      {...restProps}>
       <svg
         className="menuBar-Btn_Icon"
         width="30"
@@ -207,11 +213,11 @@ export interface FocusBtnProps extends MenubarBtnProps {
  * Focus standalone panel when searching
  */
 export const FocusBtn: FC<FocusBtnProps> = props => {
-  const { t, isFocus, ...restProps } = props
+  const { isFocus, ...restProps } = props
   return (
     <button
       className="menuBar-Btn"
-      title={t(`tip.${isFocus ? 'focusPanel' : 'unfocusPanel'}`)}
+      // title={t(`tip.${isFocus ? 'focusPanel' : 'unfocusPanel'}`)}
       {...restProps}
     >
       <svg
@@ -248,9 +254,11 @@ export const FocusBtn: FC<FocusBtnProps> = props => {
  * Close dict panel
  */
 export const CloseBtn: FC<MenubarBtnProps> = props => {
-  const { t, ...restProps } = props
+  const { ...restProps } = props
   return (
-    <button className="menuBar-Btn" title={t('tip.closePanel')} {...restProps}>
+    <button className="menuBar-Btn"
+      // title={t('tip.closePanel')}
+      {...restProps}>
       <svg
         className="menuBar-Btn_Icon"
         width="30"
@@ -265,9 +273,11 @@ export const CloseBtn: FC<MenubarBtnProps> = props => {
 }
 
 export const SidebarBtn: FC<MenubarBtnProps> = props => {
-  const { t, ...restProps } = props
+  const { ...restProps } = props
   return (
-    <button className="menuBar-Btn" title={t('tip.sidebar')} {...restProps}>
+    <button className="menuBar-Btn"
+    // title={t('tip.sidebar')}
+      {...restProps}>
       <svg
         className="menuBar-Btn_Icon"
         width="30"

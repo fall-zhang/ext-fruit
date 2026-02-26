@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC } from 'react'
+import { useEffect, useState, type FC, type ReactNode } from 'react'
 import {
   isStandalonePage,
   isOptionsPage,
@@ -16,8 +16,6 @@ import {
   SidebarBtn,
   FocusBtn
 } from './MenubarBtns'
-import type { SearchBoxProps } from './SearchBox'
-import { SearchBox } from './SearchBox'
 import './MenuBar.scss'
 // import type { ProfilesProps } from './Profiles'
 // import { ProfilePopover } from './Profiles'
@@ -30,39 +28,41 @@ import { useConfContext } from '@P/saladict-core/src/context/conf-context'
 import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
 
 export interface MenuBarProps {
-  text: string
-  updateText: SearchBoxProps['onInput']
-  searchText: (text: string) => any
+  menuBarProps?:Record<string, any>
+  customButton?:ReactNode
 
-  /** is in Notebook */
-  isInNotebook: boolean
-  addToNoteBook: () => any
+  // text: string
+  // searchText: (text: string) => any
 
-  shouldFocus: boolean
-  enableSuggest: boolean
+  // /** is in Notebook */
+  // isInNotebook: boolean
+  // addToNoteBook: () => any
 
-  isTrackHistory: boolean
-  histories: Word[]
-  historyIndex: number
-  switchHistory: (direction: 'prev' | 'next') => void
-  // 选中对应的预设模式
-  // onSelectProfile: (id: string) => void
-  // activeProfileId: ProfilesProps['activeProfileId']
-  // profiles: ProfilesProps['profiles']
+  // shouldFocus: boolean
+  // enableSuggest: boolean
 
-  isPinned: boolean
-  togglePin: () => any
+  // isTrackHistory: boolean
+  // histories: Word[]
+  // historyIndex: number
+  // switchHistory: (direction: 'prev' | 'next') => void
+  // // 选中对应的预设模式
+  // // onSelectProfile: (id: string) => void
+  // // activeProfileId: ProfilesProps['activeProfileId']
+  // // profiles: ProfilesProps['profiles']
 
-  isQSFocus: boolean
-  toggleQSFocus: () => any
+  // isPinned: boolean
+  // togglePin: () => any
 
-  onClose: () => any
-  onSwitchSidebar: (side: 'left' | 'right') => any
+  // isQSFocus: boolean
+  // toggleQSFocus: () => any
 
-  onHeightChanged: (height: number) => void
+  // onClose: () => any
+  // onSwitchSidebar: (side: 'left' | 'right') => any
+
+  // onHeightChanged: (height: number) => void
 }
 
-export const MenuBar: FC = () => {
+export const MenuBar: FC<MenuBarProps> = (props) => {
   const configContext = useConfContext()
   const config = {
     enableSuggest: configContext.config.searchSuggests,
@@ -73,7 +73,7 @@ export const MenuBar: FC = () => {
   //   histories: [],
   //   text: 'awesome',
   // }
-  const props = useDictStore(useShallow((store) => {
+  const store = useDictStore(useShallow((store) => {
     return {
       text: store.text,
       isInNotebook: store.isFav,
@@ -90,26 +90,6 @@ export const MenuBar: FC = () => {
       searchText: store.SEARCH_START,
     }
   }))
-
-  const updateText = debounce((text: string) => {
-    props.searchStart({
-      word: newWord({
-        text,
-        title: 'Saladict',
-        favicon: 'https://saladict.crimx.com/favicon.ico',
-      }),
-    })
-  }, 200)
-  function searchText (text: string) {
-    console.log('⚡️ line:89 ~ text: ', text)
-    props.searchStart({
-      word: newWord({
-        text,
-        title: 'Saladict',
-        favicon: 'https://saladict.crimx.com/favicon.ico',
-      }),
-    })
-  }
   function addToNoteBook () {
     // 将当前单词添加到 notebook
   }
@@ -147,38 +127,35 @@ export const MenuBar: FC = () => {
   //   const max = Math.max(profileHeight || 0, searchBoxHeight || 0)
   //   onHeightChanged(max > 0 ? max + 72 : 0)
   // }, [profileHeight, onHeightChanged, searchBoxHeight])
-  let renderType = 'QuickSearchPage'
-  if (isQuickSearchPage()) {
-    renderType = 'QuickSearchPage'
-  } else if (isPopupPage()) {
-    renderType = 'nothing'
-  } else {
-    renderType = 'Btns'
-  }
+  // let renderType = 'QuickSearchPage'
+  // if (isQuickSearchPage()) {
+  //   renderType = 'QuickSearchPage'
+  // } else if (isPopupPage()) {
+  //   renderType = 'nothing'
+  // } else {
+  //   renderType = 'Btns'
+  // }
   return (
     <header className="menuBar">
       <HistoryBackBtn
-        t={t}
-        disabled={props.historyIndex <= 0}
-        onClick={() => props.switchHistory('prev')}
+        disabled={store.historyIndex <= 0}
+        onClick={() => store.switchHistory('prev')}
       />
       <HistoryNextBtn
-        t={t}
-        disabled={props.historyIndex >= props.histories.length - 1}
-        onClick={() => props.switchHistory('next')}
+        disabled={store.historyIndex >= store.histories.length - 1}
+        onClick={() => store.switchHistory('next')}
       />
-
+      <div className="grow h-full" {...props.menuBarProps}></div>
       {/* <ProfilePopover
-        profiles={props.profiles}
-        activeProfileId={props.activeProfileId}
-        onSelectProfile={props.onSelectProfile}
+        profiles={store.profiles}
+        activeProfileId={store.activeProfileId}
+        onSelectProfile={store.onSelectProfile}
         onHeightChanged={(height) => {
           setProfileHeight(height)
         }}
       /> */}
       <FavBtn
-        t={t}
-        isFav={props.isInNotebook}
+        isFav={store.isInNotebook}
         onClick={addToNoteBook}
         onMouseDown={e => {
           if (e.button === 2) {
@@ -209,21 +186,19 @@ export const MenuBar: FC = () => {
           }}
         />)} */}
       {/* 自定义 button 列表 */}
-      {/* {customButton} */}
+      {props.customButton}
       {/* {isQuickSearchPage()
         ? (
           <>
             <FocusBtn
-              t={t}
-              isFocus={props.isQSFocus}
-              onClick={props.toggleQSFocus}
+              isFocus={store.isQSFocus}
+              onClick={store.toggleQSFocus}
               disabled={isOptionsPage() || isPopupPage()}
             />
             <SidebarBtn
-              t={t}
               onMouseDown={e => {
                 e.preventDefault()
-                props.onSwitchSidebar(e.button === 0 ? 'left' : 'right')
+                store.onSwitchSidebar(e.button === 0 ? 'left' : 'right')
               }}
             />
           </>
@@ -233,20 +208,19 @@ export const MenuBar: FC = () => {
           : (
             <>
               <PinBtn
-                t={t}
-                isPinned={props.isPinned}
-                onClick={props.togglePin}
+                isPinned={store.isPinned}
+                onClick={store.togglePin}
                 disabled={isOptionsPage() || isPopupPage()}
               />
-              <CloseBtn t={t} onClick={props.onClose} />
+              <CloseBtn t={t} onClick={store.onClose} />
             </>
           )} */}
       {/* {
         renderType === 'QuickSearchPage' && (<>
           <FocusBtn
             t={t}
-            isFocus={props.isQSFocus}
-            onClick={props.toggleQSFocus}
+            isFocus={store.isQSFocus}
+            onClick={store.toggleQSFocus}
             disabled={isOptionsPage() || isPopupPage()}
           />
           <SidebarBtn
@@ -262,11 +236,11 @@ export const MenuBar: FC = () => {
         <>
           <PinBtn
             t={t}
-            isPinned={props.isPinned}
-            onClick={props.togglePin}
+            isPinned={store.isPinned}
+            onClick={store.togglePin}
             disabled={isOptionsPage() || isPopupPage()}
           />
-          <CloseBtn t={t} onClick={props.onClose} />
+          <CloseBtn t={t} onClick={store.onClose} />
         </>
       )} */}
     </header>

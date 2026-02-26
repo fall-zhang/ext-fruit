@@ -1,7 +1,9 @@
-import React, { FC, useEffect } from 'react'
-import { Word } from '@P/saladict-core/src/dict-utils/new-word'
-import { TFunction } from 'i18next'
+import type { FC } from 'react'
+import type React from 'react'
+import { useEffect } from 'react'
+import type { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
+import type { Word } from '../../types/word'
 
 interface NotebookProps {
   word?: Word
@@ -11,7 +13,7 @@ interface NotebookProps {
 const wrapperStyle: React.CSSProperties = {
   textAlign: 'center',
   margin: '10px 20px',
-  fontSize: 14
+  fontSize: 14,
 }
 
 export const Notebook: FC<NotebookProps> = ({ word, hasError }) => {

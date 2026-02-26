@@ -7,6 +7,7 @@ import memoizeOne from 'memoize-one'
 import type { GlobalState } from '@P/saladict-core/src/store/global-state'
 import { useConfContext } from '@P/saladict-core/src/context/conf-context'
 import { DictItem, type DictItemProps } from './dict-list-item/dict-list-item'
+import { useDictStore } from '@P/saladict-core/src/store'
 
 const MemoDictItem = React.memo(DictItem)
 const memoizedDicts = memoizeOne((
@@ -48,11 +49,6 @@ export interface DictListProps extends Omit<
   }) => void
 }
 
-type Height = {
-  dicts: { [key in DictID]?: number }
-  sum: number
-}
-
 export const DictList: FC = () => {
   const configContext = useConfContext()
 
@@ -63,6 +59,11 @@ export const DictList: FC = () => {
     darkMode,
   } = configContext.config
   const dicts = []
+  // const { dicts } = useDictStore((store) => {
+  //   return {
+  //     dicts: store.renderedDicts memoizedDicts(store.renderedDicts, store.activeProfile.dicts.all),
+  //   }
+  // })
   // const {
   //   dicts,
   //   touchMode,

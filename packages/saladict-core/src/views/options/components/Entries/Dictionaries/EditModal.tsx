@@ -4,16 +4,15 @@ import type { Translator } from '@P/open-trans/translator'
 import { Switch, Select, Checkbox, Button, Modal } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import type { Rule } from 'antd/lib/form'
-import { SaladictModalForm } from '@/options/components/SaladictModalForm'
-import { ChangeEntryContext } from '@/options/helpers/change-entry'
 import { useTranslation } from 'react-i18next'
 import { useDictStore } from '@P/saladict-core/src/store'
-import { useFormDirty } from '../../../helpers/use-form-dirty'
+import { setFormDirty, useFormDirty } from '../../../helpers/use-form-dirty'
 import type { DictID } from '@P/saladict-core/src/app-config'
 import { supportedLangs } from '@P/saladict-core/src/utils/lang-check'
 import { getProfilePath } from '../../../helpers/path-joiner'
 import type { SaladictFormItem } from '../../SaladictForm'
 import { InputNumberGroup } from '../../InputNumberGroup'
+import { SaladictModalForm } from '../../SaladictModalForm'
 
 export interface EditModalProps {
   dictID?: DictID | null

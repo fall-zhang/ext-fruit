@@ -1,19 +1,19 @@
 import { useContext } from 'react'
 import { message } from 'antd'
-import { updateConfig } from '@/_helpers/config-manager'
 import { useTranslation } from 'react-i18next'
 import { ChangeEntryContext } from './change-entry'
 import { useDictStore } from '@P/saladict-core/src/store'
+import { useConfContext } from '@P/saladict-core/src/context/conf-context'
 
 export const useCheckDictAuth = () => {
   const { t } = useTranslation('options')
   const changeEntry = useContext(ChangeEntryContext)
   const config = useDictStore(state => state.config)
-
+  const confContext = useConfContext()
   return async () => {
     if (!config.showedDictAuth) {
       // opens on Profiles
-      await updateConfig({
+      confContext.onUpdateConfig({
         ...config,
         showedDictAuth: true,
       })

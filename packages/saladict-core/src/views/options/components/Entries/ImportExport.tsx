@@ -4,19 +4,19 @@ import type { TFunction } from 'i18next'
 import { Row, Col, Upload, notification } from 'antd'
 import type { RcFile } from 'antd/lib/upload'
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons'
-import type { ProfileIDList, Profile } from '@/app-config/profiles'
 import { useTranslation } from 'react-i18next'
-import { updateProfile, getProfile } from '@/_helpers/profile-manager'
 import type { AppConfig } from '@P/saladict-core/src/app-config'
 import { mergeConfig } from '@P/saladict-core/src/app-config/merge-config'
 import { useListLayout } from '../../helpers/layout'
 import { mergeProfile } from '@P/saladict-core/src/app-config/merge-profile'
+import type { Profile, ProfileID } from '@P/saladict-core/src/app-config/profiles'
+import { useConfContext } from '@P/saladict-core/src/context/conf-context'
 
 export type ConfigStorage = {
   baseconfig: AppConfig
   activeProfileID: string
   hasInstructionsShown: boolean
-  profileIDList: ProfileIDList
+  profileIDList: ProfileID[]
 } & {
   [id: string]: Profile
 }
@@ -106,6 +106,56 @@ export const ImportExport: FC = () => {
       }
     }
   }
+  const confContext = useConfContext()
+  const updateProfile = confContext.updateProfile
+  const getConfig = () => confContext.config
+  const getProfile = () => confContext.profile
+  async function exportConfig (t: TFunction) {
+    const result = await localStorage.get([
+      'activeProfileID',
+      'hasInstructionsShown',
+      'profileIDList',
+      'syncConfig',
+    ])
+
+    result.baseconfig = getConfig()
+
+    if (!result.baseconfig || !result.activeProfileID || !result.profileIDList) {
+      notification.error({
+        message: t('export.error.title'),
+        description: t('export.error.empty'),
+      })
+      return
+    }
+
+    for (const { id } of result.profileIDList) {
+      result[id] = getProfile()
+    }
+
+    try {
+      let text = JSON.stringify(result)
+      const { os } = await browser.runtime.getPlatformInfo()
+      if (os === 'win') {
+        text = text.replace(/\r\n|\n/g, '\r\n')
+      }
+      const file = new Blob([text], { type: 'text/plain;charset=utf-8' })
+      const a = document.createElement('a')
+      a.href = URL.createObjectURL(file)
+      a.download = `config-${Date.now()}.saladict`
+
+      // firefox
+      a.target = '_blank'
+      document.body.appendChild(a)
+
+      a.click()
+    } catch (err) {
+      notification.error({
+        message: t('export.error.title'),
+        description: t('export.error.parse'),
+      })
+    }
+  }
+
   return (
     <Row>
       <Col {...layout}>
@@ -147,48 +197,3 @@ export const ImportExport: FC = () => {
 }
 
 
-async function exportConfig (t: TFunction) {
-  const result = await localStorage.get([
-    'activeProfileID',
-    'hasInstructionsShown',
-    'profileIDList',
-    'syncConfig',
-  ])
-
-  result.baseconfig = await getConfig()
-
-  if (!result.baseconfig || !result.activeProfileID || !result.profileIDList) {
-    notification.error({
-      message: t('export.error.title'),
-      description: t('export.error.empty'),
-    })
-    return
-  }
-
-  for (const { id } of result.profileIDList) {
-    result[id] = await getProfile(id)
-  }
-
-  try {
-    let text = JSON.stringify(result)
-    const { os } = await browser.runtime.getPlatformInfo()
-    if (os === 'win') {
-      text = text.replace(/\r\n|\n/g, '\r\n')
-    }
-    const file = new Blob([text], { type: 'text/plain;charset=utf-8' })
-    const a = document.createElement('a')
-    a.href = URL.createObjectURL(file)
-    a.download = `config-${Date.now()}.saladict`
-
-    // firefox
-    a.target = '_blank'
-    document.body.appendChild(a)
-
-    a.click()
-  } catch (err) {
-    notification.error({
-      message: t('export.error.title'),
-      description: t('export.error.parse'),
-    })
-  }
-}

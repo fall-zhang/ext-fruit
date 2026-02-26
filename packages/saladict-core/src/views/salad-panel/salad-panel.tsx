@@ -1,4 +1,4 @@
-import type { CSSProperties, FC } from 'react'
+import type { CSSProperties, FC, ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import clsx from 'clsx'
 import { SALADICT_PANEL } from '../../core/saladict-state'
@@ -13,8 +13,14 @@ import { debounce } from 'es-toolkit'
 import { newWord } from '../../dict-utils/new-word'
 import { SearchBox } from './search-input/search-input'
 import { useShallow } from 'zustand/shallow'
+import { useDictSearch } from '../../store/search'
 
-export const SaladPanel: FC = () => {
+type SaladPanelProps = {
+  menuBarProps?:Record<string, any>
+  customButton?:ReactNode
+}
+
+export const SaladPanel: FC<SaladPanelProps> = (props) => {
   const config = useConfContext().config
   const withAnimation = config.animation
   const darkMode = config.darkMode
@@ -22,14 +28,8 @@ export const SaladPanel: FC = () => {
   const fontSize = config.fontSize
   const enableSuggest = config.searchSuggests
   const [inputText, setInputText] = useState('')
-  const [showMtaBox, setShowMtaBox] = useState(false)
-  // const props = useDictStore(useShallow(store => {
-  //   return {
-  //     isShowMtaBox: store.isShowMtaBox,
-  //     waveformBox: store.activeProfile.waveform ? waveformBox : null,
-  //   }
-  // }))
-  const props = useDictStore(useShallow((store) => {
+
+  const store = useDictSearch(useShallow((store) => {
     return {
       // text: store.text,
       // isInNotebook: store.isFav,
@@ -43,20 +43,20 @@ export const SaladPanel: FC = () => {
       // isQSFocus: store.isQSFocus,
       // switchHistory: store.SWITCH_HISTORY,
       // searchText: store.SEARCH_START,
-      searchStart: store.SEARCH_START,
+      searchStart: store.searchStart,
     }
   }))
   const updateText = debounce((text: string) => {
-    props.searchStart({
+    store.searchStart({
       word: newWord({
         text,
         title: 'Saladict',
         favicon: 'https://saladict.crimx.com/favicon.ico',
       }),
     })
-  }, 200)
+  }, 300)
   const searchText = (text: string) => {
-    props.searchStart({
+    store.searchStart({
       word: newWord({
         text,
         title: 'Saladict',
@@ -84,7 +84,10 @@ export const SaladPanel: FC = () => {
           } as CSSProperties}
         >
           <div className="dictPanel-Head">
-            <MenuBar />
+            <MenuBar
+              menuBarProps={props.menuBarProps}
+              customButton={props.customButton}
+            />
           </div>
           <div className="search-zone">
             <SearchBox
@@ -99,11 +102,11 @@ export const SaladPanel: FC = () => {
           </div>
           {/* <HoverBoxContext.Provider value={rootElRef}>
             <div className="dictPanel-Body fancy-scrollbar">
-              {props.isShowMtaBox && <MtaBox /> }
+              {store.isShowMtaBox && <MtaBox /> }
             </div>
           </HoverBoxContext.Provider> */}
           <DictList />
-          {/* {props.waveformBox && <WaveformBox />} */}
+          {/* {store.waveformBox && <WaveformBox />} */}
         </div>
       </div>
     </div>

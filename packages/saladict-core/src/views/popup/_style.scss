@@ -96,10 +96,9 @@ body {
   color: #333;
 }
 
-$switch-button-width: 55px;
-$switch-button-height: 35px;
-
 .btn-switch {
+  --switch-button-width: 55px;
+  --switch-button-height: 35px;
   // hide input
   position: absolute;
   z-index: -200000;
@@ -107,12 +106,12 @@ $switch-button-height: 35px;
 
   &+label {
     display: inline-block;
-    width: $switch-button-width;
-    height: $switch-button-height;
+    width: var(--switch-button-width);
+    height: var(--switch-button-height);
     position: relative;
     margin: auto;
     background-color: #ddd;
-    border-radius: $switch-button-height;
+    border-radius: var(--switch-button-height);
     cursor: pointer;
     outline: 0;
     user-select: none;
@@ -127,7 +126,7 @@ $switch-button-height: 35px;
     bottom: 1px;
     right: 1px;
     background-color: #f1f1f1;
-    border-radius: $switch-button-height;
+    border-radius: var(--switch-button-height);
     transition: 0.4s;
   }
 
@@ -135,8 +134,8 @@ $switch-button-height: 35px;
     content: '';
     display: block;
     position: absolute;
-    height: $switch-button-height - 2px;
-    width: $switch-button-height - 2px;
+    height: var(--switch-button-height) - 2px;
+    width: var(--switch-button-height) - 2px;
     background-color: #fff;
     border-radius: 100%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -148,7 +147,7 @@ $switch-button-height: 35px;
   }
 
   &:checked+label:after {
-    margin-left: $switch-button-width - $switch-button-height + 2px;
+    margin-left: var(--switch-button-width) - var(--switch-button-height) + 2px;
   }
 
   &:active+label,

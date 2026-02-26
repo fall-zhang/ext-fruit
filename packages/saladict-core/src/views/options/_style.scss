@@ -102,60 +102,60 @@ kbd kbd {
 // https://support.apple.com/kb/PH10564?locale=zh_CN
 // [Mac——如何输入⌘、⌥、⇧、⌃、⎋等特殊字符](http://softu.cn/447)
 
-kbd[data-key]:after {
+kbd[data-key]::after {
   font-family: 'Myriad Set Pro', 'Helvetica Neue', 'Helvetica', 'Arial',
     'Verdana', 'sans-serif';
 }
 
-kbd[data-key='command']:after {
+kbd[data-key='command']::after {
   content: ' ⌘';
 }
 
-kbd[data-key='cmd']:after {
+kbd[data-key='cmd']::after {
   content: ' ⌘';
 }
 
-kbd[data-key='shift']:after {
+kbd[data-key='shift']::after {
   content: ' ⇧';
 }
 
-kbd[data-key='control']:after {
+kbd[data-key='control']::after {
   content: ' ⌃';
 }
 
-kbd[data-key='option']:after {
+kbd[data-key='option']::after {
   content: ' ⌥';
 }
 
-kbd[data-key='capslock']:after {
+kbd[data-key='capslock']::after {
   content: ' ⇪';
 }
 
-kbd[data-key='caps lock']:after {
+kbd[data-key='caps lock']::after {
   content: ' ⇪';
 }
 
-kbd[data-key='escape']:after {
+kbd[data-key='escape']::after {
   content: ' ⎋';
 }
 
-kbd[data-key='esc']:after {
+kbd[data-key='esc']::after {
   content: ' ⎋';
 }
 
-kbd[data-key='return']:after {
+kbd[data-key='return']::after {
   content: ' ↩';
 }
 
-kbd[data-key='enter']:after {
+kbd[data-key='enter']::after {
   content: ' ↩';
 }
 
-kbd[data-key='delete']:after {
+kbd[data-key='delete']::after {
   content: ' ⌫';
 }
 
-kbd[data-key='eject']:after {
+kbd[data-key='eject']::after {
   content: ' ⏏';
 }
 

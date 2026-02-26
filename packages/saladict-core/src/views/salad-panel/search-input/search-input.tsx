@@ -31,15 +31,6 @@ export const SearchBox: FC<SearchBoxProps> = props => {
   const inputRef = useRef<HTMLInputElement>(null)
   const suggestRef = useRef<HTMLDivElement>(null)
 
-  // const focusInput = useRef(() => {
-  //   if (inputRef.current) {
-  //     inputRef.current.focus()
-  //     // Although search box is selected on focus event
-  //     // this is needed as the box may be focused initially.
-  //     inputRef.current.select()
-  //   }
-  // }).current
-
   const searchText = (text: string) => {
     hasTypedRef.current = false
     onShowSuggest(false)
@@ -48,22 +39,22 @@ export const SearchBox: FC<SearchBoxProps> = props => {
     inputRef.current?.focus()
   }
 
-  const checkFocus = () => {
-    // focusInput()
-    inputRef.current?.focus()
-  }
+  // const checkFocus = () => {
+  //   // focusInput()
+  //   inputRef.current?.focus()
+  // }
 
   // useEffect is not quick enough on popup panel.
-  useLayoutEffect(checkFocus, [])
+  // useLayoutEffect(checkFocus, [])
   // On in-page panel, layout effect only works on the first time.
-  useEffect(checkFocus, [])
+  // useEffect(checkFocus, [])
 
   return (
     <>
-      <div className={`menuBar-SearchBox_Wrap${isExpand ? ' isExpand' : ''}`}>
+      <div className={'menuBar-SearchBox_Wrap text-neutral-800 p-2'}>
         <input
           type="text"
-          className="menuBar-SearchBox"
+          className="menuBar-SearchBox bg-neutral-400"
           key="search-box"
           ref={inputRef}
           autoFocus

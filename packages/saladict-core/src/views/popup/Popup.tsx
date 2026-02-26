@@ -8,20 +8,16 @@ import React, {
 import classNames from 'clsx'
 import QRCode from 'qrcode.react'
 import CSSTransition from 'react-transition-group/CSSTransition'
-import { updateConfig, addConfigListener } from '@/_helpers/config-manager'
 import { useTranslation } from 'react-i18next'
-import type { AppConfig } from '../../app-config'
 import DictPanelStandaloneContainer from '../DictPanel/DictPanelStandalone.container'
+import { useConfContext } from '../../context/conf-context'
 
-interface PopupProps {
-  config: AppConfig
-}
 
-export const Popup: FC<PopupProps> = props => {
+export const Popup: FC = () => {
+  const configContext = useConfContext()
   const { t } = useTranslation('popup')
 
-
-  const [config, setConfig] = useState(props.config)
+  const [config, setConfig] = useState(configContext.config)
 
   /** URL box with QR code */
   const [isShowUrlBox, setIsShowUrlBox] = useState(false)
@@ -179,7 +175,7 @@ export const Popup: FC<PopupProps> = props => {
   }
 
   function toggleInsCap () {
-    updateConfig({
+    configContext.updateConfig({
       ...config,
       [insCapMode]: {
         ...config[insCapMode],
@@ -192,7 +188,7 @@ export const Popup: FC<PopupProps> = props => {
   }
 
   function toggleAppActive () {
-    updateConfig({
+    configContext.updateConfig({
       ...config,
       active: !config.active,
     })

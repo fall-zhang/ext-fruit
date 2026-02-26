@@ -2,7 +2,6 @@
 import type { FC } from 'react'
 import React, { useRef } from 'react'
 import { useUpdateEffect } from 'react-use'
-import { useObservableState } from 'observable-hooks'
 import { Form, Modal, Button } from 'antd'
 import type { FormInstance, Rule } from 'antd/lib/form'
 import { ExclamationCircleOutlined, PlusOutlined } from '@ant-design/icons'

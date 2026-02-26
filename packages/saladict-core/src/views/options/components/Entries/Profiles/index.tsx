@@ -41,7 +41,7 @@ export const Profiles: FC = () => {
     setProfileIDList(storeProfileIDList)
   }, [storeProfileIDList])
 
-  const tryTo = async (action: () => any): Promise<void> => {
+  const tryToRun = async (action: () => any): Promise<void> => {
     try {
       await action()
       antdMsg.destroy()
@@ -59,7 +59,7 @@ export const Profiles: FC = () => {
     setShowEditNameModal(false)
 
     if (profileID) {
-      tryTo(async () => {
+      tryToRun(async () => {
         if (profileIDList.find(({ id }) => id === profileID.id)) {
           const newList = profileIDList.map(p =>
             (p.id === profileID.id ? profileID : p)
@@ -90,7 +90,7 @@ export const Profiles: FC = () => {
           }))}
           onSelect={async ({ target: { value } }) => {
             if (await checkDictAuth()) {
-              tryTo(() => updateActiveProfileID(value))
+              tryToRun(() => updateActiveProfileID(value))
             }
           }}
           onAdd={() => {
@@ -117,13 +117,13 @@ export const Profiles: FC = () => {
               title: t('profiles.opt.delete_confirm', {
                 name: getProfileName(name, t),
               }),
-              onOk: () => tryTo(() => removeProfile(id)),
+              onOk: () => tryToRun(() => removeProfile(id)),
             })
           }}
           onOrderChanged={(oldIndex, newIndex) => {
             const newList = reorder(profileIDList, oldIndex, newIndex)
             setProfileIDList(newList)
-            tryTo(() => updateProfileIDList(newList))
+            tryToRun(() => updateProfileIDList(newList))
           }}
         />
         <EditNameModal

@@ -1,14 +1,14 @@
 import { DictPanelPortal } from './DictPanel.portal'
-import { MenuBarContainer } from '../MenuBar/MenuBar.container'
-import { MtaBoxContainer } from '../MtaBox/MtaBox.container'
-import { DictListContainer } from '../DictList/DictList.container'
-import { WaveformBoxContainer } from '../WaveformBox/WaveformBox.container'
+import { MenuBarContainer } from '../MenuBar/MenuBar'
+import { MtaBoxContainer } from '../MtaBox/MtaBox'
+import { DictListContainer } from '../DictList/DictList'
+import { WaveformBoxContainer } from '../WaveformBox/WaveformBox'
 import { useDictStore } from '../../store'
 
 const waveformBox = <WaveformBoxContainer />
 
 export const DictPanelPortalContainer = () => {
-  const props = useDictStore(state => state)
+  const props = useDictStore()
   const state = {
     show: props.isShowDictPanel,
     coord: props.dictPanelCoord,
@@ -28,7 +28,6 @@ export const DictPanelPortalContainer = () => {
   }
 
   function onDragEnd () {
-    // dispatch({ type: 'DRAG_START_COORD', payload: null })
     state.dragStartCoord = null
   }
   return <>
