@@ -14,17 +14,6 @@ import {
 import type { FAdvanceForm, FBaseForm } from './type'
 import { useId } from 'react'
 
-const tasks = [
-  {
-    value: 'push',
-    label: 'Push notifications',
-  },
-  {
-    value: 'email',
-    label: 'Email notifications',
-  },
-]
-
 
 export const FCheckbox:FAdvanceForm<{
   items:Array<{ label:string, value:string }>

@@ -2,7 +2,7 @@ import type { FC, ReactNode } from 'react'
 import React, { useMemo } from 'react'
 import type { TFunction } from 'i18next'
 import i18next from 'i18next'
-import { Button, Tooltip } from 'antd'
+import { Tooltip } from 'antd'
 import type { ColumnsType, TableProps } from 'antd/lib/table'
 import Table from 'antd/lib/table'
 import type { Word } from '@P/saladict-core/src/types/word'
@@ -28,61 +28,60 @@ export interface WordTableProps
 export const WordTable: FC<WordTableProps> = props => {
   const { t, ready } = useTranslation('wordPage')
 
-  const tableColumns = useMemo<ColumnsType<Word>>(
-    () => [
-      {
-        title: t('column.word'),
-        dataIndex: 'text',
-        key: 'text',
-        width: colTextWidth,
-        align: 'center',
-        sorter: true,
-        filters: [
-          { text: t('filterWord.chs'), value: 'ch' },
-          { text: t('filterWord.eng'), value: 'en' },
-          { text: t('filterWord.word'), value: 'word' },
-          { text: t('filterWord.phrase'), value: 'phra' },
-        ],
-      },
-      {
-        title: t('column.source'),
-        dataIndex: 'context',
-        key: 'context',
-        width: restWidth,
-        align: 'center',
-        render: renderSource,
-      },
-      {
-        title: t('column.trans'),
-        dataIndex: 'trans',
-        key: 'trans',
-        width: restWidth,
-        render: renderTrans,
-      },
-      {
-        title: t('column.note'),
-        dataIndex: 'note',
-        key: 'note',
-        width: restWidth,
-        render: renderNote,
-      },
-      {
-        title: t('column.date'),
-        dataIndex: 'date',
-        key: 'date',
-        width: colDateWidth,
-        align: 'center',
-        sorter: true,
-        render: renderDate,
-      },
-      {
-        title: t(`column.${props.area === 'notebook' ? 'edit' : 'add'}`),
-        key: 'edit',
-        align: 'center',
-        render: (_, record) => renderEdit(t, props.area, record),
-      },
-    ],
-    [ready, props.area]
+  const tableColumns = useMemo<ColumnsType<Word>>(() => [
+    {
+      title: t('column.word'),
+      dataIndex: 'text',
+      key: 'text',
+      width: colTextWidth,
+      align: 'center',
+      sorter: true,
+      filters: [
+        { text: t('filterWord.chs'), value: 'ch' },
+        { text: t('filterWord.eng'), value: 'en' },
+        { text: t('filterWord.word'), value: 'word' },
+        { text: t('filterWord.phrase'), value: 'phra' },
+      ],
+    },
+    {
+      title: t('column.source'),
+      dataIndex: 'context',
+      key: 'context',
+      width: restWidth,
+      align: 'center',
+      render: renderSource,
+    },
+    {
+      title: t('column.trans'),
+      dataIndex: 'trans',
+      key: 'trans',
+      width: restWidth,
+      render: renderTrans,
+    },
+    {
+      title: t('column.note'),
+      dataIndex: 'note',
+      key: 'note',
+      width: restWidth,
+      render: renderNote,
+    },
+    {
+      title: t('column.date'),
+      dataIndex: 'date',
+      key: 'date',
+      width: colDateWidth,
+      align: 'center',
+      sorter: true,
+      render: renderDate,
+    },
+    {
+      title: t(`column.${props.area === 'notebook' ? 'edit' : 'add'}`),
+      key: 'edit',
+      align: 'center',
+      render: (_, record) => renderEdit(t, props.area, record),
+    },
+  ],
+  [ready, props.area]
   )
 
   return (
@@ -148,9 +147,8 @@ function renderDate (datenum: number): ReactNode {
 
 function renderEdit (t: TFunction, area: DBArea, record: Word): ReactNode {
   return (
-    <Button
+    <button
       key={record.date}
-      size="small"
       onClick={() => {
         const word = {
           ...record,
@@ -161,6 +159,6 @@ function renderEdit (t: TFunction, area: DBArea, record: Word): ReactNode {
       }}
     >
       {t(`column.${area === 'notebook' ? 'edit' : 'add'}`)}
-    </Button>
+    </button>
   )
 }

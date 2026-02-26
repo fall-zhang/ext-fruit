@@ -8,6 +8,6 @@ import { documentDir } from '@tauri-apps/api/path'
 export const chooseDir = async () => {
   return openDialog({
     directory: true,
-    defaultPath: await documentDir()
+    defaultPath: await documentDir(),
   })
 }

@@ -53,7 +53,7 @@ export async function initFileSystem ():Promise<AllInfo> {
   return {
     fileList,
     workspaceInfo: localList[0],
-    config: localList[1]
+    config: localList[1],
   }
 }
 
@@ -69,20 +69,20 @@ export async function initCheck (): Promise<FileCheckRes> {
     hasConfig: false,
     hasWorkspace: false,
     leakFileList: [],
-    path: configPath
+    path: configPath,
   }
   try {
     const res = await Promise.allSettled([
       readDir(WORKSPACE_DEFAULT_DIR, {
-        baseDir: BaseDirectory.AppData
+        baseDir: BaseDirectory.AppData,
         // recursive: true
       }),
       readDir(configPath),
       exists(await join(configPath, MENU_CONFIG_FILE), {
-        baseDir: BaseDirectory.AppData
+        baseDir: BaseDirectory.AppData,
       }),
       exists(await join(configPath, GENERAL_CONFIG_FILE)),
-      exists(await join(configPath, WORKSPACE_LIST_FILE))
+      exists(await join(configPath, WORKSPACE_LIST_FILE)),
     ])
     if (res[0].status === 'rejected' || res[0].value.length === 0) {
       return result
@@ -140,13 +140,13 @@ export async function workspaceInitCheck (sysPath:string | 'workspace') {
     hasConfig: false,
     hasWorkspace: false,
     leakFileList: [],
-    path: configPath
+    path: configPath,
   }
   try {
     const res = await Promise.allSettled([
       readDir(configPath),
       exists(await join(configPath, MENU_CONFIG_FILE)),
-      exists(await join(configPath, GENERAL_CONFIG_FILE))
+      exists(await join(configPath, GENERAL_CONFIG_FILE)),
     ])
     // 存在文件，说明 workspace 的 .conf 路径存在
     if (res[0].status === 'rejected') {
@@ -189,7 +189,7 @@ export async function getMenuConfigList (workspacePath:string = 'workspace') {
 
   // const jsonText = await readTextFile(localFilePath)
   const dirFileInfo = await readTextFile(menuConfigPath, {
-    baseDir: BaseDirectory.AppData
+    baseDir: BaseDirectory.AppData,
   })
   const menuConfig = parseJSON(dirFileInfo)
   return menuConfig.data as FileItem[]
@@ -208,7 +208,7 @@ export async function initFileDir (checkInfo:FileCheckRes) {
     }
     // 没有 workspace 文件夹，就会创建新的文件夹并且初始化
     const workspaceExist = await exists(WORKSPACE_DEFAULT_DIR, {
-      baseDir: BaseDirectory.AppData
+      baseDir: BaseDirectory.AppData,
     })
     if (!workspaceExist) {
       await createDir(WORKSPACE_DEFAULT_DIR, { baseDir: BaseDirectory.AppData })
@@ -223,7 +223,7 @@ export async function initFileDir (checkInfo:FileCheckRes) {
   // 无配置时执行，添加缺少的配置文件
   if (!checkInfo.hasConfig) {
     const hasConfig = await exists(configPath, {
-      baseDir: BaseDirectory.AppData
+      baseDir: BaseDirectory.AppData,
     })
     if (!hasConfig) {
       await createDir(configPath, { baseDir: BaseDirectory.AppData })
@@ -234,7 +234,7 @@ export async function initFileDir (checkInfo:FileCheckRes) {
         data: getMenuByFile(fileList),
         fileType: 'config',
         configType: 'menu-config',
-        version: MENU_CONFIG_VERSION
+        version: MENU_CONFIG_VERSION,
       }
       addFileList.push(addJSONFile(leftMenuConf, menuConfig))
     }

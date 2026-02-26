@@ -1,4 +1,3 @@
-import { WORKSPACE_DEFAULT_DIR } from '@P/common/virtualFileSystem/const/filsName'
 import { join, sep } from '@tauri-apps/api/path'
 import { tauriWorkspaceSystem } from '../fileSystem/tauri-workspace-system'
 
@@ -14,11 +13,6 @@ export function simplifyFilePath (filePath:string, removePath?:string):string {
     relativePath = relativePath.replace(removePath, '')
   }
   relativePath = relativePath.split(sep()).join('/')
-  // 移除默认前缀 WORKSPACE_DEFAULT_DIR
-  if (relativePath.startsWith(WORKSPACE_DEFAULT_DIR)) {
-    const defaultPrefix = new RegExp(WORKSPACE_DEFAULT_DIR)
-    relativePath = relativePath.replace(defaultPrefix, '')
-  }
   return relativePath
 }
 /**

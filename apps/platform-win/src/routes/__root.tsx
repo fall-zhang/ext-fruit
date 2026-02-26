@@ -1,11 +1,18 @@
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
+import { ConfirmProvider } from '@/context/confirm-context'
+import './root.scss'
+import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+const RootLayout = () => {
+  return (
+    <>
+      <ConfirmProvider>
+        <Outlet />
+      </ConfirmProvider>
+      <TanStackRouterDevtools />
+    </>
+  )
+}
 
-const RootLayout = () => (
-  <>
-    <Outlet />
-    <TanStackRouterDevtools />
-  </>
-)
-
-export const Route = createRootRoute({ component: RootLayout })
+export const Route = createRootRoute({
+  component: RootLayout,
+})

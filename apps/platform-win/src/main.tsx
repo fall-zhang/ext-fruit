@@ -1,7 +1,6 @@
 import './assets/styles.css'
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { DictView } from './view/dict-view/dict-view'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
 // getConfig

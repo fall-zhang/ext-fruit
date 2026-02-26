@@ -1,8 +1,5 @@
 import type { FC } from 'react'
 import type { TFunction } from 'i18next'
-import { Input, Button, Modal } from 'antd'
-import { DownOutlined } from '@ant-design/icons'
-import type { DBArea } from '../../../core/database/types'
 
 import {
   NavigationMenu,
@@ -12,6 +9,9 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger
 } from '@sala/ui/components/navigation-menu'
+import { DownloadIcon } from 'lucide-react'
+import type { DBArea } from '@P/saladict-core/src/core/database/types'
+import { useConfirmContext } from '@/context/dialog'
 export interface WordPageProps {
   t: TFunction
   area: DBArea
@@ -25,13 +25,13 @@ export interface WordPageProps {
 
 export const Header: FC<WordPageProps> = props => {
   const { t } = props
+  const confirm = useConfirmContext()
   const deleteConfirm = (key:'selected' | 'page' | 'all') => {
     if (key) {
-      Modal.confirm({
+      confirm.confirm({
         title: t('delete'),
-        content: t(`delete.${key}`) + t('delete.confirm'),
-        okType: 'danger',
-        onOk: () => props.onDelete(`${key}`),
+        description: t(`delete.${key}`) + t('delete.confirm'),
+        onConfirm: () => props.onDelete(`${key}`),
       })
     }
   }
@@ -55,8 +55,8 @@ export const Header: FC<WordPageProps> = props => {
           )}
         </div>
       </div>
-      <Input
-        style={{ width: '15em' }}
+      <input
+        className='w-20'
         placeholder="Search"
         onChange={e => props.onSearchTextChanged(e.currentTarget.value)}
         value={props.searchText}
@@ -67,7 +67,8 @@ export const Header: FC<WordPageProps> = props => {
             <NavigationMenuTrigger>
               <div>
                 <div className='ml-2' onClick={props.onExport}>
-                  {t('export.title')} <DownOutlined />
+                  {t('export.title')} <DownloadIcon/>
+
                 </div>
               </div>
             </NavigationMenuTrigger>
@@ -84,11 +85,11 @@ export const Header: FC<WordPageProps> = props => {
           <NavigationMenuItem className="hidden md:flex">
             <NavigationMenuTrigger className='ml-2'>
               <div >
-                {t('delete.title')} <DownOutlined />
+                {t('delete.title')} <DownloadIcon/>
               </div>
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+              <ul className="grid w-100 gap-2 md:w-125 md:grid-cols-2 lg:w-150">
                 {props.selectedCount > 0 && (
                   <ListItem onClick={() => deleteConfirm('selected')} key="selected" >{t('delete.selected')}</ListItem>
                 )}

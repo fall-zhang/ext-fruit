@@ -5,6 +5,5 @@ export const Route = createFileRoute('/system-tray/')({
 })
 
 function RouteComponent () {
-  return <div>Hello "/system-tray/"!</div>
+  return <div>Hello /system-tray/ !</div>
 }
-4

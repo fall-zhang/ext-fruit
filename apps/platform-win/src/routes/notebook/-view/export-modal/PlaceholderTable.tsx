@@ -1,6 +1,7 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
+import React from 'react'
 import { Table } from 'antd'
-import { TFunction } from 'i18next'
+import type { TFunction } from 'i18next'
 
 export interface PlaceholderTableProps {
   t: TFunction

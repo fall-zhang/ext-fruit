@@ -12,10 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SystemTrayIndexRouteImport } from './routes/system-tray/index'
-import { Route as DictViewIndexRouteImport } from './routes/dict-view/index'
-import { Route as ContentViewIndexRouteImport } from './routes/content-view/index'
+import { Route as SearchViewIndexRouteImport } from './routes/search-view/index'
+import { Route as NotebookIndexRouteImport } from './routes/notebook/index'
+import { Route as NotebookAddIndexRouteImport } from './routes/notebook-add/index'
+import { Route as FormExampleIndexRouteImport } from './routes/form-example/index'
 import { Route as ConfigsIndexRouteImport } from './routes/configs/index'
-import { Route as ConfigsPdfRouteImport } from './routes/configs/pdf'
+import { Route as ConfigsNotebookIndexRouteImport } from './routes/configs/notebook/index'
 
 const R404Route = R404RouteImport.update({
   id: '/404',
@@ -32,14 +34,24 @@ const SystemTrayIndexRoute = SystemTrayIndexRouteImport.update({
   path: '/system-tray/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DictViewIndexRoute = DictViewIndexRouteImport.update({
-  id: '/dict-view/',
-  path: '/dict-view/',
+const SearchViewIndexRoute = SearchViewIndexRouteImport.update({
+  id: '/search-view/',
+  path: '/search-view/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ContentViewIndexRoute = ContentViewIndexRouteImport.update({
-  id: '/content-view/',
-  path: '/content-view/',
+const NotebookIndexRoute = NotebookIndexRouteImport.update({
+  id: '/notebook/',
+  path: '/notebook/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotebookAddIndexRoute = NotebookAddIndexRouteImport.update({
+  id: '/notebook-add/',
+  path: '/notebook-add/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FormExampleIndexRoute = FormExampleIndexRouteImport.update({
+  id: '/form-example/',
+  path: '/form-example/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfigsIndexRoute = ConfigsIndexRouteImport.update({
@@ -47,78 +59,92 @@ const ConfigsIndexRoute = ConfigsIndexRouteImport.update({
   path: '/configs/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ConfigsPdfRoute = ConfigsPdfRouteImport.update({
-  id: '/configs/pdf',
-  path: '/configs/pdf',
+const ConfigsNotebookIndexRoute = ConfigsNotebookIndexRouteImport.update({
+  id: '/configs/notebook/',
+  path: '/configs/notebook/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/404': typeof R404Route
-  '/configs/pdf': typeof ConfigsPdfRoute
   '/configs/': typeof ConfigsIndexRoute
-  '/content-view/': typeof ContentViewIndexRoute
-  '/dict-view/': typeof DictViewIndexRoute
+  '/form-example/': typeof FormExampleIndexRoute
+  '/notebook-add/': typeof NotebookAddIndexRoute
+  '/notebook/': typeof NotebookIndexRoute
+  '/search-view/': typeof SearchViewIndexRoute
   '/system-tray/': typeof SystemTrayIndexRoute
+  '/configs/notebook/': typeof ConfigsNotebookIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/404': typeof R404Route
-  '/configs/pdf': typeof ConfigsPdfRoute
   '/configs': typeof ConfigsIndexRoute
-  '/content-view': typeof ContentViewIndexRoute
-  '/dict-view': typeof DictViewIndexRoute
+  '/form-example': typeof FormExampleIndexRoute
+  '/notebook-add': typeof NotebookAddIndexRoute
+  '/notebook': typeof NotebookIndexRoute
+  '/search-view': typeof SearchViewIndexRoute
   '/system-tray': typeof SystemTrayIndexRoute
+  '/configs/notebook': typeof ConfigsNotebookIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/404': typeof R404Route
-  '/configs/pdf': typeof ConfigsPdfRoute
   '/configs/': typeof ConfigsIndexRoute
-  '/content-view/': typeof ContentViewIndexRoute
-  '/dict-view/': typeof DictViewIndexRoute
+  '/form-example/': typeof FormExampleIndexRoute
+  '/notebook-add/': typeof NotebookAddIndexRoute
+  '/notebook/': typeof NotebookIndexRoute
+  '/search-view/': typeof SearchViewIndexRoute
   '/system-tray/': typeof SystemTrayIndexRoute
+  '/configs/notebook/': typeof ConfigsNotebookIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/404'
-    | '/configs/pdf'
     | '/configs/'
-    | '/content-view/'
-    | '/dict-view/'
+    | '/form-example/'
+    | '/notebook-add/'
+    | '/notebook/'
+    | '/search-view/'
     | '/system-tray/'
+    | '/configs/notebook/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/404'
-    | '/configs/pdf'
     | '/configs'
-    | '/content-view'
-    | '/dict-view'
+    | '/form-example'
+    | '/notebook-add'
+    | '/notebook'
+    | '/search-view'
     | '/system-tray'
+    | '/configs/notebook'
   id:
     | '__root__'
     | '/'
     | '/404'
-    | '/configs/pdf'
     | '/configs/'
-    | '/content-view/'
-    | '/dict-view/'
+    | '/form-example/'
+    | '/notebook-add/'
+    | '/notebook/'
+    | '/search-view/'
     | '/system-tray/'
+    | '/configs/notebook/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   R404Route: typeof R404Route
-  ConfigsPdfRoute: typeof ConfigsPdfRoute
   ConfigsIndexRoute: typeof ConfigsIndexRoute
-  ContentViewIndexRoute: typeof ContentViewIndexRoute
-  DictViewIndexRoute: typeof DictViewIndexRoute
+  FormExampleIndexRoute: typeof FormExampleIndexRoute
+  NotebookAddIndexRoute: typeof NotebookAddIndexRoute
+  NotebookIndexRoute: typeof NotebookIndexRoute
+  SearchViewIndexRoute: typeof SearchViewIndexRoute
   SystemTrayIndexRoute: typeof SystemTrayIndexRoute
+  ConfigsNotebookIndexRoute: typeof ConfigsNotebookIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -144,18 +170,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SystemTrayIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dict-view/': {
-      id: '/dict-view/'
-      path: '/dict-view'
-      fullPath: '/dict-view/'
-      preLoaderRoute: typeof DictViewIndexRouteImport
+    '/search-view/': {
+      id: '/search-view/'
+      path: '/search-view'
+      fullPath: '/search-view/'
+      preLoaderRoute: typeof SearchViewIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/content-view/': {
-      id: '/content-view/'
-      path: '/content-view'
-      fullPath: '/content-view/'
-      preLoaderRoute: typeof ContentViewIndexRouteImport
+    '/notebook/': {
+      id: '/notebook/'
+      path: '/notebook'
+      fullPath: '/notebook/'
+      preLoaderRoute: typeof NotebookIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notebook-add/': {
+      id: '/notebook-add/'
+      path: '/notebook-add'
+      fullPath: '/notebook-add/'
+      preLoaderRoute: typeof NotebookAddIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/form-example/': {
+      id: '/form-example/'
+      path: '/form-example'
+      fullPath: '/form-example/'
+      preLoaderRoute: typeof FormExampleIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/configs/': {
@@ -165,11 +205,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConfigsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/configs/pdf': {
-      id: '/configs/pdf'
-      path: '/configs/pdf'
-      fullPath: '/configs/pdf'
-      preLoaderRoute: typeof ConfigsPdfRouteImport
+    '/configs/notebook/': {
+      id: '/configs/notebook/'
+      path: '/configs/notebook'
+      fullPath: '/configs/notebook/'
+      preLoaderRoute: typeof ConfigsNotebookIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -178,11 +218,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   R404Route: R404Route,
-  ConfigsPdfRoute: ConfigsPdfRoute,
   ConfigsIndexRoute: ConfigsIndexRoute,
-  ContentViewIndexRoute: ContentViewIndexRoute,
-  DictViewIndexRoute: DictViewIndexRoute,
+  FormExampleIndexRoute: FormExampleIndexRoute,
+  NotebookAddIndexRoute: NotebookAddIndexRoute,
+  NotebookIndexRoute: NotebookIndexRoute,
+  SearchViewIndexRoute: SearchViewIndexRoute,
   SystemTrayIndexRoute: SystemTrayIndexRoute,
+  ConfigsNotebookIndexRoute: ConfigsNotebookIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
