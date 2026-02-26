@@ -1,7 +1,8 @@
-import React, { FC } from 'react'
-import { CNKIResult } from './engine'
+import type { FC } from 'react'
+import React from 'react'
+import type { CNKIResult } from './engine'
 import EntryBox from '@/components/EntryBox'
-import { ViewProps } from '@/components/dictionaries/helpers'
+import type { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictCambridge: FC<ViewProps<CNKIResult>> = ({ result }) => (

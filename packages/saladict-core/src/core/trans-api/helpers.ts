@@ -1,80 +1,8 @@
 import DOMPurify from 'dompurify'
 import type { Config } from 'dompurify'
-import type AxiosMockAdapter from 'axios-mock-adapter'
-import type { DictID, AppConfig } from '@/app-config'
-import type { Profile } from '@/app-config/profiles'
-import type { Word } from '@P/saladict-core/src/types/word'
 import { isInternalPage } from '../saladict-state'
 import { isTagName } from '../../utils/dom'
 import chsToChz from '../../utils/chs-to-chz'
-
-/** Fetch and parse dictionary search result */
-export interface SearchFunction<Result, Payload = {}> {
-  (
-    text: string,
-    config: AppConfig,
-    profile: Profile,
-    payload: Readonly<Payload>
-  ): Promise<DictSearchResult<Result>>
-}
-
-export interface DictSearchResult<Result> {
-  /** search result */
-  result: Result
-  /** auto play sound */
-  audio?: {
-    uk?: string
-    us?: string
-    py?: string
-  }
-  /** generate menus on dict titlebars */
-  catalog?: Array<
-    | {
-      // <button>
-      key: string
-      value: string
-      label: string
-      options?: undefined
-    } |
-    {
-      // <select>
-      key: string
-      value: string
-      options: Array<{
-        value: string
-        label: string
-      }>
-      title?: string
-    }
-  >
-}
-
-/** Return a dictionary source page url for the dictionary header */
-export interface GetSrcPageFunction {
-  (text: string, config: AppConfig, profile: Profile): string | Promise<string>
-}
-
-/**
- * For testing and storybook.
- *
- * Mock all the requests and returns all searchable texts.
- */
-export interface MockRequest {
-  (mock: AxiosMockAdapter): void
-}
-
-export type HTMLString = string
-
-export interface ViewProps<T> {
-  result: T
-  searchText: <P = { [index: string]: any }>(arg?: {
-    id?: DictID
-    word?: Word
-    payload?: P
-  }) => any
-}
-
-export type SearchErrorType = 'NO_RESULT' | 'NETWORK_ERROR'
 
 export function handleNoResult<T = any> (): Promise<T> {
   return Promise.reject(new Error('NO_RESULT'))

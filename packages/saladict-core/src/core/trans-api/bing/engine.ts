@@ -1,15 +1,17 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+import { fetchDirtyDOM } from '@P/saladict-core/src/utils/fetch-dom'
+import type {
+  SearchFunction,
+  GetSrcPageFunction,
+  DictSearchResult
+} from '../helpers'
 import {
   handleNoResult,
   handleNetWorkError,
   getText,
   getInnerHTML,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult,
   getChsToChz
 } from '../helpers'
-import { DictConfigs } from '@/app-config'
+import type { DictConfigs } from '@P/saladict-core/src/app-config'
 
 export const getSrcPage: GetSrcPageFunction = text =>
   'https://cn.bing.com/dict/search?q=' +
@@ -110,7 +112,7 @@ export const search: SearchFunction<BingResult> = (
     })
 }
 
-function handleLexResult(
+function handleLexResult (
   doc: Document,
   options: BingConfig['options'],
   transform: null | ((text: string) => string)
@@ -118,8 +120,8 @@ function handleLexResult(
   const searchResult: DictSearchResult<BingResultLex> = {
     result: {
       type: 'lex',
-      title: getText(doc, '.client_def_hd_hd', transform)
-    }
+      title: getText(doc, '.client_def_hd_hd', transform),
+    },
   }
 
   // pronunciation
@@ -136,16 +138,16 @@ function handleLexResult(
         }
         return {
           lang: getText(el, '.client_def_hd_pn'),
-          pron
+          pron,
         }
       })
 
       searchResult.audio = searchResult.result.phsym.reduce(
         (audio, { lang, pron }) => {
           if (/us|美/i.test(lang)) {
-            audio['us'] = pron
+            audio.us = pron
           } else if (/uk|英/i.test(lang)) {
-            audio['uk'] = pron
+            audio.uk = pron
           }
           return audio
         },
@@ -162,7 +164,7 @@ function handleLexResult(
       if ($defs.length > 0) {
         searchResult.result.cdef = $defs.map(el => ({
           pos: getText(el, '.client_def_title_bar', transform),
-          def: getText(el, '.client_def_list', transform)
+          def: getText(el, '.client_def_list', transform),
         }))
       }
     }
@@ -189,7 +191,7 @@ function handleLexResult(
       const $audio = el.querySelector('.client_aud_o')
       if ($audio) {
         mp3 = (($audio.getAttribute('onclick') || '').match(/https.*\.mp3/) || [
-          ''
+          '',
         ])[0]
       }
       el.querySelectorAll('.client_sen_en_word').forEach($word => {
@@ -207,10 +209,10 @@ function handleLexResult(
         en: getInnerHTML(HOST, el, '.client_sen_en'),
         chs: getInnerHTML(HOST, el, {
           selector: '.client_sen_cn',
-          transform
+          transform,
         }),
         source: getText(el, '.client_sentence_list_link'),
-        mp3
+        mp3,
       })
     }
     searchResult.result.sentences = sentences
@@ -222,7 +224,7 @@ function handleLexResult(
   return handleNoResult()
 }
 
-function handleMachineResult(
+function handleMachineResult (
   doc: Document,
   transform: null | ((text: string) => string)
 ): BingSearchResultMachine | Promise<BingSearchResultMachine> {
@@ -232,15 +234,15 @@ function handleMachineResult(
     return {
       result: {
         type: 'machine',
-        mt
-      }
+        mt,
+      },
     }
   }
 
   return handleNoResult()
 }
 
-function handleRelatedResult(
+function handleRelatedResult (
   doc: Document,
   config: BingConfig,
   transform: null | ((text: string) => string)
@@ -249,8 +251,8 @@ function handleRelatedResult(
     result: {
       type: 'related',
       title: getText(doc, '.client_do_you_mean_title_bar', transform),
-      defs: []
-    }
+      defs: [],
+    },
   }
 
   doc.querySelectorAll('.client_do_you_mean_area').forEach($area => {
@@ -267,9 +269,9 @@ function handleRelatedResult(
           return {
             href: `https://cn.bing.com/dict/search?q=${word}`,
             word,
-            def: getText($list, '.client_do_you_mean_list_def', transform)
+            def: getText($list, '.client_do_you_mean_list_def', transform),
           }
-        })
+        }),
       })
     }
   })

@@ -1,4 +1,4 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItem } from '@P/saladict-core/src/app-config/dicts'
 
 export type BingConfig = DictItem<{
   tense: boolean
@@ -19,7 +19,7 @@ export default (): BingConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -30,18 +30,18 @@ export default (): BingConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
   preferredHeight: 240,
   selectionWC: {
     min: 1,
-    max: 5
+    max: 5,
   },
   options: {
     tense: true,
     phsym: true,
     cdef: true,
     related: true,
-    sentence: 4
-  }
+    sentence: 4,
+  },
 })

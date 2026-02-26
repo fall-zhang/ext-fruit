@@ -1,4 +1,4 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItem } from '@P/saladict-core/src/app-config/dicts'
 
 export type ZdicConfig = DictItem<{
   audio: boolean
@@ -15,7 +15,7 @@ export default (): ZdicConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -26,14 +26,14 @@ export default (): ZdicConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
   preferredHeight: 400,
   selectionWC: {
     min: 1,
-    max: 5
+    max: 5,
   },
   options: {
-    audio: false
-  }
+    audio: false,
+  },
 })

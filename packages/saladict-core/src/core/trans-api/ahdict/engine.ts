@@ -1,13 +1,15 @@
 import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
-import {
+import type {
   HTMLString,
-  getText,
-  getInnerHTML,
-  handleNoResult,
-  handleNetWorkError,
   SearchFunction,
   GetSrcPageFunction,
   DictSearchResult
+} from '../helpers'
+import {
+  getText,
+  getInnerHTML,
+  handleNoResult,
+  handleNetWorkError
 } from '../helpers'
 
 export const getSrcPage: GetSrcPageFunction = text => {
@@ -48,14 +50,13 @@ export const search: SearchFunction<AhdictResult> = (
   const options = profile.dicts.all.ahdict.options
 
   return fetchDirtyDOM(
-    'https://ahdictionary.com/word/search.html?q=' +
-      encodeURIComponent(text.replace(/\s+/g, ' '))
+    'https://ahdictionary.com/word/search.html?q=' + encodeURIComponent(text.replace(/\s+/g, ' '))
   )
     .catch(handleNetWorkError)
     .then(doc => handleDOM(doc, options))
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document,
   { resultnum }: { resultnum: number }
 ): AhdictSearchResult | Promise<AhdictSearchResult> {
@@ -72,7 +73,7 @@ function handleDOM(
     const resultItem: AhdictResultItem = {
       title: '',
       meaning: [],
-      idioms: []
+      idioms: [],
     }
 
     const $rtseg = $panel.querySelector('.rtseg') as HTMLElement
@@ -133,7 +134,6 @@ function handleDOM(
 
   if (result.length > 0) {
     return { result }
-  } else {
-    return handleNoResult()
   }
+  return handleNoResult()
 }

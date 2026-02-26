@@ -1,14 +1,15 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
-import {
+import { fetchDirtyDOM } from '@P/saladict-core/src/utils/fetch-dom'
+import type {
   HTMLString,
-  getInnerHTML,
-  handleNoResult,
-  handleNetWorkError,
   SearchFunction,
   GetSrcPageFunction,
   DictSearchResult
 } from '../helpers'
-import { getStaticSpeaker } from '@/components/Speaker'
+import {
+  getInnerHTML,
+  handleNoResult,
+  handleNetWorkError
+} from '../helpers'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.zdic.net/hans/${text}`
@@ -44,12 +45,12 @@ export const search: SearchFunction<ZdicResult> = (
     .then(doc => handleDOM(doc, isAudio))
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document,
   isAudio: boolean
 ): ZdicSearchResult | Promise<ZdicSearchResult> {
   const response: ZdicSearchResult = {
-    result: []
+    result: [],
   }
 
   for (const $entry of doc.querySelectorAll<HTMLDivElement>(
@@ -66,7 +67,7 @@ function handleDOM(
       if (isAudio) {
         if (!response.audio) {
           response.audio = {
-            py: $a.dataset.srcMp3
+            py: $a.dataset.srcMp3,
           }
         }
         $a.replaceWith(getStaticSpeaker($a.dataset.srcMp3))
@@ -77,20 +78,20 @@ function handleDOM(
 
     response.result.push({
       title,
-      content: getInnerHTML(HOST, $entry, '.content')
+      content: getInnerHTML(HOST, $entry, '.content'),
     })
   }
 
   return response.result.length > 0 ? response : handleNoResult()
 }
 
-function modifyReferer() {
+function modifyReferer () {
   const extraInfoSpec = ['blocking', 'requestHeaders']
   // https://developer.chrome.com/extensions/webRequest#life_cycle_footnote
   if (
-    browser.webRequest['OnBeforeSendHeadersOptions'] &&
+    browser.webRequest.OnBeforeSendHeadersOptions &&
     Object.prototype.hasOwnProperty.call(
-      browser.webRequest['OnBeforeSendHeadersOptions'],
+      browser.webRequest.OnBeforeSendHeadersOptions,
       'EXTRA_HEADERS'
     )
   ) {
@@ -109,7 +110,7 @@ function modifyReferer() {
         if (i === details.requestHeaders.length) {
           details.requestHeaders.push({
             name: 'Referer',
-            value: 'https://www.zdic.net'
+            value: 'https://www.zdic.net',
           })
         }
       }

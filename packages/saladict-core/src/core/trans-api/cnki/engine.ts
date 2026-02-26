@@ -1,16 +1,18 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
-import {
+import { fetchDirtyDOM } from '@P/saladict-core/src/utils/fetch-dom'
+import type {
   HTMLString,
-  getInnerHTML,
-  getFullLink,
-  handleNoResult,
-  getText,
-  handleNetWorkError,
   SearchFunction,
   GetSrcPageFunction,
   DictSearchResult
 } from '../helpers'
-import { DictConfigs } from '@/app-config'
+import {
+  getInnerHTML,
+  getFullLink,
+  handleNoResult,
+  getText,
+  handleNetWorkError
+} from '../helpers'
+import type { DictConfigs } from '@/app-config'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return (
@@ -50,14 +52,13 @@ export const search: SearchFunction<CNKIResult> = (
   payload
 ) => {
   return fetchDirtyDOM(
-    'http://dict.cnki.net/old/dict_result.aspx?scw=' + encodeURIComponent(text),
-    { withCredentials: false }
+    'http://dict.cnki.net/old/dict_result.aspx?scw=' + encodeURIComponent(text)
   )
     .catch(handleNetWorkError)
     .then(doc => handleDOM(doc, profile.dicts.all.cnki.options))
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document,
   options: DictConfigs['cnki']['options']
 ): CNKISearchResult | Promise<CNKISearchResult> {
@@ -66,7 +67,7 @@ function handleDOM(
   const result: CNKIResult = {
     dict: [],
     senbi: [],
-    seneng: []
+    seneng: [],
   }
 
   if (options.dict) {
@@ -142,7 +143,7 @@ function handleDOM(
   return handleNoResult()
 }
 
-function extractSens(
+function extractSens (
   $entries: Element[],
   selector: string,
   sensid: string
@@ -170,7 +171,7 @@ function extractSens(
       more,
       sens: [...$sens.querySelectorAll('td')].map($td =>
         getInnerHTML(HOST, $td).replace(/&nbsp;/g, '')
-      )
+      ),
     }
   })
 }
