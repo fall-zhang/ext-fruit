@@ -1,5 +1,3 @@
-import { useDictStore } from '@P/saladict-core/src/store'
-
 export const formItemModalLayout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 18 },
@@ -19,8 +17,7 @@ const listLayoutWithoutPanel = {
 } as const
 
 export const useListLayout = () => {
-  const show = useDictStore((state) => state.isShowDictPanel)
-  return (show && window.innerWidth < 1920
+  return (window.innerWidth < 1920
     ? listLayoutWithPanel
     : listLayoutWithoutPanel)
 }

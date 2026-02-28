@@ -1,4 +1,4 @@
-import type { FC } from 'react'
+import { useRef, type FC } from 'react'
 import { Select, Switch, Input, Slider } from 'antd'
 import { useTranslation } from 'react-i18next'
 
@@ -8,8 +8,10 @@ import { SaladictForm } from '../SaladictForm'
 export const DictPanel: FC = () => {
   const { t } = useTranslation('options')
   const { availWidth } = window.screen
+  const ref = useRef({})
   return (
     <SaladictForm
+      ref={ref}
       items={[
         {
           name: getProfilePath('mtaAutoUnfold'),
@@ -64,8 +66,7 @@ export const DictPanel: FC = () => {
             <Slider
               min={0}
               max={100}
-              marks={{ 0: '0%', 80: '80%', 100: '100%' }}
-            />
+              marks={{ 0: '0%', 80: '80%', 100: '100%' }} />
           ),
         },
         {
@@ -78,8 +79,7 @@ export const DictPanel: FC = () => {
                 250: '250px',
                 450: '450px',
                 [availWidth]: `${availWidth}px`,
-              }}
-            />
+              }} />
           ),
         },
         {
@@ -88,8 +88,7 @@ export const DictPanel: FC = () => {
             <Slider
               min={8}
               max={30}
-              marks={{ 8: '8px', 30: '30px' }}
-            />
+              marks={{ 8: '8px', 30: '30px' }} />
           ),
         },
         {
@@ -98,8 +97,7 @@ export const DictPanel: FC = () => {
             <Slider
               min={-100}
               max={100}
-              marks={{ '-100': '-100px', 0: '0px', 100: '100px' }}
-            />
+              marks={{ '-100': '-100px', 0: '0px', 100: '100px' }} />
           ),
         },
         {
@@ -108,8 +106,7 @@ export const DictPanel: FC = () => {
             <Slider
               min={-100}
               max={100}
-              marks={{ '-100': '-100px', 0: '0px', 100: '100px' }}
-            />
+              marks={{ '-100': '-100px', 0: '0px', 100: '100px' }} />
           ),
         },
         {
@@ -126,11 +123,9 @@ export const DictPanel: FC = () => {
           children: (
             <Input.TextArea
               placeholder=".dictPanel-Root { }"
-              autoSize={{ minRows: 4, maxRows: 15 }}
-            />
+              autoSize={{ minRows: 4, maxRows: 15 }} />
           ),
         },
-      ]}
-    />
+      ]} />
   )
 }

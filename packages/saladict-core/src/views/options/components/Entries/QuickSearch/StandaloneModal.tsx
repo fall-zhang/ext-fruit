@@ -41,17 +41,7 @@ export const StandaloneModal: FC<StandaloneModalProps> = ({
               </Select>
             ),
           },
-          {
-            name: getConfigPath('qssaHeight'),
-            hide: values => values[getConfigPath('qssaSidebar')],
-            children: (
-              <Slider
-                min={250}
-                max={availHeight}
-                marks={{ 250: '250px', [availHeight]: `${availHeight}px` }}
-              />
-            ),
-          },
+     
           {
             name: getConfigPath('qssaRectMemo'),
             valuePropName: 'checked',

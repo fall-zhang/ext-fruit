@@ -23,7 +23,7 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
   const { t, i18n } = useTranslation(['options', 'dicts', 'common', 'langcode'])
   const changeEntry = useContext(ChangeEntryContext)
   const formDirtyRef = useFormDirty()
-  const { dictAuth, allDicts } = useDictStore(
+  const { dictAuth, AllDictsConf } = useDictStore(
     state => ({
       dictAuth: state.config.dictAuth,
       allDicts: state.activeProfile.dicts.all,
