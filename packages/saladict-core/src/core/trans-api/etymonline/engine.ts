@@ -54,7 +54,7 @@ function handleDOM(
   const catalog: NonNullable<EtymonlineSearchResult['catalog']> = []
   const $items = Array.from(doc.querySelectorAll('[class*="word--"]'))
 
-  for (let i = 0; i < $items.length && result.length < options.resultnum; i++) {
+  for (let i = 0; i < $items.length && result.length < options.resultCount; i++) {
     const $item = $items[i]
 
     const title = getText($item, '[class*="word__name--"]')

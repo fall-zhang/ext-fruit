@@ -50,8 +50,7 @@ type YoudaoSearchResult = DictSearchResult<YoudaoResult>
 export const search: SearchFunction<YoudaoResult> = async (
   text,
   config,
-  profile,
-  payload
+  profile
 ) => {
   const options = profile.dicts.all.youdao.options
   const transform = await getChsToChz(config.langCode)

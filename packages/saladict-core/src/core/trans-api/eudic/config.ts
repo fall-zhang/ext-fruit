@@ -1,7 +1,7 @@
 import { DictItem } from '@P/saladict-core/src/app-config/dicts'
 
 export type EudicConfig = DictItem<{
-  resultnum: number
+  resultCount: number
 }>
 
 export default (): EudicConfig => ({
@@ -34,6 +34,6 @@ export default (): EudicConfig => ({
     max: 5
   },
   options: {
-    resultnum: 10
+    resultCount: 10
   }
 })

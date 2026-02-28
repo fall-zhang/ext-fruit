@@ -5,7 +5,7 @@
     "zh-TW": "雙語例句"
   },
   "options": {
-    "resultnum": {
+    "resultCount": {
       "en": "Show",
       "zh-CN": "结果数量",
       "zh-TW": "結果數量"

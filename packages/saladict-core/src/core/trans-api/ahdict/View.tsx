@@ -1,7 +1,7 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
 import Speaker from '@/components/Speaker'
-import { AhdictResult } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
+import type { AhdictResult } from './engine'
+import type { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictAh: FC<ViewProps<AhdictResult>> = ({ result }) => (

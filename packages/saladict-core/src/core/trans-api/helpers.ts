@@ -1,6 +1,5 @@
 import DOMPurify from 'dompurify'
 import type { Config } from 'dompurify'
-import { isInternalPage } from '../saladict-state'
 import { isTagName } from '../../utils/dom'
 import chsToChz from '../../utils/chs-to-chz'
 
@@ -18,13 +17,9 @@ export function handleNetWorkError (): Promise<never> {
  * @param langCode
  */
 export async function getChsToChz (): Promise<(text: string) => string>
-export async function getChsToChz (
-  langCode: string
-): Promise<null | ((text: string) => string)>
-export async function getChsToChz (
-  langCode?: string
-): Promise<null | ((text: string) => string)> {
-  return langCode == null || /zh-TW|zh-HK/i.test(langCode)
+export async function getChsToChz (langCode: string): Promise<null | ((text: string) => string)>
+export async function getChsToChz (langCode?: string): Promise<null | ((text: string) => string)> {
+  return langCode == null || ['zh-TW', 'zh-HK'].includes(langCode)
     ? chsToChz
     : null
 }
@@ -116,7 +111,7 @@ export function getHTML (
       if (el.getAttribute('src')) {
         el.setAttribute('src', getFullLink(host!, el, 'src'))
       }
-      if (isInternalPage() && el.getAttribute('srcset')) {
+      if (el.getAttribute('srcset')) {
         el.setAttribute(
           'srcset',
           el

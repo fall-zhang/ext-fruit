@@ -1,37 +1,46 @@
-import { SearchFunction, GetSrcPageFunction } from '../helpers'
 import memoizeOne from 'memoize-one'
-import { Baidu } from '@opentranslate/baidu'
-import {
-  MachineTranslateResult,
-  MachineTranslatePayload,
-  getMTArgs,
-  machineResult
-} from '@/components/MachineTrans/engine'
-import { BaiduLanguage } from './config'
+import { Baidu } from '@sala/trans/service-baidu'
+
+
+import type { BaiduLanguage } from './config'
+import { machineResult, type MachineTranslatePayload, type MachineTranslateResult } from '@P/saladict-core/src/components/MachineTrans/engine'
+import type { GetSrcPageFunction, SearchFunction } from '../types'
 
 export const getTranslator = memoizeOne(
   () =>
     new Baidu({
-      env: 'ext',
       config:
         process.env.BAIDU_APPID && process.env.BAIDU_KEY
           ? {
-              appid: process.env.BAIDU_APPID,
-              key: process.env.BAIDU_KEY
-            }
-          : undefined
+            appid: process.env.BAIDU_APPID,
+            key: process.env.BAIDU_KEY,
+          }
+          : undefined,
     })
 )
 
-export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
-  const lang =
-    profile.dicts.all.baidu.options.tl === 'default'
-      ? config.langCode === 'zh-CN'
-        ? 'zh'
-        : config.langCode === 'zh-TW'
-        ? 'cht'
-        : 'en'
-      : profile.dicts.all.baidu.options.tl
+export const getSrcPage: GetSrcPageFunction = (text, config, dictProfile) => {
+  let lang
+  if (dictProfile.baidu.options.tl === 'default') {
+    if (config.langCode === 'zh-CN') {
+      lang = 'zh'
+    } else if (config.langCode === 'zh-TW') {
+      lang = 'cht'
+    } else {
+      lang = 'en'
+    }
+  } else {
+    lang = dictProfile.baidu.options.tl
+  }
+
+  // const lang =
+  //   dictProfile.baidu.options.tl === 'default'
+  //     ? config.langCode === 'zh-CN'
+  //       ? 'zh'
+  //       : config.langCode === 'zh-TW'
+  //         ? 'cht'
+  //         : 'en'
+  //     : dictProfile.baidu.options.tl
 
   return `https://fanyi.baidu.com/#auto/${lang}/${text}`
 }
@@ -41,13 +50,13 @@ export type BaiduResult = MachineTranslateResult<'baidu'>
 export const search: SearchFunction<
   BaiduResult,
   MachineTranslatePayload<BaiduLanguage>
-> = async (rawText, config, profile, payload) => {
+> = async (rawText, config, allDictProfile, payload) => {
   const translator = getTranslator()
 
   const { sl, tl, text } = await getMTArgs(
     translator,
     rawText,
-    profile.dicts.all.baidu,
+    allDictProfile.baidu,
     config,
     payload
   )
@@ -62,16 +71,16 @@ export const search: SearchFunction<
       {
         result: {
           id: 'baidu',
-          slInitial: profile.dicts.all.baidu.options.slInitial,
+          slInitial: allDictProfile.baidu.options.slInitial,
           sl: result.from,
           tl: result.to,
           searchText: result.origin,
-          trans: result.trans
+          trans: result.trans,
         },
         audio: {
           py: result.trans.tts,
-          us: result.trans.tts
-        }
+          us: result.trans.tts,
+        },
       },
       translator.getSupportLanguages()
     )
@@ -84,8 +93,8 @@ export const search: SearchFunction<
           sl,
           tl,
           searchText: { paragraphs: [''] },
-          trans: { paragraphs: [''] }
-        }
+          trans: { paragraphs: [''] },
+        },
       },
       translator.getSupportLanguages()
     )

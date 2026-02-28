@@ -47,13 +47,13 @@ export const search: SearchFunction<EudicResult> = (
 
 function handleDOM(
   doc: Document,
-  { resultnum }: { resultnum: number }
+  { resultCount }: { resultCount: number }
 ): EudicSearchResult | Promise<EudicSearchResult> {
   const result: EudicResult = []
   const audio: { uk?: string; us?: string } = {}
 
   const $items = Array.from(doc.querySelectorAll('#lj_ting .lj_item'))
-  for (let i = 0; i < $items.length && result.length < resultnum; i++) {
+  for (let i = 0; i < $items.length && result.length < resultCount; i++) {
     const $item = $items[i]
     const item: EudicResultItem = { chs: '', eng: '' }
 

@@ -1,7 +1,7 @@
 import { DictItem } from '@P/saladict-core/src/app-config/dicts'
 
 export type EtymonlineConfig = DictItem<{
-  resultnum: number
+  resultCount: number
   chart: boolean
 }>
 
@@ -35,7 +35,7 @@ export default (): EtymonlineConfig => ({
     max: 5
   },
   options: {
-    resultnum: 4,
+    resultCount: 4,
     chart: true
   }
 })

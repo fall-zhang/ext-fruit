@@ -82,8 +82,7 @@ type BingSearchResultRelated = DictSearchResult<BingResultRelated>
 export const search: SearchFunction<BingResult> = (
   text,
   config,
-  profile,
-  payload
+  profile
 ) => {
   const bingConfig = profile.dicts.all.bing
 
@@ -104,7 +103,7 @@ export const search: SearchFunction<BingResult> = (
 
       if (bingConfig.options.related) {
         if (doc.querySelector('.client_do_you_mean_title_bar')) {
-          return handleRelatedResult(doc, bingConfig, transform)
+          return handleRelatedResult(doc, transform)
         }
       }
 
@@ -244,7 +243,6 @@ function handleMachineResult (
 
 function handleRelatedResult (
   doc: Document,
-  config: BingConfig,
   transform: null | ((text: string) => string)
 ): BingSearchResultRelated | Promise<BingSearchResultRelated> {
   const searchResult: DictSearchResult<BingResultRelated> = {

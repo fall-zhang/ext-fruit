@@ -37,7 +37,7 @@ export interface DictItemBase<Lang> {
     tl2: 'default' | Lang
   }
   optionsSel: {
-    keepLF: ['none', 'all']
+    keepLF: Array<'none' | 'all'>
     slInitial: ['collapse', 'hide', 'full'],
     tl: Array< Lang | 'default'>,
     tl2: Array< Lang | 'default'>,

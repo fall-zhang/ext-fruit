@@ -49,7 +49,7 @@ export const search: SearchFunction<JikipediaResult> = (
 
 function handleDOM(
   doc: Document,
-  { resultnum }: { resultnum: number }
+  { resultCount }: { resultCount: number }
 ): JikipediaSearchResult | Promise<JikipediaSearchResult> {
   const $cards = doc.querySelectorAll('.lite-card')
   if ($cards.length < 1) {
@@ -61,7 +61,7 @@ function handleDOM(
   const result: JikipediaResult = []
 
   for (const $card of $cards) {
-    if (result.length >= resultnum) {
+    if (result.length >= resultCount) {
       break
     }
 

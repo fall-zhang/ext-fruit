@@ -1,7 +1,7 @@
 import { DictItem } from '@P/saladict-core/src/app-config/dicts'
 
 export type UrbanConfig = DictItem<{
-  resultnum: number
+  resultCount: number
 }>
 
 export default (): UrbanConfig => ({
@@ -34,6 +34,6 @@ export default (): UrbanConfig => ({
     max: 5
   },
   options: {
-    resultnum: 4
+    resultCount: 4
   }
 })

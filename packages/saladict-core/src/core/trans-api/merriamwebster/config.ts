@@ -1,7 +1,7 @@
 import { DictItem } from '@P/saladict-core/src/app-config/dicts'
 
 export type MerriamWebsterConfig = DictItem<{
-  resultnum: number
+  resultCount: number
 }>
 
 export default (): MerriamWebsterConfig => ({
@@ -34,6 +34,6 @@ export default (): MerriamWebsterConfig => ({
     max: 5
   },
   options: {
-    resultnum: 4
+    resultCount: 4
   }
 })

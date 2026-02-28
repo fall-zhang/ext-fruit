@@ -1,14 +1,16 @@
-import { SearchFunction, GetSrcPageFunction } from '../helpers'
+import type { SearchFunction, GetSrcPageFunction } from '../helpers'
 import memoizeOne from 'memoize-one'
 import { Tencent } from '@opentranslate/tencent'
-import {
+import type {
   MachineTranslateResult,
-  MachineTranslatePayload,
+  MachineTranslatePayload
+} from '@/components/MachineTrans/engine'
+import {
   getMTArgs,
   machineResult
 } from '@/components/MachineTrans/engine'
 import { getTranslator as getBaiduTranslator } from '../baidu/engine'
-import { TencentLanguage } from './config'
+import type { TencentLanguage } from './config'
 
 export const getTranslator = memoizeOne(
   () =>
@@ -17,10 +19,10 @@ export const getTranslator = memoizeOne(
       config:
         process.env.TENCENT_SECRETID && process.env.TENCENT_SECRETKEY
           ? {
-              secretId: process.env.TENCENT_SECRETID,
-              secretKey: process.env.TENCENT_SECRETKEY
-            }
-          : undefined
+            secretId: process.env.TENCENT_SECRETID,
+            secretKey: process.env.TENCENT_SECRETKEY,
+          }
+          : undefined,
     })
 )
 
@@ -30,8 +32,8 @@ export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
       ? config.langCode === 'zh-CN'
         ? 'zh-CHS'
         : config.langCode === 'zh-TW'
-        ? 'zh-CHT'
-        : 'en'
+          ? 'zh-CHT'
+          : 'en'
       : profile.dicts.all.tencent.options.tl
 
   return `https://fanyi.qq.com/#auto/${lang}/${text}`
@@ -68,8 +70,8 @@ export const search: SearchFunction<
           tl: 'auto',
           slInitial: 'hide',
           searchText: { paragraphs: [''] },
-          trans: { paragraphs: [''] }
-        }
+          trans: { paragraphs: [''] },
+        },
       },
       []
     )
@@ -98,12 +100,12 @@ export const search: SearchFunction<
           tl: result.to,
           slInitial: profile.dicts.all.tencent.options.slInitial,
           searchText: result.origin,
-          trans: result.trans
+          trans: result.trans,
         },
         audio: {
           py: result.trans.tts,
-          us: result.trans.tts
-        }
+          us: result.trans.tts,
+        },
       },
       translator.getSupportLanguages()
     )
@@ -116,8 +118,8 @@ export const search: SearchFunction<
           tl,
           slInitial: 'hide',
           searchText: { paragraphs: [''] },
-          trans: { paragraphs: [''] }
-        }
+          trans: { paragraphs: [''] },
+        },
       },
       translator.getSupportLanguages()
     )

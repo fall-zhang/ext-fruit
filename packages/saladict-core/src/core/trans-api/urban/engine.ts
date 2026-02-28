@@ -105,7 +105,7 @@ async function getThumbsNums(ids: string): Promise<thumbMap | null> {
 
 async function handleDOM(
   doc: Document,
-  { resultnum }: { resultnum: number }
+  { resultCount }: { resultCount: number }
 ): Promise<UrbanSearchResult> {
   const result: UrbanResult = []
   const audio: { us?: string } = {}
@@ -118,14 +118,14 @@ async function handleDOM(
 
   const defIds: string[] = []
 
-  for (let i = 0; i < defPanels.length && result.length < resultnum; i++) {
+  for (let i = 0; i < defPanels.length && result.length < resultCount; i++) {
     const defId = defPanels[i]?.getAttribute('data-defid')
 
     defId && defIds.push(defId)
   }
   const thumbsMap = await getThumbsNums(defIds.join(','))
 
-  for (let i = 0; i < defPanels.length && result.length < resultnum; i++) {
+  for (let i = 0; i < defPanels.length && result.length < resultCount; i++) {
     const $panel = defPanels[i]
     const defId = defPanels[i]?.getAttribute('data-defid') || ''
 

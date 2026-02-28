@@ -1,16 +1,16 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
 import type {
   HTMLString,
   SearchFunction,
   GetSrcPageFunction,
   DictSearchResult
-} from '../helpers'
+} from '../types'
 import {
   getText,
   getInnerHTML,
   handleNoResult,
   handleNetWorkError
 } from '../helpers'
+import { fetchDirtyDOM } from '@P/saladict-core/src/core/trans-engine/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://ahdictionary.com/word/search.html?q=${text}`
@@ -41,13 +41,8 @@ export type AhdictResult = AhdictResultItem[]
 
 type AhdictSearchResult = DictSearchResult<AhdictResult>
 
-export const search: SearchFunction<AhdictResult> = (
-  text,
-  config,
-  profile,
-  payload
-) => {
-  const options = profile.dicts.all.ahdict.options
+export const search: SearchFunction<AhdictResult> = async (text, option) => {
+  const options = option.profile.ahdict
 
   return fetchDirtyDOM(
     'https://ahdictionary.com/word/search.html?q=' + encodeURIComponent(text.replace(/\s+/g, ' '))
@@ -58,7 +53,7 @@ export const search: SearchFunction<AhdictResult> = (
 
 function handleDOM (
   doc: Document,
-  { resultnum }: { resultnum: number }
+  options: { resultCount: number }
 ): AhdictSearchResult | Promise<AhdictSearchResult> {
   const result: AhdictResult = []
 
@@ -68,7 +63,7 @@ function handleDOM (
     return handleNoResult()
   }
 
-  for (let i = 0; i < tables.length && result.length < resultnum; i++) {
+  for (let i = 0; i < tables.length && result.length < options.resultCount; i++) {
     const $panel = tables[i]
     const resultItem: AhdictResultItem = {
       title: '',
@@ -90,7 +85,7 @@ function handleDOM (
 
     const $pseg = Array.from($panel.querySelectorAll('.pseg'))
 
-    $pseg.map(item => {
+    $pseg.forEach(item => {
       resultItem.meaning.push(
         getInnerHTML(HOST, item).replace(/<\/?(span|font)[^>]*>/g, '')
       )
@@ -99,7 +94,7 @@ function handleDOM (
     const $idmseg = Array.from($panel.querySelectorAll('.idmseg'))
 
     if ($idmseg.length) {
-      $idmseg.map(item => {
+      $idmseg.forEach(item => {
         const idiom = {} as Idiom
         idiom.title = getText(item, 'b')
         idiom.eg = getText(item, '.ds-single')
