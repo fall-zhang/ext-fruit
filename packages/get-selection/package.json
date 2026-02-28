@@ -28,13 +28,8 @@
     "node": ">=20.10.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.20",
-    "chai": "^4.5.0",
-    "rimraf": "^6.0.1",
-    "rollup": "^1.32.1",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-typescript2": "^0.21.2",
-    "tsx-dom": "^0.8.3",
-    "typescript": "^5.9.2"
+    "rollup-plugin-typescript2": "^0.36.0",
+    "tsx-dom": "^0.8.3"
   }
 }

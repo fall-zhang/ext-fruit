@@ -7,7 +7,7 @@ This package folk from https://github.com/allentown521/OpenTranslate
 ## Usage
 
 ```
-import Aliyun from '@opentranslate/aliyun'
+import Aliyun from '@salad/trans/aliyun'
 
 //Please refer to https://help.aliyun.com/zh/machine-translation/developer-reference/api-reference-machine-translation-universal-version-call-guide
 const aliyun = new Aliyun({
