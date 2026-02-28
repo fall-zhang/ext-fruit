@@ -156,7 +156,7 @@ export class Baidu extends Translator<BaiduConfig> {
 
   async detect (text: string, config?: BaiduConfig): Promise<Language> {
     try {
-      const res = await await this.request<BaiduTranslateResult>({
+      const res = await this.request<BaiduTranslateResult>({
         url: 'https://fanyi.baidu.com/langdetect',
         method: 'POST',
         headers: {

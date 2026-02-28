@@ -26,13 +26,13 @@
       "@P/*": [
         "packages/*"
       ],
-      "@sala/core/*": [
+      "@salad/core/*": [
         "packages/saladict-core/*"
       ],
-      "@sala/ui/*": [
+      "@salad/ui/*": [
         "packages/ui/*"
       ],
-      "@sala/trans/*": [
+      "@salad/trans/*": [
         "packages/open-trans/*"
       ],
       "@/*": [

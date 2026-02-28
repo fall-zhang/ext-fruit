@@ -1,4 +1,4 @@
-使用 @sala/trans 的介绍
+使用 @salad/trans 的介绍
 
 ## Installation
 

@@ -62,7 +62,13 @@ const defaultConfig = {
       exports: 'never',
       functions: 'never',
     }],
-
+    '@stylistic/type-annotation-spacing': 'error',
+    '@stylistic/type-generic-spacing': ['error'],
+    '@stylistic/type-named-tuple-spacing': ['error'],
+    '@stylistic/jsx-closing-tag-location': 'error',
+    '@stylistic/jsx-first-prop-new-line': ['error', 'multiline'],
+    '@stylistic/jsx-equals-spacing': ['error', 'never'],
+    '@stylistic/jsx-indent': ['error', 2],
     // @stylistic
     // '@stylistic/prop-types': 0,
     // '@stylistic/display-name': 'off',
