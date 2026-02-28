@@ -1,7 +1,6 @@
 
-import type { CSSProperties } from 'react'
 
-export type GlobalCssVar = CSSProperties & {
+export interface CSSProperties {
   '--panel-width'?: string
   '--panel-max-height'?: string
   '--panel-font-size'?: string
@@ -11,10 +10,4 @@ export type GlobalCssVar = CSSProperties & {
   '--color-rgb-background' ?: string
   '--color-divider'?: string
 }
-
-
-const cssE:GlobalCssVar = {
-  '--color-background': 'mage',
-}
-
 

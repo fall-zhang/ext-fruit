@@ -8,7 +8,7 @@ describe('Dict/Etymonline/engine', () => {
     const profile = getDefaultProfile() as ProfileMutable
     profile.dicts.all.etymonline.options = {
       chart: true,
-      resultnum: 4
+      resultCount: 4
     }
     return retry(() =>
       search('love', getDefaultConfig(), profile).then(

@@ -1,4 +1,4 @@
-import type { AppConfig } from '@sala/core/src/app-config'
+import type { AppConfig } from '@salad/core/src/app-config'
 import type { Observable } from 'rxjs'
 import { fromEvent, merge, of } from 'rxjs'
 import { map, filter, distinctUntilChanged } from 'rxjs/operators'

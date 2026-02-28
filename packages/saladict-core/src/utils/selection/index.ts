@@ -1,6 +1,4 @@
 import {
-  getText,
-  getSentence,
   getTextFromSelection,
   getSentenceFromSelection
 } from 'get-selection-more'

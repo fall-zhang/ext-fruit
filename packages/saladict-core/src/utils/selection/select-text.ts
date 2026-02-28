@@ -14,10 +14,6 @@ import {
 } from 'rxjs/operators'
 
 
-import {
-  getTextFromSelection,
-  getSentenceFromSelection
-} from 'get-selection-more'
 import { isTypeField } from './helper'
 import { useCallback, useEffect, type MouseEvent } from 'react'
 import { isFirefox } from '../browser'
@@ -25,6 +21,7 @@ import { isTagName } from '../dom'
 import type { AppConfig } from '../../app-config'
 import { isInDictPanel, isInSaladictExternal } from '../../core/saladict-state'
 import { checkSupportedLangs } from '../lang-check'
+import { getSentenceFromSelection, getTextFromSelection } from '../get-selection-more'
 
 export function createSelectTextStream (config: AppConfig | null) {
   if (!config) {
