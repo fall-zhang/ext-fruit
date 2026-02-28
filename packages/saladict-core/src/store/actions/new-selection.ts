@@ -1,7 +1,6 @@
 import type { GlobalState } from '../global-state'
 import type { Writable } from 'type-fest'
 import { newWord } from '../../dict-utils/new-word'
-import { isOptionsPage, isStandalonePage } from '../../core/saladict-state'
 import type { Word } from '../../types/word'
 
 export const newSelection = (state:GlobalState, selection:{
@@ -31,10 +30,6 @@ export const newSelection = (state:GlobalState, selection:{
       ...selection,
       word: newWord(selection.word),
     },
-  }
-
-  if (isOptionsPage()) {
-    return newState
   }
 
   if (selection.word) {
@@ -93,7 +88,7 @@ export const newSelection = (state:GlobalState, selection:{
     }
   }
 
-  if ((state.withQssaPanel && config.qssaPageSel) || isStandalonePage()) {
+  if ((state.withQssaPanel && config.qssaPageSel)) {
     return newState
   }
 
@@ -101,35 +96,18 @@ export const newSelection = (state:GlobalState, selection:{
 
   const { direct, holding, double } = config.mode
 
-  newState.isShowDictPanel = Boolean(
-    state.isPinned ||
-      (isActive &&
-        selection.word &&
-        selection.word.text &&
-        (state.isShowDictPanel ||
-          direct ||
-          (double && selection.dbClick) ||
-          (holding.alt && selection.altKey) ||
-          (holding.shift && selection.shiftKey) ||
-          (holding.ctrl && selection.ctrlKey) ||
-          (holding.meta && selection.metaKey) ||
-          selection.instant)) ||
-      isStandalonePage()
-  )
 
   newState.isShowBowl = Boolean(
     isActive &&
       selection.word &&
       selection.word.text &&
-      !newState.isShowDictPanel &&
       !direct &&
       !(double && selection.dbClick) &&
       !(holding.alt && selection.altKey) &&
       !(holding.shift && selection.shiftKey) &&
       !(holding.ctrl && selection.ctrlKey) &&
       !(holding.meta && selection.metaKey) &&
-      !selection.instant &&
-      !isStandalonePage()
+      !selection.instant
   )
 
   return newState

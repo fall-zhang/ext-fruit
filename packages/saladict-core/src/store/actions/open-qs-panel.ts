@@ -7,7 +7,7 @@ type OpenQSFn = {
 export const openQSPanel:OpenQSFn = state => {
   const { panelWidth, tripleCtrl, qsLocation } = state.config
 
-  if (!tripleCtrl || state.isShowDictPanel) {
+  if (!tripleCtrl) {
     return state
   }
 
@@ -55,8 +55,6 @@ export const openQSPanel:OpenQSFn = state => {
 
   return {
     ...state,
-    isQSPanel: true,
-    isShowDictPanel: true,
     dictPanelCoord: { x, y },
   }
 }

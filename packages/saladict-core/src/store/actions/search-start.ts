@@ -89,10 +89,9 @@ export const searchStart = (payload:{
     return {
       ...state,
       text: word.text,
-      isShowDictPanel: true,
       isExpandMtaBox: false,
       // activeProfile.mtaAutoUnfold === 'always' ||
-      // (activeProfile.mtaAutoUnfold === 'popup' && isPopupPage()),
+      // (activeProfile.mtaAutoUnfold === 'popup' ),
       searchHistory: newSearchHistory,
       historyIndex: newHistoryIndex,
       renderedDicts: dictList,

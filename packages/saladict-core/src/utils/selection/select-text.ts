@@ -4,7 +4,6 @@ import {
   withLatestFrom,
   filter,
   map,
-  mapTo,
   debounce,
   switchMap,
   scan,
@@ -14,18 +13,18 @@ import {
   distinctUntilChanged
 } from 'rxjs/operators'
 
-import { isFirefox } from '../utils/browser'
-import { isInDictPanel, isInSaladictExternal } from '../core/saladict-state'
 
 import {
   getTextFromSelection,
   getSentenceFromSelection
 } from 'get-selection-more'
-import { isTypeField, newSelectionWord } from './helper'
-import { useCallback, useEffect } from 'react'
-import { checkSupportedLangs } from '../utils/lang-check'
-import { isTagName } from '../utils/dom'
-import type { AppConfig } from '../app-config'
+import { isTypeField } from './helper'
+import { useCallback, useEffect, type MouseEvent } from 'react'
+import { isFirefox } from '../browser'
+import { isTagName } from '../dom'
+import type { AppConfig } from '../../app-config'
+import { isInDictPanel, isInSaladictExternal } from '../../core/saladict-state'
+import { checkSupportedLangs } from '../lang-check'
 
 export function createSelectTextStream (config: AppConfig | null) {
   if (!config) {
@@ -290,7 +289,7 @@ function clickPeriodCountStream (
 ) {
   return mouseup$.pipe(
     switchMap(() =>
-      timer(doubleClickDelay).pipe(mapTo(false), startWith(true))
+      timer(doubleClickDelay).pipe(map(() => false), startWith(true))
     ),
     scan((sum: number, flag: boolean) => (flag ? sum + 1 : 0), 0)
   )

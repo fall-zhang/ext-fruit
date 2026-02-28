@@ -1,11 +1,8 @@
 import type { AppConfig } from '@sala/core/src/app-config'
 import type { Observable } from 'rxjs'
 import { fromEvent, merge, of } from 'rxjs'
-import { map, mapTo, filter, distinctUntilChanged } from 'rxjs/operators'
-import type { Word } from '@P/saladict-core/src/dict-utils/new-word'
-import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
-import { message } from '@/_helpers/browser-api'
-import { isTagName } from '@/_helpers/dom'
+import { map, filter, distinctUntilChanged } from 'rxjs/operators'
+import { isTagName } from '../dom'
 
 
 /**
@@ -29,8 +26,8 @@ export function whenKeyPressed (
     map(keySelectior)(
       fromEvent<KeyboardEvent>(window, 'keydown', { capture: true })
     ),
-    mapTo(false)(fromEvent(window, 'keyup', { capture: true })),
-    mapTo(false)(fromEvent(window, 'blur', { capture: true })),
+    map(() => false)(fromEvent(window, 'keyup', { capture: true })),
+    map(() => false)(fromEvent(window, 'blur', { capture: true })),
     of(false)
   ).pipe(
     distinctUntilChanged(), // ignore long press
@@ -81,20 +78,19 @@ export function isBlacklisted (config: AppConfig): boolean {
 }
 
 export async function newSelectionWord (
-  word: Partial<Word> = {}
-): Promise<Word> {
-  const info = await message.send<'PAGE_INFO'>({ type: 'PAGE_INFO' })
-  window.faviconURL = info.faviconURL
-  if (info.pageTitle) {
-    window.pageTitle = info.pageTitle
-  }
-  if (info.pageURL) {
-    window.pageURL = info.pageURL
-  }
-  return newWord({
-    title: info.pageTitle || document.title || '',
-    url: info.pageURL || document.URL || '',
-    favicon: info.faviconURL || '',
-    ...word,
-  })
+) {
+  // const info = await message.send<'PAGE_INFO'>({ type: 'PAGE_INFO' })
+  // window.faviconURL = info.faviconURL
+  // if (info.pageTitle) {
+  //   window.pageTitle = info.pageTitle
+  // }
+  // if (info.pageURL) {
+  //   window.pageURL = info.pageURL
+  // }
+  // return newWord({
+  //   title: info.pageTitle || document.title || '',
+  //   url: info.pageURL || document.URL || '',
+  //   favicon: info.faviconURL || '',
+  //   ...word,
+  // })
 }

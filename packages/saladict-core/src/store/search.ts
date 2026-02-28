@@ -1,10 +1,11 @@
 import { create } from 'zustand'
 import type { Word } from '../types/word'
-import type { AllDicts, DictID } from '../app-config'
+import { getDefaultConfig, type DictID } from '../app-config'
 import { getDefaultProfile, getDefaultSelectDict, type Profile } from '../app-config/profiles'
 import { checkSupportedLangs, countWords } from '../utils/lang-check'
 import type { DictSearchResult } from '../core/trans-api/types'
-import { fetchDictResult } from '../utils/request'
+import type { AllDictsConf } from '../app-config/dicts'
+import { fetchDictResult } from '../core/trans-engine/fetch-trans'
 type RenderDictItem = {
   readonly id: DictID
   readonly searchStatus: 'IDLE' | 'SEARCHING' | 'FINISH'
@@ -16,7 +17,7 @@ export type DictSearchState = {
   text:string
 
   activeProfile: Profile
-  selectedDicts: Array<keyof AllDicts>
+  selectedDicts: Array<keyof AllDictsConf>
   renderedDicts: RenderDictItem[],
 
   historyIndex:number
@@ -49,8 +50,8 @@ export type DictSearchState = {
   }):void
   /** switch to the next or previous history */
   switchHistory(payload: 'prev' | 'next'):void
-
 }
+
 export const useDictSearch = create<DictSearchState>()((set, get) => ({
   text: '',
   activeProfile: getDefaultProfile(),
@@ -139,19 +140,29 @@ export const useDictSearch = create<DictSearchState>()((set, get) => ({
       }
     })
     console.log('⚡️ line:63 ~ word: ', word.text)
-    dictList.forEach(item => {
-      fetchDictResult({
-        id: item.id,
-        text: word.text,
-        payload: {
+    fetchDictResult({
+      id: 'bing',
+      text: word.text,
+      config: getDefaultConfig(),
+      profile: activeProfile.dicts.all,
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
 
-        },
-      }).then(res => {
-        console.log(res)
-      }).catch(err => {
-
-      })
     })
+    // dictList.forEach(item => {
+    //   fetchDictResult({
+    //     id: item.id,
+    //     text: word.text,
+    //     payload: {
+
+    //     },
+    //   }).then(res => {
+    //     console.log(res)
+    //   }).catch(err => {
+
+    //   })
+    // })
   },
   searchEnd (payload:{
     id: DictID

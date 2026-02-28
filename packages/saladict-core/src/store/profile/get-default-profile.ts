@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid'
 import type { MtaAutoUnfold } from './types'
-import type { AllDicts } from '../../app-config'
+import type { AllDictsConf } from '../../app-config'
 import { getAllDicts } from '../../app-config/dicts'
 
 

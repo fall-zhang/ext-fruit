@@ -2,7 +2,6 @@ import type { StateCreator } from 'zustand'
 import { getDefaultConfig, type AppConfig, type DictID } from '../app-config'
 import { getDefaultProfile, type Profile, type ProfileID } from '../app-config/profiles'
 import type { Word } from '../types/word'
-import { isOptionsPage, isPopupPage, isQuickSearchPage, isStandalonePage } from '../core/saladict-state'
 import type { DictSearchResult } from '../core/trans-api/types'
 import { newWord } from '../dict-utils/new-word'
 type RenderDictItem = {
@@ -36,7 +35,6 @@ export interface GlobalState {
   /**
    * 是否为快速面板
    */
-  isQSPanel: boolean
   isQSFocus: boolean
   /**
    * is a standalone quick search panel running
@@ -50,7 +48,6 @@ export interface GlobalState {
     translateCtx: boolean
   }
   isShowBowl: boolean
-  isShowDictPanel: boolean
   isShowMtaBox: boolean
   isExpandMtaBox: boolean
   isExpandWaveformBox: boolean
@@ -104,7 +101,7 @@ export const createSharedSlice: StateCreator<
   const profile = getDefaultProfile()
   const isShowMtaBox = profile.mtaAutoUnfold !== 'hide'
 
-  const isExpandMtaBox = isShowMtaBox && (profile.mtaAutoUnfold === 'once' || profile.mtaAutoUnfold === 'always' || (profile.mtaAutoUnfold === 'popup' && isPopupPage()))
+  const isExpandMtaBox = isShowMtaBox && (profile.mtaAutoUnfold === 'once' || profile.mtaAutoUnfold === 'always' || (profile.mtaAutoUnfold === 'popup'))
   return {
     bears: 0,
     config,
@@ -124,7 +121,6 @@ export const createSharedSlice: StateCreator<
     },
     activeProfile: profile,
     isTempDisabled: true,
-    isQSPanel: isQuickSearchPage(),
     isQSFocus: config.qsFocus,
     withQssaPanel: false,
     wordEditor: {
@@ -135,7 +131,6 @@ export const createSharedSlice: StateCreator<
     },
 
     isShowBowl: false,
-    isShowDictPanel: isStandalonePage(),
     isShowMtaBox,
     isExpandMtaBox,
     isExpandWaveformBox: false,
@@ -143,9 +138,7 @@ export const createSharedSlice: StateCreator<
     isFav: false,
     bowlCoord: { x: 0, y: 0 },
     /** The actual coord of dict panel might be different */
-    dictPanelCoord: isOptionsPage()
-      ? { x: window.innerWidth - config.panelWidth - 20, y: 80 }
-      : { x: 0, y: 0 },
+    dictPanelCoord: { x: 0, y: 0 },
     panelHeight: 30,
 
     panelMaxHeight: (window.innerHeight * config.panelMaxHeightRatio) / 100,

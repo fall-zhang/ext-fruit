@@ -1,12 +1,9 @@
-import { isStandalonePage, isPopupPage, isQuickSearchPage, isOptionsPage } from '../../core/saladict-state'
-
 import { searchStart } from './search-start'
 import { newSelection } from './new-selection'
 import type { StateCreator } from 'zustand'
 import type { AppConfig, DictID } from '../../app-config'
 import type { ProfileID } from '../profile/types'
 import type { Profile } from '../../app-config/profiles'
-import type { DictSearchResult } from '@P/saladict-core/src/core/trans-api/helpers'
 import { AudioManager } from '../../background/audio-manager'
 import { newWord } from '../../dict-utils/new-word'
 import type { Word } from '../../types/word'
@@ -14,9 +11,6 @@ import type { GlobalState } from '../global-state'
 
 export type DictActionSlice = {
   NEW_CONFIG(payload:AppConfig):void
-  SEARCH_START(payload:{
-    word:Word
-  }):void
   /* ------------------------------------------------ *\
      Audio Playing
   \* ------------------------------------------------ */
@@ -28,12 +22,6 @@ export type DictActionSlice = {
 
   /** switch to the next or previous history */
   SWITCH_HISTORY(payload: 'prev' | 'next'):void
-
-  /** request searching text box text from other pages */
-  SEARCH_TEXT_BOX: {
-    /** is popup received */
-    response?: boolean
-  }
 
   /** request closing panel */
   CLOSE_PANEL():void
@@ -76,7 +64,7 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
         isShowMtaBox &&
         (payload.mtaAutoUnfold === 'once' ||
           payload.mtaAutoUnfold === 'always' ||
-          (payload.mtaAutoUnfold === 'popup' && isPopupPage())),
+          (payload.mtaAutoUnfold === 'popup')),
         renderedDicts: state.renderedDicts.filter(({ id }) =>
           payload.dicts.selected.includes(id)
         ),
@@ -108,10 +96,7 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
           isTempDisabled: true,
           isPinned: false,
           // keep showing if it's standalone page
-          isShowDictPanel: isStandalonePage(),
           isShowBowl: false,
-          // also reset quick search panel state
-          isQSPanel: isQuickSearchPage(),
         }
       }
       return {
@@ -149,13 +134,9 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
     })),
 
     OPEN_PANEL: (payload:{ x: number, y: number }) => set((state) => {
-      if (isStandalonePage()) {
-        return state
-      }
       return {
         ...state,
         isPinned: state.config.defaultPinned,
-        isShowDictPanel: true,
         dictPanelCoord: {
           x: payload.x,
           y: payload.y,
@@ -164,16 +145,11 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
     }),
 
     CLOSE_PANEL: () => set(state => {
-      if (isStandalonePage()) {
-        return state
-      }
       AudioManager.getInstance().reset()
       return {
         ...state,
         isPinned: false,
         isShowBowl: false,
-        isShowDictPanel: false,
-        isQSPanel: isQuickSearchPage(),
       }
     }),
 
@@ -223,7 +199,6 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
       text: payload,
       historyIndex: 0,
       isPinned: state.config.defaultPinned,
-      isShowDictPanel: true,
       isShowBowl: false,
     })),
 
@@ -239,15 +214,11 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
           withQssaPanel: payload,
           isPinned: false,
           // no hiding if it's browser action page
-          isShowDictPanel:
-            isPopupPage() || (isOptionsPage() ? state.isShowDictPanel : false),
           isShowBowl: false,
-          isQSPanel: false,
         }
         : {
           ...state,
           withQssaPanel: payload,
-          isQSPanel: isQuickSearchPage(),
         }
     }),
 
@@ -291,21 +262,5 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
         timestamp: (new Date()).getTime(),
       },
     })),
-    SEARCH_TEXT_BOX: () => {
-      set((state) => {
-        const { searchHistory, historyIndex, text } = state
-        state.SEARCH_START({
-          word: searchHistory[historyIndex]?.text === text
-            ? searchHistory[historyIndex]
-            : newWord({
-              text,
-              title: 'Saladict',
-              favicon: 'https://saladict.crimx.com/favicon.ico',
-            }),
-        })
-        return state
-      })
-      return isPopupPage() ? Promise.resolve(true) : Promise.resolve()
-    },
   }
 }
