@@ -1,10 +1,5 @@
 import { useEffect, useState, type FC, type ReactNode } from 'react'
-import {
-  isStandalonePage,
-  isOptionsPage,
-  isPopupPage,
-  isQuickSearchPage
-} from '@P/saladict-core/src/core/saladict-state'
+
 import {
   HistoryBackBtn,
   HistoryNextBtn,
@@ -79,7 +74,7 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
       isInNotebook: store.isFav,
       shouldFocus: false, // is quick search panel or popup page
       //   shouldFocus: !store.isExpandMtaBox && // multiline search box must be folded
-      // (((store.isQSPanel || isQuickSearchPage()) && store.config.qsFocus) || isPopupPage()), // is quick search panel or popup page
+      // (( store.config.qsFocus)), // is quick search panel or popup page
       histories: store.searchHistory,
       historyIndex: store.historyIndex,
       activeProfileId: store.activeProfile.id,
@@ -130,8 +125,6 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
   // let renderType = 'QuickSearchPage'
   // if (isQuickSearchPage()) {
   //   renderType = 'QuickSearchPage'
-  // } else if (isPopupPage()) {
-  //   renderType = 'nothing'
   // } else {
   //   renderType = 'Btns'
   // }
@@ -193,7 +186,6 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
             <FocusBtn
               isFocus={store.isQSFocus}
               onClick={store.toggleQSFocus}
-              disabled={isOptionsPage() || isPopupPage()}
             />
             <SidebarBtn
               onMouseDown={e => {
@@ -203,25 +195,19 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
             />
           </>
         )
-        : isPopupPage()
-          ? null
-          : (
-            <>
-              <PinBtn
-                isPinned={store.isPinned}
-                onClick={store.togglePin}
-                disabled={isOptionsPage() || isPopupPage()}
-              />
-              <CloseBtn t={t} onClick={store.onClose} />
-            </>
-          )} */}
+        :  <>
+            <PinBtn
+              isPinned={store.isPinned}
+              onClick={store.togglePin}
+            />
+            <CloseBtn t={t} onClick={store.onClose} />
+          </>} */}
       {/* {
         renderType === 'QuickSearchPage' && (<>
           <FocusBtn
             t={t}
             isFocus={store.isQSFocus}
             onClick={store.toggleQSFocus}
-            disabled={isOptionsPage() || isPopupPage()}
           />
           <SidebarBtn
             t={t}
@@ -238,7 +224,6 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
             t={t}
             isPinned={store.isPinned}
             onClick={store.togglePin}
-            disabled={isOptionsPage() || isPopupPage()}
           />
           <CloseBtn t={t} onClick={store.onClose} />
         </>

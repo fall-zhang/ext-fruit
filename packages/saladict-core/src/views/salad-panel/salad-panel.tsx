@@ -8,7 +8,6 @@ import { DictList } from './DictList/DictList'
 import { I18nextProvider } from 'react-i18next'
 import './_style.scss'
 import i18n from '../../locales/i18n'
-import { useDictStore } from '../../store'
 import { debounce } from 'es-toolkit'
 import { newWord } from '../../dict-utils/new-word'
 import { SearchBox } from './search-input/search-input'
@@ -18,6 +17,7 @@ import { useDictSearch } from '../../store/search'
 type SaladPanelProps = {
   menuBarProps?:Record<string, any>
   customButton?:ReactNode
+  customFetch?(input: URL | Request | string, init?: RequestInit): Promise<Response>;
 }
 
 export const SaladPanel: FC<SaladPanelProps> = (props) => {
@@ -35,7 +35,7 @@ export const SaladPanel: FC<SaladPanelProps> = (props) => {
       // isInNotebook: store.isFav,
       // shouldFocus: false, // is quick search panel or popup page
       // //   shouldFocus: !store.isExpandMtaBox && // multiline search box must be folded
-      // // (((store.isQSPanel || isQuickSearchPage()) && store.config.qsFocus) || isPopupPage()), // is quick search panel or popup page
+      // // ((store.config.qsFocus)), // is quick search panel or popup page
       // histories: store.searchHistory,
       // historyIndex: store.historyIndex,
       // activeProfileId: store.activeProfile.id,

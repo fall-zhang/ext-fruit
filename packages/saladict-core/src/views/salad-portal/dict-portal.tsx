@@ -18,7 +18,6 @@ export interface DictPanelPortalProps extends DictPanelProps {
 export const DictPanelPortal: FC = () => {
   const props = useDictStore(store => {
     return {
-      show: store.isShowDictPanel,
       coord: store.dictPanelCoord,
       takeCoordSnapshot: store.wordEditor.isShow,
       width: store.config.panelWidth,
@@ -32,19 +31,18 @@ export const DictPanelPortal: FC = () => {
     }
   })
   const {
-    show: showProps,
     panelCSS,
     withAnimation,
     darkMode,
     ...restProps
   } = props
 
-  const showRef = useRef(showProps)
-  const [show, setShow] = useState(showProps)
+  const showRef = useRef(false)
+  const [show, setShow] = useState(false)
 
   useUpdateEffect(() => {
-    setShow(showProps)
-  }, [showProps])
+    setShow(false)
+  }, [show])
 
   // Restore if panel was hidden before snapshot,
   // otherwise ignore.

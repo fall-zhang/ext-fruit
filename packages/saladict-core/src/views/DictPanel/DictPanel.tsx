@@ -11,9 +11,8 @@ import {
 } from 'react'
 import clsx from 'clsx'
 import { useUpdateEffect } from 'react-use'
-// import { SALADICT_PANEL, isInternalPage } from '@/_helpers/saladict'
-import { SALADICT_PANEL, isInternalPage } from '@P/saladict-core/src/core/saladict-state'
-import { HoverBoxContext } from '@sala/core/src/components/HoverBox'
+import { SALADICT_PANEL } from '@P/saladict-core/src/core/saladict-state'
+import { HoverBoxContext } from '@salad/core/src/components/HoverBox'
 import { getScrollbarWidth } from '@P/saladict-core/src/utils/scrollbar-width'
 
 export interface DictPanelProps {
@@ -97,7 +96,7 @@ export const DictPanel: FC<DictPanelProps> = props => {
         style={{
           left: x,
           top: y,
-          zIndex: isInternalPage() ? 999 : 2147483647, // for popups on options page
+          zIndex: 2147483647, // for popups on options page
           width: props.width,
           height: props.height,
           '--panel-width': props.width + 'px',

@@ -4,7 +4,6 @@ import type { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { OptionsBtn } from './MenubarBtns'
 import { HoverBox, type HoverBoxItem } from '@P/saladict-core/src/components/HoverBox'
-import { isOptionsPage } from '@P/saladict-core/src/core/saladict-state'
 import { getProfileName } from 'apps/browser-extension/src/utils/profile-manager'
 
 export interface ProfilesProps {
@@ -55,6 +54,5 @@ export const ProfilePopover: FC<ProfilesProps> = props => {
 }
 
 function ProfilesBtn (props: React.ComponentProps<'button'>) {
-  const { t } = useTranslation(['content'])
-  return <OptionsBtn {...props} t={t} disabled={isOptionsPage()} />
+  return <OptionsBtn {...props} />
 }

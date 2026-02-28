@@ -3,7 +3,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem
-} from '@sala/ui/components/ui/dropdown-menu'
+} from '@salad/ui/components/ui/dropdown-menu'
 import { getSuggests } from '@P/saladict-core/src/utils/getSuggests'
 
 export interface SuggestItem {

@@ -10,7 +10,6 @@ const waveformBox = <WaveformBoxContainer />
 export const DictPanelPortalContainer = () => {
   const props = useDictStore()
   const state = {
-    show: props.isShowDictPanel,
     coord: props.dictPanelCoord,
     takeCoordSnapshot: props.wordEditor.isShow,
     width: props.config.panelWidth,

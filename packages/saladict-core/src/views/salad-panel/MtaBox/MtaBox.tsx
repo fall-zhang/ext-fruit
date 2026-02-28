@@ -3,7 +3,6 @@ import { useRef, useState, useEffect } from 'react'
 import classNames from 'clsx'
 import AutosizeTextarea from 'react-textarea-autosize'
 import { useDictStore } from '@P/saladict-core/src/store'
-import { isPopupPage, isQuickSearchPage } from '@P/saladict-core/src/core/saladict-state'
 import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
 
 export interface MtaBoxProps {
@@ -24,8 +23,7 @@ export const MtaBox: FC = () => {
   const props:MtaBoxProps = useDictStore(state => {
     const shouldFocus = !state.activeProfile.mtaAutoUnfold ||
         state.activeProfile.mtaAutoUnfold !== 'hide' ||
-        ((state.isQSPanel || isQuickSearchPage()) && state.config.qsFocus) ||
-        isPopupPage()
+        state.config.qsFocus
     return {
       text: state.text,
       expand: state.isExpandMtaBox,
