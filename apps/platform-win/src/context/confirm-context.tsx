@@ -1,5 +1,3 @@
-
-
 import type { ReactNode } from 'react'
 import { createContext, useContext, useRef, useState } from 'react'
 
@@ -10,8 +8,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle
-} from '@sala/ui/components/ui/dialog'
-import { Button } from '@sala/ui/components/ui/button'
+} from '@salad/ui/components/ui/dialog'
+import { Button } from '@salad/ui/components/ui/button'
 // 外部系统提供的 context
 interface DialogContextType {
   confirm(opt:{

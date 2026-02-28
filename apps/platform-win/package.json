@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
-    "@sala/ui": "workspace:*",
+    "@salad/ui": "workspace:*",
     "@tanstack/react-router": "^1.163.2",
     "@tanstack/react-router-devtools": "^1.163.2",
     "@tanstack/router-plugin": "^1.163.2",

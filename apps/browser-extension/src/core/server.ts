@@ -1,17 +1,11 @@
 import { message, openUrl } from '@/_helpers/browser-api'
-import { injectDictPanel } from '@/_helpers/injectSaladictInternal'
 import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
 import type {
   SearchFunction,
   DictSearchResult,
   GetSrcPageFunction
 } from '@/components/Dictionaries/helpers'
-import {
-  saveWord,
-  deleteWords,
-  getWordsByText,
-  getWords
-} from './database'
+
 import { AudioManager } from './audio-manager'
 import { QsPanelManager } from './windows-manager'
 import './types'

@@ -264,10 +264,6 @@ export class QsPanelManager {
     this.mainWindowsManager.destroySnapshot()
   }
 
-  isQsPanel (winId?: number): boolean {
-    return winId != null && winId === this.qsPanelId
-  }
-
   async hasCreated (): Promise<boolean> {
     const win = await this.getWin()
     if (!win) {

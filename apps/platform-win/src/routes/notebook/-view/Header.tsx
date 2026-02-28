@@ -8,7 +8,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger
-} from '@sala/ui/components/navigation-menu'
+} from '@salad/ui/components/navigation-menu'
 import { DownloadIcon } from 'lucide-react'
 import type { DBArea } from '@P/saladict-core/src/core/database/types'
 import { useConfirmContext } from '@/context/dialog'

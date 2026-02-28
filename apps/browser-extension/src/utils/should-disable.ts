@@ -1,4 +1,4 @@
-import type { AppConfig } from '@sala/core/src/app-config'
+import type { AppConfig } from '@salad/core/src/app-config'
 
 /**
  * 是否被暂时禁用

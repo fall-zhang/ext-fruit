@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { WordPage } from './-view/WordPage'
+import { WordPage } from './-view'
 
 export const Route = createFileRoute('/notebook/')({
   component: RouteComponent,
