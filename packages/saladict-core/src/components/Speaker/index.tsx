@@ -1,13 +1,15 @@
-import React, {
+import type {
   FC,
-  ComponentProps,
+  ComponentProps
+} from 'react'
+import React, {
   useCallback,
   useState,
   useContext
 } from 'react'
 import { useUpdateEffect } from 'react-use'
-import { timer } from '@/_helpers/promise-more'
-import { isTagName } from '@/_helpers/dom'
+import { timer } from '../../utils/promise-more'
+import { isTagName } from '../../utils/dom'
 
 type StaticSpeakerType = {
   (src: string): Promise<void>
@@ -26,6 +28,7 @@ export interface SpeakerProps {
 
 /**
  * Speaker for playing audio files
+ * 用于播放音频文件
  */
 export const Speaker: FC<SpeakerProps> = props => {
   const [src, setSrc] = useState(() =>
@@ -95,7 +98,7 @@ export const StaticSpeakerContainer: FC<StaticSpeakerContainerProps> = props => 
         Promise.allSettled([timer(1000), onPlayStart(target.href)]).then(() => {
           target.classList.remove('isActive')
         }).catch(err => {
-          console.log('🚀 ~ StaticSpeakerContainer ~ err:', err)
+          console.error('StaticSpeakerContainer ~ err:', err)
         })
       }
     },

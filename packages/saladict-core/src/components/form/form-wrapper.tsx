@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as z from 'zod'
 
-import { Button } from '@sala/ui/components/ui/button'
+import { Button } from '@salad/ui/components/ui/button'
 import {
   Card,
   CardContent,
@@ -12,21 +12,21 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from '@sala/ui/components/ui/card'
+} from '@salad/ui/components/ui/card'
 import {
   Field,
   FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel
-} from '@sala/ui/components/ui/field'
-import { Input } from '@sala/ui/components/ui/input'
+} from '@salad/ui/components/ui/field'
+import { Input } from '@salad/ui/components/ui/input'
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
   InputGroupTextarea
-} from '@sala/ui/components/ui/input-group'
+} from '@salad/ui/components/ui/input-group'
 
 const formSchema = z.object({
   title: z

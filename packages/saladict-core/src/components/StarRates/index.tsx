@@ -19,7 +19,7 @@ export default class StarRates extends React.PureComponent<StarRatesProps> {
 
     const style = {
       height,
-      ...(this.props.style || {})
+      ...(this.props.style || {}),
     }
 
     return (

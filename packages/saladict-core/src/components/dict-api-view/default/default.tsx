@@ -1,3 +1,6 @@
+import { getTTS } from '@P/api-server/trans-api/google/engine'
+import type { ViewProps } from '@P/api-server/types'
+import type { DictID } from '@P/api-server/types/all-dict-conf'
 import type { FC } from 'react'
 import React, {
   useState,
@@ -5,12 +8,10 @@ import React, {
   useLayoutEffect,
   useRef
 } from 'react'
-import type { MachineTranslateResult } from './engine'
 import { Trans, useTranslation } from 'react-i18next'
-import { getTTS } from '../../core/trans-api/google/engine'
-import Speaker from '../Speaker'
-import type { DictID } from '../../app-config'
-import type { ViewProps } from '../../core/trans-api/types'
+import type { MachineTranslateResult } from '../../MachineTrans/engine'
+import { Speaker } from '../../Speaker'
+import type { Language } from '@P/open-trans/languages'
 
 const rtlLangs = new Set([
   'ar', // Arabic
@@ -32,7 +33,7 @@ const TSpeaker = React.memo<{
     src={
       result[source].tts === '#'
         ? () => {
-          const lang = source === 'trans' ? result.tl : result.sl
+          const lang:Language = source === 'trans' ? result.tl : result.sl
           return getTTS(result[source].paragraphs.join(' '), lang)
         }
         : result[source].tts

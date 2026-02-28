@@ -1,7 +1,7 @@
 import type React from 'react'
-import SaladBowlContainer from '@/content/components/SaladBowl/SaladBowl.container'
-import DictPanelContainer from '@/content/components/DictPanel/DictPanel.container'
-import WordEditorContainer from '@/content/components/WordEditor/WordEditor.container'
+import SaladBowlContainer from '@/content/components/SaladBowl/SaladBowl'
+import DictPanelContainer from '@/content/components/DictPanel/DictPanel'
+import WordEditorContainer from '@/content/components/WordEditor/WordEditor'
 import { timer } from '@/_helpers/promise-more'
 import { AntdRootContainer } from './AntdRootContainer'
 
@@ -9,6 +9,7 @@ import './_style.scss'
 import { createRoot } from 'react-dom/client'
 import { createStore } from 'zustand'
 import { useDictStore } from '../../store'
+import { useConfContext } from '../../context/conf-context'
 
 export const initAntdRoot = async (
   render: () => React.ReactNode,
@@ -17,7 +18,7 @@ export const initAntdRoot = async (
   const store = useDictStore(state => state)
 
   // update theme as quickly as possible
-  let { darkMode } = store.getState().config
+  let { darkMode } = store.config
   await switchAntdTheme(darkMode)
   store.subscribe(() => {
     const { config } = store.getState()

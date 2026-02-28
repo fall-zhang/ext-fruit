@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import type { FC, Ref } from 'react'
 import React, { useState, useCallback } from 'react'
 import { ResizeReporter } from 'react-resize-reporter/scroll'
@@ -67,7 +68,7 @@ export const FloatBox: FC<FloatBoxProps> = React.forwardRef(
 
     return (
       <div
-        className={classnames('floatBox-Container', {
+        className={clsx('floatBox-Container', {
           'floatBox-compact': props.compact,
         })}
         style={{ width, height }}

@@ -1,4 +1,3 @@
-$speaker-duration: 1s !default;
 
 .saladict-Speaker {
   display: inline-block;
@@ -20,7 +19,7 @@ $speaker-duration: 1s !default;
 }
 
 .saladict-Speaker.isActive {
-  animation: saladict-Speaker-playing $speaker-duration steps(6) infinite;
+  animation: saladict-Speaker-playing 1s steps(6) infinite;
 }
 
 @keyframes saladict-Speaker-playing {
