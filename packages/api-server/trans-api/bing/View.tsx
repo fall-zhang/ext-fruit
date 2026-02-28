@@ -1,12 +1,13 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
+import React from 'react'
 import Speaker from '@/components/Speaker'
-import {
+import type {
   BingResult,
   BingResultLex,
   BingResultMachine,
   BingResultRelated
 } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
+import type { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictBing: FC<ViewProps<BingResult>> = ({ result }) => {
@@ -24,7 +25,7 @@ export const DictBing: FC<ViewProps<BingResult>> = ({ result }) => {
 
 export default DictBing
 
-function renderLex(result: BingResultLex) {
+function renderLex (result: BingResultLex) {
   return (
     <>
       <h1 className="dictBing-Title">{result.title}</h1>
@@ -85,11 +86,11 @@ function renderLex(result: BingResultLex) {
   )
 }
 
-function renderMachine(result: BingResultMachine) {
+function renderMachine (result: BingResultMachine) {
   return <p>{result.mt}</p>
 }
 
-function renderRelated(result: BingResultRelated) {
+function renderRelated (result: BingResultRelated) {
   return (
     <>
       <h1 className="dictBing-Related_Title">{result.title}</h1>

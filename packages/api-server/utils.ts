@@ -14,12 +14,12 @@ export function handleNetWorkError (): Promise<never> {
 /**
  * Get chs-chz transform function on-demand.
  * The dict object is huge.
+ *
+ * 将简体中文，翻译成繁体中文
  * @param langCode
  */
-export async function getChsToChz (): Promise<(text: string) => string>
-export async function getChsToChz (langCode: string): Promise<null | ((text: string) => string)>
-export async function getChsToChz (langCode?: string): Promise<null | ((text: string) => string)> {
-  return langCode == null || ['zh-TW', 'zh-HK'].includes(langCode)
+export function getChsToChz (langCode: string): null | ((text: string) => string) {
+  return ['zh-TW', 'zh-HK'].includes(langCode)
     ? chsToChz
     : null
 }

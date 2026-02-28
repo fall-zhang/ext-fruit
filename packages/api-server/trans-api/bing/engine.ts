@@ -1,4 +1,3 @@
-import { fetchDirtyDOM } from '@P/saladict-core/src/utils/fetch-dom'
 import type {
   SearchFunction,
   GetSrcPageFunction,
@@ -12,6 +11,7 @@ import {
   getChsToChz
 } from '../helpers'
 import type { DictConfigs } from '@P/saladict-core/src/app-config'
+import { fetchDirtyDOM } from '../../trans-engine/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text =>
   'https://cn.bing.com/dict/search?q=' +
@@ -79,19 +79,47 @@ type BingSearchResultLex = DictSearchResult<BingResultLex>
 type BingSearchResultMachine = DictSearchResult<BingResultMachine>
 type BingSearchResultRelated = DictSearchResult<BingResultRelated>
 
-export const search: SearchFunction<BingResult> = (
-  text,
+export const getSearchURL = (word:string) => {
+  return DICT_LINK + encodeURIComponent(word.replace(/\s+/g, ' '))
+}
+
+export const handleSearchRes = async ({
   config,
-  profile
+  profile,
+}) => {
+  const transform = getChsToChz(config.langCode)
+
+  if (doc.querySelector('.client_def_hd_hd')) {
+    return handleLexResult(doc, bingConfig.options, transform)
+  }
+
+  if (doc.querySelector('.client_trans_head')) {
+    return handleMachineResult(doc, transform)
+  }
+
+  if (bingConfig.options.related) {
+    if (doc.querySelector('.client_do_you_mean_title_bar')) {
+      return handleRelatedResult(doc, transform)
+    }
+  }
+
+  return handleNoResult<DictSearchResult<BingResult>>()
+}
+
+export const search: SearchFunction<BingResult> = async (
+  text,
+  {
+    config,
+    profile,
+  }
 ) => {
   const bingConfig = profile.dicts.all.bing
 
   return fetchDirtyDOM(
     DICT_LINK + encodeURIComponent(text.replace(/\s+/g, ' '))
   )
-    .catch(handleNetWorkError)
     .then(async doc => {
-      const transform = await getChsToChz(config.langCode)
+      const transform = getChsToChz(config.langCode)
 
       if (doc.querySelector('.client_def_hd_hd')) {
         return handleLexResult(doc, bingConfig.options, transform)
@@ -109,6 +137,7 @@ export const search: SearchFunction<BingResult> = (
 
       return handleNoResult<DictSearchResult<BingResult>>()
     })
+    .catch(handleNetWorkError)
 }
 
 function handleLexResult (

@@ -1,15 +1,17 @@
 import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+import type {
+  SearchFunction,
+  GetSrcPageFunction,
+  HTMLString,
+  DictSearchResult
+} from '../helpers'
 import {
   handleNoResult,
   handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
   getOuterHTML,
-  HTMLString,
   externalLink,
   getText,
-  removeChildren,
-  DictSearchResult
+  removeChildren
 } from '../helpers'
 import { getStaticSpeakerString, getStaticSpeaker } from '@/components/Speaker'
 
@@ -39,7 +41,7 @@ export const search: SearchFunction<WeblioejjeResult> = (
     .then(handleDOM)
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document
 ): WeblioejjeSearchResult | Promise<WeblioejjeSearchResult> {
   const result: WeblioejjeResult = []
