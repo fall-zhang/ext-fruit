@@ -2,13 +2,12 @@ import type { ReadonlyDeep } from 'type-fest'
 import { getAllContextMenus } from './context-menus'
 import type { MtaAutoUnfold as _MtaAutoUnfold } from './profiles'
 import { getDefaultDictAuths } from './auth'
-import type { getAllDicts } from './dicts'
 import type { ConfigType } from './config-type'
+import type { AllDictsConf, getAllDicts } from '@P/api-server/types/all-dict-conf'
 
 
-type DictConfigsMutable = ReturnType<typeof getAllDicts>
-export type DictConfigs = ReadonlyDeep<DictConfigsMutable>
-export type DictID = keyof DictConfigsMutable
+export type DictConfigs = ReadonlyDeep<AllDictsConf>
+export type DictID = keyof AllDictsConf
 export type MtaAutoUnfold = _MtaAutoUnfold
 
 export type AppConfigMutable = ConfigType
@@ -139,9 +138,6 @@ export function getDefaultConfig ():ConfigType {
     /** should panel be in a standalone window */
     qsStandalone: true,
 
-    /** standalone panel height */
-    qssaHeight: 600,
-
     /** resize main widnow to leave space to standalone window */
     qssaSidebar: '',
 
@@ -220,7 +216,6 @@ export function getDefaultConfig ():ConfigType {
     /** URLs, [regexp.source, match_pattern] */
     whitelist: [],
     /** URLs, [regexp.source, match_pattern] */
-    // tslint:disable-next-line: no-unnecessary-type-assertion
     blacklist: [
       ['^https://stackedit\\.io(/.*)?$', 'https://stackedit.io/*'],
       ['^https://docs\\.google\\.com(/.*)?$', 'https://docs.google.com/*'],

@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid'
-import { getAllDicts, type AllDictsConf } from './dicts'
 import type { ReadonlyDeep } from 'type-fest'
+import type { AllDictsConf } from '@P/api-server/types/all-dict-conf'
+import { getAllDicts } from '@P/api-server/types/all-dict-conf'
 
 export type MtaAutoUnfold = '' | 'once' | 'always' | 'popup' | 'hide'
 

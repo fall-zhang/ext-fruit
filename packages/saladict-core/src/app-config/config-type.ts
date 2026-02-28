@@ -55,10 +55,13 @@ export type ConfigType = {
   /** disable selection on type fields, like input and textarea */
   noTypeField: boolean,
 
-  /** use animation for transition */
+  /**
+   * use animation for transition
+   * 是否开启应用动画
+   */
   animation: boolean,
 
-  /** language code for locales */
+  /** language code for locales 本地 Language Code */
   langCode: LangCode,
 
   /** panel width */
@@ -132,9 +135,6 @@ export type ConfigType = {
 
   /** should panel be in a standalone window */
   qsStandalone: boolean,
-
-  /** standalone panel height */
-  qssaHeight: number,
 
   /** resize main widnow to leave space to standalone window */
   qssaSidebar: '' | 'left' | 'right',
