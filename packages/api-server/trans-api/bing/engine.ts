@@ -1,17 +1,17 @@
+import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
 import type {
   SearchFunction,
   GetSrcPageFunction,
   DictSearchResult
-} from '../types'
+} from '../../types'
 import {
   handleNoResult,
   handleNetWorkError,
   getText,
   getInnerHTML,
   getChsToChz
-} from '../helpers'
+} from '../../utils'
 import type { DictConfigs } from '@P/saladict-core/src/app-config'
-import { fetchDirtyDOM } from '../../trans-engine/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text =>
   'https://cn.bing.com/dict/search?q=' +
@@ -84,6 +84,7 @@ export const getSearchURL = (word:string) => {
 }
 
 export const handleSearchRes = async ({
+  doc,
   config,
   profile,
 }) => {

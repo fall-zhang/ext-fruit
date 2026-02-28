@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
-import { ViewProps } from '@/components/dictionaries/helpers'
-import { JikipediaResult } from './engine'
+import type { FC } from 'react'
+import type { ViewProps } from '@/components/dictionaries/helpers'
+import type { JikipediaResult } from './engine'
 import { StrElm } from '@/components/StrElm'
 
 export const Jikipedia: FC<ViewProps<JikipediaResult>> = ({ result }) => (

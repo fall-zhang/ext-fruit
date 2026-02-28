@@ -15,7 +15,12 @@ type Languages = ArrayValues<typeof languages>
 export type SupportedLangs = {
   [key in Languages | 'others' | 'matchAll']: boolean
 }
-export interface DictItemBase<Lang> {
+
+/**
+ * 每个 API 都需要实现的配置
+ * config for every API
+ */
+export interface DictItemBase {
   /**
    * Supported language: en, zh-CN, zh-TW, ja, kor, fr, de, es
    * `1` for supported
@@ -44,9 +49,12 @@ export interface DictItemBase<Lang> {
     min: number
     max: number
   }
-  /** Word count to start searching */
-  preferredHeight: number
+}
 
+/**
+ * 额外的 options 配置
+ */
+export type DictItemOption<Lang> = {
   options: {
   /** Keep linebreaks */
     keepLF: 'none' | 'all'
@@ -58,7 +66,7 @@ export interface DictItemBase<Lang> {
   optionsSel: {
     keepLF: Array<'none' | 'all'>
     slInitial: ['collapse', 'hide', 'full'],
-    tl: Array< Lang | 'default'>,
-    tl2: Array< Lang | 'default'>,
+    tl: Array<Lang | 'default'>,
+    tl2: Array<Lang | 'default'>,
   },
 }

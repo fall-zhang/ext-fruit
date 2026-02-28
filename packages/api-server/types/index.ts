@@ -2,7 +2,7 @@
 import type AxiosMockAdapter from 'axios-mock-adapter'
 import type { Word } from '@P/saladict-core/src/types/word'
 import type { AppConfig, DictID } from '@P/saladict-core/src/app-config'
-import type { AllDictsConf } from './types/all-dict-conf'
+import type { AllDictsConf } from './all-dict-conf'
 /** Fetch and parse dictionary search result */
 export interface SearchFunction<Result, Payload = unknown> {
   (
@@ -24,9 +24,9 @@ export interface DictSearchResult<Result> {
     us?: string
     py?: string
   }
-  /** generate menus on dict titlebars */
+  /** generate menus on dict title bars */
   catalog?: Array<
-    | {
+    {
       // <button>
       key: string
       value: string

@@ -1,7 +1,7 @@
 import type { Language } from '@P/open-trans/languages'
 import type { SupportedLangs } from './utils/lang-check'
 
-export interface DictItemBase<Lang> {
+interface DictItemBase<Lang> {
   /**
    * Supported language: en, zh-CN, zh-TW, ja, kor, fr, de, es
    * `1` for supported
@@ -24,9 +24,6 @@ export interface DictItemBase<Lang> {
     min: number
     max: number
   }
-  /** Word count to start searching */
-  preferredHeight: number
-
   options: {
   /** Keep linebreaks */
     keepLF: 'none' | 'all'
@@ -38,8 +35,8 @@ export interface DictItemBase<Lang> {
   optionsSel: {
     keepLF: Array<'none' | 'all'>
     slInitial: ['collapse', 'hide', 'full'],
-    tl: Array< Lang | 'default'>,
-    tl2: Array< Lang | 'default'>,
+    tl: Array<Lang | 'default'>,
+    tl2: Array<Lang | 'default'>,
   },
 }
 export type ExtractLangFromConfig<Config> = Config extends DictItemBase<
@@ -53,8 +50,8 @@ export function machineConfig<Config extends DictItemBase<Language>> (
   langs: ExtractLangFromConfig<Config>[],
   /** overwrite configs */
   config: Partial<Config>
-):DictItemBase<ExtractLangFromConfig<Config>> {
-  const setting:DictItemBase<ExtractLangFromConfig<Config>> = {
+): DictItemBase<ExtractLangFromConfig<Config>> {
+  const setting: DictItemBase<ExtractLangFromConfig<Config>> = {
     lang: '11111111',
     selectionLang: {
       english: true,
@@ -78,13 +75,12 @@ export function machineConfig<Config extends DictItemBase<Language>> (
       others: true,
       matchAll: false,
     },
-    preferredHeight: 320,
     selectionWC: {
       min: 1,
       max: 9999999,
     },
     options: {
-      keepLF: 'webpage',
+      keepLF: 'all',
       slInitial: 'collapse',
       tl: 'default',
       tl2: 'default',

@@ -30,7 +30,7 @@ type SelOptionType = {
  * Get Machine Translate arguments
  * @return 当前语言，目标语言，翻译 text
  */
-export async function getMTArgsE (
+export async function getMTArgs (
   translator: Translator,
   recText: string,
   opt:SelOptionType

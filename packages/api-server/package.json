@@ -6,8 +6,7 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./components/*": "./src/components/*.ts",
-    "./*": "./src/*"
+    "./*": "./*"
   },
   "scripts": {
     "build": "npm run build:pre && npm run build:js",

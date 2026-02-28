@@ -1,11 +1,11 @@
 
 import type { MachineDictItem } from '@P/saladict-core/src/components/MachineTrans/engine'
-import { machineConfig } from '@P/saladict-core/src/components/MachineTrans/engine'
 
 import type { Language } from '@P/open-trans/translator'
+import { machineConfig } from '@P/api-server/gen-trans-conf'
+import type { SubUnion } from '@P/saladict-core/src/types/utils'
 
 // import { SubUnion } from '@/typings/helpers'
-import type { SubUnion } from '@P/saladict-core/src/types/helpers'
 
 export type CaiyunLanguage = SubUnion<Language, 'zh-CN' | 'en' | 'ja'>
 
