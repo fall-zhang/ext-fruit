@@ -1,17 +1,50 @@
 ## 当前内容
 
-- [ ] 将 redux 转换为 zustand
-- [ ] 将 _helpers 中的内容全部迁移到对应的模块内
-- [ ] 搜索 useSelector，用 zustand 的 useDictStore 替换
+- [x] 将 redux 转换为 zustand
+- [x] 更新 database
+- [x] 更新 i18n
+- [x] 将 _helpers 中的内容全部迁移到对应的模块内
+- [x] 使用 css 变量替代 scss 的变量
+- [x] 使用 @tanstack/react-router 实现路由
+- [x] 搜索 useSelector，用 zustand 的 useDictStore 替换
+- [ ] 使应用可以打包
+- [ ] 应用类型正确
+- [ ] 所有导出内容，都直接从 @salad/core 中直接获取
+- [ ] core 中需要的功能
+  - [ ] 翻译面板，给出一个单词，或者一句话，然后就进行翻译
+  - [ ] 查询服务
+  - [ ] 插件服务，可以载入自定义翻译插件
+  - [ ] 单词查询的历史
+  - [ ] 完整的，仅查词的面板
+  - [ ] 监听当前页面选中的文本，然后在右上角给弹出一个框的组件
+  - [ ] 一个弹窗组件
+  - [ ] 一个翻译组件
+  - [ ] 一个 portal 组件，用于内嵌
+- [ ] 简化 core 模块，多余模块从 core 中移出
+  - [ ] 词典保存功能，当前是保存到浏览器的 indexDB 中，流量器插件只能保存在这里，其它平台可以保存到本地，提供一个默认模块
+  - [ ] 单词同步功能，非核心功能
+  - [ ] profile 一整套配置的保存，不许要在核心实现
+  - [ ] 配置功能，需要从 core 中移出，core 并不提供这些功能，只需要读取配置即可
+  - [ ] 更多的词典配置
 - [ ] 用 zustand 的 useDictStore 替换 useDispatch
-- [ ] 使用 @tanstack/react-router 实现路由
-- [ ] 使用 css 变量替代 scss 的变量
-- [ ] 先能跑通一个组件 NoteBook
-  - [ ] 发现需要更新 database
-  - [ ] 发现需要更新 i18n
 - [ ] 需要移除的 package
-  - [ ] react-redux 原因，使用 zustand 代替，更好的 React 支持
+  - [ ] react-redux 原因，使用 zustand 代替，更少的模板代码
   - [ ] react-transition-group 原因，之后会使用新的动画，motion 代替
   - [ ] observable-hooks 原因，作者自己写的库，不具有普遍性，和 rxjs 深度绑定，额外增加软件复杂度
 - [ ] 当点击托盘图标的时候，展示翻译 panel
 - [ ] 当前有一个配置页面，如果可以作为组件使用，可以通过操作生成对应的配置
+- [ ] 既然配置被移动到了 core 之外，那么所有用到配置的地方，也都要移动到 core 之外
+  - [ ] 包括各个翻译会用到的配置
+  - [ ] 每个语言的 query 拥有独立的配置
+  - [ ] 在外侧修改语言的配置
+  - [ ] 每一个词典，都有对应的渲染 DOM
+
+## 想要更简单的架构
+
+外部系统同步功能，推后实现
+
+core 只负责对应的组件
+
+只专注于做好当前 win，web-view 平台，做好后再关注额外的平台
+
+以能看的见为导向，尽快实现一个完整的查词搜索功能
