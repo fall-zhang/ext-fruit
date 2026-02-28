@@ -3,10 +3,7 @@ import type { AxiosInstance } from 'axios'
 
 export type Languages = Array<Language>
 
-export type TranslatorEnv = 'node' | 'ext'
-
 export interface TranslatorInit<Config extends object> {
-  env?: TranslatorEnv;
   axios?: AxiosInstance;
   config?: Config;
 }

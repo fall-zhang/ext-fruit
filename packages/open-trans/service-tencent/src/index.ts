@@ -60,7 +60,7 @@ export class Tencent extends Translator<TencentConfig> {
   private static isStubHeaders: { [host: string]: boolean } = {}
 
   private stubHeaders (host: string): void {
-    if (this.env !== 'ext' || Tencent.isStubHeaders[host]) {
+    if (Tencent.isStubHeaders[host]) {
       return
     }
     Tencent.isStubHeaders[host] = true
@@ -82,11 +82,10 @@ export class Tencent extends Translator<TencentConfig> {
 
     // For Chrome >= 72
     // https://developer.chrome.com/extensions/webRequest#life_cycle_footnote
+
     if (
       extGlobal.webRequest.OnBeforeSendHeadersOptions &&
-      extGlobal.webRequest.OnBeforeSendHeadersOptions.hasOwnProperty(
-        'EXTRA_HEADERS'
-      )
+      Object.hasOwn(extGlobal.webRequest.OnBeforeSendHeadersOptions, 'EXTRA_HEADERS')
     ) {
       extraInfoSpec.push('extraHeaders')
     }

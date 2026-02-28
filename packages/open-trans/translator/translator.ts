@@ -1,6 +1,5 @@
 import type {
   Languages,
-  TranslatorEnv,
   TranslatorInit,
   TranslateResult,
   TranslateQueryResult
@@ -12,9 +11,6 @@ import { detectLang } from './detect-lang'
 
 export abstract class Translator<Config extends object = object> {
   axios: AxiosInstance
-
-  protected readonly env: TranslatorEnv
-
   /**
    * 自定义选项
    */
@@ -29,7 +25,6 @@ export abstract class Translator<Config extends object = object> {
    * 可选的axios实例
    */
   constructor (init: TranslatorInit<Config> = {}) {
-    this.env = init.env || 'node'
     this.axios = init.axios || Axios
     this.config = init.config || ({} as Config)
   }

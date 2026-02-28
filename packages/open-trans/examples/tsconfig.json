@@ -13,7 +13,7 @@
     "strict": true,
     "target": "esnext",
     "jsx": "react-jsx",
-    "types": ["node"],
+    "types": [],
     "paths": {
     }
   },
