@@ -81,9 +81,9 @@ export const defaultAllDicts = {
   zdic: zdic(),
 }
 
-export type AllDicts = typeof defaultAllDicts
+export type AllDictsConf = typeof defaultAllDicts
 
-export const getAllDicts = (): AllDicts => cloneDeep(defaultAllDicts)
+export const getAllDicts = (): AllDictsConf => cloneDeep(defaultAllDicts)
 
 interface DictItemBase {
   /**

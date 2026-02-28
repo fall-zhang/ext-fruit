@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid'
-import { getAllDicts, type AllDicts } from './dicts'
+import { getAllDicts, type AllDictsConf } from './dicts'
 import type { ReadonlyDeep } from 'type-fest'
 
 export type MtaAutoUnfold = '' | 'once' | 'always' | 'popup' | 'hide'
@@ -20,9 +20,9 @@ export type ProfileMutable = {
 
   dicts: {
     /** default selected dictionaries */
-    selected: Array<keyof AllDicts>,
+    selected: Array<keyof AllDictsConf>,
     // settings of each dict will be auto-generated
-    all: AllDicts,
+    all: AllDictsConf,
   },
 }
 export type Profile = ReadonlyDeep<ProfileMutable>
@@ -32,7 +32,7 @@ export interface ProfileID {
   name: string
 }
 
-export function getDefaultSelectDict ():Array<keyof AllDicts> {
+export function getDefaultSelectDict ():Array<keyof AllDictsConf> {
   return [
     'bing',
     'cobuild',
@@ -139,7 +139,7 @@ export function sentence (): ProfileStorage {
   allDict.bing.options.related = false
   allDict.bing.options.sentence = 9999
   allDict.cnki.options.dict = false
-  allDict.eudic.options.resultnum = 9999
+  allDict.eudic.options.resultCount = 9999
   allDict.macmillan.options.related = false
   allDict.longman.options.wordfams = false
   allDict.longman.options.collocations = false

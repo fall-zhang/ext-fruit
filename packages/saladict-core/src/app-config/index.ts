@@ -11,9 +11,6 @@ export type DictConfigs = ReadonlyDeep<DictConfigsMutable>
 export type DictID = keyof DictConfigsMutable
 export type MtaAutoUnfold = _MtaAutoUnfold
 
-
-export type AllDicts = ReturnType<typeof getAllDicts>
-
 export type AppConfigMutable = ConfigType
 export type AppConfig = ReadonlyDeep<ConfigType>
 

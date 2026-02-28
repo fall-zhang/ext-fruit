@@ -12,7 +12,7 @@ import {
   getText,
   getFullLink
 } from '../helpers'
-import type { AllDicts } from '@/app-config'
+import type { AllDictsConf } from '@/app-config'
 import { fetchDirtyDOM } from '@P/saladict-core/src/utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {

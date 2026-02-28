@@ -2,7 +2,7 @@
 import type AxiosMockAdapter from 'axios-mock-adapter'
 import type { Word } from '@P/saladict-core/src/types/word'
 import type { DictID, AppConfig } from '../../app-config'
-import type { AllDicts } from '../../app-config/dicts'
+import type { AllDictsConf } from '../../app-config/dicts'
 /** Fetch and parse dictionary search result */
 export interface SearchFunction<Result, Payload = unknown> {
   (
