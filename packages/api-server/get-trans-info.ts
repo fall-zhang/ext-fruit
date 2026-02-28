@@ -1,7 +1,7 @@
 import type { AppConfig } from '@P/saladict-core/src/app-config'
 import type { Language } from '@P/open-trans/languages'
 import type { Translator } from '@P/open-trans/translator'
-import { isContainJapanese, isContainKorean } from './utils/lang-check'
+import { isContainJapanese, isContainKorean } from '@P/api-server/utils/lang-check'
 export interface MachineTranslatePayload<Lang = string> {
   sl?: Lang
   tl?: Lang

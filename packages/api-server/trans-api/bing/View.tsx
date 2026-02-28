@@ -7,8 +7,7 @@ import type {
   BingResultMachine,
   BingResultRelated
 } from './engine'
-import type { ViewProps } from '@/components/dictionaries/helpers'
-import { StrElm } from '@/components/StrElm'
+import type { ViewProps } from '@P/api-server/types'
 
 export const DictBing: FC<ViewProps<BingResult>> = ({ result }) => {
   switch (result.type) {

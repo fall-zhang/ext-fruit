@@ -1,14 +1,15 @@
 
 import type AxiosMockAdapter from 'axios-mock-adapter'
 import type { Word } from '@P/saladict-core/src/types/word'
-import type { DictID, AppConfig } from '../../app-config'
+import type { AppConfig, DictID } from '@P/saladict-core/src/app-config'
+import type { AllDictsConf } from './types/all-dict-conf'
 /** Fetch and parse dictionary search result */
 export interface SearchFunction<Result, Payload = unknown> {
   (
     text: string,
     options:{
       config: AppConfig,
-      profile: AllDicts,
+      profile: AllDictsConf,
       payload: Readonly<Payload>
     }
   ): Promise<DictSearchResult<Result>>
@@ -47,7 +48,7 @@ export interface DictSearchResult<Result> {
 
 /** Return a dictionary source page url for the dictionary header */
 export interface GetSrcPageFunction {
-  (text: string, config: AppConfig, profile: AllDicts): string | Promise<string>
+  (text: string, config: AppConfig, profile: AllDictsConf): string | Promise<string>
 }
 
 /**

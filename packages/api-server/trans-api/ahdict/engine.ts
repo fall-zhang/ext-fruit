@@ -1,16 +1,16 @@
+import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
 import type {
   HTMLString,
   SearchFunction,
   GetSrcPageFunction,
   DictSearchResult
-} from '../types'
+} from '../../types'
 import {
   getText,
   getInnerHTML,
   handleNoResult,
   handleNetWorkError
-} from '../helpers'
-import { fetchDirtyDOM } from '@P/saladict-core/src/core/trans-engine/fetch-dom'
+} from '../../utils'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://ahdictionary.com/word/search.html?q=${text}`

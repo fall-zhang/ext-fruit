@@ -1,4 +1,4 @@
-import { machineConfig, type DictItemBase } from '@P/saladict-core/src/core/trans-engine/get-trans-conf'
+import { machineConfig, type DictItemBase } from '@P/api-server/gen-trans-conf'
 
 import type { Language } from '@P/open-trans/translator'
 import type { SubUnion } from '@P/saladict-core/src/types/utils'

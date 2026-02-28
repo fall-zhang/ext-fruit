@@ -10,7 +10,6 @@ const languages = [
   'spanish',
   'deutsch',
 ] as const
-
 type Languages = ArrayValues<typeof languages>
 
 

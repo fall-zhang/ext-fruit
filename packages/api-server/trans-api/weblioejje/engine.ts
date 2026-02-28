@@ -4,7 +4,7 @@ import type {
   GetSrcPageFunction,
   HTMLString,
   DictSearchResult
-} from '../helpers'
+} from '../utils'
 import {
   handleNoResult,
   handleNetWorkError,
@@ -12,7 +12,7 @@ import {
   externalLink,
   getText,
   removeChildren
-} from '../helpers'
+} from '../utils'
 import { getStaticSpeakerString, getStaticSpeaker } from '@/components/Speaker'
 
 export const getSrcPage: GetSrcPageFunction = text => {

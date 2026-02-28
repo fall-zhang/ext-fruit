@@ -15,7 +15,6 @@ export async function fetchDirtyDOM (
   // fetch(url).then(res => res.text()).then(res => {
   //   console.log('⚡️ line:15 ~ res: ', res)
   // }).catch(err => {
-
   // })
   return fetch(request).then(({ text }) => {
     return text()

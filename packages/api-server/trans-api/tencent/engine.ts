@@ -1,6 +1,6 @@
 import type { SearchFunction, GetSrcPageFunction } from '../helpers'
 import memoizeOne from 'memoize-one'
-import { Tencent } from '@opentranslate/tencent'
+import { Tencent } from '@salad/trans/service-tencent'
 import type {
   MachineTranslateResult,
   MachineTranslatePayload
@@ -15,7 +15,6 @@ import type { TencentLanguage } from './config'
 export const getTranslator = memoizeOne(
   () =>
     new Tencent({
-      env: 'ext',
       config:
         process.env.TENCENT_SECRETID && process.env.TENCENT_SECRETKEY
           ? {

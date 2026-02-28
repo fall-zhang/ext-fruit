@@ -1,5 +1,5 @@
 import memoizeOne from 'memoize-one'
-import { Baidu } from '@sala/trans/service-baidu'
+import { Baidu } from '@salad/trans/service-baidu'
 
 
 import type { BaiduLanguage } from './config'

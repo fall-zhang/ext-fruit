@@ -1,6 +1,6 @@
 import type { SearchFunction, GetSrcPageFunction } from '../types'
 import memoizeOne from 'memoize-one'
-import { Youdao } from '@sala/trans/service-youdao'
+import { Youdao } from '@salad/trans/service-youdao'
 
 
 import type { YoudaotransLanguage } from './config'

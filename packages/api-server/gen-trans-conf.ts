@@ -10,7 +10,6 @@ export interface DictItemBase<Lang> {
   /** Show this dictionary when selection contains words in the chosen languages. */
   selectionLang: SupportedLangs
   /**
-   * If set to true, the dict start searching automatically.
    * Otherwise it'll only start seaching when user clicks the unfold button.
    * Default MUST be true and let user decide.
    */
@@ -56,7 +55,7 @@ export function machineConfig<Config extends DictItemBase<Language>> (
   config: Partial<Config>
 ):DictItemBase<ExtractLangFromConfig<Config>> {
   const setting:DictItemBase<ExtractLangFromConfig<Config>> = {
-    lang: 'zh-CN',
+    lang: '11111111',
     selectionLang: {
       english: true,
       chinese: true,

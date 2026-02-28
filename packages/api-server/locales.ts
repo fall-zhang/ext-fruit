@@ -79,14 +79,13 @@ export function getMachineLocales (
     },
     helps: {
       slInitial: {
-        en:
-          'Source language initial state. If hided can be reopened via dictionary titlebar menu.',
+        en: 'Source language initial state. If hided can be reopened via dictionary titleBar menu.',
         'zh-CN': '原文初始显示状态。隐藏后可通过字典标题栏菜单打开。',
         'zh-TW': '原文初始顯示狀態。隱藏後可通過字典標題欄選單開啟。',
       },
       tl2: {
         en:
-          'Fallback when detected languange and target language are identical.',
+          'Fallback when detected language and target language are identical.',
         'zh-CN': '如果检测的源语言与目标语言相同将自动切换第二目标语言。',
         'zh-TW': '如果檢測的源語言與目標語言相同將自動切換第二目標語言。',
       },

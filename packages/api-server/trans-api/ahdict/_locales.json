@@ -1,6 +1,6 @@
 {
   "name": {
-    "en": "Amercian Heritage Dict",
+    "en": "American Heritage Dict",
     "zh-CN": "美国传统词典",
     "zh-TW": "美國傳統詞典"
   },
@@ -10,7 +10,7 @@
       "zh-CN": "结果数量",
       "zh-TW": "結果數量"
     },
-    "resultnum_unit": {
+    "resultCount_unit": {
       "en": "results",
       "zh-CN": "个",
       "zh-TW": "個"

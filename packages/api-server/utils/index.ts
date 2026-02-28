@@ -1,7 +1,7 @@
 import DOMPurify from 'dompurify'
 import type { Config } from 'dompurify'
-import { isTagName } from '../../utils/dom'
-import chsToChz from '../../utils/chs-to-chz'
+import { isTagName } from './is-tag-name'
+import chsToChz from './chs-to-chz'
 
 export function handleNoResult<T = any> (): Promise<T> {
   return Promise.reject(new Error('NO_RESULT'))
@@ -31,11 +31,6 @@ export function getText (
   parent: ParentNode | null,
   selector?: string,
   transform?: null | ((text: string) => string)
-): string
-export function getText (
-  parent: ParentNode | null,
-  transform?: null | ((text: string) => string),
-  selector?: string
 ): string
 export function getText (
   parent: ParentNode | null,

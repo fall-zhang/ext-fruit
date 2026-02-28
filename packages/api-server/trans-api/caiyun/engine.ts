@@ -1,7 +1,7 @@
 import type { SearchFunction, GetSrcPageFunction } from '../types'
 import memoizeOne from 'memoize-one'
-import { Caiyun } from '@sala/trans/service-caiyun'
-import type { TranslateResult } from '@sala/trans/translator'
+import { Caiyun } from '@salad/trans/service-caiyun'
+import type { TranslateResult } from '@salad/trans/translator'
 
 import { getTranslator as getBaiduTranslator } from '../baidu/engine'
 import type { CaiyunLanguage } from './config'
