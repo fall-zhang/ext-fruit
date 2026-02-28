@@ -2,6 +2,7 @@ import { CloseBtn, PinBtn } from '@P/saladict-core/src/views/salad-panel/MenuBar
 import { SaladPanel } from '@P/saladict-core/src/views/salad-panel/salad-panel'
 import { createFileRoute } from '@tanstack/react-router'
 import { Window } from '@tauri-apps/api/window'
+import { fetch } from '@tauri-apps/plugin-http'
 import { useEffect, useState } from 'react'
 
 /**
@@ -30,6 +31,7 @@ function RouteComponent () {
       setAlwaysOnTop(true)
     }
   }
+
   return <>
     <div data-tauri-drag-region className="app-titlebar flex w-screen justify-end">
       <div className="titlebar-button" onClick={appWindow.minimize}>
@@ -46,11 +48,13 @@ function RouteComponent () {
       <SaladPanel menuBarProps={{
         'data-tauri-drag-region': true,
       }}
+      customFetch={fetch}
       customButton={
         <>
           <PinBtn
             isPinned={isAlwaysOnTop}
             onClick={togglePin}
+
           />
           <CloseBtn onClick={appWindow.close} />
         </>

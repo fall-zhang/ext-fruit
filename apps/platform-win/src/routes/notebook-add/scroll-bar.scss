@@ -1,0 +1,37 @@
+.fancy-scrollbar {
+  overscroll-behavior: contain;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: auto;
+  // Firefox has incorrect track color
+
+  &::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(138, 138, 138, 0.25);;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(138, 138, 138, 0.35);
+  }
+
+  &::-webkit-scrollbar-thumb:active {
+    background-color: rgba(138, 138, 138, 0.6);
+  }
+
+  &::-webkit-scrollbar-thumb:vertical {
+    min-height: 50px;
+  }
+
+  &::-webkit-scrollbar-thumb:horizontal {
+    min-width: 50px;
+  }
+}

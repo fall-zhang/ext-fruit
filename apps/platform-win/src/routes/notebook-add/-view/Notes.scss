@@ -1,6 +1,6 @@
-@import './WordEditorPanel.scss';
-@import './WordCards.scss';
-@import './CtxTransList.scss';
+@use './WordEditorPanel.scss';
+@use './WordCards.scss';
+@use './CtxTransList.scss';
 
 .wordEditorNote-Container {
   display: flex;

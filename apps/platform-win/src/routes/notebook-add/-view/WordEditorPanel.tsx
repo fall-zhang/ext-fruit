@@ -1,6 +1,5 @@
 import type { FC, ReactNode } from 'react'
 import type React from 'react'
-// import { isInternalPage } from '@/_helpers/saladict'
 
 export type WordEditorPanelBtns = Array<{
   type?: 'normal' | 'primary'
@@ -30,7 +29,7 @@ export const WordEditorPanel: FC<WordEditorPanelProps> = props => {
             ×
           </button>
         </header>
-        <div className="wordEditorPanel-Main fancy-scrollbar">
+        <div className="wordEditorPanel-Main ">
           {props.children}
         </div>
         {props.btns && props.btns.length > 0 && (

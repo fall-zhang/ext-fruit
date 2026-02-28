@@ -9,7 +9,6 @@ import type { AppConfig } from '@P/saladict-core/src/app-config'
 
 import type { CtxTranslateResults } from '@P/saladict-core/src/utils/translateCtx'
 import { genCtxText, translateCtxs } from '@P/saladict-core/src/utils/translateCtx'
-import { isOptionsPage } from '@P/saladict-core/src/core/saladict-state'
 
 import { WordCards } from './WordCards'
 import type {
@@ -111,12 +110,10 @@ export const Notes: FC<NotesProps> = props => {
       type: 'normal',
       title: t('content:neverShow'),
       onClick: () => {
-        if (!isOptionsPage()) {
-          console.log('jump to options page')
-          navigate({
-            to: '/configs/',
-          })
-        }
+        console.log('jump to options page')
+        navigate({
+          to: '/configs/',
+        })
       },
     },
     {

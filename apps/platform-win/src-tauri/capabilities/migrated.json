@@ -39,6 +39,13 @@
     "core:window:allow-start-dragging",
     "core:window:allow-set-always-on-top",
     "shell:default",
-    "http:default"
+    {
+      "identifier": "http:default",
+      "allow": [
+        { "url": "https://*.baidu.com" },
+        { "url": "https://ahdictionary.com" },
+        { "url": "https://cn.bing.com" }
+     ]
+    }
   ]
 }
