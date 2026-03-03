@@ -7,7 +7,7 @@ import type { AllDictsConf } from './all-dict-conf'
 export interface SearchFunction<Result, Payload = unknown> {
   (
     text: string,
-    options:{
+    options: {
       config: AppConfig,
       profile: AllDictsConf,
       payload: Readonly<Payload>
@@ -15,7 +15,7 @@ export interface SearchFunction<Result, Payload = unknown> {
   ): Promise<DictSearchResult<Result>>
 }
 
-export interface DictSearchResult<Result> {
+export interface DictSearchResult<Result = unknown> {
   /** search result */
   result: Result
   /** auto play sound */
@@ -46,10 +46,6 @@ export interface DictSearchResult<Result> {
   >
 }
 
-/** Return a dictionary source page url for the dictionary header */
-export interface GetSrcPageFunction {
-  (text: string, config: AppConfig, profile: AllDictsConf): string | Promise<string>
-}
 
 /**
  * For testing and storybook.

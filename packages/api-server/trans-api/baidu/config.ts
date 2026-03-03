@@ -1,4 +1,5 @@
-import { machineConfig, type DictItemBase } from '@P/api-server/gen-trans-conf'
+import { machineConfig } from '@P/api-server/gen-trans-conf'
+import type { DictItemBase, DictItemOption } from '@P/api-server/types/dict-base'
 
 import type { Language } from '@P/open-trans/translator'
 import type { SubUnion } from '@P/saladict-core/src/types/utils'
@@ -8,7 +9,7 @@ export type BaiduLanguage = SubUnion<
   'zh-CN' | 'zh-TW' | 'en' | 'ja' | 'ko' | 'fr' | 'de' | 'es' | 'ru' | 'nl'
 >
 
-export type BaiduConfig = DictItemBase<BaiduLanguage>
+export type BaiduConfig = DictItemBase & DictItemOption<BaiduLanguage>
 
 export default (): BaiduConfig =>
   machineConfig<BaiduConfig>(

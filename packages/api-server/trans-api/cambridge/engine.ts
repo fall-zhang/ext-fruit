@@ -1,16 +1,18 @@
 import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
 import { getStaticSpeaker } from '@/components/Speaker'
-import { DictConfigs } from '@/app-config'
-import {
+import type { DictConfigs } from '@/app-config'
+import type {
   HTMLString,
+  SearchFunction,
+  GetSrcPageFunction,
+  DictSearchResult
+} from '../../utils'
+import {
   getInnerHTML,
   handleNoResult,
   getText,
   removeChild,
   handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult,
   getFullLink,
   externalLink,
   getChsToChz
@@ -81,7 +83,7 @@ export const search: SearchFunction<CambridgeResult> = async (
     .then(doc => handleDOM(doc, profile.dicts.all.cambridge.options))
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document,
   options: DictConfigs['cambridge']['options']
 ): CambridgeSearchResult | Promise<CambridgeSearchResult> {
@@ -127,14 +129,14 @@ function handleDOM(
 
     result.push({
       id: entryId,
-      html: getInnerHTML(HOST, $entry)
+      html: getInnerHTML(HOST, $entry),
     })
 
     catalog.push({
       key: `#${i}`,
       value: entryId,
       label:
-        '#' + getText($entry, '.di-title') + ' ' + getText($entry, '.posgram')
+        '#' + getText($entry, '.di-title') + ' ' + getText($entry, '.posgram'),
     })
   })
 
@@ -148,7 +150,7 @@ function handleDOM(
 
       result.push({
         id: 'd-cambridge-entry-idiom',
-        html: getInnerHTML(HOST, $idiom)
+        html: getInnerHTML(HOST, $idiom),
       })
     }
   }
@@ -165,7 +167,7 @@ function handleDOM(
       if ($related) {
         result.push({
           id: 'd-cambridge-entry-related',
-          html: getInnerHTML(HOST, $related)
+          html: getInnerHTML(HOST, $related),
         })
       }
     }
@@ -178,7 +180,7 @@ function handleDOM(
   return handleNoResult()
 }
 
-function sanitizeEntry<E extends Element>($entry: E): E {
+function sanitizeEntry<E extends Element> ($entry: E): E {
   // expand button
   $entry.querySelectorAll('.daccord_h').forEach($btn => {
     $btn.parentElement!.classList.add('amp-accordion')

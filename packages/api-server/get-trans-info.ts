@@ -1,4 +1,3 @@
-import type { AppConfig } from '@P/saladict-core/src/app-config'
 import type { Language } from '@P/open-trans/languages'
 import type { Translator } from '@P/open-trans/translator'
 import { isContainJapanese, isContainKorean } from '@P/api-server/utils/lang-check'
@@ -21,7 +20,8 @@ type SelOptionType = {
     tl: ReadonlyArray<'default' | Language>
     tl2: ReadonlyArray<'default' | Language>
   }
-  config: AppConfig,
+  /** 本地当前语言 */
+  localeLang: 'en' | 'zh-CN' | 'zh-TW',
 }
 
 /**
@@ -33,7 +33,7 @@ type SelOptionType = {
 export async function getMTArgs (
   translator: Translator,
   recText: string,
-  opt:SelOptionType
+  opt: SelOptionType
 ): Promise<{ sl: Language; tl: Language; text: string }> {
   let text = recText
   if (opt.dictOption.keepLF === 'none') {
@@ -59,8 +59,8 @@ export async function getMTArgs (
   if (opt.to) {
     tl = opt.to
   } else if (opt.dictOption.tl === 'default') {
-    if (opt.optionAvailable.tl.includes(opt.config.langCode)) {
-      tl = opt.config.langCode
+    if (opt.optionAvailable.tl.includes(opt.localeLang)) {
+      tl = opt.localeLang
     }
   } else {
     tl = opt.dictOption.tl
@@ -73,8 +73,8 @@ export async function getMTArgs (
   if (sl === tl) {
     if (!opt.to) {
       if (opt.dictOption.tl2 === 'default') {
-        if (tl !== opt.config.langCode) {
-          tl = opt.config.langCode
+        if (tl !== opt.localeLang) {
+          tl = opt.localeLang
         } else if (tl !== 'en') {
           tl = 'en'
         } else {

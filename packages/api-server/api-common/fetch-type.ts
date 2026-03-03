@@ -1,6 +1,6 @@
 import type { Language } from '@P/open-trans/languages'
-import type { AllDictsConf } from './all-dict-conf'
-import type { DictSearchResult } from '.'
+import type { DictSearchResult } from '../types'
+import type { AllDictsConf } from '../types/all-dict-conf'
 
 /**
  * 获取该引擎 fetch 方法所需的参数

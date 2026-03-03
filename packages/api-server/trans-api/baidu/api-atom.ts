@@ -1,0 +1,126 @@
+import type { GetSrcPageFunction, GetFetchRequest, HandleFetchResponse } from '@P/api-server/types/dict-fetch'
+import { Baidu } from '@P/open-trans/service-baidu'
+import type { Language } from '@P/open-trans/languages'
+
+import md5 from 'md5'
+
+import { TranslateError } from '@P/open-trans/translator'
+import type { BaiduTranslateError, BaiduTranslateResult } from './type'
+import type { AuthBody } from './auth'
+import { machineResult, type MachineTranslateResult } from '@P/api-server/api-common/result-handle'
+
+
+export const getRequest: GetFetchRequest<AuthBody> = (text, {
+  from,
+  to,
+  option,
+}) => {
+  const salt = Date.now()
+  const searchParam = new URLSearchParams()
+  let baseURL = 'https://api.fanyi.baidu.com/api/trans/vip/translate'
+  if (searchParam.toString()) {
+    baseURL += '?' + searchParam.toString()
+  }
+  return new Request(baseURL, {
+    body: JSON.stringify({
+      from,
+      to,
+      q: text,
+      salt,
+      appid: option?.appid,
+      sign: md5(option?.appid + text + salt + option?.key),
+    }),
+  })
+}
+
+export const handleResponse: HandleFetchResponse<MachineTranslateResult> = async (res, {
+  text,
+  from,
+  to,
+  profile,
+}) => {
+  const data = await res.json()
+  const translateError = data as BaiduTranslateError
+  const error = translateError.error_code
+  if (error) {
+    // https://api.fanyi.baidu.com/api/trans/product/apidoc#joinFile
+    console.error(new Error('[Baidu service]' + error))
+    switch (error) {
+      case '52003':
+      case '54000':
+        throw new TranslateError('AUTH_ERROR', translateError.error_msg)
+      case '54004':
+        throw new TranslateError('USAGE_LIMIT', translateError.error_msg)
+      default:
+        throw new TranslateError('UNKNOWN', translateError.error_msg)
+    }
+  }
+
+  const {
+    trans_result: transResult,
+    from: langDetected,
+  } = data as BaiduTranslateResult
+  const transParagraphs = transResult.map(({ dst }) => dst)
+  const detectedFrom = Baidu.langMapReverse.get(langDetected) || 'auto'
+  const transTTS = getTextSpeech({
+    lang: to,
+    text: transParagraphs.join(' '),
+  })
+  return machineResult(
+    {
+      result: {
+        id: 'baidu',
+        slInitial: profile.baidu.options.slInitial,
+        sl: from,
+        tl: to,
+        searchText: {
+          paragraphs: transResult.map(({ src }) => src),
+          tts: getTextSpeech({ text, lang: detectedFrom }),
+        },
+        trans: {
+          paragraphs: transParagraphs,
+          tts: getTextSpeech({
+            lang: to,
+            text: transParagraphs.join(' '),
+          }),
+        },
+      },
+      audio: {
+        py: transTTS,
+        us: transTTS,
+      },
+    },
+    [...Baidu.langMap.keys()]
+  )
+}
+
+export const getSrcPage: GetSrcPageFunction = (text, langCode, dictProfile) => {
+  let lang
+  if (dictProfile.baidu.options.tl === 'default') {
+    if (langCode === 'zh-CN') {
+      lang = 'zh'
+    } else if (langCode === 'zh-TW') {
+      lang = 'cht'
+    } else {
+      lang = 'en'
+    }
+  } else {
+    lang = dictProfile.baidu.options.tl
+  }
+
+  return `https://fanyi.baidu.com/#auto/${lang}/${text}`
+}
+
+const getTextSpeech = ({
+  text,
+  lang,
+}: {
+  text: string
+  lang: Language
+}) => {
+  return `https://fanyi.baidu.com/gettts?${new URLSearchParams({
+    lan: Baidu.langMap.get(lang !== 'auto' ? lang : 'zh-CN') || 'zh',
+    text,
+    spd: '5',
+  }).toString()}`
+}

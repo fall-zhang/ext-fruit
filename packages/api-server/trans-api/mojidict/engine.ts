@@ -1,7 +1,5 @@
-import type {
-  SearchFunction,
-  GetSrcPageFunction
-} from '../helpers'
+import type { SearchFunction } from '@P/api-server/types'
+import type { GetSrcPageFunction } from '@P/api-server/types/dict-fetch'
 import {
   handleNoResult,
   handleNetWorkError
@@ -167,7 +165,7 @@ export const search: SearchFunction<MojidictResult> = async (
         .slice(1)
     }
 
-    if (result.word && config.autopron.cn.dict === 'mojidict') {
+    if (result.word && config.autoPronounce.cn.dict === 'mojidict') {
       result.word.tts = await getTTS(tarId, 102)
       return { result, audio: { py: result.word.tts } }
     }

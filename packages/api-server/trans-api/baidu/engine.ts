@@ -4,36 +4,14 @@ import { Baidu } from '@salad/trans/service-baidu/index'
 
 import type { BaiduLanguage } from './config'
 import { machineResult, type MachineTranslatePayload, type MachineTranslateResult } from '@P/saladict-core/src/components/MachineTrans/engine'
-import type { GetSrcPageFunction, SearchFunction } from '../../types'
+import type { SearchFunction } from '../../types'
 import { getMTArgs } from '@P/api-server/get-trans-info'
+import { auth } from './auth'
 export const getTranslator = memoizeOne(() =>
   new Baidu({
-    config: undefined,
-    // process.env.BAIDU_APPID && process.env.BAIDU_KEY
-    //   ? {
-    //     appid: process.env.BAIDU_APPID,
-    //     key: process.env.BAIDU_KEY,
-    //   }
-    //   : undefined,
+    config: auth,
   })
 )
-
-export const getSrcPage: GetSrcPageFunction = (text, config, dictProfile) => {
-  let lang
-  if (dictProfile.baidu.options.tl === 'default') {
-    if (config.langCode === 'zh-CN') {
-      lang = 'zh'
-    } else if (config.langCode === 'zh-TW') {
-      lang = 'cht'
-    } else {
-      lang = 'en'
-    }
-  } else {
-    lang = dictProfile.baidu.options.tl
-  }
-
-  return `https://fanyi.baidu.com/#auto/${lang}/${text}`
-}
 
 export type BaiduResult = MachineTranslateResult<'baidu'>
 
@@ -92,7 +70,7 @@ export const search: SearchFunction<
           trans: { paragraphs: [''] },
         },
       },
-      translator.getSupportLanguages()
+      [...Baidu.langMap.keys()]
     )
   }
 }

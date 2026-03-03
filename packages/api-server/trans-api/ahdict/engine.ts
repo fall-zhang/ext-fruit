@@ -2,7 +2,6 @@ import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
 import type {
   HTMLString,
   SearchFunction,
-  GetSrcPageFunction,
   DictSearchResult
 } from '../../types'
 import {
@@ -11,6 +10,7 @@ import {
   handleNoResult,
   handleNetWorkError
 } from '../../utils'
+import type { GetSrcPageFunction } from '@P/api-server/types/dict-fetch'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://ahdictionary.com/word/search.html?q=${text}`
