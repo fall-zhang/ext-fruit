@@ -11,7 +11,7 @@ import {
 } from '@salad/ui/components/navigation-menu'
 import { DownloadIcon } from 'lucide-react'
 import type { DBArea } from '@P/saladict-core/src/core/database/types'
-import { useConfirmContext } from '@/context/dialog'
+import { useConfirmContext } from '@/context/confirm-context'
 export interface WordPageProps {
   t: TFunction
   area: DBArea
@@ -19,14 +19,14 @@ export interface WordPageProps {
   totalCount: number
   selectedCount: number
   onSearchTextChanged: (text: string) => void
-  onExport(ev:React.MouseEvent):void
+  onExport(ev: React.MouseEvent): void
   onDelete: (key: string) => void
 }
 
 export const Header: FC<WordPageProps> = props => {
   const { t } = props
   const confirm = useConfirmContext()
-  const deleteConfirm = (key:'selected' | 'page' | 'all') => {
+  const deleteConfirm = (key: 'selected' | 'page' | 'all') => {
     if (key) {
       confirm.confirm({
         title: t('delete'),

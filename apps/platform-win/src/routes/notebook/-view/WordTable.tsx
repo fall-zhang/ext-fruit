@@ -2,13 +2,13 @@ import type { FC, ReactNode } from 'react'
 import React, { useMemo } from 'react'
 import type { TFunction } from 'i18next'
 import i18next from 'i18next'
-import { Tooltip } from 'antd'
 import type { ColumnsType, TableProps } from 'antd/lib/table'
 import Table from 'antd/lib/table'
 import type { Word } from '@P/saladict-core/src/types/word'
 
 import type { DBArea } from 'apps/browser-extension/src/utils/record-manager'
 import { useTranslation } from 'react-i18next'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@P/ui/components/ui/tooltip'
 
 export const colSelectionWidth = 48
 const colDateWidth = 150
@@ -132,16 +132,22 @@ function renderNote (_: any, record: Word): ReactNode {
   return renderParagraphs(record.note)
 }
 
-function renderDate (datenum: number): ReactNode {
-  const date = new Date(datenum)
+function renderDate (dateNum: number): ReactNode {
+  const date = new Date(dateNum)
   return (
-    <Tooltip
-      key={datenum}
-      placement="topRight"
-      title={date.toLocaleString(i18next.language)}
-    >
-      <>{date.toLocaleDateString(i18next.language)}</>
+    <Tooltip key={dateNum}>
+      <TooltipTrigger>{date.toLocaleDateString(i18next.language)}</TooltipTrigger>
+      <TooltipContent side='top' >
+        <p>{date.toLocaleString(i18next.language)}</p>
+      </TooltipContent>
     </Tooltip>
+    // <Tooltip
+    //   key={datenum}
+    //   placement="topRight"
+    //   title={date.toLocaleString(i18next.language)}
+    // >
+    //   <>{date.toLocaleDateString(i18next.language)}</>
+    // </Tooltip>
   )
 }
 

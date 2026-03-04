@@ -25,7 +25,7 @@ import type { Word } from '@P/saladict-core/src/types/word'
 import { useNavigate } from '@tanstack/react-router'
 
 export interface NotesProps {
-  containerWidth:WordEditorPanelProps['containerWidth']
+  containerWidth: WordEditorPanelProps['containerWidth']
   wordEditor: {
     word: Word
     translateCtx: boolean
@@ -56,7 +56,7 @@ export const Notes: FC<NotesProps> = props => {
       return result
     }, {} as CtxTranslateResults)
   )
-  function getRelatedWords (word:Word) {
+  function getRelatedWords (word: Word) {
     getWordsByText({
       area: 'notebook',
       text: word.text,

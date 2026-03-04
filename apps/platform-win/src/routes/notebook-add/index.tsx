@@ -10,7 +10,7 @@ export const Route = createFileRoute('/notebook-add/')({
 })
 
 function RouteComponent () {
-  const config:AppConfig['ctxTrans'] = {
+  const config: AppConfig['ctxTrans'] = {
     google: false,
     youdaotrans: false,
     baidu: false,
@@ -18,17 +18,17 @@ function RouteComponent () {
     caiyun: false,
     sogou: false,
   }
-  return <div className={`${SALADICT_EXTERNAL} saladict-theme`}
-  >
-    <Notes wordEditor={{
-      word: newWord(),
-      translateCtx: false,
-    }}
-    ctxTrans={config}
-    onClose={function (): void {
-      throw new Error('Function not implemented.')
-    } }
-    containerWidth={0} />
+  return <div className={`${SALADICT_EXTERNAL} saladict-theme`}>
+    <Notes
+      wordEditor={{
+        word: newWord(),
+        translateCtx: false,
+      }}
+      ctxTrans={config}
+      onClose={function (): void {
+        throw new Error('Function not implemented.')
+      } }
+      containerWidth={0} />
 
   </div>
 }

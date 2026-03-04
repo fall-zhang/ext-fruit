@@ -3,11 +3,10 @@ import type React from 'react'
 import { useState, useEffect, useContext } from 'react'
 import { Modal, Layout, Switch } from 'antd'
 import escapeHTML from 'lodash/escape'
-import type { Word } from '@/_helpers/record-manager'
-import { newWord } from '@/_helpers/record-manager'
-import { useTranslate, I18nContext } from '@/_helpers/i18n'
-import { storage } from '@/_helpers/browser-api'
 import { PlaceholderTableMemo } from './PlaceholderTable'
+import type { Word } from '@P/saladict-core/main'
+import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
+import { I18nContext, useTranslation } from 'react-i18next'
 
 const keywordMatchStr = `%(${Object.keys(newWord()).join('|')}|contextCloze)%`
 
@@ -21,7 +20,7 @@ export interface ExportModalProps {
 
 export const ExportModal: FC<ExportModalProps> = props => {
   const lang = useContext(I18nContext)
-  const { t } = useTranslate(['wordpage', 'common'])
+  const { t } = useTranslation(['wordpage', 'common'])
   const [template, setTemplate] = useState('%text%\n%trans%\n%context%\n')
   const [lineBreak, setLineBreak] = useState<LineBreakOption>('')
   const [escape, setEscape] = useState(false)
@@ -29,75 +28,66 @@ export const ExportModal: FC<ExportModalProps> = props => {
   const [output, setOutput] = useState('')
 
   useEffect(() => {
-    setOutput(
-      props.rawWords
-        .map(word =>
-          template.replace(new RegExp(keywordMatchStr, 'g'), (match, k) => {
-            switch (k) {
-              case 'date':
-                return new Date(word.date).toLocaleDateString(lang)
-              case 'trans':
-              case 'note':
-              case 'context':
-              case 'contextCloze': {
-                let text = word[k === 'contextCloze' ? 'context' : k] || ''
-                if (escape) {
-                  text = escapeHTML(text)
-                }
-                switch (lineBreak) {
-                  case 'n':
-                    text = text.replace(/\n|\r\n/g, '\\n')
-                    break
-                  case 'br':
-                    text = text.replace(/\n|\r\n/g, '<br>')
-                    break
-                  case 'p':
-                    text = text
-                      .split(/\n|\r\n/)
-                      .map(line => `<p>${line}</p>`)
-                      .join('')
-                    break
-                  case 'space':
-                    text = text.replace(/\n|\r\n/g, ' ')
-                    break
-                  default:
-                    break
-                }
-                if (k === 'contextCloze' && word.text) {
-                  const matcher = new RegExp(
-                    word.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'),
-                    'gi'
-                  )
-                  text = text.replace(
-                    matcher,
-                    ''.padStart(word.text.length, '_')
-                  )
-                }
-                return text
-              }
-              default:
-                return word[k] || ''
+    setOutput(props.rawWords.map(word =>
+      template.replace(new RegExp(keywordMatchStr, 'g'), (match, k) => {
+        switch (k) {
+          case 'date':
+            return new Date(word.date).toLocaleDateString(lang)
+          case 'trans':
+          case 'note':
+          case 'context':
+          case 'contextCloze': {
+            let text = word[k === 'contextCloze' ? 'context' : k] || ''
+            if (escape) {
+              text = escapeHTML(text)
             }
-          })
-        )
-        .join('\n')
+            switch (lineBreak) {
+              case 'n':
+                text = text.replace(/\n|\r\n/g, '\\n')
+                break
+              case 'br':
+                text = text.replace(/\n|\r\n/g, '<br>')
+                break
+              case 'p':
+                text = text
+                  .split(/\n|\r\n/)
+                  .map(line => `<p>${line}</p>`)
+                  .join('')
+                break
+              case 'space':
+                text = text.replace(/\n|\r\n/g, ' ')
+                break
+              default:
+                break
+            }
+            if (k === 'contextCloze' && word.text) {
+              const matcher = new RegExp(
+                word.text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&'),
+                'gi'
+              )
+              text = text.replace(
+                matcher,
+                ''.padStart(word.text.length, '_')
+              )
+            }
+            return text
+          }
+          default:
+            return word[k] || ''
+        }
+      })
+    )
+      .join('\n')
     )
   }, [props.rawWords, lang, template, lineBreak, escape])
 
   useEffect(() => {
-    storage.sync
-      .get<{
-      wordpageTemplate: string
-      wordpageLineBreak: LineBreakOption
-    }>(['wordpageTemplate', 'wordpageLineBreak'])
-      .then(({ wordpageTemplate, wordpageLineBreak }) => {
-        if (wordpageTemplate != null) {
-          setTemplate(wordpageTemplate)
-        }
-        if (wordpageLineBreak != null) {
-          setLineBreak(wordpageLineBreak)
-        }
-      })
+    const wordpageTemplate = localStorage.getItem('wordpageTemplate')
+    const wordpageLineBreak = localStorage.getItem('wordpageLineBreak')
+    if (wordpageTemplate) {
+      setTemplate(wordpageTemplate)
+    }
+    setLineBreak(wordpageLineBreak)
 
     storage.local
       .get<{
@@ -111,19 +101,19 @@ export const ExportModal: FC<ExportModalProps> = props => {
   }, [])
 
   const exportWords = () => {
-    browser.runtime.getPlatformInfo().then(({ os }) => {
-      const content = os === 'win' ? output.replace(/\r\n|\n/g, '\r\n') : output
-      const file = new Blob([content], { type: 'text/plain;charset=utf-8' })
-      const a = document.createElement('a')
-      a.style.display = 'none'
-      a.href = URL.createObjectURL(file)
-      a.download = `saladict-words-${Date.now()}.txt`
-      // firefox
-      a.target = '_blank'
-      document.body.appendChild(a)
+    const os = 'win'
 
-      a.click()
-    })
+    const content = os === 'win' ? output.replace(/\r\n|\n/g, '\r\n') : output
+    const file = new Blob([content], { type: 'text/plain;charset=utf-8' })
+    const a = document.createElement('a')
+    a.style.display = 'none'
+    a.href = URL.createObjectURL(file)
+    a.download = `saladict-words-${Date.now()}.txt`
+    // firefox
+    a.target = '_blank'
+    document.body.appendChild(a)
+
+    a.click()
   }
 
   return (
