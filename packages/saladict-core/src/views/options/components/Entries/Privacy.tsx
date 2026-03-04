@@ -1,8 +1,7 @@
 import type { FC } from 'react'
-import React from 'react'
 import { Switch } from 'antd'
-import { getConfigPath } from '@/options/helpers/path-joiner'
-import { SaladictForm } from '@/options/components/SaladictForm'
+import { getConfigPath } from '../../helpers/path-joiner'
+import { SaladictForm } from '../SaladictForm'
 
 export const Privacy: FC = () => {
   return (

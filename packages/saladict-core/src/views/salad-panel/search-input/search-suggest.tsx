@@ -14,7 +14,7 @@ export interface SuggestItem {
 export type SuggestProps = {
   /** Search box text */
   open: boolean
-  text:string
+  text: string
 }
 
 /**
@@ -29,7 +29,7 @@ export const SuggestPanel: FC<SuggestProps> = (props) => {
     })
   }, [props.text])
   const [suggestItems, setSuggestItems] = useState<Array<{
-    entry:string
+    entry: string
     explain: string
   }>>([])
   return <DropdownMenu open={props.open}>

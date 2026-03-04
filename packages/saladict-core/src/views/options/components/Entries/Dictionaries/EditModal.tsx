@@ -13,6 +13,7 @@ import { getProfilePath } from '../../../helpers/path-joiner'
 import type { SaladictFormItem } from '../../SaladictForm'
 import { InputNumberGroup } from '../../InputNumberGroup'
 import { SaladictModalForm } from '../../SaladictModalForm'
+import { ChangeEntryContext } from '../../../helpers/change-entry'
 
 export interface EditModalProps {
   dictID?: DictID | null
@@ -23,7 +24,7 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
   const { t, i18n } = useTranslation(['options', 'dicts', 'common', 'langcode'])
   const changeEntry = useContext(ChangeEntryContext)
   const formDirtyRef = useFormDirty()
-  const { dictAuth, AllDictsConf } = useDictStore(
+  const { dictAuth } = useDictStore(
     state => ({
       dictAuth: state.config.dictAuth,
       allDicts: state.activeProfile.dicts.all,

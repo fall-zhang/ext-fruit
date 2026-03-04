@@ -1,11 +1,11 @@
 import type { FC } from 'react'
 import { Input } from 'antd'
-import { getConfigPath } from '@/options/helpers/path-joiner'
 
 
 import { Trans, useTranslation } from 'react-i18next'
 import { useDictStore } from '@P/saladict-core/src/store'
 import { SaladictForm, type SaladictFormItem } from '../SaladictForm'
+import { getConfigPath } from '../../helpers/path-joiner'
 
 export const DictAuths: FC = () => {
   const { t } = useTranslation(['options', 'dicts'])
@@ -23,7 +23,7 @@ export const DictAuths: FC = () => {
     },
   ]
 
-  Object.keys(dictAuths).forEach((dictID:any) => {
+  Object.keys(dictAuths).forEach((dictID: any) => {
     const auth = dictAuths[dictID]
     const configPath = getConfigPath('dictAuth', dictID)
     const title = t(`dicts:${dictID}.name`)
@@ -57,5 +57,5 @@ export const DictAuths: FC = () => {
     })
   })
 
-  return <SaladictForm items={formItems} />
+  return <SaladictForm items={formItems} ref={undefined} />
 }

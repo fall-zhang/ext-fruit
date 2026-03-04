@@ -5,7 +5,6 @@ import type { FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 
 import { useTranslation } from 'react-i18next'
-import { getTitlebarOffset } from 'apps/browser-extension/src/utils/titlebar-offset'
 import { formItemModalLayout } from '../../../helpers/layout'
 
 export interface TitlebarOffsetModalProps {
@@ -23,29 +22,6 @@ export const TitlebarOffsetModal: FC<TitlebarOffsetModalProps> = props => {
   const { t } = useTranslation(['options', 'common'])
   const [offset, setOffset] = useState<TitlebarOffset>()
   const formRef = useRef<FormInstance>(null)
-
-  useEffect(() => {
-    if (props.show) return
-
-    let stale = false
-
-    getTitlebarOffset().then(res => {
-      if (!stale) {
-        setOffset(
-          res || {
-            main: 0,
-            panel: 0,
-          }
-        )
-      }
-    }).catch((err:Error) => {
-      console.warn('⚡️ line:40 ~ err: ', err)
-    })
-
-    return () => {
-      stale = true
-    }
-  }, [props.show])
 
   const onSubmit = () => {
     if (formRef.current) {

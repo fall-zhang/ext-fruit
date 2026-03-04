@@ -9,17 +9,17 @@ export const Pronunciation: FC = () => {
   const { t } = useTranslation(['options', 'common', 'dicts'])
   const autopronLists = useDictStore(state => ({
     cn: state.activeProfile.dicts.all.zdic.options.audio
-      ? state.config.autopron.cn.list
-      : state.config.autopron.cn.list.filter(id => id !== 'zdic'),
-    en: state.config.autopron.en.list,
-    machine: state.config.autopron.machine.list,
+      ? state.config.autoPronounce.cn.list
+      : state.config.autoPronounce.cn.list.filter(id => id !== 'zdic'),
+    en: state.config.autoPronounce.en.list,
+    machine: state.config.autoPronounce.machine.list,
   }))
 
   return (
     <SaladictForm
       items={[
         {
-          name: getConfigPath('autopron', 'cn', 'dict'),
+          name: getConfigPath('autoPronounce', 'cn', 'dict'),
           children: (
             <Select>
               <Select.Option value="">{t('common:none')}</Select.Option>
@@ -32,7 +32,7 @@ export const Pronunciation: FC = () => {
           ),
         },
         {
-          name: getConfigPath('autopron', 'en', 'dict'),
+          name: getConfigPath('autoPronounce', 'en', 'dict'),
           children: (
             <Select>
               <Select.Option value="">{t('common:none')}</Select.Option>
@@ -45,8 +45,8 @@ export const Pronunciation: FC = () => {
           ),
         },
         {
-          name: getConfigPath('autopron', 'en', 'accent'),
-          hide: values => !values[getConfigPath('autopron', 'en', 'dict')],
+          name: getConfigPath('autoPronounce', 'en', 'accent'),
+          hide: values => !values[getConfigPath('autoPronounce', 'en', 'dict')],
           children: (
             <Select>
               <Select.Option value="uk">
@@ -59,7 +59,7 @@ export const Pronunciation: FC = () => {
           ),
         },
         {
-          name: getConfigPath('autopron', 'machine', 'dict'),
+          name: getConfigPath('autoPronounce', 'machine', 'dict'),
           children: (
             <Select>
               <Select.Option value="">{t('common:none')}</Select.Option>
@@ -72,15 +72,15 @@ export const Pronunciation: FC = () => {
           ),
         },
         {
-          name: getConfigPath('autopron', 'machine', 'src'),
-          hide: values => !values[getConfigPath('autopron', 'machine', 'dict')],
+          name: getConfigPath('autoPronounce', 'machine', 'src'),
+          hide: values => !values[getConfigPath('autoPronounce', 'machine', 'dict')],
           children: (
             <Select>
               <Select.Option value="trans">
-                {t('config.autopron.machine.src_trans')}
+                {t('config.autoPronounce.machine.src_trans')}
               </Select.Option>
               <Select.Option value="searchText">
-                {t('config.autopron.machine.src_search')}
+                {t('config.autoPronounce.machine.src_search')}
               </Select.Option>
             </Select>
           ),

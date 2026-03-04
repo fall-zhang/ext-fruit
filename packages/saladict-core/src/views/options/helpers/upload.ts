@@ -4,8 +4,6 @@ import { useTranslation } from 'react-i18next'
 import { setFormDirty } from './use-form-dirty'
 import type { AppConfig } from '@P/saladict-core/src/app-config'
 import type { Profile } from '@P/saladict-core/src/app-config/profiles'
-import { updateProfile } from 'apps/browser-extension/src/utils/profile-manager'
-import { useConfContext } from '@P/saladict-core/src/context/conf-context'
 import { useDictStore } from '@P/saladict-core/src/store'
 import { cloneDeep } from 'es-toolkit'
 
