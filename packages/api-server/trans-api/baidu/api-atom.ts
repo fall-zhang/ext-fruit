@@ -15,21 +15,42 @@ export const getRequest: GetFetchRequest<AuthBody> = (text, {
   to,
   option,
 }) => {
-  const salt = Date.now()
-  const searchParam = new URLSearchParams()
-  let baseURL = 'https://api.fanyi.baidu.com/api/trans/vip/translate'
+  const salt = Date.now().toString()
+  const reqBody = {
+    from: from || 'auto',
+    to: to || 'en',
+    q: text,
+    salt,
+    appid: option?.appid || '',
+    key: option?.key || '',
+    sign: md5(option?.appid + text + salt + option?.key),
+  }
+  // const appid = '20260228002563230'
+  // const key = 'ujv5scyNwqVHs5_pZCaJ'
+  // const reqBody2 = {
+  //   from: 'auto',
+  //   to: 'zh',
+  //   q: 'pink',
+  //   salt: Date.now().toString(),
+  //   appid,
+  //   key,
+  //   sign: md5(appid + 'pink' + salt + key),
+  // }
+  // console.log('⚡️ line:32 ~ reqBody: ', reqBody)
+  // console.log('⚡️ line:32 ~ reqBody: ', reqBody2)
+
+  const searchParam = new URLSearchParams(reqBody)
+  let baseURL = 'https://fanyi-api.baidu.com/api/trans/vip/translate'
   if (searchParam.toString()) {
     baseURL += '?' + searchParam.toString()
   }
+
   return new Request(baseURL, {
-    body: JSON.stringify({
-      from,
-      to,
-      q: text,
-      salt,
-      appid: option?.appid,
-      sign: md5(option?.appid + text + salt + option?.key),
-    }),
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    // body: JSON.stringify(reqBody),
   })
 }
 
@@ -40,6 +61,7 @@ export const handleResponse: HandleFetchResponse<MachineTranslateResult> = async
   profile,
 }) => {
   const data = await res.json()
+  console.log('⚡️ line:50 ~ data: ', data)
   const translateError = data as BaiduTranslateError
   const error = translateError.error_code
   if (error) {

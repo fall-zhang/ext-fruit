@@ -9,6 +9,10 @@ import {
 import md5 from 'md5'
 import qs from 'qs'
 
+/**
+ * 当前语言和百度对应 LangCode 转换
+ * [customLang , BaiduLang]
+ */
 const langMap: [Language, string][] = [
   ['auto', 'auto'],
   ['zh-CN', 'zh'],
@@ -62,6 +66,13 @@ export class Baidu extends Translator<BaiduConfig> {
 
   readonly endpoint = 'https://api.fanyi.baidu.com/api/trans/vip/translate'
 
+  /** Translator lang to custom lang */
+  static readonly langMap = new Map(langMap)
+
+  /** Custom lang to translator lang */
+  static readonly langMapReverse = new Map(
+    langMap.map(([translatorLang, lang]) => [lang, translatorLang])
+  )
 
   protected async query (
     text: string,
@@ -106,7 +117,7 @@ export class Baidu extends Translator<BaiduConfig> {
         case '54000':
           throw new TranslateError('AUTH_ERROR', translateError.error_msg)
         case '54004':
-          throw new TranslateError('USEAGE_LIMIT', translateError.error_msg)
+          throw new TranslateError('USAGE_LIMIT', translateError.error_msg)
         default:
           throw new TranslateError('UNKNOWN', translateError.error_msg)
       }
@@ -134,13 +145,6 @@ export class Baidu extends Translator<BaiduConfig> {
     }
   }
 
-  /** Translator lang to custom lang */
-  private static readonly langMap = new Map(langMap)
-
-  /** Custom lang to translator lang */
-  private static readonly langMapReverse = new Map(
-    langMap.map(([translatorLang, lang]) => [lang, translatorLang])
-  )
 
   getSupportLanguages (): Language[] {
     return [...Baidu.langMap.keys()]

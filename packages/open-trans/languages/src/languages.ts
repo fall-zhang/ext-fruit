@@ -1,3 +1,6 @@
+/**
+ * 对所有语言统一命名
+ */
 export const languages = [
   'af',
   'am',
@@ -121,3 +124,5 @@ export const languages = [
 ] as const
 
 export type Language = typeof languages[number]
+
+export type Locale = { [key in Language]: string }
