@@ -5,8 +5,8 @@ import { Input } from 'antd'
 
 import { Trans, useTranslation } from 'react-i18next'
 import { useDictStore } from '@P/saladict-core/src/store'
-import { SaladictForm, type SaladictFormItem } from '../SaladictForm'
-import { getConfigPath } from '../../helpers/path-joiner'
+import { SaladictForm, type SaladictFormItem } from '../-components/SaladictForm'
+import { getConfigPath } from '../-utils/path-joiner'
 
 export const RouteComponent: FC = () => {
   const { t } = useTranslation(['options', 'dicts'])

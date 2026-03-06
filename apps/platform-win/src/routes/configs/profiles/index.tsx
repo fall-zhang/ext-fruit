@@ -11,13 +11,13 @@ import { BlockOutlined } from '@ant-design/icons'
 //   updateProfileIDList,
 //   addProfile
 // } from '@/_helpers/profile-manager'
-import { SortableList, reorder } from '../../../components/SortableList'
+import { SortableList, reorder } from '../-components/SortableList'
 import { EditNameModal } from './EditNameModal'
 import { useDictStore } from '@P/saladict-core/src/store'
 import { Trans, useTranslation } from 'react-i18next'
 import { getDefaultProfileID, type ProfileID } from '@P/saladict-core/src/app-config/profiles'
-import { useListLayout } from '../../../helpers/layout'
-import { useCheckDictAuth } from '../../../helpers/use-check-dict-auth'
+import { useListLayout } from '../-utils/layout'
+import { useCheckDictAuth } from '../-utils/use-check-dict-auth'
 
 export const Route = createFileRoute('/configs/profiles/')({
   component: RouteComponent,

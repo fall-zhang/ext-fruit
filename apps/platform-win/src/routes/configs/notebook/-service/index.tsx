@@ -4,8 +4,8 @@ import { Switch, Checkbox, Button } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 import { useDictStore } from '@P/saladict-core/src/store'
-import { SaladictForm, type SaladictFormItem } from '../../SaladictForm'
-import { getConfigPath } from '../../../helpers/path-joiner'
+import { SaladictForm, type SaladictFormItem } from '../../-components/SaladictForm'
+import { getConfigPath } from '../../-utils/path-joiner'
 
 const reqSyncService = import.meta.glob('./sync-services/*.tsx')
 
@@ -19,7 +19,7 @@ export const Notebook: FC = () => {
   }>({})
 
 
-  function syncConfig (config:any) {
+  function syncConfig (config: any) {
     const newConfig = {
       ...config,
     }

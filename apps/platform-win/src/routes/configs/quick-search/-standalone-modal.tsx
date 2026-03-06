@@ -4,7 +4,7 @@ import { Select, Slider, Switch, Button } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { searchMode } from '../-components/SearchModes/searchMode'
 import { TitlebarOffsetModal } from './TitlebarOffsetModal'
-import { getConfigPath } from '../../../helpers/path-joiner'
+import { getConfigPath } from '../-utils/path-joiner'
 import { SaladictModalForm } from '../../SaladictModalForm'
 
 export interface StandaloneModalProps {

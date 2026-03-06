@@ -7,8 +7,8 @@ import { v4 as uuid } from 'uuid'
 import { isFirefox } from '@P/saladict-core/src/utils/browser'
 import { useDictStore } from '@P/saladict-core/src/store'
 import { useTranslation } from 'react-i18next'
-import { getConfigPath } from '../../../helpers/path-joiner'
-import { useUpload } from '../../../helpers/upload'
+import { getConfigPath } from '../-utils/path-joiner'
+import { useUpload } from '../-utils/upload'
 
 /**
  * key: menu id

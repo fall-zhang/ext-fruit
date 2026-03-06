@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import type { FC } from 'react'
 import { Switch } from 'antd'
-import { getConfigPath } from '../../helpers/path-joiner'
-import { SaladictForm } from '../SaladictForm'
+import { getConfigPath } from '../-utils/path-joiner'
+import { SaladictForm } from '../-components/SaladictForm'
 
 export const Route = createFileRoute('/configs/privacy/')({
   component: RouteComponent,

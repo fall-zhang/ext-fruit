@@ -8,7 +8,7 @@ import { ExclamationCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { matchPatternToRegExpStr } from '@P/saladict-core/src/utils/matchPatternToRegExpStr'
 import { PatternItem } from './ PatternItem'
 import { useTranslation } from 'react-i18next'
-import { getConfigPath } from '../../helpers/path-joiner'
+import { getConfigPath } from '../../-utils/path-joiner'
 import { useUpload } from '../../helpers/upload'
 
 

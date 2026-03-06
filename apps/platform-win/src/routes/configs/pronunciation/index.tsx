@@ -2,15 +2,15 @@ import { createFileRoute } from '@tanstack/react-router'
 import type { FC } from 'react'
 import { Switch, Select } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { getConfigPath, getProfilePath } from '@/options/helpers/path-joiner'
-import { SaladictForm } from '@/options/components/SaladictForm'
+import { getConfigPath, getProfilePath } from '../-utils/path-joiner'
+import { SaladictForm } from '../-components/SaladictForm'
 import { useDictStore } from '@P/saladict-core/src/store'
 
 export const Route = createFileRoute('/configs/pronunciation/')({
   component: RouteComponent,
 })
 
-function RouteComponent() {
+function RouteComponent () {
   const { t } = useTranslation(['options', 'common', 'dicts'])
   const autopronLists = useDictStore(state => ({
     cn: state.activeProfile.dicts.all.zdic.options.audio

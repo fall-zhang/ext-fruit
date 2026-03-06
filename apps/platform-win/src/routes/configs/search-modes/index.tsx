@@ -4,8 +4,8 @@ import { Switch, Checkbox, Slider } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { searchMode } from './searchMode'
 import { supportedLangs } from '@P/saladict-core/src/utils/lang-check'
-import { getConfigPath, getProfilePath } from '../../../helpers/path-joiner'
-import { SaladictForm } from '../../SaladictForm'
+import { getConfigPath, getProfilePath } from '../-utils/path-joiner'
+import { SaladictForm } from '../-components/SaladictForm'
 
 export const Route = createFileRoute('/configs/search-modes/')({
   component: RouteComponent,
