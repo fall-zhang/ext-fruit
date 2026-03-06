@@ -85,7 +85,6 @@ export const searchStart = (payload:{
         })
     }
 
-    console.log('⚡️ line:49 ~ dictList: ', dictList)
     return {
       ...state,
       text: word.text,

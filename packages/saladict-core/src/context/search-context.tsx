@@ -1,13 +1,14 @@
 import { createContext, useContext, useState, type ReactNode } from 'react'
-import { createStore } from 'zustand'
+import { createStore, useStore } from 'zustand'
 
 import type { Word } from '../types/word'
-import { getDefaultConfig, type DictID } from '../app-config'
+import type { DictID } from '../app-config'
 import { getDefaultProfile, getDefaultSelectDict, type Profile } from '../app-config/profiles'
 import { checkSupportedLangs, countWords } from '../utils/lang-check'
-import type { DictSearchResult } from '../core/trans-api/types'
-import type { AllDictsConf } from '../app-config/dicts'
-import { fetchDictResult } from '../core/trans-engine/fetch-trans'
+import type { DictSearchResult } from '@P/api-server/types'
+import type { AllDictsConf } from '@P/api-server/types/all-dict-conf'
+import { apiMap } from '@P/api-server'
+
 type RenderDictItem = {
   readonly id: DictID
   readonly searchStatus: 'IDLE' | 'SEARCHING' | 'FINISH'
@@ -17,18 +18,18 @@ type RenderDictItem = {
 type CustomFetch = (input: URL | Request | string, init?: RequestInit) => Promise<Response>
 
 export type DictSearchState = {
-  text:string
+  text: string
 
   activeProfile: Profile
   selectedDicts: Array<keyof AllDictsConf>
   renderedDicts: RenderDictItem[],
 
-  historyIndex:number
+  historyIndex: number
   searchHistory: Word[],
 
-  userFoldedDicts: Partial<Record<DictID, boolean >>
-  customFetch:CustomFetch
-  searchStart(payload:{
+  userFoldedDicts: Partial<Record<DictID, boolean>>
+  customFetch: CustomFetch
+  searchStart(payload: {
     /** Search with specific dict */
     id?: DictID
     /** Search specific word */
@@ -44,26 +45,26 @@ export type DictSearchState = {
      * 本次查询，不使用缓存
      */
     noCache?: boolean
-  }):void
+  }): void
 
-  searchEnd(param:{
+  searchEnd(param: {
     id: DictID
     result: any
     catalog?: DictSearchResult<DictID>['catalog']
-  }):void
+  }): void
   /** switch to the next or previous history */
-  switchHistory(payload: 'prev' | 'next'):void
+  switchHistory(payload: 'prev' | 'next'): void
 }
 
-export const BearContext = createContext<BearStore | null>(null)
+export const SearchContext = createContext<SearchStore | null>(null)
 
-type BearStore = ReturnType<typeof createBearStore>
+type SearchStore = ReturnType<typeof createSearchStore>
 
-const createBearStore = (initProps?: {
-  customFetch?:CustomFetch
+const createSearchStore = (initProps?: {
+  customFetch?: CustomFetch
 }) => {
   const DEFAULT_PROPS = {
-    customFetch: fetch,
+    customFetch: initProps?.customFetch || fetch,
   }
   return createStore<DictSearchState>()((set, get) => ({
     ...DEFAULT_PROPS,
@@ -78,7 +79,7 @@ const createBearStore = (initProps?: {
 
     },
     searchStart (payload) {
-      let dictList:RenderDictItem[] = []
+      let dictList: RenderDictItem[] = []
       let word: Word
       const { activeProfile, searchHistory, historyIndex, selectedDicts } = get()
       // 从历史缓存中查找
@@ -144,7 +145,6 @@ const createBearStore = (initProps?: {
               }
             })
         }
-        console.log('⚡️ line:49 ~ dictList: ', dictList)
         return {
           ...state,
           text: word.text,
@@ -154,16 +154,24 @@ const createBearStore = (initProps?: {
         }
       })
       console.log('⚡️ line:63 ~ word: ', word.text)
-      
-      fetchDictResult({
-        id: 'bing',
-        text: word.text,
-        config: getDefaultConfig(),
-        profile: activeProfile.dicts.all,
-      }).then(res => {
-        console.log(res)
-      }).catch(err => {
 
+      const request = apiMap.baidu.getRequest(word.text, {
+        from: 'auto',
+        to: 'zh',
+        option: {
+          appid: '20260228002563230',
+          key: 'ujv5scyNwqVHs5_pZCaJ',
+        },
+      })
+      DEFAULT_PROPS.customFetch(request).then(res => {
+        apiMap.baidu.handleResponse(res, {
+          text: word.text,
+          from: 'auto',
+          to: 'auto',
+          profile: activeProfile.dicts.all,
+        })
+      }).catch(err => {
+        console.warn('⚡️ line:157 ~ err: ', err)
       })
       // dictList.forEach(item => {
       //   fetchDictResult({
@@ -179,7 +187,7 @@ const createBearStore = (initProps?: {
     //   })
     // })
     },
-    searchEnd (payload:{
+    searchEnd (payload: {
       id: DictID
       result: any
       catalog?: DictSearchResult<DictID>['catalog']
@@ -207,24 +215,22 @@ const createBearStore = (initProps?: {
     },
   }))
 }
-export function SearchProvider ({ children, customFetch}:{
-  children:ReactNode
-  customFetch:CustomFetch
+export function SearchProvider ({ children, customFetch}: {
+  children: ReactNode
+  customFetch?: CustomFetch
 }) {
-  const [store] = useState(() => createBearStore({
+  const [store] = useState(() => createSearchStore({
     customFetch,
   }))
   return (
-    <BearContext.Provider value={store}>
+    <SearchContext.Provider value={store}>
       {children}
-    </BearContext.Provider>
+    </SearchContext.Provider>
   )
 }
 
-export const useSearchContext = () => {
-  const store = useContext(BearContext)
+export function useSearchContext<T> (selector: (state: DictSearchState) => T): T {
+  const store = useContext(SearchContext)
   if (!store) throw new Error('Missing BearContext.Provider in the tree')
-  return store
-  // const bears = useStore(store, (s) => s.bears)
-  // const addBear = useStore(store, (s) => s.addBear)
+  return useStore(store, selector)
 }

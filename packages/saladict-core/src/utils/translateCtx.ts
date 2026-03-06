@@ -1,6 +1,6 @@
 import type { AppConfig, DictID } from '../app-config'
 import type { MachineTranslateResult } from '../components/MachineTrans/engine'
-import { fetchDictResult } from './request'
+import { fetchDictResult } from '../core/trans-engine/fetch-trans'
 
 export type CtxTranslatorId = keyof AppConfig['ctxTrans']
 
@@ -14,9 +14,10 @@ export interface FetchDictResultResponse {
 }
 
 /**
- * translate selection context with selected machine translatior
+ * translate selection context with selected machine translator
+ * 使用选中的翻译当前选中模块
  * @param text search text
- * @param id machine translatior id
+ * @param id machine translator id
  */
 export async function translateCtx (
   text: string,
@@ -24,11 +25,8 @@ export async function translateCtx (
 ): Promise<string> {
   try {
     const response = await fetchDictResult({
-      type: 'FETCH_DICT_RESULT',
-      payload: {
-        id,
-        text,
-      },
+      id,
+      text,
     })
 
     return (

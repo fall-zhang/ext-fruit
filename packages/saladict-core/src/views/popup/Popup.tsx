@@ -6,7 +6,7 @@ import React, {
   useLayoutEffect
 } from 'react'
 import classNames from 'clsx'
-import QRCode from 'qrcode.react'
+import QRCode from 'react-qr-code'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import { useTranslation } from 'react-i18next'
 import DictPanelStandaloneContainer from '../DictPanel/DictPanelStandalone.container'

@@ -5,3 +5,4 @@ export {
   OptProvider,
   ConfProvider
 }
+export type { Word } from './src/types/word'

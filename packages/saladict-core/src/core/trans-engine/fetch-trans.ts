@@ -13,10 +13,10 @@ type FetchParam = {
   id: DictID
   text: string
   /** engine search function payload */
-  from?:Language
-  to?:Language
-  config:AppConfigMutable
-  profile:AllDictsConf
+  from?: Language
+  to?: Language
+  config: AppConfigMutable
+  profile: AllDictsConf
 }
 
 export async function fetchDictResult (data: FetchParam): Promise<{
@@ -40,7 +40,7 @@ export async function fetchDictResult (data: FetchParam): Promise<{
         profile: data.profile,
         payload,
       })
-    } catch (e:any) {
+    } catch (e: any) {
       if (e.message === 'NETWORK_ERROR') {
         // retry once
         response = await search(data.text, {
