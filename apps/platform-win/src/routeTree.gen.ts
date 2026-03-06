@@ -17,7 +17,6 @@ import { Route as NotebookIndexRouteImport } from './routes/notebook/index'
 import { Route as NotebookAddIndexRouteImport } from './routes/notebook-add/index'
 import { Route as FormExampleIndexRouteImport } from './routes/form-example/index'
 import { Route as ConfigsIndexRouteImport } from './routes/configs/index'
-import { Route as ConfigsSearchModesIndexRouteImport } from './routes/configs/search-modes/index'
 import { Route as ConfigsQuickSearchIndexRouteImport } from './routes/configs/quick-search/index'
 import { Route as ConfigsPronunciationIndexRouteImport } from './routes/configs/pronunciation/index'
 import { Route as ConfigsProfilesIndexRouteImport } from './routes/configs/profiles/index'
@@ -71,11 +70,6 @@ const FormExampleIndexRoute = FormExampleIndexRouteImport.update({
 const ConfigsIndexRoute = ConfigsIndexRouteImport.update({
   id: '/configs/',
   path: '/configs/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConfigsSearchModesIndexRoute = ConfigsSearchModesIndexRouteImport.update({
-  id: '/configs/search-modes/',
-  path: '/configs/search-modes/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfigsQuickSearchIndexRoute = ConfigsQuickSearchIndexRouteImport.update({
@@ -177,7 +171,6 @@ export interface FileRoutesByFullPath {
   '/configs/profiles/': typeof ConfigsProfilesIndexRoute
   '/configs/pronunciation/': typeof ConfigsPronunciationIndexRoute
   '/configs/quick-search/': typeof ConfigsQuickSearchIndexRoute
-  '/configs/search-modes/': typeof ConfigsSearchModesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -202,7 +195,6 @@ export interface FileRoutesByTo {
   '/configs/profiles': typeof ConfigsProfilesIndexRoute
   '/configs/pronunciation': typeof ConfigsPronunciationIndexRoute
   '/configs/quick-search': typeof ConfigsQuickSearchIndexRoute
-  '/configs/search-modes': typeof ConfigsSearchModesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -228,7 +220,6 @@ export interface FileRoutesById {
   '/configs/profiles/': typeof ConfigsProfilesIndexRoute
   '/configs/pronunciation/': typeof ConfigsPronunciationIndexRoute
   '/configs/quick-search/': typeof ConfigsQuickSearchIndexRoute
-  '/configs/search-modes/': typeof ConfigsSearchModesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -255,7 +246,6 @@ export interface FileRouteTypes {
     | '/configs/profiles/'
     | '/configs/pronunciation/'
     | '/configs/quick-search/'
-    | '/configs/search-modes/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -280,7 +270,6 @@ export interface FileRouteTypes {
     | '/configs/profiles'
     | '/configs/pronunciation'
     | '/configs/quick-search'
-    | '/configs/search-modes'
   id:
     | '__root__'
     | '/'
@@ -305,7 +294,6 @@ export interface FileRouteTypes {
     | '/configs/profiles/'
     | '/configs/pronunciation/'
     | '/configs/quick-search/'
-    | '/configs/search-modes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -331,7 +319,6 @@ export interface RootRouteChildren {
   ConfigsProfilesIndexRoute: typeof ConfigsProfilesIndexRoute
   ConfigsPronunciationIndexRoute: typeof ConfigsPronunciationIndexRoute
   ConfigsQuickSearchIndexRoute: typeof ConfigsQuickSearchIndexRoute
-  ConfigsSearchModesIndexRoute: typeof ConfigsSearchModesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -390,13 +377,6 @@ declare module '@tanstack/react-router' {
       path: '/configs'
       fullPath: '/configs/'
       preLoaderRoute: typeof ConfigsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/configs/search-modes/': {
-      id: '/configs/search-modes/'
-      path: '/configs/search-modes'
-      fullPath: '/configs/search-modes/'
-      preLoaderRoute: typeof ConfigsSearchModesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/configs/quick-search/': {
@@ -523,7 +503,6 @@ const rootRouteChildren: RootRouteChildren = {
   ConfigsProfilesIndexRoute: ConfigsProfilesIndexRoute,
   ConfigsPronunciationIndexRoute: ConfigsPronunciationIndexRoute,
   ConfigsQuickSearchIndexRoute: ConfigsQuickSearchIndexRoute,
-  ConfigsSearchModesIndexRoute: ConfigsSearchModesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

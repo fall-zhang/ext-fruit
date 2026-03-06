@@ -2,10 +2,10 @@ import type { FC } from 'react'
 import { useState } from 'react'
 import { Select, Slider, Switch, Button } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { searchMode } from '../-components/SearchModes/searchMode'
-import { TitlebarOffsetModal } from './TitlebarOffsetModal'
+import { searchMode } from '../-components/search-modes/search-mode'
+import { TitlebarOffsetModal } from './-titlebar-offset-modal'
 import { getConfigPath } from '../-utils/path-joiner'
-import { SaladictModalForm } from '../../SaladictModalForm'
+import { SaladictModalForm } from '../-components/SaladictModalForm'
 
 export interface StandaloneModalProps {
   show: boolean

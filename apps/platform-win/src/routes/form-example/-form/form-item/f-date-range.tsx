@@ -18,7 +18,7 @@ export function DatePickerWithRange () {
   })
 
 
-  let dateText:React.ReactNode = <span>Pick a date</span>
+  let dateText: React.ReactNode = <span>Pick a date</span>
   if (date?.from) {
     if (date.to) {
       dateText = <>

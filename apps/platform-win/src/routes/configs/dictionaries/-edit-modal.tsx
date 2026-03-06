@@ -6,14 +6,14 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import type { Rule } from 'antd/lib/form'
 import { useTranslation } from 'react-i18next'
 import { useDictStore } from '@P/saladict-core/src/store'
-import { setFormDirty, useFormDirty } from '../../../helpers/use-form-dirty'
+import { setFormDirty, useFormDirty } from '../-utils/use-form-dirty'
 import type { DictID } from '@P/saladict-core/src/app-config'
 import { supportedLangs } from '@P/saladict-core/src/utils/lang-check'
 import { getProfilePath } from '../-utils/path-joiner'
-import type { SaladictFormItem } from '../../SaladictForm'
-import { InputNumberGroup } from '../../InputNumberGroup'
-import { SaladictModalForm } from '../../SaladictModalForm'
-import { ChangeEntryContext } from '../../../helpers/change-entry'
+import type { SaladictFormItem } from '../-components/SaladictForm'
+import { InputNumberGroup } from '../-components/InputNumberGroup'
+import { SaladictModalForm } from '../-components/SaladictModalForm'
+import { ChangeEntryContext } from '../-utils/change-entry'
 
 export interface EditModalProps {
   dictID?: DictID | null
@@ -155,7 +155,7 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
               if (optKey === 'tl' || optKey === 'tl2') {
                 const getTranslator:
                   | undefined |
-                  (() => Translator) = import(`@/components/Dictionaries/${dictID}/engine`)
+                  (() => Translator) = import(`@P/api-server/trans-api/${dictID}/engine`)
                     .getTranslator
 
                 const langs = getTranslator

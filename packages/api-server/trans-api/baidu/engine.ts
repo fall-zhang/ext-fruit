@@ -3,17 +3,17 @@ import { Baidu } from '@salad/trans/service-baidu/index'
 
 
 import type { BaiduLanguage } from './config'
-import { machineResult, type MachineTranslatePayload, type MachineTranslateResult } from '@P/saladict-core/src/components/MachineTrans/engine'
 import type { SearchFunction } from '../../types'
-import { getMTArgs } from '@P/api-server/get-trans-info'
+import { getMTArgs, type MachineTranslatePayload } from '@P/api-server/get-trans-info'
 import { auth } from './auth'
+import { machineResult, type MachineTranslateResult } from '@P/api-server/api-common/result-handle'
 export const getTranslator = memoizeOne(() =>
   new Baidu({
     config: auth,
   })
 )
 
-export type BaiduResult = MachineTranslateResult<'baidu'>
+export type BaiduResult = MachineTranslateResult
 
 export const search: SearchFunction<
   BaiduResult,

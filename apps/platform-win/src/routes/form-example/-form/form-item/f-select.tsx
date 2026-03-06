@@ -28,8 +28,8 @@ const spokenLanguages = [
 ] as const
 
 
-export const FormRhfSelect:FAdvanceForm<{
-  items:Array<{ label:string, value:string }>
+export const FormRhfSelect: FAdvanceForm<{
+  items: Array<{ label: string, value: string }>
 }> = ({
   name,
   control,

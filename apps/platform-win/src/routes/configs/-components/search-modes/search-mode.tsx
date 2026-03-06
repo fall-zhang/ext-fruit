@@ -1,8 +1,8 @@
 import { Checkbox, Slider, Select } from 'antd'
 import type { TFunction } from 'i18next'
 
-import type { SaladictFormItem } from '../-components/SaladictForm'
-import { getConfigPath } from '../-utils/path-joiner'
+import type { SaladictFormItem } from '../SaladictForm'
+import { getConfigPath } from '../../-utils/path-joiner'
 
 type Mode = 'mode' | 'pinMode' | 'panelMode' | 'qsPanelMode'
 
