@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { useMemo } from 'react'
 import { Card, List, Switch } from 'antd'
-import { DictTitle } from './DictTitle'
+import { DictTitle } from './-dict-title'
 import { useDictStore } from '@P/saladict-core/src/store'
 import type { DictID } from '@P/saladict-core/src/app-config'
 
