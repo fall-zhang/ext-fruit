@@ -9,7 +9,7 @@ import { matchPatternToRegExpStr } from '@P/saladict-core/src/utils/matchPattern
 import { PatternItem } from './ PatternItem'
 import { useTranslation } from 'react-i18next'
 import { getConfigPath } from '../../-utils/path-joiner'
-import { useUpload } from '../../helpers/upload'
+import { useUpload } from '../../-utils/upload'
 
 
 export interface MatchPatternModalProps {

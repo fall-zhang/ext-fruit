@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 import { resolve as pathResolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { visualizer } from 'rollup-plugin-visualizer'
@@ -48,16 +48,6 @@ export default defineConfig({
       '@C': pathResolve(__dirname, '../platform-web/src/components'),
       '@U': pathResolve(__dirname, '../platform-web/src/utils'),
       '@H': pathResolve(__dirname, '../platform-web/src/hooks'),
-    },
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          react: ['react', 'react-dom'],
-          antd: ['antd'],
-        },
-      },
     },
   },
 }

@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from 'react'
 import React, { useState } from 'react'
-import { Layout, Menu, Affix, Modal } from 'antd'
+import { Modal } from 'antd'
 import {
   SettingOutlined,
   TagsOutlined,
@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next'
 
 import './_style.scss'
 import clsx from 'clsx'
-import { setFormDirty, useFormDirty } from '../../helpers/use-form-dirty'
+import { setFormDirty, useFormDirty } from '../../-utils/use-form-dirty'
 import { Sidebar, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider } from '@P/ui/components/ui/sidebar'
 
 export interface EntrySideBarProps {
@@ -32,9 +32,9 @@ export interface EntrySideBarProps {
   onChange: (entry: string) => void
 }
 
-const MenuItemWrap:FC<{
-  onChangeMenu():void
-  children:ReactNode
+const MenuItemWrap: FC<{
+  onChangeMenu(): void
+  children: ReactNode
 }> = ({ onChangeMenu, children }) => {
   return <SidebarMenuItem>
     <SidebarMenuButton asChild onClick={onChangeMenu}>
@@ -49,7 +49,7 @@ export const EntrySideBar: FC<EntrySideBarProps> = props => {
   const { t } = useTranslation('options')
   const formDirtyRef = useFormDirty()
   // trigger affix rerendering on collapse state changes to update width
-  function onChangeMenu (menu:string) {
+  function onChangeMenu (menu: string) {
     const switchTab = () => {
       props.onChange(menu)
       setFormDirty(false)

@@ -3,13 +3,13 @@ import type { FC } from 'react'
 import { useState, useLayoutEffect } from 'react'
 import { Row, Col } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { SortableList, reorder } from '../../SortableList'
-import { AddModal } from './AddModal'
-import { EditModal } from './EditeModal'
+import { SortableList, reorder } from '../-components/SortableList'
+import { AddModal } from './-add-modal'
+import { EditModal } from './-edit-modal'
 import { useDictStore } from '@P/saladict-core/src/store'
 import { getConfigPath } from '../-utils/path-joiner'
 import { useUpload } from '../-utils/upload'
-import { useListLayout } from '../../../helpers/layout'
+import { useListLayout } from '../-utils/layout'
 
 export const Route = createFileRoute('/configs/context-menus/')({
   component: RouteComponent,

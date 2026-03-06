@@ -1,10 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
-import type { FC } from 'react'
 import { Switch, Select } from 'antd'
 
-import { SaladictForm, type SaladictFormItem } from '../SaladictForm'
+import { SaladictForm, type SaladictFormItem } from '../-components/SaladictForm'
 import { getConfigPath } from '../-utils/path-joiner'
-import { isFirefox, isOpera } from '@P/saladict-core/src/utils/browser'
 export const Route = createFileRoute('/configs/general/')({
   component: RouteComponent,
 })
@@ -22,14 +20,6 @@ function RouteComponent () {
       children: <Switch />,
     },
   ]
-
-  if (!(isFirefox || isOpera)) {
-    formItems.push({
-      name: getConfigPath('runInBg'),
-      valuePropName: 'checked',
-      children: <Switch />,
-    })
-  }
 
   formItems.push(
     {

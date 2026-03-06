@@ -12,7 +12,7 @@ import { BlockOutlined } from '@ant-design/icons'
 //   addProfile
 // } from '@/_helpers/profile-manager'
 import { SortableList, reorder } from '../-components/SortableList'
-import { EditNameModal } from './EditNameModal'
+import { EditNameModal } from './-edit-name-modal'
 import { useDictStore } from '@P/saladict-core/src/store'
 import { Trans, useTranslation } from 'react-i18next'
 import { getDefaultProfileID, type ProfileID } from '@P/saladict-core/src/app-config/profiles'

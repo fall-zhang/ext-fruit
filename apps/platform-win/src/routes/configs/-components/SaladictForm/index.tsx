@@ -9,9 +9,9 @@ import { SaveBtn } from './SaveBtn'
 
 import './_style.scss'
 import { useDictStore } from '@P/saladict-core/src/store'
-import { setFormDirty } from '../../helpers/use-form-dirty'
+import { setFormDirty } from '../../-utils/use-form-dirty'
 import { isFirefox } from '@P/saladict-core/src/utils/browser'
-import { useUpload } from '../../helpers/upload'
+import { useUpload } from '../../-utils/upload'
 
 interface FieldValues {
   [name: string]: any
@@ -42,7 +42,7 @@ export interface SaladictFormProps
   hideFooter?: boolean
 }
 
-export const SaladictForm:FC<SaladictFormProps> = (props) => {
+export const SaladictForm: FC<SaladictFormProps> = (props) => {
   const { items, hideFooter, ...restProps } = props
   const { t, i18n, ready } = useTranslation(['options', 'common'])
   const store = useDictStore()
@@ -83,7 +83,7 @@ export const SaladictForm:FC<SaladictFormProps> = (props) => {
   },
   [items])
 
-  const [hideFields, setHideFields] = useState< FieldShow >()
+  const [hideFields, setHideFields] = useState<FieldShow>()
 
   function genFormItems (items: SaladictFormItem[]) {
     return items.map(item => {

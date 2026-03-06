@@ -6,7 +6,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import type { FormInstance } from 'antd/lib/form/Form'
 import { useTranslation } from 'react-i18next'
 import { useDictStore } from '@P/saladict-core/src/store'
-import { useUpload } from '../../../helpers/upload'
+import { useUpload } from '../-utils/upload'
 
 export interface EditModalProps {
   menuID?: string | null
