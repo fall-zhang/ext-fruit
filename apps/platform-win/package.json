@@ -22,7 +22,6 @@
     "@tauri-apps/plugin-fs": "^2.4.5",
     "@tauri-apps/plugin-http": "~2.5.7",
     "@tauri-apps/plugin-shell": "^2.3.5",
-    "@types/lodash": "^4.17.24",
     "antd": "^6.3.0",
     "date-fns": "^4.1.0",
     "es-toolkit": "^1.39.10",
@@ -35,6 +34,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.24",
     "@tauri-apps/cli": "^2.10.0"
   }
 }
