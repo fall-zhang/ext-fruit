@@ -13,9 +13,9 @@
   "iconLibrary": "lucide",
   "rtl": false,
   "aliases": {
-    "components": "components/ui-warped",
+    "components": "ui-warped",
     "utils": "utils",
-    "ui": "components/ui",
+    "ui": "components",
     "lib": "lib",
     "hooks": ""
   },

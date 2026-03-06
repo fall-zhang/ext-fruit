@@ -4,6 +4,7 @@ import classNames from 'clsx'
 import AutosizeTextarea from 'react-textarea-autosize'
 import { useDictStore } from '@P/saladict-core/src/store'
 import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
+import { useSearchContext } from '@P/saladict-core/src/context/search-context'
 
 export interface MtaBoxProps {
   text: string
@@ -20,7 +21,9 @@ export interface MtaBoxProps {
  * Multiline Textarea Drawer. With animation on Expanding and Shrinking.
  */
 export const MtaBox: FC = () => {
-  const props:MtaBoxProps = useDictStore(state => {
+  const searchStart = useSearchContext(store => store.searchStart)
+
+  const props: MtaBoxProps = useDictStore(state => {
     const shouldFocus = !state.activeProfile.mtaAutoUnfold ||
         state.activeProfile.mtaAutoUnfold !== 'hide' ||
         state.config.qsFocus
@@ -28,8 +31,8 @@ export const MtaBox: FC = () => {
       text: state.text,
       expand: state.isExpandMtaBox,
       shouldFocus,
-      searchText: (text:string) => {
-        state.SEARCH_START({ word: newWord({ text }) })
+      searchText: (text: string) => {
+        searchStart({ word: newWord({ text }) })
         // dispatch({ type: 'SEARCH_START', payload: { word: newWord({ text }) } })
       },
       onInput: text => {
@@ -93,14 +96,14 @@ export const MtaBox: FC = () => {
           ref={textareaRef}
           className="mtaBox-TextArea"
           value={props.text}
-          onChange={(e:ChangeEvent<HTMLTextAreaElement>) => {
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
             isTypedRef.current = true
             props.onInput(e.currentTarget.value)
           }}
           onFocus={() => {
             setIsTyping(true)
           }}
-          onKeyDown={(e:KeyboardEvent) => {
+          onKeyDown={(e: KeyboardEvent) => {
             // prevent page shortkeys
             e.nativeEvent.stopPropagation()
 

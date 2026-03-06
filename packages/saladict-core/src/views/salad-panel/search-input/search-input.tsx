@@ -22,7 +22,7 @@ export const SearchBox: FC<SearchBoxProps> = props => {
   const [isExpand, setIsExpand] = useState<boolean>(false)
 
   const [isShowSuggest, setIsShowSuggest] = useState<boolean>(false)
-  function onShowSuggest (state:boolean) {
+  function onShowSuggest (state: boolean) {
     setIsShowSuggest(Boolean(props.enableSuggest && text && state))
   }
 
