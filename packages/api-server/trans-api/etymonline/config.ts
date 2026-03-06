@@ -1,9 +1,11 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItemBase } from '@P/api-server/types/dict-base'
 
-export type EtymonlineConfig = DictItem<{
-  resultCount: number
-  chart: boolean
-}>
+export type EtymonlineConfig = DictItemBase & {
+  options: {
+    resultCount: number
+    chart: boolean
+  }
+}
 
 export default (): EtymonlineConfig => ({
   lang: '10000000',
@@ -16,7 +18,7 @@ export default (): EtymonlineConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -27,15 +29,14 @@ export default (): EtymonlineConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 265,
   selectionWC: {
     min: 1,
-    max: 5
+    max: 5,
   },
   options: {
     resultCount: 4,
-    chart: true
-  }
+    chart: true,
+  },
 })

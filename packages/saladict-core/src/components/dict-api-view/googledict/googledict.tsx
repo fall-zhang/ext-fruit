@@ -1,6 +1,7 @@
-import React, { FC } from 'react'
-import { GoogleDictResult } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
+import type { FC } from 'react'
+import type React from 'react'
+import type { GoogleDictResult } from './engine'
+import type { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictGoogleDict: FC<ViewProps<GoogleDictResult>> = ({ result }) => (
@@ -12,7 +13,7 @@ export const DictGoogleDict: FC<ViewProps<GoogleDictResult>> = ({ result }) => (
   </div>
 )
 
-function onEntryClick(e: React.MouseEvent) {
+function onEntryClick (e: React.MouseEvent) {
   for (
     let isMoreBtn: boolean | null = null, node = e.target as Element | null;
     node;

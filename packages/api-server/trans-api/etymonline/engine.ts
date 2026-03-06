@@ -1,20 +1,17 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
-import { DictConfigs } from '@/app-config'
+import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
+import type {
+  HTMLString,
+  SearchFunction,
+  DictSearchResult
+} from '../../types'
 import {
   getText,
   getInnerHTML,
   getFullLink,
   handleNoResult,
-  HTMLString,
-  handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult
-} from '../helpers'
-
-export const getSrcPage: GetSrcPageFunction = text => {
-  return `http://www.etymonline.com/search?q=${text}`
-}
+  handleNetWorkError
+} from '../../utils'
+import type { AllDictsConf } from '@P/api-server/types/all-dict-conf'
 
 const HOST = 'https://www.etymonline.com'
 
@@ -32,23 +29,21 @@ type EtymonlineSearchResult = DictSearchResult<EtymonlineResult>
 
 export const search: SearchFunction<EtymonlineResult> = (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
-  const options = profile.dicts.all.etymonline.options
-  text = encodeURIComponent(text.replace(/\s+/g, ' '))
+  const options = opt.profile.etymonline.options
+  const newText = encodeURIComponent(text.replace(/\s+/g, ' '))
 
   // http to bypass the referer checking
-  return fetchDirtyDOM('https://www.etymonline.com/word/' + text)
-    .catch(() => fetchDirtyDOM('https://www.etymonline.com/search?q=' + text))
+  return fetchDirtyDOM('https://www.etymonline.com/word/' + newText)
+    .catch(() => fetchDirtyDOM('https://www.etymonline.com/search?q=' + newText))
     .catch(handleNetWorkError)
     .then(doc => handleDOM(doc, options))
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document,
-  options: DictConfigs['etymonline']['options']
+  options: AllDictsConf['etymonline']['options']
 ): EtymonlineSearchResult | Promise<EtymonlineSearchResult> {
   const result: EtymonlineResult = []
   const catalog: NonNullable<EtymonlineSearchResult['catalog']> = []
@@ -100,7 +95,7 @@ function handleDOM(
     catalog.push({
       key: `#${i}`,
       value: id,
-      label: `#${title}`
+      label: `#${title}`,
     })
   }
 

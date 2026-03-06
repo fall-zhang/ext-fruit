@@ -1,51 +1,39 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
-import {
-  getText,
-  handleNoResult,
-  handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult
-} from '../helpers'
+
+import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
+
+import type { EudicResult, EudicResultItem } from './type'
+import type { GetSrcPageFunction } from '@P/api-server/api-common/atom-type'
+import type { DictSearchResult, SearchFunction } from '@P/api-server/api-common/search-type'
+import { handleNetWorkError, getText, handleNoResult } from '@P/api-server/utils'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://dict.eudic.net/dicts/en/${text}`
 }
 
-interface EudicResultItem {
-  chs: string
-  eng: string
-  mp3?: string
-  channel?: string
-}
-
-export type EudicResult = EudicResultItem[]
-
 type EudicSearchResult = DictSearchResult<EudicResult>
+
 
 export const search: SearchFunction<EudicResult> = (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
-  text = encodeURIComponent(
+  const newText = encodeURIComponent(
     text
       .split(/\s+/)
       .slice(0, 2)
       .join(' ')
   )
-  const options = profile.dicts.all.eudic.options
+  const options = opt.profile.eudic.options
 
-  return fetchDirtyDOM('https://dict.eudic.net/dicts/en/' + text, {
-    withCredentials: false
+  return fetchDirtyDOM('https://dict.eudic.net/dicts/en/' + newText, {
+    withCredentials: false,
   })
     .catch(handleNetWorkError)
     .then(validator)
     .then(doc => handleDOM(doc, options))
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document,
   { resultCount }: { resultCount: number }
 ): EudicSearchResult | Promise<EudicSearchResult> {
@@ -92,7 +80,7 @@ function handleDOM(
   return handleNoResult()
 }
 
-function validator(doc: Document): Document | Promise<Document> {
+function validator (doc: Document): Document | Promise<Document> {
   if (doc.querySelector('#TingLiju')) {
     return doc
   }
@@ -108,6 +96,6 @@ function validator(doc: Document): Document | Promise<Document> {
   return fetchDirtyDOM('https://dict.eudic.net/Dicts/en/tab-detail/-12', {
     method: 'POST',
     data: formData,
-    withCredentials: false
+    withCredentials: false,
   })
 }

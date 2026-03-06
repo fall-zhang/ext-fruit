@@ -1,7 +1,7 @@
-import React, { FC } from 'react'
-import { EudicResult } from './engine'
-import Speaker from '@/components/Speaker'
-import { ViewProps } from '@/components/dictionaries/helpers'
+import type { FC } from 'react'
+import Speaker from '@P/saladict-core/src/components/Speaker'
+import type { EudicResult } from '@P/api-server/trans-api/eudic/type'
+import type { ViewProps } from '../type'
 
 export const DictEudic: FC<ViewProps<EudicResult>> = ({ result }) => (
   <ul className="dictEudic-List">

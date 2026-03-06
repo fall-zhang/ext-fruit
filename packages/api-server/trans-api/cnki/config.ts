@@ -1,10 +1,13 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItemBase } from '@P/api-server/types/dict-base'
 
-export type CnkiConfig = DictItem<{
-  dict: boolean
-  senbi: boolean
-  seneng: boolean
-}>
+export type CnkiConfig = DictItemBase & {
+  options: {
+    dict: boolean
+    senbi: boolean
+    seneng: boolean
+
+  }
+}
 
 export default (): CnkiConfig => ({
   lang: '11000000',
@@ -17,7 +20,7 @@ export default (): CnkiConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -28,17 +31,16 @@ export default (): CnkiConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 300,
   selectionWC: {
     min: 1,
-    max: 100
+    max: 100,
   },
   options: {
     dict: true,
     senbi: true,
-    seneng: true
+    seneng: true,
     // digests: true,
-  }
+  },
 })

@@ -10,16 +10,17 @@ import {
 import type { GoogleLanguage } from './config'
 import { Google } from '@P/open-trans/service-google'
 import type { Language } from '@P/open-trans/languages'
-import type { GetSrcPageFunction, SearchFunction } from '@P/api-server/types'
+import type { GetSrcPageFunction } from '@P/api-server/api-common/atom-type'
+import type { SearchFunction } from '@P/api-server/api-common/search-type'
 
 export const getTranslator = memoizeOne(() => new Google({ env: 'ext' }))
 
-export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
+export const getSrcPage: GetSrcPageFunction = (text, langCode, profile) => {
   const domain = 'com'
   const lang =
-    profile.dicts.all.google.options.tl === 'default'
-      ? config.langCode
-      : profile.dicts.all.google.options.tl
+    profile.google.options.tl === 'default'
+      ? langCode
+      : profile.google.options.tl
 
   return `https://translate.google.${domain}/#auto/${lang}/${text}`
 }

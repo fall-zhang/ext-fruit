@@ -1,5 +1,5 @@
 import { getTTS } from '@P/api-server/trans-api/google/engine'
-import type { ViewProps } from '@P/api-server/types'
+import type { ViewProps } from '../type'
 import type { DictID } from '@P/api-server/types/all-dict-conf'
 import type { FC } from 'react'
 import React, {
@@ -9,9 +9,9 @@ import React, {
   useRef
 } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import type { MachineTranslateResult } from '../../MachineTrans/engine'
 import { Speaker } from '../../Speaker'
 import type { Language } from '@P/open-trans/languages'
+import type { MachineTranslateResult } from '@P/api-server/api-common/result-handle'
 
 const rtlLangs = new Set([
   'ar', // Arabic
@@ -26,14 +26,14 @@ const rtlLangs = new Set([
 ])
 
 const TSpeaker = React.memo<{
-  result: MachineTranslateResult<DictID>
+  result: MachineTranslateResult
   source: 'searchText' | 'trans'
 }>(({ result, source }) => (
   <Speaker
     src={
       result[source].tts === '#'
         ? () => {
-          const lang:Language = source === 'trans' ? result.tl : result.sl
+          const lang: Language = source === 'trans' ? result.tl : result.sl
           return getTTS(result[source].paragraphs.join(' '), lang)
         }
         : result[source].tts
@@ -43,7 +43,7 @@ const TSpeaker = React.memo<{
 
 /** text with a speaker at the beginning */
 const TText = React.memo<{
-  result: MachineTranslateResult<DictID>
+  result: MachineTranslateResult
   source: 'searchText' | 'trans'
   lang: string
 }>(({ result, source, lang }) => (
@@ -58,7 +58,7 @@ const TText = React.memo<{
 ))
 
 const TTextCollapsable = React.memo<{
-  result: MachineTranslateResult<DictID>
+  result: MachineTranslateResult
   source: 'searchText' | 'trans'
   lang: string
 }>(({ result, source, lang }) => {
@@ -109,7 +109,7 @@ const TTextCollapsable = React.memo<{
   )
 })
 
-export type MachineTransProps = ViewProps<MachineTranslateResult<DictID>>
+export type MachineTransProps = ViewProps<MachineTranslateResult>
 
 /** Template for machine translations */
 export const MachineTrans: FC<MachineTransProps> = props => {
@@ -148,7 +148,7 @@ export const MachineTrans: FC<MachineTransProps> = props => {
   )
 }
 
-const RenderCredential:FC = (props) => {
+const RenderCredential: FC = (props) => {
   const { t } = useTranslation('content')
   return (<>
     <Trans message={t('machineTrans.login')}>

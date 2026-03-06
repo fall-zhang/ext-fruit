@@ -1,9 +1,6 @@
 import type {
-  HTMLString,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult
-} from '../types'
+  HTMLString
+} from '../../types'
 import {
   handleNoResult,
   getInnerHTML,
@@ -13,15 +10,9 @@ import {
   getText,
   removeChild
 } from '../helpers'
-import { fetchPlainText } from '@P/saladict-core/src/utils/fetch-dom'
 import { getStaticSpeaker } from '@P/saladict-core/src/components/Speaker'
-
-export const getSrcPage: GetSrcPageFunction = text => {
-  return (
-    'https://www.google.com.hk/search?hl=en&safe=off&q=meaning:' +
-    encodeURIComponent(text.toLowerCase().replace(/\s+/g, '+'))
-  )
-}
+import type { DictSearchResult, SearchFunction } from '@P/api-server/api-common/search-type'
+import { fetchPlainText } from '@P/api-server/utils/fetch-dom'
 
 export interface GoogleDictResult {
   entry: HTMLString
@@ -32,11 +23,9 @@ type GoogleDictSearchResult = DictSearchResult<GoogleDictResult>
 
 export const search: SearchFunction<GoogleDictResult> = async (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
-  const isen = profile.dicts.all.googledict.options.enresult
+  const isen = opt.profile.googledict.options.enresult
     ? 'hl=en&gl=en&'
     : ''
 

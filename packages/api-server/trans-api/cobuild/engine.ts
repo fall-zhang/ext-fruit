@@ -1,21 +1,13 @@
-import { AppConfig } from '@/app-config'
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
-import {
-  HTMLString,
-  getInnerHTML,
-  handleNoResult,
-  handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  externalLink,
-  DictSearchResult,
-  getChsToChz
-} from '../helpers'
-import { getStaticSpeaker } from '@/components/Speaker'
+import type { HTMLString, SearchFunction, DictSearchResult } from '@P/api-server/types'
+import type { GetSrcPageFunction } from '@P/api-server/types/dict-fetch'
+import { handleNetWorkError, getChsToChz, externalLink, getInnerHTML, handleNoResult } from '@P/api-server/utils'
+import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
+import type { AppConfig } from '@P/saladict-core/src/app-config'
+import { getStaticSpeaker } from '@P/saladict-core/src/components/Speaker'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return (
-    `https://www.collinsdictionary.com/dictionary/english/` +
+    'https://www.collinsdictionary.com/dictionary/english/' +
     encodeURIComponent(text.replace(/\s+/g, '-'))
   )
 }
@@ -56,7 +48,7 @@ export const search: SearchFunction<COBUILDResult> = async (
   const { options } = profile.dicts.all.cobuild
   const sources: string[] = [
     'https://www.collinsdictionary.com/dictionary/english/',
-    'https://www.collinsdictionary.com/zh/dictionary/english/'
+    'https://www.collinsdictionary.com/zh/dictionary/english/',
   ]
 
   if (options.cibaFirst) {
@@ -76,7 +68,7 @@ export const search: SearchFunction<COBUILDResult> = async (
   }
 }
 
-async function handleDOM(
+async function handleDOM (
   doc: Document,
   config: AppConfig
 ): Promise<DictSearchResult<COBUILDColResult>> {
@@ -84,12 +76,12 @@ async function handleDOM(
 
   const result: COBUILDColResult = {
     type: 'collins',
-    sections: []
+    sections: [],
   }
   const audio: { uk?: string; us?: string } = {}
 
   result.sections = [
-    ...doc.querySelectorAll<HTMLDivElement>(`[data-type-block]`)
+    ...doc.querySelectorAll<HTMLDivElement>('[data-type-block]'),
   ]
     .filter($section => {
       const type = $section.dataset.typeBlock || ''
@@ -142,7 +134,7 @@ async function handleDOM(
             type,
             title,
             num,
-            content: `<iframe width="${width}" height="${height}" src="https://www.youtube-nocookie.com/embed/${$youtubeVideo.dataset.embed}" frameborder="0" allow="accelerometer; encrypted-media"></iframe>`
+            content: `<iframe width="${width}" height="${height}" src="https://www.youtube-nocookie.com/embed/${$youtubeVideo.dataset.embed}" frameborder="0" allow="accelerometer; encrypted-media"></iframe>`,
           }
         }
       }
@@ -165,8 +157,8 @@ async function handleDOM(
         title,
         num,
         content: getInnerHTML('https://www.collinsdictionary.com', $section, {
-          transform
-        })
+          transform,
+        }),
       }
     })
 
@@ -177,7 +169,7 @@ async function handleDOM(
   return handleNoResult()
 }
 
-function getAudio($section: HTMLElement): string | undefined {
+function getAudio ($section: HTMLElement): string | undefined {
   const $audio = $section.querySelector<HTMLAnchorElement>(
     '.pron .audio_play_button'
   )

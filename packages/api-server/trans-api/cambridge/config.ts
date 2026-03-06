@@ -1,9 +1,9 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItemBase, DictItemOption } from '@P/api-server/types/dict-base'
 
-export type CambridgeConfig = DictItem<{
-  lang: 'default' | 'en' | 'en-chs' | 'en-chz'
+export type CambridgeConfig = DictItemBase & DictItemOption<'default' | 'en' | 'en-chs' | 'en-chz'
+> & {
   related: boolean
-}>
+}
 
 export default (): CambridgeConfig => ({
   lang: '11100000',
@@ -16,7 +16,7 @@ export default (): CambridgeConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -27,18 +27,20 @@ export default (): CambridgeConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 265,
   selectionWC: {
     min: 1,
-    max: 5
+    max: 5,
   },
   options: {
-    lang: 'default',
-    related: true
+    keepLF: 'none',
+    slInitial: 'hide',
+    tl: 'default',
+    tl2: 'default',
   },
   options_sel: {
-    lang: ['default', 'en', 'en-chs', 'en-chz']
-  }
+    lang: ['default', 'en', 'en-chs', 'en-chz'],
+    CambridgeConfig: [],
+  },
 })

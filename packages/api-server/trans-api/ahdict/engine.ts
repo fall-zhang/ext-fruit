@@ -48,7 +48,7 @@ export const search: SearchFunction<AhdictResult> = async (text, option) => {
     'https://ahdictionary.com/word/search.html?q=' + encodeURIComponent(text.replace(/\s+/g, ' '))
   )
     .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, options))
+    .then(doc => handleDOM(doc, options.options))
 }
 
 function handleDOM (

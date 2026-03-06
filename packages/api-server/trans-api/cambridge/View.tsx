@@ -1,6 +1,7 @@
-import React, { FC } from 'react'
-import { CambridgeResult } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
+import type { FC } from 'react'
+import type React from 'react'
+import type { CambridgeResult } from './engine'
+import type { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictCambridge: FC<ViewProps<CambridgeResult>> = props => (
@@ -20,7 +21,7 @@ export const DictCambridge: FC<ViewProps<CambridgeResult>> = props => (
 
 export default DictCambridge
 
-function handleEntryClick(e: React.MouseEvent<HTMLElement>) {
+function handleEntryClick (e: React.MouseEvent<HTMLElement>) {
   const target = e.nativeEvent.target as HTMLDivElement
   if (target && target.classList) {
     if (target.classList.contains('js-accord')) {

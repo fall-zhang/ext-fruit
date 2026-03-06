@@ -1,12 +1,14 @@
-import type { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItemBase } from '@P/api-server/types/dict-base'
 
-export type BingConfig = DictItem<{
-  tense: boolean
-  phsym: boolean
-  cdef: boolean
-  related: boolean
-  sentence: number
-}>
+export type BingConfig = DictItemBase & {
+  options: {
+    tense: boolean
+    phsym: boolean
+    cdef: boolean
+    related: boolean
+    sentence: number
+  }
+}
 
 export default (): BingConfig => ({
   lang: '11000000',
@@ -32,7 +34,6 @@ export default (): BingConfig => ({
     others: true,
     matchAll: false,
   },
-  preferredHeight: 240,
   selectionWC: {
     min: 1,
     max: 5,

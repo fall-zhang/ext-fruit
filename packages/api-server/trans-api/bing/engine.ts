@@ -1,7 +1,6 @@
 import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
 import type {
   SearchFunction,
-  GetSrcPageFunction,
   DictSearchResult
 } from '../../types'
 import {
@@ -12,6 +11,8 @@ import {
   getChsToChz
 } from '../../utils'
 import type { DictConfigs } from '@P/saladict-core/src/app-config'
+import type { GetSrcPageFunction } from '@P/api-server/api-common/fetch-type'
+import type { BingResult, BingResultLex, BingResultMachine, BingResultRelated } from './type'
 
 export const getSrcPage: GetSrcPageFunction = text =>
   'https://cn.bing.com/dict/search?q=' +
@@ -22,56 +23,6 @@ const HOST = 'https://cn.bing.com'
 const DICT_LINK =
   'https://cn.bing.com/dict/clientsearch?mkt=zh-CN&setLang=zh&form=BDVEHC&ClientVer=BDDTV3.5.1.4320&q='
 
-/** Lexical result */
-export interface BingResultLex {
-  type: 'lex'
-  title: string
-  /** phonetic symbols */
-  phsym?: Array<{
-    /** Phonetic Alphabet, UK|US|PY */
-    lang: string
-    /** pronunciation */
-    pron: string
-  }>
-  /** common definitions */
-  cdef?: Array<{
-    /** part of speech */
-    pos: string
-    /** definition */
-    def: string
-  }>
-  /** infinitive */
-  infs?: string[]
-  sentences?: Array<{
-    en?: string
-    chs?: string
-    source?: string
-    mp3?: string
-  }>
-}
-
-/** Alternate machine translation result */
-export interface BingResultMachine {
-  type: 'machine'
-  /** machine translation */
-  mt: string
-}
-
-/** Alternate result */
-export interface BingResultRelated {
-  type: 'related'
-  title: string
-  defs: Array<{
-    title: string
-    meanings: Array<{
-      href: string
-      word: string
-      def: string
-    }>
-  }>
-}
-
-export type BingResult = BingResultLex | BingResultMachine | BingResultRelated
 
 type BingConfig = DictConfigs['bing']
 
@@ -79,14 +30,13 @@ type BingSearchResultLex = DictSearchResult<BingResultLex>
 type BingSearchResultMachine = DictSearchResult<BingResultMachine>
 type BingSearchResultRelated = DictSearchResult<BingResultRelated>
 
-export const getSearchURL = (word:string) => {
+export const getSearchURL = (word: string) => {
   return DICT_LINK + encodeURIComponent(word.replace(/\s+/g, ' '))
 }
 
 export const handleSearchRes = async ({
   doc,
   config,
-  profile,
 }) => {
   const transform = getChsToChz(config.langCode)
 

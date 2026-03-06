@@ -28,7 +28,7 @@ export const search: SearchFunction<
     {
       from: opt.payload.sl,
       to: opt.payload.tl,
-      config: opt.config,
+      localeLang: opt.config.langCode,
       dictOption: opt.profile.baidu.options,
       optionAvailable: opt.profile.baidu.optionsSel,
     }

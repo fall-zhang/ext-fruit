@@ -1,4 +1,3 @@
-import type { GetSrcPageFunction, GetFetchRequest, HandleFetchResponse } from '@P/api-server/types/dict-fetch'
 import { Baidu } from '@P/open-trans/service-baidu'
 import type { Language } from '@P/open-trans/languages'
 
@@ -8,6 +7,7 @@ import { TranslateError } from '@P/open-trans/translator'
 import type { BaiduTranslateError, BaiduTranslateResult } from './type'
 import type { AuthBody } from './auth'
 import { machineResult, type MachineTranslateResult } from '@P/api-server/api-common/result-handle'
+import type { HandleFetchResponse, GetSrcPageFunction, GetFetchRequest } from '@P/api-server/api-common/atom-type'
 
 
 export const getRequest: GetFetchRequest<AuthBody> = (text, {

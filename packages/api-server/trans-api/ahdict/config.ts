@@ -1,14 +1,40 @@
-import { machineConfig } from '@P/api-server/gen-trans-conf'
-import type { BaiduConfig } from '../baidu/config'
 import type { DictItemBase } from '@P/api-server/types/dict-base'
 
 export type AhdictConfig = DictItemBase & {
-  resultCount: number
+  options: {
+    resultCount: number
+  }
 }
 
-
-export default (): BaiduConfig =>
-  machineConfig<BaiduConfig>(
-    ['zh-CN', 'zh-TW', 'en', 'ja', 'ko', 'fr', 'de', 'es', 'ru', 'nl'],
-    {}
-  )
+export default (): AhdictConfig => ({
+  lang: '10000000',
+  selectionLang: {
+    english: true,
+    chinese: false,
+    japanese: false,
+    korean: false,
+    french: false,
+    spanish: false,
+    deutsch: false,
+    others: false,
+    matchAll: false,
+  },
+  defaultUnfold: {
+    english: true,
+    chinese: true,
+    japanese: true,
+    korean: true,
+    french: true,
+    spanish: true,
+    deutsch: true,
+    others: true,
+    matchAll: false,
+  },
+  selectionWC: {
+    min: 1,
+    max: 5,
+  },
+  options: {
+    resultCount: 4,
+  },
+})

@@ -1,8 +1,10 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItemBase } from '@P/api-server/types/dict-base'
 
-export type GoogledictConfig = DictItem<{
-  enresult: boolean
-}>
+export type GoogledictConfig = DictItemBase & {
+  options: {
+    enresult: boolean
+  }
+}
 
 export default (): GoogledictConfig => ({
   lang: '11110000',
@@ -15,7 +17,7 @@ export default (): GoogledictConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -26,14 +28,13 @@ export default (): GoogledictConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 240,
   selectionWC: {
     min: 1,
-    max: 5
+    max: 5,
   },
   options: {
-    enresult: true
-  }
+    enresult: true,
+  },
 })
