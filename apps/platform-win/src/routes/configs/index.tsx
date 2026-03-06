@@ -1,5 +1,4 @@
-import { MainConfigPage } from '@P/saladict-core/src/views/options'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/configs/')({
   component: RouteComponent,
@@ -7,11 +6,11 @@ export const Route = createFileRoute('/configs/')({
 
 function RouteComponent () {
   const config = {}
-  function updateConf (newConf:unknown) {
+  function updateConf (newConf: unknown) {
 
 
   }
   return <div>
-    <MainConfigPage ></MainConfigPage>
+    <Outlet />
   </div>
 }

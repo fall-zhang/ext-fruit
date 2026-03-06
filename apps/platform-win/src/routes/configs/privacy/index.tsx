@@ -1,0 +1,36 @@
+import { createFileRoute } from '@tanstack/react-router'
+import type { FC } from 'react'
+import { Switch } from 'antd'
+import { getConfigPath } from '../../helpers/path-joiner'
+import { SaladictForm } from '../SaladictForm'
+
+export const Route = createFileRoute('/configs/privacy/')({
+  component: RouteComponent,
+})
+
+function RouteComponent () {
+  return <SaladictForm
+    items={[
+      {
+        name: getConfigPath('updateCheck'),
+        valuePropName: 'checked',
+        children: <Switch />,
+      },
+      {
+        name: getConfigPath('analytics'),
+        valuePropName: 'checked',
+        children: <Switch />,
+      },
+      {
+        name: getConfigPath('searchHistory'),
+        valuePropName: 'checked',
+        children: <Switch />,
+      },
+
+      {
+        key: 'third_party_privacy',
+        children: <Switch disabled checked />,
+      },
+    ]}
+  />
+}
