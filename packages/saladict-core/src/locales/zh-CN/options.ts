@@ -76,7 +76,7 @@ export const options = {
     qsPanelMode: '独立窗口响应页面划词',
     bowlHover: '图标悬停查词',
     bowlHover_help: '鼠标悬停在沙拉图标上触发查词，否则需要点击。',
-    autopron: {
+    autoPronounce: {
       cn: {
         dict: '中文自动发音',
       },

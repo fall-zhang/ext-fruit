@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid'
-import type { ReadonlyDeep } from 'type-fest'
 import type { AllDictsConf } from '@P/api-server/types/all-dict-conf'
 import { getAllDicts } from '@P/api-server/types/all-dict-conf'
 
@@ -8,7 +7,7 @@ export type MtaAutoUnfold = '' | 'once' | 'always' | 'popup' | 'hide'
 export type ProfileMutable = {
   version: number
 
-  id:string
+  id: string
 
   /** auto unfold multiline textarea search box */
   mtaAutoUnfold: MtaAutoUnfold,
@@ -26,14 +25,14 @@ export type ProfileMutable = {
     all: AllDictsConf,
   },
 }
-export type Profile = ReadonlyDeep<ProfileMutable>
+export type Profile = ProfileMutable
 
 export interface ProfileID {
   id: string
   name: string
 }
 
-export function getDefaultSelectDict ():Array<keyof AllDictsConf> {
+export function getDefaultSelectDict (): Array<keyof AllDictsConf> {
   return [
     'bing',
     'cobuild',
@@ -50,7 +49,7 @@ export function getDefaultSelectDict ():Array<keyof AllDictsConf> {
   ]
 }
 
-export function getDefaultProfile (id?: string):Profile {
+export function getDefaultProfile (id?: string): Profile {
   return {
     version: 1,
 

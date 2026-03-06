@@ -13,7 +13,7 @@ export type MtaAutoUnfold = _MtaAutoUnfold
 export type AppConfigMutable = ConfigType
 export type AppConfig = ReadonlyDeep<ConfigType>
 
-export function getDefaultConfig ():ConfigType {
+export function getDefaultConfig (): ConfigType {
   return {
     version: 14,
     active: true,
@@ -184,7 +184,7 @@ export function getDefaultConfig ():ConfigType {
     },
 
     /** auto pronunciation */
-    autopron: {
+    autoPronounce: {
       cn: {
         dict: '',
         list: ['zdic', 'guoyu'],

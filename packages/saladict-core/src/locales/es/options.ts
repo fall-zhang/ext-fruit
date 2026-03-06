@@ -82,7 +82,7 @@ export const locale: typeof _locale = {
     bowlHover: 'Icono al pasar el cursor por encima',
     bowlHover_help:
       'Pase el ratón sobre el icono del cuenco para activar la búsqueda en lugar de hacer clic.',
-    autopron: {
+    autoPronounce: {
       cn: {
         dict: 'Autopronunciación en chino',
       },

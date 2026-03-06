@@ -180,13 +180,13 @@ export type ConfigType = {
   language: SupportedLangs,
 
   /** auto pronunciation */
-  autopron: {
+  autoPronounce: {
     cn: {
       dict: DictID | '',
       list: DictID[],
     },
     en: {
-      dict:DictID | '',
+      dict: DictID | '',
       list: DictID[],
       accent: 'us' | 'uk',
     },
@@ -205,7 +205,7 @@ export type ConfigType = {
   blacklist: Array<[string, string]>
 
   contextMenus: {
-    selected:string[]
+    selected: string[]
     all: Record<string, string>,
   }
 

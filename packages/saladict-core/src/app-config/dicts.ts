@@ -24,8 +24,6 @@ interface DictItemBase {
     min: number
     max: number
   }
-  /** Word count to start searching */
-  preferredHeight: number
 }
 
 /**

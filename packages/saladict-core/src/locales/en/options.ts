@@ -82,7 +82,7 @@ export const locale: typeof _locale = {
     bowlHover: 'Icon Mouse Hover',
     bowlHover_help:
       'Hover on the bowl icon to trigger searching instead of clicking.',
-    autopron: {
+    autoPronounce: {
       cn: {
         dict: 'Chinese Auto-Pronounce',
       },

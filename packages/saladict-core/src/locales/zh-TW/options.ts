@@ -78,7 +78,7 @@ export const locale: typeof _locale = {
     qsPanelMode: '獨立字典視窗介面響應頁面選字',
     bowlHover: '圖示暫留查字',
     bowlHover_help: '滑鼠暫留在沙拉圖示上開啟字典介面，否則需要點選。',
-    autopron: {
+    autoPronounce: {
       cn: {
         dict: '中文自動發音',
       },
