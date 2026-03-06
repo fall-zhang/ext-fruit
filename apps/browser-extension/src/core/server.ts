@@ -1,15 +1,13 @@
 import { message, openUrl } from '@/_helpers/browser-api'
 import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
-import type {
-  SearchFunction,
-  DictSearchResult,
-  GetSrcPageFunction
-} from '@/components/Dictionaries/helpers'
+
 
 import { AudioManager } from './audio-manager'
 import { QsPanelManager } from './windows-manager'
 import './types'
 import type { DictID } from '@P/saladict-core/src/app-config'
+import type { DictSearchResult, SearchFunction } from '@P/api-server/types'
+import type { GetSrcPageFunction } from '@P/api-server/types/dict-fetch'
 /**
  * background script as transfer station
  */

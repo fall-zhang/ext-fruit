@@ -34,7 +34,7 @@ export async function calibrateTitlebarOffset (): Promise<
     const mainWin = await browser.windows.create({ state: 'maximized' })
     const panelWin = await browser.windows.create({
       state: 'maximized',
-      type: 'panel'
+      type: 'panel',
     })
 
     if (mainWin?.id == null || panelWin?.id == null) return

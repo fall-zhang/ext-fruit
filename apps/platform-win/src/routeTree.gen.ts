@@ -17,7 +17,21 @@ import { Route as NotebookIndexRouteImport } from './routes/notebook/index'
 import { Route as NotebookAddIndexRouteImport } from './routes/notebook-add/index'
 import { Route as FormExampleIndexRouteImport } from './routes/form-example/index'
 import { Route as ConfigsIndexRouteImport } from './routes/configs/index'
+import { Route as ConfigsSearchModesIndexRouteImport } from './routes/configs/search-modes/index'
+import { Route as ConfigsQuickSearchIndexRouteImport } from './routes/configs/quick-search/index'
+import { Route as ConfigsPronunciationIndexRouteImport } from './routes/configs/pronunciation/index'
+import { Route as ConfigsProfilesIndexRouteImport } from './routes/configs/profiles/index'
+import { Route as ConfigsPrivacyIndexRouteImport } from './routes/configs/privacy/index'
+import { Route as ConfigsPopupIndexRouteImport } from './routes/configs/popup/index'
+import { Route as ConfigsPermissionsIndexRouteImport } from './routes/configs/permissions/index'
 import { Route as ConfigsNotebookIndexRouteImport } from './routes/configs/notebook/index'
+import { Route as ConfigsImportExportIndexRouteImport } from './routes/configs/import-export/index'
+import { Route as ConfigsGeneralIndexRouteImport } from './routes/configs/general/index'
+import { Route as ConfigsDictionariesIndexRouteImport } from './routes/configs/dictionaries/index'
+import { Route as ConfigsDictPanelIndexRouteImport } from './routes/configs/dict-panel/index'
+import { Route as ConfigsDictAuthIndexRouteImport } from './routes/configs/dict-auth/index'
+import { Route as ConfigsContextMenusIndexRouteImport } from './routes/configs/context-menus/index'
+import { Route as ConfigsBlackWhiteListIndexRouteImport } from './routes/configs/black-white-list/index'
 
 const R404Route = R404RouteImport.update({
   id: '/404',
@@ -59,11 +73,86 @@ const ConfigsIndexRoute = ConfigsIndexRouteImport.update({
   path: '/configs/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConfigsSearchModesIndexRoute = ConfigsSearchModesIndexRouteImport.update({
+  id: '/configs/search-modes/',
+  path: '/configs/search-modes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfigsQuickSearchIndexRoute = ConfigsQuickSearchIndexRouteImport.update({
+  id: '/configs/quick-search/',
+  path: '/configs/quick-search/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfigsPronunciationIndexRoute =
+  ConfigsPronunciationIndexRouteImport.update({
+    id: '/configs/pronunciation/',
+    path: '/configs/pronunciation/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ConfigsProfilesIndexRoute = ConfigsProfilesIndexRouteImport.update({
+  id: '/configs/profiles/',
+  path: '/configs/profiles/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfigsPrivacyIndexRoute = ConfigsPrivacyIndexRouteImport.update({
+  id: '/configs/privacy/',
+  path: '/configs/privacy/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfigsPopupIndexRoute = ConfigsPopupIndexRouteImport.update({
+  id: '/configs/popup/',
+  path: '/configs/popup/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfigsPermissionsIndexRoute = ConfigsPermissionsIndexRouteImport.update({
+  id: '/configs/permissions/',
+  path: '/configs/permissions/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConfigsNotebookIndexRoute = ConfigsNotebookIndexRouteImport.update({
   id: '/configs/notebook/',
   path: '/configs/notebook/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConfigsImportExportIndexRoute =
+  ConfigsImportExportIndexRouteImport.update({
+    id: '/configs/import-export/',
+    path: '/configs/import-export/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ConfigsGeneralIndexRoute = ConfigsGeneralIndexRouteImport.update({
+  id: '/configs/general/',
+  path: '/configs/general/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfigsDictionariesIndexRoute =
+  ConfigsDictionariesIndexRouteImport.update({
+    id: '/configs/dictionaries/',
+    path: '/configs/dictionaries/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ConfigsDictPanelIndexRoute = ConfigsDictPanelIndexRouteImport.update({
+  id: '/configs/dict-panel/',
+  path: '/configs/dict-panel/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfigsDictAuthIndexRoute = ConfigsDictAuthIndexRouteImport.update({
+  id: '/configs/dict-auth/',
+  path: '/configs/dict-auth/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfigsContextMenusIndexRoute =
+  ConfigsContextMenusIndexRouteImport.update({
+    id: '/configs/context-menus/',
+    path: '/configs/context-menus/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ConfigsBlackWhiteListIndexRoute =
+  ConfigsBlackWhiteListIndexRouteImport.update({
+    id: '/configs/black-white-list/',
+    path: '/configs/black-white-list/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -74,7 +163,21 @@ export interface FileRoutesByFullPath {
   '/notebook/': typeof NotebookIndexRoute
   '/search-view/': typeof SearchViewIndexRoute
   '/system-tray/': typeof SystemTrayIndexRoute
+  '/configs/black-white-list/': typeof ConfigsBlackWhiteListIndexRoute
+  '/configs/context-menus/': typeof ConfigsContextMenusIndexRoute
+  '/configs/dict-auth/': typeof ConfigsDictAuthIndexRoute
+  '/configs/dict-panel/': typeof ConfigsDictPanelIndexRoute
+  '/configs/dictionaries/': typeof ConfigsDictionariesIndexRoute
+  '/configs/general/': typeof ConfigsGeneralIndexRoute
+  '/configs/import-export/': typeof ConfigsImportExportIndexRoute
   '/configs/notebook/': typeof ConfigsNotebookIndexRoute
+  '/configs/permissions/': typeof ConfigsPermissionsIndexRoute
+  '/configs/popup/': typeof ConfigsPopupIndexRoute
+  '/configs/privacy/': typeof ConfigsPrivacyIndexRoute
+  '/configs/profiles/': typeof ConfigsProfilesIndexRoute
+  '/configs/pronunciation/': typeof ConfigsPronunciationIndexRoute
+  '/configs/quick-search/': typeof ConfigsQuickSearchIndexRoute
+  '/configs/search-modes/': typeof ConfigsSearchModesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -85,7 +188,21 @@ export interface FileRoutesByTo {
   '/notebook': typeof NotebookIndexRoute
   '/search-view': typeof SearchViewIndexRoute
   '/system-tray': typeof SystemTrayIndexRoute
+  '/configs/black-white-list': typeof ConfigsBlackWhiteListIndexRoute
+  '/configs/context-menus': typeof ConfigsContextMenusIndexRoute
+  '/configs/dict-auth': typeof ConfigsDictAuthIndexRoute
+  '/configs/dict-panel': typeof ConfigsDictPanelIndexRoute
+  '/configs/dictionaries': typeof ConfigsDictionariesIndexRoute
+  '/configs/general': typeof ConfigsGeneralIndexRoute
+  '/configs/import-export': typeof ConfigsImportExportIndexRoute
   '/configs/notebook': typeof ConfigsNotebookIndexRoute
+  '/configs/permissions': typeof ConfigsPermissionsIndexRoute
+  '/configs/popup': typeof ConfigsPopupIndexRoute
+  '/configs/privacy': typeof ConfigsPrivacyIndexRoute
+  '/configs/profiles': typeof ConfigsProfilesIndexRoute
+  '/configs/pronunciation': typeof ConfigsPronunciationIndexRoute
+  '/configs/quick-search': typeof ConfigsQuickSearchIndexRoute
+  '/configs/search-modes': typeof ConfigsSearchModesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -97,7 +214,21 @@ export interface FileRoutesById {
   '/notebook/': typeof NotebookIndexRoute
   '/search-view/': typeof SearchViewIndexRoute
   '/system-tray/': typeof SystemTrayIndexRoute
+  '/configs/black-white-list/': typeof ConfigsBlackWhiteListIndexRoute
+  '/configs/context-menus/': typeof ConfigsContextMenusIndexRoute
+  '/configs/dict-auth/': typeof ConfigsDictAuthIndexRoute
+  '/configs/dict-panel/': typeof ConfigsDictPanelIndexRoute
+  '/configs/dictionaries/': typeof ConfigsDictionariesIndexRoute
+  '/configs/general/': typeof ConfigsGeneralIndexRoute
+  '/configs/import-export/': typeof ConfigsImportExportIndexRoute
   '/configs/notebook/': typeof ConfigsNotebookIndexRoute
+  '/configs/permissions/': typeof ConfigsPermissionsIndexRoute
+  '/configs/popup/': typeof ConfigsPopupIndexRoute
+  '/configs/privacy/': typeof ConfigsPrivacyIndexRoute
+  '/configs/profiles/': typeof ConfigsProfilesIndexRoute
+  '/configs/pronunciation/': typeof ConfigsPronunciationIndexRoute
+  '/configs/quick-search/': typeof ConfigsQuickSearchIndexRoute
+  '/configs/search-modes/': typeof ConfigsSearchModesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -110,7 +241,21 @@ export interface FileRouteTypes {
     | '/notebook/'
     | '/search-view/'
     | '/system-tray/'
+    | '/configs/black-white-list/'
+    | '/configs/context-menus/'
+    | '/configs/dict-auth/'
+    | '/configs/dict-panel/'
+    | '/configs/dictionaries/'
+    | '/configs/general/'
+    | '/configs/import-export/'
     | '/configs/notebook/'
+    | '/configs/permissions/'
+    | '/configs/popup/'
+    | '/configs/privacy/'
+    | '/configs/profiles/'
+    | '/configs/pronunciation/'
+    | '/configs/quick-search/'
+    | '/configs/search-modes/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -121,7 +266,21 @@ export interface FileRouteTypes {
     | '/notebook'
     | '/search-view'
     | '/system-tray'
+    | '/configs/black-white-list'
+    | '/configs/context-menus'
+    | '/configs/dict-auth'
+    | '/configs/dict-panel'
+    | '/configs/dictionaries'
+    | '/configs/general'
+    | '/configs/import-export'
     | '/configs/notebook'
+    | '/configs/permissions'
+    | '/configs/popup'
+    | '/configs/privacy'
+    | '/configs/profiles'
+    | '/configs/pronunciation'
+    | '/configs/quick-search'
+    | '/configs/search-modes'
   id:
     | '__root__'
     | '/'
@@ -132,7 +291,21 @@ export interface FileRouteTypes {
     | '/notebook/'
     | '/search-view/'
     | '/system-tray/'
+    | '/configs/black-white-list/'
+    | '/configs/context-menus/'
+    | '/configs/dict-auth/'
+    | '/configs/dict-panel/'
+    | '/configs/dictionaries/'
+    | '/configs/general/'
+    | '/configs/import-export/'
     | '/configs/notebook/'
+    | '/configs/permissions/'
+    | '/configs/popup/'
+    | '/configs/privacy/'
+    | '/configs/profiles/'
+    | '/configs/pronunciation/'
+    | '/configs/quick-search/'
+    | '/configs/search-modes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -144,7 +317,21 @@ export interface RootRouteChildren {
   NotebookIndexRoute: typeof NotebookIndexRoute
   SearchViewIndexRoute: typeof SearchViewIndexRoute
   SystemTrayIndexRoute: typeof SystemTrayIndexRoute
+  ConfigsBlackWhiteListIndexRoute: typeof ConfigsBlackWhiteListIndexRoute
+  ConfigsContextMenusIndexRoute: typeof ConfigsContextMenusIndexRoute
+  ConfigsDictAuthIndexRoute: typeof ConfigsDictAuthIndexRoute
+  ConfigsDictPanelIndexRoute: typeof ConfigsDictPanelIndexRoute
+  ConfigsDictionariesIndexRoute: typeof ConfigsDictionariesIndexRoute
+  ConfigsGeneralIndexRoute: typeof ConfigsGeneralIndexRoute
+  ConfigsImportExportIndexRoute: typeof ConfigsImportExportIndexRoute
   ConfigsNotebookIndexRoute: typeof ConfigsNotebookIndexRoute
+  ConfigsPermissionsIndexRoute: typeof ConfigsPermissionsIndexRoute
+  ConfigsPopupIndexRoute: typeof ConfigsPopupIndexRoute
+  ConfigsPrivacyIndexRoute: typeof ConfigsPrivacyIndexRoute
+  ConfigsProfilesIndexRoute: typeof ConfigsProfilesIndexRoute
+  ConfigsPronunciationIndexRoute: typeof ConfigsPronunciationIndexRoute
+  ConfigsQuickSearchIndexRoute: typeof ConfigsQuickSearchIndexRoute
+  ConfigsSearchModesIndexRoute: typeof ConfigsSearchModesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -205,11 +392,109 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConfigsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/configs/search-modes/': {
+      id: '/configs/search-modes/'
+      path: '/configs/search-modes'
+      fullPath: '/configs/search-modes/'
+      preLoaderRoute: typeof ConfigsSearchModesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/quick-search/': {
+      id: '/configs/quick-search/'
+      path: '/configs/quick-search'
+      fullPath: '/configs/quick-search/'
+      preLoaderRoute: typeof ConfigsQuickSearchIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/pronunciation/': {
+      id: '/configs/pronunciation/'
+      path: '/configs/pronunciation'
+      fullPath: '/configs/pronunciation/'
+      preLoaderRoute: typeof ConfigsPronunciationIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/profiles/': {
+      id: '/configs/profiles/'
+      path: '/configs/profiles'
+      fullPath: '/configs/profiles/'
+      preLoaderRoute: typeof ConfigsProfilesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/privacy/': {
+      id: '/configs/privacy/'
+      path: '/configs/privacy'
+      fullPath: '/configs/privacy/'
+      preLoaderRoute: typeof ConfigsPrivacyIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/popup/': {
+      id: '/configs/popup/'
+      path: '/configs/popup'
+      fullPath: '/configs/popup/'
+      preLoaderRoute: typeof ConfigsPopupIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/permissions/': {
+      id: '/configs/permissions/'
+      path: '/configs/permissions'
+      fullPath: '/configs/permissions/'
+      preLoaderRoute: typeof ConfigsPermissionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/configs/notebook/': {
       id: '/configs/notebook/'
       path: '/configs/notebook'
       fullPath: '/configs/notebook/'
       preLoaderRoute: typeof ConfigsNotebookIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/import-export/': {
+      id: '/configs/import-export/'
+      path: '/configs/import-export'
+      fullPath: '/configs/import-export/'
+      preLoaderRoute: typeof ConfigsImportExportIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/general/': {
+      id: '/configs/general/'
+      path: '/configs/general'
+      fullPath: '/configs/general/'
+      preLoaderRoute: typeof ConfigsGeneralIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/dictionaries/': {
+      id: '/configs/dictionaries/'
+      path: '/configs/dictionaries'
+      fullPath: '/configs/dictionaries/'
+      preLoaderRoute: typeof ConfigsDictionariesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/dict-panel/': {
+      id: '/configs/dict-panel/'
+      path: '/configs/dict-panel'
+      fullPath: '/configs/dict-panel/'
+      preLoaderRoute: typeof ConfigsDictPanelIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/dict-auth/': {
+      id: '/configs/dict-auth/'
+      path: '/configs/dict-auth'
+      fullPath: '/configs/dict-auth/'
+      preLoaderRoute: typeof ConfigsDictAuthIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/context-menus/': {
+      id: '/configs/context-menus/'
+      path: '/configs/context-menus'
+      fullPath: '/configs/context-menus/'
+      preLoaderRoute: typeof ConfigsContextMenusIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configs/black-white-list/': {
+      id: '/configs/black-white-list/'
+      path: '/configs/black-white-list'
+      fullPath: '/configs/black-white-list/'
+      preLoaderRoute: typeof ConfigsBlackWhiteListIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -224,7 +509,21 @@ const rootRouteChildren: RootRouteChildren = {
   NotebookIndexRoute: NotebookIndexRoute,
   SearchViewIndexRoute: SearchViewIndexRoute,
   SystemTrayIndexRoute: SystemTrayIndexRoute,
+  ConfigsBlackWhiteListIndexRoute: ConfigsBlackWhiteListIndexRoute,
+  ConfigsContextMenusIndexRoute: ConfigsContextMenusIndexRoute,
+  ConfigsDictAuthIndexRoute: ConfigsDictAuthIndexRoute,
+  ConfigsDictPanelIndexRoute: ConfigsDictPanelIndexRoute,
+  ConfigsDictionariesIndexRoute: ConfigsDictionariesIndexRoute,
+  ConfigsGeneralIndexRoute: ConfigsGeneralIndexRoute,
+  ConfigsImportExportIndexRoute: ConfigsImportExportIndexRoute,
   ConfigsNotebookIndexRoute: ConfigsNotebookIndexRoute,
+  ConfigsPermissionsIndexRoute: ConfigsPermissionsIndexRoute,
+  ConfigsPopupIndexRoute: ConfigsPopupIndexRoute,
+  ConfigsPrivacyIndexRoute: ConfigsPrivacyIndexRoute,
+  ConfigsProfilesIndexRoute: ConfigsProfilesIndexRoute,
+  ConfigsPronunciationIndexRoute: ConfigsPronunciationIndexRoute,
+  ConfigsQuickSearchIndexRoute: ConfigsQuickSearchIndexRoute,
+  ConfigsSearchModesIndexRoute: ConfigsSearchModesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
