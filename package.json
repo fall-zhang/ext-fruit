@@ -35,7 +35,7 @@
     "axios": "^1.13.4",
     "axios-mock-adapter": "^2.1.0",
     "clsx": "^2.1.1",
-    "i18next": "^25.8.1",
+    "i18next": "^25.8.14",
     "lucide": "^0.563.0",
     "lucide-react": "^0.563.0",
     "memoize-one": "^6.0.0",

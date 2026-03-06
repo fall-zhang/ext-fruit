@@ -11,6 +11,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.6.1",
     "@hookform/resolvers": "^5.2.2",
     "@salad/ui": "workspace:*",
     "@tanstack/react-router": "^1.163.2",

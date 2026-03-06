@@ -1,5 +1,6 @@
 ## 当前内容
 
+
 - [x] 将 redux 转换为 zustand
 - [x] 更新 database
 - [x] 更新 i18n
@@ -7,6 +8,7 @@
 - [x] 使用 css 变量替代 scss 的变量
 - [x] 使用 @tanstack/react-router 实现路由
 - [x] 搜索 useSelector，用 zustand 的 useDictStore 替换
+- [ ] 已经有轻量本地安装包了，还需要浏览器扩展吗？
 - [ ] 使应用可以打包
 - [ ] 应用类型正确
 - [ ] 所有导出内容，都直接从 @salad/core 中直接获取
@@ -20,15 +22,16 @@
   - [ ] 一个弹窗组件
   - [ ] 一个翻译组件
   - [ ] 一个 portal 组件，用于内嵌
+  - [ ] 之后会在其它应用中使用该内容
 - [ ] 简化 core 模块，多余模块从 core 中移出
   - [ ] 词典保存功能，当前是保存到浏览器的 indexDB 中，流量器插件只能保存在这里，其它平台可以保存到本地，提供一个默认模块
   - [ ] 单词同步功能，非核心功能
   - [ ] profile 一整套配置的保存，不许要在核心实现
   - [ ] 配置功能，需要从 core 中移出，core 并不提供这些功能，只需要读取配置即可
   - [ ] 更多的词典配置
-- [ ] 用 zustand 的 useDictStore 替换 useDispatch
+- [x] 用 zustand 的 useDictStore 替换 useDispatch
 - [ ] 需要移除的 package
-  - [ ] react-redux 原因，使用 zustand 代替，更少的模板代码
+  - [x] react-redux 原因，使用 zustand 代替，更少的模板代码
   - [ ] react-transition-group 原因，之后会使用新的动画，motion 代替
   - [ ] observable-hooks 原因，作者自己写的库，不具有普遍性，和 rxjs 深度绑定，额外增加软件复杂度
 - [ ] 当点击托盘图标的时候，展示翻译 panel
@@ -48,3 +51,5 @@ core 只负责对应的组件
 只专注于做好当前 win，web-view 平台，做好后再关注额外的平台
 
 以能看的见为导向，尽快实现一个完整的查词搜索功能
+
+- ship fast 一切以最快实现所有功能为导向，先不考虑作为组件使用，供其它应用调用的情况了
