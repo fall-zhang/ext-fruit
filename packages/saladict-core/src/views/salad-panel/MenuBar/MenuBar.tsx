@@ -2,14 +2,7 @@ import { useEffect, useState, type FC, type ReactNode } from 'react'
 
 import {
   HistoryBackBtn,
-  HistoryNextBtn,
-  FavBtn,
-  HistoryBtn,
-  NotebookBtn,
-  PinBtn,
-  CloseBtn,
-  SidebarBtn,
-  FocusBtn
+  HistoryNextBtn
 } from './MenubarBtns'
 import './MenuBar.scss'
 // import type { ProfilesProps } from './Profiles'
@@ -23,8 +16,8 @@ import { useConfContext } from '@P/saladict-core/src/context/conf-context'
 import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
 
 export interface MenuBarProps {
-  menuBarProps?:Record<string, any>
-  customButton?:ReactNode
+  menuBarProps?: Record<string, any>
+  customButton?: ReactNode
 
   // text: string
   // searchText: (text: string) => any
@@ -45,7 +38,6 @@ export interface MenuBarProps {
   // // activeProfileId: ProfilesProps['activeProfileId']
   // // profiles: ProfilesProps['profiles']
 
-  // isPinned: boolean
   // togglePin: () => any
 
   // isQSFocus: boolean
@@ -78,31 +70,25 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
       histories: store.searchHistory,
       historyIndex: store.historyIndex,
       activeProfileId: store.activeProfile.id,
-      isPinned: store.isPinned,
       isQSFocus: store.isQSFocus,
       switchHistory: store.SWITCH_HISTORY,
-      searchStart: store.SEARCH_START,
-      searchText: store.SEARCH_START,
     }
   }))
-  function addToNoteBook () {
-    // 将当前单词添加到 notebook
-  }
-  // function switchHistory () {
-  //   // store.SWITCH_HISTORY
+  // function addToNoteBook () {
+  //   // 将当前单词添加到 notebook
   // }
-  function togglePin () {
-    // store({ type: 'TOGGLE_PIN' })
-  }
-  function toggleQSFocus () {
-    // dispatch({ type: 'TOGGLE_QS_FOCUS' })
-  }
-  function onClose () {
-    // dispatch({ type: 'CLOSE_PANEL' })
-  }
-  function onSwitchSidebar (side: 'left' | 'right') {
-    // message.send({ type: 'QS_SWITCH_SIDEBAR', payload: side })
-  }
+  // // function switchHistory () {
+  // //   // store.SWITCH_HISTORY
+  // // }
+  // function toggleQSFocus () {
+  //   // dispatch({ type: 'TOGGLE_QS_FOCUS' })
+  // }
+  // function onClose () {
+  //   // dispatch({ type: 'CLOSE_PANEL' })
+  // }
+  // function onSwitchSidebar (side: 'left' | 'right') {
+  //   // message.send({ type: 'QS_SWITCH_SIDEBAR', payload: side })
+  // }
 
   // const onHeightChanged = (height: number) => {
   //   dispatch({
@@ -139,6 +125,8 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
         onClick={() => store.switchHistory('next')}
       />
       <div className="grow h-full" {...props.menuBarProps}></div>
+      {/* 自定义 button 列表 */}
+      {props.customButton}
       {/* <ProfilePopover
         profiles={store.profiles}
         activeProfileId={store.activeProfileId}
@@ -147,7 +135,7 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
           setProfileHeight(height)
         }}
       /> */}
-      <FavBtn
+      {/* <FavBtn
         isFav={store.isInNotebook}
         onClick={addToNoteBook}
         onMouseDown={e => {
@@ -164,7 +152,7 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
             // })
           }
         }}
-      />
+      /> */}
       {/* {config.isTrackHistory
         ? (<HistoryBtn
           t={t}
@@ -178,8 +166,6 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
             // 查看 Notebook 生词本
           }}
         />)} */}
-      {/* 自定义 button 列表 */}
-      {props.customButton}
       {/* {isQuickSearchPage()
         ? (
           <>
@@ -195,13 +181,9 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
             />
           </>
         )
-        :  <>
-            <PinBtn
-              isPinned={store.isPinned}
-              onClick={store.togglePin}
-            />
+        :
             <CloseBtn t={t} onClick={store.onClose} />
-          </>} */}
+         } */}
       {/* {
         renderType === 'QuickSearchPage' && (<>
           <FocusBtn
@@ -222,7 +204,6 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
         <>
           <PinBtn
             t={t}
-            isPinned={store.isPinned}
             onClick={store.togglePin}
           />
           <CloseBtn t={t} onClick={store.onClose} />

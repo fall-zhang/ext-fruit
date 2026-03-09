@@ -7,7 +7,7 @@ export interface CSSProperties {
   '--color-brand'?: string
   '--color-font'?: string
   '--color-background'?: string
-  '--color-rgb-background' ?: string
+  '--color-rgb-background'?: string
   '--color-divider'?: string
 }
 

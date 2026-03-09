@@ -1,24 +1,17 @@
-import type { CSSProperties, FC, ReactNode } from 'react'
-import { useRef, useState } from 'react'
-import clsx from 'clsx'
-import { SALADICT_PANEL } from '../../core/saladict-state'
-import { MenuBar } from './MenuBar/MenuBar'
-import { useConfContext } from '../../context/conf-context'
-import { DictList } from './DictList/DictList'
+import type { FC, ReactNode } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import './_style.scss'
 import i18n from '../../locales/i18n'
-import { debounce } from 'es-toolkit'
-import { newWord } from '../../dict-utils/new-word'
-import { SearchBox } from './search-input/search-input'
-import { SearchProvider, useSearchContext } from '../../context/search-context'
-import { useStore } from 'zustand'
+import { SearchProvider } from '../../context/search-context'
 import { SaladContent } from './salad-context'
+import type { ConfigType } from '../../app-config/config-type'
 
 type SaladPanelProps = {
   menuBarProps?: Record<string, any>
   customButton?: ReactNode
   customFetch?(input: URL | Request | string, init?: RequestInit): Promise<Response>;
+  onSearchChange: (text: string) => void
+  config?: ConfigType
 }
 
 export const SaladPanel: FC<SaladPanelProps> = (props) => {

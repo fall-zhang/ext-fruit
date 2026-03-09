@@ -1,7 +1,6 @@
 import type { CSSProperties, FC, ReactNode } from 'react'
 import './_style.scss'
 import { useSearchContext } from '../../context/search-context'
-import { useStore } from 'zustand'
 import { useCallback, useRef, useState } from 'react'
 import clsx from 'clsx'
 import { SALADICT_PANEL } from '../../core/saladict-state'
@@ -26,7 +25,9 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
   const [inputText, setInputText] = useState('')
 
   const searchStart = useSearchContext((store) => store.searchStart)
+  const renderedDicts = useSearchContext((store) => store.renderedDicts)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const updateText = useCallback(debounce((text: string) => {
     searchStart({
       word: newWord({
@@ -85,7 +86,8 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
               {store.isShowMtaBox && <MtaBox /> }
             </div>
           </HoverBoxContext.Provider> */}
-        <DictList />
+        <DictList
+          dicts={renderedDicts} />
         {/* {store.waveformBox && <WaveformBox />} */}
       </div>
     </div>
