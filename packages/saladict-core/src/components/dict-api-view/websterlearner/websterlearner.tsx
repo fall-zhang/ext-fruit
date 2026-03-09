@@ -1,15 +1,15 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
 import Speaker from '@/components/Speaker'
-import {
+import type {
   WebsterLearnerResult,
   WebsterLearnerResultLex,
   WebsterLearnerResultRelated
 } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
+import type { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictWebsterLearner: FC<ViewProps<WebsterLearnerResult>> = ({
-  result
+  result,
 }) => {
   switch (result.type) {
     case 'lex':
@@ -21,7 +21,7 @@ export const DictWebsterLearner: FC<ViewProps<WebsterLearnerResult>> = ({
   }
 }
 
-function renderLex(result: WebsterLearnerResultLex) {
+function renderLex (result: WebsterLearnerResultLex) {
   return (
     <>
       {result.items.map(entry => (
@@ -49,7 +49,7 @@ function renderLex(result: WebsterLearnerResultLex) {
   )
 }
 
-function renderRelated(result: WebsterLearnerResultRelated) {
+function renderRelated (result: WebsterLearnerResultRelated) {
   return (
     <>
       <p>Did you mean:</p>
