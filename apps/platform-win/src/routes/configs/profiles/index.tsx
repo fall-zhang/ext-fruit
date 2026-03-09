@@ -1,16 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
-import type { FC } from 'react'
 import { useState, useLayoutEffect } from 'react'
 import { Row, Col, Modal, notification, message as antdMsg } from 'antd'
 import { BlockOutlined } from '@ant-design/icons'
 
-// import {
-//   getProfileName,
-//   updateActiveProfileID,
-//   removeProfile,
-//   updateProfileIDList,
-//   addProfile
-// } from '@/_helpers/profile-manager'
 import { SortableList, reorder } from '../-components/SortableList'
 import { EditNameModal } from './-edit-name-modal'
 import { useDictStore } from '@P/saladict-core/src/store'
@@ -18,11 +10,15 @@ import { Trans, useTranslation } from 'react-i18next'
 import { getDefaultProfileID, type ProfileID } from '@P/saladict-core/src/app-config/profiles'
 import { useListLayout } from '../-utils/layout'
 import { useCheckDictAuth } from '../-utils/use-check-dict-auth'
+import { addProfile, getProfileName, updateProfileIDList } from './-utils'
 
 export const Route = createFileRoute('/configs/profiles/')({
   component: RouteComponent,
 })
 
+/**
+ * 对应用中所有的内容进行配置
+ */
 function RouteComponent () {
   const { t } = useTranslation('options')
   const checkDictAuth = useCheckDictAuth()
@@ -39,7 +35,7 @@ function RouteComponent () {
   )
   const listLayout = useListLayout()
   // make a local copy to avoid flickering on drag end
-  const [profileIDList, setProfileIDList] = useState<ProfileIDList>(
+  const [profileIDList, setProfileIDList] = useState<ProfileID[]>(
     storeProfileIDList
   )
   useLayoutEffect(() => {
@@ -69,7 +65,7 @@ function RouteComponent () {
           const newList = profileIDList.map(p =>
             (p.id === profileID.id ? profileID : p)
           )
-          await updateProfileIDList(newList)
+          updateProfileIDList(newList)
         } else {
           await addProfile(profileID)
         }

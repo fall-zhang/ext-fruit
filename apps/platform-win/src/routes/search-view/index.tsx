@@ -1,9 +1,12 @@
-import { CloseBtn, PinBtn } from '@P/saladict-core/src/views/salad-panel/MenuBar/MenubarBtns'
 import { SaladPanel } from '@P/saladict-core/src/views/salad-panel/salad-panel'
 import { createFileRoute } from '@tanstack/react-router'
 import { Window } from '@tauri-apps/api/window'
 import { fetch } from '@tauri-apps/plugin-http'
 import { useEffect, useState } from 'react'
+import { PinBtn } from './-components/pin-button'
+import { CloseBtn } from './-components/close-button'
+import { FavBtn } from './-components/fav-button'
+import type { SaladictConfig } from '@P/saladict-core/main'
 /**
  * 生词本
  */
@@ -14,6 +17,9 @@ const appWindow = new Window('main-page')
 
 function RouteComponent () {
   const [isAlwaysOnTop, setAlwaysOnTop] = useState(false)
+  const [isInNotebook, setIsInNotebook] = useState(false)
+  const [curSearchText, setCurSearchText] = useState('')
+  const [saladictConf] = useState<SaladictConfig>()
   useEffect(() => {
     async function getInitInfo () {
       const isAlwaysOnTop = await appWindow.isAlwaysOnTop()
@@ -30,7 +36,9 @@ function RouteComponent () {
       setAlwaysOnTop(true)
     }
   }
+  function toggleFavState () {
 
+  }
   return <>
     <div className='w-full h-full relative'>
       <SaladPanel
@@ -38,8 +46,14 @@ function RouteComponent () {
           'data-tauri-drag-region': true,
         }}
         customFetch={fetch}
+        onSearchChange={(text) => { setCurSearchText(text) }}
+        config={saladictConf}
         customButton={
           <>
+            <FavBtn
+              isFav={isInNotebook}
+              onClick={toggleFavState}
+            />
             <PinBtn
               isPinned={isAlwaysOnTop}
               onClick={togglePin}
