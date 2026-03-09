@@ -1,25 +1,26 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
+import React from 'react'
 import Speaker from '@/components/Speaker'
 import StarRates from '@/components/StarRates'
-import {
+import type {
   LongmanResult,
   LongmanResultLex,
   LongmanResultRelated,
   LongmanResultEntry
 } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
+import type { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictLongman: FC<ViewProps<LongmanResult>> = ({ result }) =>
-  result.type === 'lex'
+  (result.type === 'lex'
     ? renderLex(result)
     : result.type === 'related'
-    ? renderRelated(result)
-    : null
+      ? renderRelated(result)
+      : null)
 
 export default DictLongman
 
-function renderEntry(entry: LongmanResultEntry) {
+function renderEntry (entry: LongmanResultEntry) {
   return (
     <section
       key={entry.title.HWD + entry.title.HOMNUM}
@@ -36,15 +37,17 @@ function renderEntry(entry: LongmanResultEntry) {
               {entry.title.HOMNUM}
             </span>
           </h1>
-          {entry.level ? (
-            <span title={entry.level.title} className="dictLongman-Level">
-              <StarRates
-                max={3}
-                rate={entry.level.rate}
-                className="dictLongman-Level_Rate"
-              />
-            </span>
-          ) : null}
+          {entry.level
+            ? (
+              <span title={entry.level.title} className="dictLongman-Level">
+                <StarRates
+                  max={3}
+                  rate={entry.level.rate}
+                  className="dictLongman-Level_Rate"
+                />
+              </span>
+            )
+            : null}
           {entry.freq &&
             entry.freq.map(freq => (
               <span
@@ -106,7 +109,7 @@ function renderEntry(entry: LongmanResultEntry) {
   )
 }
 
-function renderLex(result: LongmanResultLex) {
+function renderLex (result: LongmanResultLex) {
   type Dicts = ['bussiness', 'contemporary'] | ['contemporary', 'bussiness']
   // const dictTitle = {
   //   contemporary: 'Longman Dictionary of Contemporary English',
@@ -123,20 +126,20 @@ function renderLex(result: LongmanResultLex) {
       )}
 
       {dicts.map((dict, index) =>
-        result[dict].length > 0 ? (
+        (result[dict].length > 0 ? (
           <div className="dictLongman-Dict" key={dict + index}>
             {/* <h1 className='dictLongman-DictTitle'>
               <span>- {dictTitle[dict]} -</span>
             </h1> */}
             {result[dict].map(renderEntry)}
           </div>
-        ) : null
+        ) : null)
       )}
     </>
   )
 }
 
-function renderRelated(result: LongmanResultRelated) {
+function renderRelated (result: LongmanResultRelated) {
   return (
     <>
       <p>Did you mean:</p>

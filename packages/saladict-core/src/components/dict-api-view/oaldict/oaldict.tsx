@@ -1,7 +1,8 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
+import React from 'react'
 import Speaker from '@/components/Speaker'
-import { OaldictResult } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
+import type { OaldictResult } from './engine'
+import type { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
 
 export const DictOal: FC<ViewProps<OaldictResult>> = ({ result }) => (
@@ -45,15 +46,17 @@ export const DictOal: FC<ViewProps<OaldictResult>> = ({ result }) => (
             <div key={senseI}>
               <div>
                 {sense.title &&
-                  (!result.isPhrasal ? (
-                    <div className={'dictOal-SensesTitle'}>{sense.title}</div>
-                  ) : (
-                    <StrElm
-                      tag="span"
-                      className="dictOal-SensesTitle"
-                      html={sense.title || ''}
-                    />
-                  ))}
+                  (!result.isPhrasal
+                    ? (
+                      <div className={'dictOal-SensesTitle'}>{sense.title}</div>
+                    )
+                    : (
+                      <StrElm
+                        tag="span"
+                        className="dictOal-SensesTitle"
+                        html={sense.title || ''}
+                      />
+                    ))}
 
                 {sense.symbol && (
                   <span className={'dictOal-TitleBoxSymbol'}>
