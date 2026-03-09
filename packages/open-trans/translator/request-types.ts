@@ -1,12 +1,5 @@
 import type { Language } from '../languages'
 
-export type GetFetchRequest<T = unknown> = {
-  (text: string, opt: {
-    from: Language
-    to: Language
-    option: T
-  }): Request
-}
 
 /**
  * 获取该引擎对于返回结果的处理

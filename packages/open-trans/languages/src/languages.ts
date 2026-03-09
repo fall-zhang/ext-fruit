@@ -126,3 +126,5 @@ export const languages = [
 export type Language = typeof languages[number]
 
 export type Locale = { [key in Language]: string }
+
+export type ExtendSupportLang<U extends Language> = U
