@@ -1,5 +1,4 @@
 import type {
-  ComponentType,
   FC
 } from 'react'
 import type React from 'react'
@@ -12,22 +11,21 @@ import {
 } from 'react'
 import clsx from 'clsx'
 import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
-import type { DictItemHeadProps } from './DictItemHead'
-import { DictItemHead } from './DictItemHead'
-import type { DictItemBodyProps } from './DictItemBody'
-import { DictItemBody } from './DictItemBody'
-import type { DictID } from '@P/saladict-core/src/app-config'
+import type { DictItemHeadProps } from './dict-item-head'
+import { DictItemHead } from './dict-item-head'
+import type { DictItemBodyProps } from './dict-item-body'
+import { DictItemBody } from './dict-item-body'
 import { timer } from '@P/saladict-core/src/utils/promise-more'
-import type { ViewProps } from '@P/saladict-core/src/core/trans-api/helpers'
 import { isTagName } from '@P/saladict-core/src/utils/dom'
 import { useOptContext } from '@P/saladict-core/src/context/opt-context'
-
+import type { DictID } from '@P/api-server/types/all-dict-conf'
+import './dict-item.scss'
 const DICT_ITEM_HEAD_HEIGHT = 20
 
 export interface DictItemProps
   extends Omit<DictItemBodyProps, 'dictRootRef'> {
   /** default height when search result is received */
-  preferredHeight: number
+  // preferredHeight: number
   withAnimation: boolean
   /** Inject dict component. Mainly for testing */
 
@@ -62,7 +60,7 @@ export const DictItem: FC<DictItemProps> = props => {
       } else if (foldState === 'FULL') {
         compareNum = offsetHeight
       } else {
-        compareNum = Math.min(offsetHeight, props.preferredHeight)
+        compareNum = Math.min(offsetHeight, 200)
       }
       // const max = Math.max(
       //   10,
@@ -74,7 +72,7 @@ export const DictItem: FC<DictItemProps> = props => {
       // )
       return Math.max(10, compareNum)
     },
-    [foldState, offsetHeight, props.preferredHeight]
+    [foldState, offsetHeight]
   )
 
   useEffect(() => {

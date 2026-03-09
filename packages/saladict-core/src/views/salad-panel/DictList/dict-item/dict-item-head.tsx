@@ -1,10 +1,11 @@
 import type { FC } from 'react'
 import type React from 'react'
 import { useState, useEffect, useMemo } from 'react'
-import type { DictID } from '@P/saladict-core/src/app-config'
 import clsx from 'clsx'
-import { HoverBox, type HoverBoxItem } from '@P/saladict-core/src/components/HoverBox'
+import type { HoverBoxItem } from '@P/saladict-core/src/components/HoverBox'
 import { useTranslation } from 'react-i18next'
+import './dict-item-head.scss'
+import type { DictID } from '@P/api-server/types/all-dict-conf'
 
 export interface DictItemHeadProps {
   dictID: DictID
@@ -49,41 +50,41 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
   }, [props.isSearching])
 
 
-  const menuItems = useMemo(() => {
-    const menuItems: HoverBoxItem[] = []
-    const localedLabel = (text: string) =>
-      text.replace(/%t\((\S+)\)/g, (m, s1) => t(s1))
+  // const menuItems = useMemo(() => {
+  //   const menuItems: HoverBoxItem[] = []
+  //   const localedLabel = (text: string) =>
+  //     text.replace(/%t\((\S+)\)/g, (m, s1) => t(s1))
 
-    if (props.catalog) {
-      for (const item of props.catalog) {
-        if (item.options) {
-          menuItems.push({
-            key: item.key,
-            value: item.value,
-            title: item.title && localedLabel(item.title),
-            options: item.options.map(opt => ({
-              value: opt.value,
-              label: localedLabel(opt.label),
-            })),
-          })
-        } else {
-          menuItems.push({
-            key: item.key,
-            value: item.value,
-            label: localedLabel(item.label),
-          })
-        }
-      }
-    }
+  //   if (props.catalog) {
+  //     for (const item of props.catalog) {
+  //       if (item.options) {
+  //         menuItems.push({
+  //           key: item.key,
+  //           value: item.value,
+  //           title: item.title && localedLabel(item.title),
+  //           options: item.options.map(opt => ({
+  //             value: opt.value,
+  //             label: localedLabel(opt.label),
+  //           })),
+  //         })
+  //       } else {
+  //         menuItems.push({
+  //           key: item.key,
+  //           value: item.value,
+  //           label: localedLabel(item.label),
+  //         })
+  //       }
+  //     }
+  //   }
 
-    menuItems.push({
-      key: '_options',
-      value: '_options',
-      label: t('content:tip.openOptions'),
-    })
+  //   menuItems.push({
+  //     key: '_options',
+  //     value: '_options',
+  //     label: t('content:tip.openOptions'),
+  //   })
 
-    return menuItems
-  }, [props.catalog, ready])
+  //   return menuItems
+  // }, [props.catalog, ready])
 
   return (
     <header
@@ -104,22 +105,16 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
           {t(`${props.dictID}.name`)}
         </a>
       </h1>
-      <HoverBox
+      {/* 打开对应语言的配置 */}
+      {/* <HoverBox
         compact
         Button={MenusBtn}
         items={menuItems}
         top={25}
         onSelect={(key, value) => {
-          if (key === '_options') {
-            // openUrl({
-            //   url: 'options.html?menuselected=Dictionaries',
-            //   self: true,
-            // })
-          } else {
-            props.onCatalogSelect({ key, value })
-          }
+          props.onCatalogSelect({ key, value })
         }}
-      />
+      /> */}
       {showLoader && (
         <div className="dictItemHead-Loader">
           <div />
