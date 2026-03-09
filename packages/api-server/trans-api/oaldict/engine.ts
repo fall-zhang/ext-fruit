@@ -1,15 +1,17 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
-import {
-  HTMLString,
-  getText,
-  getInnerHTML,
-  getOuterHTML,
-  handleNoResult,
-  handleNetWorkError,
+import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
+import type {
   SearchFunction,
   GetSrcPageFunction,
   DictSearchResult
 } from '../helpers'
+import {
+  getText,
+  getInnerHTML,
+  getOuterHTML,
+  handleNoResult,
+  handleNetWorkError
+} from '../helpers'
+import type { OaldictResult } from './type'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.oxfordlearnersdictionaries.com/search/english/direct/?q=${text}`
@@ -17,68 +19,11 @@ export const getSrcPage: GetSrcPageFunction = text => {
 
 const HOST = 'https://www.oxfordlearnersdictionaries.com'
 
-interface Idiom {
-  title?: string
-  labels?: string
-  def?: string
-  examples?: HTMLString
-}
-
-interface Mean {
-  symbols?: string
-  grammar?: string
-  labels?: string
-  variants?: HTMLString
-  variantsIsBlock?: boolean
-  use?: string
-  cf?: string
-  def?: string
-  examples?: HTMLString
-}
-
-interface Sense {
-  title?: string
-  symbol?: string
-  variants?: string
-  means: Mean[]
-}
-
-interface Ipron {
-  uk: {
-    sound?: string
-    phon?: string
-  }
-  us: {
-    sound?: string
-    phon?: string
-  }
-}
-
-interface OaldictResultItem {
-  /** word */
-  title: string
-  pos?: string
-  symbol?: string
-  /** pronunciation */
-  pron: Ipron
-  /** sense and eg */
-  senses: Sense[]
-  origin?: HTMLString
-  /** idiom and eg */
-  idioms: Idiom[]
-  /** phrasal template */
-  isPhrasal?: boolean
-}
-
-export type OaldictResult = OaldictResultItem
 
 type OaldictSearchResult = DictSearchResult<OaldictResult>
 
 export const search: SearchFunction<OaldictResult> = (
-  text,
-  config,
-  profile,
-  payload
+  text
 ) => {
   return fetchDirtyDOM(
     'https://www.oxfordlearnersdictionaries.com/search/english/direct/?q=' +
@@ -88,14 +33,14 @@ export const search: SearchFunction<OaldictResult> = (
     .then(doc => handleDOM(doc))
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document
 ): OaldictSearchResult | Promise<OaldictSearchResult> {
-  const result: OaldictResultItem = {
+  const result: OaldictResult = {
     title: '',
     idioms: [],
     senses: [],
-    pron: { uk: {}, us: {} }
+    pron: { uk: {}, us: {} },
   }
 
   const main = doc.querySelector('#entryContent') as HTMLElement
@@ -138,7 +83,7 @@ function handleDOM(
 
   const $senses_phrasal = Array.from(main.querySelectorAll('.entry>.pv-g'))
 
-  function handleGetMeans($mean, sense) {
+  function handleGetMeans ($mean, sense) {
     const mean: Mean = {}
 
     const $symbols = $mean.querySelector('.sensetop .symbols>a') as HTMLElement
@@ -179,7 +124,7 @@ function handleDOM(
     $senses_phrasal.map($mean => {
       const sense: Sense = {
         title: '',
-        means: []
+        means: [],
       }
 
       const $title = $mean.querySelector('.top-container .pv') as HTMLElement
@@ -212,7 +157,7 @@ function handleDOM(
   } else if ($senses_li.length) {
     const sense: Sense = {
       title: '',
-      means: []
+      means: [],
     }
     $senses_li.map($mean => handleGetMeans($mean, sense))
     result.senses.push(sense)
@@ -220,7 +165,7 @@ function handleDOM(
     $senses.map($sense => {
       const sense: Sense = {
         title: '',
-        means: []
+        means: [],
       }
       sense.title = getText($sense.querySelector('.shcut'))
 
@@ -262,7 +207,6 @@ function handleDOM(
 
   if (result.title || result.senses.length > 0 || result.idioms.length > 0) {
     return { result }
-  } else {
-    return handleNoResult()
   }
+  return handleNoResult()
 }

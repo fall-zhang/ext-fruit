@@ -1,7 +1,7 @@
 import type { DictItemBase, DictItemOption } from '@P/api-server/types/dict-base'
-import type { ExtendLocaleLang } from '@P/open-trans/languages/src/languages'
+import type { ExtendSupportLang } from '@P/open-trans/languages/src/languages'
 
-export type BaiduLanguage = ExtendLocaleLang<'zh-CN' | 'zh-TW' | 'en' | 'ja' | 'ko' | 'fr' | 'de' | 'es' | 'ru' | 'nl'>
+export type BaiduLanguage = ExtendSupportLang<'zh-CN' | 'zh-TW' | 'en' | 'ja' | 'ko' | 'fr' | 'de' | 'es' | 'ru' | 'nl'>
 
 export type BaiduConfig = DictItemBase & DictItemOption<BaiduLanguage>
 
@@ -48,7 +48,3 @@ export default (): BaiduConfig => {
     },
   }
 }
-// machineConfig<BaiduConfig>(
-//   [],
-//   {}
-// )

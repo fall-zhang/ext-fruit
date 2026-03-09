@@ -1,28 +1,15 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
-import { getStaticSpeaker } from '@/components/Speaker'
-import type { DictConfigs } from '@/app-config'
-import type {
-  HTMLString,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult
-} from '../../utils'
-import {
-  getInnerHTML,
-  handleNoResult,
-  getText,
-  removeChild,
-  handleNetWorkError,
-  getFullLink,
-  externalLink,
-  getChsToChz
-} from '../helpers'
+import type { GetSrcPageFunction } from '@P/api-server/api-common/atom-type'
+import type { DictSearchResult, SearchFunction } from '@P/api-server/api-common/search-type'
+import type { HTMLString } from '@P/api-server/types'
+import { getChsToChz, handleNetWorkError, getText, getFullLink, removeChild, getInnerHTML, handleNoResult, externalLink } from '@P/api-server/utils'
+import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
+import type { getStaticSpeaker } from '@P/saladict-core/src/components/Speaker'
 
-export const getSrcPage: GetSrcPageFunction = async (text, config, profile) => {
-  let { lang } = profile.dicts.all.cambridge.options
+export const getSrcPage: GetSrcPageFunction = async (text, localLang, profile) => {
+  let { lang } = profile.cambridge.options
 
   if (lang === 'default') {
-    switch (config.langCode) {
+    switch (localLang) {
       case 'zh-CN':
         lang = 'en-chs'
         break
@@ -52,7 +39,8 @@ export const getSrcPage: GetSrcPageFunction = async (text, config, profile) => {
         encodeURIComponent(text)
       )
     case 'en-chz': {
-      const chsToChz = await getChsToChz()
+      const chsToChz = getChsToChz(localLang)
+
       return (
         'https://dictionary.cambridge.org/zht/%E6%90%9C%E7%B4%A2/direct/?datasetsearch=english-chinese-traditional&q=' +
         encodeURIComponent(chsToChz(text))
@@ -75,8 +63,7 @@ type CambridgeSearchResult = DictSearchResult<CambridgeResult>
 export const search: SearchFunction<CambridgeResult> = async (
   text,
   config,
-  profile,
-  payload
+  profile
 ) => {
   return fetchDirtyDOM(await getSrcPage(text, config, profile))
     .catch(handleNetWorkError)

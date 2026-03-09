@@ -1,8 +1,13 @@
 import type { DictItemBase, DictItemOption } from '@P/api-server/types/dict-base'
 
-export type CambridgeConfig = DictItemBase & DictItemOption<'default' | 'en' | 'en-chs' | 'en-chz'
-> & {
-  related: boolean
+export type CambridgeConfig = DictItemBase & {
+  options: {
+    lang: 'default' | 'en' | 'en-chs' | 'en-chz'
+    related: boolean
+  }
+  optionalVal: {
+    lang: Array<'default' | 'en' | 'en-chs' | 'en-chz'>
+  }
 }
 
 export default (): CambridgeConfig => ({
@@ -34,15 +39,10 @@ export default (): CambridgeConfig => ({
     max: 5,
   },
   options: {
-    keepLF: 'none',
-    slInitial: 'hide',
-    tl: 'default',
-    tl2: 'default',
+    lang: 'default',
+    related: true,
   },
   optionalVal: {
-    keepLF: [],
-    slInitial: [],
-    tl: [],
-    tl2: []
+    lang: ['default', 'en', 'en-chs', 'en-chz'],
   },
 })
