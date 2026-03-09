@@ -10,29 +10,29 @@ import type { Word } from '../../types/word'
 import type { GlobalState } from '../global-state'
 
 export type DictActionSlice = {
-  NEW_CONFIG(payload:AppConfig):void
+  NEW_CONFIG(payload: AppConfig): void
   /* ------------------------------------------------ *\
      Audio Playing
   \* ------------------------------------------------ */
 
   PLAY_AUDIO: {
     /** url: to backend */
-    (payload: string):void
+    (payload: string): void
   }
 
   /** switch to the next or previous history */
-  SWITCH_HISTORY(payload: 'prev' | 'next'):void
+  SWITCH_HISTORY(payload: 'prev' | 'next'): void
 
   /** request closing panel */
-  CLOSE_PANEL():void
+  CLOSE_PANEL(): void
 
-  TEMP_DISABLED_STATE(value:boolean):void
+  TEMP_DISABLED_STATE(value: boolean): void
 }
 
-export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [],
+export const createActionSlice: StateCreator<GlobalState & DictActionSlice, [], [],
   DictActionSlice> = (set, get) => {
   return {
-    NEW_CONFIG: (payload:AppConfig) => set((state) => {
+    NEW_CONFIG: (payload: AppConfig) => set((state) => {
       const url = window.location.href
       const panelMaxHeight =
         (window.innerHeight * payload.panelMaxHeightRatio) / 100
@@ -49,12 +49,12 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
       }
     }),
 
-    NEW_PROFILES: (payload:ProfileID[]) => set((state) => ({
+    NEW_PROFILES: (payload: ProfileID[]) => set((state) => ({
       ...state,
       profiles: payload,
     })),
 
-    NEW_ACTIVE_PROFILE: (payload :Profile) => set(state => {
+    NEW_ACTIVE_PROFILE: (payload: Profile) => set(state => {
       const isShowMtaBox = payload.mtaAutoUnfold !== 'hide'
       return {
         ...state,
@@ -71,7 +71,7 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
       }
     }),
 
-    NEW_SELECTION: (payload:{
+    NEW_SELECTION: (payload: {
       word: Word
       mouseX: number
       mouseY: number
@@ -89,12 +89,11 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
     }) => set(state => newSelection(state, payload)),
 
     /** Is App temporary disabled */
-    TEMP_DISABLED_STATE: (payload:boolean) => set((state) => {
+    TEMP_DISABLED_STATE: (payload: boolean) => set((state) => {
       if (payload) {
         return {
           ...state,
           isTempDisabled: true,
-          isPinned: false,
           // keep showing if it's standalone page
           isShowBowl: false,
         }
@@ -108,7 +107,7 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
     /* ------------------------------------------------ *\
      Dict Panel
   \* ------------------------------------------------ */
-    UPDATE_TEXT: (newText:string) => set((state) => ({
+    UPDATE_TEXT: (newText: string) => set((state) => ({
       ...state,
       text: newText,
     })),
@@ -118,10 +117,6 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
       isExpandMtaBox: !state.isExpandMtaBox,
     })),
 
-    TOGGLE_PIN: () => set(state => ({
-      ...state,
-      isPinned: !state.isPinned,
-    })),
     /** Focus button on quick search panel */
     TOGGLE_QS_FOCUS: () => set(state => ({
       ...state,
@@ -133,10 +128,9 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
       isExpandWaveformBox: !state.isExpandWaveformBox,
     })),
 
-    OPEN_PANEL: (payload:{ x: number, y: number }) => set((state) => {
+    OPEN_PANEL: (payload: { x: number, y: number }) => set((state) => {
       return {
         ...state,
-        isPinned: state.config.defaultPinned,
         dictPanelCoord: {
           x: payload.x,
           y: payload.y,
@@ -148,12 +142,11 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
       AudioManager.getInstance().reset()
       return {
         ...state,
-        isPinned: false,
         isShowBowl: false,
       }
     }),
 
-    SWITCH_HISTORY: (payload:'next' | 'prev') => {
+    SWITCH_HISTORY: (payload: 'next' | 'prev') => {
       set((state) => {
         const historyIndex = Math.min(
           Math.max(0, state.historyIndex + (payload === 'prev' ? -1 : 1)),
@@ -172,7 +165,7 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
     },
 
     /** User manually folds or unfolds dict item */
-    USER_FOLD_DICT: (payload:{
+    USER_FOLD_DICT: (payload: {
       id: DictID
       fold: boolean
     }) => set((state) => ({
@@ -194,15 +187,14 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
     /* ------------------------------------------------ *\
         Quick Search Dict Panel
       \* ------------------------------------------------ */
-    SUMMONED_PANEL_INIT: (payload:string) => set((state) => ({
+    SUMMONED_PANEL_INIT: (payload: string) => set((state) => ({
       ...state,
       text: payload,
       historyIndex: 0,
-      isPinned: state.config.defaultPinned,
       isShowBowl: false,
     })),
 
-    QS_PANEL_CHANGED: (payload:boolean) => set((state) => {
+    QS_PANEL_CHANGED: (payload: boolean) => set((state) => {
       if (state.withQssaPanel === payload) {
         return state
       }
@@ -212,7 +204,6 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
         ? {
           ...state,
           withQssaPanel: payload,
-          isPinned: false,
           // no hiding if it's browser action page
           isShowBowl: false,
         }
@@ -226,7 +217,7 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
     /* ------------------------------------------------ *\
      Word Editor Panel
     \* ------------------------------------------------ */
-    WORD_EDITOR_STATUS: (payload:{
+    WORD_EDITOR_STATUS: (payload: {
       word: Word | null
       /** translate context when word editor shows */
       translateCtx?: boolean
@@ -255,7 +246,7 @@ export const createActionSlice:StateCreator<GlobalState & DictActionSlice, [], [
       }
     }),
 
-    PLAY_AUDIO: (payload:string) => set((state) => ({
+    PLAY_AUDIO: (payload: string) => set((state) => ({
       ...state,
       lastPlayAudio: {
         src: payload,

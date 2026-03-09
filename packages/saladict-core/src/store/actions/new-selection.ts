@@ -38,7 +38,7 @@ export const newSelection = (state:GlobalState, selection:{
         x: selection.mouseX,
         y: selection.mouseY,
       }
-    } else if (!state.isPinned) {
+    } else {
       // icon position       10px  panel position
       //           +-------+      +------------------------+
       //           |       |      |                        |

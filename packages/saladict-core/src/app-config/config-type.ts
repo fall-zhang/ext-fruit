@@ -1,4 +1,4 @@
-import type { DictID } from '.'
+import type { DictID } from '@P/api-server/types/all-dict-conf'
 import type { SupportedLangs } from '../utils/lang-check'
 import type { DictAuths } from './auth'
 

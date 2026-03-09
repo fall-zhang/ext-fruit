@@ -3,11 +3,7 @@ import { getAllContextMenus } from './context-menus'
 import type { MtaAutoUnfold as _MtaAutoUnfold } from './profiles'
 import { getDefaultDictAuths } from './auth'
 import type { ConfigType } from './config-type'
-import type { AllDictsConf, getAllDicts } from '@P/api-server/types/all-dict-conf'
 
-
-export type DictConfigs = ReadonlyDeep<AllDictsConf>
-export type DictID = keyof AllDictsConf
 export type MtaAutoUnfold = _MtaAutoUnfold
 
 export type AppConfigMutable = ConfigType

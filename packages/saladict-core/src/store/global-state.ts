@@ -51,10 +51,7 @@ export interface GlobalState {
   isShowMtaBox: boolean
   isExpandMtaBox: boolean
   isExpandWaveformBox: boolean
-  /**
-   * 当前面板是否固定
-   */
-  isPinned: boolean
+
   /**
    * Is current word in Notebook
    *
@@ -134,7 +131,6 @@ export const createSharedSlice: StateCreator<
     isShowMtaBox,
     isExpandMtaBox,
     isExpandWaveformBox: false,
-    isPinned: false,
     isFav: false,
     bowlCoord: { x: 0, y: 0 },
     /** The actual coord of dict panel might be different */

@@ -2,15 +2,14 @@ import { createContext, useContext, useState, type ReactNode } from 'react'
 import { createStore, useStore } from 'zustand'
 
 import type { Word } from '../types/word'
-import type { DictID } from '../app-config'
 import { getDefaultProfile, getDefaultSelectDict, type Profile } from '../app-config/profiles'
 import { checkSupportedLangs, countWords } from '../utils/lang-check'
-import type { DictSearchResult } from '@P/api-server/types'
-import type { AllDictsConf } from '@P/api-server/types/all-dict-conf'
+import type { AllDictsConf, DictID } from '@P/api-server/types/all-dict-conf'
 import { apiMap } from '@P/api-server'
+import type { DictSearchResult } from '@P/api-server/api-common/search-type'
 
 type RenderDictItem = {
-  readonly id: DictID
+  readonly dictID: DictID
   readonly searchStatus: 'IDLE' | 'SEARCHING' | 'FINISH'
   readonly searchResult: any
   readonly catalog?: DictSearchResult<DictID>['catalog']
@@ -109,9 +108,9 @@ const createSearchStore = (initProps?: {
         }
         if (payload && payload.id) {
           dictList = state.renderedDicts.map(d => {
-            if (d.id === payload.id) {
+            if (d.dictID === payload.id) {
               return {
-                id: d.id,
+                dictID: d.dictID,
                 searchStatus: 'SEARCHING',
                 searchResult: null,
               }
@@ -139,7 +138,7 @@ const createSearchStore = (initProps?: {
                 ? 'SEARCHING'
                 : 'IDLE'
               return {
-                id,
+                dictID: id,
                 searchStatus: status,
                 searchResult: null,
               }
@@ -164,26 +163,33 @@ const createSearchStore = (initProps?: {
         },
       })
       DEFAULT_PROPS.customFetch(request).then(res => {
-        apiMap.baidu.handleResponse(res, {
+        return apiMap.baidu.handleResponse(res, {
           text: word.text,
           from: 'auto',
           to: 'auto',
           profile: activeProfile.dicts.all,
         })
+      }).then(res => {
+        const dictResult: RenderDictItem = {
+          dictID: res.result.id,
+          searchStatus: 'FINISH',
+          searchResult: res.result,
+        }
+        set(state => ({
+          ...state,
+          renderedDicts: [dictResult],
+        }))
       }).catch(err => {
         console.warn('⚡️ line:157 ~ err: ', err)
       })
+
       // dictList.forEach(item => {
       //   fetchDictResult({
       //     id: item.id,
       //     text: word.text,
-      //     payload: {
-
-      //     },
       //   }).then(res => {
       //     console.log(res)
       //   }).catch(err => {
-
     //   })
     // })
     },
@@ -193,7 +199,7 @@ const createSearchStore = (initProps?: {
       catalog?: DictSearchResult<DictID>['catalog']
     }) {
       set((state) => {
-        if (state.renderedDicts.every(({ id }) => id !== payload.id)) {
+        if (state.renderedDicts.every(({ dictID }) => dictID !== payload.id)) {
           // this dict is for auto-pronunciation only
           return state
         }
@@ -201,9 +207,9 @@ const createSearchStore = (initProps?: {
         return {
           ...state,
           renderedDicts: state.renderedDicts.map(d =>
-            (d.id === payload.id
+            (d.dictID === payload.id
               ? {
-                id: d.id,
+                dictID: d.dictID,
                 searchStatus: 'FINISH',
                 searchResult: payload.result,
                 catalog: payload.catalog,
@@ -215,7 +221,7 @@ const createSearchStore = (initProps?: {
     },
   }))
 }
-export function SearchProvider ({ children, customFetch}: {
+export function SearchProvider ({ children, customFetch }: {
   children: ReactNode
   customFetch?: CustomFetch
 }) {

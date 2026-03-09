@@ -28,7 +28,7 @@ interface DictItemBase {
 
 /**
  * Optional dict custom options. Can only be boolean, number or string.
- * For string, add additional `options_sel` field to list out choices.
+ * For string, add additional `optionalVal` field to list out choices.
  */
 type DictItemWithOptions<
   Options extends
@@ -54,7 +54,7 @@ export type SelectOptions<
 
 /**
  * If an option is of `string` type there will be an array
- * of options in `options_sel` field.
+ * of options in `optionalVal` field.
  */
 export type DictItem<
   Options extends { [option: string]: number | boolean | string } | undefined = undefined,
@@ -69,5 +69,5 @@ export type DictItem<
         : never) extends never
         ? Record<string, unknown>
         : {
-          options_sel: SelectOptions<Options, Key>
+          optionalVal: SelectOptions<Options, Key>
         })
