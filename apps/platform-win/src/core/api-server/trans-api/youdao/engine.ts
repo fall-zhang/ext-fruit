@@ -11,7 +11,7 @@ import {
   getChsToChz,
   removeChild
 } from '../helpers'
-import { DictConfigs } from '@/app-config'
+import { DictConfigs } from '@/config/app-config'
 
 export const getSrcPage: GetSrcPageFunction = text =>
   'https://dict.youdao.com/w/' + encodeURIComponent(text.replace(/\s+/g, ' '))

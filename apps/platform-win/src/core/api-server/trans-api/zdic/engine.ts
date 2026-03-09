@@ -1,4 +1,4 @@
-import { fetchDirtyDOM } from '@P/saladict-core/src/utils/fetch-dom'
+import { fetchDirtyDOM } from '@/utils/fetch-dom'
 import type {
   HTMLString,
   SearchFunction,

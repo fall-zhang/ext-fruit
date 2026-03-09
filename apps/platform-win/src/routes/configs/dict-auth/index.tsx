@@ -4,7 +4,7 @@ import { Input } from 'antd'
 
 
 import { Trans, useTranslation } from 'react-i18next'
-import { useDictStore } from '@P/saladict-core/src/store'
+import { useDictStore } from '@/store'
 import { SaladictForm, type SaladictFormItem } from '../-components/SaladictForm'
 import { getConfigPath } from '../-utils/path-joiner'
 
@@ -43,7 +43,7 @@ export const RouteComponent: FC = () => {
           ? (
             <Trans message={t('dictAuth.dictHelp')}>
               <a
-                href={`@/components/Dictionaries/${dictID}/auth.ts`}
+                href={`@/core/api-server/api-common/${dictID}/auth.ts`}
                 target="_blank"
                 rel="nofollow noopener noreferrer"
               >

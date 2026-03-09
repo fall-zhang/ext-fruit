@@ -1,11 +1,11 @@
-import { getWords } from '../../core/database/read'
-import { saveWords } from '../../core/database/write'
+import { getWords } from '../../index-db/read'
+import { saveWords } from '../../index-db/write'
 import {
   getSyncMeta,
   setSyncMeta,
   deleteSyncMeta
-} from '../../core/database/sync-meta'
-import type { Word } from '../../types/word'
+} from '../../index-db/sync-meta'
+import type { Word } from '@/types/word'
 
 export interface StorageSyncConfig {
   syncConfig: { [id: string]: any }
@@ -15,14 +15,14 @@ export async function setSyncConfig<T = any> (
   serviceID: string,
   config: T
 ): Promise<void> {
-  const syncConfig:Record<string, any> = {}
+  const syncConfig: Record<string, any> = {}
   syncConfig[serviceID] = config
 }
 
 export async function getSyncConfig<T> (
   serviceID: string
 ): Promise<T | undefined> {
-  const syncConfig:Record<string, any> = {}
+  const syncConfig: Record<string, any> = {}
   return syncConfig[serviceID]
 }
 

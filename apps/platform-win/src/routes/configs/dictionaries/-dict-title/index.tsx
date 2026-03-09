@@ -3,7 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import './_style.scss'
-import type { DictID } from '@P/saladict-core/src/app-config'
+import type { DictID } from '@/config/app-config'
 export interface DictTitleProps {
   dictID: DictID
   /** Supported languages */
@@ -21,7 +21,7 @@ export const DictTitle: FC<DictTitleProps> = ({ dictID, dictLangs }) => {
       <span>
         <img
           className="saladict-dict-title-icon"
-          src={'@/components/Dictionaries/' + dictID + '/favicon.png'}
+          src={'@/core/api-server/api-common/' + dictID + '/favicon.png'}
           alt={`logo ${title}`}
         />
         <a

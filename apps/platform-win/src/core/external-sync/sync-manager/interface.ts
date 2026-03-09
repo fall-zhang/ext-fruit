@@ -1,4 +1,4 @@
-import type { Word } from '@P/saladict-core/src/types/word'
+import type { Word } from '@/types/word'
 
 export interface NotebookFile {
   timestamp: number

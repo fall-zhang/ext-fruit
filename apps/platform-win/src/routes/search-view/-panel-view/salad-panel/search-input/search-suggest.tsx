@@ -3,8 +3,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem
-} from '@salad/ui/components/ui/dropdown-menu'
-import { getSuggests } from '@P/saladict-core/src/utils/getSuggests'
+} from '@salad/ui/components/dropdown-menu'
+import { getSuggests } from '@/utils/getSuggests'
 
 export interface SuggestItem {
   explain: string

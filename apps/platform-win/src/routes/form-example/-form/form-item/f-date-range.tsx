@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { Button } from '@P/ui/components/ui/button'
-import { Calendar } from '@P/ui/components/ui/calendar'
-import { Field, FieldLabel } from '@P/ui/components/ui/field'
+import { Button } from '@P/ui/components/button'
+import { Calendar } from '@P/ui/components/calendar'
+import { Field, FieldLabel } from '@P/ui/components/field'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger
-} from '@P/ui/components/ui/popover'
+} from '@P/ui/components/popover'
 import { addDays, format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import type { DateRange } from 'react-day-picker'

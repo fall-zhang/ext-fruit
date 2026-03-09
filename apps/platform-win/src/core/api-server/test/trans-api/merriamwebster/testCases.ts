@@ -1,4 +1,4 @@
-import { MerriamWebsterResultV2 } from '@/components/Dictionaries/merriamwebster/engine'
+import { MerriamWebsterResultV2 } from '@/core/api-server/api-common/merriamwebster/engine'
 import fs from 'fs'
 import path from 'path'
 

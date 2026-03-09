@@ -6,12 +6,12 @@ import { Row, Col, Upload, notification } from 'antd'
 import type { RcFile } from 'antd/lib/upload'
 import { DownloadOutlined, UploadOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
-import type { AppConfig } from '@P/saladict-core/src/app-config'
-import { mergeConfig } from '@P/saladict-core/src/app-config/merge-config'
+import type { AppConfig } from '@/config/app-config'
+import { mergeConfig } from '@/config/app-config/merge-config'
 import { useListLayout } from '../-utils/layout'
-import { mergeProfile } from '@P/saladict-core/src/app-config/merge-profile'
-import type { Profile, ProfileID } from '@P/saladict-core/src/app-config/profiles'
-import { useConfContext } from '@P/saladict-core/src/context/conf-context'
+import { mergeProfile } from '@/config/app-config/merge-profile'
+import type { Profile, ProfileID } from '@/config/app-config/profiles'
+import { useConfContext } from '@/context/conf-context'
 
 export const Route = createFileRoute('/configs/import-export/')({
   component: RouteComponent,

@@ -14,7 +14,7 @@ import {
   getFullLink,
   getOuterHTML
 } from '../helpers'
-import { DictConfigs } from '@/app-config'
+import { DictConfigs } from '@/config/app-config'
 
 export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
   const lang =

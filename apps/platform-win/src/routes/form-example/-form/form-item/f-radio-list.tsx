@@ -1,6 +1,6 @@
 import { Controller, useForm } from 'react-hook-form'
 
-import { Checkbox } from '@P/ui/components/ui/checkbox'
+import { Checkbox } from '@P/ui/components/checkbox'
 import {
   Field,
   FieldDescription,
@@ -10,7 +10,7 @@ import {
   FieldLegend,
   FieldSeparator,
   FieldSet
-} from '@P/ui/components/ui/field'
+} from '@P/ui/components/field'
 import type { FBaseForm } from './type'
 
 export const FCheckbox:FBaseForm = ({

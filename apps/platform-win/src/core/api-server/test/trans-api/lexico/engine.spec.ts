@@ -3,9 +3,9 @@ import {
   search,
   LexicoResultLex,
   LexicoResultRelated
-} from '@/components/Dictionaries/lexico/engine'
-import { getDefaultConfig } from '@/app-config'
-import { getDefaultProfile } from '@/app-config/profiles'
+} from '@/core/api-server/api-common/lexico/engine'
+import { getDefaultConfig } from '@/config/app-config'
+import { getDefaultProfile } from '@/config/app-config/profiles'
 import { describe, expect, it } from 'vitest'
 
 describe('Dict/Lexico/engine', () => {

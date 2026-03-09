@@ -1,5 +1,5 @@
 // import type { FC } from 'react'
-// // import { AppConfig } from '@/app-config'
+// // import { AppConfig } from '@/config/app-config'
 // // import { getConfig } from '@/_helpers/config-manager'
 // import Popup from './Popup'
 // import Notebook from './Notebook'

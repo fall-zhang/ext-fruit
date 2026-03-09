@@ -6,8 +6,8 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel
-} from '@P/ui/components/ui/field'
-import { Input } from '@P/ui/components/ui/input'
+} from '@P/ui/components/field'
+import { Input } from '@P/ui/components/input'
 import { useId, type FC } from 'react'
 import type { FBaseForm } from './type'
 export const FInput:FBaseForm = ({

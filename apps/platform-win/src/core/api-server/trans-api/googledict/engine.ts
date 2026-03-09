@@ -10,7 +10,7 @@ import {
   getText,
   removeChild
 } from '../helpers'
-import { getStaticSpeaker } from '@P/saladict-core/src/components/Speaker'
+import { getStaticSpeaker } from '@/components/Speaker'
 import type { DictSearchResult, SearchFunction } from '@P/api-server/api-common/search-type'
 import { fetchPlainText } from '@P/api-server/utils/fetch-dom'
 

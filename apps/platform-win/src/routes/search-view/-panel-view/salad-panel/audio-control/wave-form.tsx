@@ -1,14 +1,14 @@
-import { isFirefox } from '@P/saladict-core/src/utils/browser'
+import { isFirefox } from '@/utils/browser'
 import clsx from 'clsx'
 import { useEffect, useRef, useState, type FC, type ChangeEvent } from 'react'
 import { InputNumber as NumberEditor } from 'antd'
 import WaveSurfer from 'wavesurfer.js'
 import RegionsPlugin from 'wavesurfer.js/dist/plugins/regions.js'
-import { useDictStore } from '@P/saladict-core/src/store'
+import { useDictStore } from '@/store'
 // import { SoundTouch, SimpleFilter, getWebAudioNode } from 'soundtouchjs'
-export const WaveFormView:FC<{
-  darkMode:boolean
-  src:string
+export const WaveFormView: FC<{
+  darkMode: boolean
+  src: string
 }> = ({ darkMode, src }) => {
   const containerRef = useRef(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -169,7 +169,7 @@ export const WaveFormView:FC<{
 
     this.shouldSTSync = true
   }
-  const onToggleLoop = (ev:ChangeEvent<HTMLInputElement>) => {
+  const onToggleLoop = (ev: ChangeEvent<HTMLInputElement>) => {
     setLoop(ev.currentTarget.checked)
     if (ev.currentTarget.checked && !isPlaying) {
       audioPlay()

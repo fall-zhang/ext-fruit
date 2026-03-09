@@ -9,7 +9,7 @@ import {
   GetSrcPageFunction,
   DictSearchResult
 } from '../helpers'
-import { DictConfigs } from '@/app-config'
+import { DictConfigs } from '@/config/app-config'
 import axios from 'axios'
 import DOMPurify from 'dompurify'
 

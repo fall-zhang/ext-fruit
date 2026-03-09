@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as z from 'zod'
 
-import { Button } from '@P/ui/components/ui/button'
+import { Button } from '@P/ui/components/button'
 import {
   Card,
   CardContent,
@@ -13,11 +13,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from '@P/ui/components/ui/card'
+} from '@P/ui/components/card'
 import {
   Field,
   FieldGroup
-} from '@P/ui/components/ui/field'
+} from '@P/ui/components/field'
 import { FInput } from './form-item/f-input'
 import { FTextarea } from './form-item/f-textarea'
 

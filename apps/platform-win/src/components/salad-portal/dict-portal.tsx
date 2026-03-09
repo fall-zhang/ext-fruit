@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { useRef, useState } from 'react'
 import { useUpdateEffect } from 'react-use'
-import { SALADICT_PANEL } from '@P/saladict-core/src/core/saladict-state'
+import { SALADICT_PANEL } from '@/core/saladict-state'
 
 import clsx from 'clsx'
 import { useDictStore } from '../../store'

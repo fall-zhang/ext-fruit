@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 import type { ZdicResult } from './engine'
 import type { ViewProps } from '../helpers'
-import EntryBox from '@P/saladict-core/src/components/EntryBox'
-import { StrElm } from '@P/saladict-core/src/components/StrElm'
+import EntryBox from '@/components/EntryBox'
+import { StrElm } from '@/components/StrElm'
 
 export const DictZdic: FC<ViewProps<ZdicResult>> = ({ result }) => (
   <div>

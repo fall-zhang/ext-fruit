@@ -11,9 +11,9 @@ import {
 } from 'react'
 import clsx from 'clsx'
 import { useUpdateEffect } from 'react-use'
-import { SALADICT_PANEL } from '@P/saladict-core/src/core/saladict-state'
+import { SALADICT_PANEL } from '@/core/saladict-state'
 import { HoverBoxContext } from '@salad/core/src/components/HoverBox'
-import { getScrollbarWidth } from '@P/saladict-core/src/utils/scrollbar-width'
+import { getScrollbarWidth } from '@/utils/scrollbar-width'
 
 export interface DictPanelProps {
   /** Update position command from uptream */
@@ -160,7 +160,7 @@ export const DictPanel: FC<DictPanelProps> = props => {
 
 function reconcileX (width: number, x: number): number {
   const winWidth = window.innerWidth
-  let newX:number = 10
+  let newX: number = 10
   // also counted scrollbar width
   if (x + width + 25 > winWidth) {
     newX = winWidth - 25 - width

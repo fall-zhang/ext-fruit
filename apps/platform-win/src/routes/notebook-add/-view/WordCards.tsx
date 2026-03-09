@@ -1,4 +1,4 @@
-import type { Word } from '@P/saladict-core/src/types/word'
+import type { Word } from '@/types/word'
 import type { FC } from 'react'
 import type React from 'react'
 import { useTranslation } from 'react-i18next'

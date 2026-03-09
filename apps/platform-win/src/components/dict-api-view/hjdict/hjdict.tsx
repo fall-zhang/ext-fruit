@@ -3,7 +3,7 @@ import type React from 'react'
 import type { HjdictResult, HjdictResultLex, HjdictResultRelated } from './engine'
 import type { ViewProps } from '@/components/dictionaries/helpers'
 import { useTranslation } from 'react-i18next'
-import { StrElm } from '@P/saladict-core/src/components/StrElm'
+import { StrElm } from '@/components/StrElm'
 
 export const DictHjDict: FC<ViewProps<HjdictResult>> = props => {
   if (props.result.type === 'lex') {

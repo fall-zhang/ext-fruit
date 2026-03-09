@@ -15,7 +15,7 @@ import type { SyncConfig } from '@/background/sync-manager/services/eudic'
 import { Service } from '@/background/sync-manager/services/eudic'
 import { setSyncConfig } from '@/background/sync-manager/helpers'
 import { useTranslation } from 'react-i18next'
-import { getWords } from '@P/saladict-core/src/core/database'
+import { getWords } from '@/core/database'
 
 export interface EudicModalProps {
   syncConfig?: SyncConfig

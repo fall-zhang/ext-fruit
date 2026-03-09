@@ -1,5 +1,5 @@
-import { useDictStore } from '@P/saladict-core/src/store'
-import { SALADICT_EXTERNAL } from '@P/saladict-core/src/core/saladict-state'
+import { useDictStore } from '@/store'
+import { SALADICT_EXTERNAL } from '@/core/saladict-state'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
@@ -11,7 +11,7 @@ export interface WaveformBoxProps {
 }
 
 export const WaveformBox: FC = () => {
-  const props:WaveformBoxProps = useDictStore(store => {
+  const props: WaveformBoxProps = useDictStore(store => {
     return {
       darkMode: store.config.darkMode,
       isExpand: store.isExpandWaveformBox,

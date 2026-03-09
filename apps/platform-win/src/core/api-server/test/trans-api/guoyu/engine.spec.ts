@@ -1,7 +1,7 @@
 import { retry } from '../helpers'
-import { search } from '@/components/Dictionaries/guoyu/engine'
-import { getDefaultConfig } from '@/app-config'
-import { getDefaultProfile } from '@/app-config/profiles'
+import { search } from '@/core/api-server/api-common/guoyu/engine'
+import { getDefaultConfig } from '@/config/app-config'
+import { getDefaultProfile } from '@/config/app-config/profiles'
 import { describe, expect, it } from 'vitest'
 
 describe('Dict/GuoYu/engine', () => {

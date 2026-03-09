@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Switch, Select, Button } from 'antd'
 import { StandaloneModal } from './-standalone-modal'
 import { Trans, useTranslation } from 'react-i18next'
-import type { TCDirection } from '@P/saladict-core/src/app-config/config-type'
+import type { TCDirection } from '@/config/app-config/config-type'
 import { getConfigPath } from '../-utils/path-joiner'
 import { SaladictForm } from '../-components/SaladictForm'
 

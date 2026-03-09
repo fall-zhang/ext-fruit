@@ -1,9 +1,9 @@
-import { SALADICT_EXTERNAL } from '@P/saladict-core/src/core/saladict-state'
+import { SALADICT_EXTERNAL } from '@/core/saladict-state'
 import { createFileRoute } from '@tanstack/react-router'
 import './word-editor.scss'
-import type { AppConfig } from '@P/saladict-core/src/app-config'
+import type { AppConfig } from '@/config/app-config'
 import { Notes } from './-view/Notes'
-import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
+import { newWord } from '@/dict-utils/new-word'
 
 export const Route = createFileRoute('/notebook-add/')({
   component: RouteComponent,

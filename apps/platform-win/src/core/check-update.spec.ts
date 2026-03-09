@@ -1,7 +1,7 @@
 import { checkUpdate } from '@/_helpers/check-update'
 import type { FetchMock } from 'jest-fetch-mock'
 import _fetchMock from 'jest-fetch-mock'
-import getDefaultConfig from '@/app-config'
+import getDefaultConfig from '@/config/app-config'
 
 const fetchMock = _fetchMock as FetchMock
 

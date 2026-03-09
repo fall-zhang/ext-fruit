@@ -6,7 +6,7 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel
-} from '@P/ui/components/ui/field'
+} from '@P/ui/components/field'
 import {
   Select,
   SelectContent,
@@ -14,7 +14,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue
-} from '@P/ui/components/ui/select'
+} from '@P/ui/components/select'
 import type { FAdvanceForm } from './type'
 
 const spokenLanguages = [

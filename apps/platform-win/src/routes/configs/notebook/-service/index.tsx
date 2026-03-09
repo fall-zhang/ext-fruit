@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react'
 import { Switch, Checkbox, Button } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import { useDictStore } from '@P/saladict-core/src/store'
+import { useDictStore } from '@/store'
 import { SaladictForm, type SaladictFormItem } from '../../-components/SaladictForm'
 import { getConfigPath } from '../../-utils/path-joiner'
 

@@ -1,10 +1,13 @@
 /* eslint-disable max-lines-per-function */
-import { NotebookFile } from '@/background/sync-manager/interface'
-import {
-  Service,
+import type { NotebookFile } from '@/background/sync-manager/interface'
+import type {
   SyncConfig
 } from '@/background/sync-manager/services/webdav'
-import { Word, newWord } from '@P/saladict-core/src/dict-utils/new-word'
+import {
+  Service
+} from '@/background/sync-manager/services/webdav'
+import type { Word } from '@/dict-utils/new-word'
+import { newWord } from '@/dict-utils/new-word'
 import { describe, beforeEach, it, expect } from 'vitest'
 import * as jest from 'vitest'
 

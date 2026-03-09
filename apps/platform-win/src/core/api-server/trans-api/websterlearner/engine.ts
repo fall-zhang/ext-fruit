@@ -8,7 +8,7 @@ import {
   GetSrcPageFunction,
   DictSearchResult
 } from '../helpers'
-import { DictConfigs } from '@/app-config'
+import { DictConfigs } from '@/config/app-config'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `http://www.learnersdictionary.com/definition/${text

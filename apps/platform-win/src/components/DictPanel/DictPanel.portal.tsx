@@ -3,7 +3,7 @@ import { useRef, useState } from 'react'
 import { useUpdateEffect } from 'react-use'
 import type { DictPanelProps } from './DictPanel'
 import { DictPanel } from './DictPanel'
-import { SALADICT_PANEL } from '@P/saladict-core/src/core/saladict-state'
+import { SALADICT_PANEL } from '@/core/saladict-state'
 
 import clsx from 'clsx'
 import ShadowPortal, { defaultTimeout } from '../../components/ShadowPortal'

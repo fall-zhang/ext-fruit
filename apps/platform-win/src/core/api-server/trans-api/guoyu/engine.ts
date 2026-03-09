@@ -5,7 +5,7 @@ import {
   getChsToChz
 } from '../helpers'
 import axios from 'axios'
-import type { Profile } from '@/app-config/profiles'
+import type { Profile } from '@/config/app-config/profiles'
 import type { GuoYuResult } from './type'
 import type { SearchFunction, DictSearchResult } from '@P/api-server/api-common/search-type'
 

@@ -78,6 +78,4 @@ export const defaultAllDicts = {
 
 export type AllDictsConf = typeof defaultAllDicts
 
-export type DictID = keyof AllDictsConf
-
 export const getAllDicts = (): AllDictsConf => cloneDeep(defaultAllDicts)

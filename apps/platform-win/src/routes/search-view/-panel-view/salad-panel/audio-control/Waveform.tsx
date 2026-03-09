@@ -3,7 +3,7 @@ import classNames from 'clsx'
 import WaveSurfer from 'wavesurfer.js'
 import RegionsPlugin from 'wavesurfer.js/dist/plugins/regions'
 import { InputNumber as NumberEditor } from 'antd'
-import { isFirefox } from '@P/saladict-core/src/utils/browser'
+import { isFirefox } from '@/utils/browser'
 import { SoundTouch, SimpleFilter, getWebAudioNode } from 'soundtouchjs'
 
 interface AnyObject {

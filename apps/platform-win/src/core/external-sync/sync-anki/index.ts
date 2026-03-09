@@ -1,6 +1,6 @@
 import axios from 'axios'
-import type { Word } from '@P/saladict-core/src/store/selection/types'
-import { parseCtxText } from '@P/saladict-core/src/utils/translateCtx'
+import type { Word } from '@/store/selection/types'
+import { parseCtxText } from '@/utils/translateCtx'
 import { SyncService, type AddConfig } from '../sync-manager/interface'
 import { getNotebook } from './utils'
 

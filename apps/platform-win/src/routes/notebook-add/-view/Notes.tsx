@@ -4,11 +4,11 @@ import type React from 'react'
 import { useState, useEffect } from 'react'
 import { useUpdateEffect } from 'react-use'
 
-import { getWordsByText, deleteWords, saveWord } from '@P/saladict-core/src/core/database'
-import type { AppConfig } from '@P/saladict-core/src/app-config'
+import { getWordsByText, deleteWords, saveWord } from '@/core/database'
+import type { AppConfig } from '@/config/app-config'
 
-import type { CtxTranslateResults } from '@P/saladict-core/src/utils/translateCtx'
-import { genCtxText, translateCtxs } from '@P/saladict-core/src/utils/translateCtx'
+import type { CtxTranslateResults } from '@/utils/translateCtx'
+import { genCtxText, translateCtxs } from '@/utils/translateCtx'
 
 import { WordCards } from './WordCards'
 import type {
@@ -20,8 +20,8 @@ import {
 } from './WordEditorPanel'
 import { CtxTransList } from './CtxTransList'
 import { useTranslation } from 'react-i18next'
-import { useOptContext } from '@P/saladict-core/src/context/opt-context'
-import type { Word } from '@P/saladict-core/src/types/word'
+import { useOptContext } from '@/context/opt-context'
+import type { Word } from '@/types/word'
 import { useNavigate } from '@tanstack/react-router'
 
 export interface NotesProps {

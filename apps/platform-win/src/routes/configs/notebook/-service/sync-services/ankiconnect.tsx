@@ -15,7 +15,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import type { SyncConfig } from '@/background/sync-manager/services/ankiconnect'
 import { Service } from '@/background/sync-manager/services/ankiconnect'
 import { useTranslation } from 'react-i18next'
-import { setSyncConfig } from '@P/saladict-core/src/core/sync-manager/helpers'
+import { setSyncConfig } from '@/core/sync-manager/helpers'
 
 export interface AnkiConnectModalProps {
   syncConfig?: SyncConfig

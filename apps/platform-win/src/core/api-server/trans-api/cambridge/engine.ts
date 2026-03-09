@@ -3,7 +3,7 @@ import type { DictSearchResult, SearchFunction } from '@P/api-server/api-common/
 import type { HTMLString } from '@P/api-server/types'
 import { getChsToChz, handleNetWorkError, getText, getFullLink, removeChild, getInnerHTML, handleNoResult, externalLink } from '@P/api-server/utils'
 import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
-import type { getStaticSpeaker } from '@P/saladict-core/src/components/Speaker'
+import type { getStaticSpeaker } from '@/components/Speaker'
 
 export const getSrcPage: GetSrcPageFunction = async (text, localLang, profile) => {
   let { lang } = profile.cambridge.options

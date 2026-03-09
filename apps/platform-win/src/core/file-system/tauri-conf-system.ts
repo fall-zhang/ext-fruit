@@ -5,14 +5,14 @@ import type { GlobalConfig, MenuConfigJSON, WorkspaceConfigJSON } from '@P/commo
 import type { FileItem, FileJSON } from '@P/common/types/File'
 import { touchDir, addJSONFile } from '../bridge/file-utils'
 import { GENERAL_CONFIG_FILE } from '@P/common/virtualFileSystem/const/filsName'
-import { i18n } from '@P/saladict-core/src/utils/i18n'
+import { i18n } from '@/utils/i18n'
 // import i18n from 'i18next'
 
 // tauri 内容应该始终为相对路径
 export class TauriConfSystem implements ConfigSystem {
   currentConfig: GlobalConfig
 
-  constructor (localConf:GlobalConfig) {
+  constructor (localConf: GlobalConfig) {
     i18n.changeLanguage(localConf.language)
     this.currentConfig = localConf
   }
@@ -21,27 +21,27 @@ export class TauriConfSystem implements ConfigSystem {
     throw new Error('Method not implemented.')
   }
 
-  async updateConfig (config: GlobalConfig):Promise<OperateResult> {
-    const result:OperateResult<string> = {
+  async updateConfig (config: GlobalConfig): Promise<OperateResult> {
+    const result: OperateResult<string> = {
       state: 'failure',
-      msg: '更新文件失败'
+      msg: '更新文件失败',
     }
-    const fileInfo:FileItem = {
+    const fileInfo: FileItem = {
       fileName: '',
       filePath: '/.conf/' + GENERAL_CONFIG_FILE,
       fileType: 'config',
-      fileSuffix: 'json'
+      fileSuffix: 'json',
     }
     const touchResult = await touchDir(fileInfo.filePath)
     if (touchResult.state === 'failure') {
       console.warn('当前文件路径有问题', fileInfo.filePath)
       return result
     }
-    const newConf:WorkspaceConfigJSON = {
+    const newConf: WorkspaceConfigJSON = {
       fileType: 'config',
       configType: 'global-config',
       data: config,
-      version: ''
+      version: '',
     }
     try {
       if (fileInfo.fileSuffix === 'json') {
@@ -61,9 +61,9 @@ export class TauriConfSystem implements ConfigSystem {
   }
 
   async updateMenuConfig () {
-    const result:OperateResult<string> = {
+    const result: OperateResult<string> = {
       state: 'failure',
-      msg: '更新菜单失败，当前方法暂未实现'
+      msg: '更新菜单失败，当前方法暂未实现',
     }
     return result
   }

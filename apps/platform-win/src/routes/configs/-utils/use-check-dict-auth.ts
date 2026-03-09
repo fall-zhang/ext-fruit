@@ -2,8 +2,8 @@ import { useContext } from 'react'
 import { message } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { ChangeEntryContext } from './change-entry'
-import { useDictStore } from '@P/saladict-core/src/store'
-import { useConfContext } from '@P/saladict-core/src/context/conf-context'
+import { useDictStore } from '@/store'
+import { useConfContext } from '@/context/conf-context'
 
 export const useCheckDictAuth = () => {
   const { t } = useTranslation('options')

@@ -3,7 +3,7 @@ import { Switch, Select } from 'antd'
 
 import { SaladictForm, type SaladictFormItem } from '../-components/SaladictForm'
 import { getConfigPath } from '../-utils/path-joiner'
-import { isFirefox, isOpera } from '@P/saladict-core/src/utils/browser'
+import { isFirefox, isOpera } from '@/utils/browser'
 
 export const General: FC = () => {
   const formItems: SaladictFormItem[] = [

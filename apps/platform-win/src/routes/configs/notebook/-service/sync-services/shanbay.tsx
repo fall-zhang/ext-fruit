@@ -1,8 +1,11 @@
-import React, { FC, useState, useEffect } from 'react'
+import type { FC } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Modal, Button, Switch, message as AntdMsg, notification } from 'antd'
-import { Service, SyncConfig } from '@/background/sync-manager/services/shanbay'
+import type { SyncConfig } from '@/background/sync-manager/services/shanbay'
+import { Service } from '@/background/sync-manager/services/shanbay'
 import { setSyncConfig as uploadSyncConfig } from '@/background/sync-manager/helpers'
-import { getWords, Word } from '@P/saladict-core/src/dict-utils/new-word'
+import type { Word } from '@/dict-utils/new-word'
+import { getWords } from '@/dict-utils/new-word'
 import { useTranslation } from 'react-i18next'
 
 export interface WebdavModalProps {
@@ -51,7 +54,7 @@ export const ShanbayModal: FC<WebdavModalProps> = props => {
   async function onToggleEnable (enable: boolean) {
     const newConfig = {
       ...syncConfig,
-      enable
+      enable,
     }
     if (enable) {
       const service = new Service(newConfig)
@@ -63,7 +66,7 @@ export const ShanbayModal: FC<WebdavModalProps> = props => {
           title: t('syncService.shanbay.login'),
           onOk: () => {
             Service.openLogin()
-          }
+          },
         })
         return
       }
@@ -77,7 +80,7 @@ export const ShanbayModal: FC<WebdavModalProps> = props => {
     } catch (e) {
       notification.error({
         message: t('config.opt.upload_error'),
-        description: `${e}`
+        description: `${e}`,
       })
     }
   }
@@ -85,7 +88,7 @@ export const ShanbayModal: FC<WebdavModalProps> = props => {
   async function onSyncAll () {
     const { total } = await getWords('notebook', {
       itemsPerPage: 1,
-      filters: {}
+      filters: {},
     })
     if (total > 50 && !confirm(t('syncService.shanbay.sync_all_confirm'))) {
       return
@@ -97,7 +100,7 @@ export const ShanbayModal: FC<WebdavModalProps> = props => {
   async function onSyncLast () {
     const { words } = await getWords('notebook', {
       itemsPerPage: 1,
-      filters: {}
+      filters: {},
     })
     if (!words || words.length <= 0) {
       return
@@ -125,7 +128,7 @@ export const ShanbayModal: FC<WebdavModalProps> = props => {
       const msgPath = `sync:shanbay.error.${error}`
       notification.error({
         message: t('syncService.failed'),
-        description: i18n.exists(msgPath) ? t(msgPath) : `${error}`
+        description: i18n.exists(msgPath) ? t(msgPath) : `${error}`,
       })
     }
   }

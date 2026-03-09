@@ -8,16 +8,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle
-} from '@salad/ui/components/ui/dialog'
-import { Button } from '@salad/ui/components/ui/button'
+} from '@salad/ui/components/dialog'
+import { Button } from '@salad/ui/components/button'
 // 外部系统提供的 context
 interface DialogContextType {
-  confirm(opt:{
+  confirm(opt: {
     title: string,
     description?: string,
-    onConfirm?():void
-    onCancel?():void
-  }):void
+    onConfirm?(): void
+    onCancel?(): void
+  }): void
 }
 // 默认
 const ConfirmContext = createContext<DialogContextType>({
@@ -41,8 +41,8 @@ export function ConfirmProvider ({ children }: CalendarProviderProps) {
   const [description, setDescription] = useState<ReactNode>('')
   const [title, setTitle] = useState('')
   const useFunRef = useRef<{
-    onConfirm?():void
-    onCancel?():void
+    onConfirm?(): void
+    onCancel?(): void
   }>({ })
   const onCancelDialog = () => {
     useFunRef.current.onCancel?.()
@@ -51,7 +51,7 @@ export function ConfirmProvider ({ children }: CalendarProviderProps) {
     useFunRef.current.onConfirm?.()
   }
 
-  const props:DialogContextType = {
+  const props: DialogContextType = {
     confirm (opt) {
       setDialogOpen(true)
       setDescription(opt.description)

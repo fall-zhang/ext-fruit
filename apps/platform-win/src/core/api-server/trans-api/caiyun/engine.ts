@@ -5,7 +5,7 @@ import type { TranslateResult } from '@salad/trans/translator'
 
 import { getTranslator as getBaiduTranslator } from '../baidu/engine'
 import type { CaiyunLanguage } from './config'
-import { machineResult, type MachineTranslatePayload, type MachineTranslateResult } from '@P/saladict-core/src/components/MachineTrans/engine'
+import { machineResult, type MachineTranslatePayload, type MachineTranslateResult } from '@/components/MachineTrans/engine'
 
 export const getTranslator = memoizeOne(
   () =>

@@ -1,4 +1,4 @@
-import { MockRequest } from '@/components/Dictionaries/helpers'
+import { MockRequest } from '@/core/api-server/api-common/helpers'
 
 export const mockSearchTexts = ['心']
 

@@ -3,9 +3,9 @@ import {
   search,
   YoudaoResultLex,
   YoudaoResultRelated
-} from '@/components/Dictionaries/youdao/engine'
-import { getDefaultConfig } from '@/app-config'
-import { getDefaultProfile, ProfileMutable } from '@/app-config/profiles'
+} from '@/core/api-server/api-common/youdao/engine'
+import { getDefaultConfig } from '@/config/app-config'
+import { getDefaultProfile, ProfileMutable } from '@/config/app-config/profiles'
 import { describe, it, expect } from 'vitest'
 describe('Dict/Youdao/engine', () => {
   it('should parse lex result correctly', () => {

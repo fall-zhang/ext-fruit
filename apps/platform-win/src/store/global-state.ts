@@ -1,9 +1,9 @@
 import type { StateCreator } from 'zustand'
-import { getDefaultConfig, type AppConfig, type DictID } from '../app-config'
-import { getDefaultProfile, type Profile, type ProfileID } from '../app-config/profiles'
+import { getDefaultConfig, type AppConfig } from '@/config/app-config'
+import { getDefaultProfile, type Profile, type ProfileID } from '@/config/trans-profile'
 import type { Word } from '../types/word'
-import type { DictSearchResult } from '../core/trans-api/types'
-import { newWord } from '../dict-utils/new-word'
+import type { DictID } from '@/core/api-server/types'
+import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
 type RenderDictItem = {
   readonly id: DictID
   readonly searchStatus: 'IDLE' | 'SEARCHING' | 'FINISH'

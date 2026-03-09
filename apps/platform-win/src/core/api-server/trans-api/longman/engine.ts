@@ -10,7 +10,7 @@ import {
   DictSearchResult,
   getFullLink
 } from '../helpers'
-import { DictConfigs } from '@/app-config'
+import { DictConfigs } from '@/config/app-config'
 import { getStaticSpeaker } from '@/components/Speaker'
 
 export const getSrcPage: GetSrcPageFunction = text => {

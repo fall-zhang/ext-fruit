@@ -1,9 +1,9 @@
 import type { GlobalState } from '../global-state'
 import type { Writable } from 'type-fest'
-import { newWord } from '../../dict-utils/new-word'
 import type { Word } from '../../types/word'
+import { newWord } from '@/utils/dict-utils/new-word'
 
-export const newSelection = (state:GlobalState, selection:{
+export const newSelection = (state: GlobalState, selection: {
   word: Word
   mouseX: number
   mouseY: number

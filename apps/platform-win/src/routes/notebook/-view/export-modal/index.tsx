@@ -5,7 +5,7 @@ import { Modal, Layout, Switch } from 'antd'
 import escapeHTML from 'lodash/escape'
 import { PlaceholderTableMemo } from './PlaceholderTable'
 import type { Word } from '@P/saladict-core/main'
-import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
+import { newWord } from '@/dict-utils/new-word'
 import { I18nContext, useTranslation } from 'react-i18next'
 
 const keywordMatchStr = `%(${Object.keys(newWord()).join('|')}|contextCloze)%`

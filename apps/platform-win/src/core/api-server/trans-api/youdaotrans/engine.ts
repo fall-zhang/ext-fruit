@@ -4,8 +4,8 @@ import { Youdao } from '@salad/trans/service-youdao'
 
 
 import type { YoudaotransLanguage } from './config'
-import { getMTArgs, machineResult } from '@P/saladict-core/src/components/MachineTrans/engine'
-import type { MachineTranslatePayload, MachineTranslateResult } from '@P/saladict-core/src/components/MachineTrans/engine'
+import { getMTArgs, machineResult } from '@/components/MachineTrans/engine'
+import type { MachineTranslatePayload, MachineTranslateResult } from '@/components/MachineTrans/engine'
 
 export const getTranslator = memoizeOne(
   () =>

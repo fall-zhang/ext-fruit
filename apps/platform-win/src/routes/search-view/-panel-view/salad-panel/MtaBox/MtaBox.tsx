@@ -2,9 +2,9 @@ import type { FC, ChangeEvent, KeyboardEvent } from 'react'
 import { useRef, useState, useEffect } from 'react'
 import classNames from 'clsx'
 import AutosizeTextarea from 'react-textarea-autosize'
-import { useDictStore } from '@P/saladict-core/src/store'
-import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
-import { useSearchContext } from '@P/saladict-core/src/context/search-context'
+import { useDictStore } from '@/store'
+import { newWord } from '@/dict-utils/new-word'
+import { useSearchContext } from '@/context/search-context'
 
 export interface MtaBoxProps {
   text: string

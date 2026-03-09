@@ -2,8 +2,8 @@ import type { FC } from 'react'
 import { useMemo } from 'react'
 import { Card, List, Switch } from 'antd'
 import { DictTitle } from './-dict-title'
-import { useDictStore } from '@P/saladict-core/src/store'
-import type { DictID } from '@P/saladict-core/src/app-config'
+import { useDictStore } from '@/store'
+import type { DictID } from '@/config/app-config'
 
 export interface AllDictsProps {
   value?: DictID[]

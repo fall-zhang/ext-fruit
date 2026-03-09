@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import React, { useRef } from 'react'
 import { Input, Modal, type InputRef } from 'antd'
-import type { ProfileID } from '@P/saladict-core/src/app-config/profiles'
+import type { ProfileID } from '@/config/app-config/profiles'
 
 export interface EditNameModalProps {
   title: string

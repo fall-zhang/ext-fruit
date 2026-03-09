@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { WordEditor } from './WordEditor'
-import ShadowPortal from '@P/saladict-core/src/components/ShadowPortal'
+import ShadowPortal from '@/components/ShadowPortal'
 import clsx from 'clsx'
 
 export interface WordEditorPortalProps {

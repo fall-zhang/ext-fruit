@@ -11,7 +11,7 @@ import {
 } from './engine'
 import type { ViewProps } from '../helpers'
 import { useTranslation } from 'react-i18next'
-import { StrElm } from '@P/saladict-core/src/components/StrElm'
+import { StrElm } from '@/components/StrElm'
 
 export const DictWikipedia: FC<ViewProps<WikipediaResult>> = ({
   result,

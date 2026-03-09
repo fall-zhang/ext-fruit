@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import { useState, useEffect } from 'react'
-// import { DBArea, getWords, Word, deleteWords } from '@P/saladict-core/src/dict-utils/new-word'
+// import { DBArea, getWords, Word, deleteWords } from '@/dict-utils/new-word'
 import { Header } from './Header'
 import type { WordTableProps } from './WordTable'
 import { colSelectionWidth, WordTable } from './WordTable'
@@ -9,9 +9,9 @@ import { ExportModal } from './export-modal'
 
 import './_style.scss'
 import { useTranslation } from 'react-i18next'
-import type { Word } from '@P/saladict-core/src/types/word'
-import { deleteWords, getWords } from '@P/saladict-core/src/core/database'
-import type { DBArea } from '@P/saladict-core/src/core/database/types'
+import type { Word } from '@/types/word'
+import { deleteWords, getWords } from '@/core/database'
+import type { DBArea } from '@/core/database/types'
 
 const ITEMS_PER_PAGE = 200
 
@@ -135,7 +135,7 @@ export const WordPage: FC<WordPageProps> = props => {
           }
         }}
         onDelete={key => {
-          let keys:number[] | undefined = []
+          let keys: number[] | undefined = []
           if (key === 'selected') {
             keys = tableInfo.rowSelection?.selectedRowKeys?.map(date =>
               Number(date)

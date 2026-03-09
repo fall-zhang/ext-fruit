@@ -7,13 +7,13 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel
-} from '@P/ui/components/ui/field'
+} from '@P/ui/components/field'
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
   InputGroupTextarea
-} from '@P/ui/components/ui/input-group'
+} from '@P/ui/components/input-group'
 import type { FAdvanceForm } from './type'
 
 export const FTextarea:FAdvanceForm<{

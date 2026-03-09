@@ -10,7 +10,7 @@ import {
   NavigationMenuTrigger
 } from '@salad/ui/components/navigation-menu'
 import { DownloadIcon } from 'lucide-react'
-import type { DBArea } from '@P/saladict-core/src/core/database/types'
+import type { DBArea } from '@/core/database/types'
 import { useConfirmContext } from '@/context/confirm-context'
 export interface WordPageProps {
   t: TFunction

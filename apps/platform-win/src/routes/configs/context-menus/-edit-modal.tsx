@@ -5,7 +5,7 @@ import { Input, Modal, Form } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import type { FormInstance } from 'antd/lib/form/Form'
 import { useTranslation } from 'react-i18next'
-import { useDictStore } from '@P/saladict-core/src/store'
+import { useDictStore } from '@/store'
 import { useUpload } from '../-utils/upload'
 
 export interface EditModalProps {

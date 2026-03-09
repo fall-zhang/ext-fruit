@@ -1,16 +1,16 @@
 import type { FC } from 'react'
 import type React from 'react'
 import { useState } from 'react'
-// import { AppConfig } from '@/app-config'
-import type { AppConfig } from '@P/saladict-core/src/app-config'
+// import { AppConfig } from '@/config/app-config'
+import type { AppConfig } from '@/config/app-config'
 // import {
 //   CtxTranslatorId,
 //   CtxTranslateResults,
 //   translateCtx
 // } from '@/_helpers/translateCtx'
-import type { CtxTranslateResults, CtxTranslatorId } from '@P/saladict-core/src/utils/translateCtx'
-import { translateCtx } from '@P/saladict-core/src/utils/translateCtx'
-import type { Word } from '@P/saladict-core/src/types/word'
+import type { CtxTranslateResults, CtxTranslatorId } from '@/utils/translateCtx'
+import { translateCtx } from '@/utils/translateCtx'
+import type { Word } from '@/types/word'
 
 export interface CtxTransListProps {
   word: Word
@@ -22,7 +22,7 @@ export interface CtxTransListProps {
 
 export const CtxTransList: FC<CtxTransListProps> = props => {
   const [isLoading, setIsLoading] = useState(() => {
-    const result:Record<keyof AppConfig['ctxTrans'], boolean> = {
+    const result: Record<keyof AppConfig['ctxTrans'], boolean> = {
       baidu: false,
       caiyun: false,
       google: false,

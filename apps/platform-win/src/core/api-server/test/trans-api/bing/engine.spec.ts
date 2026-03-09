@@ -1,12 +1,15 @@
 import { retry } from '../helpers'
-import {
-  search,
+import type {
   BingResultLex,
   BingResultMachine,
   BingResultRelated
-} from '@/components/Dictionaries/bing/engine'
-import { getDefaultConfig } from '@/app-config'
-import { getDefaultProfile, ProfileMutable } from '@/app-config/profiles'
+} from '@/core/api-server/api-common/bing/engine'
+import {
+  search
+} from '@/core/api-server/api-common/bing/engine'
+import { getDefaultConfig } from '@/config/app-config'
+import type { ProfileMutable } from '@/config/app-config/profiles'
+import { getDefaultProfile } from '@/config/app-config/profiles'
 import { describe, expect, it } from 'vitest'
 
 describe('Dict/Bing/engine', () => {
@@ -17,7 +20,7 @@ describe('Dict/Bing/engine', () => {
       phsym: true,
       cdef: true,
       related: true,
-      sentence: 4
+      sentence: 4,
     }
     return retry(() =>
       search('love', getDefaultConfig(), profile).then(

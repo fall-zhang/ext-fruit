@@ -25,7 +25,7 @@ import { useTranslation } from 'react-i18next'
 import './_style.scss'
 import clsx from 'clsx'
 import { setFormDirty, useFormDirty } from '../../-utils/use-form-dirty'
-import { Sidebar, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider } from '@P/ui/components/ui/sidebar'
+import { Sidebar, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider } from '@P/ui/components/sidebar'
 
 export interface EntrySideBarProps {
   entry: string

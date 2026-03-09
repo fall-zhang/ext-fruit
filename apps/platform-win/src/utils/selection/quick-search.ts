@@ -1,6 +1,6 @@
 import { EMPTY, merge } from 'rxjs'
 import { share, buffer, debounceTime, filter } from 'rxjs/operators'
-import type { AppConfig } from '@/app-config'
+import type { AppConfig } from '@/config/app-config'
 import { whenKeyPressed, isQSKey } from './helper'
 
 /**

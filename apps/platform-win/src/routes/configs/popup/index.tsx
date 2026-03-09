@@ -3,8 +3,8 @@ import type { FC } from 'react'
 import { Switch, Select, Slider } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import { useDictStore } from '@P/saladict-core/src/store'
-import { isFirefox } from '@P/saladict-core/src/utils/browser'
+import { useDictStore } from '@/store'
+import { isFirefox } from '@/utils/browser'
 import { getConfigPath } from '../-utils/path-joiner'
 import { SaladictForm } from '../-components/SaladictForm'
 

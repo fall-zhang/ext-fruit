@@ -1,5 +1,5 @@
-import type { AppConfig } from '@P/saladict-core/src/app-config'
-import type { Profile } from '@P/saladict-core/src/app-config/profiles'
+import type { AppConfig } from '@/config/app-config'
+import type { Profile } from '@/config/app-config/profiles'
 import { useRef } from 'react'
 
 export function getConfigPath<A extends keyof AppConfig> (pA: A): string

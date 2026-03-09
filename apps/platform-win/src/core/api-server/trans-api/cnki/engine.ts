@@ -1,4 +1,4 @@
-import { fetchDirtyDOM } from '@P/saladict-core/src/utils/fetch-dom'
+import { fetchDirtyDOM } from '@/utils/fetch-dom'
 import type {
   HTMLString,
   SearchFunction,
@@ -12,7 +12,7 @@ import {
   getText,
   handleNetWorkError
 } from '../helpers'
-import type { DictConfigs } from '@/app-config'
+import type { DictConfigs } from '@/config/app-config'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return (

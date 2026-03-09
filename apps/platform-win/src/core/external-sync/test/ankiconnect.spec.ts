@@ -7,7 +7,7 @@ import {
   // SyncConfig
 } from '@/background/sync-manager/services/ankiconnect'
 import { describe, afterAll, beforeEach, expect, it } from 'vitest'
-// import { Word, newWord } from '@P/saladict-core/src/dict-utils/new-word'
+// import { Word, newWord } from '@/dict-utils/new-word'
 
 jest.mock('@/background/sync-manager/helpers')
 // const helpers: typeof helpersMock = require('@/background/sync-manager/helpers')
@@ -58,12 +58,12 @@ describe('Sync service Anki Connect', () => {
 
       mockRequest(data => {
         switch (data.action) {
-        case 'version':
-          return [200, { result: 6, error: null }]
-        case 'deckNames':
-          return [200, { result: [], error: null }]
-        default:
-          return [404]
+          case 'version':
+            return [200, { result: 6, error: null }]
+          case 'deckNames':
+            return [200, { result: [], error: null }]
+          default:
+            return [404]
         }
       })
 
@@ -86,14 +86,14 @@ describe('Sync service Anki Connect', () => {
 
       mockRequest(data => {
         switch (data.action) {
-        case 'version':
-          return [200, { result: 6, error: null }]
-        case 'deckNames':
-          return [200, { result: [config.deckName], error: null }]
-        case 'modelNames':
-          return [200, { result: [], error: null }]
-        default:
-          return [404]
+          case 'version':
+            return [200, { result: 6, error: null }]
+          case 'deckNames':
+            return [200, { result: [config.deckName], error: null }]
+          case 'modelNames':
+            return [200, { result: [], error: null }]
+          default:
+            return [404]
         }
       })
 
@@ -116,14 +116,14 @@ describe('Sync service Anki Connect', () => {
 
       mockRequest(data => {
         switch (data.action) {
-        case 'version':
-          return [200, { result: 6, error: null }]
-        case 'deckNames':
-          return [200, { result: [config.deckName], error: null }]
-        case 'modelNames':
-          return [200, { result: [config.noteType], error: null }]
-        default:
-          return [404]
+          case 'version':
+            return [200, { result: 6, error: null }]
+          case 'deckNames':
+            return [200, { result: [config.deckName], error: null }]
+          case 'modelNames':
+            return [200, { result: [config.noteType], error: null }]
+          default:
+            return [404]
         }
       })
 

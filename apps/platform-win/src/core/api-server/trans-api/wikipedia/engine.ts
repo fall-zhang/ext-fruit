@@ -12,8 +12,8 @@ import {
   getText,
   getFullLink
 } from '../helpers'
-import type { AllDictsConf } from '@/app-config'
-import { fetchDirtyDOM } from '@P/saladict-core/src/utils/fetch-dom'
+import type { AllDictsConf } from '@/config/app-config'
+import { fetchDirtyDOM } from '@/utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
   const { lang } = profile.dicts.all.wikipedia.options
@@ -76,7 +76,7 @@ export const search: SearchFunction<WikipediaResult, WikipediaPayload> = (
 export function fetchLangList (langSelector: string) {
   return fetchDirtyDOM(langSelector)
     .then(getLangList)
-    .catch((e:unknown) => {
+    .catch((e: unknown) => {
       console.error('Dict wikipedia: fetch langList failed', e)
       return [] as LangList
     })

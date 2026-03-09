@@ -1,6 +1,6 @@
 import type { Language } from '@P/open-trans/languages'
 import type { AllDictsConf } from '../types/all-dict-conf'
-import type { AppConfig } from '@P/saladict-core/src/app-config'
+import type { AppConfig } from '@/config/app-config'
 
 
 /**

@@ -4,12 +4,12 @@ import classNames from 'clsx'
 import root from 'react-shadow'
 
 import dictContentStyles from './DictItemContent.shadow.scss?raw'
-import type { Word } from '@P/saladict-core/src/types/word'
-import { SALADICT_PANEL } from '@P/saladict-core/src/core/saladict-state'
-import { ErrorBoundary } from '@P/saladict-core/src/components/ErrorBoundary'
-import { StaticSpeakerContainer } from '@P/saladict-core/src/components/Speaker'
+import type { Word } from '@/types/word'
+import { SALADICT_PANEL } from '@/core/saladict-state'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
+import { StaticSpeakerContainer } from '@/components/Speaker'
 import type { DictID } from '@P/api-server/types/all-dict-conf'
-import type { ViewProps } from '@P/saladict-core/src/components/dict-api-view/type'
+import type { ViewProps } from '@/components/dict-api-view/type'
 
 export interface DictItemBodyProps {
   dictID: DictID
@@ -40,7 +40,7 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
   const Dict = useMemo(() =>
     React.lazy<ComponentType<ViewProps<any>>>(() =>
       import(
-        `@P/saladict-core/src/components/dict-api-view/${props.dictID}/${props.dictID}.tsx`
+        `@/components/dict-api-view/${props.dictID}/${props.dictID}.tsx`
       )
     ),
   [props.dictID]
@@ -50,7 +50,7 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
     () =>
       React.lazy(async () => {
         const styleModule = await import(
-          `@P/saladict-core/src/components/dict-api-view/${props.dictID}/_style.shadow.scss?raw`
+          `@/components/dict-api-view/${props.dictID}/_style.shadow.scss?raw`
         )
         return {
           default: () => (

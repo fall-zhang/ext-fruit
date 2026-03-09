@@ -8,9 +8,9 @@ import { useTranslation } from 'react-i18next'
 import { SaveBtn } from './SaveBtn'
 
 import './_style.scss'
-import { useDictStore } from '@P/saladict-core/src/store'
+import { useDictStore } from '@/store'
 import { setFormDirty } from '../../-utils/use-form-dirty'
-import { isFirefox } from '@P/saladict-core/src/utils/browser'
+import { isFirefox } from '@/utils/browser'
 import { useUpload } from '../../-utils/upload'
 
 interface FieldValues {

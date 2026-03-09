@@ -1,7 +1,7 @@
 import { retry } from '../helpers'
-import { search } from '@/components/Dictionaries/vocabulary/engine'
-import { getDefaultConfig } from '@/app-config'
-import { getDefaultProfile } from '@/app-config/profiles'
+import { search } from '@/core/api-server/api-common/vocabulary/engine'
+import { getDefaultConfig } from '@/config/app-config'
+import { getDefaultProfile } from '@/config/app-config/profiles'
 import { describe, it, expect } from 'vitest'
 describe('Dict/Vocabulary/engine', () => {
   it('should parse result correctly', () => {

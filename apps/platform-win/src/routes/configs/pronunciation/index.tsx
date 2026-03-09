@@ -4,7 +4,7 @@ import { Switch, Select } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { getConfigPath, getProfilePath } from '../-utils/path-joiner'
 import { SaladictForm } from '../-components/SaladictForm'
-import { useDictStore } from '@P/saladict-core/src/store'
+import { useDictStore } from '@/store'
 
 export const Route = createFileRoute('/configs/pronunciation/')({
   component: RouteComponent,

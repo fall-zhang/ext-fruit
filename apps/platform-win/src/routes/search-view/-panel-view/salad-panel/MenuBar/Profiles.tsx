@@ -3,7 +3,7 @@ import type React from 'react'
 import type { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { OptionsBtn } from './MenubarBtns'
-import { HoverBox, type HoverBoxItem } from '@P/saladict-core/src/components/HoverBox'
+import { HoverBox, type HoverBoxItem } from '@/components/HoverBox'
 import { getProfileName } from 'apps/browser-extension/src/utils/profile-manager'
 
 export interface ProfilesProps {

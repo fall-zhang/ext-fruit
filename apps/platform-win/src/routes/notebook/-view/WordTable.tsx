@@ -4,11 +4,11 @@ import type { TFunction } from 'i18next'
 import i18next from 'i18next'
 import type { ColumnsType, TableProps } from 'antd/lib/table'
 import Table from 'antd/lib/table'
-import type { Word } from '@P/saladict-core/src/types/word'
+import type { Word } from '@/types/word'
 
 import type { DBArea } from 'apps/browser-extension/src/utils/record-manager'
 import { useTranslation } from 'react-i18next'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@P/ui/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@P/ui/components/tooltip'
 
 export const colSelectionWidth = 48
 const colDateWidth = 150

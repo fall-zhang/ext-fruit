@@ -14,7 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@salad/ui/components/ui/dropdown-menu'
+} from '@salad/ui/components/dropdown-menu'
 import {
   SidebarGroup,
   SidebarGroupLabel,

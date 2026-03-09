@@ -1,4 +1,4 @@
-import type { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItem } from '@/config/app-config/dicts'
 
 export type ShanbayConfig = DictItem<{
   basic: boolean

@@ -2,12 +2,12 @@ import type { FC } from 'react'
 import React from 'react'
 import { Button } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { newWord } from '@P/saladict-core/src/dict-utils/new-word'
+import { newWord } from '@/dict-utils/new-word'
 import { PreviewIcon } from './PreviewIcon'
 
 import './_style.scss'
-import { useDictStore } from '@P/saladict-core/src/store'
-import { getWordOfTheDay } from '@P/saladict-core/src/utils/everyday-word'
+import { useDictStore } from '@/store'
+import { getWordOfTheDay } from '@/utils/everyday-word'
 
 // pre-fetch the word
 // const pWordOfTheDay = getWordOfTheDay()

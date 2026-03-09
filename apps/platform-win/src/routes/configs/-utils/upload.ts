@@ -2,9 +2,9 @@ import { notification, message as antMsg } from 'antd'
 import set from 'lodash/set'
 import { useTranslation } from 'react-i18next'
 import { setFormDirty } from './use-form-dirty'
-import type { AppConfig } from '@P/saladict-core/src/app-config'
-import type { Profile } from '@P/saladict-core/src/app-config/profiles'
-import { useDictStore } from '@P/saladict-core/src/store'
+import type { AppConfig } from '@/config/app-config'
+import type { Profile } from '@/config/app-config/profiles'
+import { useDictStore } from '@/store'
 import { cloneDeep } from 'es-toolkit'
 
 

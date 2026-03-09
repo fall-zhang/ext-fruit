@@ -5,7 +5,7 @@ import { createPortal } from 'react-dom'
 import type { CSSTransitionProps } from 'react-transition-group/CSSTransition'
 import CSSTransition from 'react-transition-group/CSSTransition'
 import root from 'react-shadow'
-import { SALADICT_EXTERNAL } from '@P/saladict-core/src/core/saladict-state'
+import { SALADICT_EXTERNAL } from '@/core/saladict-state'
 
 export const defaultTimeout = { enter: 400, exit: 100, appear: 400 }
 

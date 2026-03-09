@@ -1,5 +1,5 @@
 import { fetchDirtyDOM } from './fetch-dom'
-import { handleNoResult, getText } from '@P/saladict-core/src/core/trans-api/helpers'
+import { handleNoResult, getText } from '@/core/trans-api/helpers'
 
 export async function getWordOfTheDay (): Promise<string> {
   try {

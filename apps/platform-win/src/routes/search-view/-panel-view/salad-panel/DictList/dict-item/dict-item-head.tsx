@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import type React from 'react'
 import { useState, useEffect, useMemo } from 'react'
 import clsx from 'clsx'
-import type { HoverBoxItem } from '@P/saladict-core/src/components/HoverBox'
+import type { HoverBoxItem } from '@/components/HoverBox'
 import { useTranslation } from 'react-i18next'
 import './dict-item-head.scss'
 import type { DictID } from '@P/api-server/types/all-dict-conf'
@@ -92,7 +92,7 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
         isSearching: props.isSearching,
       })}
     >
-      <img className="dictItemHead-Logo" src={'@/components/Dictionaries/' + props.dictID + '/favicon.png'} alt="dict logo" />
+      <img className="dictItemHead-Logo" src={'@/core/api-server/api-common/' + props.dictID + '/favicon.png'} alt="dict logo" />
       <h1 className="dictItemHead-Title">
         <a
           href="#"
