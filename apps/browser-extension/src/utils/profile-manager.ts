@@ -49,7 +49,7 @@ type InflateFn = {
   (profile?: Profile | ProfileCompressed): Profile | undefined
 }
 
-export const inflate:InflateFn = (
+export const inflate: InflateFn = (
   profile
 ) => {
   if (profile?.v === 1) {
@@ -58,15 +58,6 @@ export const inflate:InflateFn = (
     )
   }
   return profile
-}
-
-export function getProfileName (name: string, t: TFunction): string {
-  // default names
-  const match = /^%%_(\S+)_%%$/.exec(name)
-  if (match) {
-    return t(`common:profile.${match[1]}`) || name
-  }
-  return name
 }
 
 export async function initProfiles (): Promise<Profile> {

@@ -9,6 +9,7 @@
 - [x] 使用 @tanstack/react-router 实现路由
 - [x] 搜索 useSelector，用 zustand 的 useDictStore 替换
 - [ ] 已经有轻量本地安装包了，还需要浏览器扩展吗？
+- [ ] 翻译已经走通了，现在可以添加对应词典的视图了
 - [ ] 使应用可以打包
 - [ ] 应用类型正确
 - [ ] 所有导出内容，都直接从 @salad/core 中直接获取
@@ -33,7 +34,7 @@
 - [ ] 需要移除的 package
   - [x] react-redux 原因，使用 zustand 代替，更少的模板代码
   - [ ] react-transition-group 原因，之后会使用新的动画，motion 代替
-  - [ ] observable-hooks 原因，作者自己写的库，不具有普遍性，和 rxjs 深度绑定，额外增加软件复杂度
+  - [X] observable-hooks 原因，作者自己写的库，不具有普遍性，和 rxjs 深度绑定，额外增加软件复杂度
 - [ ] 当点击托盘图标的时候，展示翻译 panel
 - [ ] 当前有一个配置页面，如果可以作为组件使用，可以通过操作生成对应的配置
 - [ ] 既然配置被移动到了 core 之外，那么所有用到配置的地方，也都要移动到 core 之外
