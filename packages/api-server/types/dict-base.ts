@@ -56,7 +56,7 @@ export interface DictItemBase {
  */
 export type DictItemOption<Lang> = {
   options: {
-  /** Keep linebreaks */
+    /** Keep linebreaks */
     keepLF: 'none' | 'all'
     /** Source language initial state */
     slInitial: 'hide' | 'collapse' | 'full'

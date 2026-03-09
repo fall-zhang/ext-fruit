@@ -1,15 +1,8 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
-import {
-  HTMLString,
-  getText,
-  getInnerHTML,
-  handleNoResult,
-  handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult,
-  getFullLink
-} from '../helpers'
+import type { GetSrcPageFunction } from '../../api-common/atom-type'
+import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
+import { handleNetWorkError, handleNoResult, getText, getFullLink, getInnerHTML } from '../../utils'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.91dict.com/words?w=${encodeURIComponent(
@@ -42,10 +35,7 @@ export type RenrenResult = RenrenResultItem[]
 type RenrenSearchResult = DictSearchResult<RenrenResult>
 
 export const search: SearchFunction<RenrenResult> = (
-  text,
-  config,
-  profile,
-  payload
+  text
 ) => {
   return fetchDirtyDOM(
     `https://www.91dict.com/words?w=${encodeURIComponent(
@@ -56,7 +46,7 @@ export const search: SearchFunction<RenrenResult> = (
     .then(handleDOM)
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document
 ): RenrenSearchResult | Promise<RenrenSearchResult> {
   const result: RenrenResult = []
@@ -79,7 +69,7 @@ function handleDOM(
       title,
       detail: '',
       slide,
-      context: []
+      context: [],
     }
 
     const $detail = $li.querySelector('.viewdetail')
@@ -93,7 +83,7 @@ function handleDOM(
 
       item.context.push({
         title,
-        content: [...$box.querySelectorAll('.sty2 > *')].map($p => getText($p))
+        content: [...$box.querySelectorAll('.sty2 > *')].map($p => getText($p)),
       })
     })
 
@@ -104,12 +94,11 @@ function handleDOM(
 
   if (result.length > 0) {
     return { result }
-  } else {
-    return handleNoResult()
   }
+  return handleNoResult()
 }
 
-export async function getDetail(src: string): Promise<RenrenSlide[]> {
+export async function getDetail (src: string): Promise<RenrenSlide[]> {
   const result: RenrenSlide[] = []
 
   try {
@@ -127,12 +116,12 @@ export async function getDetail(src: string): Promise<RenrenSlide[]> {
   return result
 }
 
-function extractSlide($li: Element): RenrenSlide | null {
+function extractSlide ($li: Element): RenrenSlide | null {
   const slide: RenrenSlide = {
     cover: '',
     mp3: '',
     en: '',
-    chs: ''
+    chs: '',
   }
 
   const $cover = $li.querySelector('img')

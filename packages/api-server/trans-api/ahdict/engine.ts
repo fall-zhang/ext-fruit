@@ -1,43 +1,17 @@
-import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
-import type {
-  HTMLString,
-  SearchFunction,
-  DictSearchResult
-} from '../../types'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
+
 import {
   getText,
   getInnerHTML,
   handleNoResult,
   handleNetWorkError
 } from '../../utils'
-import type { GetSrcPageFunction } from '@P/api-server/types/dict-fetch'
+import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { AhdictResult, AhdictResultItem, Idiom } from './type'
 
-export const getSrcPage: GetSrcPageFunction = text => {
-  return `https://ahdictionary.com/word/search.html?q=${text}`
-}
 
 const HOST = 'https://ahdictionary.com'
 
-interface Idiom {
-  title?: string
-  eg?: string
-  tips?: string
-}
-
-interface AhdictResultItem {
-  /** word */
-  title: string
-  /** pronunciation */
-  pron?: string
-  /** meaning and eg */
-  meaning: HTMLString[]
-  /** idiom and eg */
-  idioms: Idiom[]
-  origin?: HTMLString
-  usageNote?: string
-}
-
-export type AhdictResult = AhdictResultItem[]
 
 type AhdictSearchResult = DictSearchResult<AhdictResult>
 
