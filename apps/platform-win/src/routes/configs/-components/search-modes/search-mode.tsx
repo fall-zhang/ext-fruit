@@ -131,13 +131,19 @@ export const searchMode = (mode: Mode, t: TFunction): SaladictFormItem => {
       help: t('searchMode.instantKey_help'),
       hide: values => !values[getConfigPath(mode, 'instant', 'enable')],
       children: (
-        <Select style={{ width: 100 }}>
-          <Select.Option value="direct">
+        <Select
+          style={{ width: 100 }} options={[
+            { label: t('searchMode.instantDirect'), value: 'direct' },
+            { label: 'Ctrl/⌘', value: 'ctrl' },
+            { label: 'Alt', value: 'alt' },
+            { label: 'Shift', value: 'shift' },
+          ]}>
+          {/* <Select.Option value="direct">
             {t('searchMode.instantDirect')}
           </Select.Option>
           <Select.Option value="ctrl">Ctrl/⌘</Select.Option>
           <Select.Option value="alt">Alt</Select.Option>
-          <Select.Option value="shift">Shift</Select.Option>
+          <Select.Option value="shift">Shift</Select.Option> */}
         </Select>
       ),
     },

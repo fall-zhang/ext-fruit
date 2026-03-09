@@ -1,4 +1,5 @@
-import React, { FC, useState } from 'react'
+import type { FC } from 'react'
+import React, { useState } from 'react'
 import { Input, Select } from 'antd'
 import { useTranslation } from 'react-i18next'
 
@@ -14,27 +15,32 @@ export const PatternItem: FC<PatternItemProps> = ({ value, onChange }) => {
   )
 
   return (
-    <Input
-      addonBefore={
-        <Select
-          value={patternType}
-          onChange={setPatternType}
-          className="select-before"
-        >
-          <Select.Option value="0">{t('matchPattern.regex')}</Select.Option>
-          <Select.Option value="1">{t('matchPattern.url')}</Select.Option>
-        </Select>
-      }
-      value={value?.[patternType]}
-      onChange={e => {
-        if (patternType === '0') {
+    <>
+      <Select
+        value={patternType}
+        onChange={setPatternType}
+        className="select-before"
+        options={[
+          { label: t('matchPattern.regex'), value: '0' },
+          { label: t('matchPattern.url'), value: '1' },
+        ]}
+      >
+        {/* <Select.Option value="0">{t('matchPattern.regex')}</Select.Option>
+        <Select.Option value="1">{t('matchPattern.url')}</Select.Option> */}
+      </Select>
+      <Input
+
+        value={value?.[patternType]}
+        onChange={e => {
+          if (patternType === '0') {
           // regex
-          onChange && onChange([e.currentTarget.value, ''])
-        } else {
+            onChange && onChange([e.currentTarget.value, ''])
+          } else {
           // url
-          onChange && onChange(['', e.currentTarget.value])
-        }
-      }}
-    />
+            onChange && onChange(['', e.currentTarget.value])
+          }
+        }}
+      />
+    </>
   )
 }

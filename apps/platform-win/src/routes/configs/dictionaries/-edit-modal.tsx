@@ -162,7 +162,7 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
                   ? getTranslator()
                     .getSupportLanguages()
                     .map(lang => (lang === 'auto' ? 'default' : lang))
-                  : allDicts[dictID].optionsSel[optKey]
+                  : allDicts[dictID].optionalVal[optKey]
 
                 item.children = (
                   <Select>
@@ -177,7 +177,7 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
               } else {
                 item.children = (
                   <Select>
-                    {allDicts[dictID].optionsSel[optKey].map(
+                    {allDicts[dictID].optionalVal[optKey].map(
                       (option: string) => (
                         <Select.Option value={option} key={option}>
                           {t(`dicts:${dictID}.options.${optKey}-${option}`)}

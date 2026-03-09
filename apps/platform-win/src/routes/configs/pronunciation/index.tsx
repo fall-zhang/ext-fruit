@@ -26,68 +26,67 @@ function RouteComponent () {
         {
           name: getConfigPath('autoPronounce', 'cn', 'dict'),
           children: (
-            <Select>
-              <Select.Option value="">{t('common:none')}</Select.Option>
-              {autopronLists.cn.map(id => (
-                <Select.Option key={id} value={id}>
-                  {t(`dicts:${id}.name`)}
-                </Select.Option>
-              ))}
-            </Select>
+            <Select
+              options={[
+                { label: t('common:none'), value: '' },
+                ...autopronLists.cn.map(id => ({
+                  label: t(`dicts:${id}.name`),
+                  value: id,
+                })),
+              ]}
+            />
           ),
         },
         {
           name: getConfigPath('autoPronounce', 'en', 'dict'),
           children: (
-            <Select>
-              <Select.Option value="">{t('common:none')}</Select.Option>
-              {autopronLists.en.map(id => (
-                <Select.Option key={id} value={id}>
-                  {t(`dicts:${id}.name`)}
-                </Select.Option>
-              ))}
-            </Select>
+            <Select
+              options={[
+                { label: t('common:none'), value: '' },
+                ...autopronLists.en.map(id => ({
+                  label: t(`dicts:${id}.name`),
+                  value: id,
+                })),
+              ]}
+            />
           ),
         },
         {
           name: getConfigPath('autoPronounce', 'en', 'accent'),
           hide: values => !values[getConfigPath('autoPronounce', 'en', 'dict')],
           children: (
-            <Select>
-              <Select.Option value="uk">
-                {t('config.opt.accent.uk')}
-              </Select.Option>
-              <Select.Option value="us">
-                {t('config.opt.accent.us')}
-              </Select.Option>
-            </Select>
+            <Select
+              options={[
+                { label: t('config.opt.accent.uk'), value: 'uk' },
+                { label: t('config.opt.accent.us'), value: 'us' },
+              ]}
+            />
           ),
         },
         {
           name: getConfigPath('autoPronounce', 'machine', 'dict'),
           children: (
-            <Select>
-              <Select.Option value="">{t('common:none')}</Select.Option>
-              {autopronLists.machine.map(id => (
-                <Select.Option key={id} value={id}>
-                  {t(`dicts:${id}.name`)}
-                </Select.Option>
-              ))}
-            </Select>
+            <Select
+              options={[
+                { label: t('common:none'), value: '' },
+                ...autopronLists.machine.map(id => ({
+                  label: t(`dicts:${id}.name`),
+                  value: id,
+                })),
+              ]}
+            />
           ),
         },
         {
           name: getConfigPath('autoPronounce', 'machine', 'src'),
           hide: values => !values[getConfigPath('autoPronounce', 'machine', 'dict')],
           children: (
-            <Select>
-              <Select.Option value="trans">
-                {t('config.autoPronounce.machine.src_trans')}
-              </Select.Option>
-              <Select.Option value="searchText">
-                {t('config.autoPronounce.machine.src_search')}
-              </Select.Option>
-            </Select>
+            <Select
+              options={[
+                { label: t('config.autoPronounce.machine.src_trans'), value: 'trans' },
+                { label: t('config.autoPronounce.machine.src_search'), value: 'searchText' },
+              ]}
+            />
           ),
         },
         {

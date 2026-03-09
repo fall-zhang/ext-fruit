@@ -36,10 +36,15 @@ export const General: FC = () => {
     {
       name: getConfigPath('langCode'),
       children: (
-        <Select>
-          <Select.Option value="zh-CN">简体中文</Select.Option>
+        <Select
+          options={[
+            { label: '简体中文', value: 'zh-CN' },
+            { label: '繁體中文', value: 'zh-TW' },
+            { label: 'English', value: 'en' },
+          ]}>
+          {/* <Select.Option value="zh-CN">简体中文</Select.Option>
           <Select.Option value="zh-TW">繁體中文</Select.Option>
-          <Select.Option value="en">English</Select.Option>
+          <Select.Option value="en">English</Select.Option> */}
         </Select>
       ),
     }
