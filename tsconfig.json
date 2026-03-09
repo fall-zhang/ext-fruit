@@ -26,9 +26,6 @@
       "@P/*": [
         "packages/*"
       ],
-      "@salad/core/*": [
-        "packages/saladict-core/*"
-      ],
       "@salad/ui/*": [
         "packages/ui/*"
       ],

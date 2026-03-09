@@ -4,6 +4,6 @@ import { invoke } from '@tauri-apps/api/core'
 
 export const helloTauri = () => {
   invoke('greet', {
-    name: '老东西'
+    name: '老东西',
   })
 }

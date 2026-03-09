@@ -7,8 +7,8 @@ import { tauriWorkspaceSystem } from '../fileSystem/tauri-workspace-system'
  * @param removePath 根路径 C:\Users\Administrator\AppData\Roaming\less-process\
  * @returns  /Untitled.md
  */
-export function simplifyFilePath (filePath:string, removePath?:string):string {
-  let relativePath:string = filePath
+export function simplifyFilePath (filePath: string, removePath?: string): string {
+  let relativePath: string = filePath
   if (removePath) {
     relativePath = relativePath.replace(removePath, '')
   }
@@ -20,7 +20,7 @@ export function simplifyFilePath (filePath:string, removePath?:string):string {
  * @param path /abc/foo.md
  * @returns [workspacePath]\abc\foo.md
  */
-export async function convertPathToLocal (path:string):Promise<string> {
+export async function convertPathToLocal (path: string): Promise<string> {
   const pathArr = path.split('/')
   if (pathArr.length === 0) return ''
   const result = await join(tauriWorkspaceSystem.currentPath, ...pathArr)

@@ -1,4 +1,4 @@
-import { SaladPanel } from '@P/saladict-core/src/views/salad-panel/salad-panel'
+import { SaladPanel } from '.-panel-view/salad-panel'
 import { createFileRoute } from '@tanstack/react-router'
 import { Window } from '@tauri-apps/api/window'
 import { fetch } from '@tauri-apps/plugin-http'

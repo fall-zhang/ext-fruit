@@ -12,7 +12,7 @@ type AnyArgFunction = {
 export const useDebounce = (fun: AnyArgFunction, delay: number = 300) => {
   const timber = useRef<number>(-1)
 
-  const trigger = useCallback((...rec:unknown[]) => {
+  const trigger = useCallback((...rec: unknown[]) => {
     if (timber.current) {
       clearTimeout(timber.current)
     }
@@ -29,13 +29,13 @@ export const useDebounce = (fun: AnyArgFunction, delay: number = 300) => {
   // return trigger
   return {
     trigger,
-    clear
+    clear,
   }
 }
 export const useThrottle = (fun: AnyArgFunction, delay: number = 300) => {
   const timber = useRef<number>(-1)
 
-  const trigger = useCallback((...rec:unknown[]) => {
+  const trigger = useCallback((...rec: unknown[]) => {
     if (timber.current) {
       return
     }
@@ -52,6 +52,6 @@ export const useThrottle = (fun: AnyArgFunction, delay: number = 300) => {
   }, [])
   return {
     trigger,
-    clear
+    clear,
   }
 }

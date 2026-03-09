@@ -2,19 +2,19 @@ import { useEffect, useState } from 'react'
 import { useConfigSystem } from './useConfigSystem'
 import type { ThemeType } from '../types/ConfigFile'
 
-let darkThemeMatch:MediaQueryList
+let darkThemeMatch: MediaQueryList
 type ThemeInfo = {
   theme: ThemeType
 }
 export const useBrowserTheme = () => {
   darkThemeMatch = matchMedia('(prefers-color-scheme: dark)')
   const [themeInfo, setThemeInfo] = useState<ThemeInfo>({
-    theme: darkThemeMatch.matches ? 'dark' : 'light'
+    theme: darkThemeMatch.matches ? 'dark' : 'light',
   })
   useEffect(() => {
-    const callback = (e:MediaQueryListEvent) => {
+    const callback = (e: MediaQueryListEvent) => {
       setThemeInfo({
-        theme: e.matches ? 'dark' : 'light'
+        theme: e.matches ? 'dark' : 'light',
       })
     }
     darkThemeMatch = matchMedia('(prefers-color-scheme: dark)')
@@ -38,7 +38,7 @@ export const useBrowserTheme = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  function setNewTheme (themeInfo:ThemeInfo) {
+  function setNewTheme (themeInfo: ThemeInfo) {
     if (themeInfo.theme === 'dark') {
       document.body.className = 'dark'
     } else if (themeInfo.theme === 'light') {
@@ -51,12 +51,12 @@ export const useBrowserTheme = () => {
       }
     }
     setThemeInfo({
-      ...themeInfo
+      ...themeInfo,
     })
   }
   return {
     themeInfo,
-    setThemeInfo: setNewTheme
+    setThemeInfo: setNewTheme,
   }
 }
 
