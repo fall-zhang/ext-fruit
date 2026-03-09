@@ -1,7 +1,9 @@
-import {
+import type {
   Language,
+  TranslateQueryResult
+} from '../../translator'
+import {
   Translator,
-  TranslateQueryResult,
   TranslateError
 } from '../../translator'
 
@@ -16,7 +18,7 @@ type AzureTranslateResult = [
       score: number;
     };
   }
-];
+]
 
 const langMap: [Language, string][] = [
   ['auto', ''],
@@ -47,7 +49,7 @@ const langMap: [Language, string][] = [
   ['sl', 'sl'],
   ['sv', 'sv'],
   ['hu', 'hu'],
-  ['vi', 'vi']
+  ['vi', 'vi'],
 ]
 
 export interface AzureConfig {
@@ -88,9 +90,9 @@ export class Azure extends Translator<AzureConfig> {
         method: 'GET',
         headers: {
           'User-Agent':
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42'
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42',
         },
-        responseType: 'text'
+        responseType: 'text',
       })
     }
 
@@ -113,52 +115,52 @@ export class Azure extends Translator<AzureConfig> {
       Referer: 'https://appsumo.com/',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
       'User-Agent':
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42'
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.42',
     }
     const paidHeaders = {
       'Ocp-Apim-Subscription-Key': config.subscriptionKey,
-      ...(config.region && { 'Ocp-Apim-Subscription-Region': config.region })
+      ...(config.region && { 'Ocp-Apim-Subscription-Region': config.region }),
     }
     const response = await this.request<AzureTranslateResult>({
       url: 'https://api.cognitive.microsofttranslator.com/translate',
       headers: {
         'content-type': 'application/json',
         ...(config.free ? freeHeaders : paidHeaders),
-        includeSentenceLength: 'true'
+        includeSentenceLength: 'true',
       },
       method: 'POST',
       params: {
         'api-version': '3.0',
-        to: Azure.langMap.get(to)
+        to: Azure.langMap.get(to),
       },
       data: source.map(text => ({
-        Text: text
-      }))
+        Text: text,
+      })),
     }).catch(error => {
       // https://api.interpreter.caiyunai.com/v1/translator
       if (error && error.response && error.response.status) {
         switch (error.response.status) {
-        case 401:
-        case 403:
-          throw new TranslateError(
-            'AUTH_ERROR',
-            error.response.data?.error?.message
-          )
-        case 429:
-          throw new TranslateError(
-            'TOO_MANY_REQUESTS',
-            error.response.data?.error?.message
-          )
-        case 500: // never happen now , need to check
-          throw new TranslateError(
-            'USEAGE_LIMIT',
-            error.response.data?.error?.message
-          )
-        default:
-          throw new TranslateError(
-            'UNKNOWN',
-            error.response.data?.error?.message
-          )
+          case 401:
+          case 403:
+            throw new TranslateError(
+              'AUTH_ERROR',
+              error.response.data?.error?.message
+            )
+          case 429:
+            throw new TranslateError(
+              'TOO_MANY_REQUESTS',
+              error.response.data?.error?.message
+            )
+          case 500: // never happen now , need to check
+            throw new TranslateError(
+              'USAGE_LIMIT',
+              error.response.data?.error?.message
+            )
+          default:
+            throw new TranslateError(
+              'UNKNOWN',
+              error.response.data?.error?.message
+            )
         }
       } else {
         throw new TranslateError('UNKNOWN')
@@ -171,11 +173,11 @@ export class Azure extends Translator<AzureConfig> {
       from,
       to,
       origin: {
-        paragraphs: source
+        paragraphs: source,
       },
       trans: {
-        paragraphs: result.map(translation => translation.translations[0].text)
-      }
+        paragraphs: result.map(translation => translation.translations[0].text),
+      },
     }
   }
 }

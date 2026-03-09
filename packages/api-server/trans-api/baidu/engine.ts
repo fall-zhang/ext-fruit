@@ -3,10 +3,10 @@ import { Baidu } from '@salad/trans/service-baidu/index'
 
 
 import type { BaiduLanguage } from './config'
-import type { SearchFunction } from '../../types'
-import { getMTArgs, type MachineTranslatePayload } from '@P/api-server/get-trans-info'
+import { getMTArgs, type MachineTranslatePayload } from '../../api-common/get-trans-info'
 import { auth } from './auth'
-import { machineResult, type MachineTranslateResult } from '@P/api-server/api-common/result-handle'
+import { machineResult, type MachineTranslateResult } from '../../api-common/result-handle'
+import type { SearchFunction } from '../../api-common/search-type'
 export const getTranslator = memoizeOne(() =>
   new Baidu({
     config: auth,

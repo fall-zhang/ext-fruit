@@ -1,14 +1,5 @@
 import type { AxiosRequestConfig } from 'axios'
-/**
- * 将 Request 转换为 axios 需要的 request
- * @param request
- * @returns
- */
-const getAxiosRequest = (request: Request): AxiosRequestConfig => {
-  return {
 
-  }
-}
 type FetchToAxios = {
   (input: string, init: RequestInit): AxiosRequestConfig
   (input: Request, init: undefined): AxiosRequestConfig

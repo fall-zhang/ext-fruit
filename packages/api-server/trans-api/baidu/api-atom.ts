@@ -25,19 +25,6 @@ export const getRequest: GetFetchRequest<AuthBody> = (text, {
     key: option?.key || '',
     sign: md5(option?.appid + text + salt + option?.key),
   }
-  // const appid = '20260228002563230'
-  // const key = 'ujv5scyNwqVHs5_pZCaJ'
-  // const reqBody2 = {
-  //   from: 'auto',
-  //   to: 'zh',
-  //   q: 'pink',
-  //   salt: Date.now().toString(),
-  //   appid,
-  //   key,
-  //   sign: md5(appid + 'pink' + salt + key),
-  // }
-  // console.log('⚡️ line:32 ~ reqBody: ', reqBody)
-  // console.log('⚡️ line:32 ~ reqBody: ', reqBody2)
 
   const searchParam = new URLSearchParams(reqBody)
   let baseURL = 'https://fanyi-api.baidu.com/api/trans/vip/translate'
