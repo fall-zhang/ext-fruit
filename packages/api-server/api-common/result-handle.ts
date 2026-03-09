@@ -1,7 +1,7 @@
 import type { Language } from '@P/open-trans/languages'
-import type { DictSearchResult } from '@P/api-server/types'
 import type { DictID } from '../types/all-dict-conf'
-// import { isContainJapanese, isContainKorean } from '@/_helpers/lang-check'
+import type { DictSearchResult } from './search-type'
+
 export interface MachineTranslateResult {
   id: DictID
   slInitial: 'hide' | 'collapse' | 'full'
@@ -19,6 +19,7 @@ export interface MachineTranslateResult {
   }
   requireCredential?: boolean
 }
+
 
 /** Generate catalog 生成目录 */
 export function machineResult (
