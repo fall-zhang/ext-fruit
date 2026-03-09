@@ -30,7 +30,7 @@ export const search: SearchFunction<
       to: opt.payload.tl,
       localeLang: opt.config.langCode,
       dictOption: opt.profile.baidu.options,
-      optionAvailable: opt.profile.baidu.optionsSel,
+      optionAvailable: opt.profile.baidu.optionalVal,
     }
     // payload
   )

@@ -39,8 +39,10 @@ export default (): CambridgeConfig => ({
     tl: 'default',
     tl2: 'default',
   },
-  options_sel: {
-    lang: ['default', 'en', 'en-chs', 'en-chz'],
-    CambridgeConfig: [],
+  optionalVal: {
+    keepLF: [],
+    slInitial: [],
+    tl: [],
+    tl2: []
   },
 })

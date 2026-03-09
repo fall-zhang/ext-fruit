@@ -1,6 +1,6 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItemBase } from '@P/api-server/types/dict-base'
 
-export type VocabularyConfig = DictItem
+export type VocabularyConfig = DictItemBase
 
 export default (): VocabularyConfig => ({
   lang: '10000000',
@@ -13,7 +13,7 @@ export default (): VocabularyConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -24,11 +24,11 @@ export default (): VocabularyConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 180,
+  // preferredHeight: 180,
   selectionWC: {
     min: 1,
-    max: 5
-  }
+    max: 5,
+  },
 })

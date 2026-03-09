@@ -1,6 +1,5 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
-
-export type LianganConfig = DictItem
+import type { DictItemBase } from '@P/api-server/types/dict-base'
+export type LianganConfig = DictItemBase
 
 export default (): LianganConfig => ({
   lang: '10010000',
@@ -13,7 +12,7 @@ export default (): LianganConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -24,11 +23,11 @@ export default (): LianganConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 265,
+  // preferredHeight: 265,
   selectionWC: {
     min: 1,
-    max: 5
-  }
+    max: 5,
+  },
 })

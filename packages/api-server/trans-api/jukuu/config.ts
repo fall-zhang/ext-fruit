@@ -1,8 +1,9 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
-
-export type JukuuConfig = DictItem<{
-  lang: 'zheng' | 'engjp' | 'zhjp'
-}>
+import type { DictItemBase } from '@P/api-server/types/dict-base'
+export type JukuuConfig = DictItemBase & {
+  options: {
+    lang: 'zheng' | 'engjp' | 'zhjp'
+  }
+}
 
 export default (): JukuuConfig => ({
   lang: '11010000',
@@ -15,7 +16,7 @@ export default (): JukuuConfig => ({
     spanish: true,
     deutsch: true,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -26,17 +27,16 @@ export default (): JukuuConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 300,
   selectionWC: {
     min: 1,
-    max: 99999
+    max: 99999,
   },
   options: {
-    lang: 'zheng'
+    lang: 'zheng',
   },
-  options_sel: {
-    lang: ['zheng', 'engjp', 'zhjp']
-  }
+  optionalVal: {
+    lang: ['zheng', 'engjp', 'zhjp'],
+  },
 })

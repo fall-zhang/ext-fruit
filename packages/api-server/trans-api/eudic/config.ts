@@ -1,8 +1,10 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItemBase } from '@P/api-server/types/dict-base'
 
-export type EudicConfig = DictItem<{
-  resultCount: number
-}>
+export type EudicConfig = DictItemBase & {
+  options: {
+    resultCount: number
+  }
+}
 
 export default (): EudicConfig => ({
   lang: '11000000',
@@ -15,7 +17,7 @@ export default (): EudicConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -26,14 +28,13 @@ export default (): EudicConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 240,
   selectionWC: {
     min: 1,
-    max: 5
+    max: 5,
   },
   options: {
-    resultCount: 10
-  }
+    resultCount: 10,
+  },
 })

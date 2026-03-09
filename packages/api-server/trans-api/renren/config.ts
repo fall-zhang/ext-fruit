@@ -1,6 +1,6 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItemBase } from '@P/api-server/types/dict-base'
 
-export type RenrenConfig = DictItem
+export type RenrenConfig = DictItemBase
 
 export default (): RenrenConfig => ({
   lang: '11000000',
@@ -13,7 +13,7 @@ export default (): RenrenConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -24,11 +24,11 @@ export default (): RenrenConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 400,
+  // preferredHeight: 400,
   selectionWC: {
     min: 1,
-    max: 999
-  }
+    max: 999,
+  },
 })

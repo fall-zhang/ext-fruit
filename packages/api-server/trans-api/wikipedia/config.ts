@@ -1,8 +1,12 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
-
-export type WikipediaConfig = DictItem<{
-  lang: 'auto' | 'zh' | 'zh-cn' | 'zh-tw' | 'zh-hk' | 'en' | 'ja' | 'fr' | 'de'
-}>
+import type { DictItemBase } from '@P/api-server/types/dict-base'
+export type WikipediaConfig = DictItemBase & {
+  options: {
+    lang: 'auto' | 'zh' | 'zh-cn' | 'zh-tw' | 'zh-hk' | 'en' | 'ja' | 'fr' | 'de'
+  }
+  optionalVal: {
+    lang: Array<'auto' | 'zh' | 'zh-cn' | 'zh-tw' | 'zh-hk' | 'en' | 'ja' | 'fr' | 'de'>
+  }
+}
 
 export default (): WikipediaConfig => ({
   lang: '11110000',
@@ -15,7 +19,7 @@ export default (): WikipediaConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -26,17 +30,17 @@ export default (): WikipediaConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 420,
+  // preferredHeight: 420,
   selectionWC: {
     min: 1,
-    max: 999999999999999
+    max: 999999999999999,
   },
   options: {
-    lang: 'auto'
+    lang: 'auto',
   },
-  options_sel: {
-    lang: ['auto', 'zh', 'zh-cn', 'zh-tw', 'zh-hk', 'en', 'ja', 'fr', 'de']
-  }
+  optionalVal: {
+    lang: ['auto', 'zh', 'zh-cn', 'zh-tw', 'zh-hk', 'en', 'ja', 'fr', 'de'],
+  },
 })

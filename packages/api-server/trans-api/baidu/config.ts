@@ -40,7 +40,7 @@ export default (): BaiduConfig => {
       tl: 'default',
       tl2: 'default',
     },
-    optionsSel: {
+    optionalVal: {
       keepLF: ['none', 'all'],
       slInitial: ['collapse', 'hide', 'full'],
       tl: ['default', 'zh-CN', 'zh-TW', 'en', 'ja', 'ko', 'fr', 'de', 'es', 'ru', 'nl'],

@@ -1,9 +1,13 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
-
-export type MacmillanConfig = DictItem<{
-  related: boolean
-  locale: 'uk' | 'us'
-}>
+import type { DictItemBase } from '@P/api-server/types/dict-base'
+export type MacmillanConfig = DictItemBase & {
+  options: {
+    related: boolean
+    locale: 'uk' | 'us'
+  }
+  optionalVal: {
+    locale: Array<'uk' | 'us'>
+  }
+}
 
 export default (): MacmillanConfig => ({
   lang: '10000000',
@@ -16,7 +20,7 @@ export default (): MacmillanConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -27,18 +31,17 @@ export default (): MacmillanConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 465,
   selectionWC: {
     min: 1,
-    max: 5
+    max: 5,
   },
   options: {
     related: true,
-    locale: 'uk'
+    locale: 'uk',
   },
-  options_sel: {
-    locale: ['uk', 'us']
-  }
+  optionalVal: {
+    locale: ['uk', 'us'],
+  },
 })

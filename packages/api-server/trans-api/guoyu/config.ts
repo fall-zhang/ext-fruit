@@ -1,9 +1,11 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItemBase } from '@P/api-server/types/dict-base'
 
-export type GuoyuConfig = DictItem<{
+export type GuoyuConfig = DictItemBase & {
+  options: {
   /** show translation */
-  trans: boolean
-}>
+    trans: boolean
+  }
+}
 
 export default (): GuoyuConfig => ({
   lang: '00100000',
@@ -16,7 +18,7 @@ export default (): GuoyuConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -27,14 +29,13 @@ export default (): GuoyuConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 265,
   selectionWC: {
     min: 1,
-    max: 5
+    max: 5,
   },
   options: {
-    trans: true
-  }
+    trans: true,
+  },
 })

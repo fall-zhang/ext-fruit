@@ -1,8 +1,9 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
-
-export type MerriamWebsterConfig = DictItem<{
-  resultCount: number
-}>
+import type { DictItemBase } from '@P/api-server/types/dict-base'
+export type MerriamWebsterConfig = DictItemBase & {
+  options: {
+    resultCount: number
+  }
+}
 
 export default (): MerriamWebsterConfig => ({
   lang: '10000000',
@@ -15,7 +16,7 @@ export default (): MerriamWebsterConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -26,14 +27,13 @@ export default (): MerriamWebsterConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 180,
   selectionWC: {
     min: 1,
-    max: 5
+    max: 5,
   },
   options: {
-    resultCount: 4
-  }
+    resultCount: 4,
+  },
 })

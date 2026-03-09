@@ -1,60 +1,22 @@
-import {
-  isContainChinese,
-  isContainEnglish,
-  isContainJapanese,
-  isContainKorean,
-  isContainFrench,
-  isContainDeutsch,
-  isContainSpanish
-} from '@/_helpers/lang-check'
-import {
-  HTMLString,
-  getInnerHTML,
-  handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult
-} from '../helpers'
-import { DictConfigs } from '@/app-config'
-import { Profile } from '@/app-config/profiles'
-import { getStaticSpeaker } from '@/components/Speaker'
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
 
-export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
-  return `https://www.hjdict.com/${getLangCode(
-    text,
-    profile
-  )}/${encodeURIComponent(text)}`
-}
+import type { DictSearchResult, SearchFunction } from '@P/api-server/api-common/search-type'
+import type { HTMLString } from '@P/api-server/types'
+import { handleNetWorkError, getInnerHTML } from '@P/api-server/utils'
+import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
+import type { Profile } from '@P/saladict-core/src/app-config/profiles'
+import { getStaticSpeaker } from '@P/saladict-core/src/components/Speaker'
+import type { HjdictPayload, HjdictResult, HjdictResultRelated } from './type'
+import { isContainFrench, isContainDeutsch, isContainSpanish, isContainEnglish, isContainJapanese, isContainKorean, isContainChinese } from '@P/api-server/utils/lang-check'
+import type { HjdictConfig } from './config'
+
 
 const HOST = 'https://www.hjdict.com'
 
-export interface HjdictResultLex {
-  type: 'lex'
-  langCode: string
-  header?: HTMLString
-  entries: HTMLString[]
-}
-
-export interface HjdictResultRelated {
-  type: 'related'
-  langCode: string
-  content: HTMLString
-}
-
-export type HjdictResult = HjdictResultLex | HjdictResultRelated
-
 type HjdictSearchResult = DictSearchResult<HjdictResult>
-
-interface HjdictPayload {
-  langCode?: string
-}
 
 export const search: SearchFunction<HjdictResult, HjdictPayload> = async (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
   const cookies = {
     HJ_SITEID: 3,
@@ -68,7 +30,7 @@ export const search: SearchFunction<HjdictResult, HjdictPayload> = async (
     HJ_ST: 1,
     HJ_CST: 1,
     HJ_T: +new Date(),
-    _: getUUID(16)
+    _: getUUID(16),
   }
 
   await Promise.all(
@@ -77,24 +39,24 @@ export const search: SearchFunction<HjdictResult, HjdictPayload> = async (
         url: 'https://www.hjdict.com',
         domain: 'hjdict.com',
         name,
-        value: String(cookies[name])
+        value: String(cookies[name]),
       })
     )
   )
 
-  const langCode = payload.langCode || getLangCode(text, profile)
+  const langCode = opt.payload.langCode || getLangCode(text, opt.profile.hjdict)
 
   return fetchDirtyDOM(
     `https://www.hjdict.com/${langCode}/${encodeURIComponent(text)}`,
     {
-      withCredentials: true
+      withCredentials: true,
     }
   )
     .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, profile.dicts.all.hjdict.options, langCode))
+    .then(doc => handleDOM(doc, profile.options, langCode))
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document,
   options: DictConfigs['hjdict']['options'],
   langCode: string
@@ -110,8 +72,8 @@ function handleDOM(
         result: {
           type: 'related',
           langCode,
-          content: getInnerHTML(HOST, $suggests)
-        }
+          content: getInnerHTML(HOST, $suggests),
+        },
       }
     }
     return wrapNoResult(langCode)
@@ -133,7 +95,7 @@ function handleDOM(
   })
 
   const entries: HTMLString[] = [
-    ...doc.querySelectorAll('.word-details-pane')
+    ...doc.querySelectorAll('.word-details-pane'),
   ].map(
     ($pane, i) => `
       <div class="word-details-pane${
@@ -154,13 +116,13 @@ function handleDOM(
     : wrapNoResult(langCode)
 }
 
-function wrapNoResult(langCode: string): DictSearchResult<HjdictResultRelated> {
+function wrapNoResult (langCode: string): DictSearchResult<HjdictResultRelated> {
   return {
     result: {
       type: 'related',
       langCode,
-      content: '<p style="text-align:center;">No Result</p>'
-    }
+      content: '<p style="text-align:center;">No Result</p>',
+    },
   }
 }
 
@@ -187,20 +149,20 @@ function wrapNoResult(langCode: string): DictSearchResult<HjdictResultRelated> {
 //   })
 // }
 
-function getLangCode(text: string, profile: Profile): string {
+function getLangCode (text: string, profile: HjdictConfig): string {
   // ü
   if (/\u00fc/i.test(text)) {
-    return profile.dicts.all.hjdict.options.uas
+    return profile.options.uas
   }
 
   // ä
   if (/\u00e4/i.test(text)) {
-    return profile.dicts.all.hjdict.options.aas
+    return profile.options.aas
   }
 
   // é
   if (/\u00e9/i.test(text)) {
-    return profile.dicts.all.hjdict.options.eas
+    return profile.options.eas
   }
 
   if (isContainFrench(text)) {
@@ -216,7 +178,7 @@ function getLangCode(text: string, profile: Profile): string {
   }
 
   if (isContainEnglish(text)) {
-    return profile.dicts.all.hjdict.options.engas
+    return profile.options.engas
   }
 
   if (isContainJapanese(text)) {
@@ -228,16 +190,16 @@ function getLangCode(text: string, profile: Profile): string {
   }
 
   if (isContainChinese(text)) {
-    return profile.dicts.all.hjdict.options.chsas
+    return profile.options.chsas
   }
 
   return 'w'
 }
 
-function getUUID(e?: number): string {
+function getUUID (e?: number): string {
   let t = arguments.length > 1 && undefined !== arguments[1] ? arguments[1] : 16
   let n = ''
-  if ('number' === typeof e) {
+  if (typeof e === 'number') {
     for (let i = 0; i < e; i++) {
       const r = Math.floor(10 * Math.random())
       n += r % 2 === 0 ? 'x' : 'y'
@@ -246,10 +208,10 @@ function getUUID(e?: number): string {
     n = e || 'xxxxxxxx-xyxx-yxxx-xxxy-xxyxxxxxxxxx'
   }
   return (
-    ('number' !== typeof t || t < 2 || t > 36) && (t = 16),
-    n.replace(/[xy]/g, function(e) {
+    (typeof t !== 'number' || t < 2 || t > 36) && (t = 16),
+    n.replace(/[xy]/g, function (e) {
       const n = (Math.random() * t) | 0
-      return ('x' === e ? n : (3 & n) | 8).toString(t)
+      return (e === 'x' ? n : (3 & n) | 8).toString(t)
     })
   )
 }

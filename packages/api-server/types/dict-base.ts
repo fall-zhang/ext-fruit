@@ -63,7 +63,7 @@ export type DictItemOption<Lang> = {
     tl: 'default' | Lang
     tl2: 'default' | Lang
   }
-  optionsSel: {
+  optionalVal: {
     keepLF: Array<'none' | 'all'>
     slInitial: ['collapse', 'hide', 'full'],
     tl: Array<Lang | 'default'>,

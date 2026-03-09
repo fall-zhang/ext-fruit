@@ -1,14 +1,15 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
-
-export type LongmanConfig = DictItem<{
-  wordfams: boolean
-  collocations: boolean
-  grammar: boolean
-  thesaurus: boolean
-  examples: boolean
-  bussinessFirst: boolean
-  related: boolean
-}>
+import type { DictItemBase } from '@P/api-server/types/dict-base'
+export type LongmanConfig = DictItemBase & {
+  options: {
+    wordfams: boolean
+    collocations: boolean
+    grammar: boolean
+    thesaurus: boolean
+    examples: boolean
+    bussinessFirst: boolean
+    related: boolean
+  }
+}
 
 export default (): LongmanConfig => ({
   lang: '10000000',
@@ -21,7 +22,7 @@ export default (): LongmanConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -32,12 +33,11 @@ export default (): LongmanConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 265,
   selectionWC: {
     min: 1,
-    max: 5
+    max: 5,
   },
   options: {
     wordfams: false,
@@ -46,6 +46,6 @@ export default (): LongmanConfig => ({
     thesaurus: true,
     examples: true,
     bussinessFirst: true,
-    related: true
-  }
+    related: true,
+  },
 })

@@ -1,13 +1,14 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
-
-export type YoudaoConfig = DictItem<{
-  basic: boolean
-  collins: boolean
-  discrimination: boolean
-  sentence: boolean
-  translation: boolean
-  related: boolean
-}>
+import type { DictItemBase } from '@P/api-server/types/dict-base'
+export type YoudaoConfig = DictItemBase & {
+  options: {
+    basic: boolean
+    collins: boolean
+    discrimination: boolean
+    sentence: boolean
+    translation: boolean
+    related: boolean
+  }
+}
 
 export default (): YoudaoConfig => ({
   lang: '11000000',
@@ -20,7 +21,7 @@ export default (): YoudaoConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -31,12 +32,12 @@ export default (): YoudaoConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 265,
+  // preferredHeight: 265,
   selectionWC: {
     min: 1,
-    max: 999999999999999
+    max: 999999999999999,
   },
   options: {
     basic: true,
@@ -44,6 +45,6 @@ export default (): YoudaoConfig => ({
     discrimination: true,
     sentence: true,
     translation: false,
-    related: true
-  }
+    related: true,
+  },
 })

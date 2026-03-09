@@ -50,7 +50,7 @@ export function machineConfig<Config extends DictItem<Language>> (
       tl: 'default',
       tl2: 'default',
     },
-    optionsSel: {
+    optionalVall: {
       keepLF: ['none', 'all'],
       slInitial: ['collapse', 'hide', 'full'],
       tl: ['default', ...langs],

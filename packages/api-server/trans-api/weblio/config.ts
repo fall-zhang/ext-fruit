@@ -1,6 +1,6 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItemBase } from '@P/api-server/types/dict-base'
 
-export type WeblioConfig = DictItem
+export type WeblioConfig = DictItemBase
 
 export default (): WeblioConfig => ({
   lang: '00010000',
@@ -13,7 +13,7 @@ export default (): WeblioConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -24,11 +24,11 @@ export default (): WeblioConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 265,
+  // preferredHeight: 265,
   selectionWC: {
     min: 1,
-    max: 20
-  }
+    max: 20,
+  },
 })

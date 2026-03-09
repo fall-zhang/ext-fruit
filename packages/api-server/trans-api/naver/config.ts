@@ -1,9 +1,11 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItemBase } from '@P/api-server/types/dict-base'
+export type NaverConfig = DictItemBase & {
+  options: {
+    hanAsJa: boolean
+    korAsJa: boolean
+  }
+}
 
-export type NaverConfig = DictItem<{
-  hanAsJa: boolean
-  korAsJa: boolean
-}>
 
 export default (): NaverConfig => ({
   lang: '01011000',
@@ -16,7 +18,7 @@ export default (): NaverConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -27,15 +29,15 @@ export default (): NaverConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 465,
+  // preferredHeight: 465,
   selectionWC: {
     min: 1,
-    max: 10
+    max: 10,
   },
   options: {
     hanAsJa: false,
-    korAsJa: false
-  }
+    korAsJa: false,
+  },
 })

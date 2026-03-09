@@ -1,13 +1,13 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
-
-export type WebsterlearnerConfig = DictItem<{
-  defs: boolean
-  phrase: boolean
-  derived: boolean
-  arts: boolean
-  related: boolean
-}>
-
+import type { DictItemBase } from '@P/api-server/types/dict-base'
+export type WebsterlearnerConfig = DictItemBase & {
+  options: {
+    defs: boolean
+    phrase: boolean
+    derived: boolean
+    arts: boolean
+    related: boolean
+  }
+}
 export default (): WebsterlearnerConfig => ({
   lang: '10000000',
   selectionLang: {
@@ -19,7 +19,7 @@ export default (): WebsterlearnerConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -30,18 +30,18 @@ export default (): WebsterlearnerConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 265,
+  // preferredHeight: 265,
   selectionWC: {
     min: 1,
-    max: 5
+    max: 5,
   },
   options: {
     defs: true,
     phrase: true,
     derived: true,
     arts: true,
-    related: true
-  }
+    related: true,
+  },
 })

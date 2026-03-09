@@ -1,8 +1,10 @@
-import { DictItem } from '@P/saladict-core/src/app-config/dicts'
+import type { DictItemBase } from '@P/api-server/types/dict-base'
 
-export type LexicoConfig = DictItem<{
-  related: boolean
-}>
+export type LexicoConfig = DictItemBase & {
+  options: {
+    related: boolean
+  }
+}
 
 export default (): LexicoConfig => ({
   lang: '10000000',
@@ -15,7 +17,7 @@ export default (): LexicoConfig => ({
     spanish: false,
     deutsch: false,
     others: false,
-    matchAll: false
+    matchAll: false,
   },
   defaultUnfold: {
     english: true,
@@ -26,14 +28,13 @@ export default (): LexicoConfig => ({
     spanish: true,
     deutsch: true,
     others: true,
-    matchAll: false
+    matchAll: false,
   },
-  preferredHeight: 265,
   selectionWC: {
     min: 1,
-    max: 5
+    max: 5,
   },
   options: {
-    related: true
-  }
+    related: true,
+  },
 })
