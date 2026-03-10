@@ -1,20 +1,20 @@
 import type { ReactNode } from 'react'
 import { createContext, useContext } from 'react'
 import type { Word } from '../types/word'
-import { isInNotebook, saveWord } from '../core/database'
-import { newWord } from '../dict-utils/new-word'
+import { isInNotebook, saveWord } from '@/core/index-db'
+import { newWord } from '@/utils/dict-utils/new-word'
 // 外部系统提供的 context
 interface OptContextType {
-  navigate(path:string):void
-  openURL(path:string):void
-  openExternalURL(path:string):void
+  navigate(path: string): void
+  openURL(path: string): void
+  openExternalURL(path: string): void
   /**
    * Add the latest history item to Notebook
    * @returns {boolean} if success return true
   */
-  addToNoteBook(word:Word):Promise<boolean>
+  addToNoteBook(word: Word): Promise<boolean>
   /** Is current word in Notebook */
-  isInNotebook(word:string):Promise<boolean>
+  isInNotebook(word: string): Promise<boolean>
 }
 // 默认
 const OptContext = createContext<OptContextType>({

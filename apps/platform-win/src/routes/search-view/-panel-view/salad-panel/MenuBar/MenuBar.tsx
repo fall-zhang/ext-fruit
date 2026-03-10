@@ -7,13 +7,10 @@ import {
 import './MenuBar.scss'
 // import type { ProfilesProps } from './Profiles'
 // import { ProfilePopover } from './Profiles'
-import type { Word } from '@/types/word'
 import { useTranslation } from 'react-i18next'
 import { useDictStore } from '@/store'
-import { debounce } from 'es-toolkit'
 import { useShallow } from 'zustand/shallow'
 import { useConfContext } from '@/context/conf-context'
-import { newWord } from '@/dict-utils/new-word'
 
 export interface MenuBarProps {
   menuBarProps?: Record<string, any>

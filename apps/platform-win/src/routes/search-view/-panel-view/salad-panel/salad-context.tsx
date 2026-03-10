@@ -1,15 +1,15 @@
 import type { CSSProperties, FC, ReactNode } from 'react'
 import './_style.scss'
-import { useSearchContext } from '../../context/search-context'
+import { useSearchContext } from '@/context/search-context'
 import { useCallback, useRef, useState } from 'react'
 import clsx from 'clsx'
-import { SALADICT_PANEL } from '../../core/saladict-state'
 import { MenuBar } from './MenuBar/MenuBar'
-import { useConfContext } from '../../context/conf-context'
+import { useConfContext } from '@/context/conf-context'
 import { DictList } from './DictList/DictList'
 import { debounce } from 'es-toolkit'
-import { newWord } from '../../dict-utils/new-word'
+import { newWord } from '@/utils/dict-utils/new-word'
 import { SearchBox } from './search-input/search-input'
+import { SALADICT_PANEL } from '@/config/const/saladict'
 
 type SaladPanelProps = {
   menuBarProps?: Record<string, any>

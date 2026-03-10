@@ -10,7 +10,7 @@ import {
   useMemo
 } from 'react'
 import clsx from 'clsx'
-import { newWord } from '@/dict-utils/new-word'
+import { newWord } from '@/utils/dict-utils/new-word'
 import type { DictItemHeadProps } from './dict-item-head'
 import { DictItemHead } from './dict-item-head'
 import type { DictItemBodyProps } from './dict-item-body'
@@ -18,8 +18,8 @@ import { DictItemBody } from './dict-item-body'
 import { timer } from '@/utils/promise-more'
 import { isTagName } from '@/utils/dom'
 import { useOptContext } from '@/context/opt-context'
-import type { DictID } from '@/core/api-server/types/all-dict-conf'
 import './dict-item.scss'
+import type { DictID } from '@/core/api-server/types'
 const DICT_ITEM_HEAD_HEIGHT = 20
 
 export interface DictItemProps

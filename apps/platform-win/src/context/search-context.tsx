@@ -27,7 +27,6 @@ export type DictSearchState = {
   searchHistory: Word[],
 
   userFoldedDicts: Partial<Record<DictID, boolean>>
-  customFetch: CustomFetch
   searchStart(payload: {
     /** Search with specific dict */
     id?: DictID
@@ -59,14 +58,8 @@ export const SearchContext = createContext<SearchStore | null>(null)
 
 type SearchStore = ReturnType<typeof createSearchStore>
 
-const createSearchStore = (initProps?: {
-  customFetch?: CustomFetch
-}) => {
-  const DEFAULT_PROPS = {
-    customFetch: initProps?.customFetch || fetch,
-  }
+const createSearchStore = () => {
   return createStore<DictSearchState>()((set, get) => ({
-    ...DEFAULT_PROPS,
     text: '',
     activeProfile: getDefaultProfile(),
     historyIndex: -1,
@@ -154,34 +147,34 @@ const createSearchStore = (initProps?: {
       })
       console.log('⚡️ line:63 ~ word: ', selectedDicts)
 
-      const request = apiMap.baidu.getRequest(word.text, {
-        from: 'auto',
-        to: 'zh',
-        option: {
-          appid: '20260228002563230',
-          key: 'ujv5scyNwqVHs5_pZCaJ',
-        },
-      })
-      DEFAULT_PROPS.customFetch(request).then(res => {
-        return apiMap.baidu.handleResponse(res, {
-          text: word.text,
-          from: 'auto',
-          to: 'auto',
-          profile: activeProfile.dicts.all,
-        })
-      }).then(res => {
-        const dictResult: RenderDictItem = {
-          dictID: res.result.id,
-          searchStatus: 'FINISH',
-          searchResult: res.result,
-        }
-        set(state => ({
-          ...state,
-          renderedDicts: [dictResult],
-        }))
-      }).catch(err => {
-        console.warn('⚡️ line:157 ~ err: ', err)
-      })
+      // const request = apiMap.baidu.getRequest(word.text, {
+      //   from: 'auto',
+      //   to: 'zh',
+      //   option: {
+      //     appid: '20260228002563230',
+      //     key: 'ujv5scyNwqVHs5_pZCaJ',
+      //   },
+      // })
+      // DEFAULT_PROPS.customFetch(request).then(res => {
+      //   return apiMap.baidu.handleResponse(res, {
+      //     text: word.text,
+      //     from: 'auto',
+      //     to: 'auto',
+      //     profile: activeProfile.dicts.all,
+      //   })
+      // }).then(res => {
+      //   const dictResult: RenderDictItem = {
+      //     dictID: res.result.id,
+      //     searchStatus: 'FINISH',
+      //     searchResult: res.result,
+      //   }
+      //   set(state => ({
+      //     ...state,
+      //     renderedDicts: [dictResult],
+      //   }))
+      // }).catch(err => {
+      //   console.warn('⚡️ line:157 ~ err: ', err)
+      // })
 
       // dictList.forEach(item => {
       //   fetchDictResult({
@@ -221,13 +214,10 @@ const createSearchStore = (initProps?: {
     },
   }))
 }
-export function SearchProvider ({ children, customFetch }: {
+export function SearchProvider ({ children }: {
   children: ReactNode
-  customFetch?: CustomFetch
 }) {
-  const [store] = useState(() => createSearchStore({
-    customFetch,
-  }))
+  const [store] = useState(() => createSearchStore())
   return (
     <SearchContext.Provider value={store}>
       {children}

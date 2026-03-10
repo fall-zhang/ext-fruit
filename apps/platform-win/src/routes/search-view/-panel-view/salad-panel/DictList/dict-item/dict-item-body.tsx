@@ -5,11 +5,11 @@ import root from 'react-shadow'
 
 import dictContentStyles from './DictItemContent.shadow.scss?raw'
 import type { Word } from '@/types/word'
-import { SALADICT_PANEL } from '@/core/saladict-state'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { StaticSpeakerContainer } from '@/components/Speaker'
-import type { DictID } from '@/core/api-server/types/all-dict-conf'
 import type { ViewProps } from '@/components/dict-api-view/type'
+import { SALADICT_PANEL } from '@/config/const/saladict'
+import type { DictID } from '@/core/api-server/types'
 
 export interface DictItemBodyProps {
   dictID: DictID
