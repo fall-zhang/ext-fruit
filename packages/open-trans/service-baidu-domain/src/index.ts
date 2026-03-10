@@ -81,7 +81,7 @@ export class BaiduDomain extends Translator<BaiduDomainConfig> {
       case '54000':
         throw new TranslateError('AUTH_ERROR')
       case '54004':
-        throw new TranslateError('USEAGE_LIMIT')
+        throw new TranslateError('USAGE_LIMIT')
       default:
         throw new TranslateError('UNKNOWN')
       }

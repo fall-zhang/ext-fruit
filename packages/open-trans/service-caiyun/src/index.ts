@@ -68,7 +68,7 @@ export class Caiyun extends Translator<CaiyunConfig> {
             throw new TranslateError('AUTH_ERROR', error.response.data.message)
           case 500: // never happen now , need to check
             throw new TranslateError(
-              'USEAGE_LIMIT',
+              'USAGE_LIMIT',
               error.response.data.message
             )
           default:

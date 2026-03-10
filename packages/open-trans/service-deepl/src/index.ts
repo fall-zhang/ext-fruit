@@ -163,7 +163,7 @@ export class Deepl extends Translator<DeeplConfig> {
             )
           case 456:
             throw new TranslateError(
-              'USEAGE_LIMIT',
+              'USAGE_LIMIT',
               'Quota exceeded. The character limit has been reached.'
             )
           default:

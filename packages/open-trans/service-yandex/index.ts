@@ -106,7 +106,7 @@ export class Baidu extends Translator<BaiduConfig> {
         case '54000':
           throw new TranslateError('AUTH_ERROR', translateError.error_msg)
         case '54004':
-          throw new TranslateError('USEAGE_LIMIT', translateError.error_msg)
+          throw new TranslateError('USAGE_LIMIT', translateError.error_msg)
         default:
           throw new TranslateError('UNKNOWN', translateError.error_msg)
       }

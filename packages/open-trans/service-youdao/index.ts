@@ -94,7 +94,7 @@ export class Youdao extends Translator<YoudaoConfig> {
         case '108':
           throw new TranslateError('AUTH_ERROR', res.data.errorCode)
         case '401':
-          throw new TranslateError('USEAGE_LIMIT', res.data.errorCode)
+          throw new TranslateError('USAGE_LIMIT', res.data.errorCode)
         default:
           throw new TranslateError('UNKNOWN', res.data.errorCode)
       }

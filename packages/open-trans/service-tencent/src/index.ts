@@ -220,7 +220,7 @@ export class Tencent extends Translator<TencentConfig> {
         case 'FailedOperation.NoFreeAmount':
         case 'FailedOperation.UserHasNoFreeAmount':
         case 'FailedOperation.ServiceIsolate':
-          throw new TranslateError('USEAGE_LIMIT', data.Response.Error.Code)
+          throw new TranslateError('USAGE_LIMIT', data.Response.Error.Code)
         default:
           throw new TranslateError('UNKNOWN', data.Response.Error.Code)
       }

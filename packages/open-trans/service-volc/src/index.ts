@@ -151,7 +151,7 @@ export class VolcTranslator extends Translator<VolcConfig> {
           )
         case 100018: // todo docs is not mentioned
           throw new TranslateError(
-            'USEAGE_LIMIT',
+            'USAGE_LIMIT',
             res.data.ResponseMetadata.Error?.Message
           )
         default:

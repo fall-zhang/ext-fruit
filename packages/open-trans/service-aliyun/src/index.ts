@@ -173,7 +173,7 @@ export class Aliyun extends Translator<AliyunConfig> {
             )
           case 113: // never happen now , need to check
             throw new TranslateError(
-              'USEAGE_LIMIT',
+              'USAGE_LIMIT',
               (error.response.data as AliyunTranslateError)?.Message
             )
           default:
