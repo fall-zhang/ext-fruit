@@ -3,7 +3,14 @@
   "private": true,
   "license": "MIT",
   "exports": {
-    "./*": "./*.ts"
+    ".": {
+      "types": "./index.ts",
+      "import": "./index.ts"
+    },
+    "./*": {
+      "types": "./*.ts",
+      "import": "./*.ts"
+    }
   },
   "scripts": {
     "lint": "eslint --no-eslintrc -c .eslintrc.js ./*.js ./scripts/**/*.js ./packages/**/*.ts",

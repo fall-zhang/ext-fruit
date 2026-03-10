@@ -13,7 +13,10 @@
   ],
   "exclude": [
     "packages/**/*.mock.ts",
+    "**/__tests__/*.test.ts",
     "packages/**/*.spec.ts",
+    "tests/**/*.js",
+    "tests/**/*.jsx",
     "**/__mock__/**/*.spec.ts",
   ],
   "compilerOptions": {
@@ -29,9 +32,7 @@
       "@salad/ui/*": [
         "packages/ui/*"
       ],
-      "@salad/trans/*": [
-        "packages/open-trans/*"
-      ],
+
       "@/*": [
         "apps/platform-win/src/*"
       ]
