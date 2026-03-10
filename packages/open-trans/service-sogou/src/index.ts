@@ -1,7 +1,9 @@
-import {
+import type {
   Language,
+  TranslateQueryResult
+} from '../../translator'
+import {
   Translator,
-  TranslateQueryResult,
   TranslateError
 } from '../../translator'
 import md5 from 'md5'
@@ -69,7 +71,7 @@ const langMap: [Language, string][] = [
   ['ur', 'ur'],
   ['vi', 'vi'],
   ['yua', 'yua'],
-  ['yue', 'yue']
+  ['yue', 'yue'],
 ]
 
 export interface SogouConfig {
@@ -102,7 +104,7 @@ export class Sogou extends Translator<SogouConfig> {
     const sign = md5(config.pid + text + Sogou.salt + config.key)
     const headers = {
       'content-type': 'application/x-www-form-urlencoded',
-      accept: 'application/json'
+      accept: 'application/json',
     }
     const res = await this.request<SogouResult>({
       url: 'http://fanyi.sogou.com/reventondc/api/sogouTranslate',
@@ -113,9 +115,9 @@ export class Sogou extends Translator<SogouConfig> {
         pid: config.pid,
         q: text,
         sign,
-        salt: Sogou.salt
+        salt: Sogou.salt,
       }),
-      headers
+      headers,
     }).catch(() => {
       throw new TranslateError('NETWORK_ERROR')
     })
@@ -126,12 +128,12 @@ export class Sogou extends Translator<SogouConfig> {
       to,
       origin: {
         paragraphs: text.split(/\n+/),
-        tts: (await this.textToSpeech(text, from)) || ''
+        tts: (await this.textToSpeech(text, from)) || '',
       },
       trans: {
         paragraphs: [result.translation],
-        tts: (await this.textToSpeech(result.translation, to)) || ''
-      }
+        tts: (await this.textToSpeech(result.translation, to)) || '',
+      },
     }
   }
 
@@ -152,14 +154,14 @@ export class Sogou extends Translator<SogouConfig> {
         {
           text,
           spokenDialect: 'zh-CHT',
-          from: 'translateweb'
+          from: 'translateweb',
         }
       )}`
       : `https://fanyi.sogou.com/reventondc/synthesis?${qs.stringify({
         text,
         speed: '1',
         lang: Sogou.langMap.get(lang) || 'en',
-        from: 'translateweb'
+        from: 'translateweb',
       })}`
   }
 }

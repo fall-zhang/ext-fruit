@@ -1,7 +1,9 @@
-import {
+import type {
   Language,
+  TranslateQueryResult
+} from '../../translator'
+import {
   Translator,
-  TranslateQueryResult,
   TranslateError
 } from '../../translator'
 
@@ -18,7 +20,7 @@ const fromLangMap: [Language, string][] = [
   ['nl', 'NL'],
   ['pl', 'PL'],
   ['pt', 'PT'],
-  ['ru', 'RU']
+  ['ru', 'RU'],
 ]
 
 const toLangMap: [Language, string][] = [
@@ -34,7 +36,7 @@ const toLangMap: [Language, string][] = [
   ['nl', 'NL'],
   ['pl', 'PL'],
   ['pt', 'PT'],
-  ['ru', 'RU']
+  ['ru', 'RU'],
 ]
 
 export interface DeeplConfig {
@@ -137,37 +139,37 @@ export class Deepl extends Translator<DeeplConfig> {
           ...config,
           text: isOfficial ? [text] : text,
           source_lang: Deepl.fromLangMap.get(from),
-          target_lang: Deepl.toLangMap.get(to)
+          target_lang: Deepl.toLangMap.get(to),
         },
         headers: {
-          Authorization: `DeepL-Auth-Key ${config.auth_key}`
-        }
+          Authorization: `DeepL-Auth-Key ${config.auth_key}`,
+        },
       }).catch(error => {
         // https://developers.deepl.com/docs/api-reference/translate/openapi-spec-for-text-translation
         if (error && error.response && error.response.status) {
           switch (error.response.status) {
-          case 400:
-            throw new TranslateError(
-              'AUTH_ERROR',
-              error.response.data?.message
-            )
-          case 403:
-            throw new TranslateError(
-              'AUTH_ERROR',
-              'Authorization failed. Please supply a valid DeepL-Auth-Key via the Authorization header.'
-            )
-          case 429:
-            throw new TranslateError(
-              'TOO_MANY_REQUESTS',
-              'Too many requests. Please wait and resend your request.'
-            )
-          case 456:
-            throw new TranslateError(
-              'USAGE_LIMIT',
-              'Quota exceeded. The character limit has been reached.'
-            )
-          default:
-            throw new TranslateError('UNKNOWN', error.response.data?.message)
+            case 400:
+              throw new TranslateError(
+                'AUTH_ERROR',
+                error.response.data?.message
+              )
+            case 403:
+              throw new TranslateError(
+                'AUTH_ERROR',
+                'Authorization failed. Please supply a valid DeepL-Auth-Key via the Authorization header.'
+              )
+            case 429:
+              throw new TranslateError(
+                'TOO_MANY_REQUESTS',
+                'Too many requests. Please wait and resend your request.'
+              )
+            case 456:
+              throw new TranslateError(
+                'USAGE_LIMIT',
+                'Quota exceeded. The character limit has been reached.'
+              )
+            default:
+              throw new TranslateError('UNKNOWN', error.response.data?.message)
           }
         } else {
           throw new TranslateError('UNKNOWN', error.response.data?.message)
@@ -183,12 +185,12 @@ export class Deepl extends Translator<DeeplConfig> {
           splitting: 'newlines',
           lang: {
             source_lang_user_selected: Deepl.fromLangMap.get(from),
-            target_lang: (Deepl.toLangMap.get(to) || '').slice(0, 2) // todo: not support zh-TW.
+            target_lang: (Deepl.toLangMap.get(to) || '').slice(0, 2), // todo: not support zh-TW.
           },
           texts: [{ text, requestAlternatives: 3 }],
-          timestamp: this.getTimeStamp(this.getICount(text))
+          timestamp: this.getTimeStamp(this.getICount(text)),
         },
-        id: rand
+        id: rand,
       }
 
       let bodyStr = JSON.stringify(body)
@@ -207,17 +209,17 @@ export class Deepl extends Translator<DeeplConfig> {
         url: finalBaseUrl,
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
-        data: bodyStr
+        data: bodyStr,
       }).catch(error => {
         // 处理错误
         if (error && error.response && error.response.status) {
           switch (error.response.status) {
-          case 403:
-            throw new TranslateError('AUTH_ERROR')
-          case 429:
-            throw new TranslateError('TOO_MANY_REQUESTS')
-          default:
-            throw new TranslateError('UNKNOWN')
+            case 403:
+              throw new TranslateError('AUTH_ERROR')
+            case 429:
+              throw new TranslateError('TOO_MANY_REQUESTS')
+            default:
+              throw new TranslateError('UNKNOWN')
           }
         } else {
           throw new TranslateError('UNKNOWN')
@@ -241,7 +243,7 @@ export class Deepl extends Translator<DeeplConfig> {
           from,
         to,
         origin: { paragraphs: text.split(/\n+/) },
-        trans: { paragraphs: translations.map(t => t.text) }
+        trans: { paragraphs: translations.map(t => t.text) },
       }
     } else if (isWeb) {
       const { result } = response.data
@@ -250,7 +252,7 @@ export class Deepl extends Translator<DeeplConfig> {
         from,
         to,
         origin: { paragraphs: text.split(/\n+/) },
-        trans: { paragraphs: result.texts.map(t => t.text.trim()) }
+        trans: { paragraphs: result.texts.map(t => t.text.trim()) },
       }
     }
     // deeplx and not v2 api, https://deeplx.owo.network/endpoints/free.html
@@ -260,7 +262,7 @@ export class Deepl extends Translator<DeeplConfig> {
       from,
       to,
       origin: { paragraphs: text.split(/\n+/) },
-      trans: { paragraphs: [data] }
+      trans: { paragraphs: [data] },
     }
   }
 
@@ -274,8 +276,8 @@ export class Deepl extends Translator<DeeplConfig> {
   getTimeStamp (iCount: number): number {
     const ts = Date.now()
     if (iCount !== 0) {
-      iCount = iCount + 1
-      return ts - (ts % iCount) + iCount
+      const newCount = iCount + 1
+      return ts - (ts % newCount) + newCount
     }
     return ts
   }

@@ -1,11 +1,11 @@
-import { get } from 'google-translate-open-api/dist/token'
+import translate from '../google-translate-open-api/src'
 
 /**
  * Calculate TK token
  * @param tld 'com' or 'cn'
  */
-export async function getTK (text: string, tld: string): Promise<string> {
-  const { value } = await get(text, { tld })
+export async function getTK (text: string, tld: 'cn' | 'com'): Promise<string> {
+  const { value } = await translate(text, { tld })
   return value
 }
 
