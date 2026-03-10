@@ -1,5 +1,5 @@
 // 每次打开时，都会初始化内容
-import { BaseDirectory, mkdir as createDir, exists, readDir, readTextFile } from '@tauri-apps/plugin-fs'
+import { BaseDirectory, mkdir as createDir, exists, readDir, readTextFile, writeFile } from '@tauri-apps/plugin-fs'
 import { addInitConf, addInitFile } from './first-install-init'
 import { appDataDir, join } from '@tauri-apps/api/path'
 import { transLocalFileList, getMenuByFile, menuListFix } from './menu'
@@ -7,11 +7,10 @@ import { parseJSON } from '@P/common/utils/json'
 import type { DirRecursiveEntry } from '../types/fileSystem'
 import { getInitFileList, getRootConfig, getWorkSpaceList } from './get-config-files'
 import { getWorkspaceFileList } from './get-workspace-conf'
+import { APP_CONFIG_DIR, APP_CONFIG_FILE_NAME, APP_PROFILE_FILE_NAME } from './const/file-name'
+import type { FileItem } from '../types/file-type'
 type FileCheckRes = {
-  path: string | 'workspace'
-  hasConfig: boolean,
-  hasWorkspace: boolean,
-  leakFileList: string[]
+
 }
 
 
@@ -53,55 +52,37 @@ export async function initFileSystem (): Promise<AllInfo> {
  * @returns hasWorkspace 是否有其它文件
  */
 export async function initCheck (): Promise<FileCheckRes> {
-  const configPath = await join(await appDataDir(), WORKSPACE_DEFAULT_DIR, CONFIG_DIR)
-  const result: FileCheckRes = {
-    hasConfig: false,
-    hasWorkspace: false,
-    leakFileList: [],
-    path: configPath,
-  }
+  const appDir = await appDataDir()
+  const appConfDir = await join(appDir, APP_CONFIG_DIR)
   try {
     const res = await Promise.allSettled([
-      readDir(WORKSPACE_DEFAULT_DIR, {
-        baseDir: BaseDirectory.AppData,
-        // recursive: true
-      }),
-      readDir(configPath),
-      exists(await join(configPath, MENU_CONFIG_FILE), {
-        baseDir: BaseDirectory.AppData,
-      }),
-      exists(await join(configPath, GENERAL_CONFIG_FILE)),
-      exists(await join(configPath, WORKSPACE_LIST_FILE)),
+      exists(appDir),
+      exists(appConfDir),
+      exists(await join(appConfDir, APP_CONFIG_FILE_NAME)),
+      exists(await join(appConfDir, APP_PROFILE_FILE_NAME)),
     ])
-    if (res[0].status === 'rejected' || res[0].value.length === 0) {
-      return result
+    const appendFileList = []
+    if (res[0].status === 'rejected' || res[0].value === false) {
+      appendFileList.push(createDir(appDir))
     }
-    // 存在文件，说明 workspace 存在
-    if (res[1].status === 'rejected') {
-      result.hasWorkspace = true
-      result.leakFileList.push(MENU_CONFIG_FILE)
-      result.leakFileList.push(GENERAL_CONFIG_FILE)
-      return result
+    if (res[1].status === 'rejected' || res[0].value === false) {
+      appendFileList.push(createDir(appDir))
     }
-    // 判断是否存在其它文件
-    result.hasWorkspace = res[0].value.length - res[1].value.length > 0
+    if (res[0].status === 'rejected' || res[0].value === false) {
+      appendFileList.push(createDir(appDir))
+    }
+    if (res[0].status === 'rejected' || res[0].value === false) {
+      appendFileList.push(createDir(appDir))
+    }
 
-    if (res[2].status === 'rejected' || !res[2].value) {
-      result.leakFileList.push(MENU_CONFIG_FILE)
+    return {
+
     }
-    if (res[3].status === 'rejected' || !res[3].value) {
-      result.leakFileList.push(GENERAL_CONFIG_FILE)
-    }
-    if (res[4].status === 'rejected' || !res[4].value) {
-      result.leakFileList.push(WORKSPACE_LIST_FILE)
-    }
-    if (result.leakFileList.length === 0) {
-      result.hasConfig = true
-    }
-    return result
   } catch (err) {
     console.warn('初始化文件检查出现错误', err)
-    return result
+    return {
+
+    }
   }
 }
 

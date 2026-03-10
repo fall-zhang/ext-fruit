@@ -1,6 +1,7 @@
-import type { AppConfig, DictID } from '../app-config'
-import type { MachineTranslateResult } from '../components/MachineTrans/engine'
-import { fetchDictResult } from '../core/trans-engine/fetch-trans'
+import type { AppConfig } from '@/config/app-config'
+import type { MachineTranslateResult } from '@/core/api-server/api-common/result-handle'
+import { fetchDictResult } from '@/core/api-server/fetch-trans'
+import type { DictID } from '@/core/api-server/types'
 
 export type CtxTranslatorId = keyof AppConfig['ctxTrans']
 
@@ -10,7 +11,7 @@ export type CtxTranslateResults = {
 
 export interface FetchDictResultResponse {
   id: DictID
-  result: MachineTranslateResult<DictID>
+  result: MachineTranslateResult
 }
 
 /**

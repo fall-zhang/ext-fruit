@@ -11,14 +11,14 @@ class TauriWorkspaceSystem implements WorkspaceSystem {
   /**
    * 当前工作区的文件系统路径
    */
-  currentPath:string = 'workspace'
-  workspaceList:WorkspaceInfo[] = []
+  currentPath: string = 'workspace'
+  workspaceList: WorkspaceInfo[] = []
   // constructor (defaultPath:WorkspaceListJSON) {
   //   this.currentPath = defaultPath.data.currentPath
   //   this.workspaceList = defaultPath.data.list
   // }
 
-  setWorkspaceInfo (defaultPath:WorkspaceListJSON) {
+  setWorkspaceInfo (defaultPath: WorkspaceListJSON) {
     this.currentPath = defaultPath.data.currentPath
     this.workspaceList = defaultPath.data.list
     console.log('🚀 ~ TauriWorkspaceSystem ~ setWorkspaceInfo ~ defaultPath:', defaultPath)
@@ -29,12 +29,12 @@ class TauriWorkspaceSystem implements WorkspaceSystem {
    * 更改当前工作区的路径
    * @returns
    */
-  async changePath (newPath:string) {
+  async changePath (newPath: string) {
     if (newPath === this.currentPath) return
     if (!this.workspaceList.some((item) => item.path === newPath)) {
       this.workspaceList.push({
         name: newPath.split(sep()).at(-1) || '找不到工作区名称',
-        path: newPath
+        path: newPath,
       })
     }
 
@@ -54,7 +54,7 @@ class TauriWorkspaceSystem implements WorkspaceSystem {
   /**
    * 获取最近使用的工作区
    */
-  getRecentWorkspace ():WorkspaceInfo[] {
+  getRecentWorkspace (): WorkspaceInfo[] {
     return this.workspaceList
   }
 
@@ -62,29 +62,29 @@ class TauriWorkspaceSystem implements WorkspaceSystem {
    * 将工作区信息保存到本地
    */
   async saveWorkspaceList () {
-    const result:OperateResult<string> = {
+    const result: OperateResult<string> = {
       state: 'failure',
-      msg: '更新文件失败'
+      msg: '更新文件失败',
     }
-    const fileInfo:FileItem = {
+    const fileInfo: FileItem = {
       fileName: WORKSPACE_LIST_FILE,
       filePath: '/.conf/' + WORKSPACE_LIST_FILE,
       fileType: 'config',
-      fileSuffix: 'json'
+      fileSuffix: 'json',
     }
     const touchResult = await touchDir(fileInfo.filePath)
     if (touchResult.state === 'failure') {
       console.warn('当前文件路径有问题', fileInfo.filePath)
       return result
     }
-    const newConf:WorkspaceListJSON = {
+    const newConf: WorkspaceListJSON = {
       fileType: 'config',
       configType: 'workspace-list',
       data: {
         currentPath: this.currentPath,
-        list: this.workspaceList
+        list: this.workspaceList,
       },
-      version: ''
+      version: '',
     }
     try {
       if (fileInfo.fileSuffix === 'json') {
@@ -105,7 +105,7 @@ class TauriWorkspaceSystem implements WorkspaceSystem {
     this.workspaceList = []
     return {
       currentPath: this.currentPath,
-      workspaceList: this.workspaceList
+      workspaceList: this.workspaceList,
     }
   }
 

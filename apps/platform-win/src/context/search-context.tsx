@@ -7,6 +7,7 @@ import { checkSupportedLangs, countWords } from '../utils/lang-check'
 import type { AllDictsConf } from '@/core/api-server/types/all-dict-conf'
 import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
 import type { DictID } from '@/core/api-server/types'
+import { api } from '@/core/api-server/trans-api'
 
 type RenderDictItem = {
   readonly dictID: DictID
@@ -14,7 +15,6 @@ type RenderDictItem = {
   readonly searchResult: any
   readonly catalog?: DictSearchResult<DictID>['catalog']
 }
-type CustomFetch = (input: URL | Request | string, init?: RequestInit) => Promise<Response>
 
 export type DictSearchState = {
   text: string
@@ -68,12 +68,11 @@ const createSearchStore = () => {
     searchHistory: [],
     userFoldedDicts: {},
     switchHistory () {
-
     },
     searchStart (payload) {
       let dictList: RenderDictItem[] = []
       let word: Word
-      const { activeProfile, searchHistory, historyIndex, selectedDicts } = get()
+      const { activeProfile, searchHistory, historyIndex, selectedDicts, renderedDicts } = get()
       // 从历史缓存中查找
       const newSearchHistory: Word[] =
         payload && payload.noHistory
@@ -146,7 +145,23 @@ const createSearchStore = () => {
         }
       })
       console.log('⚡️ line:63 ~ word: ', selectedDicts)
-
+      selectedDicts.forEach((id, index) => {
+        api[id]({
+          text: word.text,
+        }).then((res: DictSearchResult) => {
+          const dictResult: RenderDictItem = {
+            dictID: id,
+            searchStatus: 'FINISH',
+            searchResult: res,
+          }
+          set(state => ({
+            ...state,
+            renderedDicts: renderedDicts.toSpliced(index, 1, dictResult),
+          }))
+        }).catch((err: unknown) => {
+          console.warn('⚡️ line:157 ~ err: ', err)
+        })
+      })
       // const request = apiMap.baidu.getRequest(word.text, {
       //   from: 'auto',
       //   to: 'zh',
