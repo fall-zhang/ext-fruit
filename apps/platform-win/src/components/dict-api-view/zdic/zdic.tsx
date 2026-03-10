@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import type { ZdicResult } from './engine'
-import type { ViewProps } from '../helpers'
+import type { ViewProps } from '../../utils'
 import EntryBox from '@/components/EntryBox'
 import { StrElm } from '@/components/StrElm'
 

@@ -5,12 +5,12 @@ import React, {
   useLayoutEffect,
   useRef
 } from 'react'
-import type { MachineTranslateResult } from './engine'
 import { Trans, useTranslation } from 'react-i18next'
-import { getTTS } from '../../core/trans-api/google/engine'
 import Speaker from '../Speaker'
-import type { DictID } from '../../app-config'
-import type { ViewProps } from '../../core/trans-api/types'
+import type { MachineTranslateResult } from '@/core/api-server/api-common/result-handle'
+import { getTTS } from '@/core/api-server/trans-api/google/engine'
+import type { ViewProps } from '../dict-api-view/type'
+
 
 const rtlLangs = new Set([
   'ar', // Arabic
@@ -25,7 +25,7 @@ const rtlLangs = new Set([
 ])
 
 const TSpeaker = React.memo<{
-  result: MachineTranslateResult<DictID>
+  result: MachineTranslateResult
   source: 'searchText' | 'trans'
 }>(({ result, source }) => (
   <Speaker
@@ -42,7 +42,7 @@ const TSpeaker = React.memo<{
 
 /** text with a speaker at the beginning */
 const TText = React.memo<{
-  result: MachineTranslateResult<DictID>
+  result: MachineTranslateResult
   source: 'searchText' | 'trans'
   lang: string
 }>(({ result, source, lang }) => (
@@ -57,7 +57,7 @@ const TText = React.memo<{
 ))
 
 const TTextCollapsable = React.memo<{
-  result: MachineTranslateResult<DictID>
+  result: MachineTranslateResult
   source: 'searchText' | 'trans'
   lang: string
 }>(({ result, source, lang }) => {
@@ -108,7 +108,7 @@ const TTextCollapsable = React.memo<{
   )
 })
 
-export type MachineTransProps = ViewProps<MachineTranslateResult<DictID>>
+export type MachineTransProps = ViewProps<MachineTranslateResult>
 
 /** Template for machine translations */
 export const MachineTrans: FC<MachineTransProps> = props => {
@@ -147,7 +147,7 @@ export const MachineTrans: FC<MachineTransProps> = props => {
   )
 }
 
-const RenderCredential:FC = (props) => {
+const RenderCredential: FC = (props) => {
   const { t } = useTranslation('content')
   return (<>
     <Trans message={t('machineTrans.login')}>

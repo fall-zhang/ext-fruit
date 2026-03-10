@@ -9,7 +9,7 @@ import type {
 import {
   fetchLangList
 } from './engine'
-import type { ViewProps } from '../helpers'
+import type { ViewProps } from '../../utils'
 import { useTranslation } from 'react-i18next'
 import { StrElm } from '@/components/StrElm'
 
