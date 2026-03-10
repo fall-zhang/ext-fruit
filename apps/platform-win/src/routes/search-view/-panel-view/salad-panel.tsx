@@ -7,10 +7,7 @@ import { SaladContent } from './salad-context'
 import type { SaladConfigType } from '@/config/app-config/config-type'
 
 type SaladPanelProps = {
-  menuBarProps?: Record<string, any>
   customButton?: ReactNode
-  customFetch?(input: URL | Request | string, init?: RequestInit): Promise<Response>;
-  onSearchChange: (text: string) => void
   config?: SaladConfigType
 }
 

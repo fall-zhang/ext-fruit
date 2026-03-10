@@ -3,11 +3,13 @@ import { Switch, Select } from 'antd'
 
 import { SaladictForm, type SaladictFormItem } from '../-components/SaladictForm'
 import { getConfigPath } from '../-utils/path-joiner'
+import { useRef } from 'react'
 export const Route = createFileRoute('/configs/general/')({
   component: RouteComponent,
 })
 
 function RouteComponent () {
+  const formRef = useRef<HTMLFormElement>(null)
   const formItems: SaladictFormItem[] = [
     {
       name: getConfigPath('active'),
@@ -41,5 +43,5 @@ function RouteComponent () {
     }
   )
 
-  return <SaladictForm items={formItems} />
+  return <SaladictForm items={formItems} ref={formRef} />
 }

@@ -66,7 +66,6 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
       >
         <div className="dictPanel-Head">
           <MenuBar
-            menuBarProps={props.menuBarProps}
             customButton={props.customButton}
           />
         </div>

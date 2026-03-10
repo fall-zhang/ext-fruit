@@ -6,7 +6,7 @@ import { PinBtn } from './-components/pin-button'
 import { CloseBtn } from './-components/close-button'
 import { FavBtn } from './-components/fav-button'
 import type { SaladConfigType } from '@/config/app-config/config-type'
-import { SaladPanel } from './-panel-view/salad-panel/salad-panel'
+import { SaladPanel } from './-panel-view/salad-panel'
 /**
  * 生词本
  */
@@ -18,7 +18,6 @@ const appWindow = new Window('main-page')
 function RouteComponent () {
   const [isAlwaysOnTop, setAlwaysOnTop] = useState(false)
   const [isInNotebook, setIsInNotebook] = useState(false)
-  const [curSearchText, setCurSearchText] = useState('')
   const [saladictConf] = useState<SaladConfigType>()
   useEffect(() => {
     async function getInitInfo () {
@@ -42,11 +41,6 @@ function RouteComponent () {
   return <>
     <div className='w-full h-full relative'>
       <SaladPanel
-        menuBarProps={{
-          'data-tauri-drag-region': true,
-        }}
-        customFetch={fetch}
-        onSearchChange={(text) => { setCurSearchText(text) }}
         config={saladictConf}
         customButton={
           <>

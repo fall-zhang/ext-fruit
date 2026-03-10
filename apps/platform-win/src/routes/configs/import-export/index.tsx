@@ -9,9 +9,9 @@ import { useTranslation } from 'react-i18next'
 import type { AppConfig } from '@/config/app-config'
 import { mergeConfig } from '@/config/app-config/merge-config'
 import { useListLayout } from '../-utils/layout'
-import { mergeProfile } from '@/config/app-config/merge-profile'
-import type { Profile, ProfileID } from '@/config/app-config/profiles'
 import { useConfContext } from '@/context/conf-context'
+import type { ProfileID, Profile } from '@/config/trans-profile'
+import { mergeProfile } from '@/config/trans-profile/merge-profile'
 
 export const Route = createFileRoute('/configs/import-export/')({
   component: RouteComponent,

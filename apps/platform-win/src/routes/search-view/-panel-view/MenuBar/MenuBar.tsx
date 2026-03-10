@@ -121,7 +121,7 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
         disabled={store.historyIndex >= store.histories.length - 1}
         onClick={() => store.switchHistory('next')}
       />
-      <div className="grow h-full" {...props.menuBarProps}></div>
+      <div className="grow h-full" data-tauri-drag-region={true}></div>
       {/* 自定义 button 列表 */}
       {props.customButton}
       {/* <ProfilePopover

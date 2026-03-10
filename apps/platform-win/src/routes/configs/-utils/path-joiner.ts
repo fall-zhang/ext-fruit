@@ -1,5 +1,5 @@
 import type { AppConfig } from '@/config/app-config'
-import type { Profile } from '@/config/app-config/profiles'
+import type { Profile } from '@/config/trans-profile'
 import { useRef } from 'react'
 
 export function getConfigPath<A extends keyof AppConfig> (pA: A): string
@@ -33,73 +33,6 @@ export function getConfigPath<
   E extends keyof AppConfig[A][B][C][D],
   F extends keyof AppConfig[A][B][C][D][E]
 > (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F): string
-export function getConfigPath<
-  A extends keyof AppConfig,
-  B extends keyof AppConfig[A],
-  C extends keyof AppConfig[A][B],
-  D extends keyof AppConfig[A][B][C],
-  E extends keyof AppConfig[A][B][C][D],
-  F extends keyof AppConfig[A][B][C][D][E],
-  G extends keyof AppConfig[A][B][C][D][E][F]
-> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G): string
-export function getConfigPath<
-  A extends keyof AppConfig,
-  B extends keyof AppConfig[A],
-  C extends keyof AppConfig[A][B],
-  D extends keyof AppConfig[A][B][C],
-  E extends keyof AppConfig[A][B][C][D],
-  F extends keyof AppConfig[A][B][C][D][E],
-  G extends keyof AppConfig[A][B][C][D][E][F],
-  H extends keyof AppConfig[A][B][C][D][E][F][G]
-> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H): string
-export function getConfigPath<
-  A extends keyof AppConfig,
-  B extends keyof AppConfig[A],
-  C extends keyof AppConfig[A][B],
-  D extends keyof AppConfig[A][B][C],
-  E extends keyof AppConfig[A][B][C][D],
-  F extends keyof AppConfig[A][B][C][D][E],
-  G extends keyof AppConfig[A][B][C][D][E][F],
-  H extends keyof AppConfig[A][B][C][D][E][F][G],
-  I extends keyof AppConfig[A][B][C][D][E][F][G][H]
-> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H, pI: I): string
-export function getConfigPath<
-  A extends keyof AppConfig,
-  B extends keyof AppConfig[A],
-  C extends keyof AppConfig[A][B],
-  D extends keyof AppConfig[A][B][C],
-  E extends keyof AppConfig[A][B][C][D],
-  F extends keyof AppConfig[A][B][C][D][E],
-  G extends keyof AppConfig[A][B][C][D][E][F],
-  H extends keyof AppConfig[A][B][C][D][E][F][G],
-  I extends keyof AppConfig[A][B][C][D][E][F][G][H],
-  J extends keyof AppConfig[A][B][C][D][E][F][G][H][I]
-> (pA: A, pB: B, pC: C, pD: D, pE: E, pF: F, pG: G, pH: H, pI: I, pJ: J): string
-export function getConfigPath<
-  A extends keyof AppConfig,
-  B extends keyof AppConfig[A],
-  C extends keyof AppConfig[A][B],
-  D extends keyof AppConfig[A][B][C],
-  E extends keyof AppConfig[A][B][C][D],
-  F extends keyof AppConfig[A][B][C][D][E],
-  G extends keyof AppConfig[A][B][C][D][E][F],
-  H extends keyof AppConfig[A][B][C][D][E][F][G],
-  I extends keyof AppConfig[A][B][C][D][E][F][G][H],
-  J extends keyof AppConfig[A][B][C][D][E][F][G][H][I],
-  K extends keyof AppConfig[A][B][C][D][E][F][G][H][I][J]
-> (
-  pA: A,
-  pB: B,
-  pC: C,
-  pD: D,
-  pE: E,
-  pF: F,
-  pG: G,
-  pH: H,
-  pI: I,
-  pJ: J,
-  pK: K
-): string
 export function getConfigPath (...args: string[]): string {
   return 'config.' + args.join('.')
 }

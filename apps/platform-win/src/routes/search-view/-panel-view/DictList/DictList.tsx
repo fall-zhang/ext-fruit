@@ -7,7 +7,7 @@ import memoizeOne from 'memoize-one'
 import type { GlobalState } from '@/store/global-state'
 import { useConfContext } from '@/context/conf-context'
 import { DictItem, type DictItemProps } from './dict-item/dict-item'
-import type { DictID } from '@/core/api-server/types/all-dict-conf'
+import type { DictID } from '@/core/api-server/types'
 
 const MemoDictItem = React.memo(DictItem)
 // const memoizedDicts = memoizeOne((
