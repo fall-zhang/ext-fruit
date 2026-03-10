@@ -4,9 +4,10 @@ import { useState, useEffect, useContext } from 'react'
 import { Modal, Layout, Switch } from 'antd'
 import escapeHTML from 'lodash/escape'
 import { PlaceholderTableMemo } from './PlaceholderTable'
-import type { Word } from '@P/saladict-core/main'
-import { newWord } from '@/dict-utils/new-word'
 import { I18nContext, useTranslation } from 'react-i18next'
+import type { Word } from '@/types/word'
+import { newWord } from '@/utils/dict-utils/new-word'
+import type { storage } from 'sinon-chrome'
 
 const keywordMatchStr = `%(${Object.keys(newWord()).join('|')}|contextCloze)%`
 
@@ -37,7 +38,8 @@ export const ExportModal: FC<ExportModalProps> = props => {
           case 'note':
           case 'context':
           case 'contextCloze': {
-            let text = word[k === 'contextCloze' ? 'context' : k] || ''
+            const key: 'trans' | 'note' | 'context' = k === 'contextCloze' ? 'context' : k
+            let text = word[key] || ''
             if (escape) {
               text = escapeHTML(text)
             }

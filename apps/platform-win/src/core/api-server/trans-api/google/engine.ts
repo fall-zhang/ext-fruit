@@ -10,8 +10,8 @@ import {
 import type { GoogleLanguage } from './config'
 import { Google } from '@P/open-trans/service-google'
 import type { Language } from '@P/open-trans/languages'
-import type { GetSrcPageFunction } from '@P/api-server/api-common/atom-type'
-import type { SearchFunction } from '@P/api-server/api-common/search-type'
+import type { GetSrcPageFunction } from '@/core/api-server/api-common/atom-type'
+import type { SearchFunction } from '@/core/api-server/api-common/search-type'
 
 export const getTranslator = memoizeOne(() => new Google({ env: 'ext' }))
 

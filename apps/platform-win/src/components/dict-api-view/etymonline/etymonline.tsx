@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import type { EtymonlineResult } from '@P/api-server/trans-api/etymonline/engine'
+import type { EtymonlineResult } from '@/core/api-server/trans-api/etymonline/engine'
 import type { ViewProps } from '../type'
 import { StrElm } from '../../StrElm'
 

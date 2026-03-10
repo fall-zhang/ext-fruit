@@ -1,4 +1,4 @@
-import type { DictItemBase, DictItemOption } from '@P/api-server/types/dict-base'
+import type { DictItemBase, DictItemOption } from '@/core/api-server/types/dict-base'
 import type { ExtendSupportLang } from '@P/open-trans/languages/src/languages'
 
 export type BaiduLanguage = ExtendSupportLang<'zh-CN' | 'zh-TW' | 'en' | 'ja' | 'ko' | 'fr' | 'de' | 'es' | 'ru' | 'nl'>

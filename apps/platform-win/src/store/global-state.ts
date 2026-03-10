@@ -4,6 +4,7 @@ import { getDefaultProfile, type Profile, type ProfileID } from '@/config/trans-
 import type { Word } from '../types/word'
 import type { DictID } from '@/core/api-server/types'
 import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
+import { newWord } from '@/utils/dict-utils/new-word'
 type RenderDictItem = {
   readonly id: DictID
   readonly searchStatus: 'IDLE' | 'SEARCHING' | 'FINISH'

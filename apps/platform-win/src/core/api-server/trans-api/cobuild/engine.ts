@@ -1,7 +1,7 @@
-import type { HTMLString, SearchFunction, DictSearchResult } from '@P/api-server/types'
-import type { GetSrcPageFunction } from '@P/api-server/types/dict-fetch'
-import { handleNetWorkError, getChsToChz, externalLink, getInnerHTML, handleNoResult } from '@P/api-server/utils'
-import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
+import type { HTMLString, SearchFunction, DictSearchResult } from '@/core/api-server/types'
+import type { GetSrcPageFunction } from '@/core/api-server/types/dict-fetch'
+import { handleNetWorkError, getChsToChz, externalLink, getInnerHTML, handleNoResult } from '@/core/api-server/utils'
+import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 import type { AppConfig } from '@/config/app-config'
 import { getStaticSpeaker } from '@/components/Speaker'
 

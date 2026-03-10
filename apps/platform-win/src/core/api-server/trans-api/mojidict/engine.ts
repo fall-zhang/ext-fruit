@@ -1,5 +1,5 @@
-import type { SearchFunction } from '@P/api-server/types'
-import type { GetSrcPageFunction } from '@P/api-server/types/dict-fetch'
+import type { SearchFunction } from '@/core/api-server/types'
+import type { GetSrcPageFunction } from '@/core/api-server/types/dict-fetch'
 import {
   handleNoResult,
   handleNetWorkError

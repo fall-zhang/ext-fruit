@@ -1,4 +1,4 @@
-import { getMachineLocales } from '@P/api-server/locales'
+import { getMachineLocales } from '@/core/api-server/locales'
 
 export const locales = getMachineLocales({
   en: 'Baidu Translate',

@@ -1,12 +1,12 @@
 
-import type { DictSearchResult, SearchFunction } from '@P/api-server/api-common/search-type'
-import type { HTMLString } from '@P/api-server/types'
-import { handleNetWorkError, getInnerHTML } from '@P/api-server/utils'
-import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
+import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
+import type { HTMLString } from '@/core/api-server/types'
+import { handleNetWorkError, getInnerHTML } from '@/core/api-server/utils'
+import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 import type { Profile } from '@/config/app-config/profiles'
 import { getStaticSpeaker } from '@/components/Speaker'
 import type { HjdictPayload, HjdictResult, HjdictResultRelated } from './type'
-import { isContainFrench, isContainDeutsch, isContainSpanish, isContainEnglish, isContainJapanese, isContainKorean, isContainChinese } from '@P/api-server/utils/lang-check'
+import { isContainFrench, isContainDeutsch, isContainSpanish, isContainEnglish, isContainJapanese, isContainKorean, isContainChinese } from '@/core/api-server/utils/lang-check'
 import type { HjdictConfig } from './config'
 
 

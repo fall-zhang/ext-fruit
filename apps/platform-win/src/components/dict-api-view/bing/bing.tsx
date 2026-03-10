@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 import React from 'react'
 
-import type { ViewProps } from '@P/api-server/types'
-import type { BingResult, BingResultLex, BingResultMachine, BingResultRelated } from '@P/api-server/trans-api/bing/engine'
+import type { ViewProps } from '@/core/api-server/types'
+import type { BingResult, BingResultLex, BingResultMachine, BingResultRelated } from '@/core/api-server/trans-api/bing/engine'
 import { StrElm } from '../../StrElm'
 import Speaker from '../../Speaker'
 

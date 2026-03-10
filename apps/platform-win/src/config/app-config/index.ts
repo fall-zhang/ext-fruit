@@ -1,15 +1,12 @@
 import type { ReadonlyDeep } from 'type-fest'
 import { getAllContextMenus } from './context-menus'
-import type { MtaAutoUnfold as _MtaAutoUnfold } from './profiles'
 import { getDefaultDictAuths } from './auth'
-import type { ConfigType } from './config-type'
+import type { SaladConfigType } from './config-type'
 
-export type MtaAutoUnfold = _MtaAutoUnfold
+export type AppConfigMutable = SaladConfigType
+export type AppConfig = ReadonlyDeep<SaladConfigType>
 
-export type AppConfigMutable = ConfigType
-export type AppConfig = ReadonlyDeep<ConfigType>
-
-export function getDefaultConfig (): ConfigType {
+export function getDefaultConfig (): SaladConfigType {
   return {
     version: 14,
     active: true,

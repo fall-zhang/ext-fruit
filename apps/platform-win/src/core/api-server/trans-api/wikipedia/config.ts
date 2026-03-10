@@ -1,4 +1,4 @@
-import type { DictItemBase } from '@P/api-server/types/dict-base'
+import type { DictItemBase } from '@/core/api-server/types/dict-base'
 export type WikipediaConfig = DictItemBase & {
   options: {
     lang: 'auto' | 'zh' | 'zh-cn' | 'zh-tw' | 'zh-hk' | 'en' | 'ja' | 'fr' | 'de'

@@ -2,11 +2,11 @@ import { createContext, useContext, useState, type ReactNode } from 'react'
 import { createStore, useStore } from 'zustand'
 
 import type { Word } from '../types/word'
-import { getDefaultProfile, getDefaultSelectDict, type Profile } from '../app-config/profiles'
+import { getDefaultProfile, getDefaultSelectDict, type Profile } from '@/config/trans-profile'
 import { checkSupportedLangs, countWords } from '../utils/lang-check'
-import type { AllDictsConf, DictID } from '@P/api-server/types/all-dict-conf'
-import { apiMap } from '@P/api-server'
-import type { DictSearchResult } from '@P/api-server/api-common/search-type'
+import type { AllDictsConf } from '@/core/api-server/types/all-dict-conf'
+import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
+import type { DictID } from '@/core/api-server/types'
 
 type RenderDictItem = {
   readonly dictID: DictID
@@ -152,7 +152,7 @@ const createSearchStore = (initProps?: {
           renderedDicts: dictList,
         }
       })
-      console.log('⚡️ line:63 ~ word: ', word.text)
+      console.log('⚡️ line:63 ~ word: ', selectedDicts)
 
       const request = apiMap.baidu.getRequest(word.text, {
         from: 'auto',

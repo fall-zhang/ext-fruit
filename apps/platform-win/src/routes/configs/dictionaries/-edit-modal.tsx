@@ -155,7 +155,7 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
               if (optKey === 'tl' || optKey === 'tl2') {
                 const getTranslator:
                   | undefined |
-                  (() => Translator) = import(`@P/api-server/trans-api/${dictID}/engine`)
+                  (() => Translator) = import(`@/core/api-server/trans-api/${dictID}/engine`)
                     .getTranslator
 
                 const langs = getTranslator

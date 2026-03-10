@@ -1,4 +1,3 @@
-import { SaladPanel } from '.-panel-view/salad-panel'
 import { createFileRoute } from '@tanstack/react-router'
 import { Window } from '@tauri-apps/api/window'
 import { fetch } from '@tauri-apps/plugin-http'
@@ -6,7 +5,8 @@ import { useEffect, useState } from 'react'
 import { PinBtn } from './-components/pin-button'
 import { CloseBtn } from './-components/close-button'
 import { FavBtn } from './-components/fav-button'
-import type { SaladictConfig } from '@P/saladict-core/main'
+import type { SaladConfigType } from '@/config/app-config/config-type'
+import { SaladPanel } from './-panel-view/salad-panel/salad-panel'
 /**
  * 生词本
  */
@@ -19,7 +19,7 @@ function RouteComponent () {
   const [isAlwaysOnTop, setAlwaysOnTop] = useState(false)
   const [isInNotebook, setIsInNotebook] = useState(false)
   const [curSearchText, setCurSearchText] = useState('')
-  const [saladictConf] = useState<SaladictConfig>()
+  const [saladictConf] = useState<SaladConfigType>()
   useEffect(() => {
     async function getInitInfo () {
       const isAlwaysOnTop = await appWindow.isAlwaysOnTop()

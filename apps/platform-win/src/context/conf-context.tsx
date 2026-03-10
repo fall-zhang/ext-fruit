@@ -1,22 +1,22 @@
 import type { ReactNode } from 'react'
 import { createContext, useContext } from 'react'
-import { getDefaultProfile, type Profile } from '../app-config/profiles'
-import { getDefaultConfig, type AppConfig } from '../app-config'
+import { getDefaultProfile, type Profile } from '@/config/trans-profile'
+import { getDefaultConfig, type AppConfig } from '@/config/app-config'
 
 interface ConfContextType {
-  config:AppConfig
-  profile:Profile
+  config: AppConfig
+  profile: Profile
   // Date management
   // appDisable: boolean;
-  updateConfig(config:AppConfig):void
-  updateProfile(profile:Profile):void
+  updateConfig(config: AppConfig): void
+  updateProfile(profile: Profile): void
   // // Etiquette visibility management
   // visibleColors: string[];
   // toggleColorVisibility: (color: string) => void;
   // isColorVisible: (color: string | undefined) => boolean;
 }
 
-const ConfContext = createContext<ConfContextType >({
+const ConfContext = createContext<ConfContextType>({
   config: getDefaultConfig(),
   profile: getDefaultProfile(),
   updateConfig: function (config: AppConfig): void {
@@ -45,7 +45,7 @@ type ConfProviderProps = ConfContextType & {
 
 export function ConfProvider ({ children, config, profile, updateConfig, updateProfile }: ConfProviderProps) {
   // Initialize visibleColors based on the isActive property in etiquettes
-  const value:ConfContextType = {
+  const value: ConfContextType = {
     config,
     profile,
     updateConfig: function (config: AppConfig): void {

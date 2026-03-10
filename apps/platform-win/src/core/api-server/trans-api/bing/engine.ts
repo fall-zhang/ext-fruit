@@ -1,4 +1,4 @@
-import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
+import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 import type {
   SearchFunction,
   DictSearchResult
@@ -11,7 +11,7 @@ import {
   getChsToChz
 } from '../../utils'
 import type { DictConfigs } from '@/config/app-config'
-import type { GetSrcPageFunction } from '@P/api-server/api-common/fetch-type'
+import type { GetSrcPageFunction } from '@/core/api-server/api-common/fetch-type'
 import type { BingResult, BingResultLex, BingResultMachine, BingResultRelated } from './type'
 
 export const getSrcPage: GetSrcPageFunction = text =>

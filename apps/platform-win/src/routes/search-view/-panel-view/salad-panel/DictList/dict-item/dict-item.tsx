@@ -18,7 +18,7 @@ import { DictItemBody } from './dict-item-body'
 import { timer } from '@/utils/promise-more'
 import { isTagName } from '@/utils/dom'
 import { useOptContext } from '@/context/opt-context'
-import type { DictID } from '@P/api-server/types/all-dict-conf'
+import type { DictID } from '@/core/api-server/types/all-dict-conf'
 import './dict-item.scss'
 const DICT_ITEM_HEAD_HEIGHT = 20
 

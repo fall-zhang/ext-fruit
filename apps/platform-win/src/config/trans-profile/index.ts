@@ -1,7 +1,7 @@
 // 每个翻译对应的配置信息
 import { v4 as uuid } from 'uuid'
-import type { AllDictsConf } from '@P/api-server/types/all-dict-conf'
-import { getAllDicts } from '@P/api-server/types/all-dict-conf'
+import type { AllDictsConf } from '@/core/api-server/types/all-dict-conf'
+import { getAllDicts } from '@/core/api-server/types/all-dict-conf'
 
 export type MtaAutoUnfold = '' | 'once' | 'always' | 'popup' | 'hide'
 

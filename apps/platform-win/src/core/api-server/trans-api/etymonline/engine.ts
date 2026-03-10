@@ -1,4 +1,4 @@
-import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
+import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 import type {
   HTMLString,
   SearchFunction,
@@ -11,7 +11,7 @@ import {
   handleNoResult,
   handleNetWorkError
 } from '../../utils'
-import type { AllDictsConf } from '@P/api-server/types/all-dict-conf'
+import type { AllDictsConf } from '@/core/api-server/types/all-dict-conf'
 
 const HOST = 'https://www.etymonline.com'
 

@@ -8,7 +8,6 @@
 - [x] 使用 css 变量替代 scss 的变量
 - [x] 使用 @tanstack/react-router 实现路由
 - [x] 搜索 useSelector，用 zustand 的 useDictStore 替换
-- [ ] 已经有轻量本地安装包了，还需要浏览器扩展吗？
 - [ ] 翻译已经走通了，现在可以添加对应词典的视图了
 - [ ] 使应用可以打包
 - [ ] 应用类型正确

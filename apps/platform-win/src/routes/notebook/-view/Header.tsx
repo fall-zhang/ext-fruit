@@ -8,9 +8,9 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger
-} from '@salad/ui/components/navigation-menu'
+} from '@salad/ui/ui-wrapped/navigation-menu'
 import { DownloadIcon } from 'lucide-react'
-import type { DBArea } from '@/core/database/types'
+import type { DBArea } from '@/core/index-db/types'
 import { useConfirmContext } from '@/context/confirm-context'
 export interface WordPageProps {
   t: TFunction

@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { StrElm } from '../../StrElm'
 import Speaker from '../../Speaker'
 import type { ViewProps } from '../type'
-// import type { OaldictResult } from '@P/api-server/trans-api/oaldict/engine'
+// import type { OaldictResult } from '@/core/api-server/trans-api/oaldict/engine'
 
 export const DictOal: FC<ViewProps<OaldictResult>> = ({ result }) => (
   <div>

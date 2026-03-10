@@ -1,10 +1,10 @@
 
-import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
+import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 
 import type { EudicResult, EudicResultItem } from './type'
-import type { GetSrcPageFunction } from '@P/api-server/api-common/atom-type'
-import type { DictSearchResult, SearchFunction } from '@P/api-server/api-common/search-type'
-import { handleNetWorkError, getText, handleNoResult } from '@P/api-server/utils'
+import type { GetSrcPageFunction } from '@/core/api-server/api-common/atom-type'
+import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
+import { handleNetWorkError, getText, handleNoResult } from '@/core/api-server/utils'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://dict.eudic.net/dicts/en/${text}`

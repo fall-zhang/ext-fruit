@@ -1,4 +1,4 @@
-import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
+import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 import type {
   SearchFunction,
   GetSrcPageFunction,

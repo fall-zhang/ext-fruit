@@ -1,6 +1,6 @@
 import type { FC } from 'react'
-import type { AhdictResult } from '@P/api-server/trans-api/ahdict/engine'
-import type { ViewProps } from '@P/api-server/types'
+import type { AhdictResult } from '@/core/api-server/trans-api/ahdict/engine'
+import type { ViewProps } from '@/core/api-server/types'
 import { Speaker } from '../../Speaker'
 import { StrElm } from '../../StrElm'
 

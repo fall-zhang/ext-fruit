@@ -7,7 +7,7 @@ import {
 import axios from 'axios'
 import type { Profile } from '@/config/app-config/profiles'
 import type { GuoYuResult } from './type'
-import type { SearchFunction, DictSearchResult } from '@P/api-server/api-common/search-type'
+import type { SearchFunction, DictSearchResult } from '@/core/api-server/api-common/search-type'
 
 export const search: SearchFunction<GuoYuResult> = (
   text,

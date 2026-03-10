@@ -1,6 +1,6 @@
-import { getTTS } from '@P/api-server/trans-api/google/engine'
+import { getTTS } from '@/core/api-server/trans-api/google/engine'
 import type { ViewProps } from '../type'
-import type { DictID } from '@P/api-server/types/all-dict-conf'
+import type { DictID } from '@/core/api-server/types/all-dict-conf'
 import type { FC } from 'react'
 import React, {
   useState,
@@ -11,7 +11,7 @@ import React, {
 import { Trans, useTranslation } from 'react-i18next'
 import { Speaker } from '../../Speaker'
 import type { Language } from '@P/open-trans/languages'
-import type { MachineTranslateResult } from '@P/api-server/api-common/result-handle'
+import type { MachineTranslateResult } from '@/core/api-server/api-common/result-handle'
 
 const rtlLangs = new Set([
   'ar', // Arabic

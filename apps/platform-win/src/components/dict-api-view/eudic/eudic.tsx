@@ -1,6 +1,6 @@
 import type { FC } from 'react'
 import Speaker from '@/components/Speaker'
-import type { EudicResult } from '@P/api-server/trans-api/eudic/type'
+import type { EudicResult } from '@/core/api-server/trans-api/eudic/type'
 import type { ViewProps } from '../type'
 
 export const DictEudic: FC<ViewProps<EudicResult>> = ({ result }) => (

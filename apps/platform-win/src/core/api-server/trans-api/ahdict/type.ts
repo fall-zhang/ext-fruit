@@ -1,4 +1,4 @@
-import type { HTMLString } from '@P/api-server/types'
+import type { HTMLString } from '@/core/api-server/types'
 
 export interface Idiom {
   title?: string

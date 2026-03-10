@@ -1,13 +1,10 @@
-import { searchStart } from './search-start'
 import { newSelection } from './new-selection'
 import type { StateCreator } from 'zustand'
-import type { AppConfig, DictID } from '../../app-config'
-import type { ProfileID } from '../profile/types'
-import type { Profile } from '../../app-config/profiles'
-import { AudioManager } from '../../background/audio-manager'
-import { newWord } from '../../dict-utils/new-word'
+import type { AppConfig } from '@/config/app-config'
 import type { Word } from '../../types/word'
 import type { GlobalState } from '../global-state'
+import type { ProfileID, Profile } from '@/config/trans-profile'
+import type { DictID } from '@/core/api-server/types'
 
 export type DictActionSlice = {
   NEW_CONFIG(payload: AppConfig): void

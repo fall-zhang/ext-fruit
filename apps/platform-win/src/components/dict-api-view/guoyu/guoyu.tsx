@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import React from 'react'
 import Speaker from '@/components/Speaker'
 import type { ViewProps } from '@/components/dictionaries/helpers'
-import type { GuoYuResult } from '@P/api-server/trans-api/guoyu/engine'
+import type { GuoYuResult } from '@/core/api-server/trans-api/guoyu/engine'
 
 export const DictGuoyu: FC<ViewProps<GuoYuResult>> = ({ result }) => (
   <>

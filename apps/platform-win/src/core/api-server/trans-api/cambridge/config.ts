@@ -1,4 +1,4 @@
-import type { DictItemBase, DictItemOption } from '@P/api-server/types/dict-base'
+import type { DictItemBase, DictItemOption } from '@/core/api-server/types/dict-base'
 
 export type CambridgeConfig = DictItemBase & {
   options: {

@@ -6,8 +6,8 @@ import md5 from 'md5'
 import { TranslateError } from '@P/open-trans/translator'
 import type { BaiduTranslateError, BaiduTranslateResult } from './type'
 import type { AuthBody } from './auth'
-import { machineResult, type MachineTranslateResult } from '@P/api-server/api-common/result-handle'
-import type { HandleFetchResponse, GetSrcPageFunction, GetFetchRequest } from '@P/api-server/api-common/atom-type'
+import { machineResult, type MachineTranslateResult } from '@/core/api-server/api-common/result-handle'
+import type { HandleFetchResponse, GetSrcPageFunction, GetFetchRequest } from '@/core/api-server/api-common/atom-type'
 
 
 export const getRequest: GetFetchRequest<AuthBody> = (text, {

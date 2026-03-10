@@ -11,8 +11,8 @@ import {
   removeChild
 } from '../helpers'
 import { getStaticSpeaker } from '@/components/Speaker'
-import type { DictSearchResult, SearchFunction } from '@P/api-server/api-common/search-type'
-import { fetchPlainText } from '@P/api-server/utils/fetch-dom'
+import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
+import { fetchPlainText } from '@/core/api-server/utils/fetch-dom'
 
 export interface GoogleDictResult {
   entry: HTMLString

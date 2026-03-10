@@ -1,8 +1,8 @@
-import type { GetSrcPageFunction } from '@P/api-server/api-common/atom-type'
-import type { DictSearchResult, SearchFunction } from '@P/api-server/api-common/search-type'
-import type { HTMLString } from '@P/api-server/types'
-import { getChsToChz, handleNetWorkError, getText, getFullLink, removeChild, getInnerHTML, handleNoResult, externalLink } from '@P/api-server/utils'
-import { fetchDirtyDOM } from '@P/api-server/utils/fetch-dom'
+import type { GetSrcPageFunction } from '@/core/api-server/api-common/atom-type'
+import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
+import type { HTMLString } from '@/core/api-server/types'
+import { getChsToChz, handleNetWorkError, getText, getFullLink, removeChild, getInnerHTML, handleNoResult, externalLink } from '@/core/api-server/utils'
+import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 import type { getStaticSpeaker } from '@/components/Speaker'
 
 export const getSrcPage: GetSrcPageFunction = async (text, localLang, profile) => {
