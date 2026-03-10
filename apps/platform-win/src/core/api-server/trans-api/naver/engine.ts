@@ -1,11 +1,10 @@
+
+import { isContainJapanese, isContainKorean } from '@/utils/lang-check'
+import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
 import {
   handleNoResult,
-  handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult
+  handleNetWorkError
 } from '../../utils'
-import { isContainJapanese, isContainKorean } from '@/_helpers/lang-check'
 import axios from 'axios'
 
 export const getSrcPage: GetSrcPageFunction = text => {
@@ -32,14 +31,12 @@ type NaverSearchResult = DictSearchResult<NaverResult>
 
 export const search: SearchFunction<NaverResult, NaverPayload> = (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
-  const { options } = profile.dicts.all.naver
+  const { options } = opt.profile.naver
 
   if (
-    payload.lang === 'ja' ||
+    opt.payload.lang === 'ja' ||
     options.hanAsJa ||
     isContainJapanese(text) ||
     (options.korAsJa && isContainKorean(text))
@@ -50,7 +47,7 @@ export const search: SearchFunction<NaverResult, NaverPayload> = (
   return zhDict(text)
 }
 
-async function zhDict(text: string): Promise<NaverSearchResult> {
+async function zhDict (text: string): Promise<NaverSearchResult> {
   const { data } = await axios
     .get(
       `https://zh.dict.naver.com/api3/zhko/search?query=${encodeURIComponent(
@@ -68,12 +65,12 @@ async function zhDict(text: string): Promise<NaverSearchResult> {
   return {
     result: {
       lang: 'zh',
-      entry: ListMap
-    }
+      entry: ListMap,
+    },
   }
 }
 
-async function jaDict(text: string): Promise<NaverSearchResult> {
+async function jaDict (text: string): Promise<NaverSearchResult> {
   const { data } = await axios
     .get(
       `https://ja.dict.naver.com/api3/jako/search?query=${encodeURIComponent(
@@ -91,7 +88,7 @@ async function jaDict(text: string): Promise<NaverSearchResult> {
   return {
     result: {
       lang: 'ja',
-      entry: ListMap
-    }
+      entry: ListMap,
+    },
   }
 }

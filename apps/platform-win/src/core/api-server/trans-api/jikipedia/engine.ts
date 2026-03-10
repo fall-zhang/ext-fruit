@@ -1,15 +1,14 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+
+import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
 import {
-  HTMLString,
   getText,
   getInnerHTML,
   handleNoResult,
   handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult,
   getFullLink
 } from '../../utils'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://jikipedia.com/search?phrase=${encodeURIComponent(text)}`
@@ -34,11 +33,9 @@ type JikipediaSearchResult = DictSearchResult<JikipediaResult>
 
 export const search: SearchFunction<JikipediaResult> = (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
-  const options = profile.dicts.all.jikipedia.options
+  const options = opt.profile.jikipedia.options
 
   return fetchDirtyDOM(
     `https://jikipedia.com/search?phrase=${encodeURIComponent(text)}`
@@ -47,7 +44,7 @@ export const search: SearchFunction<JikipediaResult> = (
     .then(doc => handleDOM(doc, options))
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document,
   { resultCount }: { resultCount: number }
 ): JikipediaSearchResult | Promise<JikipediaSearchResult> {
@@ -68,7 +65,7 @@ function handleDOM(
     const item: JikipediaResultItem = {
       title: getText($card, '.title'),
       content: getInnerHTML(HOST, $card, '.content'),
-      likes: Number(getText($card, '.like-count')) || 0
+      likes: Number(getText($card, '.like-count')) || 0,
     }
 
     if (!item.content) {
@@ -84,7 +81,7 @@ function handleDOM(
     if ($author) {
       item.author = {
         name: getText($author),
-        url: getFullLink(HOST, $author, 'href')
+        url: getFullLink(HOST, $author, 'href'),
       }
     }
 

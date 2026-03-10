@@ -1,16 +1,15 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+
+import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
 import {
-  HTMLString,
   getInnerHTML,
   handleNoResult,
   handleNetWorkError,
   getOuterHTML,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult,
   getText,
   removeChild
 } from '../../utils'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.weblio.jp/content/${text}`
@@ -25,11 +24,8 @@ export type WeblioResult = Array<{
 
 type WeblioSearchResult = DictSearchResult<WeblioResult>
 
-export const search: SearchFunction<WeblioResult> = (
-  text,
-  config,
-  profile,
-  payload
+export const search: SearchFunction<WeblioResult> = async (
+  text
 ) => {
   return fetchDirtyDOM(
     'https://www.weblio.jp/content/' +
@@ -39,7 +35,7 @@ export const search: SearchFunction<WeblioResult> = (
     .then(handleDOM)
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document
 ): WeblioSearchResult | Promise<WeblioSearchResult> {
   const result: WeblioResult = []
@@ -52,7 +48,7 @@ function handleDOM(
       const $title = $titles[i]
       if (!$title) {
         if (process.env.DEBUG) {
-          console.error(`Dict Weblio: missing title`)
+          console.error('Dict Weblio: missing title')
         }
         return
       }
@@ -64,7 +60,7 @@ function handleDOM(
 
       result.push({
         title: getOuterHTML(HOST, $title, { config: {} }),
-        def: getInnerHTML(HOST, $dict, { config: {} })
+        def: getInnerHTML(HOST, $dict, { config: {} }),
       })
     })
 
@@ -75,7 +71,7 @@ function handleDOM(
         removeChild($card, '.pbarT')
         result.push({
           title,
-          def: getInnerHTML(HOST, $card, { config: {} })
+          def: getInnerHTML(HOST, $card, { config: {} }),
         })
       }
     })

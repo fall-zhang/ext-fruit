@@ -1,29 +1,27 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
 import {
-  HTMLString,
   getText,
   getInnerHTML,
   handleNoResult,
   handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  removeChildren,
-  DictSearchResult
+  removeChildren
 } from '../../utils'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
 export type JukuuLang = 'engjp' | 'zhjp' | 'zheng'
 
-function getUrl(text: string, lang: JukuuLang) {
-  text = encodeURIComponent(text.replace(/\s+/g, '+'))
+function getUrl (text: string, lang: JukuuLang) {
+  const newText = encodeURIComponent(text.replace(/\s+/g, '+'))
 
   switch (lang) {
     case 'engjp':
-      return 'http://www.jukuu.com/jsearch.php?q=' + text
+      return 'http://www.jukuu.com/jsearch.php?q=' + newText
     case 'zhjp':
-      return 'http://www.jukuu.com/jcsearch.php?q=' + text
+      return 'http://www.jukuu.com/jcsearch.php?q=' + newText
     // case 'zheng':
     default:
-      return 'http://www.jukuu.com/search.php?q=' + text
+      return 'http://www.jukuu.com/search.php?q=' + newText
   }
 }
 
@@ -59,11 +57,11 @@ export const search: SearchFunction<JukuuResult, JukuuPayload> = (
     .catch(handleNetWorkError)
     .then(handleDOM)
     .then(sens =>
-      sens.length > 0 ? { result: { lang, sens } } : handleNoResult()
+      (sens.length > 0 ? { result: { lang, sens } } : handleNoResult())
     )
 }
 
-function handleDOM(doc: Document): JukuuTransItem[] {
+function handleDOM (doc: Document): JukuuTransItem[] {
   return [...doc.querySelectorAll('tr.e')]
     .map($e => {
       const $trans = $e.lastElementChild
@@ -85,7 +83,7 @@ function handleDOM(doc: Document): JukuuTransItem[] {
         src:
           $src && $src.classList.contains('s')
             ? getText($src).replace(/^[\s-]*/, '')
-            : ''
+            : '',
       }
     })
     .filter((item): item is JukuuTransItem => Boolean(item && item.trans))

@@ -1,14 +1,13 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+
+import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
+import type { AllDictsConf } from '../../types/all-dict-conf'
 import {
-  HTMLString,
   getInnerHTML,
   handleNoResult,
-  handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult
+  handleNetWorkError
 } from '../../utils'
-import { AllDictsConf } from '@/config/app-config'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `http://www.learnersdictionary.com/definition/${text
@@ -44,19 +43,17 @@ export interface WebsterLearnerResultRelated {
 }
 
 export type WebsterLearnerResult =
-  | WebsterLearnerResultLex
-  | WebsterLearnerResultRelated
+  | WebsterLearnerResultLex |
+  WebsterLearnerResultRelated
 
 type WebsterLearnerSearchResult = DictSearchResult<WebsterLearnerResult>
 type WebsterLearnerSearchResultLex = DictSearchResult<WebsterLearnerResultLex>
 
 export const search: SearchFunction<WebsterLearnerResult> = (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
-  const options = profile.dicts.all.websterlearner.options
+  const options = opt.profile.websterlearner.options
 
   return fetchDirtyDOM(
     'http://www.learnersdictionary.com/definition/' +
@@ -66,7 +63,7 @@ export const search: SearchFunction<WebsterLearnerResult> = (
     .then(doc => checkResult(doc, options))
 }
 
-function checkResult(
+function checkResult (
   doc: Document,
   options: AllDictsConf['websterlearner']['options']
 ): WebsterLearnerSearchResult | Promise<WebsterLearnerSearchResult> {
@@ -79,14 +76,14 @@ function checkResult(
     return {
       result: {
         type: 'related',
-        list: getInnerHTML(HOST, $alternative)
-      }
+        list: getInnerHTML(HOST, $alternative),
+      },
     }
   }
   return handleNoResult()
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document,
   options: AllDictsConf['websterlearner']['options']
 ): WebsterLearnerSearchResultLex | Promise<WebsterLearnerSearchResultLex> {
@@ -94,13 +91,13 @@ function handleDOM(
 
   const result: WebsterLearnerResultLex = {
     type: 'lex',
-    items: []
+    items: [],
   }
   const audio: { us?: string } = {}
 
   doc.querySelectorAll('.entry').forEach($entry => {
     const entry: WebsterLearnerResultItem = {
-      title: ''
+      title: '',
     }
 
     const $headword = $entry.querySelector('.hw_d')

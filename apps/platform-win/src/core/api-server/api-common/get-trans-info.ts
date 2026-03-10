@@ -16,7 +16,7 @@ type SelOptionType = {
     tl2: 'default' | Language
     keepLF: 'none' | 'all'
   }
-  optionAvailable: {
+  optionalVal: {
     tl: ReadonlyArray<'default' | Language>
     tl2: ReadonlyArray<'default' | Language>
   }
@@ -59,7 +59,7 @@ export async function getMTArgs (
   if (opt.to) {
     tl = opt.to
   } else if (opt.dictOption.tl === 'default') {
-    if (opt.optionAvailable.tl.includes(opt.localeLang)) {
+    if (opt.optionalVal.tl.includes(opt.localeLang)) {
       tl = opt.localeLang
     }
   } else {
@@ -67,7 +67,7 @@ export async function getMTArgs (
   }
 
   if (!tl) {
-    tl = opt.optionAvailable.tl.find((lang): lang is Language => lang !== 'default') || 'en'
+    tl = opt.optionalVal.tl.find((lang): lang is Language => lang !== 'default') || 'en'
   }
 
   if (sl === tl) {
@@ -79,7 +79,7 @@ export async function getMTArgs (
           tl = 'en'
         } else {
           tl =
-            opt.optionAvailable.tl.find(
+            opt.optionalVal.tl.find(
               (lang): lang is Language => lang !== 'default' && lang !== tl
             ) || 'en'
         }

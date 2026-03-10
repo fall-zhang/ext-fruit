@@ -55,7 +55,7 @@ export type GetSrcPageFunction = {
   // config 当前配置
   (
     text: string,
-    localLangCode: 'zh-CN' | 'zh-TW' | 'en',
-    profile: AllDictsConf
+    localLangCode?: 'zh-CN' | 'zh-TW' | 'en',
+    profile?: AllDictsConf
   ): string | Promise<string>
 }

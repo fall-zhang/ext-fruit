@@ -1,9 +1,10 @@
-import { SearchFunction, GetSrcPageFunction, getChsToChz } from '../../utils'
-import { moedictSearch, GuoYuResult } from '../guoyu/engine'
+import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
+import { getChsToChz } from '../../utils'
+import { moedictSearch } from '../guoyu/engine'
+import type { GuoYuResult } from '../guoyu/type'
 
 export const getSrcPage: GetSrcPageFunction = async text => {
-  const chsToChz = await getChsToChz()
-  return `https://www.moedict.tw/~${chsToChz(text)}`
+  return 'https://www.moedict.tw/~'
 }
 
 export type LiangAnResult = GuoYuResult
@@ -11,8 +12,7 @@ export type LiangAnResult = GuoYuResult
 export const search: SearchFunction<LiangAnResult> = (
   text,
   config,
-  profile,
-  payload
+  profile
 ) => {
   return moedictSearch<LiangAnResult>(
     'c',

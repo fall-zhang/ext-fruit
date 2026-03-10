@@ -1,16 +1,11 @@
-import type { SearchFunction, GetSrcPageFunction } from '../../utils'
 import memoizeOne from 'memoize-one'
-import { Tencent } from '@salad/trans/service-tencent'
-import type {
-  MachineTranslateResult,
-  MachineTranslatePayload
-} from '@/components/MachineTrans/engine'
-import {
-  getMTArgs,
-  machineResult
-} from '@/components/MachineTrans/engine'
+import { Tencent } from '@salad/trans/service-tencent/index'
+
 import { getTranslator as getBaiduTranslator } from '../baidu/engine'
 import type { TencentLanguage } from './config'
+import { type MachineTranslatePayload, getMTArgs } from '../../api-common/get-trans-info'
+import type { MachineTranslateResult, machineResult } from '../../api-common/result-handle'
+import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 
 export const getTranslator = memoizeOne(
   () =>
@@ -26,32 +21,36 @@ export const getTranslator = memoizeOne(
 )
 
 export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
-  const lang =
-    profile.dicts.all.tencent.options.tl === 'default'
-      ? config.langCode === 'zh-CN'
-        ? 'zh-CHS'
-        : config.langCode === 'zh-TW'
-          ? 'zh-CHT'
-          : 'en'
-      : profile.dicts.all.tencent.options.tl
+  let lang
+  if (profile.tencent.options.tl === 'default') {
+    if (config.langCode === 'zh-CN') {
+      lang = 'zh-CHS'
+    } else if (config.langCode === 'zh-TW') {
+      lang = 'zh-CHT'
+    } else {
+      lang = 'en'
+    }
+  } else {
+    lang = profile.tencent.options.tl
+  }
 
   return `https://fanyi.qq.com/#auto/${lang}/${text}`
 }
 
-export type TencentResult = MachineTranslateResult<'tencent'>
+export type TencentResult = MachineTranslateResult
 
 export const search: SearchFunction<
   TencentResult,
   MachineTranslatePayload<TencentLanguage>
-> = async (rawText, config, profile, payload) => {
+> = async (rawText, opt) => {
   const translator = getTranslator()
 
   const { sl, tl, text } = await getMTArgs(
     translator,
     rawText,
-    profile.dicts.all.tencent,
-    config,
-    payload
+    opt.profile.tencent,
+    opt.config,
+    opt.payload
   )
 
   const secretId = config.dictAuth.tencent.secretId
@@ -97,7 +96,7 @@ export const search: SearchFunction<
           id: 'tencent',
           sl: result.from,
           tl: result.to,
-          slInitial: profile.dicts.all.tencent.options.slInitial,
+          slInitial: profile.tencent.options.slInitial,
           searchText: result.origin,
           trans: result.trans,
         },

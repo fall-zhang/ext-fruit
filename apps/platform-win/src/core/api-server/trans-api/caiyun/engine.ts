@@ -1,16 +1,16 @@
-import type { SearchFunction, GetSrcPageFunction } from '../types'
 import memoizeOne from 'memoize-one'
-import { Caiyun } from '@salad/trans/service-caiyun'
-import type { TranslateResult } from '@salad/trans/translator'
+import { Caiyun } from '@salad/trans/service-caiyun/index'
+import type { TranslateResult } from '@salad/trans/translator/index'
 
 import { getTranslator as getBaiduTranslator } from '../baidu/engine'
 import type { CaiyunLanguage } from './config'
-import { machineResult, type MachineTranslatePayload, type MachineTranslateResult } from '@/components/MachineTrans/engine'
+import { getMTArgs, type MachineTranslatePayload } from '../../api-common/get-trans-info'
+import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
+import { machineResult, type MachineTranslateResult } from '../../api-common/result-handle'
 
 export const getTranslator = memoizeOne(
   () =>
     new Caiyun({
-      env: 'ext',
       config: process.env.CAIYUN_TOKEN
         ? {
           token: process.env.CAIYUN_TOKEN,
@@ -23,21 +23,25 @@ export const getSrcPage: GetSrcPageFunction = () => {
   return 'https://fanyi.caiyunapp.com/'
 }
 
-export type CaiyunResult = MachineTranslateResult<'caiyun'>
+export type CaiyunResult = MachineTranslateResult
 
 export const search: SearchFunction<
   CaiyunResult,
   MachineTranslatePayload<CaiyunLanguage>
-> = async (rawText, config, profile, payload) => {
+> = async (rawText, opt) => {
   const translator = getTranslator()
   const langcodes = translator.getSupportLanguages()
 
   let { sl, tl, text } = await getMTArgs(
     translator,
     rawText,
-    profile.dicts.all.caiyun,
-    config,
-    payload
+    {
+      from: opt.payload.sl,
+      to: opt.payload.tl,
+      dictOption: opt.profile.caiyun.options,
+      optionalVal: opt.profile.caiyun.optionalVal,
+      localeLang: opt.config.langCode,
+    }
   )
 
   const baiduTranslator = getBaiduTranslator()
@@ -50,7 +54,9 @@ export const search: SearchFunction<
     if (langcodes.includes(baiduResult.from)) {
       sl = baiduResult.from
     }
-  } catch (e) {}
+  } catch (e) {
+    console.warn('⚡️ line:55 ~ e: ', e)
+  }
 
   const caiYunToken = config.dictAuth.caiyun.token
   const caiYunConfig = caiYunToken ? { token: caiYunToken } : undefined

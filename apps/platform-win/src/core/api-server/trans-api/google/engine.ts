@@ -1,19 +1,13 @@
 import memoizeOne from 'memoize-one'
-import type {
-  MachineTranslateResult,
-  MachineTranslatePayload
-} from '@/components/MachineTrans/engine'
-import {
-  getMTArgs,
-  machineResult
-} from '@/components/MachineTrans/engine'
+
 import type { GoogleLanguage } from './config'
 import { Google } from '@P/open-trans/service-google'
 import type { Language } from '@P/open-trans/languages'
-import type { GetSrcPageFunction } from '@/core/api-server/api-common/atom-type'
-import type { SearchFunction } from '@/core/api-server/api-common/search-type'
+import type { GetSrcPageFunction, SearchFunction } from '@/core/api-server/api-common/search-type'
+import { type MachineTranslatePayload, getMTArgs } from '../../api-common/get-trans-info'
+import type { MachineTranslateResult, machineResult } from '../../api-common/result-handle'
 
-export const getTranslator = memoizeOne(() => new Google({ env: 'ext' }))
+export const getTranslator = memoizeOne(() => new Google())
 
 export const getSrcPage: GetSrcPageFunction = (text, langCode, profile) => {
   const domain = 'com'
@@ -25,13 +19,13 @@ export const getSrcPage: GetSrcPageFunction = (text, langCode, profile) => {
   return `https://translate.google.${domain}/#auto/${lang}/${text}`
 }
 
-export type GoogleResult = MachineTranslateResult<'google'>
+export type GoogleResult = MachineTranslateResult
 
 export const search: SearchFunction<
   GoogleResult,
   MachineTranslatePayload<GoogleLanguage>
-> = async (rawText, config, profile, payload) => {
-  const options = profile.dicts.all.google.options
+> = async (rawText, opt) => {
+  const options = opt.profile.google.options
 
   const translator = getTranslator()
 

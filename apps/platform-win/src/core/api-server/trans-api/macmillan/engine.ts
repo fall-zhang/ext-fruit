@@ -1,24 +1,22 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+
+import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
+import type { AllDictsConf } from '../../types/all-dict-conf'
 import {
-  HTMLString,
   getInnerHTML,
   handleNoResult,
   handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
   externalLink,
-  DictSearchResult,
   removeChildren,
   getText,
   removeChild,
   getFullLink,
   getOuterHTML
 } from '../../utils'
-import { AllDictsConf } from '@/config/app-config'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
-export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
-  const lang =
-    profile.dicts.all.macmillan.options.locale === 'us' ? 'american' : 'british'
+export const getSrcPage: GetSrcPageFunction = (text, localLang, profile) => {
+  const lang = profile?.macmillan.options.locale === 'us' ? 'american' : 'british'
   return (
     `http://www.macmillandictionary.com/dictionary/${lang}/` +
     encodeURIComponent(text.toLocaleLowerCase().replace(/[^A-Za-z0-9]+/g, '-'))
@@ -63,20 +61,18 @@ export interface MacmillanPayload {
 
 export const search: SearchFunction<MacmillanResult, MacmillanPayload> = async (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
-  const options = profile.dicts.all.macmillan.options
+  const options = opt.profile.macmillan.options
 
   return fetchMacmillanDom(
-    payload.href || (await getSrcPage(text, config, profile))
+    payload.href || (await getSrcPage(text, opt.config.langCode, opt.profile))
   )
     .catch(handleNetWorkError)
     .then(doc => checkResult(doc, options))
 }
 
-async function checkResult(
+async function checkResult (
   doc: Document,
   options: AllDictsConf['macmillan']['options']
 ): Promise<MacmillanSearchResult> {
@@ -84,24 +80,24 @@ async function checkResult(
     return handleDOM(doc)
   } else if (options.related) {
     const alternatives = [
-      ...doc.querySelectorAll<HTMLAnchorElement>('.display-list li a')
+      ...doc.querySelectorAll<HTMLAnchorElement>('.display-list li a'),
     ].map($a => ({
       title: getText($a),
-      href: getFullLink(HOST, $a, 'href')
+      href: getFullLink(HOST, $a, 'href'),
     }))
     if (alternatives.length > 0) {
       return {
         result: {
           type: 'related',
-          list: alternatives
-        }
+          list: alternatives,
+        },
       }
     }
   }
   return handleNoResult()
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document
 ): MacmillanSearchResult | Promise<MacmillanSearchResult> {
   const $entry = doc.querySelector('#entryContent .left-content')
@@ -114,7 +110,7 @@ function handleDOM(
     title: getText($entry, '.big-title .BASE'),
     senses: '',
     toggleables: [],
-    relatedEntries: []
+    relatedEntries: [],
   }
 
   if (!result.title) {
@@ -152,7 +148,7 @@ function handleDOM(
 
       result.relatedEntries.push({
         title: getText($a),
-        href: getFullLink(HOST, $a, 'href')
+        href: getFullLink(HOST, $a, 'href'),
       })
     })
 
@@ -169,7 +165,7 @@ function handleDOM(
   return { result, audio }
 }
 
-async function fetchMacmillanDom(url: string): Promise<Document> {
+async function fetchMacmillanDom (url: string): Promise<Document> {
   const doc = await fetchDirtyDOM(url)
   removeChildren(doc, '.visible-xs')
   return doc

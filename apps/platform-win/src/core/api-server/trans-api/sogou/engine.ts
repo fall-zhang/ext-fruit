@@ -1,47 +1,49 @@
-import { SearchFunction, GetSrcPageFunction } from '../../utils'
 import memoizeOne from 'memoize-one'
-import { Sogou } from '@opentranslate/sogou'
-import {
-  MachineTranslateResult,
-  MachineTranslatePayload,
-  getMTArgs,
-  machineResult
-} from '@/components/MachineTrans/engine'
-import { SogouLanguage } from './config'
+import { Sogou } from '@salad/trans/service-sogou/index'
+
+
+import type { SogouLanguage } from './config'
+import { type MachineTranslatePayload, getMTArgs } from '../../api-common/get-trans-info'
+import type { MachineTranslateResult, machineResult } from '../../api-common/result-handle'
+import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 
 export const getTranslator = memoizeOne(
   () =>
     new Sogou({
-      env: 'ext',
       config:
         process.env.SOGOU_PID && process.env.SOGOU_KEY
           ? {
-              pid: process.env.SOGOU_PID,
-              key: process.env.SOGOU_KEY
-            }
-          : undefined
+            pid: process.env.SOGOU_PID,
+            key: process.env.SOGOU_KEY,
+          }
+          : undefined,
     })
 )
 
-export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
-  const lang =
-    profile.dicts.all.sogou.options.tl === 'default'
-      ? config.langCode === 'zh-CN'
-        ? 'zh-CHS'
-        : config.langCode === 'zh-TW'
-        ? 'zh-CHT'
-        : 'en'
-      : profile.dicts.all.sogou.options.tl
+export const getSrcPage: GetSrcPageFunction = (text, langCode, profile) => {
+  let lang
+  if (profile.sogou.options.tl === 'default') {
+    if (langCode === 'zh-CN') {
+      lang = 'zh-CHS'
+    } else if (langCode === 'zh-TW') {
+      lang = 'zh-CHT'
+    } else {
+      lang = 'en'
+    }
+  } else {
+    lang = profile.sogou.options.tl
+  }
+
 
   return `https://fanyi.sogou.com/#auto/${lang}/${text}`
 }
 
-export type SogouResult = MachineTranslateResult<'sogou'>
+export type SogouResult = MachineTranslateResult
 
 export const search: SearchFunction<
   SogouResult,
   MachineTranslatePayload<SogouLanguage>
-> = async (rawText, config, profile, payload) => {
+> = async (rawText, opt) => {
   if (!config.dictAuth.sogou.pid) {
     return machineResult(
       {
@@ -52,8 +54,8 @@ export const search: SearchFunction<
           tl: 'auto',
           slInitial: 'hide',
           searchText: { paragraphs: [''] },
-          trans: { paragraphs: [''] }
-        }
+          trans: { paragraphs: [''] },
+        },
       },
       []
     )
@@ -71,7 +73,7 @@ export const search: SearchFunction<
 
   const translatorConfig = {
     pid: config.dictAuth.sogou.pid,
-    key: config.dictAuth.sogou.key
+    key: config.dictAuth.sogou.key,
   }
 
   try {
@@ -84,12 +86,12 @@ export const search: SearchFunction<
           tl: result.to,
           slInitial: profile.dicts.all.sogou.options.slInitial,
           searchText: result.origin,
-          trans: result.trans
+          trans: result.trans,
         },
         audio: {
           py: result.trans.tts,
-          us: result.trans.tts
-        }
+          us: result.trans.tts,
+        },
       },
       translator.getSupportLanguages()
     )
@@ -102,8 +104,8 @@ export const search: SearchFunction<
           tl,
           slInitial: 'hide',
           searchText: { paragraphs: [''] },
-          trans: { paragraphs: [''] }
-        }
+          trans: { paragraphs: [''] },
+        },
       },
       translator.getSupportLanguages()
     )

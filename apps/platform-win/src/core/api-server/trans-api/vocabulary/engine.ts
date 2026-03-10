@@ -1,12 +1,11 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+
+import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
 import {
   getText,
   handleNoResult,
-  handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult
+  handleNetWorkError
 } from '../../utils'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.vocabulary.com/dictionary/${text}`
@@ -20,10 +19,7 @@ export interface VocabularyResult {
 type VocabularySearchResult = DictSearchResult<VocabularyResult>
 
 export const search: SearchFunction<VocabularyResult> = (
-  text,
-  config,
-  profile,
-  payload
+  text
 ) => {
   return fetchDirtyDOM(
     'https://www.vocabulary.com/dictionary/' +
@@ -33,7 +29,7 @@ export const search: SearchFunction<VocabularyResult> = (
     .then(handleDOM)
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document
 ): VocabularySearchResult | Promise<VocabularySearchResult> {
   const short = getText(doc, '.short')

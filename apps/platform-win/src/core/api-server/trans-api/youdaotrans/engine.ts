@@ -1,11 +1,11 @@
-import type { SearchFunction, GetSrcPageFunction } from '../types'
 import memoizeOne from 'memoize-one'
-import { Youdao } from '@salad/trans/service-youdao'
+import { Youdao } from '@salad/trans/service-youdao/index'
 
 
 import type { YoudaotransLanguage } from './config'
 import { type MachineTranslatePayload, getMTArgs } from '../../api-common/get-trans-info'
 import type { MachineTranslateResult, machineResult } from '../../api-common/result-handle'
+import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 
 export const getTranslator = memoizeOne(
   () =>
@@ -24,12 +24,12 @@ export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
   return 'http://fanyi.youdao.com'
 }
 
-export type YoudaotransResult = MachineTranslateResult<'youdaotrans'>
+export type YoudaotransResult = MachineTranslateResult
 
 export const search: SearchFunction<
   YoudaotransResult,
   MachineTranslatePayload<YoudaotransLanguage>
-> = async (rawText, config, profile, payload) => {
+> = async (rawText, opt) => {
   const translator = getTranslator()
 
   const { sl, tl, text } = await getMTArgs(

@@ -1,17 +1,16 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+
 import {
   getText,
   getInnerHTML,
   handleNoResult,
-  HTMLString,
-  handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult
+  handleNetWorkError
 } from '../../utils'
-import { AllDictsConf } from '@/config/app-config'
 import axios from 'axios'
 import DOMPurify from 'dompurify'
+import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
+import type { AllDictsConf } from '../../types/all-dict-conf'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.shanbay.com/bdc/mobile/preview/word?word=${text}`
@@ -43,10 +42,9 @@ type ShanbaySearchResult = DictSearchResult<ShanbayResult>
 
 export const search: SearchFunction<ShanbayResult> = (
   text,
-  config,
-  profile
+  opt
 ) => {
-  const options = profile.dicts.all.shanbay.options
+  const options = opt.profile.shanbay.options
   return fetchDirtyDOM(
     'https://www.shanbay.com/bdc/mobile/preview/word?word=' +
       encodeURIComponent(text.replace(/\s+/g, ' '))
@@ -55,7 +53,7 @@ export const search: SearchFunction<ShanbayResult> = (
     .then(doc => checkResult(doc, options))
 }
 
-function checkResult(
+function checkResult (
   doc: Document,
   options: AllDictsConf['shanbay']['options']
 ): ShanbaySearchResult | Promise<ShanbaySearchResult> {
@@ -66,7 +64,7 @@ function checkResult(
   return handleNoResult()
 }
 
-function loadSentences(id: string) {
+function loadSentences (id: string) {
   return axios
     .get(
       `https://www.shanbay.com/api/v1/bdc/example/?vocabulary_id=${id}&type=sys`
@@ -77,7 +75,7 @@ function loadSentences(id: string) {
           (sentence: { annotation: string; translation: string }) => {
             return {
               annotation: DOMPurify.sanitize(sentence.annotation),
-              translation: DOMPurify.sanitize(sentence.translation)
+              translation: DOMPurify.sanitize(sentence.translation),
             }
           }
         )
@@ -86,7 +84,7 @@ function loadSentences(id: string) {
     })
 }
 
-async function handleDOM(
+async function handleDOM (
   doc: Document,
   options: AllDictsConf['shanbay']['options']
 ): Promise<ShanbaySearchResult> {
@@ -97,17 +95,17 @@ async function handleDOM(
     title: getText(doc, '.word-spell'),
     pattern: getText(doc, '.pattern'),
     prons: [],
-    sentences: []
+    sentences: [],
   }
 
   const audio: { uk: string; us: string } = {
     uk: 'http://media.shanbay.com/audio/uk/' + result.title + '.mp3',
-    us: 'http://media.shanbay.com/audio/us/' + result.title + '.mp3'
+    us: 'http://media.shanbay.com/audio/us/' + result.title + '.mp3',
   }
 
   result.prons.push({
     phsym: getText(doc, '.word-announace'),
-    url: audio.us
+    url: audio.us,
   })
 
   if (options.basic) {

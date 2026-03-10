@@ -1,17 +1,16 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+
+import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
+import type { AllDictsConf } from '../../types/all-dict-conf'
 import {
-  HTMLString,
   getText,
   getInnerHTML,
   handleNoResult,
   handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult,
   getFullLink
 } from '../../utils'
-import { AllDictsConf } from '@/config/app-config'
 import { getStaticSpeaker } from '@/components/Speaker'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.ldoceonline.com/dictionary/${text
@@ -87,7 +86,7 @@ export const search: SearchFunction<LongmanResult> = (
     .then(doc => handleDOM(doc, options))
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document,
   options: AllDictsConf['longman']['options']
 ): LongmanSearchResult | Promise<LongmanSearchResult> {
@@ -99,7 +98,7 @@ function handleDOM(
   return handleNoResult()
 }
 
-function handleDOMLex(
+function handleDOMLex (
   doc: Document,
   options: AllDictsConf['longman']['options']
 ): LongmanSearchResultLex | Promise<LongmanSearchResultLex> {
@@ -107,7 +106,7 @@ function handleDOMLex(
     type: 'lex',
     bussinessFirst: options.bussinessFirst,
     contemporary: [],
-    bussiness: []
+    bussiness: [],
   }
 
   const audio: { uk?: string; us?: string } = {}
@@ -153,17 +152,17 @@ function handleDOMLex(
       title: {
         HWD: '',
         HYPHENATION: '',
-        HOMNUM: ''
+        HOMNUM: '',
       },
       prons: [],
-      senses: []
+      senses: [],
     }
 
     const $topic = $entry.querySelector<HTMLAnchorElement>('a.topic')
     if ($topic) {
       entry.topic = {
         title: $topic.textContent || '',
-        href: getFullLink(HOST, $topic, 'href')
+        href: getFullLink(HOST, $topic, 'href'),
       }
     }
 
@@ -182,7 +181,7 @@ function handleDOMLex(
     if ($level) {
       const level = {
         rate: 0,
-        title: ''
+        title: '',
       }
 
       level.rate = (($level.textContent || '').match(/●/g) || []).length
@@ -195,7 +194,7 @@ function handleDOMLex(
       $head.querySelectorAll<HTMLSpanElement>('.FREQ')
     ).map($el => ({
       title: $el.title,
-      rank: $el.textContent || ''
+      rank: $el.textContent || '',
     }))
 
     entry.pos = getText($head, '.POS')
@@ -244,7 +243,7 @@ function handleDOMLex(
   return { result, audio }
 }
 
-function handleDOMRelated(
+function handleDOMRelated (
   doc: Document
 ): LongmanSearchResultRelated | Promise<LongmanSearchResultRelated> {
   const $didyoumean = doc.querySelector('.didyoumean')
@@ -252,8 +251,8 @@ function handleDOMRelated(
     return {
       result: {
         type: 'related',
-        list: getInnerHTML(HOST, $didyoumean)
-      }
+        list: getInnerHTML(HOST, $didyoumean),
+      },
     }
   }
   return handleNoResult()

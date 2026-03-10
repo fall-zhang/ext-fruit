@@ -1,21 +1,11 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
-import type {
-  SearchFunction,
-  GetSrcPageFunction,
-  HTMLString,
-  DictSearchResult
-} from '../utils'
-import {
-  handleNoResult,
-  handleNetWorkError,
-  getOuterHTML,
-  externalLink,
-  getText,
-  removeChildren
-} from '../utils'
-import { getStaticSpeakerString, getStaticSpeaker } from '@/components/Speaker'
 
-export const getSrcPage: GetSrcPageFunction = text => {
+import { getStaticSpeakerString, getStaticSpeaker } from '@/components/Speaker'
+import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
+import { handleNetWorkError, getOuterHTML, removeChildren, getText, externalLink, handleNoResult } from '../../utils'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
+
+export const getSrcPage = (text: string) => {
   return `https://ejje.weblio.jp/content/${encodeURIComponent(
     text.replace(/\s+/g, '+')
   )}`
@@ -32,11 +22,9 @@ type WeblioejjeSearchResult = DictSearchResult<WeblioejjeResult>
 
 export const search: SearchFunction<WeblioejjeResult> = (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
-  return fetchDirtyDOM(getSrcPage(text, config, profile))
+  return fetchDirtyDOM(getSrcPage(text))
     .catch(handleNetWorkError)
     .then(handleDOM)
 }

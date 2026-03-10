@@ -1,9 +1,8 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 import {
-  handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction
+  handleNetWorkError
 } from '../../utils'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.merriam-webster.com/dictionary/${text}`
@@ -48,10 +47,7 @@ export interface MerriamWebsterResultV2 {
 }
 
 export const search: SearchFunction<MerriamWebsterResultV2> = (
-  text,
-  config,
-  profile,
-  payload
+  text
 ) => {
   // const options = profile.dicts.all.merriamwebster.options
 
@@ -66,7 +62,7 @@ export const search: SearchFunction<MerriamWebsterResultV2> = (
     })
 }
 
-export function _getContentEle(doc: Document): Element {
+export function _getContentEle (doc: Document): Element {
   const content = doc.querySelector('#left-content') as HTMLElement
 
   if (!content || !content.querySelector('div[id^=dictionary-entry]')) {
@@ -75,7 +71,7 @@ export function _getContentEle(doc: Document): Element {
   return content
 }
 
-export function _getGroupsEles(content: Element): Element[] {
+export function _getGroupsEles (content: Element): Element[] {
   return new Array(
     ...content
       .querySelectorAll(
@@ -85,7 +81,7 @@ export function _getGroupsEles(content: Element): Element[] {
   )
 }
 
-export function _getSynonyms(
+export function _getSynonyms (
   content: Element
 ): Array<[string, string[]]> | undefined {
   const synonymsEle = content
@@ -95,10 +91,10 @@ export function _getSynonyms(
   if (!synonymsEle) return undefined
 
   const functions = [
-    ...synonymsEle?.querySelectorAll('.function-label').values()
+    ...synonymsEle?.querySelectorAll('.function-label').values(),
   ]
   const lists = [
-    ...synonymsEle?.querySelectorAll('ul.synonyms-antonyms-grid-list')?.values()
+    ...synonymsEle?.querySelectorAll('ul.synonyms-antonyms-grid-list')?.values(),
   ]
 
   if (!lists) return undefined
@@ -112,7 +108,7 @@ export function _getSynonyms(
   return functions.map((v, i) => [v.textContent, [...words[i]]]) as any
 }
 
-export function _getEtymology(
+export function _getEtymology (
   content: Element
 ): Array<[string, string]> | undefined {
   const eles = content
@@ -134,14 +130,14 @@ export function _getEtymology(
     : paragraphs.map(v => ['', v])) as any
 }
 
-export function _getTitle(group: Element): string | undefined {
+export function _getTitle (group: Element): string | undefined {
   return (
     group.querySelector('div.entry-header-content')?.querySelector('.hword')
       ?.textContent || undefined
   )
 }
 
-export function _getPartOfSpeech(group: Element): string | undefined {
+export function _getPartOfSpeech (group: Element): string | undefined {
   return (
     group
       .querySelector('h2.parts-of-speech')
@@ -149,17 +145,17 @@ export function _getPartOfSpeech(group: Element): string | undefined {
   )
 }
 
-export function _getPrEle(group: Element): Element | undefined {
+export function _getPrEle (group: Element): Element | undefined {
   return (
     group.querySelector('div.word-syllables-prons-header-content') || undefined
   )
 }
 
-export function _getSyllable(pr: Element): string | undefined {
+export function _getSyllable (pr: Element): string | undefined {
   return pr.querySelector('span.word-syllables-entry')?.textContent || undefined
 }
 
-export function _getPhoneticEles(pr: Element): Element[] | undefined {
+export function _getPhoneticEles (pr: Element): Element[] | undefined {
   const pEles = pr
     .querySelector('span.prons-entries-list-inline')
     ?.querySelectorAll('.prons-entry-list-item')
@@ -168,26 +164,26 @@ export function _getPhoneticEles(pr: Element): Element[] | undefined {
   return pEles ? [...pEles] : undefined
 }
 
-export function _getPhoneticSymbol(pt: Element): string | undefined {
+export function _getPhoneticSymbol (pt: Element): string | undefined {
   if (pt.tagName === 'a') {
     return pt.textContent?.trim() || undefined
   }
   return pt.childNodes.item(0).textContent?.trim() || undefined
 }
 
-export function _getPhoneticAudio(pt: Element): string | undefined {
+export function _getPhoneticAudio (pt: Element): string | undefined {
   const dir = pt.getAttribute('data-dir')
   const fileName = pt.getAttribute('data-file')
   const lang = pt.getAttribute('data-lang')
   return dir && fileName && lang
     ? `https://media.merriam-webster.com/audio/prons/${lang.replace(
-        '_',
-        '/'
-      )}/mp3/${dir}/${fileName}.mp3`
+      '_',
+      '/'
+    )}/mp3/${dir}/${fileName}.mp3`
     : undefined
 }
 
-export function _getConjugation(group: Element): string | undefined {
+export function _getConjugation (group: Element): string | undefined {
   const conjEles = group
     .querySelector('.row.headword-row.header-ins')
     ?.querySelectorAll('span.vg-ins')
@@ -195,46 +191,46 @@ export function _getConjugation(group: Element): string | undefined {
 
   return conjEles
     ? new Array(...conjEles)
-        .map(e => e.textContent)
-        .join()
-        .trim()
+      .map(e => e.textContent)
+      .join()
+      .trim()
     : undefined
 }
 
-export function _getSectionsEles(group: Element): Element[] | undefined {
+export function _getSectionsEles (group: Element): Element[] | undefined {
   const sEles = group.querySelectorAll('div.vg').values()
   return sEles ? [...sEles] : undefined
 }
 
-export function _getForms(group: Element): string[] {
+export function _getForms (group: Element): string[] {
   return ['']
 }
 
-export function _getSectionTitle(section: Element): string | undefined {
+export function _getSectionTitle (section: Element): string | undefined {
   return (
     section.querySelector('p.vd')?.querySelector('a.important-blue-link')
       ?.textContent || undefined
   )
 }
 
-export function _getMeaningGroupEles(section: Element): Element[] | undefined {
+export function _getMeaningGroupEles (section: Element): Element[] | undefined {
   const mgEles = section.querySelectorAll('div.vg-sseq-entry-item').values()
   return mgEles ? [...mgEles] : undefined
 }
 
-export function _getMeaningEles(mg: Element): Element[] | undefined {
+export function _getMeaningEles (mg: Element): Element[] | undefined {
   const meanEles = mg.querySelectorAll('div.sb-entry').values()
   return meanEles ? [...meanEles] : undefined
 }
 
-export function _getExpaining(meaning: Element): string | undefined {
+export function _getExpaining (meaning: Element): string | undefined {
   return (
     meaning.querySelector('span.dtText')?.textContent?.trim() ||
     meaning.querySelector('span.unText')?.textContent?.trim()
   )
 }
 
-export function _getExamples(meaning: Element): string[] | undefined {
+export function _getExamples (meaning: Element): string[] | undefined {
   const result = [] as string[]
   const eles = meaning.querySelectorAll('span.ex-sent.sents').values()
   if (!eles) return undefined
@@ -244,7 +240,7 @@ export function _getExamples(meaning: Element): string[] | undefined {
   return result.length > 0 ? result : undefined
 }
 
-export function getResult(dom: Document): MerriamWebsterResultV2 {
+export function getResult (dom: Document): MerriamWebsterResultV2 {
   const eleContent = _getContentEle(dom)
 
   const groups: Group[] = []
@@ -264,7 +260,7 @@ export function getResult(dom: Document): MerriamWebsterResultV2 {
       pr.syllable = _getSyllable(prEle)
       pr.phonetics = []
       const ptEles = _getPhoneticEles(prEle)
-      if (ptEles)
+      if (ptEles) {
         for (const p of ptEles) {
           if (p) {
             const symbol = _getPhoneticSymbol(p)
@@ -272,32 +268,36 @@ export function getResult(dom: Document): MerriamWebsterResultV2 {
             pr.phonetics.push({ symbol, audio })
           }
         }
+      }
     }
 
     const sEles = _getSectionsEles(g)
-    if (sEles)
+    if (sEles) {
       for (const s of sEles) {
         const title = _getSectionTitle(s)
         const meaningGroups: MeaningGroup[] = []
         const mgEles = _getMeaningGroupEles(s)
 
-        if (mgEles)
+        if (mgEles) {
           for (const mg of mgEles) {
             const meanings: Meaning[] = []
             const mEles = _getMeaningEles(mg)
 
-            if (mEles)
+            if (mEles) {
               for (const m of mEles) {
                 const explaining = _getExpaining(m)
                 const examples = _getExamples(m)
                 meanings.push({ explaining, examples })
               }
+            }
 
             meaningGroups.push(meanings)
           }
+        }
 
         sections.push({ title, meaningGroups })
       }
+    }
 
     groups.push({ title, pos, pr, conjugation: conjugations, sections, forms })
   }
