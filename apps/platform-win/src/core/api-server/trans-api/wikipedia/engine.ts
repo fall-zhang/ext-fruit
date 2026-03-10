@@ -1,22 +1,18 @@
-import { isContainJapanese, isContainChinese } from '@/_helpers/lang-check'
-import type {
-  SearchFunction,
-  HTMLString,
-  GetSrcPageFunction,
-  DictSearchResult
-} from '../helpers'
+
+import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
+import type { AllDictsConf } from '../../types/all-dict-conf'
 import {
   handleNoResult,
   handleNetWorkError,
   getOuterHTML,
   getText,
   getFullLink
-} from '../helpers'
-import type { AllDictsConf } from '@/config/app-config'
-import { fetchDirtyDOM } from '@/utils/fetch-dom'
+} from '../../utils'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
-export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
-  const { lang } = profile.dicts.all.wikipedia.options
+export const getSrcPage: GetSrcPageFunction = (text, localLangCode, profile) => {
+  const { lang } = profile.wikipedia.options
   const subdomain = getSubdomain(text, lang)
   const path = lang.startsWith('zh-') ? lang : 'wiki'
   return `https://${subdomain}.wikipedia.org/${path}/${encodeURIComponent(
@@ -46,14 +42,12 @@ export type WikipediaPayload = {
 
 export const search: SearchFunction<WikipediaResult, WikipediaPayload> = (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
-  const { lang } = profile.dicts.all.wikipedia.options
+  const { lang } = opt.profile.wikipedia.options
   let subdomain = getSubdomain(text, lang)
 
-  let url = payload.url
+  let url = opt.payload.url
   if (url) {
     const matchSubdomain = url.match(/([^/.]+)\.m\.wikipedia\.org/)
     if (matchSubdomain) {
@@ -140,7 +134,7 @@ function handleDOM (
 
 function getSubdomain (
   text: string,
-  lang: AllDicts['wikipedia']['options']['lang']
+  lang: AllDictsConf['wikipedia']['options']['lang']
 ): string {
   if (lang.startsWith('zh-')) {
     return 'zh'

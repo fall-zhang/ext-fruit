@@ -7,8 +7,8 @@ import {
   SearchFunction,
   GetSrcPageFunction,
   DictSearchResult
-} from '../helpers'
-import { DictConfigs } from '@/config/app-config'
+} from '../../utils'
+import { AllDictsConf } from '@/config/app-config'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `http://www.learnersdictionary.com/definition/${text
@@ -68,7 +68,7 @@ export const search: SearchFunction<WebsterLearnerResult> = (
 
 function checkResult(
   doc: Document,
-  options: DictConfigs['websterlearner']['options']
+  options: AllDictsConf['websterlearner']['options']
 ): WebsterLearnerSearchResult | Promise<WebsterLearnerSearchResult> {
   const $alternative = doc.querySelector<HTMLAnchorElement>(
     '[id^="spelling"] .links'
@@ -88,7 +88,7 @@ function checkResult(
 
 function handleDOM(
   doc: Document,
-  options: DictConfigs['websterlearner']['options']
+  options: AllDictsConf['websterlearner']['options']
 ): WebsterLearnerSearchResultLex | Promise<WebsterLearnerSearchResultLex> {
   doc.querySelectorAll('.d_hidden').forEach(el => el.remove())
 

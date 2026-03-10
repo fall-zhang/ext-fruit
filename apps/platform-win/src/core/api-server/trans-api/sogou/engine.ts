@@ -1,4 +1,4 @@
-import { SearchFunction, GetSrcPageFunction } from '../helpers'
+import { SearchFunction, GetSrcPageFunction } from '../../utils'
 import memoizeOne from 'memoize-one'
 import { Sogou } from '@opentranslate/sogou'
 import {

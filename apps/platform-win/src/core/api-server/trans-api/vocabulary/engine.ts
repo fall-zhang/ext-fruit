@@ -6,7 +6,7 @@ import {
   SearchFunction,
   GetSrcPageFunction,
   DictSearchResult
-} from '../helpers'
+} from '../../utils'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.vocabulary.com/dictionary/${text}`

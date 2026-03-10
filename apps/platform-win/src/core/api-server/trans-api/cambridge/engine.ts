@@ -72,7 +72,7 @@ export const search: SearchFunction<CambridgeResult> = async (
 
 function handleDOM (
   doc: Document,
-  options: DictConfigs['cambridge']['options']
+  options: AllDictsConf['cambridge']['options']
 ): CambridgeSearchResult | Promise<CambridgeSearchResult> {
   const result: CambridgeResult = []
   const catalog: NonNullable<CambridgeSearchResult['catalog']> = []

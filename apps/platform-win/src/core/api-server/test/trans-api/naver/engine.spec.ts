@@ -1,4 +1,4 @@
-import { retry } from '../helpers'
+import { retry } from '../../utils'
 import { search } from '@/core/api-server/api-common/naver/engine'
 import { getDefaultConfig } from '@/config/app-config'
 import { getDefaultProfile, ProfileMutable } from '@/config/app-config/profiles'

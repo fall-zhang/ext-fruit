@@ -1,16 +1,16 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+
+import type { GetSrcPageFunction } from '@/core/api-atom/atom-type'
+import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
 import {
-  HTMLString,
   getText,
   getInnerHTML,
   handleNoResult,
-  handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult
-} from '../helpers'
+  handleNetWorkError
+} from '../../utils'
 
 import axios from 'axios'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `http://www.urbandictionary.com/define.php?term=${text}`
@@ -64,11 +64,9 @@ type UrbanSearchResult = DictSearchResult<UrbanResult>
 
 export const search: SearchFunction<UrbanResult> = (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
-  const options = profile.dicts.all.urban.options
+  const options = opt.profile.urban.options
 
   return fetchDirtyDOM(
     'http://www.urbandictionary.com/define.php?term=' +
@@ -79,14 +77,14 @@ export const search: SearchFunction<UrbanResult> = (
 }
 
 /** get thumbs-up and thumbs-down nums  */
-async function getThumbsNums(ids: string): Promise<thumbMap | null> {
+async function getThumbsNums (ids: string): Promise<thumbMap | null> {
   const thumbsMap = {}
 
   const result = await axios
-    .get<thumbRes>(`https://api.urbandictionary.com/v0/uncacheable`, {
+    .get<thumbRes>('https://api.urbandictionary.com/v0/uncacheable', {
       params: {
-        ids
-      }
+        ids,
+      },
     })
     .catch(handleNetWorkError)
 
@@ -97,13 +95,13 @@ async function getThumbsNums(ids: string): Promise<thumbMap | null> {
   result?.data?.thumbs?.map(t => {
     thumbsMap[t.defid] = {
       up: t.up,
-      down: t.down
+      down: t.down,
     }
   })
   return thumbsMap
 }
 
-async function handleDOM(
+async function handleDOM (
   doc: Document,
   { resultCount }: { resultCount: number }
 ): Promise<UrbanSearchResult> {
@@ -161,7 +159,7 @@ async function handleDOM(
       const $attr = $gif.nextElementSibling
       resultItem.gif = {
         src: $gif.src,
-        attr: getText($attr)
+        attr: getText($attr),
       }
     }
 
@@ -179,7 +177,6 @@ async function handleDOM(
 
   if (result.length > 0) {
     return { result, audio }
-  } else {
-    return handleNoResult()
   }
+  return handleNoResult()
 }

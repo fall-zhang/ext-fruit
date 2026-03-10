@@ -10,7 +10,7 @@ import {
   DictSearchResult,
   getText,
   removeChild
-} from '../helpers'
+} from '../../utils'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.weblio.jp/content/${text}`

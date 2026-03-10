@@ -8,8 +8,8 @@ import {
   SearchFunction,
   GetSrcPageFunction,
   DictSearchResult
-} from '../helpers'
-import { DictConfigs } from '@/config/app-config'
+} from '../../utils'
+import { AllDictsConf } from '@/config/app-config'
 import axios from 'axios'
 import DOMPurify from 'dompurify'
 
@@ -57,7 +57,7 @@ export const search: SearchFunction<ShanbayResult> = (
 
 function checkResult(
   doc: Document,
-  options: DictConfigs['shanbay']['options']
+  options: AllDictsConf['shanbay']['options']
 ): ShanbaySearchResult | Promise<ShanbaySearchResult> {
   const $typo = doc.querySelector('.error-typo')
   if (!$typo) {
@@ -88,7 +88,7 @@ function loadSentences(id: string) {
 
 async function handleDOM(
   doc: Document,
-  options: DictConfigs['shanbay']['options']
+  options: AllDictsConf['shanbay']['options']
 ): Promise<ShanbaySearchResult> {
   const word = doc.querySelector('.word-spell')
   const result: ShanbayResult = {

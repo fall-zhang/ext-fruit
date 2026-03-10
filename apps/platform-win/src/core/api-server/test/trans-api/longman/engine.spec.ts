@@ -1,5 +1,5 @@
 /* eslint-disable max-nested-callbacks */
-import { retry } from '../helpers'
+import { retry } from '../../utils'
 import {
   search,
   LongmanResultLex,

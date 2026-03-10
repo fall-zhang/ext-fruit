@@ -1,17 +1,16 @@
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
-import type {
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult
-} from '../helpers'
+
 import {
   getText,
   getInnerHTML,
   getOuterHTML,
   handleNoResult,
   handleNetWorkError
-} from '../helpers'
-import type { OaldictResult } from './type'
+} from '../../utils'
+import type { OaldictResult, Idiom } from './type'
+import type { GetSrcPageFunction } from '@/core/api-atom/atom-type'
+import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
+
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.oxfordlearnersdictionaries.com/search/english/direct/?q=${text}`

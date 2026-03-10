@@ -10,7 +10,7 @@ import {
   getInnerHTML,
   getChsToChz
 } from '../../utils'
-import type { DictConfigs } from '@/config/app-config'
+import type { AllDictsConf } from '@/config/app-config'
 import type { GetSrcPageFunction } from '@/core/api-server/api-common/fetch-type'
 import type { BingResult, BingResultLex, BingResultMachine, BingResultRelated } from './type'
 
@@ -24,7 +24,7 @@ const DICT_LINK =
   'https://cn.bing.com/dict/clientsearch?mkt=zh-CN&setLang=zh&form=BDVEHC&ClientVer=BDDTV3.5.1.4320&q='
 
 
-type BingConfig = DictConfigs['bing']
+type BingConfig = AllDictsConf['bing']
 
 type BingSearchResultLex = DictSearchResult<BingResultLex>
 type BingSearchResultMachine = DictSearchResult<BingResultMachine>

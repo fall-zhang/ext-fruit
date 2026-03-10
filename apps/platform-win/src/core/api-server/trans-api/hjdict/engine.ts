@@ -58,7 +58,7 @@ export const search: SearchFunction<HjdictResult, HjdictPayload> = async (
 
 function handleDOM (
   doc: Document,
-  options: DictConfigs['hjdict']['options'],
+  options: AllDictsConf['hjdict']['options'],
   langCode: string
 ): HjdictSearchResult | Promise<HjdictSearchResult> {
   if (doc.querySelector('.word-notfound')) {

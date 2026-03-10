@@ -13,8 +13,8 @@ import {
   removeChild,
   getFullLink,
   getOuterHTML
-} from '../helpers'
-import { DictConfigs } from '@/config/app-config'
+} from '../../utils'
+import { AllDictsConf } from '@/config/app-config'
 
 export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
   const lang =
@@ -78,7 +78,7 @@ export const search: SearchFunction<MacmillanResult, MacmillanPayload> = async (
 
 async function checkResult(
   doc: Document,
-  options: DictConfigs['macmillan']['options']
+  options: AllDictsConf['macmillan']['options']
 ): Promise<MacmillanSearchResult> {
   if (doc.querySelector('.senses')) {
     return handleDOM(doc)

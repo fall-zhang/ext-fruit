@@ -1,4 +1,4 @@
-import type { SearchFunction, GetSrcPageFunction } from '../helpers'
+import type { SearchFunction, GetSrcPageFunction } from '../../utils'
 import memoizeOne from 'memoize-one'
 import { Tencent } from '@salad/trans/service-tencent'
 import type {

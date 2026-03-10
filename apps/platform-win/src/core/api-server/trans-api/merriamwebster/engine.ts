@@ -3,7 +3,7 @@ import {
   handleNetWorkError,
   SearchFunction,
   GetSrcPageFunction
-} from '../helpers'
+} from '../../utils'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.merriam-webster.com/dictionary/${text}`

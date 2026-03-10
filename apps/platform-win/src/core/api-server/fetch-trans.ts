@@ -1,9 +1,9 @@
-import { timeout } from 'es-toolkit'
 import type { Language } from '@P/open-trans/languages'
-import type { AppConfig, AppConfigMutable, DictID } from '../../app-config'
 import type { AllDictsConf } from '@/core/api-server/types/all-dict-conf'
-import type { DictSearchResult } from '@/core/api-server/types'
 import { search } from '@/core/api-server/trans-api/baidu/engine'
+import type { AppConfigMutable } from '@/config/app-config'
+import type { DictSearchResult } from './api-common/search-type'
+import type { DictID } from './types'
 
 // function getDictEngine (dictID:DictID) {
 //   return import(`../core/trans-api/${dictID}/engine.ts`)

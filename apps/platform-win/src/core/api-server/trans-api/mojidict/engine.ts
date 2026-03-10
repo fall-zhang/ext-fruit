@@ -3,7 +3,7 @@ import type { GetSrcPageFunction } from '@/core/api-server/types/dict-fetch'
 import {
   handleNoResult,
   handleNetWorkError
-} from '../helpers'
+} from '../../utils'
 import type { AxiosResponse } from 'axios'
 import axios from 'axios'
 

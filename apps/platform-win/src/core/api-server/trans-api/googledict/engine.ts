@@ -9,7 +9,7 @@ import {
   getFullLink,
   getText,
   removeChild
-} from '../helpers'
+} from '../../utils'
 import { getStaticSpeaker } from '@/components/Speaker'
 import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
 import { fetchPlainText } from '@/core/api-server/utils/fetch-dom'

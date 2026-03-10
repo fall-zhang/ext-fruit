@@ -1,5 +1,5 @@
 /* eslint-disable max-nested-callbacks */
-import { retry } from '../helpers'
+import { retry } from '../../utils'
 import { search } from '@/core/api-server/api-common/weblioejje/engine'
 import { getDefaultConfig } from '@/config/app-config'
 import { getDefaultProfile } from '@/config/app-config/profiles'

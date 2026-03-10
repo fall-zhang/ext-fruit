@@ -3,7 +3,7 @@ import {
   handleNoResult,
   handleNetWorkError,
   getChsToChz
-} from '../helpers'
+} from '../../utils'
 import axios from 'axios'
 import type { Profile } from '@/config/app-config/profiles'
 import type { GuoYuResult } from './type'

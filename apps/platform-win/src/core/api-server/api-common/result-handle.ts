@@ -1,6 +1,6 @@
 import type { Language } from '@P/open-trans/languages'
-import type { DictID } from '../types/all-dict-conf'
 import type { DictSearchResult } from './search-type'
+import type { DictID } from '../types'
 
 export interface MachineTranslateResult {
   id: DictID

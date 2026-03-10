@@ -4,7 +4,7 @@ import {
   SearchFunction,
   GetSrcPageFunction,
   DictSearchResult
-} from '../helpers'
+} from '../../utils'
 import { isContainJapanese, isContainKorean } from '@/_helpers/lang-check'
 import axios from 'axios'
 

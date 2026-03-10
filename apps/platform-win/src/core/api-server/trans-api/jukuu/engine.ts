@@ -9,7 +9,7 @@ import {
   GetSrcPageFunction,
   removeChildren,
   DictSearchResult
-} from '../helpers'
+} from '../../utils'
 
 export type JukuuLang = 'engjp' | 'zhjp' | 'zheng'
 

@@ -9,8 +9,8 @@ import {
   GetSrcPageFunction,
   DictSearchResult,
   getFullLink
-} from '../helpers'
-import { DictConfigs } from '@/config/app-config'
+} from '../../utils'
+import { AllDictsConf } from '@/config/app-config'
 import { getStaticSpeaker } from '@/components/Speaker'
 
 export const getSrcPage: GetSrcPageFunction = text => {
@@ -89,7 +89,7 @@ export const search: SearchFunction<LongmanResult> = (
 
 function handleDOM(
   doc: Document,
-  options: DictConfigs['longman']['options']
+  options: AllDictsConf['longman']['options']
 ): LongmanSearchResult | Promise<LongmanSearchResult> {
   if (doc.querySelector('.dictentry')) {
     return handleDOMLex(doc, options)
@@ -101,7 +101,7 @@ function handleDOM(
 
 function handleDOMLex(
   doc: Document,
-  options: DictConfigs['longman']['options']
+  options: AllDictsConf['longman']['options']
 ): LongmanSearchResultLex | Promise<LongmanSearchResultLex> {
   const result: LongmanResultLex = {
     type: 'lex',

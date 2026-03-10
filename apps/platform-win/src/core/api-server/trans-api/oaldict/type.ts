@@ -1,6 +1,6 @@
 import type { HTMLString } from '../../types'
 
-interface Idiom {
+export interface Idiom {
   title?: string
   labels?: string
   def?: string

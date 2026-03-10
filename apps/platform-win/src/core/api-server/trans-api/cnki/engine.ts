@@ -1,18 +1,16 @@
-import { fetchDirtyDOM } from '@/utils/fetch-dom'
-import type {
-  HTMLString,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult
-} from '../helpers'
+
+import type { GetSrcPageFunction } from '@/core/api-atom/atom-type'
+import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
+import type { AllDictsConf } from '../../types/all-dict-conf'
 import {
   getInnerHTML,
   getFullLink,
   handleNoResult,
   getText,
   handleNetWorkError
-} from '../helpers'
-import type { DictConfigs } from '@/config/app-config'
+} from '../../utils'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return (
@@ -47,20 +45,18 @@ type CNKISearchResult = DictSearchResult<CNKIResult>
 
 export const search: SearchFunction<CNKIResult> = (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
   return fetchDirtyDOM(
     'http://dict.cnki.net/old/dict_result.aspx?scw=' + encodeURIComponent(text)
   )
     .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, profile.dicts.all.cnki.options))
+    .then(doc => handleDOM(doc, opt.profile.cnki.options))
 }
 
 function handleDOM (
   doc: Document,
-  options: DictConfigs['cnki']['options']
+  options: AllDictsConf['cnki']['options']
 ): CNKISearchResult | Promise<CNKISearchResult> {
   const $entries = [...doc.querySelectorAll('.main-table')]
 
@@ -87,6 +83,7 @@ function handleDOM (
               }
             }
           }
+          return null
         })
         .filter((x): x is CNKIDictItem => Boolean(x))
     }

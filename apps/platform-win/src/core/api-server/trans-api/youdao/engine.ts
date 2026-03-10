@@ -1,17 +1,17 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+import type { GetSrcPageFunction } from '@/core/api-atom/atom-type'
+import type {
+  HTMLString
+
+} from '../../types'
+import type { AllDictsConf } from '../../types/all-dict-conf'
 import {
   getText,
   getInnerHTML,
   handleNoResult,
-  HTMLString,
   handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult,
   getChsToChz,
   removeChild
-} from '../helpers'
-import { DictConfigs } from '@/config/app-config'
+} from '../../utils'
 
 export const getSrcPage: GetSrcPageFunction = text =>
   'https://dict.youdao.com/w/' + encodeURIComponent(text.replace(/\s+/g, ' '))
@@ -62,9 +62,9 @@ export const search: SearchFunction<YoudaoResult> = async (
     .then(doc => checkResult(doc, options, transform))
 }
 
-function checkResult(
+function checkResult (
   doc: Document,
-  options: DictConfigs['youdao']['options'],
+  options: AllDictsConf['youdao']['options'],
   transform: null | ((text: string) => string)
 ): YoudaoSearchResult | Promise<YoudaoSearchResult> {
   const $typo = doc.querySelector('.error-typo')
@@ -74,16 +74,16 @@ function checkResult(
     return {
       result: {
         type: 'related',
-        list: getInnerHTML(HOST, $typo, { transform })
-      }
+        list: getInnerHTML(HOST, $typo, { transform }),
+      },
     }
   }
   return handleNoResult()
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document,
-  options: DictConfigs['youdao']['options'],
+  options: AllDictsConf['youdao']['options'],
   transform: null | ((text: string) => string)
 ): YoudaoSearchResult | Promise<YoudaoSearchResult> {
   const result: YoudaoResult = {
@@ -93,7 +93,7 @@ function handleDOM(
     rank: getText(doc, '.rank'),
     pattern: getText(doc, '.pattern', transform),
     prons: [],
-    collins: []
+    collins: [],
   }
 
   const audio: { uk?: string; us?: string } = {}
@@ -123,7 +123,7 @@ function handleDOM(
   if (options.basic) {
     result.basic = getInnerHTML(HOST, doc, {
       selector: '#phrsListTab .trans-container',
-      transform
+      transform,
     })
   }
 
@@ -172,21 +172,21 @@ function handleDOM(
   if (options.discrimination) {
     result.discrimination = getInnerHTML(HOST, doc, {
       selector: '#discriminate',
-      transform
+      transform,
     })
   }
 
   if (options.sentence) {
     result.sentence = getInnerHTML(HOST, doc, {
       selector: '#authority .ol',
-      transform
+      transform,
     })
   }
 
   if (options.translation) {
     result.translation = getInnerHTML(HOST, doc, {
       selector: '#fanyiToggle .trans-container',
-      transform
+      transform,
     })
   }
 

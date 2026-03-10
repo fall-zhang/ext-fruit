@@ -1,4 +1,4 @@
-import { SearchFunction, GetSrcPageFunction, getChsToChz } from '../helpers'
+import { SearchFunction, GetSrcPageFunction, getChsToChz } from '../../utils'
 import { moedictSearch, GuoYuResult } from '../guoyu/engine'
 
 export const getSrcPage: GetSrcPageFunction = async text => {

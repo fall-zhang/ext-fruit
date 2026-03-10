@@ -1,4 +1,3 @@
-import type { Language } from '@P/open-trans/languages'
 import type { AllDictsConf } from '../types/all-dict-conf'
 import type { AppConfig } from '@/config/app-config'
 
@@ -49,4 +48,14 @@ export interface DictSearchResult<Result = unknown> {
       title?: string
     }
   >
+}
+
+
+export type GetSrcPageFunction = {
+  // config 当前配置
+  (
+    text: string,
+    localLangCode: 'zh-CN' | 'zh-TW' | 'en',
+    profile: AllDictsConf
+  ): string | Promise<string>
 }

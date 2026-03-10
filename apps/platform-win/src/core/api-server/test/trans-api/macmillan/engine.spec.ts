@@ -1,4 +1,4 @@
-import { retry } from '../helpers'
+import { retry } from '../../utils'
 import {
   search,
   MacmillanResultLex,

@@ -9,7 +9,7 @@ import {
   GetSrcPageFunction,
   DictSearchResult,
   getFullLink
-} from '../helpers'
+} from '../../utils'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://jikipedia.com/search?phrase=${encodeURIComponent(text)}`

@@ -1,19 +1,19 @@
-import { fetchDirtyDOM } from '@/_helpers/fetch-dom'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
+
 import {
-  HTMLString,
   handleNoResult,
   handleNetWorkError,
-  SearchFunction,
-  GetSrcPageFunction,
-  DictSearchResult,
   getText,
   getFullLink,
   removeChild,
   removeChildren,
   getInnerHTML,
   externalLink
-} from '../helpers'
+} from '../../utils'
 import { getStaticSpeaker } from '@/components/Speaker'
+import type { GetSrcPageFunction } from '@/core/api-atom/atom-type'
+import type { SearchFunction, DictSearchResult } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
 
 const getSrc = (text: string) =>
   `https://www.lexico.com/definition/${text.trim().replace(/\s+/g, '_')}`
@@ -39,11 +39,9 @@ export type LexicoResult = LexicoResultLex | LexicoResultRelated
 
 export const search: SearchFunction<LexicoResult> = (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
-  const { options } = profile.dicts.all.lexico
+  const { options } = opt.profile.lexico
 
   return fetchDirtyDOM(getSrc(text))
     .catch(handleNetWorkError)
@@ -59,8 +57,8 @@ export const search: SearchFunction<LexicoResult> = (
               type: 'related',
               list: [...$similar].map($a => ({
                 href: getFullLink(HOST, $a, 'href'),
-                text: getText($a)
-              }))
+                text: getText($a),
+              })),
             }
             return { result }
           }
@@ -71,11 +69,11 @@ export const search: SearchFunction<LexicoResult> = (
     })
 }
 
-function handleDOM(
+function handleDOM (
   doc: Document
 ):
-  | Promise<DictSearchResult<LexicoResultLex>>
-  | DictSearchResult<LexicoResultLex> {
+  | Promise<DictSearchResult<LexicoResultLex>> |
+  DictSearchResult<LexicoResultLex> {
   const $entry = doc.querySelector('.entryWrapper')
 
   if ($entry) {
@@ -97,7 +95,7 @@ function handleDOM(
       .forEach($a => externalLink($a))
     ;[
       ...$entry.querySelectorAll<HTMLAnchorElement>('.headwordAudio'),
-      ...$entry.querySelectorAll<HTMLAnchorElement>('.speaker')
+      ...$entry.querySelectorAll<HTMLAnchorElement>('.speaker'),
     ].forEach($speaker => {
       const $audio = $speaker.querySelector<HTMLAudioElement>('audio')
       const src = $audio && getFullLink(HOST, $audio, 'src')
@@ -110,9 +108,9 @@ function handleDOM(
     return {
       result: {
         type: 'lex',
-        entry: getInnerHTML(HOST, $entry)
+        entry: getInnerHTML(HOST, $entry),
       },
-      audio: mp3 ? { uk: mp3 } : undefined
+      audio: mp3 ? { uk: mp3 } : undefined,
     }
   }
 

@@ -4,13 +4,12 @@ import { Youdao } from '@salad/trans/service-youdao'
 
 
 import type { YoudaotransLanguage } from './config'
-import { getMTArgs, machineResult } from '@/components/MachineTrans/engine'
-import type { MachineTranslatePayload, MachineTranslateResult } from '@/components/MachineTrans/engine'
+import { type MachineTranslatePayload, getMTArgs } from '../../api-common/get-trans-info'
+import type { MachineTranslateResult, machineResult } from '../../api-common/result-handle'
 
 export const getTranslator = memoizeOne(
   () =>
     new Youdao({
-      env: 'ext',
       config:
         process.env.YOUDAO_APPKEY && process.env.YOUDAO_KEY
           ? {
