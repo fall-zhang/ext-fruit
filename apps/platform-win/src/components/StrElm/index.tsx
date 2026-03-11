@@ -3,15 +3,10 @@ import React, { useMemo, useState } from 'react'
 import { useIsomorphicLayoutEffect } from 'react-use'
 import DOMPurify from 'dompurify'
 
-export type StrElmProps<
-  T extends keyof JSX.IntrinsicElements = keyof JSX.IntrinsicElements
-> = {
-  tag?: T
+
+export const StrElm: FC<Partial<HTMLElement> & {
+  tag?: 'div' | 'span'
   html: string
-} & JSX.IntrinsicElements[T]
-export const StrElm:FC< Partial<HTMLElement> & {
-  tag?:'div' | 'span'
-  html:string
 }> = (
   props
 ) => {
@@ -26,9 +21,7 @@ export const StrElm:FC< Partial<HTMLElement> & {
       })
       return fragment
     } catch (e) {
-      if (process.env.DEBUG) {
-        console.error(e)
-      }
+      console.error(e)
     }
     return null
   }, [html])

@@ -37,6 +37,7 @@ export interface DictItemBodyProps {
 }
 
 export const DictItemBody: FC<DictItemBodyProps> = props => {
+  // console.log('⚡️ line:39 ~ props: ', props)
   const Dict = useMemo(() =>
     React.lazy<ComponentType<ViewProps<any>>>(() =>
       import(

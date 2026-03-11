@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import type { HoverBoxItem } from '@/components/HoverBox'
 import { useTranslation } from 'react-i18next'
 import './dict-item-head.scss'
-import type { DictID } from '@/core/api-server/types/all-dict-conf'
+import type { DictID } from '@/core/api-server/types'
 
 export interface DictItemHeadProps {
   dictID: DictID
