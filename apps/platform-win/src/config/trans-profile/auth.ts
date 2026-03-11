@@ -3,12 +3,14 @@ import { auth as caiyun } from '@/core/api-server/trans-api/caiyun/auth'
 import { auth as sogou } from '@/core/api-server/trans-api/sogou/auth'
 import { auth as tencent } from '@/core/api-server/trans-api/tencent/auth'
 import { auth as youdaotrans } from '@/core/api-server/trans-api/youdaotrans/auth'
+import { auth as google } from '@/core/api-server/trans-api/google/auth'
 import { cloneDeep } from 'es-toolkit'
 export const defaultDictAuths = {
   baidu,
   caiyun,
   sogou,
   tencent,
+  google,
   youdaotrans,
 }
 

@@ -1,6 +1,6 @@
 import { cloneDeep } from 'es-toolkit'
-import type { Profile, ProfileMutable } from './profiles'
-import { getDefaultProfile } from './profiles'
+import type { Profile, ProfileMutable } from './index'
+import { getDefaultProfile } from './index'
 
 /**
  * 对旧配置文件进行迁移
