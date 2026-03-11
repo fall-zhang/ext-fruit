@@ -3,18 +3,19 @@ import { Sogou } from '@salad/trans/service-sogou/index'
 
 
 import type { SogouLanguage } from './config'
-import { type MachineTranslatePayload, getMTArgs } from '../../api-common/get-trans-info'
-import type { MachineTranslateResult, machineResult } from '../../api-common/result-handle'
+import { machineResult, type MachineTranslateResult } from '../../api-common/result-handle'
 import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
+import { detectLangInfo } from '../../api-common/detect-lang'
+import type { config } from 'rxjs'
 
 export const getTranslator = memoizeOne(
   () =>
     new Sogou({
       config:
-        process.env.SOGOU_PID && process.env.SOGOU_KEY
+        import.meta.env.VITE_SOGOU_PID && import.meta.env.SOGOU_KEY
           ? {
-            pid: process.env.SOGOU_PID,
-            key: process.env.SOGOU_KEY,
+            pid: import.meta.env.VITE_SOGOU_PID,
+            key: import.meta.env.SOGOU_KEY,
           }
           : undefined,
     })
@@ -40,11 +41,8 @@ export const getSrcPage: GetSrcPageFunction = (text, langCode, profile) => {
 
 export type SogouResult = MachineTranslateResult
 
-export const search: SearchFunction<
-  SogouResult,
-  MachineTranslatePayload<SogouLanguage>
-> = async (rawText, opt) => {
-  if (!config.dictAuth.sogou.pid) {
+export const search: SearchFunction<SogouResult> = async (rawText, opt) => {
+  if (!opt.dictAuth?.sogou.pid) {
     return machineResult(
       {
         result: {
@@ -63,17 +61,18 @@ export const search: SearchFunction<
 
   const translator = getTranslator()
 
-  const { sl, tl, text } = await getMTArgs(
-    translator,
+  const { from: sl, to: tl, text } = detectLangInfo(
     rawText,
-    profile.dicts.all.sogou,
-    config,
-    payload
+    {
+      from: opt.from,
+      to: opt.to,
+      localLang: opt.localLang,
+    }
   )
 
   const translatorConfig = {
-    pid: config.dictAuth.sogou.pid,
-    key: config.dictAuth.sogou.key,
+    pid: opt.dictAuth.sogou.pid,
+    key: opt.dictAuth.sogou.key,
   }
 
   try {
@@ -84,7 +83,7 @@ export const search: SearchFunction<
           id: 'sogou',
           sl: result.from,
           tl: result.to,
-          slInitial: profile.dicts.all.sogou.options.slInitial,
+          slInitial: opt.profile.sogou.options.slInitial,
           searchText: result.origin,
           trans: result.trans,
         },

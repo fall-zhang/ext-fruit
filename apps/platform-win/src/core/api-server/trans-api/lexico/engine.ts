@@ -11,14 +11,13 @@ import {
   externalLink
 } from '../../utils'
 import { getStaticSpeaker } from '@/components/Speaker'
-import type { GetSrcPageFunction } from '@/core/api-atom/atom-type'
-import type { SearchFunction, DictSearchResult } from '../../api-common/search-type'
+import type { SearchFunction, DictSearchResult, GetSrcPageFunction } from '../../api-common/search-type'
 import type { HTMLString } from '../../types'
 
-const getSrc = (text: string) =>
+
+export const getSrcPage: GetSrcPageFunction = (text: string) =>
   `https://www.lexico.com/definition/${text.trim().replace(/\s+/g, '_')}`
 
-export const getSrcPage: GetSrcPageFunction = getSrc
 
 const HOST = 'https://www.lexico.com'
 
@@ -37,13 +36,14 @@ export interface LexicoResultRelated {
 
 export type LexicoResult = LexicoResultLex | LexicoResultRelated
 
-export const search: SearchFunction<LexicoResult> = (
+export const search: SearchFunction<LexicoResult> = async (
   text,
   opt
 ) => {
   const { options } = opt.profile.lexico
 
-  return fetchDirtyDOM(getSrc(text))
+  const url = await getSrcPage(text, opt.localLang || 'zh-CN', opt.profile)
+  return fetchDirtyDOM(url)
     .catch(handleNetWorkError)
     .then(doc => {
       const $noResult = doc.querySelector('.no-exact-matches')

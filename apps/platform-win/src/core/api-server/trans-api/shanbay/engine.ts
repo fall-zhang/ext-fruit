@@ -11,6 +11,7 @@ import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../..
 import type { HTMLString } from '../../types'
 import type { AllDictsConf } from '../../types/all-dict-conf'
 import { fetchDirtyDOM } from '../../utils/fetch-dom'
+import type { ShanbayResult, ShanbaySearchResult } from './type'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.shanbay.com/bdc/mobile/preview/word?word=${text}`
@@ -18,29 +19,15 @@ export const getSrcPage: GetSrcPageFunction = text => {
 
 const HOST = 'http://www.shanbay.com'
 
-export interface ShanbayResultLex {
-  type: 'lex'
-  title: string
-  pattern: string
-  prons: Array<{
-    phsym: string
-    url: string
-  }>
-  basic?: HTMLString
-  wordId?: string | null
-  sentences: Array<{
-    annotation: string
-    translation: string
-  }>
-  translation?: HTMLString
-  id: 'shanbay'
-}
-
-export type ShanbayResult = ShanbayResultLex
-
-type ShanbaySearchResult = DictSearchResult<ShanbayResult>
-
-export const search: SearchFunction<ShanbayResult> = (
+/**
+ * ！！！！！！！！！！！！！！！！
+ * Disable
+ * 当前翻译暂时不可用
+ * @param text
+ * @returns
+ * ！！！！！！！！！！！！！！！！
+ */
+export const search: SearchFunction<ShanbayResult> = async (
   text,
   opt
 ) => {

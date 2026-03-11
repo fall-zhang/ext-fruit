@@ -31,7 +31,7 @@ export type JikipediaResult = JikipediaResultItem[]
 
 type JikipediaSearchResult = DictSearchResult<JikipediaResult>
 
-export const search: SearchFunction<JikipediaResult> = (
+export const search: SearchFunction<JikipediaResult> = async (
   text,
   opt
 ) => {

@@ -1,7 +1,6 @@
 
 import { getStaticSpeaker } from '@/components/Speaker'
-import type { GetSrcPageFunction } from '../../api-common/atom-type'
-import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 import type { HTMLString } from '../../types'
 import {
   getInnerHTML,
@@ -25,10 +24,7 @@ type ZdicSearchResult = DictSearchResult<ZdicResult>
 
 let isRefererModified = false
 
-export const search: SearchFunction<ZdicResult> = (
-  text,
-  opt
-) => {
+export const search: SearchFunction<ZdicResult> = async (text, opt) => {
   const isAudio = opt.profile.zdic.options.audio
   if (!isRefererModified && isAudio) {
     isRefererModified = true

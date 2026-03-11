@@ -1,11 +1,10 @@
 import memoizeOne from 'memoize-one'
 
-import type { GoogleLanguage } from './config'
 import { Google } from '@P/open-trans/service-google'
 import type { Language } from '@P/open-trans/languages'
 import type { GetSrcPageFunction, SearchFunction } from '@/core/api-server/api-common/search-type'
-import { type MachineTranslatePayload, getMTArgs } from '../../api-common/get-trans-info'
-import type { MachineTranslateResult, machineResult } from '../../api-common/result-handle'
+import { machineResult, type MachineTranslateResult } from '../../api-common/result-handle'
+import { detectLangInfo } from '../../api-common/detect-lang'
 
 export const getTranslator = memoizeOne(() => new Google())
 
@@ -21,27 +20,25 @@ export const getSrcPage: GetSrcPageFunction = (text, langCode, profile) => {
 
 export type GoogleResult = MachineTranslateResult
 
-export const search: SearchFunction<
-  GoogleResult,
-  MachineTranslatePayload<GoogleLanguage>
-> = async (rawText, opt) => {
+export const search: SearchFunction<GoogleResult> = async (rawText, opt) => {
   const options = opt.profile.google.options
 
   const translator = getTranslator()
 
-  const { sl, tl, text } = await getMTArgs(
-    translator,
+  const { from: sl, to: tl, text } = detectLangInfo(
     rawText,
-    profile.dicts.all.google,
-    config,
-    payload
+    {
+      from: opt.from,
+      to: opt.to,
+      localLang: opt.localLang,
+    }
   )
 
   try {
     const result = await translator.translate(text, sl, tl, {
-      token: process.env.GOOGLE_TOKEN || '',
       concurrent: options.concurrent,
       apiAsFallback: true,
+      order: [],
     })
     return machineResult(
       {
@@ -49,7 +46,7 @@ export const search: SearchFunction<
           id: 'google',
           sl: result.from,
           tl: result.to,
-          slInitial: profile.dicts.all.google.options.slInitial,
+          slInitial: opt.profile.google.options.slInitial,
           searchText: result.origin,
           trans: result.trans,
         },

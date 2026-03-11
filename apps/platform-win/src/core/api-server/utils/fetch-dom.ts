@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export async function fetchDirtyDOM (
   url: string,
-  config?: Request
+  config?: Partial<RequestInit>
 ): Promise<Document> {
   const request = new Request(url, {
     method: 'GET',

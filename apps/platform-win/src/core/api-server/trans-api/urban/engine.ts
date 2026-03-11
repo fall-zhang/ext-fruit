@@ -1,6 +1,5 @@
 
-import type { GetSrcPageFunction } from '@/core/api-atom/atom-type'
-import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 import type { HTMLString } from '../../types'
 import {
   getText,
@@ -54,7 +53,7 @@ interface thumbMapItem {
   down: string
 }
 
-interface thumbMap {
+interface ThumbMap {
   [defid: string]: thumbMapItem
 }
 
@@ -62,7 +61,7 @@ export type UrbanResult = UrbanResultItem[]
 
 type UrbanSearchResult = DictSearchResult<UrbanResult>
 
-export const search: SearchFunction<UrbanResult> = (
+export const search: SearchFunction<UrbanResult> = async (
   text,
   opt
 ) => {
@@ -77,7 +76,7 @@ export const search: SearchFunction<UrbanResult> = (
 }
 
 /** get thumbs-up and thumbs-down nums  */
-async function getThumbsNums (ids: string): Promise<thumbMap | null> {
+async function getThumbsNums (ids: string): Promise<ThumbMap | null> {
   const thumbsMap = {}
 
   const result = await axios
@@ -92,7 +91,7 @@ async function getThumbsNums (ids: string): Promise<thumbMap | null> {
     return null
   }
 
-  result?.data?.thumbs?.map(t => {
+  result?.data?.thumbs?.forEach(t => {
     thumbsMap[t.defid] = {
       up: t.up,
       down: t.down,

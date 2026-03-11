@@ -1,6 +1,5 @@
 
-import type { GetSrcPageFunction } from '@/core/api-atom/atom-type'
-import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 import type { HTMLString } from '../../types'
 import type { AllDictsConf } from '../../types/all-dict-conf'
 import {
@@ -12,7 +11,7 @@ import {
 } from '../../utils'
 import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
-export const getSrcPage: GetSrcPageFunction = text => {
+export const getSrcPage: GetSrcPageFunction = (text: string) => {
   return (
     'http://dict.cnki.net/old/dict_result.aspx?scw=' + encodeURIComponent(text)
   )
@@ -43,7 +42,7 @@ export interface CNKIResult {
 
 type CNKISearchResult = DictSearchResult<CNKIResult>
 
-export const search: SearchFunction<CNKIResult> = (
+export const search: SearchFunction<CNKIResult> = async (
   text,
   opt
 ) => {

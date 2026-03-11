@@ -49,7 +49,7 @@ export type WebsterLearnerResult =
 type WebsterLearnerSearchResult = DictSearchResult<WebsterLearnerResult>
 type WebsterLearnerSearchResultLex = DictSearchResult<WebsterLearnerResultLex>
 
-export const search: SearchFunction<WebsterLearnerResult> = (
+export const search: SearchFunction<WebsterLearnerResult> = async (
   text,
   opt
 ) => {

@@ -5,9 +5,9 @@ import {
   getChsToChz
 } from '../../utils'
 import axios from 'axios'
-import type { Profile } from '@/config/app-config/profiles'
 import type { GuoYuResult } from './type'
 import type { SearchFunction, DictSearchResult } from '@/core/api-server/api-common/search-type'
+import type { Profile } from '@/config/trans-profile'
 
 export const search: SearchFunction<GuoYuResult> = (
   text,
@@ -25,7 +25,7 @@ export async function moedictSearch<R extends GuoYuResult> (
   text: string,
   options: Profile['dicts']['all']['guoyu']['options']
 ): Promise<DictSearchResult<R>> {
-  const chsToChz = await getChsToChz()
+  const chsToChz = getChsToChz()
   const { data } = await axios
     .get<R>(
       `https://www.moedict.tw/${moedictID}/${encodeURIComponent(
@@ -46,9 +46,7 @@ export async function moedictSearch<R extends GuoYuResult> (
 
   for (const h of data.h) {
     if (h['=']) {
-      h[
-        '='
-      ] = `https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/${h['=']}.ogg`
+      h['='] = `https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/${h['=']}.ogg`
     }
     if (!result.audio) {
       result.audio = {

@@ -8,8 +8,7 @@ import {
   handleNetWorkError
 } from '../../utils'
 import type { OaldictResult, Idiom } from './type'
-import type { GetSrcPageFunction } from '@/core/api-atom/atom-type'
-import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 
 
 export const getSrcPage: GetSrcPageFunction = text => {

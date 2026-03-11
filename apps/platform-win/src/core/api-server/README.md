@@ -2,7 +2,8 @@
 
 
 
-- 该项目不应该引入任何 saladict-core 中的内容
+- search 应该和 globalConfig 进行解耦
+- search 不应该包含视图，或者任何翻译内容以外的格式
 - 所有文件夹都包含以下内容
   - _locales 提供语言的名称
   - api-atom 提供拆分各个 API 的多个原子化的方法

@@ -59,15 +59,13 @@ export interface MacmillanPayload {
   href?: string
 }
 
-export const search: SearchFunction<MacmillanResult, MacmillanPayload> = async (
+export const search: SearchFunction<MacmillanResult> = async (
   text,
   opt
 ) => {
   const options = opt.profile.macmillan.options
 
-  return fetchMacmillanDom(
-    payload.href || (await getSrcPage(text, opt.config.langCode, opt.profile))
-  )
+  return fetchMacmillanDom((await getSrcPage(text, opt.localLang || 'zh-CN', opt.profile)))
     .catch(handleNetWorkError)
     .then(doc => checkResult(doc, options))
 }

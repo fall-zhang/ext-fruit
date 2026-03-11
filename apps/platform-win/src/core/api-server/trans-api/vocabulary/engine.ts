@@ -18,9 +18,7 @@ export interface VocabularyResult {
 
 type VocabularySearchResult = DictSearchResult<VocabularyResult>
 
-export const search: SearchFunction<VocabularyResult> = (
-  text
-) => {
+export const search: SearchFunction<VocabularyResult> = async (text) => {
   return fetchDirtyDOM(
     'https://www.vocabulary.com/dictionary/' +
       encodeURIComponent(text.replace(/\s+/g, ' '))

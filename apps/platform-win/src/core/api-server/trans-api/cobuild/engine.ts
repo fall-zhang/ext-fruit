@@ -1,9 +1,9 @@
-import type { HTMLString, SearchFunction, DictSearchResult } from '@/core/api-server/types'
-import type { GetSrcPageFunction } from '@/core/api-server/types/dict-fetch'
 import { handleNetWorkError, getChsToChz, externalLink, getInnerHTML, handleNoResult } from '@/core/api-server/utils'
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 import type { AppConfig } from '@/config/app-config'
 import { getStaticSpeaker } from '@/components/Speaker'
+import type { GetSrcPageFunction, SearchFunction, DictSearchResult } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return (
@@ -39,13 +39,11 @@ export interface COBUILDColResult {
 export type COBUILDResult = COBUILDCibaResult | COBUILDColResult
 
 export const search: SearchFunction<COBUILDResult> = async (
-  text,
-  config,
-  profile,
-  payload
+  recText,
+  opt
 ) => {
-  text = encodeURIComponent(text.replace(/\s+/g, '-'))
-  const { options } = profile.dicts.all.cobuild
+  const text = encodeURIComponent(recText.replace(/\s+/g, '-'))
+  const { options } = opt.profile.cobuild
   const sources: string[] = [
     'https://www.collinsdictionary.com/dictionary/english/',
     'https://www.collinsdictionary.com/zh/dictionary/english/',
@@ -56,7 +54,7 @@ export const search: SearchFunction<COBUILDResult> = async (
   }
 
   try {
-    return handleDOM(await fetchDirtyDOM(sources[0] + text), config)
+    return handleDOM(await fetchDirtyDOM(sources[0] + text), opt.localLang)
   } catch (e) {
     let doc: Document
     try {
@@ -64,15 +62,15 @@ export const search: SearchFunction<COBUILDResult> = async (
     } catch (e) {
       return handleNetWorkError()
     }
-    return handleDOM(doc, config)
+    return handleDOM(doc, opt.localLang)
   }
 }
 
 async function handleDOM (
   doc: Document,
-  config: AppConfig
+  localLang?: 'en' | 'zh-CN' | 'zh-TW'
 ): Promise<DictSearchResult<COBUILDColResult>> {
-  const transform = await getChsToChz(config.langCode)
+  const transform = getChsToChz(localLang)
 
   const result: COBUILDColResult = {
     type: 'collins',
@@ -126,7 +124,7 @@ async function handleDOM (
           '.youtube-video'
         )
         if ($youtubeVideo && $youtubeVideo.dataset.embed) {
-          const width = config.panelWidth - 25
+          const width = 240 - 25
           const height = (width / 560) * 315
           return {
             id,

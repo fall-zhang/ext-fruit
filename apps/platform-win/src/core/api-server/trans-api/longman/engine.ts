@@ -73,11 +73,9 @@ type LongmanSearchResultRelated = DictSearchResult<LongmanResultRelated>
 
 export const search: SearchFunction<LongmanResult> = (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
-  const options = profile.dicts.all.longman.options
+  const options = opt.profile.longman.options
   return fetchDirtyDOM(
     'http://www.ldoceonline.com/dictionary/' +
       text.toLocaleLowerCase().replace(/[^A-Za-z0-9]+/g, '-')

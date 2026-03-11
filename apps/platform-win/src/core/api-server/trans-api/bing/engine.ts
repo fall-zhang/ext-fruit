@@ -1,8 +1,5 @@
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
-import type {
-  SearchFunction,
-  DictSearchResult
-} from '../../types'
+
 import {
   handleNoResult,
   handleNetWorkError,
@@ -10,9 +7,9 @@ import {
   getInnerHTML,
   getChsToChz
 } from '../../utils'
-import type { AllDictsConf } from '@/config/app-config'
-import type { GetSrcPageFunction } from '@/core/api-server/api-common/fetch-type'
 import type { BingResult, BingResultLex, BingResultMachine, BingResultRelated } from './type'
+import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { AllDictsConf } from '../../types/all-dict-conf'
 
 export const getSrcPage: GetSrcPageFunction = text =>
   'https://cn.bing.com/dict/search?q=' +
@@ -34,43 +31,17 @@ export const getSearchURL = (word: string) => {
   return DICT_LINK + encodeURIComponent(word.replace(/\s+/g, ' '))
 }
 
-export const handleSearchRes = async ({
-  doc,
-  config,
-}) => {
-  const transform = getChsToChz(config.langCode)
-
-  if (doc.querySelector('.client_def_hd_hd')) {
-    return handleLexResult(doc, bingConfig.options, transform)
-  }
-
-  if (doc.querySelector('.client_trans_head')) {
-    return handleMachineResult(doc, transform)
-  }
-
-  if (bingConfig.options.related) {
-    if (doc.querySelector('.client_do_you_mean_title_bar')) {
-      return handleRelatedResult(doc, transform)
-    }
-  }
-
-  return handleNoResult<DictSearchResult<BingResult>>()
-}
-
 export const search: SearchFunction<BingResult> = async (
   text,
-  {
-    config,
-    profile,
-  }
+  opt
 ) => {
-  const bingConfig = profile.dicts.all.bing
+  const bingConfig = opt.profile.bing
 
   return fetchDirtyDOM(
     DICT_LINK + encodeURIComponent(text.replace(/\s+/g, ' '))
   )
     .then(async doc => {
-      const transform = getChsToChz(config.langCode)
+      const transform = getChsToChz(opt.localLang || '')
 
       if (doc.querySelector('.client_def_hd_hd')) {
         return handleLexResult(doc, bingConfig.options, transform)

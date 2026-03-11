@@ -3,7 +3,6 @@ import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-com
 import type { HTMLString } from '@/core/api-server/types'
 import { handleNetWorkError, getInnerHTML } from '@/core/api-server/utils'
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
-import type { Profile } from '@/config/app-config/profiles'
 import { getStaticSpeaker } from '@/components/Speaker'
 import type { HjdictPayload, HjdictResult, HjdictResultRelated } from './type'
 import { isContainFrench, isContainDeutsch, isContainSpanish, isContainEnglish, isContainJapanese, isContainKorean, isContainChinese } from '@/core/api-server/utils/lang-check'
@@ -14,7 +13,7 @@ const HOST = 'https://www.hjdict.com'
 
 type HjdictSearchResult = DictSearchResult<HjdictResult>
 
-export const search: SearchFunction<HjdictResult, HjdictPayload> = async (
+export const search: SearchFunction<HjdictResult> = async (
   text,
   opt
 ) => {
@@ -35,7 +34,7 @@ export const search: SearchFunction<HjdictResult, HjdictPayload> = async (
 
   await Promise.all(
     Object.keys(cookies).map(name =>
-      browser.cookies.set({
+      window.cookieStore.set({
         url: 'https://www.hjdict.com',
         domain: 'hjdict.com',
         name,
@@ -44,7 +43,7 @@ export const search: SearchFunction<HjdictResult, HjdictPayload> = async (
     )
   )
 
-  const langCode = opt.payload.langCode || getLangCode(text, opt.profile.hjdict)
+  const langCode = getLangCode(text, opt.profile.hjdict)
 
   return fetchDirtyDOM(
     `https://www.hjdict.com/${langCode}/${encodeURIComponent(text)}`,

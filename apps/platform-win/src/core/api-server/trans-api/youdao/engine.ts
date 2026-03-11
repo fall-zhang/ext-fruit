@@ -1,4 +1,4 @@
-import type { GetSrcPageFunction } from '@/core/api-atom/atom-type'
+import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 import type {
   HTMLString
 
@@ -12,6 +12,7 @@ import {
   getChsToChz,
   removeChild
 } from '../../utils'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text =>
   'https://dict.youdao.com/w/' + encodeURIComponent(text.replace(/\s+/g, ' '))
@@ -49,11 +50,10 @@ type YoudaoSearchResult = DictSearchResult<YoudaoResult>
 
 export const search: SearchFunction<YoudaoResult> = async (
   text,
-  config,
-  profile
+  opt
 ) => {
-  const options = profile.dicts.all.youdao.options
-  const transform = await getChsToChz(config.langCode)
+  const options = opt.profile.youdao.options
+  const transform = getChsToChz(opt.localLang || '')
 
   return fetchDirtyDOM(
     'https://dict.youdao.com/w/' + encodeURIComponent(text.replace(/\s+/g, ' '))

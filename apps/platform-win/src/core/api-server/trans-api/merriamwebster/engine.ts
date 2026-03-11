@@ -90,14 +90,23 @@ export function _getSynonyms (
 
   if (!synonymsEle) return undefined
 
-  const functions = [
-    ...synonymsEle?.querySelectorAll('.function-label').values(),
-  ]
-  const lists = [
-    ...synonymsEle?.querySelectorAll('ul.synonyms-antonyms-grid-list')?.values(),
-  ]
+  const functions = []
+  const domList = synonymsEle?.querySelectorAll('.function-label').values()
+  if (domList) {
+    for (const item of domList) {
+      functions.push(item)
+    }
+  }
+  const lists = []
+  const domList2 = synonymsEle?.querySelectorAll('ul.synonyms-antonyms-grid-list')?.values()
+  if (domList2) {
+    for (const item of domList2) {
+      lists.push(item)
+    }
+  }
 
-  if (!lists) return undefined
+
+  if (lists.length === 0) return undefined
 
   const words = [...lists].map(l =>
     [...l.querySelectorAll('a[lang]').values()].map(v => v.textContent)

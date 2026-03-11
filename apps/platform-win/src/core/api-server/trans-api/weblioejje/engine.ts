@@ -20,9 +20,8 @@ export type WeblioejjeResult = Array<{
 
 type WeblioejjeSearchResult = DictSearchResult<WeblioejjeResult>
 
-export const search: SearchFunction<WeblioejjeResult> = (
-  text,
-  opt
+export const search: SearchFunction<WeblioejjeResult> = async (
+  text
 ) => {
   return fetchDirtyDOM(getSrcPage(text))
     .catch(handleNetWorkError)

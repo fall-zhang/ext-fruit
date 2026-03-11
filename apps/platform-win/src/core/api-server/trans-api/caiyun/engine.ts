@@ -3,20 +3,18 @@ import { Caiyun } from '@salad/trans/service-caiyun/index'
 import type { TranslateResult } from '@salad/trans/translator/index'
 
 import { getTranslator as getBaiduTranslator } from '../baidu/engine'
-import type { CaiyunLanguage } from './config'
-import { getMTArgs, type MachineTranslatePayload } from '../../api-common/get-trans-info'
 import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 import { machineResult, type MachineTranslateResult } from '../../api-common/result-handle'
+import { detectLangInfo } from '../../api-common/detect-lang'
 
-export const getTranslator = memoizeOne(
-  () =>
-    new Caiyun({
-      config: process.env.CAIYUN_TOKEN
-        ? {
-          token: process.env.CAIYUN_TOKEN,
-        }
-        : undefined,
-    })
+export const getTranslator = memoizeOne(() =>
+  new Caiyun({
+    config: process.env.CAIYUN_TOKEN
+      ? {
+        token: process.env.CAIYUN_TOKEN,
+      }
+      : undefined,
+  })
 )
 
 export const getSrcPage: GetSrcPageFunction = () => {
@@ -26,21 +24,17 @@ export const getSrcPage: GetSrcPageFunction = () => {
 export type CaiyunResult = MachineTranslateResult
 
 export const search: SearchFunction<
-  CaiyunResult,
-  MachineTranslatePayload<CaiyunLanguage>
+  CaiyunResult
 > = async (rawText, opt) => {
   const translator = getTranslator()
   const langcodes = translator.getSupportLanguages()
 
-  let { sl, tl, text } = await getMTArgs(
-    translator,
+  let { from: sl, to: tl, text } = detectLangInfo(
     rawText,
     {
-      from: opt.payload.sl,
-      to: opt.payload.tl,
-      dictOption: opt.profile.caiyun.options,
-      optionalVal: opt.profile.caiyun.optionalVal,
-      localeLang: opt.config.langCode,
+      from: opt.from,
+      to: opt.to,
+      localLang: opt.localLang,
     }
   )
 
@@ -57,8 +51,7 @@ export const search: SearchFunction<
   } catch (e) {
     console.warn('⚡️ line:55 ~ e: ', e)
   }
-
-  const caiYunToken = config.dictAuth.caiyun.token
+  const caiYunToken = opt.dictAuth?.caiyun.token
   const caiYunConfig = caiYunToken ? { token: caiYunToken } : undefined
 
   try {
@@ -77,7 +70,7 @@ export const search: SearchFunction<
           id: 'caiyun',
           sl: result.from,
           tl: result.to,
-          slInitial: profile.dicts.all.caiyun.options.slInitial,
+          slInitial: opt.profile.caiyun.options.slInitial,
           searchText: result.origin,
           trans: result.trans,
         },

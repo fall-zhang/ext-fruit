@@ -1,8 +1,6 @@
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 import type {
-  HTMLString,
-  SearchFunction,
-  DictSearchResult
+  HTMLString
 } from '../../types'
 import {
   getText,
@@ -12,6 +10,7 @@ import {
   handleNetWorkError
 } from '../../utils'
 import type { AllDictsConf } from '@/core/api-server/types/all-dict-conf'
+import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
 
 const HOST = 'https://www.etymonline.com'
 
@@ -27,7 +26,7 @@ export type EtymonlineResult = EtymonlineResultItem[]
 
 type EtymonlineSearchResult = DictSearchResult<EtymonlineResult>
 
-export const search: SearchFunction<EtymonlineResult> = (
+export const search: SearchFunction<EtymonlineResult> = async (
   text,
   opt
 ) => {

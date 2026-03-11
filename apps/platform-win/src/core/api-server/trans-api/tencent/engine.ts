@@ -2,10 +2,9 @@ import memoizeOne from 'memoize-one'
 import { Tencent } from '@salad/trans/service-tencent/index'
 
 import { getTranslator as getBaiduTranslator } from '../baidu/engine'
-import type { TencentLanguage } from './config'
-import { type MachineTranslatePayload, getMTArgs } from '../../api-common/get-trans-info'
-import type { MachineTranslateResult, machineResult } from '../../api-common/result-handle'
+import { machineResult, type MachineTranslateResult } from '../../api-common/result-handle'
 import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
+import { detectLangInfo } from '../../api-common/detect-lang'
 
 export const getTranslator = memoizeOne(
   () =>
@@ -20,12 +19,12 @@ export const getTranslator = memoizeOne(
     })
 )
 
-export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
+export const getSrcPage: GetSrcPageFunction = (text, localLang, profile) => {
   let lang
   if (profile.tencent.options.tl === 'default') {
-    if (config.langCode === 'zh-CN') {
+    if (localLang === 'zh-CN') {
       lang = 'zh-CHS'
-    } else if (config.langCode === 'zh-TW') {
+    } else if (localLang === 'zh-TW') {
       lang = 'zh-CHT'
     } else {
       lang = 'en'
@@ -39,22 +38,20 @@ export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
 
 export type TencentResult = MachineTranslateResult
 
-export const search: SearchFunction<
-  TencentResult,
-  MachineTranslatePayload<TencentLanguage>
-> = async (rawText, opt) => {
+export const search: SearchFunction<TencentResult> = async (rawText, opt) => {
   const translator = getTranslator()
 
-  const { sl, tl, text } = await getMTArgs(
-    translator,
+  const { from: sl, to: tl, text } = detectLangInfo(
     rawText,
-    opt.profile.tencent,
-    opt.config,
-    opt.payload
+    {
+      from: opt.from,
+      to: opt.to,
+      localLang: opt.localLang,
+    }
   )
 
-  const secretId = config.dictAuth.tencent.secretId
-  const secretKey = config.dictAuth.tencent.secretKey
+  const secretId = opt.dictAuth?.tencent.secretId
+  const secretKey = opt.dictAuth?.tencent.secretKey
   const translatorConfig =
     secretId && secretKey ? { secretId, secretKey } : undefined
 

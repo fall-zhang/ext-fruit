@@ -1,11 +1,11 @@
-import type { SearchFunction } from '@/core/api-server/types'
-import type { GetSrcPageFunction } from '@/core/api-server/types/dict-fetch'
+
 import {
   handleNoResult,
   handleNetWorkError
 } from '../../utils'
 import type { AxiosResponse } from 'axios'
 import axios from 'axios'
+import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 
 export const getSrcPage: GetSrcPageFunction = async text => {
   const suggests = await getSuggests(text).catch(() => null)
@@ -106,10 +106,7 @@ export interface MojidictResult {
 }
 
 export const search: SearchFunction<MojidictResult> = async (
-  text,
-  config,
-  profile,
-  payload
+  text
 ) => {
   const suggests = await getSuggests(text)
 
@@ -165,7 +162,7 @@ export const search: SearchFunction<MojidictResult> = async (
         .slice(1)
     }
 
-    if (result.word && config.autoPronounce.cn.dict === 'mojidict') {
+    if (result.word) {
       result.word.tts = await getTTS(tarId, 102)
       return { result, audio: { py: result.word.tts } }
     }

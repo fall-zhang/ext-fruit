@@ -2,8 +2,7 @@
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 
 import type { EudicResult, EudicResultItem } from './type'
-import type { GetSrcPageFunction } from '@/core/api-server/api-common/atom-type'
-import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
+import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '@/core/api-server/api-common/search-type'
 import { handleNetWorkError, getText, handleNoResult } from '@/core/api-server/utils'
 
 export const getSrcPage: GetSrcPageFunction = text => {
@@ -13,7 +12,7 @@ export const getSrcPage: GetSrcPageFunction = text => {
 type EudicSearchResult = DictSearchResult<EudicResult>
 
 
-export const search: SearchFunction<EudicResult> = (
+export const search: SearchFunction<EudicResult> = async (
   text,
   opt
 ) => {
@@ -25,9 +24,7 @@ export const search: SearchFunction<EudicResult> = (
   )
   const options = opt.profile.eudic.options
 
-  return fetchDirtyDOM('https://dict.eudic.net/dicts/en/' + newText, {
-    withCredentials: false,
-  })
+  return fetchDirtyDOM('https://dict.eudic.net/dicts/en/' + newText)
     .catch(handleNetWorkError)
     .then(validator)
     .then(doc => handleDOM(doc, options))
@@ -95,7 +92,7 @@ function validator (doc: Document): Document | Promise<Document> {
 
   return fetchDirtyDOM('https://dict.eudic.net/Dicts/en/tab-detail/-12', {
     method: 'POST',
-    data: formData,
-    withCredentials: false,
+    body: formData,
+    credentials: 'omit',
   })
 }

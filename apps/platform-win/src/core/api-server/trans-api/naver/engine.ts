@@ -29,14 +29,13 @@ interface NaverPayload {
 
 type NaverSearchResult = DictSearchResult<NaverResult>
 
-export const search: SearchFunction<NaverResult, NaverPayload> = (
+export const search: SearchFunction<NaverResult> = (
   text,
   opt
 ) => {
   const { options } = opt.profile.naver
 
   if (
-    opt.payload.lang === 'ja' ||
     options.hanAsJa ||
     isContainJapanese(text) ||
     (options.korAsJa && isContainKorean(text))

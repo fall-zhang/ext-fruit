@@ -18,10 +18,15 @@ export function handleNetWorkError (): Promise<never> {
  * 将简体中文，翻译成繁体中文
  * @param langCode
  */
-export function getChsToChz (langCode: string): null | ((text: string) => string) {
-  return ['zh-TW', 'zh-HK'].includes(langCode)
-    ? chsToChz
-    : null
+// export function getChsToChz (langCode: undefined): (text: string) => string
+export function getChsToChz (langCode?: string): null | ((text: string) => string) {
+  if (!langCode) {
+    return chsToChz
+  }
+  if (['zh-TW', 'zh-HK'].includes(langCode)) {
+    return chsToChz
+  }
+  return null
 }
 
 /**

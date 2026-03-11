@@ -1,5 +1,4 @@
-import type { GetSrcPageFunction } from '../../api-common/atom-type'
-import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 import type { HTMLString } from '../../types'
 import { handleNetWorkError, handleNoResult, getText, getFullLink, getInnerHTML } from '../../utils'
 import { fetchDirtyDOM } from '../../utils/fetch-dom'
@@ -34,7 +33,7 @@ export type RenrenResult = RenrenResultItem[]
 
 type RenrenSearchResult = DictSearchResult<RenrenResult>
 
-export const search: SearchFunction<RenrenResult> = (
+export const search: SearchFunction<RenrenResult> = async (
   text
 ) => {
   return fetchDirtyDOM(

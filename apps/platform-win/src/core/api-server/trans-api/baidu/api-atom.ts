@@ -1,3 +1,4 @@
+import type { GetSrcPageFunction } from '../../api-common/search-type'
 
 export const getSrcPage: GetSrcPageFunction = (text, langCode, dictProfile) => {
   let lang

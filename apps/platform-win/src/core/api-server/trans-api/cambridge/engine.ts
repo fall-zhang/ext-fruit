@@ -1,9 +1,9 @@
-import type { GetSrcPageFunction } from '@/core/api-server/api-common/atom-type'
-import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
+import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '@/core/api-server/api-common/search-type'
 import type { HTMLString } from '@/core/api-server/types'
 import { getChsToChz, handleNetWorkError, getText, getFullLink, removeChild, getInnerHTML, handleNoResult, externalLink } from '@/core/api-server/utils'
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 import type { getStaticSpeaker } from '@/components/Speaker'
+import type { AllDictsConf } from '../../types/all-dict-conf'
 
 export const getSrcPage: GetSrcPageFunction = async (text, localLang, profile) => {
   let { lang } = profile.cambridge.options
@@ -62,12 +62,11 @@ type CambridgeSearchResult = DictSearchResult<CambridgeResult>
 
 export const search: SearchFunction<CambridgeResult> = async (
   text,
-  config,
-  profile
+  opt
 ) => {
-  return fetchDirtyDOM(await getSrcPage(text, config, profile))
+  return fetchDirtyDOM(await getSrcPage(text, opt.localLang || 'zh-CN', opt.profile))
     .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, profile.dicts.all.cambridge.options))
+    .then(doc => handleDOM(doc, opt.profile.cambridge.options))
 }
 
 function handleDOM (

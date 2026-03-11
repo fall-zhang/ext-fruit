@@ -1,5 +1,5 @@
 export const auth = {
-  token: ''
+  token: '',
 }
 
 export const url = 'https://fanyi.caiyunapp.com/#/api'

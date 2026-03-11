@@ -1,19 +1,26 @@
+import type { Language } from '@P/open-trans/languages'
 import type { AllDictsConf } from '../types/all-dict-conf'
-import type { AppConfig } from '@/config/app-config'
-
+// import type { AppConfig } from '@/config/app-config'
+import type { DictAuths } from '@/config/trans-profile/auth'
 
 /**
  * Fetch and parse dictionary search result
  *
  * 获取和解析查询结果
  */
-export interface SearchFunction<Result, Payload = unknown> {
+export interface SearchFunction<Result = unknown> {
   (
     text: string,
     options: {
-      config: AppConfig,
+      // config: AppConfig,
       profile: AllDictsConf,
-      payload: Readonly<Payload>
+      dictAuth?: DictAuths
+      // 语言相关配置
+      from?: Language
+      to?: Language
+      localLang?: 'en' | 'zh-CN' | 'zh-TW'
+      /** 保留换行 */
+      keepLF?: boolean
     }
   ): Promise<DictSearchResult<Result>>
 }
@@ -55,7 +62,7 @@ export type GetSrcPageFunction = {
   // config 当前配置
   (
     text: string,
-    localLangCode?: 'zh-CN' | 'zh-TW' | 'en',
-    profile?: AllDictsConf
+    localLangCode: 'zh-CN' | 'zh-TW' | 'en',
+    profile: AllDictsConf
   ): string | Promise<string>
 }

@@ -15,8 +15,8 @@ const HOST = 'https://ahdictionary.com'
 
 type AhdictSearchResult = DictSearchResult<AhdictResult>
 
-export const search: SearchFunction<AhdictResult> = async (text, option) => {
-  const options = option.profile.ahdict
+export const search: SearchFunction<AhdictResult> = async (text, opt) => {
+  const options = opt.profile.ahdict
 
   return fetchDirtyDOM(
     'https://ahdictionary.com/word/search.html?q=' + encodeURIComponent(text.replace(/\s+/g, ' '))

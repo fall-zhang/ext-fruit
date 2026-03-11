@@ -46,13 +46,11 @@ export interface JukuuPayload {
 
 type JukuuSearchResult = DictSearchResult<JukuuResult>
 
-export const search: SearchFunction<JukuuResult, JukuuPayload> = (
+export const search: SearchFunction<JukuuResult> = async (
   text,
-  config,
-  profile,
-  payload
+  opt
 ) => {
-  const lang = payload.lang || profile.dicts.all.jukuu.options.lang
+  const lang = opt.profile.jukuu.options.lang
   return fetchDirtyDOM(getUrl(text, lang))
     .catch(handleNetWorkError)
     .then(handleDOM)

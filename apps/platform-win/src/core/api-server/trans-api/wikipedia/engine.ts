@@ -10,6 +10,7 @@ import {
   getFullLink
 } from '../../utils'
 import { fetchDirtyDOM } from '../../utils/fetch-dom'
+import { isContainChinese, isContainJapanese } from '../../utils/lang-check'
 
 export const getSrcPage: GetSrcPageFunction = (text, localLangCode, profile) => {
   const { lang } = profile.wikipedia.options
@@ -40,14 +41,15 @@ export type WikipediaPayload = {
   url?: string
 }
 
-export const search: SearchFunction<WikipediaResult, WikipediaPayload> = (
+export const search: SearchFunction<WikipediaResult> = async (
   text,
   opt
 ) => {
   const { lang } = opt.profile.wikipedia.options
   let subdomain = getSubdomain(text, lang)
 
-  let url = opt.payload.url
+  // let url = opt.payload.url
+  let url = ''
   if (url) {
     const matchSubdomain = url.match(/([^/.]+)\.m\.wikipedia\.org/)
     if (matchSubdomain) {
@@ -141,7 +143,12 @@ function getSubdomain (
   }
 
   if (lang === 'auto') {
-    return isContainJapanese(text) ? 'ja' : isContainChinese(text) ? 'zh' : 'en'
+    if (isContainJapanese(text)) {
+      return 'ja'
+    } else if (isContainChinese(text)) {
+      return 'zh'
+    }
+    return 'en'
   }
 
   return lang
@@ -155,6 +162,7 @@ function getLangList (doc: Document): LangList {
       if (url && title) {
         return { url, title }
       }
+      return undefined
     })
     .filter((x): x is LangListItem => !!x)
 }

@@ -11,14 +11,12 @@ export type LiangAnResult = GuoYuResult
 
 export const search: SearchFunction<LiangAnResult> = (
   text,
-  config,
-  profile
+  opt
 ) => {
   return moedictSearch<LiangAnResult>(
     'c',
     text,
-    config,
-    profile.dicts.all.liangan.options
+    opt.profile.liangan.options
   ).then(result => {
     if (result.result.h) {
       result.result.h.forEach(h => {
