@@ -4,7 +4,6 @@ import {
   handleNetWorkError,
   getChsToChz
 } from '../../utils'
-import axios from 'axios'
 import type { GuoYuResult } from './type'
 import type { SearchFunction, DictSearchResult } from '@/core/api-server/api-common/search-type'
 import type { Profile } from '@/config/trans-profile'
@@ -26,12 +25,9 @@ export async function moedictSearch<R extends GuoYuResult> (
   options: Profile['dicts']['all']['guoyu']['options']
 ): Promise<DictSearchResult<R>> {
   const chsToChz = getChsToChz()
-  const { data } = await axios
-    .get<R>(
-      `https://www.moedict.tw/${moedictID}/${encodeURIComponent(
-        chsToChz(text.replace(/\s+/g, ''))
-      )}.json`
-    )
+  const { data } = await fetch(`https://www.moedict.tw/${moedictID}/${encodeURIComponent(
+    chsToChz(text.replace(/\s+/g, ''))
+  )}.json`).then(res => res.json())
     .catch(handleNetWorkError)
 
   if (!data || !data.h) {

@@ -1,6 +1,6 @@
 import type { AxiosRequestConfig } from 'axios'
 import axios from 'axios'
-
+import { fetch } from '@tauri-apps/plugin-http'
 export async function fetchDirtyDOM (
   url: string,
   config?: Partial<RequestInit>

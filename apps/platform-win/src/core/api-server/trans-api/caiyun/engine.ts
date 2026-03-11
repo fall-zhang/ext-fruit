@@ -9,9 +9,9 @@ import { detectLangInfo } from '../../api-common/detect-lang'
 
 export const getTranslator = memoizeOne(() =>
   new Caiyun({
-    config: process.env.CAIYUN_TOKEN
+    config: import.meta.env.VITE_CAIYUN_TOKEN
       ? {
-        token: process.env.CAIYUN_TOKEN,
+        token: import.meta.env.VITE_CAIYUN_TOKEN,
       }
       : undefined,
   })
