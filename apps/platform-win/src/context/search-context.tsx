@@ -5,9 +5,10 @@ import type { Word } from '../types/word'
 import { getDefaultProfile, getDefaultSelectDict, type Profile } from '@/config/trans-profile'
 import { checkSupportedLangs, countWords } from '../utils/lang-check'
 import type { AllDictsConf } from '@/core/api-server/types/all-dict-conf'
-import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
+import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
 import type { DictID } from '@/core/api-server/types'
 import { api } from '@/core/api-server/trans-api'
+import { getDefaultDictAuths } from '@/config/trans-profile/auth'
 
 type RenderDictItem = {
   readonly dictID: DictID
@@ -67,8 +68,7 @@ const createSearchStore = () => {
     selectedDicts: getDefaultSelectDict(),
     searchHistory: [],
     userFoldedDicts: {},
-    switchHistory () {
-    },
+    switchHistory () { },
     searchStart (payload) {
       let dictList: RenderDictItem[] = []
       let word: Word
@@ -93,9 +93,7 @@ const createSearchStore = () => {
       }
       set((state) => {
         if (!word) {
-          if (process.env.DEBUG) {
-            console.warn('SEARCH_START: Empty word on first search', payload)
-          }
+          console.warn('SEARCH_START: Empty word on first search', payload)
           return state
         }
         if (payload && payload.id) {
@@ -146,17 +144,27 @@ const createSearchStore = () => {
       })
       console.log('⚡️ line:63 ~ word: ', selectedDicts)
       selectedDicts.forEach((id, index) => {
-        api[id]({
-          text: word.text,
+        const searchFun: SearchFunction = api[id]
+        // api.baidu('', {
+        //   config: undefined,
+        //   profile: undefined,
+        //   payload: undefined,
+        // })
+        searchFun(word.text, {
+          profile: activeProfile.dicts.all,
+          dictAuth: getDefaultDictAuths(),
         }).then((res: DictSearchResult) => {
+          console.log('⚡️ line:158 ~ res: ', id, '   ', res)
           const dictResult: RenderDictItem = {
             dictID: id,
             searchStatus: 'FINISH',
             searchResult: res,
           }
+          const newDict = renderedDicts.toSpliced(index, 1, dictResult)
+          console.log('⚡️ line:157 ~ newDict: ', newDict)
           set(state => ({
             ...state,
-            renderedDicts: renderedDicts.toSpliced(index, 1, dictResult),
+            renderedDicts: newDict,
           }))
         }).catch((err: unknown) => {
           console.warn('⚡️ line:157 ~ err: ', err)
@@ -166,8 +174,8 @@ const createSearchStore = () => {
       //   from: 'auto',
       //   to: 'zh',
       //   option: {
-      //     appid: '20260228002563230',
-      //     key: 'ujv5scyNwqVHs5_pZCaJ',
+      //     appid: '',
+      //     key: '',
       //   },
       // })
       // DEFAULT_PROPS.customFetch(request).then(res => {
@@ -242,6 +250,6 @@ export function SearchProvider ({ children }: {
 
 export function useSearchContext<T> (selector: (state: DictSearchState) => T): T {
   const store = useContext(SearchContext)
-  if (!store) throw new Error('Missing BearContext.Provider in the tree')
+  if (!store) throw new Error('Missing SearchProvider in the tree')
   return useStore(store, selector)
 }
