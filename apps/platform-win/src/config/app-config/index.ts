@@ -1,6 +1,5 @@
 import type { ReadonlyDeep } from 'type-fest'
 import { getAllContextMenus } from './context-menus'
-import { getDefaultDictAuths } from './auth'
 import type { SaladConfigType } from './config-type'
 
 export type AppConfigMutable = SaladConfigType
@@ -223,6 +222,5 @@ export function getDefaultConfig (): SaladConfigType {
 
     /** Open settings on first switching "translation" profile */
     showedDictAuth: false,
-    dictAuth: getDefaultDictAuths(),
   }
 }

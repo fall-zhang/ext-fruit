@@ -1,5 +1,4 @@
 import type { DictID } from '@/core/api-server/types'
-import type { DictAuths } from './auth'
 import type { SupportedLangs } from '@/utils/lang-check'
 
 export type LangCode = 'zh-CN' | 'zh-TW' | 'en'
@@ -211,7 +210,6 @@ export type SaladConfigType = {
 
   /** Open settings on first switching "translation" profile */
   showedDictAuth: boolean,
-  dictAuth: DictAuths
 
 
   /** enable Google analytics */

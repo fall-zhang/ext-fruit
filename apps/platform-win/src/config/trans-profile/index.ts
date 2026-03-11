@@ -2,6 +2,7 @@
 import { v4 as uuid } from 'uuid'
 import type { AllDictsConf } from '@/core/api-server/types/all-dict-conf'
 import { getAllDicts } from '@/core/api-server/types/all-dict-conf'
+import { getDefaultDictAuths, type DictAuths } from './auth'
 
 export type MtaAutoUnfold = '' | 'once' | 'always' | 'popup' | 'hide'
 
@@ -25,6 +26,7 @@ export type ProfileMutable = {
     // settings of each dict will be auto-generated
     all: AllDictsConf,
   },
+  dictAuth: DictAuths
 }
 export type Profile = ProfileMutable
 
@@ -71,6 +73,7 @@ export function getDefaultProfile (id?: string): Profile {
       // settings of each dict will be auto-generated
       all: getAllDicts(),
     },
+    dictAuth: getDefaultDictAuths(),
   }
 }
 
