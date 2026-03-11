@@ -1,4 +1,5 @@
-import { AddConfig, SyncService } from '../../interface'
+import type { AddConfig } from '../../interface'
+import { SyncService } from '../../interface'
 import { getNotebook } from '../../helpers'
 import axios from 'axios'
 
@@ -21,7 +22,7 @@ export class Service extends SyncService<SyncConfig> {
     return {
       enable: false,
       token: '',
-      syncAll: false
+      syncAll: false,
     }
   }
 
@@ -66,11 +67,11 @@ export class Service extends SyncService<SyncConfig> {
       method: 'get',
       url: 'https://api.frdic.com/api/open/v1/studylist/category',
       params: {
-        language: 'en'
+        language: 'en',
       },
       headers: {
-        Authorization: this.config.token
-      }
+        Authorization: this.config.token,
+      },
     }).catch(e => {
       if (e.response && e.response.status === 401) {
         throw new Error('illegal_token')
@@ -83,7 +84,7 @@ export class Service extends SyncService<SyncConfig> {
     }
     const { data } = result
 
-    if (process.env.DEBUG) {
+    if (import.meta.env.VITE_DEBUG) {
       console.log('Eudic Connect response(wordbook list)', data)
     }
 
@@ -101,13 +102,13 @@ export class Service extends SyncService<SyncConfig> {
       data: {
         id: '0', // id of default wordbook
         language: 'en',
-        words: typeof words === 'string' ? [words] : words
+        words: typeof words === 'string' ? [words] : words,
       },
       headers: {
-        Authorization: this.config.token
-      }
+        Authorization: this.config.token,
+      },
     }).catch(e => {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.error(e)
       }
       if (e.response && e.response.status === 401) {

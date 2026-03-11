@@ -217,9 +217,7 @@ export async function getTTS (
 
     return data.result?.result?.url || ''
   } catch (e) {
-    if (process.env.DEBUG) {
-      console.error(e)
-    }
+    console.error(e)
   }
   return ''
 }
@@ -228,7 +226,7 @@ export type GetTTS = typeof getTTS
 
 function requestPayload (data: object) {
   return JSON.stringify({
-    _ApplicationId: process.env.MOJI_ID,
+    // _ApplicationId: process.env.VITE_MOJI_ID,
     _ClientVersion: 'js2.12.0',
     _InstallationId: getInstallationId(),
     ...data,

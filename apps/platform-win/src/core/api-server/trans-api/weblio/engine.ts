@@ -47,9 +47,7 @@ function handleDOM (
     .forEach(($dict, i) => {
       const $title = $titles[i]
       if (!$title) {
-        if (process.env.DEBUG) {
-          console.error('Dict Weblio: missing title')
-        }
+        console.error('Dict Weblio: missing title')
         return
       }
 

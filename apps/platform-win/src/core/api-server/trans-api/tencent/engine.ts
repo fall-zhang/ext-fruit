@@ -7,16 +7,7 @@ import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search
 import { detectLangInfo } from '../../api-common/detect-lang'
 
 export const getTranslator = memoizeOne(
-  () =>
-    new Tencent({
-      config:
-        process.env.TENCENT_SECRETID && process.env.TENCENT_SECRETKEY
-          ? {
-            secretId: process.env.TENCENT_SECRETID,
-            secretKey: process.env.TENCENT_SECRETKEY,
-          }
-          : undefined,
-    })
+  () => new Tencent({})
 )
 
 export const getSrcPage: GetSrcPageFunction = (text, localLang, profile) => {
@@ -52,8 +43,7 @@ export const search: SearchFunction<TencentResult> = async (rawText, opt) => {
 
   const secretId = opt.dictAuth?.tencent.secretId
   const secretKey = opt.dictAuth?.tencent.secretKey
-  const translatorConfig =
-    secretId && secretKey ? { secretId, secretKey } : undefined
+  const translatorConfig = (secretId && secretKey) ? { secretId, secretKey } : undefined
 
   if (!translatorConfig) {
     return machineResult(
@@ -93,7 +83,7 @@ export const search: SearchFunction<TencentResult> = async (rawText, opt) => {
           id: 'tencent',
           sl: result.from,
           tl: result.to,
-          slInitial: profile.tencent.options.slInitial,
+          slInitial: opt.profile.tencent.options.slInitial,
           searchText: result.origin,
           trans: result.trans,
         },

@@ -109,9 +109,7 @@ export class Service extends SyncService<SyncConfig> {
         }
       ).then(r => r.json())
     } catch (e) {
-      if (process.env.DEBUG) {
-        console.error(e)
-      }
+      console.error(e)
       throw new Error('network')
     }
 

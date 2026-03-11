@@ -6,7 +6,7 @@ import type { DictSearchResult } from './api-common/search-type'
 import type { DictID } from './types'
 
 // function getDictEngine (dictID:DictID) {
-//   return import(`../core/trans-api/${dictID}/engine.ts`)
+//   return import(`./trans-api/${dictID}/engine.ts`)
 // }
 
 type FetchParam = {
@@ -25,10 +25,6 @@ export async function fetchDictResult (data: FetchParam): Promise<{
   catalog?: DictSearchResult<DictID>['catalog']
   audio?: DictSearchResult<DictID>['audio']
 }> {
-  const payload = {
-    from: '',
-  }
-
   let response: DictSearchResult<any> | undefined
 
   try {
@@ -36,17 +32,13 @@ export async function fetchDictResult (data: FetchParam): Promise<{
 
     try {
       response = await search(data.text, {
-        config: data.config,
         profile: data.profile,
-        payload,
       })
     } catch (e: any) {
       if (e.message === 'NETWORK_ERROR') {
         // retry once
         response = await search(data.text, {
-          config: data.config,
           profile: data.profile,
-          payload,
         })
       } else {
         throw e
@@ -60,9 +52,7 @@ export async function fetchDictResult (data: FetchParam): Promise<{
     ? { ...response, id: data.id }
     : { result: null, id: data.id }
 
-  if (process.env.DEBUG) {
-    console.log(`Search Engine ${data.id}`, data.text, result)
-  }
+  console.log(`Search Engine ${data.id}`, data.text, result)
 
   return result
 }

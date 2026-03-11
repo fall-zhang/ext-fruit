@@ -20,7 +20,7 @@ export async function saveWords ({
   area: DBArea
   words: Word[]
 }) {
-  if (process.env.DEBUG) {
+  if (import.meta.env.VITE_DEBUG) {
     if (words.length !== new Set(words.map(w => w.date)).size) {
       console.error('save Words: duplicate records')
     }

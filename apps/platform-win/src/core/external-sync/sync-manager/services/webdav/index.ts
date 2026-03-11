@@ -46,12 +46,12 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
   meta: SyncMeta = {}
 
   async onStart () {
-    if (process.env.DEBUG) {
+    if (import.meta.env.VITE_DEBUG) {
       console.log('Sync Service WebDAV starts interval.')
     }
 
     if (!this.config.enable) {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.warn('Sync Service WebDAV already started.')
       }
       return
@@ -94,7 +94,7 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
       return
     }
 
-    if (process.env.DEBUG) {
+    if (import.meta.env.VITE_DEBUG) {
       console.log('Sync Service WebDAV Interval Alarm triggered.')
     }
 
@@ -197,7 +197,7 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
 
   async add ({ force }: AddConfig) {
     if (!this.config.url) {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.warn(`sync service ${Service.id} upload: empty url`)
       }
       return
@@ -217,7 +217,7 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
     try {
       var body = JSON.stringify({ timestamp, words } as NotebookFile)
     } catch (e) {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.error('WebDAV: Stringify notebook failed', words)
       }
       throw new Error('parse')
@@ -236,7 +236,7 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
         throw new Error('network')
       }
     } catch (e) {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.error('WebDAV: upload failed', e)
       }
       throw new Error('network')
@@ -254,7 +254,7 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
     const config = testConfig || this.config
 
     if (!config.url) {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.warn(`sync service ${Service.id} download: empty url`)
       }
       return
@@ -287,7 +287,7 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
         throw new Error()
       }
     } catch (e) {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.error(e)
       }
       throw new Error('network')
@@ -296,27 +296,27 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
     try {
       var json: NotebookFile = await response.json()
     } catch (e) {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.error('Fetch webdav notebook.json error', response)
       }
       throw new Error('parse')
     }
 
-    if (process.env.DEBUG) {
+    if (import.meta.env.VITE_DEBUG) {
       if (!response.headers.get('ETag')) {
         console.warn('webdav notebook.json no etag', response)
       }
     }
 
     if (!Array.isArray(json.words) || json.words.some(w => !w.date)) {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.error('Parse webdav notebook.json error: incorrect words', json)
       }
       throw new Error('format')
     }
 
     if (!json.timestamp) {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.error('webdav notebook.json no timestamp', json)
       }
       throw new Error('timestamp')
@@ -343,7 +343,7 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
 
     await setNotebook(json.words)
 
-    if (process.env.DEBUG) {
+    if (import.meta.env.VITE_DEBUG) {
       console.log('Webdav download', json)
     }
   }

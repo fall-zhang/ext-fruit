@@ -8,15 +8,7 @@ import { detectLangInfo } from '../../api-common/detect-lang'
 
 export const getTranslator = memoizeOne(
   () =>
-    new Youdao({
-      config:
-        process.env.YOUDAO_APPKEY && process.env.YOUDAO_KEY
-          ? {
-            appKey: process.env.YOUDAO_APPKEY,
-            key: process.env.YOUDAO_KEY,
-          }
-          : undefined,
-    })
+    new Youdao({})
 )
 
 export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
@@ -38,8 +30,8 @@ export const search: SearchFunction<YoudaotransResult> = async (rawText, opt) =>
   )
 
 
-  const appKey = config.dictAuth.youdaotrans.appKey
-  const key = config.dictAuth.youdaotrans.key
+  const appKey = opt.dictAuth?.youdaotrans.appKey
+  const key = opt.dictAuth?.youdaotrans.key
   const translatorConfig = appKey && key ? { appKey, key } : undefined
 
   try {
@@ -50,7 +42,7 @@ export const search: SearchFunction<YoudaotransResult> = async (rawText, opt) =>
           id: 'youdaotrans',
           sl: result.from,
           tl: result.to,
-          slInitial: profile.dicts.all.youdaotrans.options.slInitial,
+          slInitial: opt.profile.youdaotrans.options.slInitial,
           searchText: result.origin,
           trans: result.trans,
         },

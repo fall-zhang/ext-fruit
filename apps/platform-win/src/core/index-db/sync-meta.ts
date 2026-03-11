@@ -7,7 +7,7 @@ export async function getSyncMeta (serviceID: string) {
     .equals(serviceID)
     .first(record => record && record.json)
     .catch(e => {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.error(e)
       }
     })
@@ -21,7 +21,7 @@ export async function setSyncMeta (serviceID: string, text: string) {
 export async function deleteSyncMeta (serviceID: string) {
   const db = await getDB()
   return db.syncmeta.delete(serviceID).catch(e => {
-    if (process.env.DEBUG) {
+    if (import.meta.env.VITE_DEBUG) {
       console.error(e)
     }
   })

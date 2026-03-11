@@ -1,8 +1,8 @@
 import axios from 'axios'
-import type { Word } from '@/store/selection/types'
 import { parseCtxText } from '@/utils/translateCtx'
 import { SyncService, type AddConfig } from '../sync-manager/interface'
 import { getNotebook } from './utils'
+import type { Word } from '@/types/word'
 
 export interface SyncConfig {
   enable: boolean
@@ -70,9 +70,7 @@ export class Service extends SyncService<SyncConfig> {
       })
       return notes[0]
     } catch (e) {
-      if (process.env.DEBUG) {
-        console.error(e)
-      }
+      console.error(e)
     }
   }
 
@@ -98,9 +96,7 @@ export class Service extends SyncService<SyncConfig> {
           try {
             await this.addWord(word)
           } catch (e) {
-            if (process.env.DEBUG) {
-              console.warn(e)
-            }
+            console.warn(e)
             throw new Error('add')
           }
         }
@@ -111,7 +107,7 @@ export class Service extends SyncService<SyncConfig> {
       try {
         await this.request('sync')
       } catch (e) {
-        if (process.env.DEBUG) {
+        if (import.meta.env.VITE_DEBUG) {
           console.warn(e)
         }
       }
@@ -201,7 +197,7 @@ export class Service extends SyncService<SyncConfig> {
       },
     })
 
-    if (process.env.DEBUG) {
+    if (import.meta.env.VITE_DEBUG) {
       console.log(`Anki Connect ${action} response`, data)
     }
 
@@ -351,7 +347,7 @@ export class Service extends SyncService<SyncConfig> {
     try {
       return (await this.request<number>('version')) != null
     } catch (e) {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.error(e)
       }
       return false
