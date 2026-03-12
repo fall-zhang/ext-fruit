@@ -8,7 +8,8 @@ import type { Language } from '../languages'
 import type { AxiosInstance, AxiosRequestConfig, AxiosPromise } from 'axios'
 import Axios from 'axios'
 import { detectLang } from './detect-lang'
-
+import { fetch } from '@tauri-apps/plugin-http'
+import { axiosToFetch } from '@P/salad-api/src/utils/axios-to-fetch'
 export abstract class Translator<Config extends object = object> {
   axios: AxiosInstance
   /**
@@ -69,8 +70,10 @@ export abstract class Translator<Config extends object = object> {
     config: Config
   ): Promise<TranslateQueryResult>
 
-  protected request<R = object> (config: AxiosRequestConfig): AxiosPromise<R> {
-    return this.axios(config)
+  protected async request<R = object> (config: AxiosRequestConfig): AxiosPromise<R> {
+    const param = axiosToFetch(config)
+    return fetch(param.url, param.init).then(res => res.json())
+    // return this.axios(config)
   }
 
   /**
