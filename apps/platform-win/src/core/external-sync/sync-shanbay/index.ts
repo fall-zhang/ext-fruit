@@ -1,7 +1,9 @@
-import type { AddConfig } from '../../interface'
-import { SyncService } from '../../interface'
-import { getNotebook } from '../../helpers'
-
+import { AddConfig, SyncService } from '../../interface'
+import { getNotebook, notifyError } from '../../helpers'
+import { openUrl } from '@/_helpers/browser-api'
+import { timer } from '@/_helpers/promise-more'
+import { isFirefox } from '@/_helpers/saladict'
+import { I18nManager } from '@/background/i18n-manager'
 
 export interface SyncConfig {
   enable: boolean
@@ -10,30 +12,30 @@ export interface SyncConfig {
 export class Service extends SyncService<SyncConfig> {
   static readonly id = 'shanbay'
 
-  static getDefaultConfig (): SyncConfig {
+  static getDefaultConfig(): SyncConfig {
     return {
-      enable: false,
+      enable: false
     }
   }
 
-  static openLogin () {
-    return window.open('https://www.shanbay.com/web/account/login')
+  static openLogin() {
+    return openUrl('https://www.shanbay.com/web/account/login')
   }
 
-  async init () {
+  async init() {
     if (!(await this.isLogin())) {
       throw new Error('login')
     }
   }
 
-  async add (config: AddConfig) {
+  async add(config: AddConfig) {
     await this.addInternal(config)
   }
 
   /**
    * @returns failed words
    */
-  async addInternal ({ words, force }: AddConfig): Promise<number> {
+  async addInternal({ words, force }: AddConfig): Promise<number> {
     if (!this.config.enable) {
       return 0
     }
@@ -74,7 +76,7 @@ export class Service extends SyncService<SyncConfig> {
     return errorCount
   }
 
-  async addWord (text: string) {
+  async addWord(text: string) {
     let word: { id: string } | undefined
     try {
       const url =
@@ -97,16 +99,18 @@ export class Service extends SyncService<SyncConfig> {
         {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             vocab_id: word.id,
-            business_id: 6,
-          }),
+            business_id: 6
+          })
         }
       ).then(r => r.json())
     } catch (e) {
-      console.error(e)
+      if (import.meta.env.VITE_DEBUG) {
+        console.error(e)
+      }
       throw new Error('network')
     }
 
@@ -115,16 +119,16 @@ export class Service extends SyncService<SyncConfig> {
     }
   }
 
-  async isLogin (): Promise<boolean> {
+  async isLogin(): Promise<boolean> {
     return Boolean(
       await browser.cookies.get({
         url: 'http://www.shanbay.com',
-        name: 'auth_token',
+        name: 'auth_token'
       })
     )
   }
 
-  async notifyLogin () {
+  async notifyLogin() {
     const { i18n } = await I18nManager.getInstance()
     await i18n.loadNamespaces('sync')
 
@@ -139,11 +143,11 @@ export class Service extends SyncService<SyncConfig> {
 
       const options: browser.notifications.CreateNotificationOptions = {
         type: 'basic',
-        iconUrl: browser.runtime.getURL('assets/icon-128.png'),
-        title: `Saladict ${i18n.t('sync:shanbay.title')}`,
+        iconUrl: browser.runtime.getURL(`assets/icon-128.png`),
+        title: `Saladict ${i18n.t(`sync:shanbay.title`)}`,
         message: i18n.t('sync:shanbay.error.login'),
         eventTime: Date.now() + 10000,
-        priority: 2,
+        priority: 2
       }
 
       if (!isFirefox) {
@@ -155,14 +159,14 @@ export class Service extends SyncService<SyncConfig> {
   }
 }
 
-function handleLoginNotification (id: string) {
+function handleLoginNotification(id: string) {
   if (id === 'shanbay-login') {
     Service.openLogin()
     removeNotificationHandler(id)
   }
 }
 
-function removeNotificationHandler (id: string) {
+function removeNotificationHandler(id: string) {
   if (id === 'shanbay-login') {
     if (browser.notifications) {
       browser.notifications.onClicked.removeListener(handleLoginNotification)
