@@ -1,8 +1,9 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
+import React from 'react'
 import Speaker from '@/components/Speaker'
-import { ShanbayResult } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
+import type { ShanbayResult } from '@/core/api-server/trans-api/shanbay/type'
+import type { ViewProps } from '../type'
 
 export const DictShanbay: FC<ViewProps<ShanbayResult>> = ({ result }) => (
   <>

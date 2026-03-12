@@ -1,8 +1,8 @@
 import type { FC } from 'react'
-import type { ZdicResult } from './engine'
-import type { ViewProps } from '../../utils'
 import EntryBox from '@/components/EntryBox'
 import { StrElm } from '@/components/StrElm'
+import type { ZdicResult } from '@/core/api-server/trans-api/zdic/engine'
+import type { ViewProps } from '../type'
 
 export const DictZdic: FC<ViewProps<ZdicResult>> = ({ result }) => (
   <div>

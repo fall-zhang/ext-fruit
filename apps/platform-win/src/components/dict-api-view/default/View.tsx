@@ -1,6 +1,5 @@
 import { getTTS } from '@/core/api-server/trans-api/google/engine'
 import type { ViewProps } from '../type'
-import type { DictID } from '@/core/api-server/types/all-dict-conf'
 import type { FC } from 'react'
 import React, {
   useState,
@@ -153,7 +152,7 @@ const RenderCredential: FC = (props) => {
   return (<>
     <Trans message={t('machineTrans.login')}>
       <a
-        href={browser.runtime.getURL('options.html?menuselected=DictAuths')}
+        // href={browser.runtime.getURL('')}
         target="_blank"
         rel="nofollow noopener noreferrer"
       >

@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
 import Speaker from '@/components/Speaker'
-import { UrbanResult } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
+import type { UrbanResult } from '@/core/api-server/trans-api/urban/engine'
+import type { ViewProps } from '../type'
 
 export const DictUrban: FC<ViewProps<UrbanResult>> = ({ result }) => (
   <ul className="dictUrban-List">
@@ -12,10 +12,10 @@ export const DictUrban: FC<ViewProps<UrbanResult>> = ({ result }) => (
           {def.title} <Speaker src={def.pron} />
         </h2>
         {def.meaning && (
-          <StrElm tag="p" className="dictUrban-Meaning" html={def.meaning} />
+          <StrElm tag="div" className="dictUrban-Meaning" html={def.meaning} />
         )}
         {def.example && (
-          <StrElm tag="p" className="dictUrban-Example" html={def.example} />
+          <StrElm tag="div" className="dictUrban-Example" html={def.example} />
         )}
         {def.gif && (
           <figure className="dictUrban-Gif">
