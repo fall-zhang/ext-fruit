@@ -1,9 +1,6 @@
 import type { Language } from '@P/open-trans/languages'
 import type { AtomSearchResult } from './res-type'
-
-type AllDictsConf = {
-
-}
+import type { AllDictsConf } from './all-config'
 
 /**
  * 获取该引擎 fetch 方法所需的参数

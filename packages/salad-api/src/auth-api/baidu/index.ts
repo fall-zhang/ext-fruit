@@ -4,13 +4,14 @@ import type { Language } from '@P/open-trans/languages'
 import md5 from 'md5'
 
 import { TranslateError } from '@P/open-trans/translator'
-import type { BaiduTranslateError, BaiduTranslateResult } from './type'
-import type { AuthBody } from './auth'
 import { machineResult, type MachineTranslateResult } from '@/core/api-server/api-common/result-handle'
-import type { HandleFetchResponse, GetSrcPageFunction, GetFetchRequest } from '@/core/api-server/api-common/atom-type'
+import type { GetSrcPageFunction } from '@/core/api-server/api-common/search-type'
+import type { AuthBody } from './config'
+import type { BaiduTranslateError, BaiduTranslateResult } from './type'
+import type { AtomFetchRequest, AtomFetchResponse } from '../../types/atom-type'
 
 
-export const getRequest: GetFetchRequest<AuthBody> = (text, {
+export const getRequest: AtomFetchRequest<AuthBody> = (text, {
   from,
   to,
   option,
@@ -41,7 +42,7 @@ export const getRequest: GetFetchRequest<AuthBody> = (text, {
   })
 }
 
-export const handleResponse: HandleFetchResponse<MachineTranslateResult> = async (res, {
+export const handleResponse: AtomFetchResponse<MachineTranslateResult> = async (res, {
   text,
   from,
   to,
@@ -79,7 +80,6 @@ export const handleResponse: HandleFetchResponse<MachineTranslateResult> = async
     {
       result: {
         id: 'baidu',
-        slInitial: profile.baidu.options.slInitial,
         sl: from,
         tl: to,
         searchText: {

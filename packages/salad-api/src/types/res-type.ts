@@ -1,7 +1,5 @@
 import type { AppConfig } from '@/config/app-config'
-type AllDictsConf = {
-
-}
+import type { AllDictsConf } from './all-config'
 
 /**
  * Fetch and parse dictionary search result
