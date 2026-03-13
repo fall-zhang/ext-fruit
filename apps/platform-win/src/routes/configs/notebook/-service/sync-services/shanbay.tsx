@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import React, { useState, useEffect } from 'react'
 import { Modal, Button, Switch, message as AntdMsg, notification } from 'antd'
-import type { SyncConfig } from '@/background/sync-manager/services/shanbay'
+import type { SyncConfig } from '@/core/external-sync/services/shanbay'
 import { Service } from '@/background/sync-manager/services/shanbay'
 import { setSyncConfig as uploadSyncConfig } from '@/background/sync-manager/helpers'
 import type { Word } from '@/dict-utils/new-word'
@@ -15,7 +15,7 @@ export interface WebdavModalProps {
 }
 
 export const ShanbayModal: FC<WebdavModalProps> = props => {
-  const { t, i18n } = useTranslate(['options', 'common', 'sync'])
+  const { t, i18n } = useTranslation(['options', 'common', 'sync'])
   const [syncConfig, setSyncConfig] = useState<SyncConfig>(
     () => props.syncConfig || Service.getDefaultConfig()
   )

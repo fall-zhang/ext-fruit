@@ -15,7 +15,7 @@ import type { SyncConfig } from '@/background/sync-manager/services/eudic'
 import { Service } from '@/background/sync-manager/services/eudic'
 import { setSyncConfig } from '@/background/sync-manager/helpers'
 import { useTranslation } from 'react-i18next'
-import { getWords } from '@/core/database'
+import { getWords } from '@/core/index-db'
 
 export interface EudicModalProps {
   syncConfig?: SyncConfig
@@ -180,7 +180,7 @@ export const EuDicModal: FC<EudicModalProps> = props => {
 
   function extractConfigFromForm (): SyncConfig | undefined {
     if (!formRef.current) {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.error(new Error('Missing form ref when saving service'))
       }
       notification.error({

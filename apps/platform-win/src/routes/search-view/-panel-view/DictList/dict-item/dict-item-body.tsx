@@ -36,20 +36,28 @@ export interface DictItemBodyProps {
   onInPanelSelect: (e: React.MouseEvent<HTMLElement>) => void
 }
 
+const dictViewMap = import.meta.glob('@/components/dict-api-view/*/View.tsx')
+
 export const DictItemBody: FC<DictItemBodyProps> = props => {
-  // console.log('⚡️ line:39 ~ props: ', props)
   const Dict = useMemo(() =>
-    React.lazy<ComponentType<ViewProps<any>>>(() =>
-      import(
-        `@/components/dict-api-view/${props.dictID}/${props.dictID}.tsx`
-      )
+    React.lazy<ComponentType<ViewProps<any>>>(async () => {
+      console.log('⚡️ line:43 ~ props.dictID: ', props.dictID)
+      const Comp = dictViewMap[`@/components/dict-api-view/${props.dictID}/View.tsx`] as FC<ViewProps<any>>
+      if (Comp) {
+        return {
+          default: Comp,
+        }
+      }
+      return import('@/components/dict-api-view/default/View')
+    }
+
     ),
   [props.dictID]
   )
 
-  const DictStyle = useMemo(
-    () =>
-      React.lazy(async () => {
+  const DictStyle = useMemo(() =>
+    React.lazy(async () => {
+      try {
         const styleModule = await import(
           `@/components/dict-api-view/${props.dictID}/_style.shadow.scss?raw`
         )
@@ -58,8 +66,18 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
             <style>{(styleModule.default || styleModule).toString()}</style>
           ),
         }
-      }),
-    [props.dictID]
+      } catch (err) {
+        console.log('missint dictID: ', props.dictID)
+        console.warn('fetch style dict-item err: ', err)
+        const styleModule = await import('@/components/dict-api-view/default/MachineTrans.scss?raw')
+        return {
+          default: () => (
+            <style>{(styleModule.default || styleModule).toString()}</style>
+          ),
+        }
+      }
+    }),
+  [props.dictID]
   )
 
   return (

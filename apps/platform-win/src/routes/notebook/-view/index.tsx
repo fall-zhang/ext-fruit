@@ -10,8 +10,8 @@ import { ExportModal } from './export-modal'
 import './_style.scss'
 import { useTranslation } from 'react-i18next'
 import type { Word } from '@/types/word'
-import { deleteWords, getWords } from '@/core/database'
-import type { DBArea } from '@/core/database/types'
+import { deleteWords, getWords } from '@/core/index-db'
+import type { DBArea } from '@/core/index-db/types'
 
 const ITEMS_PER_PAGE = 200
 
@@ -117,7 +117,7 @@ export const WordPage: FC<WordPageProps> = props => {
               itemsPerPage: undefined,
               pageNum: undefined,
             })
-            if (process.env.DEBUG) {
+            if (import.meta.env.VITE_DEBUG) {
               console.assert(words.length === total, 'get all words')
             }
             setExportModalTitle(key)

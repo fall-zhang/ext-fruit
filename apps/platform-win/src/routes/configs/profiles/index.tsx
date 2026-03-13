@@ -7,10 +7,10 @@ import { SortableList, reorder } from '../-components/SortableList'
 import { EditNameModal } from './-edit-name-modal'
 import { useDictStore } from '@/store'
 import { Trans, useTranslation } from 'react-i18next'
-import { getDefaultProfileID, type ProfileID } from '@/config/app-config/profiles'
 import { useListLayout } from '../-utils/layout'
 import { useCheckDictAuth } from '../-utils/use-check-dict-auth'
 import { addProfile, getProfileName, updateProfileIDList } from './-utils'
+import { removeProfile, updateActiveProfileID, getDefaultProfileID, type ProfileID } from '@/core/api-local/profile'
 
 export const Route = createFileRoute('/configs/profiles/')({
   component: RouteComponent,
@@ -48,9 +48,9 @@ function RouteComponent () {
       antdMsg.destroy()
       antdMsg.success(t('msg_updated'))
     } catch (error) {
-      notification.error({
+      console.error({
         message: 'Error',
-        description: error.message,
+        description: error,
       })
     }
   }

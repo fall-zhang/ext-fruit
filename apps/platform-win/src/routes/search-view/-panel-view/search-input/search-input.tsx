@@ -51,7 +51,7 @@ export const SearchBox: FC<SearchBoxProps> = props => {
 
   return (
     <>
-      <div className={'menuBar-SearchBox_Wrap text-neutral-800 p-2'}>
+      <div className={'menuBar-SearchBox_Wrap text-neutral-800 p-2 bg-teal-300/15 rounded-lg my-2 mx-2 px-1.5'}>
         <input
           type="text"
           className="menuBar-SearchBox bg-neutral-400"

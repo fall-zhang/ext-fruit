@@ -4,7 +4,7 @@ import type React from 'react'
 import { useState, useEffect } from 'react'
 import { useUpdateEffect } from 'react-use'
 
-import { getWordsByText, deleteWords, saveWord } from '@/core/database'
+import { getWordsByText, deleteWords, saveWord } from '@/core/index-db'
 import type { AppConfig } from '@/config/app-config'
 
 import type { CtxTranslateResults } from '@/utils/translateCtx'
@@ -149,7 +149,7 @@ export const Notes: FC<NotesProps> = props => {
           // this.updateWord(ankiCardId, word)
           // }
         } catch (e) {
-          if (process.env.DEBUG) {
+          if (import.meta.env.VITE_DEBUG) {
             console.error(e)
           }
           status = 'content:updateAnki.failed'

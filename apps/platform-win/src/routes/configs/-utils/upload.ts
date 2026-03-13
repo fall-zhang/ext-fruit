@@ -17,7 +17,7 @@ export const useUpload = () => {
     const data: { config?: AppConfig; profile?: Profile } = {}
     const paths = Object.keys(values)
 
-    if (process.env.DEBUG) {
+    if (import.meta.env.VITE_DEBUG) {
       if (paths.length <= 0) {
         console.warn('Saving empty fields.', values)
       }
@@ -63,7 +63,7 @@ export const useUpload = () => {
       console.error(e)
     }
 
-    if (process.env.DEBUG) {
+    if (import.meta.env.VITE_DEBUG) {
       console.log('saved setting', data)
     }
   }

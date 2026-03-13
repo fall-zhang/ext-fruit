@@ -217,7 +217,7 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
 
   function extractConfigFromForm (): SyncConfig | undefined {
     if (!formRef.current) {
-      if (process.env.DEBUG) {
+      if (import.meta.env.VITE_DEBUG) {
         console.error(new Error('Missing form ref when saving service'))
       }
       notification.error({

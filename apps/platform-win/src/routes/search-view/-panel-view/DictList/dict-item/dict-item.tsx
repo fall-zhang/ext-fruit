@@ -57,6 +57,8 @@ export const DictItem: FC<DictItemProps> = props => {
       let compareNum = 10
       if (foldState === 'COLLAPSE') {
         compareNum = 10
+      } else if (foldState === 'HALF') {
+        compareNum = 240
       } else if (foldState === 'FULL') {
         compareNum = offsetHeight
       } else {
@@ -76,6 +78,7 @@ export const DictItem: FC<DictItemProps> = props => {
   )
 
   useEffect(() => {
+    console.log('⚡️ line:79 ~ props.searchStatus: ', props.searchStatus)
     if (props.searchStatus === 'FINISH') {
       setFoldState('HALF')
     } else {

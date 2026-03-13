@@ -43,7 +43,7 @@ export const TitlebarOffsetModal: FC<TitlebarOffsetModalProps> = props => {
   }
 
   const onFormFinish = async (values: any) => {
-    if (process.env.DEBUG) {
+    if (import.meta.env.VITE_DEBUG) {
       console.log(values)
     }
     // 保存配置
