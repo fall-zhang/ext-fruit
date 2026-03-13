@@ -1,0 +1,15 @@
+
+- search 不应该包含视图，或者任何翻译内容以外的格式
+- 所有文件夹都包含以下内容
+  - _locales.json 提供语言的名称
+  - api-atom 提供拆分各个 API 的多个原子化的方法
+    - getFetchRequest 获取当前请求的 Request
+    - handleFetchRes
+    - getDictSrc
+  - auth （可选）用于认证
+  - config 语言的默认配置
+  - engine 核心模块，用于请求
+  - type.ts 该语言的返回结果类型
+- 一系列工具，用于辅助
+  - request-to-axios 将 fetch 的请求参数转换为 axios 的参数
+  - axios-to-fetch 将 axios 的请求参数转换为 fetch 的参数

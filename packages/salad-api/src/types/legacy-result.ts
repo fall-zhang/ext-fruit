@@ -1,4 +1,4 @@
-import type { DictID } from '@/core/api-server/types'
+import type { DictID } from '@/core/api-server/config'
 import type { AtomSearchResult } from './res-type'
 import type { Language } from '@P/open-trans/languages'
 
