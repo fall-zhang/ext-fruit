@@ -8,10 +8,12 @@
 - [x] 使用 css 变量替代 scss 的变量
 - [x] 使用 @tanstack/react-router 实现路由
 - [x] 搜索 useSelector，用 zustand 的 useDictStore 替换
-- [ ] 翻译已经走通了，现在可以添加对应词典的视图了
 - [x] 使应用可以打包
+- [x] api search 查询应该和 globalConfig 进行解耦
+- [x] 移除 process.env
+- [x] 走通一个翻译，以及对应的视图
+- [ ] 验证所有 API 以及对应的视图
 - [ ] 应用类型正确
-- [ ] 移除 process.env
 - [ ] 所有导出内容，都直接从 @salad/core 中直接获取
 - [ ] core 中需要的功能
   - [ ] 翻译面板，给出一个单词，或者一句话，然后就进行翻译
