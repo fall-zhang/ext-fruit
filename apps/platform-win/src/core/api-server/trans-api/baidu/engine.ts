@@ -1,14 +1,12 @@
 import memoizeOne from 'memoize-one'
 import { Baidu } from '@salad/trans/service-baidu/index'
 
-import { auth } from './auth'
 import { machineResult, type MachineTranslateResult } from '../../api-common/result-handle'
 import type { SearchFunction } from '../../api-common/search-type'
 import { detectLangInfo } from '../../api-common/detect-lang'
+
 export const getTranslator = memoizeOne(() =>
-  new Baidu({
-    config: auth,
-  })
+  new Baidu({ })
 )
 
 export type BaiduResult = MachineTranslateResult
@@ -25,8 +23,8 @@ export const search: SearchFunction<
     localLang: opt.localLang,
   })
 
-  const appid = opt.dictAuth.baidu.appid
-  const key = opt.dictAuth.baidu.key
+  const appid = opt.dictAuth?.baidu.appid
+  const key = opt.dictAuth?.baidu.key
   const translatorConfig = appid && key ? { appid, key } : undefined
 
   try {

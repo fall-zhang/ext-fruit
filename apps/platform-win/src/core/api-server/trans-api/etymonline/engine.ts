@@ -9,7 +9,7 @@ import {
   handleNoResult,
   handleNetWorkError
 } from '../../utils'
-import type { AllDictsConf } from '@/core/api-server/types/all-dict-conf'
+import type { AllDictsConf } from '@/core/api-server/config'
 import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
 
 const HOST = 'https://www.etymonline.com'

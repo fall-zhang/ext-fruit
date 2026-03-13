@@ -29,6 +29,7 @@ function handleDOM (
   doc: Document,
   options: { resultCount: number }
 ): AhdictSearchResult | Promise<AhdictSearchResult> {
+  console.log('⚡️ line:29 ~ doc: ', doc)
   const result: AhdictResult = []
 
   const tables = Array.from(doc.querySelectorAll('#results>table'))

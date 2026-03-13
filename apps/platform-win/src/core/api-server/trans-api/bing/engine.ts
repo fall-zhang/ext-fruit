@@ -94,14 +94,18 @@ function handleLexResult (
 
       searchResult.audio = searchResult.result.phsym.reduce(
         (audio, { lang, pron }) => {
+          const newAudio = { ...audio }
           if (/us|美/i.test(lang)) {
-            audio.us = pron
+            newAudio.us = pron
           } else if (/uk|英/i.test(lang)) {
-            audio.uk = pron
+            newAudio.uk = pron
           }
-          return audio
+          return newAudio
         },
-        {}
+        {
+          us: '',
+          uk: '',
+        }
       )
     }
   }
@@ -145,12 +149,15 @@ function handleLexResult (
         ])[0]
       }
       el.querySelectorAll('.client_sen_en_word').forEach($word => {
+        // eslint-disable-next-line no-param-reassign
         $word.outerHTML = getText($word)
       })
       el.querySelectorAll('.client_sen_cn_word').forEach($word => {
+        // eslint-disable-next-line no-param-reassign
         $word.outerHTML = getText($word, transform)
       })
       el.querySelectorAll('.client_sentence_search').forEach($word => {
+        // eslint-disable-next-line no-param-reassign
         $word.outerHTML = `<span class="dictBing-SentenceItem_HL">${getText(
           $word
         )}</span>`
