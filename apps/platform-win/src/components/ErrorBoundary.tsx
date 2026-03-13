@@ -2,8 +2,8 @@ import type { ComponentType, ReactNode } from 'react'
 import React from 'react'
 
 interface ErrorBoundaryProps {
-  /** Reanders on error */
-  children:ReactNode
+  /** Renders on error */
+  children: ReactNode
   error?: ComponentType
 }
 
