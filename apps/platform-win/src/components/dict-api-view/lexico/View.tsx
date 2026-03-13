@@ -1,7 +1,8 @@
-import React, { FC } from 'react'
-import { LexicoResult, LexicoResultLex, LexicoResultRelated } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
+import type { FC } from 'react'
+import type React from 'react'
 import { StrElm } from '@/components/StrElm'
+import type { LexicoResult, LexicoResultLex, LexicoResultRelated } from '@/core/api-server/trans-api/lexico/engine'
+import type { ViewProps } from '../type'
 
 export const DictLexico: FC<ViewProps<LexicoResult>> = ({ result }) => {
   switch (result.type) {
@@ -14,17 +15,18 @@ export const DictLexico: FC<ViewProps<LexicoResult>> = ({ result }) => {
   }
 }
 
-function renderLex(result: LexicoResultLex) {
+function renderLex (result: LexicoResultLex) {
   return (
     <StrElm
       className="dictLexico-Lex"
+      tag='p'
       onClick={onLexClick}
       html={result.entry}
     />
   )
 }
 
-function renderRelated(result: LexicoResultRelated) {
+function renderRelated (result: LexicoResultRelated) {
   return (
     <>
       <p>Did you mean:</p>
@@ -47,13 +49,16 @@ function renderRelated(result: LexicoResultRelated) {
 
 export default DictLexico
 
-function onLexClick(e: React.MouseEvent): void {
+function onLexClick (e: React.MouseEvent): void {
   const $target = e.target as Element
-  const $info = $target.classList?.contains('moreInfo')
-    ? $target
-    : $target.parentElement?.classList?.contains('moreInfo')
-    ? $target.parentElement
-    : null
+  let $info: Element | null = null
+
+  if ($target.classList?.contains('moreInfo')) {
+    $info = $target
+  } else if ($target.parentElement?.classList?.contains('moreInfo')) {
+    $info = $target.parentElement
+  }
+
   if ($info) {
     $info.classList.toggle('active')
   }

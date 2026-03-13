@@ -41,20 +41,26 @@ const TSpeaker = React.memo<{
 ))
 
 /** text with a speaker at the beginning */
-const TText = React.memo<{
+
+const TText: FC<{
   result: MachineTranslateResult
   source: 'searchText' | 'trans'
   lang: string
-}>(({ result, source, lang }) => (
-  <div className={'MachineTrans-Lines'}>
-    <TSpeaker result={result} source={source} />
-    {result[source].paragraphs.map((line, i) => (
-      <p key={i} className={`MachineTrans-lang-${lang}`}>
-        {line}
-      </p>
-    ))}
-  </div>
-))
+}> = ({ result, source, lang }) => {
+  console.log('⚡️ line:55 ~ result[source]: ', result)
+  // if(result)
+
+  return (
+    <div className={'MachineTrans-Lines'}>
+      <TSpeaker result={result} source={source} />
+      {result[source].paragraphs.map((line, i) => (
+        <p key={i} className={`MachineTrans-lang-${lang}`}>
+          {line}
+        </p>
+      ))}
+    </div>
+  )
+}
 
 const TTextCollapsable = React.memo<{
   result: MachineTranslateResult
@@ -162,3 +168,4 @@ const RenderCredential: FC = (props) => {
   </>
   )
 }
+export default MachineTrans

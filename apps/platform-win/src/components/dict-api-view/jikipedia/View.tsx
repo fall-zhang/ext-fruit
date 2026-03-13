@@ -1,7 +1,7 @@
 import type { FC } from 'react'
-import type { ViewProps } from '@/components/dictionaries/helpers'
-import type { JikipediaResult } from './engine'
 import { StrElm } from '@/components/StrElm'
+import type { JikipediaResult } from '@/core/api-server/trans-api/jikipedia/engine'
+import type { ViewProps } from '../type'
 
 export const Jikipedia: FC<ViewProps<JikipediaResult>> = ({ result }) => (
   <ul className="dictJikipedia-List">

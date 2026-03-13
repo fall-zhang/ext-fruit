@@ -1,15 +1,15 @@
 import type { FC } from 'react'
 import React from 'react'
 
-import type { ViewProps } from '@/core/api-server/types'
-import type { BingResult, BingResultLex, BingResultMachine, BingResultRelated } from '@/core/api-server/trans-api/bing/engine'
 import { StrElm } from '../../StrElm'
 import Speaker from '../../Speaker'
+import type { BingResult, BingResultLex, BingResultMachine, BingResultRelated } from '@/core/api-server/trans-api/bing/type'
+import type { ViewProps } from '../type'
 
 export const DictBing: FC<ViewProps<BingResult>> = ({ result }) => {
   switch (result.type) {
     case 'lex':
-      return renderLex(result)
+      return <RenderLex {...result}></RenderLex>
     case 'machine':
       return renderMachine(result)
     case 'related':
@@ -21,7 +21,7 @@ export const DictBing: FC<ViewProps<BingResult>> = ({ result }) => {
 
 export default DictBing
 
-function renderLex (result: BingResultLex) {
+function RenderLex (result: BingResultLex) {
   return (
     <>
       <h1 className="dictBing-Title">{result.title}</h1>

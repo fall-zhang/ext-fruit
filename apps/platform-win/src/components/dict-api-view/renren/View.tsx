@@ -1,9 +1,10 @@
-import React, { FC, useState, useEffect } from 'react'
+import type { FC } from 'react'
+import type React from 'react'
+import { useState, useEffect } from 'react'
 import Speaker from '@/components/Speaker'
-import { RenrenResult, RenrenSlide } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
-import { message } from '@/_helpers/browser-api'
 import { StrElm } from '@/components/StrElm'
+import type { RenrenSlide, RenrenResult } from '@/core/api-server/trans-api/renren/engine'
+import type { ViewProps } from '../type'
 
 interface RenrenSlideProps {
   slide: RenrenSlide
@@ -53,21 +54,21 @@ export const DictRenren: FC<ViewProps<RenrenResult>> = ({ result }) => {
     e.stopPropagation()
 
     const selectedSlide = result[slide]
-    const detail = await message.send<'DICT_ENGINE_METHOD', RenrenSlide[]>({
-      type: 'DICT_ENGINE_METHOD',
-      payload: {
-        id: 'renren',
-        method: 'getDetail',
-        args: [selectedSlide.detail]
-      }
-    })
+    // const detail = await message.send<'DICT_ENGINE_METHOD', RenrenSlide[]>({
+    //   type: 'DICT_ENGINE_METHOD',
+    //   payload: {
+    //     id: 'renren',
+    //     method: 'getDetail',
+    //     args: [selectedSlide.detail],
+    //   },
+    // })
 
-    if (detail && detail.length > 0) {
-      setDetails(details => ({
-        ...details,
-        [selectedSlide.key]: detail
-      }))
-    }
+    // if (detail && detail.length > 0) {
+    //   setDetails(details => ({
+    //     ...details,
+    //     [selectedSlide.key]: detail,
+    //   }))
+    // }
   }
 
   return (
@@ -82,32 +83,34 @@ export const DictRenren: FC<ViewProps<RenrenResult>> = ({ result }) => {
           </option>
         ))}
       </select>
-      {details[result[slide].key] ? (
-        details[result[slide].key].map(slide => (
-          <Slide key={slide.cover + slide.mp3} slide={slide} />
-        ))
-      ) : (
-        <>
-          <Slide slide={result[slide].slide} />
-          <a
-            className="dictRenren-Detail"
-            href={result[slide].detail}
-            onClick={handleDetailClick}
-          >
-            ⤋查看详情
-          </a>
-          {result[slide].context.map(ctx => (
-            <div key={ctx.title} className="dictRenren-Ctx">
-              <p className="dictRenren-Ctx_Title">{ctx.title}</p>
-              <div className="dictRenren-Ctx_Subtitles">
-                {ctx.content.map(subtitle => (
-                  <p key={subtitle}>{subtitle}</p>
-                ))}
+      {details[result[slide].key]
+        ? (
+          details[result[slide].key].map(slide => (
+            <Slide key={slide.cover + slide.mp3} slide={slide} />
+          ))
+        )
+        : (
+          <>
+            <Slide slide={result[slide].slide} />
+            {/* <a
+              className="dictRenren-Detail"
+              href={result[slide].detail}
+              onClick={handleDetailClick}
+            >
+              ⤋查看详情
+            </a> */}
+            {result[slide].context.map(ctx => (
+              <div key={ctx.title} className="dictRenren-Ctx">
+                <p className="dictRenren-Ctx_Title">{ctx.title}</p>
+                <div className="dictRenren-Ctx_Subtitles">
+                  {ctx.content.map(subtitle => (
+                    <p key={subtitle}>{subtitle}</p>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </>
-      )}
+            ))}
+          </>
+        )}
     </>
   )
 }

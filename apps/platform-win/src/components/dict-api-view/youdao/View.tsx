@@ -1,10 +1,11 @@
-import React, { FC, useState } from 'react'
+import type { FC } from 'react'
+import React, { useState } from 'react'
 import Speaker from '@/components/Speaker'
 import StarRates from '@/components/StarRates'
-import { YoudaoResult } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
 import EntryBox from '@/components/EntryBox'
 import { StrElm } from '@/components/StrElm'
+import type { YoudaoResult } from '@/core/api-server/trans-api/youdao/engine'
+import type { ViewProps } from '../type'
 
 export const DictYoudao: FC<ViewProps<YoudaoResult>> = ({ result }) => {
   const [collinsEntry, setCollinsEntry] = useState<string | number>(0)

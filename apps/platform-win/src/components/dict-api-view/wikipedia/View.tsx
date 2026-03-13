@@ -1,17 +1,11 @@
 import type { FC, ReactNode } from 'react'
 import type React from 'react'
 import { useState, useEffect } from 'react'
-import type {
-  WikipediaResult,
-  WikipediaPayload,
-  LangList
-} from './engine'
-import {
-  fetchLangList
-} from './engine'
-import type { ViewProps } from '../../utils'
+
 import { useTranslation } from 'react-i18next'
 import { StrElm } from '@/components/StrElm'
+import { type WikipediaResult, type LangList, type WikipediaPayload, fetchLangList } from '@/core/api-server/trans-api/wikipedia/engine'
+import type { ViewProps } from '../type'
 
 export const DictWikipedia: FC<ViewProps<WikipediaResult>> = ({
   result,

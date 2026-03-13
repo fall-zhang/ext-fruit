@@ -1,8 +1,9 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
+import React from 'react'
 import Speaker from '@/components/Speaker'
-import { NaverResult } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
+import type { NaverResult } from '@/core/api-server/trans-api/naver/engine'
+import type { ViewProps } from '../type'
 
 export const DictNaver: FC<ViewProps<NaverResult>> = props => {
   const ListMap = props.result.entry
@@ -13,7 +14,7 @@ export const DictNaver: FC<ViewProps<NaverResult>> = props => {
         onChange={e =>
           props.searchText({
             id: 'naver',
-            payload: { lang: e.target.value }
+            payload: { lang: e.target.value },
           })
         }
         value={props.result.lang}
@@ -78,10 +79,10 @@ export const DictNaver: FC<ViewProps<NaverResult>> = props => {
                               '|'
                             ).length > 1
                               ? word.searchPhoneticSymbolList[0]?.phoneticSymbolPath?.split(
-                                  '|'
-                                )[0]
+                                '|'
+                              )[0]
                               : word.searchPhoneticSymbolList[0]
-                                  .phoneticSymbolPath
+                                .phoneticSymbolPath
                           }
                         />
                       )}

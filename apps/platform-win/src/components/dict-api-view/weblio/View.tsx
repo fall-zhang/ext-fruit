@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
-import { WeblioResult } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
+import type { FC } from 'react'
 import EntryBox from '@/components/EntryBox'
 import { StrElm } from '@/components/StrElm'
+import type { WeblioResult } from '@/core/api-server/trans-api/weblio/engine'
+import type { ViewProps } from '../type'
 
 export const DictWeblio: FC<ViewProps<WeblioResult>> = ({ result }) => (
   <div className="dictWeblio-Container">

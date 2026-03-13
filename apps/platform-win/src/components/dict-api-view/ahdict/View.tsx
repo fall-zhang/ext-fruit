@@ -1,8 +1,8 @@
 import type { FC } from 'react'
-import type { AhdictResult } from '@/core/api-server/trans-api/ahdict/engine'
-import type { ViewProps } from '@/core/api-server/types'
 import { Speaker } from '../../Speaker'
 import { StrElm } from '../../StrElm'
+import type { AhdictResult } from '@/core/api-server/trans-api/ahdict/type'
+import type { ViewProps } from '../type'
 
 export const DictAh: FC<ViewProps<AhdictResult>> = ({ result }) => (
   <div>

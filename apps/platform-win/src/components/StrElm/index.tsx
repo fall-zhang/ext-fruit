@@ -4,8 +4,8 @@ import { useIsomorphicLayoutEffect } from 'react-use'
 import DOMPurify from 'dompurify'
 
 
-export const StrElm: FC<Partial<HTMLElement> & {
-  tag?: 'div' | 'span'
+export const StrElm: FC<Partial<React.HTMLAttributes<HTMLElement>> & {
+  tag?: React.HTMLElementType
   html: string
 }> = (
   props

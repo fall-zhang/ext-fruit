@@ -1,8 +1,9 @@
-import React, { FC } from 'react'
-import { JukuuResult, JukuuPayload, JukuuLang } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
+import type { FC } from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StrElm } from '@/components/StrElm'
+import type { JukuuResult, JukuuPayload, JukuuLang } from '@/core/api-server/trans-api/jukuu/engine'
+import type { ViewProps } from '../type'
 
 export const DictJukuu: FC<ViewProps<JukuuResult>> = props => {
   const { result, searchText } = props
@@ -15,8 +16,8 @@ export const DictJukuu: FC<ViewProps<JukuuResult>> = props => {
             searchText<JukuuPayload>({
               id: 'jukuu',
               payload: {
-                lang: e.target.value as JukuuLang
-              }
+                lang: e.target.value as JukuuLang,
+              },
             })
           }
         }}

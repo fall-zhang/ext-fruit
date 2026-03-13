@@ -1,15 +1,15 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
 import Speaker from '@/components/Speaker'
-import { MerriamWebsterResultV2 } from './engine'
-import { ViewProps } from '@/components/dictionaries/helpers'
+import type { MerriamWebsterResultV2 } from '@/core/api-server/trans-api/merriamwebster/engine'
+import type { ViewProps } from '../type'
 
 export const DictMerriamWebster: FC<ViewProps<MerriamWebsterResultV2>> = ({
-  result
+  result,
 }) => (
   // <ul className="mw-list">
   <ul>
     {result.groups.map((g, i) => (
-      <li key={`${`mw-g`}-${i}`} className="mw-item">
+      <li key={`${'mw-g'}-${i}`} className="mw-item">
         <div className="mw-top-container">
           <div className="mw-title-area">
             {/* <sup className="mw-Sup">{i + 1}</sup> */}
@@ -49,10 +49,10 @@ export const DictMerriamWebster: FC<ViewProps<MerriamWebsterResultV2>> = ({
                       <div key={'mw-meaning-' + k} className="mw-mean-area">
                         {(mean.examples || mean.explaining) &&
                           means.length > 1 && (
-                            <span className="mw-mean-sign">
-                              {String.fromCharCode(k + 97)}
-                            </span>
-                          )}
+                          <span className="mw-mean-sign">
+                            {String.fromCharCode(k + 97)}
+                          </span>
+                        )}
 
                         {mean.explaining && (
                           <div className="mw-mean-text">{mean.explaining}</div>
@@ -60,6 +60,7 @@ export const DictMerriamWebster: FC<ViewProps<MerriamWebsterResultV2>> = ({
 
                         {mean.examples && (
                           <div className="mw-mean-ex-area">
+                            {/* eslint-disable-next-line max-nested-callbacks */}
                             {mean.examples?.map((ex, m) => (
                               <div
                                 key={'mw-example-' + m}
