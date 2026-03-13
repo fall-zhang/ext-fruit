@@ -37,7 +37,7 @@ export async function reportPageView (page: string): Promise<void> {
       ul: 'zh-cn',
     })
   } catch (error) {
-    if (!process.env.DEBUG) {
+    if (!import.meta.env.VITE_DEBUG) {
       console.error('Report pageview error', error)
     }
   }
@@ -61,7 +61,7 @@ export async function reportEvent (event: GAEvent) {
   try {
     await requestGA(params)
   } catch (error) {
-    if (!process.env.DEBUG) {
+    if (!import.meta.env.VITE_DEBUG) {
       console.error('Report event error', error)
     }
   }

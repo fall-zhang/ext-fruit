@@ -1,9 +1,10 @@
 // 每个翻译对应的配置信息
 import { v4 as uuid } from 'uuid'
-import type { AllDictsConf } from '@/core/api-server/types/all-dict-conf'
-import { getAllDicts } from '@/core/api-server/types/all-dict-conf'
+import type { AllDictsConf, DictID } from '@/core/api-server/config'
+import { getAllDicts } from '@/core/api-server/config'
 import { getDefaultDictAuths, type DictAuths } from './auth'
 import { getDefaultProfileID, type ProfileID } from '@/core/api-local/profile'
+
 
 export type MtaAutoUnfold = '' | 'once' | 'always' | 'popup' | 'hide'
 
@@ -31,20 +32,22 @@ export type ProfileMutable = {
 }
 export type Profile = ProfileMutable
 
-export function getDefaultSelectDict (): Array<keyof AllDictsConf> {
+export function getDefaultSelectDict (): Array<DictID> {
   return [
-    // 'bing',
+    'baidu',
     // 'cobuild',
     // 'cambridge',
     // 'youdao',
     // 'urban',
     // 'vocabulary',
-    'caiyun',
+    // 'caiyun',
     // 'youdaotrans',
     // 'zdic',
     // 'guoyu',
     // 'liangan',
     // 'googledict',
+
+    // "baidu" , "ahdict" , "oaldict" , "caiyun" , "cambridge" , "cnki" , "cobuild" , "etymonline" , "eudic" , "google" , "googledict" , "guoyu" , "hjdict" , "jikipedia" , "jukuu" , "lexico" , "liangan" , "longman" , "macmillan" , "mojidict" , "naver" , "renren" , "sogou" , "tencent" , "urban" , "vocabulary" , "weblio" , "weblioejje" , "merriamwebster" , "websterlearner" , "wikipedia" , "youdao" , "youdaotrans" , "zdic"
   ]
 }
 

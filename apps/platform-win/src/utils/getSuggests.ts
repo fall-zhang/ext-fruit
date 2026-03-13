@@ -34,7 +34,7 @@ async function getCiba (text: string): Promise<Suggest[]> {
           : '',
       }))
   }
-  if (process.env.DEBUG) {
+  if (import.meta.env.VITE_DEBUG) {
     console.warn('fetch suggests failed', text, json)
   }
   throw new Error()
@@ -49,7 +49,7 @@ async function getYoudao (text: string): Promise<Suggest[]> {
   if (json && json.data && Array.isArray(json.data.entries)) {
     return json.data.entries.filter(x => x && x.explain && x.entry)
   }
-  if (process.env.DEBUG) {
+  if (import.meta.env.VITE_DEBUG) {
     console.warn('fetch suggests failed', text, json)
   }
   throw new Error()

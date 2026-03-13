@@ -1,4 +1,4 @@
-import type { DictID } from '@/core/api-server/types'
+import type { DictID } from '@/core/api-server/config'
 import type { SupportedLangs } from '@/utils/lang-check'
 
 export type LangCode = 'zh-CN' | 'zh-TW' | 'en'

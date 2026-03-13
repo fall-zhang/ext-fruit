@@ -4,11 +4,10 @@ import { createStore, useStore } from 'zustand'
 import type { Word } from '../types/word'
 import { getDefaultProfile, getDefaultSelectDict, type Profile } from '@/config/trans-profile'
 import { checkSupportedLangs, countWords } from '../utils/lang-check'
-import type { AllDictsConf } from '@/core/api-server/types/all-dict-conf'
+import type { AllDictsConf, DictID } from '@/core/api-server/config'
 import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
-import type { DictID } from '@/core/api-server/types'
 import { api } from '@/core/api-server/trans-api'
-import { getDefaultDictAuths } from '@/config/trans-profile/auth'
+
 
 type RenderDictItem = {
   readonly dictID: DictID
