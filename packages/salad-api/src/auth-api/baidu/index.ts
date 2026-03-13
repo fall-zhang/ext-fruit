@@ -4,11 +4,11 @@ import type { Language } from '@P/open-trans/languages'
 import md5 from 'md5'
 
 import { TranslateError } from '@P/open-trans/translator'
-import { machineResult, type MachineTranslateResult } from '@/core/api-server/api-common/result-handle'
 import type { GetSrcPageFunction } from '@/core/api-server/api-common/search-type'
 import type { AuthBody } from './config'
 import type { BaiduTranslateError, BaiduTranslateResult } from './type'
 import type { AtomFetchRequest, AtomFetchResponse } from '../../types/atom-type'
+import { machineResult, type MachineTranslateResult } from '../../types/legacy-result'
 
 
 export const getRequest: AtomFetchRequest<AuthBody> = (text, {

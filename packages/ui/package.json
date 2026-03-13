@@ -6,6 +6,7 @@
   "exports": {
     ".": "./",
     "./components/*": "./components/*.tsx",
+    "./ui-wrapped/*": "./ui-wrapped/*.tsx",
     "./lib/*": "./lib/*.ts"
   },
   "scripts": {},
