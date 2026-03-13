@@ -13,6 +13,7 @@
   ],
   "exclude": [
     "packages/**/*.mock.ts",
+    "app/**/*.mock.ts",
     "**/__tests__/*.test.ts",
     "packages/**/*.spec.ts",
     "tests/**/*.js",
