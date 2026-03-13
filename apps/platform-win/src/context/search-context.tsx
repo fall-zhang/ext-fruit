@@ -144,28 +144,27 @@ const createSearchStore = () => {
       })
       console.log('⚡️ line:63 ~ word: ', selectedDicts)
       selectedDicts.forEach((id, index) => {
+        console.log('⚡️ line:146 ~ id: ', id)
         const searchFun: SearchFunction = api[id]
-        // api.baidu('', {
-        //   config: undefined,
-        //   profile: undefined,
-        //   payload: undefined,
-        // })
         searchFun(word.text, {
           profile: activeProfile.dicts.all,
-          dictAuth: getDefaultDictAuths(),
+          dictAuth: activeProfile.dictAuth,
         }).then((res: DictSearchResult) => {
           console.log('⚡️ line:158 ~ res: ', id, '   ', res)
-          const dictResult: RenderDictItem = {
-            dictID: id,
-            searchStatus: 'FINISH',
-            searchResult: res,
-          }
-          const newDict = renderedDicts.toSpliced(index, 1, dictResult)
-          console.log('⚡️ line:157 ~ newDict: ', newDict)
-          set(state => ({
-            ...state,
-            renderedDicts: newDict,
-          }))
+          set(state => {
+            console.log('⚡️ line:164 ~ renderedDicts: ', state.renderedDicts)
+            const dictResult: RenderDictItem = {
+              dictID: id,
+              searchStatus: 'FINISH',
+              searchResult: res.result,
+            }
+            const newDict = state.renderedDicts.toSpliced(index, 1, dictResult)
+
+            return {
+              ...state,
+              renderedDicts: newDict,
+            }
+          })
         }).catch((err: unknown) => {
           console.warn('⚡️ line:157 ~ err: ', err)
         })
