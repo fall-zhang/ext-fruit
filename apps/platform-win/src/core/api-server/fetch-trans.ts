@@ -1,9 +1,8 @@
 import type { Language } from '@P/open-trans/languages'
-import type { AllDictsConf } from '@/core/api-server/types/all-dict-conf'
+import type { AllDictsConf, DictID } from './config'
 import { search } from '@/core/api-server/trans-api/baidu/engine'
 import type { AppConfigMutable } from '@/config/app-config'
 import type { DictSearchResult } from './api-common/search-type'
-import type { DictID } from './types'
 
 // function getDictEngine (dictID:DictID) {
 //   return import(`./trans-api/${dictID}/engine.ts`)
@@ -29,7 +28,6 @@ export async function fetchDictResult (data: FetchParam): Promise<{
 
   try {
     // const { search } = await getDictEngine(data.id)
-
     try {
       response = await search(data.text, {
         profile: data.profile,

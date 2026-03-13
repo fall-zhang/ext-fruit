@@ -7,7 +7,8 @@ export function handleNoResult<T = any> (): Promise<T> {
   return Promise.reject(new Error('NO_RESULT'))
 }
 
-export function handleNetWorkError (): Promise<never> {
+export function handleNetWorkError (err: any): Promise<never> {
+  console.log('⚡️ line:10 ~ err: ', err)
   return Promise.reject(new Error('NETWORK_ERROR'))
 }
 

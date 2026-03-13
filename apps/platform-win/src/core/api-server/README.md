@@ -1,8 +1,10 @@
 
 
+该核心模块后续会从 core 中移出，因为 API 模块可以做到所有应用通用，并且去除视图相关影响
+
+迁移到 packages/salad-api 路径下
 
 
-- search 应该和 globalConfig 进行解耦
 - search 不应该包含视图，或者任何翻译内容以外的格式
 - 所有文件夹都包含以下内容
   - _locales 提供语言的名称
