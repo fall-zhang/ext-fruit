@@ -19,8 +19,7 @@ import { timer } from '@/utils/promise-more'
 import { isTagName } from '@/utils/dom'
 import { useOptContext } from '@/context/opt-context'
 import './dict-item.scss'
-import type { DictID } from '@/core/api-server/types'
-const DICT_ITEM_HEAD_HEIGHT = 20
+import type { DictID } from '@/core/api-server/config'
 
 export interface DictItemProps
   extends Omit<DictItemBodyProps, 'dictRootRef'> {
@@ -39,10 +38,6 @@ export interface DictItemProps
 }
 
 export const DictItem: FC<DictItemProps> = props => {
-  const [selectedCatalog, setSelectedCatalog] = useState<{
-    key: string
-    value: string
-  }>()
   const optContext = useOptContext()
   const [noHeightTransition, setNoHeightTransition] = useState(false)
 
@@ -50,32 +45,21 @@ export const DictItem: FC<DictItemProps> = props => {
     'COLLAPSE'
   )
   /** Rendered height */
-  const [offsetHeight, setOffsetHeight] = useState(10)
+  // const [offsetHeight, setOffsetHeight] = useState(10)
 
-  const visibleHeight = useMemo(
-    () => {
-      let compareNum = 10
-      if (foldState === 'COLLAPSE') {
-        compareNum = 10
-      } else if (foldState === 'HALF') {
-        compareNum = 240
-      } else if (foldState === 'FULL') {
-        compareNum = offsetHeight
-      } else {
-        compareNum = Math.min(offsetHeight, 200)
-      }
-      // const max = Math.max(
-      //   10,
-      //   foldState === 'COLLAPSE'
-      //     ? 10
-      //     : foldState === 'FULL'
-      //       ? offsetHeight
-      //       : Math.min(offsetHeight, props.preferredHeight)
-      // )
-      return Math.max(10, compareNum)
-    },
-    [foldState, offsetHeight]
-  )
+  const visibleHeight = useMemo(() => {
+    let compareNum = 10
+    if (foldState === 'COLLAPSE') {
+      compareNum = 10
+    } else if (foldState === 'HALF') {
+      compareNum = 200
+    } else if (foldState === 'FULL') {
+      compareNum = 0
+    } else {
+      compareNum = 200
+    }
+    return compareNum
+  }, [foldState])
 
   useEffect(() => {
     console.log('⚡️ line:79 ~ props.searchStatus: ', props.searchStatus)
@@ -86,9 +70,9 @@ export const DictItem: FC<DictItemProps> = props => {
     }
   }, [props.searchStatus])
 
-  useEffect(() => {
-    props.onHeightChanged(props.dictID, visibleHeight + DICT_ITEM_HEAD_HEIGHT)
-  }, [visibleHeight])
+  // useEffect(() => {
+  //   props.onHeightChanged(props.dictID, visibleHeight + DICT_ITEM_HEAD_HEIGHT)
+  // }, [visibleHeight])
 
   const dictItemRef = useRef<HTMLDivElement | null>(null)
   // container element in shadow dom
@@ -96,7 +80,10 @@ export const DictItem: FC<DictItemProps> = props => {
 
   const preCatalogSelect = useCallback(
     async (item: { key: string; value: string }) => {
-      if (item.key[0] !== '#') return setSelectedCatalog(item)
+      if (item.key[0] !== '#') {
+        // setSelectedCatalog(item)
+        return
+      }
 
       // handle anchor jump
       if (!dictRootRef.current) return
@@ -196,6 +183,7 @@ export const DictItem: FC<DictItemProps> = props => {
       props.searchText({ id: props.dictID })
     }
   }
+  console.log('⚡️ line:199 ~ foldState: ', foldState)
   return (
     <section
       ref={dictItemRef}
@@ -215,19 +203,17 @@ export const DictItem: FC<DictItemProps> = props => {
       <div
         className="dictItem-Body"
         key={props.dictID}
-        style={{ height: visibleHeight }}
+        style={{ height: visibleHeight > 0 ? visibleHeight : undefined }}
         onClick={searchLinkText}
       >
-        <article className="dictItem-BodyMesure">
+        <section className="dictItem-BodyMesure">
           {/* <ResizeReporter reportInit onHeightChanged={setOffsetHeight} /> */}
           <DictItemBody
             {...props}
             dictRootRef={dictRootRef}
           />
-        </article>
-        {foldState === 'HALF' &&
-          visibleHeight < offsetHeight &&
-          props.searchResult && (
+        </section>
+        {foldState === 'HALF' && props.searchResult && (
           <button
             className="dictItem-FoldMask"
             onClick={() => setFoldState('FULL')}

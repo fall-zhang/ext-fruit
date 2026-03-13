@@ -7,7 +7,7 @@ import memoizeOne from 'memoize-one'
 import type { GlobalState } from '@/store/global-state'
 import { useConfContext } from '@/context/conf-context'
 import { DictItem, type DictItemProps } from './dict-item/dict-item'
-import type { DictID } from '@/core/api-server/types'
+import type { DictID } from '@/core/api-server/config'
 
 const MemoDictItem = React.memo(DictItem)
 // const memoizedDicts = memoizeOne((
@@ -120,16 +120,12 @@ export const DictList: FC<DictListProps> = (props) => {
           darkMode={darkMode}
           panelCSS={''}
           openDictSrcPage={(id, ctrlKey: boolean) => {
-            throw new Error('Function not implemented.')
           } }
           onUserFold={function (id: DictID, fold: boolean): void {
-            throw new Error('Function not implemented.')
           } }
-          searchText={function (arg?: { id?: DictID; word?: Word; payload?: { [index: string]: any } }) {
-            throw new Error('Function not implemented.')
+          searchText={function (arg) {
           } }
-          onSpeakerPlay={function (src: string): Promise<void> {
-            throw new Error('Function not implemented.')
+          onSpeakerPlay={async (src) => {
           } }
           key={data.dictID}
           {...data}

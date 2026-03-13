@@ -2,11 +2,9 @@ import type { FC } from 'react'
 import type React from 'react'
 import { useState, useEffect, useMemo } from 'react'
 import clsx from 'clsx'
-import type { HoverBoxItem } from '@/components/HoverBox'
 import { useTranslation } from 'react-i18next'
 import './dict-item-head.scss'
-import type { DictID } from '@/core/api-server/types'
-
+import type { DictID } from '@/core/api-server/config'
 export interface DictItemHeadProps {
   dictID: DictID
   isSearching: boolean
@@ -85,14 +83,13 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
 
   //   return menuItems
   // }, [props.catalog, ready])
-
   return (
     <header
       className={clsx('dictItemHead', {
         isSearching: props.isSearching,
       })}
     >
-      <img className="dictItemHead-Logo" src={'@/core/api-server/api-common/' + props.dictID + '/favicon.png'} alt="dict logo" />
+      <img className="dictItemHead-Logo" src={`/src/core/api-server/trans-api/${props.dictID}/favicon.png`} alt="dict logo" />
       <h1 className="dictItemHead-Title">
         <a
           href="#"

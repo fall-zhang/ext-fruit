@@ -3,7 +3,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import './_style.scss'
-import type { DictID } from '@/core/api-server/types'
+import type { DictID } from '@/core/api-server/config'
 export interface DictTitleProps {
   dictID: DictID
   /** Supported languages */

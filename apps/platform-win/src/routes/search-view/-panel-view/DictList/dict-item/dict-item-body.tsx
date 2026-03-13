@@ -9,8 +9,9 @@ import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { StaticSpeakerContainer } from '@/components/Speaker'
 import type { ViewProps } from '@/components/dict-api-view/type'
 import { SALADICT_PANEL } from '@/config/const/saladict'
-import type { DictID } from '@/core/api-server/types'
+import type { DictID } from '@/core/api-server/config'
 
+import DefaultView from '@/components/dict-api-view/default/View'
 export interface DictItemBodyProps {
   dictID: DictID
 
@@ -39,19 +40,15 @@ export interface DictItemBodyProps {
 const dictViewMap = import.meta.glob('@/components/dict-api-view/*/View.tsx')
 
 export const DictItemBody: FC<DictItemBodyProps> = props => {
-  const Dict = useMemo(() =>
-    React.lazy<ComponentType<ViewProps<any>>>(async () => {
-      console.log('⚡️ line:43 ~ props.dictID: ', props.dictID)
-      const Comp = dictViewMap[`@/components/dict-api-view/${props.dictID}/View.tsx`] as FC<ViewProps<any>>
-      if (Comp) {
-        return {
-          default: Comp,
-        }
-      }
-      return import('@/components/dict-api-view/default/View')
+  const Dict = useMemo(() => {
+    const Comp = dictViewMap[`/src/components/dict-api-view/${props.dictID}/View.tsx`] as () => Promise<{
+      default: ComponentType<ViewProps<any>>;
+    }>
+    if (!Comp) {
+      return DefaultView
     }
-
-    ),
+    return React.lazy<ComponentType<ViewProps<any>>>(Comp)
+  },
   [props.dictID]
   )
 
@@ -80,6 +77,7 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
   [props.dictID]
   )
 
+  console.log('⚡️ line:86 ~ props.searchResult: ', props.searchResult)
   return (
     <ErrorBoundary error={DictRenderError}>
       <Suspense fallback={null}>
@@ -117,7 +115,7 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
 
 function DictRenderError () {
   return (
-    <p>
+    <p className='text-neutral-900'>
       Render error. Please{' '}
       <a
         href="https://github.com/fall-zhang/fruit-saladict/issues"
