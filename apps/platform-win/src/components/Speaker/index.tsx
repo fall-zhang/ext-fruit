@@ -31,6 +31,7 @@ export interface SpeakerProps {
  * 用于播放音频文件
  */
 export const Speaker: FC<SpeakerProps> = props => {
+  console.log('⚡️ line:33 ~ props: ', props);
   const [src, setSrc] = useState(() =>
     (typeof props.src === 'string' ? props.src : '#')
   )

@@ -4,7 +4,7 @@ type OpenQSFn = {
   (state: GlobalState): GlobalState
 }
 
-export const openQSPanel:OpenQSFn = state => {
+export const openQSPanel: OpenQSFn = state => {
   const { panelWidth, tripleCtrl, qsLocation } = state.config
 
   if (!tripleCtrl) {

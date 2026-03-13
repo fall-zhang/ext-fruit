@@ -2,7 +2,7 @@ import type { StateCreator } from 'zustand'
 import { getDefaultConfig, type AppConfig } from '@/config/app-config'
 import { getDefaultProfile, type Profile, type ProfileID } from '@/config/trans-profile'
 import type { Word } from '../types/word'
-import type { DictID } from '@/core/api-server/types'
+import type { DictID } from '@/core/api-server/config'
 import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
 import { newWord } from '@/utils/dict-utils/new-word'
 type RenderDictItem = {

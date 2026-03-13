@@ -4,7 +4,7 @@ import type { AppConfig } from '@/config/app-config'
 import type { Word } from '../../types/word'
 import type { GlobalState } from '../global-state'
 import type { ProfileID, Profile } from '@/config/trans-profile'
-import type { DictID } from '@/core/api-server/types'
+import type { DictID } from '@/core/api-server/config'
 
 export type DictActionSlice = {
   NEW_CONFIG(payload: AppConfig): void

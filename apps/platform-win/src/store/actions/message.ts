@@ -17,7 +17,7 @@ type DictMessageSlice = {
     text: string
     /** Focus on the new page? */
     active?: boolean
-  }):void
+  }): void
   /** Request backend for page info */
   PAGE_INFO(): {
     pageId: string | number
@@ -42,7 +42,7 @@ type DictMessageSlice = {
     sortField?: string | string []
     sortOrder?: 'ascend' | 'descend'
     searchText?: string
-  }):{
+  }): {
     total: number
     words: Word[]
   }
@@ -71,7 +71,7 @@ type DictMessageSlice = {
     instant: boolean
     /** force panel to skip reconciling position */
     force: boolean
-  }):void
+  }): void
 
   /** Manually emit selection */
   EMIT_SELECTION: Record<string, unknown>
@@ -79,22 +79,22 @@ type DictMessageSlice = {
     Quick Search Dict Panel
   \* ------------------------------------------------ */
   /** Open or update Quick Search Panel */
-  OPEN_QS_PANEL():void
+  OPEN_QS_PANEL(): void
 
   /** Send new words to standalone panel */
-  QS_PANEL_SEARCH_TEXT(payload: Word):void
+  QS_PANEL_SEARCH_TEXT(payload: Word): void
 
-  CLOSE_QS_PANEL():void
+  CLOSE_QS_PANEL(): void
 
   /** query backend for standalone panel appearance */
-  QUERY_QS_PANEL():boolean
+  QUERY_QS_PANEL(): boolean
 
 
   /** Focus standalone quick search panel */
   QS_PANEL_FOCUSED: Record<string, unknown>
 
   /** Switch to Sidebar */
-  QS_SWITCH_SIDEBAR(payload: 'left' | 'right'):void
+  QS_SWITCH_SIDEBAR(payload: 'left' | 'right'): void
 
   /* ------------------------------------------------ *\
      Context Menus
@@ -105,10 +105,10 @@ type DictMessageSlice = {
     menuItemId: string
     selectionText?: string
     linkUrl?: string
-  }):void
+  }): void
 }
 
-export const messageActionSlice:StateCreator<DictMessageSlice & DictActionSlice & GlobalState, [], [], DictMessageSlice> = (set, get) => {
+export const messageActionSlice: StateCreator<DictMessageSlice & DictActionSlice & GlobalState, [], [], DictMessageSlice> = (set, get) => {
   return {
     PAGE_INFO () {
       const result = {
@@ -208,7 +208,7 @@ export const messageActionSlice:StateCreator<DictMessageSlice & DictActionSlice 
     QS_PANEL_FOCUSED: () => {
       const isExpandMtaBox = get().isExpandMtaBox
       if (isQuickSearchPage()) {
-        const input = document.querySelector< HTMLTextAreaElement | HTMLInputElement >(
+        const input = document.querySelector<HTMLTextAreaElement | HTMLInputElement>(
           isExpandMtaBox
             ? '.mtaBox-TextArea'
             : '.menuBar-SearchBox'
