@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid'
 import type { AllDictsConf } from '@/core/api-server/types/all-dict-conf'
 import { getAllDicts } from '@/core/api-server/types/all-dict-conf'
 import { getDefaultDictAuths, type DictAuths } from './auth'
+import { getDefaultProfileID, type ProfileID } from '@/core/api-local/profile'
 
 export type MtaAutoUnfold = '' | 'once' | 'always' | 'popup' | 'hide'
 
@@ -30,25 +31,20 @@ export type ProfileMutable = {
 }
 export type Profile = ProfileMutable
 
-export interface ProfileID {
-  id: string
-  name: string
-}
-
 export function getDefaultSelectDict (): Array<keyof AllDictsConf> {
   return [
-    'bing',
-    'cobuild',
-    'cambridge',
-    'youdao',
-    'urban',
-    'vocabulary',
+    // 'bing',
+    // 'cobuild',
+    // 'cambridge',
+    // 'youdao',
+    // 'urban',
+    // 'vocabulary',
     'caiyun',
-    'youdaotrans',
-    'zdic',
-    'guoyu',
-    'liangan',
-    'googledict',
+    // 'youdaotrans',
+    // 'zdic',
+    // 'guoyu',
+    // 'liangan',
+    // 'googledict',
   ]
 }
 
@@ -77,12 +73,6 @@ export function getDefaultProfile (id?: string): Profile {
   }
 }
 
-export function getDefaultProfileID (id?: string): ProfileID {
-  return {
-    id: id || uuid(),
-    name: '%%_default_%%',
-  }
-}
 
 export interface ProfileStorage {
   idItem: ProfileID

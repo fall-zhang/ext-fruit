@@ -7,7 +7,7 @@ import {
 import type { GuoYuResult } from './type'
 import type { SearchFunction, DictSearchResult } from '@/core/api-server/api-common/search-type'
 import type { Profile } from '@/config/trans-profile'
-
+import { fetch } from '@tauri-apps/plugin-http'
 export const search: SearchFunction<GuoYuResult> = (
   text,
   opt

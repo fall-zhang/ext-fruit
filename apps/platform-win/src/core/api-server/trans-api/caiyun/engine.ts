@@ -8,13 +8,7 @@ import { machineResult, type MachineTranslateResult } from '../../api-common/res
 import { detectLangInfo } from '../../api-common/detect-lang'
 
 export const getTranslator = memoizeOne(() =>
-  new Caiyun({
-    config: import.meta.env.VITE_CAIYUN_TOKEN
-      ? {
-        token: import.meta.env.VITE_CAIYUN_TOKEN,
-      }
-      : undefined,
-  })
+  new Caiyun({ })
 )
 
 export const getSrcPage: GetSrcPageFunction = () => {
@@ -29,7 +23,7 @@ export const search: SearchFunction<
   const translator = getTranslator()
   const langcodes = translator.getSupportLanguages()
 
-  let { from: sl, to: tl, text } = detectLangInfo(
+  const { from: sl, to: tl, text } = detectLangInfo(
     rawText,
     {
       from: opt.from,
@@ -40,22 +34,23 @@ export const search: SearchFunction<
 
   const baiduTranslator = getBaiduTranslator()
 
-  let baiduResult: TranslateResult | undefined
+  // let baiduResult: TranslateResult | undefined
 
-  try {
-    // Caiyun's lang detection is broken
-    baiduResult = await baiduTranslator.translate(text, sl, tl)
-    if (langcodes.includes(baiduResult.from)) {
-      sl = baiduResult.from
-    }
-  } catch (e) {
-    console.warn('⚡️ line:55 ~ e: ', e)
-  }
+  // try {
+  //   // Caiyun's lang detection is broken
+  //   baiduResult = await baiduTranslator.translate(text, sl, tl)
+  //   if (langcodes.includes(baiduResult.from)) {
+  //     sl = baiduResult.from
+  //   }
+  // } catch (e) {
+  //   console.warn('⚡️ line:55 ~ e: ', e)
+  // }
   const caiYunToken = opt.dictAuth?.caiyun.token
   const caiYunConfig = caiYunToken ? { token: caiYunToken } : undefined
 
   try {
     const result = await translator.translate(text, sl, tl, caiYunConfig)
+    console.log('⚡️ line:52 ~ result: ', result)
     result.origin.tts = await baiduTranslator.textToSpeech(
       result.origin.paragraphs.join('\n'),
       result.from

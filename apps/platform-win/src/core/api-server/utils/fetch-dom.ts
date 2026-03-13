@@ -25,11 +25,9 @@ export async function fetchDirtyDOM (
 
 export async function fetchPlainText (
   url: string,
-  config: AxiosRequestConfig = {}
+  config: Partial<RequestInit>
 ): Promise<string> {
-  return axios(url, {
-    withCredentials: false,
+  return fetch(url, {
     ...config,
-    responseType: 'text',
-  }).then(({ data }) => data)
+  }).then(res => res.text()).then((textRes) => textRes)
 }

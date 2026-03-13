@@ -68,6 +68,6 @@ export const detectLangInfo: GetTransLang = (recText, {
   return {
     from: fromLang,
     to: toLang,
-    text: 'string',
+    text,
   }
 }
