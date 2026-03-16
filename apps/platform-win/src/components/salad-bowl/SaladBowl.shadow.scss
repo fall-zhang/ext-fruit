@@ -1,4 +1,4 @@
-.saladbowl {
+.salad-bowl {
   position: fixed;
   z-index: 2147483647;
   top: 0;
@@ -15,7 +15,7 @@
   }
 }
 
-.isAnimate .saladbowl {
+.isAnimate .salad-bowl {
   will-change: transform;
   transition: transform 0.3s ease-out;
 
@@ -36,22 +36,22 @@
   }
 }
 
-.isAnimate-enter-active .saladbowl {
+.isAnimate-enter-active .salad-bowl {
   &>svg {
     animation: saladbowl-jelly 1000ms linear;
   }
 }
 
-.isAnimate-exit .saladbowl {
+.isAnimate-exit .salad-bowl {
   opacity: 1;
 }
 
-.isAnimate-exit-active .saladbowl {
+.isAnimate-exit-active .salad-bowl {
   opacity: 0;
   transition: opacity 0.1s;
 }
 
-.isAnimate-exit-done .saladbowl {
+.isAnimate-exit-done .salad-bowl {
   display: none;
 }
 
@@ -161,7 +161,6 @@
   }
 }
 
-// prettier-ignore
 @keyframes saladbowl-leaf-shake {
   0% {
     transform: translate(2px, 1px) rotate(0deg);
@@ -208,7 +207,6 @@
   }
 }
 
-// prettier-ignore
 @keyframes saladbowl-orange-spin {
   from {
     transform: rotate(0deg);
@@ -219,7 +217,6 @@
   }
 }
 
-// prettier-ignore
 @keyframes saladbowl-tomato-shake {
   0% {
     transform: rotate(10deg);

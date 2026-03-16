@@ -1,29 +1,28 @@
 import { useState, type FC } from 'react'
 import clsx from 'clsx'
-import { SALADICT_EXTERNAL } from '../../core/saladict-state'
 
 export interface SaladBowlProps {
   watchSelection: boolean
   /** Viewport based coordinate. */
-  readonly x: number
+  x: number
   /** Viewport based coordinate. */
-  readonly y: number
+  y: number
   /** React on hover. */
-  readonly enableHover: boolean
+  enableHover: boolean
   /** When bowl is activated via mouse. */
-  readonly onActive: () => void
-  readonly onHover: (isHover: boolean) => void
+  onActive: () => void
+  onHover: (isHover: boolean) => void
 }
 
 /**
  * Cute little icon that pops up near the selection.
  */
 export const SaladBowl: FC<SaladBowlProps> = props => {
-  const [isMouseOut, setMouseOut] = useState< boolean >(false)
+  const [isMouseOut, setMouseOut] = useState<boolean>(false)
   return (
     <div
       role="img"
-      className={clsx('saladbowl', SALADICT_EXTERNAL, {
+      className={clsx('salad-bowl', {
         enableHover: props.enableHover && !isMouseOut,
       })}
       style={{ transform: `translate(${props.x}px, ${props.y}px)` }}
@@ -31,7 +30,7 @@ export const SaladBowl: FC<SaladBowlProps> = props => {
         props.enableHover && setMouseOut(true)
         props.onHover(true)
         props.onActive()
-      } }
+      }}
       onMouseOut={() => {
         props.onHover(false)
         setMouseOut(false)

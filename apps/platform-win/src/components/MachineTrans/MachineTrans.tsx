@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import Speaker from '../Speaker'
-import type { MachineTranslateResult } from '@/core/api-server/api-common/result-handle'
+import type { MachineTranslateResult } from '@/core/api-server/trans-api/result-handle'
 import { getTTS } from '@/core/api-server/trans-api/google/engine'
 import type { ViewProps } from '../dict-api-view/type'
 
