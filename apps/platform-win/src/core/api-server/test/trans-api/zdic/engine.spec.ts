@@ -1,5 +1,5 @@
 import { retry } from '../../utils'
-import { search } from '@/core/api-server/api-common/zdic/engine'
+import { search } from '@/core/api-server/trans-api/zdic/engine'
 import { getDefaultConfig } from '@/config/app-config'
 import getDefaultProfile, { ProfileMutable } from '@/config/app-config/profiles'
 import { describe, expect, it } from 'vitest'

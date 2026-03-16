@@ -1,9 +1,9 @@
 import type { FC } from 'react'
 import React from 'react'
-import type { CNKIResult } from './engine'
 import EntryBox from '@/components/EntryBox'
-import type { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
+import type { CNKIResult } from '@/core/api-server/trans-api/cnki/engine'
+import type { ViewProps } from '../type'
 
 export const DictCambridge: FC<ViewProps<CNKIResult>> = ({ result }) => (
   <div className="dictCNKI">

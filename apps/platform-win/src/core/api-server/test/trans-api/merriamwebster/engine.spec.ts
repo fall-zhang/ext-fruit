@@ -19,7 +19,7 @@ import {
   _getSyllable,
   _getSynonyms,
   _getTitle
-} from '@/core/api-server/api-common/merriamwebster/engine'
+} from '@/core/api-server/trans-api/merriamwebster/engine'
 import { cases } from './testCases'
 import { beforeAll, describe, expect, it } from 'vitest'
 // import getDefaultProfile from '@/config/app-config/profiles'

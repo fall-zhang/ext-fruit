@@ -1,5 +1,5 @@
 import { retry } from '../../utils'
-import { search } from '@/core/api-server/api-common/shanbay/engine'
+import { search } from '@/core/api-server/trans-api/shanbay/engine'
 import { getDefaultConfig } from '@/config/app-config'
 import { getDefaultProfile } from '@/config/app-config/profiles'
 import { isContainChinese } from '@/_helpers/lang-check'

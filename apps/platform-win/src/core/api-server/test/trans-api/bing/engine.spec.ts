@@ -3,10 +3,10 @@ import type {
   BingResultLex,
   BingResultMachine,
   BingResultRelated
-} from '@/core/api-server/api-common/bing/engine'
+} from '@/core/api-server/trans-api/bing/engine'
 import {
   search
-} from '@/core/api-server/api-common/bing/engine'
+} from '@/core/api-server/trans-api/bing/engine'
 import { getDefaultConfig } from '@/config/app-config'
 import type { ProfileMutable } from '@/config/app-config/profiles'
 import { getDefaultProfile } from '@/config/app-config/profiles'

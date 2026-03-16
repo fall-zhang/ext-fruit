@@ -3,7 +3,7 @@ import {
   search,
   YoudaoResultLex,
   YoudaoResultRelated
-} from '@/core/api-server/api-common/youdao/engine'
+} from '@/core/api-server/trans-api/youdao/engine'
 import { getDefaultConfig } from '@/config/app-config'
 import { getDefaultProfile, ProfileMutable } from '@/config/app-config/profiles'
 import { describe, it, expect } from 'vitest'

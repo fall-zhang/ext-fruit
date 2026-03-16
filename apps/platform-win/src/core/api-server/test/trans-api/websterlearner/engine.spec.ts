@@ -2,7 +2,7 @@ import { retry } from '../../utils'
 import {
   search,
   WebsterLearnerResultLex
-} from '@/core/api-server/api-common/websterlearner/engine'
+} from '@/core/api-server/trans-api/websterlearner/engine'
 import { getDefaultConfig } from '@/config/app-config'
 import { getDefaultProfile } from '@/config/app-config/profiles'
 import { describe, it, expect } from 'vitest'

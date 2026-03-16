@@ -1,4 +1,4 @@
-import { MockRequest } from '@/core/api-server/api-common/helpers'
+import { MockRequest } from '@/core/api-server/trans-api/helpers'
 
 export const mockSearchTexts = ['主催', 'love', '吐く', '当たる']
 

@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 import type React from 'react'
-import type { CambridgeResult } from './engine'
-import type { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
+import type { CambridgeResult } from '@/core/api-server/trans-api/cambridge/engine'
+import type { ViewProps } from '../type'
 
 export const DictCambridge: FC<ViewProps<CambridgeResult>> = props => (
   <>

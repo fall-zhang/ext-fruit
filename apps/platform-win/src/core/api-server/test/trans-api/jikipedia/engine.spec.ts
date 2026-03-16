@@ -1,5 +1,5 @@
 import { retry } from '../../utils'
-import { search } from '@/core/api-server/api-common/jikipedia/engine'
+import { search } from '@/core/api-server/trans-api/jikipedia/engine'
 import { getDefaultConfig } from '@/config/app-config'
 import { getDefaultProfile } from '@/config/app-config/profiles'
 import { describe, it, expect } from 'vitest'

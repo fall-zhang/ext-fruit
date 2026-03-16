@@ -1,5 +1,5 @@
 import { retry } from '../../utils'
-import { search } from '@/core/api-server/api-common/renren/engine'
+import { search } from '@/core/api-server/trans-api/renren/engine'
 import { getDefaultConfig } from '@/config/app-config'
 import { getDefaultProfile } from '@/config/app-config/profiles'
 import { describe, it } from 'vitest'

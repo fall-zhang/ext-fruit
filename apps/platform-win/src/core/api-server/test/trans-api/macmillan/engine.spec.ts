@@ -3,7 +3,7 @@ import {
   search,
   MacmillanResultLex,
   MacmillanResultRelated
-} from '@/core/api-server/api-common/macmillan/engine'
+} from '@/core/api-server/trans-api/macmillan/engine'
 import { getDefaultConfig } from '@/config/app-config'
 import { getDefaultProfile } from '@/config/app-config/profiles'
 import { describe, expect, it } from 'vitest'

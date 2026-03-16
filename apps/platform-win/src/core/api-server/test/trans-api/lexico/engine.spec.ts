@@ -3,7 +3,7 @@ import {
   search,
   LexicoResultLex,
   LexicoResultRelated
-} from '@/core/api-server/api-common/lexico/engine'
+} from '@/core/api-server/trans-api/lexico/engine'
 import { getDefaultConfig } from '@/config/app-config'
 import { getDefaultProfile } from '@/config/app-config/profiles'
 import { describe, expect, it } from 'vitest'

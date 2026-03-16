@@ -8,7 +8,7 @@ import type { YoudaoResult } from '@/core/api-server/trans-api/youdao/engine'
 import type { ViewProps } from '../type'
 
 export const DictYoudao: FC<ViewProps<YoudaoResult>> = ({ result }) => {
-  const [collinsEntry, setCollinsEntry] = useState<string | number>(0)
+  const [collinsEntry, setCollinsEntry] = useState<number>(0)
 
   if (result.type === 'related') {
     return <StrElm className="dictYoudao-Related" html={result.list} />
@@ -43,7 +43,7 @@ export const DictYoudao: FC<ViewProps<YoudaoResult>> = ({ result }) => {
           {result.collins.length > 1 && (
             <select
               value={collinsEntry}
-              onChange={e => setCollinsEntry(e.currentTarget.value)}
+              onChange={e => setCollinsEntry(parseInt(e.currentTarget.value))}
             >
               {result.collins.map((col, i) => (
                 <option key={i} value={i}>

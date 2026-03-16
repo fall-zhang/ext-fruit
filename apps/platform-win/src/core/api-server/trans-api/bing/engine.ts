@@ -9,7 +9,7 @@ import {
 } from '../../utils'
 import type { BingResult, BingResultLex, BingResultMachine, BingResultRelated } from './type'
 import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
-import type { AllDictsConf } from '../../types/all-dict-conf'
+import type { AllDictsConf } from '../../config'
 
 export const getSrcPage: GetSrcPageFunction = text =>
   'https://cn.bing.com/dict/search?q=' +

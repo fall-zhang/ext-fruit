@@ -1,6 +1,6 @@
 /* eslint-disable max-nested-callbacks */
 import { retry } from '../../utils'
-import { search } from '@/core/api-server/api-common/cambridge/engine'
+import { search } from '@/core/api-server/trans-api/cambridge/engine'
 import { getDefaultConfig, AppConfigMutable } from '@/config/app-config'
 import getDefaultProfile from '@/config/app-config/profiles'
 import { afterAll, describe, expect, it } from 'vitest'

@@ -1,4 +1,4 @@
-import type { GetSrcPageFunction } from '@/core/api-server/api-common/atom-type'
+import type { GetSrcPageFunction } from '@/core/api-server/trans-api/atom-type'
 import { getChsToChz } from '@/core/api-server/utils'
 
 export const getSrcPage: GetSrcPageFunction = async text => {

@@ -1,11 +1,11 @@
 
-import { isContainJapanese, isContainKorean } from '@/utils/lang-check'
 import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
 import {
   handleNoResult,
   handleNetWorkError
 } from '../../utils'
 import axios from 'axios'
+import { isContainJapanese } from '../../utils/lang-check'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return isContainJapanese(text)

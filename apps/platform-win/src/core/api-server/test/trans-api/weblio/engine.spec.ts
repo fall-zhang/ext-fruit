@@ -1,6 +1,6 @@
 /* eslint-disable max-nested-callbacks */
 import { retry } from '../../utils'
-import { search } from '@/core/api-server/api-common/weblio/engine'
+import { search } from '@/core/api-server/trans-api/weblio/engine'
 import { getDefaultConfig } from '@/config/app-config'
 import { getDefaultProfile } from '@/config/app-config/profiles'
 import { describe, it, expect } from 'vitest'
