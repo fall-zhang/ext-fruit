@@ -10,11 +10,11 @@ export const useKeyModifier = () => {
     fn: false,
     meta: false,
     fnLock: false,
-    numLock: false
+    numLock: false,
   })
 
   useEffect(() => {
-    const keyDown = (ev:KeyboardEvent) => {
+    const keyDown = (ev: KeyboardEvent) => {
       const state = {
         control: ev.ctrlKey,
         alt: ev.altKey,
@@ -23,11 +23,11 @@ export const useKeyModifier = () => {
         capsLock: ev.getModifierState('CapsLock'),
         fn: ev.getModifierState('Fn'),
         fnLock: ev.getModifierState('FnLock'),
-        numLock: ev.getModifierState('NumLock')
+        numLock: ev.getModifierState('NumLock'),
       }
       setKeys(state)
     }
-    function keyUp (ev:KeyboardEvent) {
+    function keyUp (ev: KeyboardEvent) {
       const state = {
         control: ev.ctrlKey,
         alt: ev.altKey,
@@ -36,7 +36,7 @@ export const useKeyModifier = () => {
         capsLock: ev.getModifierState('CapsLock'),
         fn: ev.getModifierState('Fn'),
         fnLock: ev.getModifierState('FnLock'),
-        numLock: ev.getModifierState('NumLock')
+        numLock: ev.getModifierState('NumLock'),
       }
       setKeys(state)
     }

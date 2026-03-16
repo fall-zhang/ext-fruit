@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-export const useFetch = (url:string) => {
+export const useFetch = (url: string) => {
   useEffect(() => {
     fetch(url).then(res => {
       res.json()

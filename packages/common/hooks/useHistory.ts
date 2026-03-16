@@ -1,12 +1,12 @@
 import { useCallback, useRef, useState } from 'react'
 import { useImmer } from 'use-immer'
 type HistoryOption = {
-  maxStep?:number
+  maxStep?: number
 }
 /**
  * 历史记录功能
  */
-export const useHistory = <T>(initValue:T, options?:HistoryOption) => {
+export const useHistory = <T>(initValue: T, options?: HistoryOption) => {
   const [current, setCurrent] = useState<T>(initValue)
   const historyStack = useRef<T[]>([initValue])
   const undoStack = useRef<T[]>([])
@@ -28,7 +28,7 @@ export const useHistory = <T>(initValue:T, options?:HistoryOption) => {
     return undefined
   }, [])
 
-  const pushToHistory = useCallback((rec:T) => {
+  const pushToHistory = useCallback((rec: T) => {
     historyStack.current.push(rec)
     setCurrent(rec)
     if (undoStack.current.length > 0) {
@@ -40,14 +40,14 @@ export const useHistory = <T>(initValue:T, options?:HistoryOption) => {
     redo,
     historyStack,
     current,
-    pushToHistory
+    pushToHistory,
   }
 }
 
 /**
  * 历史操作功能，可以根据每一项操作进行针对撤回和重做
  */
-export const useHistoryList = <T>(initValue:T[]) => {
+export const useHistoryList = <T>(initValue: T[]) => {
   const [historyStack, setHistoryStack] = useImmer<T[]>(initValue)
   const undoStack = useRef<T[]>([])
   function undo () {
@@ -76,7 +76,7 @@ export const useHistoryList = <T>(initValue:T[]) => {
     undo,
     redo,
     historyStack,
-    pushToHistory
+    pushToHistory,
   }
 }
 
@@ -87,7 +87,7 @@ export const useHistoryList = <T>(initValue:T[]) => {
  * @param options 配置
  * @returns
  */
-export const useHistoryState = <T>(initValue:T, options?:HistoryOption) => {
+export const useHistoryState = <T>(initValue: T, options?: HistoryOption) => {
   const [current, setCurrent] = useState<T>(initValue)
   const historyStack = useRef<T[]>([initValue])
   const undoStack = useRef<T[]>([])
@@ -109,7 +109,7 @@ export const useHistoryState = <T>(initValue:T, options?:HistoryOption) => {
     return undefined
   }, [])
 
-  const pushToHistory = useCallback((rec:T) => {
+  const pushToHistory = useCallback((rec: T) => {
     historyStack.current.push(rec)
     setCurrent(rec)
     if (undoStack.current.length > 0) {
@@ -120,7 +120,7 @@ export const useHistoryState = <T>(initValue:T, options?:HistoryOption) => {
    * 只更新 state，不添加到历史列表中
    * @param rec
    */
-  const onlyUpdateState = (rec:T) => {
+  const onlyUpdateState = (rec: T) => {
     setCurrent(rec)
   }
   return {
@@ -128,6 +128,6 @@ export const useHistoryState = <T>(initValue:T, options?:HistoryOption) => {
     redo,
     historyStack,
     current,
-    pushToHistory
+    pushToHistory,
   }
 }
