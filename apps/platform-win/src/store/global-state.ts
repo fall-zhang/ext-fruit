@@ -1,10 +1,11 @@
 import type { StateCreator } from 'zustand'
 import { getDefaultConfig, type AppConfig } from '@/config/app-config'
-import { getDefaultProfile, type Profile, type ProfileID } from '@/config/trans-profile'
+import { getDefaultProfile, type Profile } from '@/config/trans-profile'
 import type { Word } from '../types/word'
 import type { DictID } from '@/core/api-server/config'
 import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
 import { newWord } from '@/utils/dict-utils/new-word'
+import type { ProfileID } from '@/core/api-local/profile'
 type RenderDictItem = {
   readonly id: DictID
   readonly searchStatus: 'IDLE' | 'SEARCHING' | 'FINISH'
@@ -12,7 +13,6 @@ type RenderDictItem = {
   readonly catalog?: DictSearchResult<DictID>['catalog']
 }
 export interface GlobalState {
-  bears: number
   config: AppConfig
   profiles: ProfileID[]
   selection: {
@@ -85,8 +85,6 @@ export interface GlobalState {
   /** Record init coordinate on dragstart */
   dragStartCoord: null | { x: number; y: number },
   lastPlayAudio: null | { src: string; timestamp: number },
-  increasePopulation: (by: number) => void
-  removeAllBears: () => void
 }
 export const createSharedSlice: StateCreator<
   GlobalState,
@@ -101,7 +99,6 @@ export const createSharedSlice: StateCreator<
 
   const isExpandMtaBox = isShowMtaBox && (profile.mtaAutoUnfold === 'once' || profile.mtaAutoUnfold === 'always' || (profile.mtaAutoUnfold === 'popup'))
   return {
-    bears: 0,
     config,
     profiles: [],
     selection: {
@@ -188,10 +185,6 @@ export const createSharedSlice: StateCreator<
     /** Record init coordinate on dragstart */
     dragStartCoord: null as null | { x: number; y: number },
     lastPlayAudio: null as null | { src: string; timestamp: number },
-    increasePopulation () {
-      set((state) => ({ bears: state.bears + 1 }))
-    },
-    removeAllBears: () => set({ bears: 0 }),
 
   } satisfies GlobalState
 }

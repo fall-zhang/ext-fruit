@@ -41,13 +41,13 @@ export const newSelection = (state: GlobalState, selection: {
     } else {
       // icon position       10px  panel position
       //           +-------+      +------------------------+
-      //           |       |      |                        |
+      //           | icon  |      |                        |
       //           |       | 30px |                        |
       //      50px +-------+      |                        |
       //           |  30px        |                        |
       //     20px  |              |                        |
-      //     +-----+              |                        |
-      // cursor
+      //   → +-----+              |                        |
+      // cursor 鼠标位置
       const iconWidth = 30
       const scrollbarWidth = 10
 
