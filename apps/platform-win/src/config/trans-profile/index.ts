@@ -34,8 +34,8 @@ export type Profile = ProfileMutable
 
 export function getDefaultSelectDict (): Array<DictID> {
   return [
-    'baidu',
-    // 'cobuild',
+    // 'baidu',
+    'cobuild', // ✅
     // 'cambridge',
     // 'youdao',
     // 'urban',
@@ -47,7 +47,10 @@ export function getDefaultSelectDict (): Array<DictID> {
     // 'liangan',
     // 'googledict',
 
-    // "baidu" , "ahdict" , "oaldict" , "caiyun" , "cambridge" , "cnki" , "cobuild" , "etymonline" , "eudic" , "google" , "googledict" , "guoyu" , "hjdict" , "jikipedia" , "jukuu" , "lexico" , "liangan" , "longman" , "macmillan" , "mojidict" , "naver" , "renren" , "sogou" , "tencent" , "urban" , "vocabulary" , "weblio" , "weblioejje" , "merriamwebster" , "websterlearner" , "wikipedia" , "youdao" , "youdaotrans" , "zdic"
+    // "ahdict" ,
+    //  "oaldict" , 
+    // "caiyun" ,
+    //  "cambridge" , "cnki" , "cobuild" , "etymonline" , "eudic" , "google" , "googledict" , "guoyu" , "hjdict" , "jikipedia" , "jukuu" , "lexico" , "liangan" , "longman" , "macmillan" , "mojidict" , "naver" , "renren" , "sogou" , "tencent" , "urban" , "vocabulary" , "weblio" , "weblioejje" , "merriamwebster" , "websterlearner" , "wikipedia" , "youdao" , "youdaotrans" , "zdic"
   ]
 }
 

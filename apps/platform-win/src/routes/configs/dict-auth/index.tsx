@@ -43,7 +43,7 @@ export const RouteComponent: FC = () => {
           ? (
             <Trans message={t('dictAuth.dictHelp')}>
               <a
-                href={`@/core/api-server/api-common/${dictID}/auth.ts`}
+                href={`@/core/api-server/trans-api/${dictID}/auth.ts`}
                 target="_blank"
                 rel="nofollow noopener noreferrer"
               >

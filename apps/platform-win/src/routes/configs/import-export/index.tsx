@@ -10,8 +10,9 @@ import type { AppConfig } from '@/config/app-config'
 import { mergeConfig } from '@/config/app-config/merge-config'
 import { useListLayout } from '../-utils/layout'
 import { useConfContext } from '@/context/conf-context'
-import type { ProfileID, Profile } from '@/config/trans-profile'
+import type { Profile } from '@/config/trans-profile'
 import { mergeProfile } from '@/config/trans-profile/merge-profile'
+import type { ProfileID } from '@/core/api-local/profile'
 
 export const Route = createFileRoute('/configs/import-export/')({
   component: RouteComponent,

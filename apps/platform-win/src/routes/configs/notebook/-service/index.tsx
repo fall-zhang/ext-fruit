@@ -28,7 +28,7 @@ export const Notebook: FC = () => {
     }
     return newConfig
   }
-
+  const formRef = useRef(null)
 
   const formItems: SaladictFormItem[] = [
     {
@@ -74,7 +74,7 @@ export const Notebook: FC = () => {
 
   return (
     <>
-      <SaladictForm items={formItems} />
+      <SaladictForm items={formItems} ref={formRef}/>
       {'需要重写的模块，同步配置'}
       {syncServiceIds.map(id =>
         React.createElement(reqSyncService(`./${id}.tsx`).default, {

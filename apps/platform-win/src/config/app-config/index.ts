@@ -7,7 +7,7 @@ export type AppConfig = ReadonlyDeep<SaladConfigType>
 
 export function getDefaultConfig (): SaladConfigType {
   return {
-    version: 14,
+    version: 1,
     active: true,
     runInBg: false,
     analytics: true,
@@ -208,11 +208,7 @@ export function getDefaultConfig (): SaladConfigType {
     /** URLs, [regexp.source, match_pattern] */
     whitelist: [],
     /** URLs, [regexp.source, match_pattern] */
-    blacklist: [
-      ['^https://stackedit\\.io(/.*)?$', 'https://stackedit.io/*'],
-      ['^https://docs\\.google\\.com(/.*)?$', 'https://docs.google.com/*'],
-      ['^https://docs\\.qq\\.com(/.*)?$', 'https://docs.qq.com/*'],
-    ],
+    blacklist: [],
 
     contextMenus: {
       selected: ['google_translate', 'saladict'],

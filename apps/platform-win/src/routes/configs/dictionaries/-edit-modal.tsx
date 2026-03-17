@@ -7,14 +7,13 @@ import type { Rule } from 'antd/lib/form'
 import { useTranslation } from 'react-i18next'
 import { useDictStore } from '@/store'
 import { setFormDirty, useFormDirty } from '../-utils/use-form-dirty'
-import type { DictID } from '@/config/app-config'
-import { supportedLangs } from '@/utils/lang-check'
 import { getProfilePath } from '../-utils/path-joiner'
 import type { SaladictFormItem } from '../-components/SaladictForm'
 import { InputNumberGroup } from '../-components/InputNumberGroup'
 import { SaladictModalForm } from '../-components/SaladictModalForm'
 import { ChangeEntryContext } from '../-utils/change-entry'
-
+import type { DictID } from '@/core/api-server/config'
+import { supportedLangs } from '@/core/api-server/utils/lang-check'
 export interface EditModalProps {
   dictID?: DictID | null
   onClose: () => void
@@ -24,7 +23,7 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
   const { t, i18n } = useTranslation(['options', 'dicts', 'common', 'langcode'])
   const changeEntry = useContext(ChangeEntryContext)
   const formDirtyRef = useFormDirty()
-  const { dictAuth } = useDictStore(
+  const { dictAuth, allDicts } = useDictStore(
     state => ({
       dictAuth: state.config.dictAuth,
       allDicts: state.activeProfile.dicts.all,
@@ -165,13 +164,12 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
                   : allDicts[dictID].optionalVal[optKey]
 
                 item.children = (
-                  <Select>
-                    {langs.map((option: string) => (
-                      <Select.Option value={option} key={option}>
-                        {option === 'default' ? '' : option + ' '}
-                        {t(`langcode:${option}`)}
-                      </Select.Option>
-                    ))}
+                  <Select
+                    options={langs.map((option: string) => ({
+                      label: (option === 'default' ? '' : option + ' ') + t(`langcode:${option}`),
+                      value: option,
+                    }
+                    ))}>
                   </Select>
                 )
               } else {
