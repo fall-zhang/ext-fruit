@@ -13,16 +13,21 @@ import {
   distinctUntilChanged
 } from 'rxjs/operators'
 
-
 import { isTypeField } from './helper'
-import { useCallback, useEffect, type MouseEvent } from 'react'
+import type { MouseEvent } from 'react'
 import { isFirefox } from '../browser'
-import { isTagName } from '../dom'
-import type { AppConfig } from '../../app-config'
-import { checkSupportedLangs } from '../lang-check'
 import { getSentenceFromSelection, getTextFromSelection } from '../get-selection-more'
+import { checkSupportedLangs } from '@/core/api-server/utils/lang-check'
+import { isInDictPanel } from './utils'
 
-export function createSelectTextStream (config: AppConfig | null) {
+type SelectionConf = {
+  // 启用 touch 事件的监听
+  touchMode: boolean
+  // 双击的判定间隔
+  doubleClickDelay: 300
+}
+
+export function createSelectTextStream (config: SelectionConf | null) {
   if (!config) {
     return EMPTY
   }
@@ -30,7 +35,7 @@ export function createSelectTextStream (config: AppConfig | null) {
   return config.touchMode ? withTouchMode(config) : withoutTouchMode(config)
 }
 
-function withTouchMode (config: AppConfig) {
+function withTouchMode (config: SelectionConf) {
   const mousedown$ = merge(
     fromEvent<MouseEvent>(window, 'mousedown', { capture: true }).pipe(
       filter(e => e.button === 0)
@@ -61,14 +66,10 @@ function withTouchMode (config: AppConfig) {
     map(() => false)(fromEvent(window, 'blur', { capture: true }))
   )
 
-  return fromEvent(document, 'selectionchange').pipe(
+  const result = fromEvent(document, 'selectionchange').pipe(
     withLatestFrom(isMouseDown$),
     debounce(([, isWithMouse]) => (isWithMouse ? mouseup$ : timer(400))),
     map(([, isWithMouse]) => [window.getSelection(), isWithMouse] as const),
-    filter(
-      (args): args is [Selection, boolean] =>
-        !!args[0] && !isInSaladictExternal(args[0].anchorNode)
-    ),
     withLatestFrom(mouseup$, mousedown$, clickPeriodCount$),
     map(([[selection, isWithMouse], mouseup, mousedown, clickPeriodCount]) => {
       const self = isInDictPanel(selection.anchorNode || mousedown.target)
@@ -152,9 +153,10 @@ function withTouchMode (config: AppConfig) {
       return timer(0)
     })
   )
+  return result
 }
 
-function withoutTouchMode (config: AppConfig) {
+function withoutTouchMode (config: SelectionConf) {
   const mousedown$ = fromEvent<MouseEvent>(window, 'mousedown', {
     capture: true,
   }).pipe(filter(e => e.button === 0))
@@ -169,7 +171,6 @@ function withoutTouchMode (config: AppConfig) {
   )
 
   return mouseup$.pipe(
-    filter(e => !isInSaladictExternal(e.target)),
     // if user click on a selected text,
     // getSelection would reture the text before the highlight disappears
     // delay to wait for selection get cleared
@@ -182,7 +183,7 @@ function withoutTouchMode (config: AppConfig) {
         !isInDictPanel(mouseup.target) && !isInDictPanel(mousedown.target)
     ),
     map(([mouseup, mousedown, clickPeriodCount]) => {
-      if (config.noTypeField && isTypeField(mousedown.target)) {
+      if (config.noTypeField && isTypeField(mousedown.currentTarget)) {
         return { self: false }
       }
 
@@ -222,61 +223,6 @@ function withoutTouchMode (config: AppConfig) {
       )
     })
   )
-}
-
-export function useInPanelSelect (
-  touchMode: AppConfig['touchMode'],
-  language: AppConfig['language']
-) {
-  const onMouseUp = useCallback((ev:MouseEvent) => {
-    let isPureTextNode = true
-    if (touchMode) {
-      isPureTextNode = false
-    }
-
-    for (
-      let el = ev.target as HTMLElement | null;
-      el;
-      el = el.parentElement
-    ) {
-      if (isTagName(el, 'a') || isTagName(el, 'button')) {
-        isPureTextNode = false
-      }
-    }
-    const selection = window.getSelection()
-    const text = getTextFromSelection(selection)
-
-    return checkSupportedLangs(language, text)
-      ? {
-        word: {
-          text,
-          context: getSentenceFromSelection(selection),
-        },
-        mouseX: ev.clientX,
-        mouseY: ev.clientY,
-        altKey: ev.altKey,
-        shiftKey: ev.shiftKey,
-        ctrlKey: ev.ctrlKey,
-        metaKey: ev.metaKey,
-        self: true,
-        instant: false,
-        force: false,
-      }
-      : {
-        word: null,
-        self: true,
-        mouseX: 0,
-        mouseY: 0,
-        dbClick: false,
-        altKey: false,
-        shiftKey: false,
-        ctrlKey: false,
-        metaKey: false,
-        instant: false,
-        force: false,
-      }
-  }, [])
-  return onMouseUp
 }
 
 function clickPeriodCountStream (

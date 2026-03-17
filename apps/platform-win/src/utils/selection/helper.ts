@@ -1,8 +1,9 @@
-import type { AppConfig } from '@salad/core/src/app-config'
 import type { Observable } from 'rxjs'
 import { fromEvent, merge, of } from 'rxjs'
 import { map, filter, distinctUntilChanged } from 'rxjs/operators'
 import { isTagName } from '../dom'
+import { isMac } from '../browser'
+import type { AppConfig } from '@/config/app-config'
 
 
 /**
@@ -38,7 +39,7 @@ export function whenKeyPressed (
 // common editors
 const editorTester = /CodeMirror|ace_editor|monaco-editor/
 
-export function isTypeField (element: Node | EventTarget | null): boolean {
+export function isTypeField (element: HTMLElement | null): boolean {
   if (!element || !element.tagName) {
     return false
   }
@@ -67,7 +68,7 @@ export function isTypeField (element: Node | EventTarget | null): boolean {
 }
 
 export function isBlacklisted (config: AppConfig): boolean {
-  const url = window.pageURL || document.URL || ''
+  const url = document.URL || ''
   if (!url) {
     return false
   }
@@ -79,18 +80,5 @@ export function isBlacklisted (config: AppConfig): boolean {
 
 export async function newSelectionWord (
 ) {
-  // const info = await message.send<'PAGE_INFO'>({ type: 'PAGE_INFO' })
-  // window.faviconURL = info.faviconURL
-  // if (info.pageTitle) {
-  //   window.pageTitle = info.pageTitle
-  // }
-  // if (info.pageURL) {
-  //   window.pageURL = info.pageURL
-  // }
-  // return newWord({
-  //   title: info.pageTitle || document.title || '',
-  //   url: info.pageURL || document.URL || '',
-  //   favicon: info.faviconURL || '',
-  //   ...word,
-  // })
+
 }

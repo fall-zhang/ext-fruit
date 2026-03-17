@@ -1,5 +1,5 @@
-import { fetchDirtyDOM } from './fetch-dom'
-import { handleNoResult, getText } from '@/core/trans-api/helpers'
+import { getText, handleNoResult } from '@/core/api-server/utils'
+import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 
 export async function getWordOfTheDay (): Promise<string> {
   try {

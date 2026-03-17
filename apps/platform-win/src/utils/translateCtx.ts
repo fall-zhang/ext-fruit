@@ -1,5 +1,5 @@
 import type { AppConfig } from '@/config/app-config'
-import type { MachineTranslateResult } from '@/core/api-server/api-common/result-handle'
+import type { MachineTranslateResult } from '@/core/api-server/trans-api/result-handle'
 import { fetchDictResult } from '@/core/api-server/fetch-trans'
 import type { DictID } from '@/core/api-server/config'
 
