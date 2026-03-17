@@ -5,7 +5,8 @@ import lintReactHooks from 'eslint-plugin-react-hooks'
 import tslint from 'typescript-eslint'
 import stylistic from '@stylistic/eslint-plugin'
 import globals from 'globals'
-import standard from 'eslint-config-standard-new'
+import standardConfig from 'eslint-config-standard-new'
+
 const defaultConfig = {
   plugins: {
     react: lintReact,
@@ -90,7 +91,7 @@ export default [
   jslint.configs.recommended,
   lintReact.configs.flat.recommended,
   lintReact.configs.flat['jsx-runtime'],
-  standard, // js 标准配置
+  standardConfig, // js 标准配置
   ...tslint.configs.recommended,
   // ...tailwind.configs['flat/recommended'],
   // stylistic.configs.recommended,

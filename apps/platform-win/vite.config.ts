@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve as pathResolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { visualizer } from 'rollup-plugin-visualizer'
+// import { visualizer } from 'rollup-plugin-visualizer'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import tailwindcss from '@tailwindcss/vite'
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
@@ -15,10 +15,10 @@ export default defineConfig({
       autoCodeSplitting: true,
     }),
     react(),
-    visualizer({
-      open: true,
-      filename: 'build/analyze.html',
-    }),
+    // visualizer({
+    //   open: true,
+    //   filename: 'build/analyze.html',
+    // }),
   ],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
