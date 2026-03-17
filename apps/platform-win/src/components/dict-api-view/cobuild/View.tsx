@@ -2,16 +2,16 @@ import type { FC } from 'react'
 import React, { useState } from 'react'
 import { Speaker } from '@/components/Speaker'
 import StarRates from '@/components/StarRates'
-import type { COBUILDResult, COBUILDCibaResult, COBUILDColResult } from './engine'
-import type { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
+import type { COBUILDResult, COBUILDCibaResult, COBUILDColResult } from '@/core/api-server/trans-api/cobuild/engine'
+import type { ViewProps } from '../type'
 
 export const DictCOBUILD: FC<ViewProps<COBUILDResult>> = ({ result }) => {
   switch (result.type) {
     case 'ciba':
       return renderCiba(result)
     case 'collins':
-      return renderCol(result)
+      return <RenderCol {...result}></RenderCol>
   }
   return null
 }
@@ -49,21 +49,23 @@ function renderCiba (result: COBUILDCibaResult) {
   )
 }
 
-function renderCol (result: COBUILDColResult) {
-  const [iSec, setiSec] = useState('0')
+function RenderCol (result: COBUILDColResult) {
+  const [iSec, setiSec] = useState(0)
   const curSection = result.sections[iSec]
 
   return (
     <div className="dictCOBUILD-ColEntry">
       {result.sections.length > 0 && (
-        <select value={iSec} onChange={e => setiSec(e.currentTarget.value)}>
-          {result.sections.map((section, i) => (
-            <option key={section.id} value={i}>
-              {section.type}
-              {section.title ? ` :${section.title}` : ''}
-              {section.num ? ` ${section.num}` : ''}
-            </option>
-          ))}
+        <select value={iSec} onChange={e => setiSec(parseInt(e.currentTarget.value))}>
+          {result.sections.map((section, i) => {
+            return (
+              <option key={section.id + i} value={i}>
+                {section.type}
+                {section.title ? ` :${section.title}` : ''}
+                {section.num ? ` ${section.num}` : ''}
+              </option>
+            )
+          })}
         </select>
       )}
       <div className="dictionary">
@@ -74,7 +76,6 @@ function renderCol (result: COBUILDColResult) {
                 <div className="dictentry">
                   <div className="dictlink">
                     <StrElm
-                      key={curSection}
                       className={curSection.className}
                       html={curSection.content}
                     />

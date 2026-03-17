@@ -1,5 +1,5 @@
 import type { DictID } from '@/core/api-server/config'
-import type { Word } from '../../types/word'
+import type { Word } from '@/types/word'
 
 export interface ViewProps<T> {
   result: T
