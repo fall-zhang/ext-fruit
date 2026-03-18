@@ -42,21 +42,8 @@
     {
       "identifier": "http:default",
       "allow": [
-        { "url": "https://*.baidu.com" },
-        { "url": "https://ahdictionary.com" },
-        { "url": "https://dict.youdao.com" },
-        { "url": "https://www.collinsdictionary.com" },
-        { "url": "https://api.interpreter.caiyunai.com" },
-        { "url": "https://openapi.youdao.com" },
-        { "url": "https://dictionary.cambridge.org" },
-        { "url": "https://www.google.com" },
-        { "url": "https://www.moedict.tw" },
-        { "url": "https://www.zdic.net" },
-        { "url": "https://www.vocabulary.com" },
-        { "url": "http://www.urbandictionary.com" },
-        { "url": "https://www.oxfordlearnersdictionaries.com/" },
-        { "url": "http://dict.cnki.net" },
-        { "url": "https://cn.bing.com" }
+        "http://**",
+        "https://**"
      ]
     }
   ]
