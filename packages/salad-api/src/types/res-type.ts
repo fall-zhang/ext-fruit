@@ -1,6 +1,8 @@
 import type { AppConfig } from '@/config/app-config'
 import type { AllDictsConf } from './all-config'
 
+
+export type HTMLString = string
 /**
  * Fetch and parse dictionary search result
  *
