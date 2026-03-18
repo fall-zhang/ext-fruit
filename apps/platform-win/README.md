@@ -4,8 +4,6 @@
 
 默认工作区
 
-C:\Users\Administrator\AppData\Roaming\less-process\workspace
-
 ## 支持的系统
 
 - 支持系统：win11，win10（Version 1803 and later with all updates applied）

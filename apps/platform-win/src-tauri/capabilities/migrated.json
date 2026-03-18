@@ -54,6 +54,8 @@
         { "url": "https://www.zdic.net" },
         { "url": "https://www.vocabulary.com" },
         { "url": "http://www.urbandictionary.com" },
+        { "url": "https://www.oxfordlearnersdictionaries.com/" },
+        { "url": "http://dict.cnki.net" },
         { "url": "https://cn.bing.com" }
      ]
     }

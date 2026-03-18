@@ -4,18 +4,18 @@
  * @param event
  */
 interface AnyFun {
-  (...arg:any[]):void
+  (...arg: any[]): void
 }
 
 interface ExecuteFun {
-  ():void
+  (): void
 }
 interface OutSideEvent {
-  (fun: AnyFun, element?: Element):Record<'cancel' | 'trigger', ExecuteFun> | void
+  (fun: AnyFun, element?: Element): Record<'cancel' | 'trigger', ExecuteFun> | void
 }
 
 
-export const clickOutside = (event:AnyFun, element:any) => {
+export const clickOutside = (event: AnyFun, element: any) => {
   // console.log('🚀 ~ event:', event, element)
   const fun = event
   document.addEventListener('click', fun)
@@ -25,7 +25,7 @@ export const clickOutside = (event:AnyFun, element:any) => {
     },
     trigger () {
       event()
-    }
+    },
   }
 }
 
@@ -35,7 +35,7 @@ export const clickOutside = (event:AnyFun, element:any) => {
  * @param element
  * @returns
  */
-export const clickOutsideOnce:OutSideEvent = (event, element) => {
+export const clickOutsideOnce: OutSideEvent = (event, element) => {
   // console.log('🚀 ~ event:', event, element)
   // const fun = event
   const newEvent = () => {
@@ -54,6 +54,6 @@ export const clickOutsideOnce:OutSideEvent = (event, element) => {
   }
   return {
     cancel,
-    trigger
+    trigger,
   }
 }

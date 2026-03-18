@@ -1,18 +1,18 @@
 use std::sync::Mutex;
-use tauri::async_runtime::spawn;
+// use tauri::async_runtime::spawn;
 use tauri::{AppHandle, Manager, State};
-use tokio::time::{sleep, Duration};
+// use tokio::time::{sleep, Duration};
 
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 // #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
-enum FileOperateState {
-    Remove,
-    Add,
-    Modify,
-}
+// enum FileOperateState {
+//     Remove,
+//     Add,
+//     Modify,
+// }
 
 struct SetupState {
     frontend_task: bool,
@@ -82,27 +82,27 @@ async fn set_complete(
     }
     Ok(())
 }
-#[tauri::command]
-fn greet(name: String) -> String {
-    // format!("Hello {name} from Rust!");
-    println!("Hello, {}! You've been running greet in Rust!", name);
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
+// #[tauri::command]
+// fn greet(name: String) -> String {
+//     // format!("Hello {name} from Rust!");
+//     println!("Hello, {}! You've been running greet in Rust!", name);
+//     format!("Hello, {}! You've been greeted from Rust!", name)
+// }
 
 // An async function that does some heavy setup task
-async fn setup(app: AppHandle) -> Result<(), ()> {
-    // Fake performing some heavy action for 3 seconds
-    println!("Performing really heavy backend setup task...");
-    // sleep(Duration::from_secs(3)).await;
-    println!("Backend setup task completed!");
-    // Set the backend task as being completed
-    // Commands can be ran as regular functions as long as you take
-    // care of the input arguments yourself
-    set_complete(
-        app.clone(),
-        app.state::<Mutex<SetupState>>(),
-        "backend".to_string(),
-    )
-    .await?;
-    Ok(())
-}
+// async fn setup(app: AppHandle) -> Result<(), ()> {
+//     // Fake performing some heavy action for 3 seconds
+//     println!("Performing really heavy backend setup task...");
+//     // sleep(Duration::from_secs(3)).await;
+//     println!("Backend setup task completed!");
+//     // Set the backend task as being completed
+//     // Commands can be ran as regular functions as long as you take
+//     // care of the input arguments yourself
+//     set_complete(
+//         app.clone(),
+//         app.state::<Mutex<SetupState>>(),
+//         "backend".to_string(),
+//     )
+//     .await?;
+//     Ok(())
+// }

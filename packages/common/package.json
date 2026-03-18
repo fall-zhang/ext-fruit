@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "version": "0.0.1",
-  "description": "Common API tools in less-process.",
+  "description": "Common API tools in fruit-saladict.",
   "main": "index.ts",
   "author": "Fall Zhang",
   "homepage": "https://github.com/MaTeMaTuK/editor-gantt",

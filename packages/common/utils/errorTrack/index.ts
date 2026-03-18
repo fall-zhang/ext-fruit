@@ -7,14 +7,14 @@ export const errorReporter = () => {
   })
   window.addEventListener('error', (e) => {
     const trackInfo = {
-      programName: 'LESS-PROCESS',
+      programName: 'fruit-saladict',
       pageName: location.hash, // 页面，模块名称
       url: location.href, // 页面，应用 URL
       timeStamp: new Date().getTime(), // 错误的时间戳
       deviceInfo: {
         userAgent: 'Chrome', // 用户浏览器类型
         browserVersion: '110', // 用户浏览器版本
-        system: 'windows'
+        system: 'windows',
       }, // 用户浏览器类型
       message: e.message, // 错误详细信息
       loadedTime: 'string', // 本次应用运行时间
@@ -23,7 +23,7 @@ export const errorReporter = () => {
       type: '', // 'error' |'warn' |'performance' // 类型，包括 error, warn, performance
       subType: 'string', // 'jsError' // 错误类型
       position: `${e.lineno}:${e.colno}`, // '0:0' // 行:列信息
-      errorStack: e.error
+      errorStack: e.error,
     }
     new Date().getTime()
     console.log(e)
@@ -35,7 +35,7 @@ export const errorReporter = () => {
   // fetch('192.168.100.154')
 }
 
-export const errorHandler = (errorInfo:Error) => {
+export const errorHandler = (errorInfo: Error) => {
   console.log('🚀 ~ errorHandler ~ errorInfo:', errorInfo.stack)
   console.log('🚀 ~ errorHandler ~ errorInfo:', errorInfo.cause)
   console.log('🚀 ~ errorHandler ~ errorInfo:', errorInfo.message)
