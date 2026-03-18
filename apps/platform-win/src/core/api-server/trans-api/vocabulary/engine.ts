@@ -31,6 +31,7 @@ function handleDOM (
   doc: Document
 ): VocabularySearchResult | Promise<VocabularySearchResult> {
   const short = getText(doc, '.short')
+  console.log('⚡️ line:33 ~ short: ', short)
   if (!short) {
     return handleNoResult()
   }

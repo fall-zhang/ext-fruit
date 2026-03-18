@@ -36,6 +36,7 @@ export const search: SearchFunction<YoudaotransResult> = async (rawText, opt) =>
 
   try {
     const result = await translator.translate(text, sl, tl, translatorConfig)
+    console.log('⚡️ line:38 ~ result: ', result)
     return machineResult(
       {
         result: {

@@ -25,7 +25,7 @@ export const search: SearchFunction<GoogleDictResult> = async (
   text,
   opt
 ) => {
-  const isen = opt.profile.googledict.options.enresult
+  const isEnQuery = opt.profile.googledict.options.enresult
     ? 'hl=en&gl=en&'
     : ''
 
@@ -35,13 +35,14 @@ export const search: SearchFunction<GoogleDictResult> = async (
 
   try {
     return await fetchPlainText(
-      `https://www.google.com/search?hl=en&safe=off&${isen}q=meaning:${encodedText}`
+      'https://www.google.com/search?hl=en&safe=off&hl=en&gl=en&q=meaning:wild', {}
+      // https://www.google.com/search?hl=en&safe=off&hl=en&gl=en&q=meaning:wild
     )
       .catch(handleNetWorkError)
       .then(handleDOM)
   } catch (e) {
     return await fetchPlainText(
-      `https://www.google.com/search?hl=en&safe=off&${isen}q=define:${encodedText}`
+      `https://www.google.com/search?hl=en&safe=off&${isEnQuery}q=define:${encodedText}`, {}
     )
       .catch(handleNetWorkError)
       .then(handleDOM)
@@ -51,6 +52,7 @@ export const search: SearchFunction<GoogleDictResult> = async (
     bodyText: string
   ): GoogleDictSearchResult | Promise<GoogleDictSearchResult> {
     const doc = new DOMParser().parseFromString(bodyText, 'text/html')
+    console.log('⚡️ line:53 ~ doc: ', doc)
 
     // mend fragments
     extFragements(bodyText).forEach(({ id, innerHTML }) => {
@@ -65,6 +67,7 @@ export const search: SearchFunction<GoogleDictResult> = async (
     })
 
     const $obcontainer = doc.querySelector('.lr_container')
+    console.log('⚡️ line:68 ~ $obcontainer: ', $obcontainer)
     if ($obcontainer) {
       $obcontainer
         .querySelectorAll<HTMLDivElement>('.vkc_np')

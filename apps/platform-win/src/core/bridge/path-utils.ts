@@ -3,8 +3,8 @@ import { tauriWorkspaceSystem } from '../fileSystem/tauri-workspace-system'
 
 /**
  * 将文件系统路径简化，获得统一格式的相对路径
- * @param filePath 文件路径 C:\Users\Administrator\AppData\Roaming\less-process\workspace\Untitled.md
- * @param removePath 根路径 C:\Users\Administrator\AppData\Roaming\less-process\
+ * @param filePath 文件路径 C:\Users\Administrator\AppData\Roaming\your-folder\workspace\Untitled.md
+ * @param removePath 根路径 C:\Users\Administrator\AppData\Roaming\your-folder\
  * @returns  /Untitled.md
  */
 export function simplifyFilePath (filePath: string, removePath?: string): string {

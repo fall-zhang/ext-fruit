@@ -2,8 +2,8 @@ import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '@/cor
 import type { HTMLString } from '@/core/api-server/types'
 import { getChsToChz, handleNetWorkError, getText, getFullLink, removeChild, getInnerHTML, handleNoResult, externalLink } from '@/core/api-server/utils'
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
-import type { getStaticSpeaker } from '@/components/Speaker'
-import type { AllDictsConf } from '../../types/all-dict-conf'
+import { getStaticSpeaker } from '@/components/Speaker'
+import type { AllDictsConf } from '../../config'
 
 export const getSrcPage: GetSrcPageFunction = async (text, localLang, profile) => {
   let { lang } = profile.cambridge.options
@@ -47,6 +47,7 @@ export const getSrcPage: GetSrcPageFunction = async (text, localLang, profile) =
       )
     }
   }
+  return ''
 }
 
 const HOST = 'https://dictionary.cambridge.org'

@@ -25,10 +25,11 @@ export async function moedictSearch<R extends GuoYuResult> (
   options: Profile['dicts']['all']['guoyu']['options']
 ): Promise<DictSearchResult<R>> {
   const chsToChz = getChsToChz()
-  const { data } = await fetch(`https://www.moedict.tw/${moedictID}/${encodeURIComponent(
+  const data = await fetch(`https://www.moedict.tw/${moedictID}/${encodeURIComponent(
     chsToChz(text.replace(/\s+/g, ''))
   )}.json`).then(res => res.json())
     .catch(handleNetWorkError)
+  console.log('⚡️ line:28 ~ data: ', data)
 
   if (!data || !data.h) {
     return handleNoResult()

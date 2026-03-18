@@ -60,7 +60,7 @@ export const search: SearchFunction<COBUILDResult> = async (
     try {
       doc = await fetchDirtyDOM(sources[1] + text)
     } catch (e) {
-      return handleNetWorkError()
+      return handleNetWorkError(e)
     }
     return handleDOM(doc, opt.localLang)
   }

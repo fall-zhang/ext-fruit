@@ -11,10 +11,11 @@ import {
 import axios from 'axios'
 import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
+// 需要代理 proxy
 export const getSrcPage: GetSrcPageFunction = text => {
   return `http://www.urbandictionary.com/define.php?term=${text}`
+  // https://www.urbandictionary.com/define.php?term=trying
 }
-
 const HOST = 'https://www.urbandictionary.com'
 
 interface UrbanResultItem {
@@ -108,6 +109,7 @@ async function handleDOM (
   const audio: { us?: string } = {}
 
   const defPanels = Array.from(doc.querySelectorAll('.def-panel'))
+  console.log('⚡️ line:111 ~ defPanels: ', defPanels)
 
   if (defPanels.length <= 0) {
     return handleNoResult()
@@ -173,6 +175,7 @@ async function handleDOM (
 
     result.push(resultItem)
   }
+  console.log('⚡️ line:179 ~ result: ', result)
 
   if (result.length > 0) {
     return { result, audio }
