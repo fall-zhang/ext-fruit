@@ -34,23 +34,28 @@ export type Profile = ProfileMutable
 
 export function getDefaultSelectDict (): Array<DictID> {
   return [
-    // 'baidu',
-    'cobuild', // ✅
-    // 'cambridge',
-    // 'youdao',
-    // 'urban',
-    // 'vocabulary',
-    // 'caiyun',
-    // 'youdaotrans',
-    // 'zdic',
-    // 'guoyu',
-    // 'liangan',
-    // 'googledict',
+    // 'cobuild', // 科林斯高阶 ✅ 默认启用
+    // 'cambridge', // 剑桥词典 ✅  默认启用
+    // 'youdao', // 有道词典 ✅  默认启用
+    // 'vocabulary', // vocabulary ✅ 默认启用（可以爬取更多有用的信息） 默认启用
+    // 'baidu', // 百度 ❌ 需要登录
+    // 'urban', // urban ❌ 需要代理，且 DOM 已经更新，无法抓取 默认启用
+    // 'caiyun', // 彩云 ❌ 需要登录
+    // 'youdaotrans', // 有道 ❌ 需要登录
+    // 'zdic', // 汉语词典，不能查英文 ✅ 默认启用
+    // 'guoyu', // 汉语词典，不能查英文 ✅ 默认启用
+    // 'liangan', // 汉语词典，不能查英文 ✅ 默认启用
+    // 'googledict', // 当前无法爬取数据，需要更新
+    // "google", // 谷歌 API ❌ 需要登录
 
-    // "ahdict" ,
-    //  "oaldict" , 
-    // "caiyun" ,
-    //  "cambridge" , "cnki" , "cobuild" , "etymonline" , "eudic" , "google" , "googledict" , "guoyu" , "hjdict" , "jikipedia" , "jukuu" , "lexico" , "liangan" , "longman" , "macmillan" , "mojidict" , "naver" , "renren" , "sogou" , "tencent" , "urban" , "vocabulary" , "weblio" , "weblioejje" , "merriamwebster" , "websterlearner" , "wikipedia" , "youdao" , "youdaotrans" , "zdic"
+    // 'ahdict', // 美国传统词典 ✅
+    // 'oaldict', // 牛津高阶词典 ✅
+    'cnki', // 牛津高阶词典 ✅
+    // "etymonline",
+    // "eudic",
+    // "hjdict",
+    // "jikipedia",
+    //  "jukuu", "lexico", "longman", "macmillan", "mojidict", "naver", "renren", "sogou", "tencent", "weblio", "weblioejje", "merriamwebster", "websterlearner", "wikipedia"
   ]
 }
 

@@ -16,6 +16,7 @@ import { Route as SearchViewIndexRouteImport } from './routes/search-view/index'
 import { Route as NotebookIndexRouteImport } from './routes/notebook/index'
 import { Route as NotebookAddIndexRouteImport } from './routes/notebook-add/index'
 import { Route as FormExampleIndexRouteImport } from './routes/form-example/index'
+import { Route as ExternalUseIndexRouteImport } from './routes/external-use/index'
 import { Route as ConfigsIndexRouteImport } from './routes/configs/index'
 import { Route as ConfigsQuickSearchIndexRouteImport } from './routes/configs/quick-search/index'
 import { Route as ConfigsPronunciationIndexRouteImport } from './routes/configs/pronunciation/index'
@@ -65,6 +66,11 @@ const NotebookAddIndexRoute = NotebookAddIndexRouteImport.update({
 const FormExampleIndexRoute = FormExampleIndexRouteImport.update({
   id: '/form-example/',
   path: '/form-example/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExternalUseIndexRoute = ExternalUseIndexRouteImport.update({
+  id: '/external-use/',
+  path: '/external-use/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConfigsIndexRoute = ConfigsIndexRouteImport.update({
@@ -152,6 +158,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/configs/': typeof ConfigsIndexRoute
+  '/external-use/': typeof ExternalUseIndexRoute
   '/form-example/': typeof FormExampleIndexRoute
   '/notebook-add/': typeof NotebookAddIndexRoute
   '/notebook/': typeof NotebookIndexRoute
@@ -176,6 +183,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/configs': typeof ConfigsIndexRoute
+  '/external-use': typeof ExternalUseIndexRoute
   '/form-example': typeof FormExampleIndexRoute
   '/notebook-add': typeof NotebookAddIndexRoute
   '/notebook': typeof NotebookIndexRoute
@@ -201,6 +209,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/configs/': typeof ConfigsIndexRoute
+  '/external-use/': typeof ExternalUseIndexRoute
   '/form-example/': typeof FormExampleIndexRoute
   '/notebook-add/': typeof NotebookAddIndexRoute
   '/notebook/': typeof NotebookIndexRoute
@@ -227,6 +236,7 @@ export interface FileRouteTypes {
     | '/'
     | '/404'
     | '/configs/'
+    | '/external-use/'
     | '/form-example/'
     | '/notebook-add/'
     | '/notebook/'
@@ -251,6 +261,7 @@ export interface FileRouteTypes {
     | '/'
     | '/404'
     | '/configs'
+    | '/external-use'
     | '/form-example'
     | '/notebook-add'
     | '/notebook'
@@ -275,6 +286,7 @@ export interface FileRouteTypes {
     | '/'
     | '/404'
     | '/configs/'
+    | '/external-use/'
     | '/form-example/'
     | '/notebook-add/'
     | '/notebook/'
@@ -300,6 +312,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   R404Route: typeof R404Route
   ConfigsIndexRoute: typeof ConfigsIndexRoute
+  ExternalUseIndexRoute: typeof ExternalUseIndexRoute
   FormExampleIndexRoute: typeof FormExampleIndexRoute
   NotebookAddIndexRoute: typeof NotebookAddIndexRoute
   NotebookIndexRoute: typeof NotebookIndexRoute
@@ -370,6 +383,13 @@ declare module '@tanstack/react-router' {
       path: '/form-example'
       fullPath: '/form-example/'
       preLoaderRoute: typeof FormExampleIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/external-use/': {
+      id: '/external-use/'
+      path: '/external-use'
+      fullPath: '/external-use/'
+      preLoaderRoute: typeof ExternalUseIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/configs/': {
@@ -484,6 +504,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   R404Route: R404Route,
   ConfigsIndexRoute: ConfigsIndexRoute,
+  ExternalUseIndexRoute: ExternalUseIndexRoute,
   FormExampleIndexRoute: FormExampleIndexRoute,
   NotebookAddIndexRoute: NotebookAddIndexRoute,
   NotebookIndexRoute: NotebookIndexRoute,

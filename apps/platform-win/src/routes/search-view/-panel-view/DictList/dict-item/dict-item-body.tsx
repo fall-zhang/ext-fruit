@@ -29,7 +29,7 @@ export interface DictItemBodyProps {
   searchText: (arg?: {
     id?: DictID
     word?: Word
-    payload?: { [index: string]: any }
+    payload?: any
   }) => any
 
   onSpeakerPlay: (src: string) => Promise<void>
@@ -45,7 +45,7 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
       default: ComponentType<ViewProps<any>>;
     }>
     if (!Comp) {
-      return DefaultView
+      return DefaultView as ComponentType<ViewProps<any>>
     }
     return React.lazy<ComponentType<ViewProps<any>>>(Comp)
   },

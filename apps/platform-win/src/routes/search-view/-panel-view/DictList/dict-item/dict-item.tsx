@@ -20,6 +20,7 @@ import { isTagName } from '@/utils/dom'
 import { useOptContext } from '@/context/opt-context'
 import './dict-item.scss'
 import type { DictID } from '@/core/api-server/config'
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 
 export interface DictItemProps
   extends Omit<DictItemBodyProps, 'dictRootRef'> {
@@ -62,7 +63,6 @@ export const DictItem: FC<DictItemProps> = props => {
   }, [foldState])
 
   useEffect(() => {
-    console.log('⚡️ line:79 ~ props.searchStatus: ', props.searchStatus)
     if (props.searchStatus === 'FINISH') {
       setFoldState('HALF')
     } else {
@@ -183,11 +183,11 @@ export const DictItem: FC<DictItemProps> = props => {
       props.searchText({ id: props.dictID })
     }
   }
-  console.log('⚡️ line:199 ~ foldState: ', foldState)
+  // console.log('⚡️ line:199 ~ foldState: ', foldState)
   return (
     <section
       ref={dictItemRef}
-      className={clsx('dictItem', {
+      className={clsx('dictItem relative', {
         isUnfold: foldState !== 'COLLAPSE',
         noHeightTransition,
       })}
@@ -201,7 +201,7 @@ export const DictItem: FC<DictItemProps> = props => {
         onCatalogSelect={preCatalogSelect}
       />
       <div
-        className="dictItem-Body"
+        className="dictItem-Body relative"
         key={props.dictID}
         style={{ height: visibleHeight > 0 ? visibleHeight : undefined }}
         onClick={searchLinkText}
@@ -215,21 +215,21 @@ export const DictItem: FC<DictItemProps> = props => {
         </section>
         {foldState === 'HALF' && props.searchResult && (
           <button
-            className="dictItem-FoldMask"
+            className="dictItem-FoldMask text-neutral-900 flex justify-center"
             onClick={() => setFoldState('FULL')}
           >
-            <svg
-              className="dictItem-FoldMaskArrow"
-              width="15"
-              height="15"
-              viewBox="0 0 59.414 59.414"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M58 14.146L29.707 42.44 1.414 14.145 0 15.56 29.707 45.27 59.414 15.56" />
-            </svg>
+            <ChevronDownIcon />
           </button>
         )}
       </div>
+      {foldState === 'FULL' && props.searchResult && (
+        <button
+          className="sticky bottom-0 h-6 w-full text-neutral-900 flex justify-center cursor-pointer"
+          onClick={() => setFoldState('COLLAPSE')}
+        >
+          <ChevronUpIcon />
+        </button>
+      )}
     </section>
   )
 }

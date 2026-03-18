@@ -3,10 +3,11 @@ import { createStore, useStore } from 'zustand'
 
 import type { Word } from '../types/word'
 import { getDefaultProfile, getDefaultSelectDict, type Profile } from '@/config/trans-profile'
-import { checkSupportedLangs, countWords } from '../utils/lang-check'
 import type { AllDictsConf, DictID } from '@/core/api-server/config'
 import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
 import { api } from '@/core/api-server/trans-api'
+import { checkSupportedLangs } from '@/core/api-server/utils/lang-check'
+import { countWords } from '@/core/api-server/utils/get-word-count'
 
 
 type RenderDictItem = {
@@ -248,6 +249,7 @@ export function SearchProvider ({ children }: {
 
 export function useSearchContext<T> (selector: (state: DictSearchState) => T): T {
   const store = useContext(SearchContext)
+  // console.log('⚡️ line:251 ~ store: ', store)
   if (!store) throw new Error('Missing SearchProvider in the tree')
   return useStore(store, selector)
 }

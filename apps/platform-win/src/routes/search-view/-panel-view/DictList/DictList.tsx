@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import React, { useRef } from 'react'
 import type { AppConfig } from '@/config/app-config'
 import type { Word } from '@/types/word'
-import { useInPanelSelect } from '@/utils/selection/select-text'
+// import { useInPanelSelect } from '@/utils/selection/select-text'
 import memoizeOne from 'memoize-one'
 import type { GlobalState } from '@/store/global-state'
 import { useConfContext } from '@/context/conf-context'
@@ -107,10 +107,10 @@ export const DictList: FC<DictListProps> = (props) => {
   //   onUpdateHeight(heightRef.current.sum)
   // }, [dicts])
 
-  const onInPanelSelect = useInPanelSelect(
-    touchMode,
-    language
-  )
+  // const onInPanelSelect = useInPanelSelect(
+  //   touchMode,
+  //   language
+  // )
 
   return (
     <div className="dictList">
@@ -129,7 +129,7 @@ export const DictList: FC<DictListProps> = (props) => {
           } }
           key={data.dictID}
           {...data}
-          onInPanelSelect={onInPanelSelect}
+          // onInPanelSelect={onInPanelSelect}
           onHeightChanged={onItemHeightChanged} />
       ))}
     </div>
