@@ -1,21 +1,22 @@
 // 该文件用作 tauri 和 js 进行通信
-import type { FileSystem, OperateResult } from '@P/common/types/FileSystem'
-import type { FileItem, FileJSON, SystemFileItem } from '@P/common/types/File'
-// import { addTextFile, addJSONFile, convertPathToLocal, readTextFile, touchDir, updateMenuConf, readJSONFile, updateFileName, removeFileOrDir } from './utils'
-import { addTextFile, addJSONFile, readTextFile, touchDir, updateMenuConf, readJSONFile, updateFileName, removeFileOrDir } from '../bridge/file-utils'
-import { convertPathToLocal } from '../bridge/path-utils'
+import { addTextFile, addJSONFile, readTextFile, readJSONFile, touchDir, updateFileName, removeFileOrDir } from './utils/file-utils'
+import { convertPathToLocal } from './utils/path-utils'
 import { sep } from '@tauri-apps/api/path'
-import { getWorkspaceFileList } from './get-workspace-conf'
+import type { OperateResult, PromiseOptResult } from './types'
+import type { FileItem } from './types/file-type'
+import type { WordSaveJSON } from './types/file-content-type'
+// updateMenuConf, updateFileName, removeFileOrDir
 
 // tauri 内容应该始终为相对路径
-class TauriFileSystem implements FileSystem {
+// 用于读取所有 年、月组成的单词列表
+class TauriFileSystem {
   fileList: FileItem[] = []
-  rootPath:string = 'workspace'
+  rootPath: string = 'workspace'
   // constructor (spaceFiles:FileItem[], basePath:string) {
   //   this.fileList = spaceFiles
   //   this.rootPath = basePath
   // }
-  initTauriFS (spaceFiles:FileItem[], basePath:string) {
+  initTauriFS (spaceFiles: FileItem[], basePath: string) {
     this.fileList = spaceFiles
     this.rootPath = basePath
   }
@@ -26,27 +27,21 @@ class TauriFileSystem implements FileSystem {
       analyzePath = analyzePath.slice(1)
     }
     const paths = analyzePath.split('/')
-    let currentList:SystemFileItem[] = this.fileList
-    let result:SystemFileItem = {
-      fileName: 'empty',
-      fileType: 'folder',
-      filePath: '/',
-      fileSuffix: ''
+    const currentList: FileItem[] = this.fileList
+    let result: FileItem = {
+      name: 'empty',
+      path: '/',
     }
-    paths.forEach((pathItem:string) => {
+    paths.forEach((pathItem: string) => {
       let getFileState = false
       const isFinalPath = pathItem.includes('.') && !pathItem.startsWith('.')
       currentList.forEach((item, index) => {
-        let fullFileName:string = ''
-        if (isFinalPath) {
-          fullFileName = item.fileName + '.' + item.fileSuffix
-        } else {
-          fullFileName = item.fileName
-        }
+        const fullFileName: string = item.name
+
         if (fullFileName === pathItem) {
           result = item
           getFileState = true
-          if (item.children) currentList = item.children
+          // if (item.children) currentList = item.children
         }
       })
       if (!getFileState) {
@@ -70,27 +65,13 @@ class TauriFileSystem implements FileSystem {
     if (paths.length === 0 || paths[0] === '') {
       return this.fileList
     }
-    let currentList:SystemFileItem[] = this.fileList
-    paths.forEach((pathItem:string) => {
+    const currentList: FileItem[] = this.fileList
+    paths.forEach((pathItem: string) => {
       let getFileState = false
-      const isFinalPath = pathItem.includes('.')
       currentList.forEach((item, index) => {
-        let fullFileName:string = ''
-        if (isFinalPath) {
-          fullFileName = item.fileName + '.' + item.fileSuffix
-        } else {
-          fullFileName = item.fileName
-        }
+        const fullFileName: string = item.name
         if (fullFileName === pathItem) {
           getFileState = true
-
-          if (item.children) {
-            currentList = item.children
-          } else if (item.fileType === 'folder') {
-            currentList = []
-          } else {
-            console.error('文件夹下没有文件，或并非文件夹', item)
-          }
         }
       })
       if (!getFileState) {
@@ -103,7 +84,7 @@ class TauriFileSystem implements FileSystem {
   }
 
   async getFilePath (fileInfo: FileItem): Promise<string> {
-    let convertPath = fileInfo.filePath
+    let convertPath = fileInfo.path
     if (convertPath.startsWith('/')) {
       convertPath = convertPath.slice(1)
     }
@@ -121,89 +102,55 @@ class TauriFileSystem implements FileSystem {
     return this.fileList
   }
 
-  async getFileContent (fileInfo: FileItem): Promise<OperateResult<string | FileJSON>> {
+  async getFileContent (fileInfo: FileItem): Promise<OperateResult<string | WordSaveJSON>> {
     // console.log('🚀 ~ TauriFileSystem ~ getFileContent ~ fileInfo:', fileInfo)
-    const result:OperateResult<string | FileJSON> = {
-      state: 'failure',
-      msg: '获取文件内容失败',
-      data: ''
+    const jsonRes = await readJSONFile(fileInfo)
+    if (jsonRes.state === 'success') {
+      return {
+        state: 'success',
+        msg: '获取文件内容成功',
+        data: jsonRes.data,
+      }
     }
-    if (fileInfo.fileSuffix === 'json') {
-      const jsonRes = await readJSONFile(fileInfo)
-      result.data = jsonRes.data as FileJSON
-    } else if (fileInfo.fileType === 'markdown') {
-      const fileText = await readTextFile(fileInfo)
-      result.data = fileText.data
-    } else {
-      console.warn('未知文件类型，无法获取文件详情', fileInfo)
-    }
-    result.msg = '获取文件内容成功'
-    result.state = 'success'
-    return result
+    return jsonRes
   }
 
-  async updateFileInfo (oldInfo: FileItem, newInfo: FileItem): Promise<OperateResult> {
-    const result:OperateResult<string> = {
+  async updateFileInfo (oldInfo: FileItem, newInfo: FileItem): PromiseOptResult {
+    const result: OperateResult<string> = {
       state: 'failure',
-      msg: '更新文件名称失败'
+      msg: '更新文件名称失败',
     }
     // let localDirItemList = oldInfo.filePath.split('/')
     // if (localDirItemList[0] === '') {
     //   localDirItemList = localDirItemList.slice(1)
     // }
-    let fileInfoChanged = false
-    const storeFileInfo = this.getFile(oldInfo.filePath)
 
     // 文件路径更改后
-    if (oldInfo.filePath !== newInfo.filePath) {
+    if (oldInfo.path !== newInfo.path) {
       updateFileName(oldInfo, newInfo)
     }
-
-    // 查看其他属性更改
-    Object.keys({ ...oldInfo, ...newInfo }).forEach((key) => {
-      const infoKey = key as 'fileName'
-      // const isNewInfoEmpty = Boolean(newInfo[infoKey])
-      if (newInfo[infoKey] === oldInfo[infoKey]) {
-        return
-      }
-      fileInfoChanged = true
-      // 为空则忽略
-      storeFileInfo[infoKey] = newInfo[infoKey] ?? oldInfo[infoKey]
-    })
-    if (oldInfo.fileScheme !== newInfo.fileScheme) {
-      this.getFile(oldInfo.filePath).fileScheme = newInfo.fileScheme
+    return {
+      state: 'success',
+      msg: '更新文件名称成功',
+      data: null,
     }
-    // console.log('🚀 ~ TauriFileSystem ~ updateFileInfo ~ fileInfoChanged:', fileInfoChanged)
-
-    if (fileInfoChanged) {
-      await updateMenuConf(this.fileList).then(res => {
-        console.log('保存菜单配置成功', res)
-      }).catch(err => {
-        console.log('保存菜单配置失败', err)
-      })
-    }
-    result.state = 'success'
-    result.msg = '更新文件名称成功'
-    return result
   }
 
-  async updateFileContent (fileInfo: FileItem, content: string | FileJSON): Promise<OperateResult> {
-    const result:OperateResult<string> = {
+  async updateFileContent (fileInfo: FileItem, content: string | WordSaveJSON): Promise<OperateResult> {
+    const result: OperateResult<string> = {
       state: 'failure',
-      msg: '更新文件失败'
+      msg: '更新文件失败',
     }
-    const touchResult = await touchDir(fileInfo.filePath)
+    const touchResult = await touchDir(fileInfo.path)
     if (touchResult.state === 'failure') {
-      console.warn('当前文件路径有问题', fileInfo.filePath)
+      console.warn('当前文件路径有问题', fileInfo.path)
       return result
     }
     try {
-      if (fileInfo.fileType === 'markdown' && typeof content === 'string') {
+      if (typeof content === 'string') {
         await addTextFile(fileInfo, content)
-        result.state = 'success'
-        result.msg = '更新文件成功'
         return result
-      } else if (fileInfo.fileSuffix === 'json' && typeof content === 'object') {
+      } else if (typeof content === 'object') {
         await addJSONFile(fileInfo, content)
       } else {
         console.warn('文件类型与文件内容不对应：', fileInfo, content)
@@ -214,33 +161,28 @@ class TauriFileSystem implements FileSystem {
     return result
   }
 
-  async addFile (fileInfo: FileItem, content: string | FileJSON): Promise<OperateResult> {
-    const result:OperateResult = {
+  async addFile (fileInfo: FileItem, content: string | WordSaveJSON): Promise<OperateResult> {
+    const result: OperateResult = {
       state: 'failure',
-      msg: '文件添加失败'
+      msg: '文件添加失败',
     }
     // await writeTextFile('app.conf', 'file contents', { dir: BaseDirectory.AppConfig })
     try {
-      if (fileInfo.fileType === 'folder') {
-        // const fileName = await convertPathToLocal(fileInfo.filePath)
-        await touchDir(fileInfo.filePath)
-      } else if (typeof content === 'string') {
+      if (typeof content === 'string') {
         await addTextFile(fileInfo, content)
-      } else if (fileInfo.fileSuffix === 'json') {
-        await addJSONFile(fileInfo, content as FileJSON)
+      } else if (typeof content === 'object') {
+        await addJSONFile(fileInfo, content as WordSaveJSON)
       } else {
         console.warn('未知的文件格式', fileInfo)
       }
       // const filePathList = this.getFilePath(fileInfo)
       // this.fileList.push(fileInfo)
       await this.reload()
-      await updateMenuConf(this.fileList).then(res => {
-        console.log('保存菜单配置成功')
-      }).catch(err => {
-        console.log('保存菜单配置失败', err)
-      })
-      result.state = 'success'
-      result.msg = '添加文件成功'
+      return {
+        state: 'success',
+        msg: '添加文件成功',
+        data: null,
+      }
     } catch (error) {
       console.log('添加本地文件时出错:', error)
     }
@@ -257,7 +199,7 @@ class TauriFileSystem implements FileSystem {
     return result
   }
 
-  searchFile (fileName: string): Promise<FileItem[]> {
+  searchFile (name: string): Promise<FileItem[]> {
     throw new Error('Method not implemented.')
   }
 
@@ -270,15 +212,11 @@ class TauriFileSystem implements FileSystem {
   }
 
   async reload (): Promise<OperateResult<unknown>> {
-    const result:OperateResult = {
-      state: 'failure',
-      msg: '重载文件系统失败'
+    return {
+      state: 'success',
+      msg: '重载文件系统成功',
+      data: null,
     }
-    this.fileList = await getWorkspaceFileList(this.rootPath)
-    result.state = 'success'
-    result.msg = '重载文件系统成功'
-    // throw new Error('Method not implemented.')
-    return result
   }
 
   getFileBlob (filePath: string): Promise<OperateResult<unknown>> {
@@ -291,11 +229,11 @@ class TauriFileSystem implements FileSystem {
   }
 
   // 工作区的文件夹变动的时候执行
-  onChangeRootPath (newPath:string) {
+  onChangeRootPath (newPath: string) {
     this.rootPath = newPath
   }
 
-  updateFileListItem (oldInfo: FileItem, newInfo:FileItem): void {
+  updateFileListItem (oldInfo: FileItem, newInfo: FileItem): void {
   }
 }
 
