@@ -12,10 +12,9 @@ type SaladPanelProps = {
 }
 
 export const SaladPanel: FC<SaladPanelProps> = (props) => {
-  return (<I18nextProvider i18n={i18n}>
+  return (
     <SearchProvider>
       <SaladContent {...props} />
     </SearchProvider>
-  </I18nextProvider>
   )
 }

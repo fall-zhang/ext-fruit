@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Button } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { MatchPatternModal } from '../-components/MatchPatternModal'
@@ -12,11 +12,12 @@ export const Route = createFileRoute('/configs/black-white-list/')({
 function RouteComponent () {
   const { t } = useTranslation(['options', 'common'])
   const [editingArea, setEditingArea] = useState<'whitelist' | 'blacklist' | null>(null)
-
+  const formRef = useRef(null)
   return (
     <>
       <SaladictForm
         hideFooter
+        ref={formRef}
         items={[
           {
             key: 'BlackWhiteList',
