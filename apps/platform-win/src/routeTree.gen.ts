@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ConfigsRouteImport } from './routes/configs'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SystemTrayIndexRouteImport } from './routes/system-tray/index'
@@ -17,7 +18,6 @@ import { Route as NotebookIndexRouteImport } from './routes/notebook/index'
 import { Route as NotebookAddIndexRouteImport } from './routes/notebook-add/index'
 import { Route as FormExampleIndexRouteImport } from './routes/form-example/index'
 import { Route as ExternalUseIndexRouteImport } from './routes/external-use/index'
-import { Route as ConfigsIndexRouteImport } from './routes/configs/index'
 import { Route as ConfigsQuickSearchIndexRouteImport } from './routes/configs/quick-search/index'
 import { Route as ConfigsPronunciationIndexRouteImport } from './routes/configs/pronunciation/index'
 import { Route as ConfigsProfilesIndexRouteImport } from './routes/configs/profiles/index'
@@ -33,6 +33,11 @@ import { Route as ConfigsDictAuthIndexRouteImport } from './routes/configs/dict-
 import { Route as ConfigsContextMenusIndexRouteImport } from './routes/configs/context-menus/index'
 import { Route as ConfigsBlackWhiteListIndexRouteImport } from './routes/configs/black-white-list/index'
 
+const ConfigsRoute = ConfigsRouteImport.update({
+  id: '/configs',
+  path: '/configs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const R404Route = R404RouteImport.update({
   id: '/404',
   path: '/404',
@@ -73,91 +78,86 @@ const ExternalUseIndexRoute = ExternalUseIndexRouteImport.update({
   path: '/external-use/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ConfigsIndexRoute = ConfigsIndexRouteImport.update({
-  id: '/configs/',
-  path: '/configs/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ConfigsQuickSearchIndexRoute = ConfigsQuickSearchIndexRouteImport.update({
-  id: '/configs/quick-search/',
-  path: '/configs/quick-search/',
-  getParentRoute: () => rootRouteImport,
+  id: '/quick-search/',
+  path: '/quick-search/',
+  getParentRoute: () => ConfigsRoute,
 } as any)
 const ConfigsPronunciationIndexRoute =
   ConfigsPronunciationIndexRouteImport.update({
-    id: '/configs/pronunciation/',
-    path: '/configs/pronunciation/',
-    getParentRoute: () => rootRouteImport,
+    id: '/pronunciation/',
+    path: '/pronunciation/',
+    getParentRoute: () => ConfigsRoute,
   } as any)
 const ConfigsProfilesIndexRoute = ConfigsProfilesIndexRouteImport.update({
-  id: '/configs/profiles/',
-  path: '/configs/profiles/',
-  getParentRoute: () => rootRouteImport,
+  id: '/profiles/',
+  path: '/profiles/',
+  getParentRoute: () => ConfigsRoute,
 } as any)
 const ConfigsPrivacyIndexRoute = ConfigsPrivacyIndexRouteImport.update({
-  id: '/configs/privacy/',
-  path: '/configs/privacy/',
-  getParentRoute: () => rootRouteImport,
+  id: '/privacy/',
+  path: '/privacy/',
+  getParentRoute: () => ConfigsRoute,
 } as any)
 const ConfigsPopupIndexRoute = ConfigsPopupIndexRouteImport.update({
-  id: '/configs/popup/',
-  path: '/configs/popup/',
-  getParentRoute: () => rootRouteImport,
+  id: '/popup/',
+  path: '/popup/',
+  getParentRoute: () => ConfigsRoute,
 } as any)
 const ConfigsPermissionsIndexRoute = ConfigsPermissionsIndexRouteImport.update({
-  id: '/configs/permissions/',
-  path: '/configs/permissions/',
-  getParentRoute: () => rootRouteImport,
+  id: '/permissions/',
+  path: '/permissions/',
+  getParentRoute: () => ConfigsRoute,
 } as any)
 const ConfigsNotebookIndexRoute = ConfigsNotebookIndexRouteImport.update({
-  id: '/configs/notebook/',
-  path: '/configs/notebook/',
-  getParentRoute: () => rootRouteImport,
+  id: '/notebook/',
+  path: '/notebook/',
+  getParentRoute: () => ConfigsRoute,
 } as any)
 const ConfigsImportExportIndexRoute =
   ConfigsImportExportIndexRouteImport.update({
-    id: '/configs/import-export/',
-    path: '/configs/import-export/',
-    getParentRoute: () => rootRouteImport,
+    id: '/import-export/',
+    path: '/import-export/',
+    getParentRoute: () => ConfigsRoute,
   } as any)
 const ConfigsGeneralIndexRoute = ConfigsGeneralIndexRouteImport.update({
-  id: '/configs/general/',
-  path: '/configs/general/',
-  getParentRoute: () => rootRouteImport,
+  id: '/general/',
+  path: '/general/',
+  getParentRoute: () => ConfigsRoute,
 } as any)
 const ConfigsDictionariesIndexRoute =
   ConfigsDictionariesIndexRouteImport.update({
-    id: '/configs/dictionaries/',
-    path: '/configs/dictionaries/',
-    getParentRoute: () => rootRouteImport,
+    id: '/dictionaries/',
+    path: '/dictionaries/',
+    getParentRoute: () => ConfigsRoute,
   } as any)
 const ConfigsDictPanelIndexRoute = ConfigsDictPanelIndexRouteImport.update({
-  id: '/configs/dict-panel/',
-  path: '/configs/dict-panel/',
-  getParentRoute: () => rootRouteImport,
+  id: '/dict-panel/',
+  path: '/dict-panel/',
+  getParentRoute: () => ConfigsRoute,
 } as any)
 const ConfigsDictAuthIndexRoute = ConfigsDictAuthIndexRouteImport.update({
-  id: '/configs/dict-auth/',
-  path: '/configs/dict-auth/',
-  getParentRoute: () => rootRouteImport,
+  id: '/dict-auth/',
+  path: '/dict-auth/',
+  getParentRoute: () => ConfigsRoute,
 } as any)
 const ConfigsContextMenusIndexRoute =
   ConfigsContextMenusIndexRouteImport.update({
-    id: '/configs/context-menus/',
-    path: '/configs/context-menus/',
-    getParentRoute: () => rootRouteImport,
+    id: '/context-menus/',
+    path: '/context-menus/',
+    getParentRoute: () => ConfigsRoute,
   } as any)
 const ConfigsBlackWhiteListIndexRoute =
   ConfigsBlackWhiteListIndexRouteImport.update({
-    id: '/configs/black-white-list/',
-    path: '/configs/black-white-list/',
-    getParentRoute: () => rootRouteImport,
+    id: '/black-white-list/',
+    path: '/black-white-list/',
+    getParentRoute: () => ConfigsRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/404': typeof R404Route
-  '/configs/': typeof ConfigsIndexRoute
+  '/configs': typeof ConfigsRouteWithChildren
   '/external-use/': typeof ExternalUseIndexRoute
   '/form-example/': typeof FormExampleIndexRoute
   '/notebook-add/': typeof NotebookAddIndexRoute
@@ -182,7 +182,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/404': typeof R404Route
-  '/configs': typeof ConfigsIndexRoute
+  '/configs': typeof ConfigsRouteWithChildren
   '/external-use': typeof ExternalUseIndexRoute
   '/form-example': typeof FormExampleIndexRoute
   '/notebook-add': typeof NotebookAddIndexRoute
@@ -208,7 +208,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/404': typeof R404Route
-  '/configs/': typeof ConfigsIndexRoute
+  '/configs': typeof ConfigsRouteWithChildren
   '/external-use/': typeof ExternalUseIndexRoute
   '/form-example/': typeof FormExampleIndexRoute
   '/notebook-add/': typeof NotebookAddIndexRoute
@@ -235,7 +235,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/404'
-    | '/configs/'
+    | '/configs'
     | '/external-use/'
     | '/form-example/'
     | '/notebook-add/'
@@ -285,7 +285,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/404'
-    | '/configs/'
+    | '/configs'
     | '/external-use/'
     | '/form-example/'
     | '/notebook-add/'
@@ -311,31 +311,24 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   R404Route: typeof R404Route
-  ConfigsIndexRoute: typeof ConfigsIndexRoute
+  ConfigsRoute: typeof ConfigsRouteWithChildren
   ExternalUseIndexRoute: typeof ExternalUseIndexRoute
   FormExampleIndexRoute: typeof FormExampleIndexRoute
   NotebookAddIndexRoute: typeof NotebookAddIndexRoute
   NotebookIndexRoute: typeof NotebookIndexRoute
   SearchViewIndexRoute: typeof SearchViewIndexRoute
   SystemTrayIndexRoute: typeof SystemTrayIndexRoute
-  ConfigsBlackWhiteListIndexRoute: typeof ConfigsBlackWhiteListIndexRoute
-  ConfigsContextMenusIndexRoute: typeof ConfigsContextMenusIndexRoute
-  ConfigsDictAuthIndexRoute: typeof ConfigsDictAuthIndexRoute
-  ConfigsDictPanelIndexRoute: typeof ConfigsDictPanelIndexRoute
-  ConfigsDictionariesIndexRoute: typeof ConfigsDictionariesIndexRoute
-  ConfigsGeneralIndexRoute: typeof ConfigsGeneralIndexRoute
-  ConfigsImportExportIndexRoute: typeof ConfigsImportExportIndexRoute
-  ConfigsNotebookIndexRoute: typeof ConfigsNotebookIndexRoute
-  ConfigsPermissionsIndexRoute: typeof ConfigsPermissionsIndexRoute
-  ConfigsPopupIndexRoute: typeof ConfigsPopupIndexRoute
-  ConfigsPrivacyIndexRoute: typeof ConfigsPrivacyIndexRoute
-  ConfigsProfilesIndexRoute: typeof ConfigsProfilesIndexRoute
-  ConfigsPronunciationIndexRoute: typeof ConfigsPronunciationIndexRoute
-  ConfigsQuickSearchIndexRoute: typeof ConfigsQuickSearchIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/configs': {
+      id: '/configs'
+      path: '/configs'
+      fullPath: '/configs'
+      preLoaderRoute: typeof ConfigsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/404': {
       id: '/404'
       path: '/404'
@@ -392,124 +385,125 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExternalUseIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/configs/': {
-      id: '/configs/'
-      path: '/configs'
-      fullPath: '/configs/'
-      preLoaderRoute: typeof ConfigsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/configs/quick-search/': {
       id: '/configs/quick-search/'
-      path: '/configs/quick-search'
+      path: '/quick-search'
       fullPath: '/configs/quick-search/'
       preLoaderRoute: typeof ConfigsQuickSearchIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
     '/configs/pronunciation/': {
       id: '/configs/pronunciation/'
-      path: '/configs/pronunciation'
+      path: '/pronunciation'
       fullPath: '/configs/pronunciation/'
       preLoaderRoute: typeof ConfigsPronunciationIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
     '/configs/profiles/': {
       id: '/configs/profiles/'
-      path: '/configs/profiles'
+      path: '/profiles'
       fullPath: '/configs/profiles/'
       preLoaderRoute: typeof ConfigsProfilesIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
     '/configs/privacy/': {
       id: '/configs/privacy/'
-      path: '/configs/privacy'
+      path: '/privacy'
       fullPath: '/configs/privacy/'
       preLoaderRoute: typeof ConfigsPrivacyIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
     '/configs/popup/': {
       id: '/configs/popup/'
-      path: '/configs/popup'
+      path: '/popup'
       fullPath: '/configs/popup/'
       preLoaderRoute: typeof ConfigsPopupIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
     '/configs/permissions/': {
       id: '/configs/permissions/'
-      path: '/configs/permissions'
+      path: '/permissions'
       fullPath: '/configs/permissions/'
       preLoaderRoute: typeof ConfigsPermissionsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
     '/configs/notebook/': {
       id: '/configs/notebook/'
-      path: '/configs/notebook'
+      path: '/notebook'
       fullPath: '/configs/notebook/'
       preLoaderRoute: typeof ConfigsNotebookIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
     '/configs/import-export/': {
       id: '/configs/import-export/'
-      path: '/configs/import-export'
+      path: '/import-export'
       fullPath: '/configs/import-export/'
       preLoaderRoute: typeof ConfigsImportExportIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
     '/configs/general/': {
       id: '/configs/general/'
-      path: '/configs/general'
+      path: '/general'
       fullPath: '/configs/general/'
       preLoaderRoute: typeof ConfigsGeneralIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
     '/configs/dictionaries/': {
       id: '/configs/dictionaries/'
-      path: '/configs/dictionaries'
+      path: '/dictionaries'
       fullPath: '/configs/dictionaries/'
       preLoaderRoute: typeof ConfigsDictionariesIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
     '/configs/dict-panel/': {
       id: '/configs/dict-panel/'
-      path: '/configs/dict-panel'
+      path: '/dict-panel'
       fullPath: '/configs/dict-panel/'
       preLoaderRoute: typeof ConfigsDictPanelIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
     '/configs/dict-auth/': {
       id: '/configs/dict-auth/'
-      path: '/configs/dict-auth'
+      path: '/dict-auth'
       fullPath: '/configs/dict-auth/'
       preLoaderRoute: typeof ConfigsDictAuthIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
     '/configs/context-menus/': {
       id: '/configs/context-menus/'
-      path: '/configs/context-menus'
+      path: '/context-menus'
       fullPath: '/configs/context-menus/'
       preLoaderRoute: typeof ConfigsContextMenusIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
     '/configs/black-white-list/': {
       id: '/configs/black-white-list/'
-      path: '/configs/black-white-list'
+      path: '/black-white-list'
       fullPath: '/configs/black-white-list/'
       preLoaderRoute: typeof ConfigsBlackWhiteListIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ConfigsRoute
     }
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  R404Route: R404Route,
-  ConfigsIndexRoute: ConfigsIndexRoute,
-  ExternalUseIndexRoute: ExternalUseIndexRoute,
-  FormExampleIndexRoute: FormExampleIndexRoute,
-  NotebookAddIndexRoute: NotebookAddIndexRoute,
-  NotebookIndexRoute: NotebookIndexRoute,
-  SearchViewIndexRoute: SearchViewIndexRoute,
-  SystemTrayIndexRoute: SystemTrayIndexRoute,
+interface ConfigsRouteChildren {
+  ConfigsBlackWhiteListIndexRoute: typeof ConfigsBlackWhiteListIndexRoute
+  ConfigsContextMenusIndexRoute: typeof ConfigsContextMenusIndexRoute
+  ConfigsDictAuthIndexRoute: typeof ConfigsDictAuthIndexRoute
+  ConfigsDictPanelIndexRoute: typeof ConfigsDictPanelIndexRoute
+  ConfigsDictionariesIndexRoute: typeof ConfigsDictionariesIndexRoute
+  ConfigsGeneralIndexRoute: typeof ConfigsGeneralIndexRoute
+  ConfigsImportExportIndexRoute: typeof ConfigsImportExportIndexRoute
+  ConfigsNotebookIndexRoute: typeof ConfigsNotebookIndexRoute
+  ConfigsPermissionsIndexRoute: typeof ConfigsPermissionsIndexRoute
+  ConfigsPopupIndexRoute: typeof ConfigsPopupIndexRoute
+  ConfigsPrivacyIndexRoute: typeof ConfigsPrivacyIndexRoute
+  ConfigsProfilesIndexRoute: typeof ConfigsProfilesIndexRoute
+  ConfigsPronunciationIndexRoute: typeof ConfigsPronunciationIndexRoute
+  ConfigsQuickSearchIndexRoute: typeof ConfigsQuickSearchIndexRoute
+}
+
+const ConfigsRouteChildren: ConfigsRouteChildren = {
   ConfigsBlackWhiteListIndexRoute: ConfigsBlackWhiteListIndexRoute,
   ConfigsContextMenusIndexRoute: ConfigsContextMenusIndexRoute,
   ConfigsDictAuthIndexRoute: ConfigsDictAuthIndexRoute,
@@ -524,6 +518,21 @@ const rootRouteChildren: RootRouteChildren = {
   ConfigsProfilesIndexRoute: ConfigsProfilesIndexRoute,
   ConfigsPronunciationIndexRoute: ConfigsPronunciationIndexRoute,
   ConfigsQuickSearchIndexRoute: ConfigsQuickSearchIndexRoute,
+}
+
+const ConfigsRouteWithChildren =
+  ConfigsRoute._addFileChildren(ConfigsRouteChildren)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  R404Route: R404Route,
+  ConfigsRoute: ConfigsRouteWithChildren,
+  ExternalUseIndexRoute: ExternalUseIndexRoute,
+  FormExampleIndexRoute: FormExampleIndexRoute,
+  NotebookAddIndexRoute: NotebookAddIndexRoute,
+  NotebookIndexRoute: NotebookIndexRoute,
+  SearchViewIndexRoute: SearchViewIndexRoute,
+  SystemTrayIndexRoute: SystemTrayIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

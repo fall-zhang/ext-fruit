@@ -31,6 +31,7 @@ export type ProfileMutable = {
   dictAuth: DictAuths
 }
 export type Profile = ProfileMutable
+export type AppProfile = ProfileMutable
 
 export function getDefaultSelectDict (): Array<DictID> {
   return [
