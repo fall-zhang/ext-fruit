@@ -1,18 +1,9 @@
-// use std::sync::Mutex;
-// use tauri::async_runtime::spawn;
-// use tauri::{AppHandle, Manager, State};
-// use tokio::time::{sleep, Duration};
-
+mod tray;
+use tray::{create_tray_menu};
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 // #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-
-// enum FileOperateState {
-//     Remove,
-//     Add,
-//     Modify,
-// }
 
 #[derive(Default)]
 struct MyState {
@@ -27,6 +18,7 @@ async fn file_operate(state: tauri::State<'_, MyState>) -> Result<(), String> {
     state.t.lock().unwrap().insert("key".into(), "value".into());
     Ok(())
 }
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -35,6 +27,13 @@ pub fn run() {
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
         .invoke_handler(tauri::generate_handler![file_operate])
+        .setup(|app| {
+            // 创建托盘图标
+            if let Err(e) = create_tray_menu(&app.handle()) {
+                eprintln!("Failed to create tray menu: {}", e);
+            }
+            Ok(())
+        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
