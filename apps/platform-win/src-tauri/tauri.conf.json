@@ -19,7 +19,14 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "publisher": "Fall",
+    "windows": {
+      "wix": {
+        "language": "zh-CN",
+        "enableElevatedUpdateTask": false
+      }
+    }
   },
   "plugins": {},
   "app": {
@@ -29,7 +36,7 @@
     "windows": [
       {
         "title": "fruit-saladict",
-        "label": "main-page",
+        "label": "search-view",
         "decorations": false,
         "width": 420,
         "height": 680,
@@ -39,7 +46,7 @@
       },
       {
         "title": "saladict-config",
-        "label": "config-page",
+        "label": "config-view",
         "visible": false,
         "url": "/configs"
       },
