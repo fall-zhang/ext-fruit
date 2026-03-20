@@ -49,7 +49,7 @@ pub fn create_tray_menu(app: &AppHandle) -> Result<(), tauri::Error> {
 // 处理托盘事件
 fn handle_tray_event(tray: &tauri::tray::TrayIcon, event: TrayIconEvent) {
     let app = tray.app_handle();
-    tauri_plugin_positioner::on_tray_event(app, &event);
+    // tauri_plugin_positioner::on_tray_event(app, &event);
 
     match event {
         TrayIconEvent::Click { button, .. } => {
@@ -75,12 +75,12 @@ fn handle_tray_event(tray: &tauri::tray::TrayIcon, event: TrayIconEvent) {
 
 // 显示搜索面板
 fn show_search_panel(app: &AppHandle) {
-    // 尝试获取主窗口
+    // 获取搜索面板
     if let Some(window) = app.get_webview_window("search-view") {
         let _ = window.show();
         let _ = window.set_focus();
         let _ = window.unminimize();
-        
+        // let _ = window.move_window(Position::BottomRight);
         // 使用 tauri_plugin_positioner 将窗口移动到屏幕右下角
         // 首先尝试获取当前显示器信息
         if let Ok(Some(monitor)) = window.current_monitor() {
