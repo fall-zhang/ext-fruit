@@ -38,10 +38,10 @@
         "useHttpsScheme": true
       },
       {
-        "title": "fruit-saladict",
-        "label": "splash-screen",
+        "title": "saladict-config",
+        "label": "config-page",
         "visible": false,
-        "url": "/splash-screen"
+        "url": "/configs"
       },
       {
         "title": "fruit-saladict",
