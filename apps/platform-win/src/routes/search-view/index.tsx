@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Window } from '@tauri-apps/api/window'
+import { getCurrentWindow, Window } from '@tauri-apps/api/window'
 import { fetch } from '@tauri-apps/plugin-http'
 import { useEffect, useState } from 'react'
 import { PinBtn } from './-components/pin-button'
@@ -13,7 +13,7 @@ import { SaladPanel } from './-panel-view/salad-panel'
 export const Route = createFileRoute('/search-view/')({
   component: RouteComponent,
 })
-const appWindow = new Window('main-page')
+const appWindow = new Window('search-view')
 
 function RouteComponent () {
   const [isAlwaysOnTop, setAlwaysOnTop] = useState(false)
@@ -38,6 +38,10 @@ function RouteComponent () {
   function toggleFavState () {
 
   }
+  async function closeWindow () {
+    const closeAble = await appWindow.isClosable()
+    const state = await getCurrentWindow().hide()
+  }
   return <>
     <div className='w-full h-full relative'>
       <SaladPanel
@@ -52,7 +56,7 @@ function RouteComponent () {
               isPinned={isAlwaysOnTop}
               onClick={togglePin}
             />
-            <CloseBtn onClick={appWindow.close} />
+            <CloseBtn onClick={closeWindow} />
           </>
         }
       />
