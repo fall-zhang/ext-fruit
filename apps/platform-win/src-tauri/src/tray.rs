@@ -27,13 +27,16 @@ pub fn create_tray_menu(app: &AppHandle) -> Result<(), tauri::Error> {
                 println!("quit menu item was clicked");
                 app.exit(0);
             }
+            "show_config" =>{
+                show_config_page(app);
+            }
             _ => {
                 println!("menu item {:?} not handled", event.id);
             }
         })
         .show_menu_on_left_click(false) // 禁用左键点击菜单，使用自定义处理
-        .on_tray_icon_event(move |tray, event| {
-            handle_tray_event(tray, event);
+        .on_tray_icon_event(move |app, event| {
+            handle_tray_event(app, event);
         })
         .build(app)?;
 
@@ -46,6 +49,7 @@ pub fn create_tray_menu(app: &AppHandle) -> Result<(), tauri::Error> {
 // 处理托盘事件
 fn handle_tray_event(tray: &tauri::tray::TrayIcon, event: TrayIconEvent) {
     let app = tray.app_handle();
+    tauri_plugin_positioner::on_tray_event(app, &event);
 
     match event {
         TrayIconEvent::Click { button, .. } => {
@@ -54,8 +58,8 @@ fn handle_tray_event(tray: &tauri::tray::TrayIcon, event: TrayIconEvent) {
                 show_search_panel(&app);
             }
             if button == MouseButton::Right {
-                // 单击左键：显示搜索面板
-                show_search_panel(&app);
+                // 单击右键：显示搜索面板
+                // show_search_panel(&app);
             }
             // 右键点击会自动显示菜单
         }
@@ -72,22 +76,53 @@ fn handle_tray_event(tray: &tauri::tray::TrayIcon, event: TrayIconEvent) {
 // 显示搜索面板
 fn show_search_panel(app: &AppHandle) {
     // 尝试获取主窗口
-    if let Some(window) = app.get_webview_window("main") {
+    if let Some(window) = app.get_webview_window("search-view") {
         let _ = window.show();
         let _ = window.set_focus();
         let _ = window.unminimize();
+        
+        // 使用 tauri_plugin_positioner 将窗口移动到屏幕右下角
+        // 首先尝试获取当前显示器信息
+        if let Ok(Some(monitor)) = window.current_monitor() {
+            let monitor_size = monitor.size();
+            let monitor_position = monitor.position();
+            
+            // 计算右下角坐标
+            let screen_width = monitor_size.width as f64;
+            let screen_height = monitor_size.height as f64;
+            
+            // 获取窗口大小
+            if let Ok(size) = window.inner_size() {
+                // 在 Tauri 2 中，inner_size() 返回 PhysicalSize<u32>
+                let window_width = size.width as f64;
+                let window_height = size.height as f64;
+                
+                let x = monitor_position.x as f64 + screen_width - window_width;
+                let y = monitor_position.y as f64 + screen_height - window_height;
+                
+                let _ = window.set_position(tauri::Position::Physical(
+                    tauri::PhysicalPosition {
+                        x: x as i32,
+                        y: y as i32
+                    }
+                ));
+            }
+        }
+        
         // 导航到搜索页面
-        let _ = window.eval("window.location.href = '/search-view';");
+        // let _ = window.eval("window.location.href = '/search-view';");
     } else {
         // 如果主窗口不存在，创建新窗口
+        // 创建窗口时不指定位置，让系统决定
         let _ = tauri::WebviewWindowBuilder::new(
             app,
-            "main",
+            "search-view",
             tauri::WebviewUrl::App("/search-view".into()),
         )
         .title("Fruit Saladict - 搜索")
-        .inner_size(800.0, 600.0)
-        .min_inner_size(400.0, 300.0)
+        .inner_size(420.0, 680.0)
+        .min_inner_size(360.0, 520.0)
+        .decorations(false)
         .visible(true)
         .build();
     }
@@ -96,16 +131,16 @@ fn show_search_panel(app: &AppHandle) {
 // 显示配置页面
 fn show_config_page(app: &AppHandle) {
     // 尝试获取主窗口
-    if let Some(window) = app.get_webview_window("main") {
+    if let Some(window) = app.get_webview_window("config-view") {
         let _ = window.show();
         let _ = window.set_focus();
         let _ = window.unminimize();
         // 导航到配置页面
-        let _ = window.eval("window.location.href = '/config';");
+        // let _ = window.eval("window.location.href = '/config';");
     } else {
         // 如果主窗口不存在，创建新窗口
         let _ =
-            tauri::WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::App("/config".into()))
+            tauri::WebviewWindowBuilder::new(app, "config-view", tauri::WebviewUrl::App("/configs".into()))
                 .title("Fruit Saladict - 配置")
                 .inner_size(900.0, 700.0)
                 .min_inner_size(500.0, 400.0)
