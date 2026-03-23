@@ -6,7 +6,7 @@ import {
   getInnerHTML,
   handleNoResult,
   handleNetWorkError
-} from '../../utils'
+} from '../../../utils/get-default-res'
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 
 export const getSrcPage: GetSrcPageFunction = text => {

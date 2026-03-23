@@ -76,31 +76,28 @@ export const handleResponse: AtomFetchResponse<MachineTranslateResult> = async (
     lang: to,
     text: transParagraphs.join(' '),
   })
-  return machineResult(
-    {
-      result: {
-        id: 'baidu',
-        sl: from,
-        tl: to,
-        searchText: {
-          paragraphs: transResult.map(({ src }) => src),
-          tts: getTextSpeech({ text, lang: detectedFrom }),
-        },
-        trans: {
-          paragraphs: transParagraphs,
-          tts: getTextSpeech({
-            lang: to,
-            text: transParagraphs.join(' '),
-          }),
-        },
+  return machineResult({
+    result: {
+      id: 'baidu',
+      sl: from,
+      tl: to,
+      searchText: {
+        paragraphs: transResult.map(({ src }) => src),
+        tts: getTextSpeech({ text, lang: detectedFrom }),
       },
-      audio: {
-        py: transTTS,
-        us: transTTS,
+      trans: {
+        paragraphs: transParagraphs,
+        tts: getTextSpeech({
+          lang: to,
+          text: transParagraphs.join(' '),
+        }),
       },
     },
-    [...Baidu.langMap.keys()]
-  )
+    audio: {
+      py: transTTS,
+      us: transTTS,
+    },
+  })
 }
 
 export const getSrcPage: GetSrcPageFunction = (text, langCode, dictProfile) => {

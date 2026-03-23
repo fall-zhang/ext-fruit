@@ -1,5 +1,4 @@
 import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
-import { getChsToChz } from '../../utils'
 import { moedictSearch } from '../guoyu/engine'
 import type { GuoYuResult } from '../guoyu/type'
 

@@ -13,3 +13,9 @@
 - 一系列工具，用于辅助
   - request-to-axios 将 fetch 的请求参数转换为 axios 的参数
   - axios-to-fetch 将 axios 的请求参数转换为 fetch 的参数
+
+
+自翻译 trans by itself
+
+- zh-to-zh [汉典](./src/self-trans-api/zh-to-zh/zdic/engine.ts)
+

@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
-import { timer } from '@/_helpers/promise-more'
+
+import { timer } from '@/utils/promise-more'
 
 export async function retry (executor: () => Promise<any>, retryTimes = 1) {
   let times = retryTimes + 1
