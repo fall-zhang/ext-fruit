@@ -142,17 +142,13 @@ const createSearchStore = () => {
           renderedDicts: dictList,
         }
       })
-      console.log('⚡️ line:63 ~ word: ', selectedDicts)
       selectedDicts.forEach((id, index) => {
-        console.log('⚡️ line:146 ~ id: ', id)
         const searchFun: SearchFunction = api[id]
         searchFun(word.text, {
           profile: activeProfile.dicts.all,
           dictAuth: activeProfile.dictAuth,
         }).then((res: DictSearchResult) => {
-          console.log('⚡️ line:158 ~ res: ', id, '   ', res)
           set(state => {
-            console.log('⚡️ line:164 ~ renderedDicts: ', state.renderedDicts)
             const dictResult: RenderDictItem = {
               dictID: id,
               searchStatus: 'FINISH',
@@ -169,44 +165,6 @@ const createSearchStore = () => {
           console.warn('⚡️ line:157 ~ err: ', err)
         })
       })
-      // const request = apiMap.baidu.getRequest(word.text, {
-      //   from: 'auto',
-      //   to: 'zh',
-      //   option: {
-      //     appid: '',
-      //     key: '',
-      //   },
-      // })
-      // DEFAULT_PROPS.customFetch(request).then(res => {
-      //   return apiMap.baidu.handleResponse(res, {
-      //     text: word.text,
-      //     from: 'auto',
-      //     to: 'auto',
-      //     profile: activeProfile.dicts.all,
-      //   })
-      // }).then(res => {
-      //   const dictResult: RenderDictItem = {
-      //     dictID: res.result.id,
-      //     searchStatus: 'FINISH',
-      //     searchResult: res.result,
-      //   }
-      //   set(state => ({
-      //     ...state,
-      //     renderedDicts: [dictResult],
-      //   }))
-      // }).catch(err => {
-      //   console.warn('⚡️ line:157 ~ err: ', err)
-      // })
-
-      // dictList.forEach(item => {
-      //   fetchDictResult({
-      //     id: item.id,
-      //     text: word.text,
-      //   }).then(res => {
-      //     console.log(res)
-      //   }).catch(err => {
-    //   })
-    // })
     },
     searchEnd (payload: {
       id: DictID

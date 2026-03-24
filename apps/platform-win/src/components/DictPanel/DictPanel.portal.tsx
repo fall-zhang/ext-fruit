@@ -3,10 +3,10 @@ import { useRef, useState } from 'react'
 import { useUpdateEffect } from 'react-use'
 import type { DictPanelProps } from './DictPanel'
 import { DictPanel } from './DictPanel'
-import { SALADICT_PANEL } from '@/core/saladict-state'
 
 import clsx from 'clsx'
-import ShadowPortal, { defaultTimeout } from '../../components/ShadowPortal'
+import ShadowPortal, { defaultTimeout } from '../salad-portal/shadow-portal'
+import { SALADICT_PANEL } from '@/config/const/saladict'
 
 export interface DictPanelPortalProps extends DictPanelProps {
   show: boolean

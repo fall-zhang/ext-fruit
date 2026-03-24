@@ -11,9 +11,9 @@ import {
 } from 'react'
 import clsx from 'clsx'
 import { useUpdateEffect } from 'react-use'
-import { SALADICT_PANEL } from '@/core/saladict-state'
-import { HoverBoxContext } from '@salad/core/src/components/HoverBox'
 import { getScrollbarWidth } from '@/utils/scrollbar-width'
+import { SALADICT_PANEL } from '@/config/const/saladict'
+import { HoverBoxContext } from '../HoverBox'
 
 export interface DictPanelProps {
   /** Update position command from uptream */

@@ -7,6 +7,7 @@ import langZhTW from 'antd/lib/locale/zh_TW'
 import langEnUS from 'antd/lib/locale/en_US'
 import { useDictStore } from '../../store'
 import { reportPageView } from '../../utils/analytics'
+import { useConfContext } from '@/context/conf-context'
 
 const antdLocales = (saladictLocale: string) => {
   switch (saladictLocale) {
@@ -28,10 +29,7 @@ export interface AntdRootContainerProps {
 
 /** Inner Component so that it can access Redux store */
 export const AntdRootContainer: FC<AntdRootContainerProps> = props => {
-  const { langCode, analytics, darkMode } = useDictStore(state => {
-    const { langCode, analytics, darkMode } = state.config
-    return { langCode, analytics, darkMode }
-  })
+  const { langCode, analytics, darkMode } = useConfContext().config
 
   const locale = useMemo(() => antdLocales(langCode), [langCode])
 

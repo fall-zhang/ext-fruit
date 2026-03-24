@@ -6,6 +6,7 @@ import { getDefaultConfig, type AppConfig } from '@/config/app-config'
 interface ConfContextType {
   config: AppConfig
   profile: Profile
+  darkMode: boolean
   // Date management
   // appDisable: boolean;
   updateConfig(config: AppConfig): void
@@ -15,10 +16,11 @@ interface ConfContextType {
   // toggleColorVisibility: (color: string) => void;
   // isColorVisible: (color: string | undefined) => boolean;
 }
-
+// 应用配置的 context
 const ConfContext = createContext<ConfContextType>({
   config: getDefaultConfig(),
   profile: getDefaultProfile(),
+  darkMode: false,
   updateConfig: function (config: AppConfig): void {
     throw new Error('Function not implemented.')
   },
@@ -47,6 +49,7 @@ export function ConfProvider ({ children, config, profile, updateConfig, updateP
   // Initialize visibleColors based on the isActive property in etiquettes
   const value: ConfContextType = {
     config,
+    darkMode: false,
     profile,
     updateConfig: function (config: AppConfig): void {
       throw new Error('Function not implemented.')

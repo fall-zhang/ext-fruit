@@ -1,12 +1,12 @@
 import type { FC } from 'react'
 import { useRef, useState } from 'react'
 import { useUpdateEffect } from 'react-use'
-import { SALADICT_PANEL } from '@/core/saladict-state'
 
 import clsx from 'clsx'
 import { useDictStore } from '../../store'
 import { DictPanel, type DictPanelProps } from '../DictPanel/DictPanel'
 import ShadowPortal, { defaultTimeout } from './shadow-portal'
+import { SALADICT_PANEL } from '@/config/const/saladict'
 
 export interface DictPanelPortalProps extends DictPanelProps {
   show: boolean
@@ -61,17 +61,15 @@ export const DictPanelPortal: FC = () => {
       shadowRootClassName={SALADICT_PANEL}
       innerRootClassName={clsx({ isAnimate: withAnimation, darkMode })}
       panelCSS={panelCSS}
-      in={show}
-      timeout={props.withAnimation ? defaultTimeout : 0}
     >
-      {() => <DictPanel
+      <DictPanel
         menuBar={undefined}
         mtaBox={undefined}
         dictList={undefined}
         waveformBox={undefined}
         onDragEnd={ () => {
           throw new Error('Function not implemented.')
-        }} {...restProps} />}
+        }} {...restProps} />
     </ShadowPortal>
   )
 }

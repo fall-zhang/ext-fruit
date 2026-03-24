@@ -1,11 +1,9 @@
+import { SALADICT_EXTERNAL } from '@/config/const/saladict'
 import type { ReactNode } from 'react'
 import type React from 'react'
 import { useMemo, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import type { CSSTransitionProps } from 'react-transition-group/CSSTransition'
-import CSSTransition from 'react-transition-group/CSSTransition'
 import root from 'react-shadow'
-import { SALADICT_EXTERNAL } from '@/core/saladict-state'
 
 export const defaultTimeout = { enter: 400, exit: 100, appear: 400 }
 
@@ -22,10 +20,10 @@ export interface ShadowPortalOwnProps {
   shadowRootClassName?: string
   innerRootClassName?: string
   panelCSS?: string
+  children: ReactNode
 }
 
-export type ShadowPortalProps = ShadowPortalOwnProps & CSSTransitionProps
-
+export type ShadowPortalProps = ShadowPortalOwnProps
 /**
  * Render a shadow DOM on Portal to a removable element with transition.
  * Insert the element to DOM when the Component mounts.
@@ -38,9 +36,6 @@ export const ShadowPortal = (props: ShadowPortalProps) => {
     shadowRootClassName,
     innerRootClassName,
     panelCSS,
-    onEnter,
-    onExited,
-    ...restProps
   } = props
 
   const $root = useMemo(() => {
@@ -68,7 +63,7 @@ export const ShadowPortal = (props: ShadowPortalProps) => {
       <div className={innerRootClassName} style={styleResetBoundary}>
         {head}
         {panelCSS ? <style>{panelCSS}</style> : null}
-        <CSSTransition
+        {/* <CSSTransition
           classNames={defaultClassNames}
           mountOnEnter
           unmountOnExit
@@ -91,7 +86,8 @@ export const ShadowPortal = (props: ShadowPortalProps) => {
               return onExited(...args)
             }
           }}
-        />
+        /> */}
+        {props.children}
       </div>
     </root.div>,
     $root
