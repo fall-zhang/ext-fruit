@@ -15,7 +15,7 @@
     "packages/**/*.mock.ts",
     "apps/**/*.spec.ts",
     "apps/**/*.mock.ts",
-    "**/__tests__/*.test.ts",
+    "**/*.test.ts",
     "packages/**/*.spec.ts",
     "tests/**/*.js",
     "tests/**/*.jsx",
