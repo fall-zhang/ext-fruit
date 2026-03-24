@@ -2,21 +2,19 @@ import type { FC } from 'react'
 import React from 'react'
 import Speaker from '@/components/Speaker'
 import StarRates from '@/components/StarRates'
-import type {
-  LongmanResult,
-  LongmanResultLex,
-  LongmanResultRelated,
-  LongmanResultEntry
-} from './engine'
-import type { ViewProps } from '@/components/dictionaries/helpers'
-import { StrElm } from '@/components/StrElm'
 
-export const DictLongman: FC<ViewProps<LongmanResult>> = ({ result }) =>
-  (result.type === 'lex'
-    ? renderLex(result)
-    : result.type === 'related'
-      ? renderRelated(result)
-      : null)
+import { StrElm } from '@/components/StrElm'
+import type { LongmanResult, LongmanResultEntry, LongmanResultLex, LongmanResultRelated } from '@/core/api-server/trans-api/longman/engine'
+import type { ViewProps } from '../type'
+
+export const DictLongman: FC<ViewProps<LongmanResult>> = ({ result }) => {
+  if (result.type === 'lex') {
+    return renderLex(result)
+  } else if (result.type === 'related') {
+    return renderRelated(result)
+  }
+  return null
+}
 
 export default DictLongman
 
@@ -37,17 +35,15 @@ function renderEntry (entry: LongmanResultEntry) {
               {entry.title.HOMNUM}
             </span>
           </h1>
-          {entry.level
-            ? (
-              <span title={entry.level.title} className="dictLongman-Level">
-                <StarRates
-                  max={3}
-                  rate={entry.level.rate}
-                  className="dictLongman-Level_Rate"
-                />
-              </span>
-            )
-            : null}
+          {entry.level && (
+            <span title={entry.level.title} className="dictLongman-Level">
+              <StarRates
+                max={3}
+                rate={entry.level.rate}
+                className="dictLongman-Level_Rate"
+              />
+            </span>
+          )}
           {entry.freq &&
             entry.freq.map(freq => (
               <span
@@ -125,16 +121,19 @@ function renderLex (result: LongmanResultLex) {
         <StrElm className="dictLongman-Wordfams" html={result.wordfams} />
       )}
 
-      {dicts.map((dict, index) =>
-        (result[dict].length > 0 ? (
-          <div className="dictLongman-Dict" key={dict + index}>
-            {/* <h1 className='dictLongman-DictTitle'>
-              <span>- {dictTitle[dict]} -</span>
-            </h1> */}
-            {result[dict].map(renderEntry)}
-          </div>
-        ) : null)
-      )}
+      {dicts.map((dict, index) => {
+        if (result[dict].length > 0) {
+          return (
+            <div className="dictLongman-Dict" key={dict + index}>
+              {/* <h1 className='dictLongman-DictTitle'>
+                <span>- {dictTitle[dict]} -</span>
+              </h1> */}
+              {result[dict].map(renderEntry)}
+            </div>
+          )
+        }
+        return null
+      })}
     </>
   )
 }

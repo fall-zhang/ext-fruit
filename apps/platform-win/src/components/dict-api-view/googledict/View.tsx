@@ -1,8 +1,8 @@
 import type { FC } from 'react'
 import type React from 'react'
-import type { GoogleDictResult } from './engine'
-import type { ViewProps } from '@/components/dictionaries/helpers'
 import { StrElm } from '@/components/StrElm'
+import type { GoogleDictResult } from '@/core/api-server/trans-api/googledict/engine'
+import type { ViewProps } from '../type'
 
 export const DictGoogleDict: FC<ViewProps<GoogleDictResult>> = ({ result }) => (
   <div>

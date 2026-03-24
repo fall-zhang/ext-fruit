@@ -1,14 +1,11 @@
-import type { FC, ReactNode } from 'react'
+import type { FC, MouseEvent, MouseEventHandler, ReactNode } from 'react'
 import type React from 'react'
 import Speaker from '@/components/Speaker'
 import StarRates from '@/components/StarRates'
-import type {
-  MacmillanResult,
-  MacmillanResultLex,
-  MacmillanResultRelated
-} from './engine'
-import type { ViewProps } from '@/components/dictionaries/helpers'
+
 import { StrElm } from '@/components/StrElm'
+import type { MacmillanResult, MacmillanResultLex, MacmillanResultRelated } from '@/core/api-server/trans-api/macmillan/engine'
+import type { ViewProps } from '../type'
 
 export const DictMacmillan: FC<ViewProps<MacmillanResult>> = ({
   result,
@@ -89,8 +86,8 @@ function renderRelated (result: MacmillanResultRelated) {
   )
 }
 
-function onEntryClick (event: React.MouseEvent<HTMLElement>) {
-  if (!event.target.classList) {
+function onEntryClick (event: MouseEvent<HTMLElement>) {
+  if (!event.currentTarget.classList) {
     return
   }
   const target = event.target as Element

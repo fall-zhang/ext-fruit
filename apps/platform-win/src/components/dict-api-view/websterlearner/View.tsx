@@ -1,12 +1,9 @@
 import type { FC } from 'react'
 import Speaker from '@/components/Speaker'
-import type {
-  WebsterLearnerResult,
-  WebsterLearnerResultLex,
-  WebsterLearnerResultRelated
-} from './engine'
-import type { ViewProps } from '@/components/dictionaries/helpers'
+
 import { StrElm } from '@/components/StrElm'
+import type { WebsterLearnerResult, WebsterLearnerResultLex, WebsterLearnerResultRelated } from '@/core/api-server/trans-api/websterlearner/engine'
+import type { ViewProps } from '../type'
 
 export const DictWebsterLearner: FC<ViewProps<WebsterLearnerResult>> = ({
   result,

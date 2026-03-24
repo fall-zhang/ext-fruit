@@ -89,7 +89,7 @@ export const DictNaver: FC<ViewProps<NaverResult>> = props => {
                     </>
                   )}
 
-                  {word?.frequencyAdd?.split('^').map(wordF => (
+                  {word?.frequencyAdd?.split('^').map((wordF: string) => (
                     <span key={wordF} className={'dictNaver-EntryPronFa'}>
                       {wordF}
                     </span>
@@ -97,10 +97,10 @@ export const DictNaver: FC<ViewProps<NaverResult>> = props => {
                 </div>
 
                 <div className={'dictNaver-EntryExp'}>
-                  {word?.meansCollector?.map((wordMc, wordMcI) => {
+                  {word?.meansCollector?.map((wordMc: any, wordMcI: number) => {
                     return (
                       <ul key={wordMcI}>
-                        {wordMc.means.map((m, mI) => (
+                        {wordMc.means.map((m: any, mI: number) => (
                           <li key={mI}>
                             {m.order && <span>{m.order}.</span>}
                             {wordMc.partOfSpeech2 && (
@@ -174,10 +174,10 @@ export const DictNaver: FC<ViewProps<NaverResult>> = props => {
                 </div>
 
                 <div className={'dictNaver-MeanExp'}>
-                  {meaning?.meansCollector?.map((meaningMc, meaningMcI) => {
+                  {meaning?.meansCollector?.map((meaningMc: any, meaningMcI: number) => {
                     return (
                       <ul key={meaningMcI}>
-                        {meaningMc?.means.map((m, mI) => (
+                        {meaningMc?.means.map((m: any, mI: number) => (
                           <li key={mI}>
                             {m.order && <span>{m.order}.</span>}
                             {meaningMc.partOfSpeech2 && (

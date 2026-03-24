@@ -16,15 +16,29 @@ import {
 import type { MouseEvent } from 'react'
 import { checkSupportedLangs } from '@/core/api-server/utils/lang-check'
 import { isFirefox } from '@/utils/browser'
-import { getTextFromSelection, type getSentenceFromSelection } from '@/utils/get-selection-more'
+import { getSentenceFromSelection, getTextFromSelection } from '@/utils/get-selection-more'
 import { isTypeField } from '@/utils/selection/helper'
 import { isInDictPanel } from '@/utils/selection/utils'
+import type { SupportedLangs } from '@/core/api-server/types/dict-base'
 
 type SelectionConf = {
   // 启用 touch 事件的监听
   touchMode: boolean
   // 双击的判定间隔
   doubleClickDelay: 300
+  noTypeField: boolean
+  language: SupportedLangs
+  panelMode: {
+    direct: boolean,
+    double: boolean,
+    holding: {
+      alt: boolean,
+      shift: boolean,
+      ctrl: boolean,
+      meta: boolean,
+    }
+  }
+
 }
 
 export function createSelectTextStream (config: SelectionConf | null) {
@@ -79,7 +93,7 @@ function withTouchMode (config: SelectionConf) {
       if (!checkSupportedLangs(config.language, text)) {
         return { self }
       }
-
+      const mouseArg = mouseup as MouseEvent
       if (isWithMouse) {
         return {
           word: {
@@ -88,15 +102,17 @@ function withTouchMode (config: SelectionConf) {
           },
           self,
           dbClick: clickPeriodCount >= 2,
-          mouseX: mouseup.clientX,
-          mouseY: mouseup.clientY,
-          altKey: !!mouseup.altKey,
-          shiftKey: !!mouseup.shiftKey,
-          ctrlKey: !!mouseup.ctrlKey,
-          metaKey: !!mouseup.metaKey,
+          mouseX: mouseArg.clientX,
+          mouseY: mouseArg.clientY,
+          altKey: !!mouseArg.altKey,
+          shiftKey: !!mouseArg.shiftKey,
+          ctrlKey: !!mouseArg.ctrlKey,
+          metaKey: !!mouseArg.metaKey,
         }
       }
-
+      if (!selection) {
+        return { self }
+      }
       if (selection.rangeCount <= 0) {
         return { self }
       }

@@ -1,9 +1,9 @@
 import type { FC } from 'react'
 import type React from 'react'
-import type { HjdictResult, HjdictResultLex, HjdictResultRelated } from './engine'
-import type { ViewProps } from '@/components/dictionaries/helpers'
 import { useTranslation } from 'react-i18next'
 import { StrElm } from '@/components/StrElm'
+import type { HjdictResult, HjdictResultLex, HjdictResultRelated } from '@/core/api-server/trans-api/hjdict/type'
+import type { ViewProps } from '../type'
 
 export const DictHjDict: FC<ViewProps<HjdictResult>> = props => {
   if (props.result.type === 'lex') {

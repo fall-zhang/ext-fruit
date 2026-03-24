@@ -7,9 +7,10 @@ import React, {
 } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import Speaker from '../Speaker'
-import type { MachineTranslateResult } from '@/core/api-server/trans-api/result-handle'
 import { getTTS } from '@/core/api-server/trans-api/google/engine'
 import type { ViewProps } from '../dict-api-view/type'
+import type { MachineTranslateResult } from '@/core/api-server/api-common/result-handle'
+import { Link } from '@tanstack/react-router'
 
 
 const rtlLangs = new Set([
@@ -151,13 +152,12 @@ const RenderCredential: FC = (props) => {
   const { t } = useTranslation('content')
   return (<>
     <Trans message={t('machineTrans.login')}>
-      <a
-        href={browser.runtime.getURL('options.html?menuselected=DictAuths')}
-        target="_blank"
-        rel="nofollow noopener noreferrer"
+      <Link
+        to='options?menuselected=DictAuths'
+        // to: 'options.html?menuselected=DictAuths',
       >
         {t('machineTrans.dictAccount')}
-      </a>
+      </Link>
     </Trans>
   </>
   )
