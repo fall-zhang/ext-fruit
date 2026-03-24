@@ -21,9 +21,6 @@ export type DictActionSlice = {
   /** switch to the next or previous history */
   SWITCH_HISTORY(payload: 'prev' | 'next'): void
 
-  /** request closing panel */
-  CLOSE_PANEL(): void
-
   TEMP_DISABLED_STATE(value: boolean): void
 }
 
@@ -40,7 +37,6 @@ export const createActionSlice: StateCreator<GlobalState & DictActionSlice, [], 
         config: payload,
         panelHeight: Math.min(state.panelHeight, panelMaxHeight),
         panelMaxHeight,
-        isQSFocus: payload.qsFocus,
         isTempDisabled:
         payload.blacklist.some(([r]) => new RegExp(r).test(url)) &&
         payload.whitelist.every(([r]) => !new RegExp(r).test(url)),
@@ -58,14 +54,6 @@ export const createActionSlice: StateCreator<GlobalState & DictActionSlice, [], 
         ...state,
         activeProfile: payload,
         isShowMtaBox,
-        isExpandMtaBox:
-        isShowMtaBox &&
-        (payload.mtaAutoUnfold === 'once' ||
-          payload.mtaAutoUnfold === 'always' ||
-          (payload.mtaAutoUnfold === 'popup')),
-        renderedDicts: state.renderedDicts.filter(({ id }) =>
-          payload.dicts.selected.includes(id)
-        ),
       }
     }),
 
@@ -110,17 +98,6 @@ export const createActionSlice: StateCreator<GlobalState & DictActionSlice, [], 
       text: newText,
     })),
 
-    TOGGLE_MTA_BOX: () => set(state => ({
-      ...state,
-      isExpandMtaBox: !state.isExpandMtaBox,
-    })),
-
-    /** Focus button on quick search panel */
-    TOGGLE_QS_FOCUS: () => set(state => ({
-      ...state,
-      isQSFocus: !state.isQSFocus,
-    })),
-
     TOGGLE_WAVEFORM_BOX: () => set(state => ({
       ...state,
       isExpandWaveformBox: !state.isExpandWaveformBox,
@@ -133,14 +110,6 @@ export const createActionSlice: StateCreator<GlobalState & DictActionSlice, [], 
           x: payload.x,
           y: payload.y,
         },
-      }
-    }),
-
-    CLOSE_PANEL: () => set(state => {
-      AudioManager.getInstance().reset()
-      return {
-        ...state,
-        isShowBowl: false,
       }
     }),
 
@@ -191,26 +160,6 @@ export const createActionSlice: StateCreator<GlobalState & DictActionSlice, [], 
       historyIndex: 0,
       isShowBowl: false,
     })),
-
-    QS_PANEL_CHANGED: (payload: boolean) => set((state) => {
-      if (state.withQssaPanel === payload) {
-        return state
-      }
-
-      // hide panel on other pages and leave just quick search panel
-      return payload && state.config.qssaPageSel
-        ? {
-          ...state,
-          withQssaPanel: payload,
-          // no hiding if it's browser action page
-          isShowBowl: false,
-        }
-        : {
-          ...state,
-          withQssaPanel: payload,
-        }
-    }),
-
 
     /* ------------------------------------------------ *\
      Word Editor Panel

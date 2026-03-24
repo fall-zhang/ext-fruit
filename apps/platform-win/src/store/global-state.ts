@@ -1,11 +1,8 @@
 import type { StateCreator } from 'zustand'
-import { getDefaultConfig, type AppConfig } from '@/config/app-config'
-import { getDefaultProfile, type Profile } from '@/config/trans-profile'
 import type { Word } from '../types/word'
 import type { DictID } from '@/core/api-server/config'
 import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
 import { newWord } from '@/utils/dict-utils/new-word'
-import type { ProfileID } from '@/core/api-local/profile'
 type RenderDictItem = {
   readonly id: DictID
   readonly searchStatus: 'IDLE' | 'SEARCHING' | 'FINISH'
@@ -13,8 +10,6 @@ type RenderDictItem = {
   readonly catalog?: DictSearchResult<DictID>['catalog']
 }
 export interface GlobalState {
-  config: AppConfig
-  profiles: ProfileID[]
   selection: {
     word: Word
     mouseX: number
@@ -34,10 +29,6 @@ export interface GlobalState {
    */
   isTempDisabled: boolean
   /**
-   * 是否为快速面板
-   */
-  isQSFocus: boolean
-  /**
    * is a standalone quick search panel running
    * 运行中的独立快速搜索面板
    */
@@ -49,8 +40,6 @@ export interface GlobalState {
     translateCtx: boolean
   }
   isShowBowl: boolean
-  isShowMtaBox: boolean
-  isExpandMtaBox: boolean
   isExpandWaveformBox: boolean
 
   /**
@@ -63,7 +52,7 @@ export interface GlobalState {
     x: number
     y: number
   },
-  activeProfile: Profile
+  // activeProfile: Profile
   /** The actual coord of dict panel might be different */
   dictPanelCoord: {
     x: number
@@ -92,15 +81,7 @@ export const createSharedSlice: StateCreator<
   [],
   GlobalState
 > = (set, get) => {
-  const config = getDefaultConfig()
-  // getActiveProfileID
-  const profile = getDefaultProfile()
-  const isShowMtaBox = profile.mtaAutoUnfold !== 'hide'
-
-  const isExpandMtaBox = isShowMtaBox && (profile.mtaAutoUnfold === 'once' || profile.mtaAutoUnfold === 'always' || (profile.mtaAutoUnfold === 'popup'))
   return {
-    config,
-    profiles: [],
     selection: {
       word: newWord(),
       mouseX: 0,
@@ -114,9 +95,7 @@ export const createSharedSlice: StateCreator<
       instant: false,
       force: false,
     },
-    activeProfile: profile,
     isTempDisabled: true,
-    isQSFocus: config.qsFocus,
     withQssaPanel: false,
     wordEditor: {
       isShow: false,
@@ -126,8 +105,6 @@ export const createSharedSlice: StateCreator<
     },
 
     isShowBowl: false,
-    isShowMtaBox,
-    isExpandMtaBox,
     isExpandWaveformBox: false,
     isFav: false,
     bowlCoord: { x: 0, y: 0 },
@@ -135,7 +112,7 @@ export const createSharedSlice: StateCreator<
     dictPanelCoord: { x: 0, y: 0 },
     panelHeight: 30,
 
-    panelMaxHeight: (window.innerHeight * config.panelMaxHeightRatio) / 100,
+    panelMaxHeight: (window.innerHeight * 80) / 100,
     /** Dicts that will be rendered to dict panel */
     renderedDicts: [],
     /** User manually folded or unfolded */

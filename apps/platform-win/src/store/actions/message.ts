@@ -73,9 +73,6 @@ type DictMessageSlice = {
   /** Open or update Quick Search Panel */
   OPEN_QS_PANEL(): void
 
-  /** Send new words to standalone panel */
-  QS_PANEL_SEARCH_TEXT(payload: Word): void
-
   CLOSE_QS_PANEL(): void
 
   /** query backend for standalone panel appearance */
@@ -111,15 +108,6 @@ export const messageActionSlice: StateCreator<DictMessageSlice & DictActionSlice
     CLOSE_QS_PANEL: () => {
       // AudioManager.getInstance().reset()
       // return qsPanelManager.destroy()
-    },
-    QS_PANEL_SEARCH_TEXT: (word) => {
-      const state = get()
-      // request searching text, from other tabs
-      if (state.isQSFocus) {
-        // focus standalone panel
-        state.OPEN_QS_PANEL()
-      }
-      return Promise.resolve()
     },
     SELECTION: (payload) => {
       set(state => ({
