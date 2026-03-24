@@ -1,10 +1,8 @@
-# 水果沙拉查词（个人版，非官方）
+# 水果沙拉查词
 
-水果沙拉查词为沙拉查词重构版本。更新了项目架构，以及依赖升级，并将支持更多平台本地运行。
+水果沙拉查词为沙拉查词重构版本。更新了项目架构，以及依赖升级，并将支持本地运行。
 
 ！！！项目仍旧处于重构阶段，有很多内容正在完善
-
-甚至可以将沙拉查词作为组件插入到对应代码中
 
 ## 改动日志
 
@@ -16,7 +14,7 @@
 
 沙拉查词项目为 [MIT](https://github.com/crimx/ext-saladict/blob/dev/LICENSE) 许可，因此，重构后的项目也为 MIT 协议，你可以随意使用源码，但必须附带该许可与版权声明。请勿用于任何违法犯罪行为，沙拉查词强烈谴责并会尽可能配合追究责任。对于照搬源码二次发布的套壳项目沙拉查词有责任对平台和用户发出相应的举报和提醒。
 
-该项目从个人角度出发，为了磨练技术，以及学习开发浏览器插件，同时也是避免好用的查词功能无法使用，如果有问题请及时指出。同时也欢迎更多人进行贡献。
+该项目从个人角度出发，为了磨练技术，同时也是避免好用的查词功能无法使用，如果有问题请及时指出。同时也欢迎更多人进行贡献。
 
 ## 从源码构建
 
@@ -40,27 +38,5 @@ pnpm tauri build
 
 见[项目贡献指南](./CONTRIBUTING-zh.md)。
 
-## 更多截图
-
-<p align="center">
-  <a href="https://github.com/crimx/ext-saladict/releases/" target="_blank"><img src="https://github.com/crimx/ext-saladict/wiki/images/youdao-page.gif" /></a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/crimx/ext-saladict/releases/" target="_blank"><img src="https://github.com/crimx/ext-saladict/wiki/images/screen-notebook.png" /></a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/crimx/ext-saladict/releases/" target="_blank"><img src="https://github.com/crimx/ext-saladict/wiki/images/pin.gif" /></a>
-</p>
-
 ## 目标运行环境
 
-### 操作系统
-
-### 浏览器
-
-## 待更新功能
-
-- 自动 dark mode
-- 打包为本地应用使用
