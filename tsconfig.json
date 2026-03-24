@@ -12,6 +12,8 @@
     // "tests/**/*.jsx",
   ],
   "exclude": [
+    "**/build/**",
+    "**/dist/**",
     "packages/**/*.mock.ts",
     "apps/**/*.spec.ts",
     "apps/**/*.mock.ts",
