@@ -1,7 +1,7 @@
 import type { Language } from '@P/open-trans/languages'
-import type { AllDictsConf } from '../types/all-dict-conf'
 // import type { AppConfig } from '@/config/app-config'
 import type { DictAuths } from '@/config/trans-profile/auth'
+import type { AllDictsConf } from '../config'
 
 /**
  * Fetch and parse dictionary search result

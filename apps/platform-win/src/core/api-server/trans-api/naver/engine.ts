@@ -5,7 +5,7 @@ import {
   handleNetWorkError
 } from '../../utils'
 import axios from 'axios'
-import { isContainJapanese } from '../../utils/lang-check'
+import { isContainJapanese, isContainKorean } from '../../utils/lang-check'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return isContainJapanese(text)

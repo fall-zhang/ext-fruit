@@ -1,6 +1,7 @@
 import memoizeOne from 'memoize-one'
 import type { ArrayValues } from 'type-fest'
 import { matchers, matcherSign } from './reg-utils'
+import type { SupportedLangs } from '../types/dict-base'
 const languages = [
   'chinese',
   'english',
@@ -57,9 +58,6 @@ const isContain: { [key in Languages]: (text: string) => boolean } = {
 
 const matchAllMeaningless = new RegExp(`^(\\d|\\s|${matcherSign.source})+$`)
 
-export type SupportedLangs = {
-  [key in Languages | 'others' | 'matchAll']: boolean
-}
 export const supportedLangs: ReadonlyArray<keyof SupportedLangs> = [
   ...languages,
   'others',

@@ -39,7 +39,7 @@ export function whenKeyPressed (
 // common editors
 const editorTester = /CodeMirror|ace_editor|monaco-editor/
 
-export function isTypeField (element: HTMLElement | null): boolean {
+export function isTypeField (element: EventTarget & Element | null): boolean {
   if (!element || !element.tagName) {
     return false
   }

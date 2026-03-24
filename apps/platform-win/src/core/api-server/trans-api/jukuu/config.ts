@@ -2,7 +2,10 @@ import type { DictItemBase } from '@/core/api-server/types/dict-base'
 export type JukuuConfig = DictItemBase & {
   options: {
     lang: 'zheng' | 'engjp' | 'zhjp'
-  }
+  },
+  optionalVal: {
+    lang: Array<'zheng' | 'engjp' | 'zhjp'>,
+  },
 }
 
 export default (): JukuuConfig => ({
