@@ -1,6 +1,6 @@
 // import type { ProfileID } from '@/config/app-config/profiles'
 
-import type { ProfileID } from '@/config/app-config/profiles'
+import type { ProfileID } from '@/core/api-local/profile'
 import type { TFunction } from 'i18next'
 
 export async function updateProfileIDList (profiles: ProfileID[]) {

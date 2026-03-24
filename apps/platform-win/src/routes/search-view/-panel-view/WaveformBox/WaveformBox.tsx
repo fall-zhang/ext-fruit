@@ -1,19 +1,19 @@
+import { SALADICT_EXTERNAL } from '@/config/const/saladict'
+import { useConfContext } from '@/context/conf-context'
 import { useDictStore } from '@/store'
-import { SALADICT_EXTERNAL } from '@/core/saladict-state'
 import type { FC } from 'react'
 import { useEffect } from 'react'
 
 export interface WaveformBoxProps {
-  darkMode: boolean
   isExpand: boolean
   toggleExpand: () => void
   onHeightChanged: (height: number) => void
 }
 
 export const WaveformBox: FC = () => {
+  const config = useConfContext()
   const props: WaveformBoxProps = useDictStore(store => {
     return {
-      darkMode: store.config.darkMode,
       isExpand: store.isExpandWaveformBox,
       toggleExpand: () => {
         // store()

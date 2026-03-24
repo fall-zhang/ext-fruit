@@ -6,9 +6,7 @@ import { InputNumber as NumberEditor } from 'antd'
 import { isFirefox } from '@/utils/browser'
 import { SoundTouch, SimpleFilter, getWebAudioNode } from 'soundtouchjs'
 
-interface AnyObject {
-  [index: string]: any
-}
+type AnyObject = Record<string, any>
 
 interface WaveformProps {
   darkMode: boolean

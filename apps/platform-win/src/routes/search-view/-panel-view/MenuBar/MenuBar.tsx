@@ -37,7 +37,6 @@ export interface MenuBarProps {
 
   // togglePin: () => any
 
-  // isQSFocus: boolean
   // toggleQSFocus: () => any
 
   // onClose: () => any
@@ -66,8 +65,6 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
       // (( store.config.qsFocus)), // is quick search panel or popup page
       histories: store.searchHistory,
       historyIndex: store.historyIndex,
-      activeProfileId: store.activeProfile.id,
-      isQSFocus: store.isQSFocus,
       switchHistory: store.SWITCH_HISTORY,
     }
   }))
@@ -167,7 +164,6 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
         ? (
           <>
             <FocusBtn
-              isFocus={store.isQSFocus}
               onClick={store.toggleQSFocus}
             />
             <SidebarBtn
@@ -185,7 +181,6 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
         renderType === 'QuickSearchPage' && (<>
           <FocusBtn
             t={t}
-            isFocus={store.isQSFocus}
             onClick={store.toggleQSFocus}
           />
           <SidebarBtn

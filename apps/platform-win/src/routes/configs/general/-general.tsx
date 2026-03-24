@@ -1,4 +1,4 @@
-import type { FC } from 'react'
+import { useRef, type FC } from 'react'
 import { Switch, Select } from 'antd'
 
 import { SaladictForm, type SaladictFormItem } from '../-components/SaladictForm'
@@ -6,6 +6,7 @@ import { getConfigPath } from '../-utils/path-joiner'
 import { isFirefox, isOpera } from '@/utils/browser'
 
 export const General: FC = () => {
+  const formRef = useRef(null)
   const formItems: SaladictFormItem[] = [
     {
       name: getConfigPath('active'),
@@ -50,5 +51,5 @@ export const General: FC = () => {
     }
   )
 
-  return <SaladictForm items={formItems} />
+  return <SaladictForm items={formItems} ref={formRef} />
 }

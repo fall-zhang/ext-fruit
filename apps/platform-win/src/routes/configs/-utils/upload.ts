@@ -3,9 +3,10 @@ import set from 'lodash/set'
 import { useTranslation } from 'react-i18next'
 import { setFormDirty } from './use-form-dirty'
 import type { AppConfig } from '@/config/app-config'
-import type { Profile } from '@/config/app-config/profiles'
 import { useDictStore } from '@/store'
 import { cloneDeep } from 'es-toolkit'
+import type { AppProfile } from '@/config/trans-profile'
+import { toast } from 'sonner'
 
 
 export const useUpload = () => {
@@ -14,7 +15,7 @@ export const useUpload = () => {
   const dictStore = useDictStore(state => state.config)
   // [stateObjectPaths: string]
   return async (values: Record<string, any>) => {
-    const data: { config?: AppConfig; profile?: Profile } = {}
+    const data: { config?: AppConfig; profile?: AppProfile } = {}
     const paths = Object.keys(values)
 
     if (import.meta.env.VITE_DEBUG) {
@@ -55,9 +56,8 @@ export const useUpload = () => {
 
       antMsg.destroy()
       antMsg.success(t('msg_updated'))
-    } catch (e) {
-      notification.error({
-        message: t('config.opt.upload_error'),
+    } catch (e: any) {
+      toast.warning(t('config.opt.upload_error'), {
         description: e.message,
       })
       console.error(e)

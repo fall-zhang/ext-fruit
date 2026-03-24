@@ -119,6 +119,8 @@ export const DictList: FC<DictListProps> = (props) => {
           withAnimation={animation}
           darkMode={darkMode}
           panelCSS={''}
+          onInPanelSelect={() => {
+          }}
           openDictSrcPage={(id, ctrlKey: boolean) => {
           } }
           onUserFold={function (id: DictID, fold: boolean): void {

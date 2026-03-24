@@ -9,7 +9,6 @@ import type { AppConfig } from '@/config/app-config'
 //   translateCtx
 // } from '@/_helpers/translateCtx'
 import type { CtxTranslateResults, CtxTranslatorId } from '@/utils/translateCtx'
-import { translateCtx } from '@/utils/translateCtx'
 import type { Word } from '@/types/word'
 
 export interface CtxTransListProps {
@@ -56,14 +55,12 @@ export const CtxTransList: FC<CtxTransListProps> = props => {
           [name]: true,
         }))
 
-        const result = await translateCtx(text, name as CtxTranslatorId)
-
         setIsLoading(isLoading => ({
           ...isLoading,
           [name]: false,
         }))
 
-        props.onNewCtxTransResult(name as CtxTranslatorId, result)
+        props.onNewCtxTransResult(name as CtxTranslatorId, '')
       } else {
         props.onNewCtxTransResult(name as CtxTranslatorId, '')
       }
@@ -85,15 +82,6 @@ export const CtxTransList: FC<CtxTransListProps> = props => {
               />
               <label htmlFor={'ctx-' + name}>{name}</label>
             </h1>
-            {isLoading[name] && (
-              <div className="ctxTrans-Loader">
-                <div />
-                <div />
-                <div />
-                <div />
-                <div />
-              </div>
-            )}
           </div>
           <p className="ctxTrans-Content">{props.ctxTransResult[name]}</p>
         </li>

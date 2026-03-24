@@ -18,11 +18,11 @@ import type {
 import {
   WordEditorPanel
 } from './WordEditorPanel'
-import { CtxTransList } from './CtxTransList'
 import { useTranslation } from 'react-i18next'
-import { useOptContext } from '@/context/opt-context'
 import type { Word } from '@/types/word'
 import { useNavigate } from '@tanstack/react-router'
+import { toast } from 'sonner'
+
 
 export interface NotesProps {
   containerWidth: WordEditorPanelProps['containerWidth']
@@ -50,7 +50,7 @@ export const Notes: FC<NotesProps> = props => {
   // const ctxTransConfig = props.ctxTrans
 
   const [ctxTransResult, setCtxTransResult] = useState(() =>
-    Object.keys(props.ctxTrans).reduce((result, id) => {
+    Object.keys(props.ctxTrans).reduce((result: any, id) => {
       // eslint-disable-next-line no-param-reassign
       result[id] = ''
       return result
@@ -62,7 +62,7 @@ export const Notes: FC<NotesProps> = props => {
       text: word.text,
     })
       .then(words => {
-        setRelatedWords (words.filter(({ date }) => date !== word.date))
+        setRelatedWords (words.filter(({ date }: any) => date !== word.date))
       })
       .catch(() => [])
   }
@@ -154,13 +154,12 @@ export const Notes: FC<NotesProps> = props => {
           }
           status = 'content:updateAnki.failed'
         }
-        browser.notifications.create({
-          type: 'basic',
-          eventTime: Date.now() + 2000,
-          iconUrl: browser.runtime.getURL('assets/icon-128.png'),
-          title: 'Saladict',
-          message: t(status),
+        toast(t(status), {
+          duration: 2000,
         })
+        // iconUrl: browser.runtime.getURL('assets/icon-128.png'),
+        // title: 'Saladict',
+        // message: t(status),
       },
     })
   }
@@ -282,7 +281,7 @@ export const Notes: FC<NotesProps> = props => {
         </div>
       </WordEditorPanel>
 
-      <WordEditorPanel
+      {/* <WordEditorPanel
         containerWidth={props.containerWidth - 100}
         title={t('content:wordEditor.chooseCtxTitle')}
         onClose={() => setShowCtxTransList(false)}
@@ -311,7 +310,7 @@ export const Notes: FC<NotesProps> = props => {
             }))
           }}
         />
-      </WordEditorPanel>
+      </WordEditorPanel> */}
     </>
   )
 }

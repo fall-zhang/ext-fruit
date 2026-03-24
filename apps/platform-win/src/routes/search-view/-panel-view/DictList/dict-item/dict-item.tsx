@@ -17,10 +17,10 @@ import type { DictItemBodyProps } from './dict-item-body'
 import { DictItemBody } from './dict-item-body'
 import { timer } from '@/utils/promise-more'
 import { isTagName } from '@/utils/dom'
-import { useOptContext } from '@/context/opt-context'
 import './dict-item.scss'
 import type { DictID } from '@/core/api-server/config'
 import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
+import { useNavigate } from '@tanstack/react-router'
 
 export interface DictItemProps
   extends Omit<DictItemBodyProps, 'dictRootRef'> {
@@ -39,7 +39,7 @@ export interface DictItemProps
 }
 
 export const DictItem: FC<DictItemProps> = props => {
-  const optContext = useOptContext()
+  const navigate = useNavigate()
   const [noHeightTransition, setNoHeightTransition] = useState(false)
 
   const [foldState, setFoldState] = useState<'COLLAPSE' | 'HALF' | 'FULL'>(
@@ -147,8 +147,8 @@ export const DictItem: FC<DictItemProps> = props => {
         e.stopPropagation()
 
         const $a = el as HTMLAnchorElement
-        if (/nofollow|noopener|noreferrer/.test($a.rel)) {
-          optContext.navigate($a.href)
+        if (['nofollow', 'noopener', 'noreferrer'].includes($a.rel)) {
+          navigate({ to: '' })
         } else {
           props.searchText({
             word: newWord({

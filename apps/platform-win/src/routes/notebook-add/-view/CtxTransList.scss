@@ -31,33 +31,3 @@
 .ctxTrans-Content {
   margin: 0 0 5px 0;
 }
-
-.ctxTrans-Loader {
-  display: flex;
-  align-items: center;
-  width: 54px;
-  height: 20px;
-
-  & > div {
-    width: 8px;
-    height: 8px;
-    margin: 2px;
-    background: #f9690e;
-    border-radius: 100%;
-
-    animation: ctxTrans-Loader 1.5s infinite ease-in-out;
-  }
-}
-
-@keyframes ctxTrans-Loader {
-  0%,
-  30%,
-  70%,
-  100% {
-    transform: scale(0);
-  }
-
-  50% {
-    transform: scale(1);
-  }
-}

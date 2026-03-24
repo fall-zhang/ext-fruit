@@ -2,12 +2,11 @@ import type { FC } from 'react'
 import React from 'react'
 import { Button } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { newWord } from '@/dict-utils/new-word'
 import { PreviewIcon } from './PreviewIcon'
 
 import './_style.scss'
-import { useDictStore } from '@/store'
-import { getWordOfTheDay } from '@/utils/everyday-word'
+import { newWord } from '@/utils/dict-utils/new-word'
+import { useSearchContext } from '@/context/search-context'
 
 // pre-fetch the word
 // const pWordOfTheDay = getWordOfTheDay()
@@ -15,7 +14,7 @@ const pWordOfTheDay = 'awesome'
 
 export const BtnPreview: FC = () => {
   const { t } = useTranslation('options')
-  const store = useDictStore((state) => state)
+  const searchContext = useSearchContext(state => state.searchStart)
   return (
     <div>
       <Button
@@ -28,7 +27,7 @@ export const BtnPreview: FC = () => {
           // const { x, width } = e.currentTarget.getBoundingClientRect()
           // panel will adjust the position itself
           // store.OPEN_PANEL({ x: x + width, y: 80 })
-          store.SEARCH_START({
+          searchContext({
             word: newWord({ text: pWordOfTheDay }),
           })
         }}

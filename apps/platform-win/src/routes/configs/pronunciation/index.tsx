@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import type { FC } from 'react'
+import { useRef, type FC } from 'react'
 import { Switch, Select } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { getConfigPath, getProfilePath } from '../-utils/path-joiner'
@@ -11,17 +11,19 @@ export const Route = createFileRoute('/configs/pronunciation/')({
 })
 
 function RouteComponent () {
+  // pronounce
   const { t } = useTranslation(['options', 'common', 'dicts'])
-  const autopronLists = useDictStore(state => ({
+  const autoPlayLists = useDictStore(state => ({
     cn: state.activeProfile.dicts.all.zdic.options.audio
       ? state.config.autoPronounce.cn.list
       : state.config.autoPronounce.cn.list.filter(id => id !== 'zdic'),
     en: state.config.autoPronounce.en.list,
     machine: state.config.autoPronounce.machine.list,
   }))
-
+  const ref = useRef(null)
   return (
     <SaladictForm
+      ref={ref}
       items={[
         {
           name: getConfigPath('autoPronounce', 'cn', 'dict'),
@@ -29,7 +31,7 @@ function RouteComponent () {
             <Select
               options={[
                 { label: t('common:none'), value: '' },
-                ...autopronLists.cn.map(id => ({
+                ...autoPlayLists.cn.map(id => ({
                   label: t(`dicts:${id}.name`),
                   value: id,
                 })),
@@ -43,7 +45,7 @@ function RouteComponent () {
             <Select
               options={[
                 { label: t('common:none'), value: '' },
-                ...autopronLists.en.map(id => ({
+                ...autoPlayLists.en.map(id => ({
                   label: t(`dicts:${id}.name`),
                   value: id,
                 })),
@@ -69,7 +71,7 @@ function RouteComponent () {
             <Select
               options={[
                 { label: t('common:none'), value: '' },
-                ...autopronLists.machine.map(id => ({
+                ...autoPlayLists.machine.map(id => ({
                   label: t(`dicts:${id}.name`),
                   value: id,
                 })),
