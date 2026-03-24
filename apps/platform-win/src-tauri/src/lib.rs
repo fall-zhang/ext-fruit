@@ -1,4 +1,5 @@
 mod tray;
+use tauri::tray::TrayIconBuilder;
 use tray::create_tray_menu;
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 // #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
@@ -26,6 +27,7 @@ pub fn run() {
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_positioner::init())
         .invoke_handler(tauri::generate_handler![file_operate])
         .setup(|app| {
             // 创建托盘图标
