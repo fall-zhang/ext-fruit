@@ -1,9 +1,32 @@
+use std::sync::OnceLock;
+use std::time::{Duration, Instant};
 use tauri::{
     menu::{Menu, MenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
     AppHandle, Manager,
 };
 use tauri_plugin_positioner::{Position, WindowExt};
+use std::sync::Mutex;
+
+// 点击状态管理
+struct ClickState {
+    last_click_time: Instant,
+    click_count: u32,
+    pending_timer: bool, // 是否有待处理的定时器
+}
+
+static CLICK_STATE: OnceLock<Mutex<ClickState>> = OnceLock::new();
+
+// 初始化点击状态
+fn init_click_state() -> &'static Mutex<ClickState> {
+    CLICK_STATE.get_or_init(|| {
+        Mutex::new(ClickState {
+            last_click_time: Instant::now() - Duration::from_secs(1), // 设置为过去时间
+            click_count: 0,
+            pending_timer: false,
+        })
+    })
+}
 
 // 创建托盘图标和菜单
 pub fn create_tray_menu(app: &AppHandle) -> Result<(), tauri::Error> {
@@ -56,8 +79,7 @@ fn handle_tray_event(tray: &tauri::tray::TrayIcon, event: TrayIconEvent) {
     match event {
         TrayIconEvent::Click { button, .. } => {
             if button == MouseButton::Left {
-                // 单击左键：显示搜索面板
-                show_search_panel(&app);
+                handle_left_click(&app);
             }
             if button == MouseButton::Right {
                 // 单击右键：显示搜索面板
@@ -65,13 +87,67 @@ fn handle_tray_event(tray: &tauri::tray::TrayIcon, event: TrayIconEvent) {
             }
             // 右键点击会自动显示菜单
         }
-        TrayIconEvent::DoubleClick { button, .. } => {
-            if button == MouseButton::Left {
-                // 双击左键：显示配置页面
-                show_config_page(&app);
-            }
-        }
+        // TrayIconEvent::DoubleClick { button, .. } => {
+        //     if button == MouseButton::Left {
+        //         // 双击左键：显示配置页面
+        //         show_config_page(&app);
+        //     }
+        // }
         _ => {}
+    }
+}
+
+// 处理左键单击
+fn handle_left_click(app: &AppHandle) {
+    let state = init_click_state();
+    let mut state_guard = state.lock().unwrap();
+    let now = Instant::now();
+    let double_click_threshold = Duration::from_millis(200);
+    
+    let time_since_last = now.duration_since(state_guard.last_click_time);
+    // println!("托盘单击: time_since_last = {:?}, threshold = {:?}, pending_timer = {}, click_count = {}",
+    //          time_since_last, double_click_threshold, state_guard.pending_timer, state_guard.click_count);
+    // 添加 12 ms 的防抖
+    if time_since_last < Duration::from_millis(12){
+        return;
+    }
+    // 检查是否在双击阈值内
+    if time_since_last < double_click_threshold {
+        // println!("检测为双击，打开配置页面");
+        // 双击检测到，打开配置页面
+        state_guard.last_click_time = now;
+        state_guard.click_count = 0;
+        state_guard.pending_timer = false;
+        drop(state_guard); // 释放锁
+        
+        show_config_page(app);
+    } else {
+        // println!("第一次单击或超过阈值，启动定时器");
+        // 第一次点击或超过阈值
+        state_guard.last_click_time = now;
+        state_guard.click_count = 1;
+        state_guard.pending_timer = true;
+        let app_clone = app.clone();
+        drop(state_guard); // 释放锁，避免在异步任务中持有锁
+        
+        // 启动定时器任务
+        tauri::async_runtime::spawn(async move {
+            tokio::time::sleep(double_click_threshold).await;
+            
+            // 检查是否仍然是待处理状态
+            let state = init_click_state();
+            let mut state_guard = state.lock().unwrap();
+            if state_guard.pending_timer && state_guard.click_count == 1 {
+                // println!("定时器触发，没有第二次点击，打开搜索面板");
+                // 没有第二次点击，打开搜索面板
+                state_guard.pending_timer = false;
+                drop(state_guard);
+                show_search_panel(&app_clone);
+            } else {
+                // println!("定时器触发，但状态已改变: pending_timer = {}, click_count = {}",
+                //          state_guard.pending_timer, state_guard.click_count);
+            }
+        });
     }
 }
 

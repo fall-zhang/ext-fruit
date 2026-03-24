@@ -52,65 +52,13 @@ export const DictList: FC<DictListProps> = (props) => {
   const configContext = useConfContext()
 
   const {
-    touchMode,
     animation,
-    language,
     darkMode,
   } = configContext.config
   const dicts = props.dicts
-  // const { dicts } = useDictStore((store) => {
-  //   return {
-  //     dicts: store.renderedDicts,
-  //   }
-  // })
-  // const {
-  //   dicts,
-  //   touchMode,
-  //   language,
-  //   withAnimation,
-  //   darkMode,
-  // } = useDictStore(store => {
-  //   const { config } = store
-  //   return {
-  //     darkMode: config.darkMode,
-  //     withAnimation: config.animation,
-  //     panelCSS: config.panelCSS,
-  //     touchMode: config.touchMode,
-  //     language: config.language,
-  //     dicts: memoizedDicts(store.renderedDicts, store.activeProfile.dicts.all),
-  //   }
-  // })
-
-  // const heightRef = useRef<Height>({ dicts: {}, sum: 0 })
-
-  function onUpdateHeight (height: number) {
-    // setUpdateHeight(height)
-  }
 
   const onItemHeightChanged = useRef((id: DictID, height: number) => {
-    // heightRef.current.sum =
-    //   heightRef.current.sum - (heightRef.current.dicts[id] || 0) + height
-    // heightRef.current.dicts[id] = height
-    // onUpdateHeight(heightRef.current.sum)
   }).current
-
-  // useEffect(() => {
-  //   const oldHeight = heightRef.current
-  //   heightRef.current = dicts.reduce(
-  //     (height, { dictID }:{ dictID:DictID }) => {
-  //       height.dicts[dictID] = oldHeight.dicts[dictID] || 30
-  //       height.sum += height.dicts[dictID] || 30
-  //       return height
-  //     },
-  //     { dicts: {}, sum: 0 } as Height
-  //   )
-  //   onUpdateHeight(heightRef.current.sum)
-  // }, [dicts])
-
-  // const onInPanelSelect = useInPanelSelect(
-  //   touchMode,
-  //   language
-  // )
 
   return (
     <div className="dictList">

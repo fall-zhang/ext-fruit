@@ -26,8 +26,8 @@ async function getCiba (text: string): Promise<Suggest[]> {
   const json = await res.json()
   if (json && Array.isArray(json.message)) {
     return json.message
-      .filter((x:any) => x && x.key)
-      .map((x:any) => ({
+      .filter((x: any) => x && x.key)
+      .map((x: any) => ({
         entry: x.key,
         explain: Array.isArray(x.means) && x.means.length > 0
           ? x.means[0].part + ' ' + x.means[0].means.join(' ')
@@ -47,7 +47,7 @@ async function getYoudao (text: string): Promise<Suggest[]> {
   )
   const json = await r.json()
   if (json && json.data && Array.isArray(json.data.entries)) {
-    return json.data.entries.filter(x => x && x.explain && x.entry)
+    return json.data.entries.filter((x: any) => x && x.explain && x.entry)
   }
   if (import.meta.env.VITE_DEBUG) {
     console.warn('fetch suggests failed', text, json)
