@@ -5,7 +5,6 @@ import { Switch, Select, Checkbox, Button, Modal } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import type { Rule } from 'antd/lib/form'
 import { useTranslation } from 'react-i18next'
-import { useDictStore } from '@/store'
 import { setFormDirty, useFormDirty } from '../-utils/use-form-dirty'
 import { getProfilePath } from '../-utils/path-joiner'
 import type { SaladictFormItem } from '../-components/SaladictForm'
@@ -14,6 +13,7 @@ import { SaladictModalForm } from '../-components/SaladictModalForm'
 import { ChangeEntryContext } from '../-utils/change-entry'
 import type { DictID } from '@/core/api-server/config'
 import { supportedLangs } from '@/core/api-server/utils/lang-check'
+import { useConfContext } from '@/context/conf-context'
 export interface EditModalProps {
   dictID?: DictID | null
   onClose: () => void
@@ -23,12 +23,10 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
   const { t, i18n } = useTranslation(['options', 'dicts', 'common', 'langcode'])
   const changeEntry = useContext(ChangeEntryContext)
   const formDirtyRef = useFormDirty()
-  const { dictAuth, allDicts } = useDictStore(
-    state => ({
-      dictAuth: state.config.dictAuth,
-      allDicts: state.activeProfile.dicts.all,
-    })
-  )
+  const configContext = useConfContext()
+  const dictAuth = configContext.profile.dictAuth
+  const allDicts = configContext.profile.dicts.all
+
   const formItems: SaladictFormItem[] = []
 
   const NUMBER_RULES: Rule[] = [

@@ -2,8 +2,8 @@ import type { FC } from 'react'
 import { useMemo } from 'react'
 import { Card, List, Switch } from 'antd'
 import { DictTitle } from './-dict-title'
-import { useDictStore } from '@/store'
-import type { DictID } from '@/config/app-config'
+import { useConfContext } from '@/context/conf-context'
+import type { DictID } from '@/core/api-server/config'
 
 export interface AllDictsProps {
   value?: DictID[]
@@ -14,7 +14,11 @@ export interface AllDictsProps {
  * Antd form item compatible list
  */
 export const AllDicts: FC<AllDictsProps> = props => {
-  const allDicts = useDictStore(state => state.activeProfile.dicts.all)
+  // const allDicts = useDictStore(state => state.activeProfile.dicts.all)
+  const confContext = useConfContext()
+
+  const allDicts = confContext.profile.dicts.all
+
   const allDictIds = useMemo<DictID[]>(() => Object.keys(allDicts) as DictID[], [allDicts])
   const selected = useMemo(() => new Set(props.value || []), [props.value])
 

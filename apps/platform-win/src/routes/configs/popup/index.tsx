@@ -3,10 +3,9 @@ import type { FC } from 'react'
 import { Switch, Select, Slider } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-import { useDictStore } from '@/store'
-import { isFirefox } from '@/utils/browser'
 import { getConfigPath } from '../-utils/path-joiner'
 import { SaladictForm } from '../-components/SaladictForm'
+import { useConfContext } from '@/context/conf-context'
 
 export const Route = createFileRoute('/configs/popup/')({
   component: RouteComponent,
@@ -14,20 +13,9 @@ export const Route = createFileRoute('/configs/popup/')({
 
 function RouteComponent () {
   const { t } = useTranslation(['options', 'menus'])
-  const menusIds = useDictStore(state => {
-    const ids = Object.keys(state.config.contextMenus.all)
-    if (isFirefox) {
-      return ids.filter(id => {
-        switch (id) {
-          case 'youdao_page_translate':
-          case 'caiyuntrs':
-            return false
-        }
-        return true
-      })
-    }
-    return ids
-  })
+  const menuAll = useConfContext().config.contextMenus.all
+  const menusIds = Object.keys(menuAll)
+
   const { availWidth } = window.screen
 
   return (

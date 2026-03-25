@@ -10,6 +10,7 @@ import { useDictStore } from '@/store'
 import { getConfigPath } from '../-utils/path-joiner'
 import { useUpload } from '../-utils/upload'
 import { useListLayout } from '../-utils/layout'
+import { useConfContext } from '@/context/conf-context'
 
 export const Route = createFileRoute('/configs/context-menus/')({
   component: RouteComponent,
@@ -21,7 +22,9 @@ function RouteComponent () {
   const [showAddModal, setShowAddModal] = useState(false)
   const [editingMenu, setEditingMenu] = useState<string | null>(null)
   const listLayout = useListLayout()
-  const contextMenus = useDictStore(state => state.config.contextMenus)
+  // const contextMenus = useDictStore(state => state.config.contextMenus)
+  const contextMenus = useConfContext().config.contextMenus
+
   // make a local copy to avoid flickering on drag end
   const [selectedMenus, setSelectedMenus] = useState<ReadonlyArray<string>>(
     contextMenus.selected

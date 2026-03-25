@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { getConfigPath, getProfilePath } from '../-utils/path-joiner'
 import { SaladictForm } from '../-components/SaladictForm'
 import { useDictStore } from '@/store'
+import { useConfContext } from '@/context/conf-context'
 
 export const Route = createFileRoute('/configs/pronunciation/')({
   component: RouteComponent,
@@ -13,13 +14,16 @@ export const Route = createFileRoute('/configs/pronunciation/')({
 function RouteComponent () {
   // pronounce
   const { t } = useTranslation(['options', 'common', 'dicts'])
-  const autoPlayLists = useDictStore(state => ({
-    cn: state.activeProfile.dicts.all.zdic.options.audio
-      ? state.config.autoPronounce.cn.list
-      : state.config.autoPronounce.cn.list.filter(id => id !== 'zdic'),
-    en: state.config.autoPronounce.en.list,
-    machine: state.config.autoPronounce.machine.list,
-  }))
+  const confContext = useConfContext()
+  const cnConf = confContext.profile.dicts.all.zdic.options.audio ? confContext.config.autoPronounce.cn.list : confContext.config.autoPronounce.cn.list.filter(id => id !== 'zdic')
+  const enConf = confContext.config.autoPronounce.en.list
+  // const autoPlayLists = useDictStore(state => ({
+  //   cn: state.activeProfile.dicts.all.zdic.options.audio
+  //     ? state.config.autoPronounce.cn.list
+  //     : state.config.autoPronounce.cn.list.filter(id => id !== 'zdic'),
+  //   en: state.config.autoPronounce.en.list,
+  //   machine: state.config.autoPronounce.machine.list,
+  // }))
   const ref = useRef(null)
   return (
     <SaladictForm
@@ -31,7 +35,7 @@ function RouteComponent () {
             <Select
               options={[
                 { label: t('common:none'), value: '' },
-                ...autoPlayLists.cn.map(id => ({
+                ...cnConf.map(id => ({
                   label: t(`dicts:${id}.name`),
                   value: id,
                 })),
@@ -45,7 +49,7 @@ function RouteComponent () {
             <Select
               options={[
                 { label: t('common:none'), value: '' },
-                ...autoPlayLists.en.map(id => ({
+                ...enConf.map(id => ({
                   label: t(`dicts:${id}.name`),
                   value: id,
                 })),
@@ -65,20 +69,20 @@ function RouteComponent () {
             />
           ),
         },
-        {
-          name: getConfigPath('autoPronounce', 'machine', 'dict'),
-          children: (
-            <Select
-              options={[
-                { label: t('common:none'), value: '' },
-                ...autoPlayLists.machine.map(id => ({
-                  label: t(`dicts:${id}.name`),
-                  value: id,
-                })),
-              ]}
-            />
-          ),
-        },
+        // {
+        //   name: getConfigPath('autoPronounce', 'machine', 'dict'),
+        //   children: (
+        //     <Select
+        //       options={[
+        //         { label: t('common:none'), value: '' },
+        //         ...autoPlayLists.machine.map(id => ({
+        //           label: t(`dicts:${id}.name`),
+        //           value: id,
+        //         })),
+        //       ]}
+        //     />
+        //   ),
+        // },
         {
           name: getConfigPath('autoPronounce', 'machine', 'src'),
           hide: values => !values[getConfigPath('autoPronounce', 'machine', 'dict')],

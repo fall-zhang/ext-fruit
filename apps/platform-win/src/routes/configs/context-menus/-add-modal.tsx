@@ -9,6 +9,7 @@ import { useDictStore } from '@/store'
 import { useTranslation } from 'react-i18next'
 import { getConfigPath } from '../-utils/path-joiner'
 import { useUpload } from '../-utils/upload'
+import { useConfContext } from '@/context/conf-context'
 
 /**
  * key: menu id
@@ -27,7 +28,8 @@ export interface AddModalProps {
 
 export const AddModal: FC<AddModalProps> = ({ show, onEdit, onClose }) => {
   const { t } = useTranslation(['common', 'menus', 'options'])
-  const contextMenus = useDictStore(state => state.config.contextMenus)
+  // const contextMenus = useDictStore(state => state.config.contextMenus)
+  const contextMenus = useConfContext().config.contextMenus
   const unselected = useMemo(() => {
     if (!contextMenus) {
       return []

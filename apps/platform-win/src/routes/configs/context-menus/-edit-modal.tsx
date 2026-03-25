@@ -7,6 +7,7 @@ import type { FormInstance } from 'antd/lib/form/Form'
 import { useTranslation } from 'react-i18next'
 import { useDictStore } from '@/store'
 import { useUpload } from '../-utils/upload'
+import { useConfContext } from '@/context/conf-context'
 
 export interface EditModalProps {
   menuID?: string | null
@@ -16,7 +17,9 @@ export interface EditModalProps {
 export const EditModal: FC<EditModalProps> = ({ menuID, onClose }) => {
   const { t } = useTranslation(['options', 'dicts', 'common', 'langcode'])
   const formRef = useRef<FormInstance>(null)
-  const allMenus = useDictStore(state => state.config.contextMenus.all)
+  // const allMenus = useDictStore(state => state.config.contextMenus.all)
+  const allMenus = useConfContext().config.contextMenus.all
+
   const uploadStatus = 'idle'
   const upload = useUpload()
 

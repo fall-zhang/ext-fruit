@@ -1,17 +1,20 @@
 import { createFileRoute } from '@tanstack/react-router'
-import type { FC } from 'react'
+import { useRef, type FC } from 'react'
 import { Input } from 'antd'
 
 
 import { Trans, useTranslation } from 'react-i18next'
 import { useDictStore } from '@/store'
 import { SaladictForm, type SaladictFormItem } from '../-components/SaladictForm'
-import { getConfigPath } from '../-utils/path-joiner'
+import { getConfigPath, getProfilePath } from '../-utils/path-joiner'
+import { useConfContext } from '@/context/conf-context'
+import { isKey } from '@/utils/type-utils'
 
 export const RouteComponent: FC = () => {
   const { t } = useTranslation(['options', 'dicts'])
-  const dictAuths = useDictStore(state => state.config.dictAuth)
+  const dictAuths = useConfContext().profile.dictAuth
 
+  const formRef = useRef(null)
   if (dictAuths === null || dictAuths === undefined) return null
 
   const formItems: SaladictFormItem[] = [
@@ -24,9 +27,12 @@ export const RouteComponent: FC = () => {
     },
   ]
 
-  Object.keys(dictAuths).forEach((dictID: any) => {
+  Object.keys(dictAuths).forEach((dictID) => {
+    if (!isKey(dictAuths, dictID)) {
+      return
+    }
     const auth = dictAuths[dictID]
-    const configPath = getConfigPath('dictAuth', dictID)
+    const configPath = getProfilePath('dictAuth', dictID)
     const title = t(`dicts:${dictID}.name`)
 
     Object.keys(auth).forEach((key, i, keys) => {
@@ -58,7 +64,7 @@ export const RouteComponent: FC = () => {
     })
   })
 
-  return <SaladictForm items={formItems} ref={undefined} />
+  return <SaladictForm items={formItems} ref={formRef} />
 }
 
 export const Route = createFileRoute('/configs/dict-auth/')({
