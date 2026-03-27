@@ -9,49 +9,6 @@ type Mode = 'mode' | 'pinMode' | 'panelMode' | 'qsPanelMode'
 export const searchMode = (mode: Mode, t: TFunction): SaladictFormItem => {
   const items: SaladictFormItem[] = []
 
-  if (mode === 'mode') {
-    items.push(
-      {
-        name: getConfigPath('mode', 'icon'),
-        label: null,
-        help: t('searchMode.icon_help'),
-        valuePropName: 'checked',
-        children: <Checkbox>{t('searchMode.icon')}</Checkbox>,
-      },
-      {
-        name: getConfigPath('bowlHover'),
-        label: null,
-        hide: values => !values[getConfigPath('mode', 'icon')],
-        valuePropName: 'checked',
-        children: <Checkbox>{t(getConfigPath('bowlHover'))}</Checkbox>,
-      },
-      {
-        name: getConfigPath('bowlOffsetX'),
-        hide: values => !values[getConfigPath('mode', 'icon')],
-        children: (
-          <Slider
-            min={-100}
-            max={100}
-            marks={{ '-100': '-100px', 0: '0px', 100: '100px' }}
-            style={{ marginBottom: 0 }}
-          />
-        ),
-      },
-      {
-        name: getConfigPath('bowlOffsetY'),
-        hide: values => !values[getConfigPath('mode', 'icon')],
-        children: (
-          <Slider
-            min={-100}
-            max={100}
-            marks={{ '-100': '-100px', 0: '0px', 100: '100px' }}
-            style={{ marginBottom: 0 }}
-          />
-        ),
-      }
-    )
-  }
-
   items.push(
     {
       name: getConfigPath(mode, 'direct'),

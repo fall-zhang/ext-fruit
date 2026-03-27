@@ -41,7 +41,7 @@ function RouteComponent () {
     const state = await getCurrentWindow().hide()
   }
   return <>
-    <div className='w-full h-full relative'>
+    <div className='w-full relative h-screen '>
       <SaladPanel
         config={saladictConf}
         customButton={

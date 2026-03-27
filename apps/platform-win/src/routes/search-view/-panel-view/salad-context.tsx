@@ -19,7 +19,7 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
   const config = useConfContext().config
   const withAnimation = config.animation
   const darkMode = config.darkMode
-  const panelCSS = config.panelCSS
+  // const panelCSS = config.panelCSS
   const fontSize = config.fontSize
   const enableSuggest = config.searchSuggests
   const [inputText, setInputText] = useState('')
@@ -49,27 +49,26 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
 
   const rootElRef = useRef<HTMLDivElement | null>(null)
 
+  // an extra layer as float box offest parent
   return (<div
-    // an extra layer as float box offest parent
     className={clsx('dictPanel-FloatBox-Container', {
       isAnimate: withAnimation,
       darkMode,
     })}
   >
     <div ref={rootElRef} className="saladict-theme">
-      {panelCSS ? <style>{panelCSS}</style> : null}
+      <div className="dictPanel-Head sticky top-0">
+        <MenuBar
+          customButton={props.customButton}
+        />
+      </div>
       <div
-        className={`dictPanel-Root ${SALADICT_PANEL}`}
+        className={`dictPanel-Root ${SALADICT_PANEL} overflow-auto h-full`}
         style={{
           '--panel-font-size': fontSize + 'px',
         } as CSSProperties}
       >
-        <div className="dictPanel-Head">
-          <MenuBar
-            customButton={props.customButton}
-          />
-        </div>
-        <div className="search-zone">
+        <div className="search-zone ">
           <SearchBox
             text={inputText}
             enableSuggest={enableSuggest}

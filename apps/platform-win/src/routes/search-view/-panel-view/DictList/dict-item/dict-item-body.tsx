@@ -76,8 +76,7 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
     }),
   [props.dictID]
   )
-
-  console.log('⚡️ line:86 ~ props.searchResult: ', props.searchResult)
+  // console.log('⚡️ line:86 ~ props.searchResult: ', props.searchResult)
   return (
     <ErrorBoundary error={DictRenderError}>
       <Suspense fallback={null}>

@@ -1,5 +1,5 @@
 import type { FC, ReactNode, Ref, RefObject } from 'react'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Form, Button, Modal, Tooltip } from 'antd'
 import type { FormItemProps, Rule, FormProps, FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined, BlockOutlined } from '@ant-design/icons'
@@ -14,10 +14,6 @@ import { useUpload } from '../../-utils/upload'
 
 interface FieldValues {
   [name: string]: any
-}
-
-interface FieldShow {
-  [name: string]: boolean
 }
 
 export interface SaladictFormItem
@@ -47,12 +43,11 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
   const store = useDictStore()
   const upload = useUpload()
 
-
   const { initialValues } = useMemo(() => {
     function extractInitial (
       items: SaladictFormItem[],
       result: {
-        initialValues: { [index: string]: any }
+        initialValues: Record<string, any>
         hideFieldFns: { [index: string]: (values: FieldValues) => boolean }
       } = { initialValues: {}, hideFieldFns: {} }
     ): { [index: string]: any } {
@@ -80,11 +75,9 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
 
     return extractInitial(items)
   },
-  [items])
+  [items, store])
 
-  const [hideFields, setHideFields] = useState<FieldShow>()
-
-  function genFormItems (items: SaladictFormItem[]) {
+  const genFormItems = useCallback((items: SaladictFormItem[]) => {
     return items.map(item => {
       const name = (item.key || item.name)!
       const newItem = { ...item }
@@ -106,10 +99,7 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
         }
       }
 
-      let { className, children, items: subItems, ...itemProps } = newItem
-      if (hideFields?.[name]) {
-        className = className ? className + ' saladict-hide' : 'saladict-hide'
-      }
+      const { className, children, items: subItems, ...itemProps } = newItem
 
       return (
         <Form.Item key={name} {...itemProps} className={className}>
@@ -117,7 +107,7 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
         </Form.Item>
       )
     })
-  }
+  }, [i18n, ready, t])
 
   const formItems = genFormItems(items)
 
@@ -128,8 +118,7 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
       onFinish={upload}
       onValuesChange={(_, values) => {
         setFormDirty(true)
-        //  values => hideFieldFns.map(hide => hide(values))
-        setHideFields(values)
+
         if (props.onValuesChange) {
           props.onValuesChange(_, values)
         }
@@ -142,17 +131,6 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
       {!hideFooter && (
         <Form.Item wrapperCol={ { offset: 6, span: 18 } } className="saladict-form-btns">
           <SaveBtn />
-          {/* <Button
-            onClick={() => {
-              if (isFirefox) {
-                Modal.info({ content: t('firefox_shortcuts') })
-              } else {
-                openUrl('chrome://extensions/shortcuts')
-              }
-            }}
-          >
-            {t('shortcuts')}
-          </Button> */}
           <Button
             type="primary"
             danger

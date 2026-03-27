@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet, useLocation } from '@tanstack/react-router'
+import { createFileRoute, Link, Outlet, useLocation, redirect } from '@tanstack/react-router'
 import {
   KeyOutlined,
   SettingOutlined,
@@ -15,6 +15,15 @@ import { cn } from '@P/ui/lib/utils'
 
 export const Route = createFileRoute('/configs')({
   component: RouteComponent,
+  beforeLoad: ({ location }) => {
+    // 如果当前路径正好是 /configs，重定向到 /configs/general
+    if (location.pathname === '/configs') {
+      throw redirect({
+        to: '/configs/general',
+        replace: true,
+      })
+    }
+  },
   notFoundComponent () {
     return <>配置找不到</>
   },
