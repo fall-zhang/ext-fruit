@@ -127,9 +127,6 @@ export function getDefaultConfig (): SaladConfigType {
     /** pin panel when shows up  */
     defaultPinned: false,
 
-    /** should panel be in a standalone window */
-    qsStandalone: true,
-
     /** resize main widnow to leave space to standalone window */
     qssaSidebar: '',
 
@@ -216,7 +213,5 @@ export function getDefaultConfig (): SaladConfigType {
       all: getAllContextMenus(),
     },
 
-    /** Open settings on first switching "translation" profile */
-    showedDictAuth: false,
   }
 }

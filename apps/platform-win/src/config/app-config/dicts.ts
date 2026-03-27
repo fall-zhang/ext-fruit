@@ -1,4 +1,4 @@
-import type { SupportedLangs } from '@/core/api-server/utils/lang-check'
+import type { SupportedLangs } from '@/core/api-server/types/dict-base'
 
 interface DictItemBase {
   /**

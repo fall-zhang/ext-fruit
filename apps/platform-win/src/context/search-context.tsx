@@ -2,7 +2,7 @@ import { createContext, useContext, useState, type ReactNode } from 'react'
 import { createStore, useStore } from 'zustand'
 
 import type { Word } from '../types/word'
-import { getDefaultProfile, getDefaultSelectDict, type Profile } from '@/config/trans-profile'
+import { getDefaultProfile, getDefaultSelectDict, type AppProfile, type Profile } from '@/config/trans-profile'
 import type { AllDictsConf, DictID } from '@/core/api-server/config'
 import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
 import { api } from '@/core/api-server/trans-api'
@@ -28,13 +28,11 @@ export type DictSearchState = {
   searchHistory: Word[],
 
   userFoldedDicts: Partial<Record<DictID, boolean>>
-  searchStart(payload: {
+  searchStart(option: {
     /** Search with specific dict */
     id?: DictID
     /** Search specific word */
     word?: Word
-    /** Additional payload passed to search engine */
-    payload?: any
     /**
      * Do not update search history
      * 本次查询不计入历史查询
@@ -45,12 +43,6 @@ export type DictSearchState = {
      */
     noCache?: boolean
   }): void
-
-  searchEnd(param: {
-    id: DictID
-    result: any
-    catalog?: DictSearchResult<DictID>['catalog']
-  }): void
   /** switch to the next or previous history */
   switchHistory(payload: 'prev' | 'next'): void
 }
@@ -59,58 +51,72 @@ export const SearchContext = createContext<SearchStore | null>(null)
 
 type SearchStore = ReturnType<typeof createSearchStore>
 
-const createSearchStore = () => {
+const createSearchStore = (profile: AppProfile) => {
   return createStore<DictSearchState>()((set, get) => ({
     text: '',
-    activeProfile: getDefaultProfile(),
+    activeProfile: profile,
     historyIndex: -1,
     renderedDicts: [],
     selectedDicts: getDefaultSelectDict(),
     searchHistory: [],
     userFoldedDicts: {},
-    switchHistory () { },
-    searchStart (payload) {
+    switchHistory (arg) {
+      set((state) => {
+        const historyIndex = Math.min(
+          Math.max(0, state.historyIndex + (arg === 'prev' ? -1 : 1)),
+          state.searchHistory.length - 1
+        )
+
+        return {
+          ...state,
+          historyIndex,
+          text: state.searchHistory[historyIndex]
+            ? state.searchHistory[historyIndex].text
+            : state.text,
+        }
+      })
+      return true
+    },
+    searchStart (searchOpt) {
       let dictList: RenderDictItem[] = []
       let word: Word
-      const { activeProfile, searchHistory, historyIndex, selectedDicts, renderedDicts } = get()
+      const { activeProfile, searchHistory, historyIndex, selectedDicts } = get()
       // 从历史缓存中查找
-      const newSearchHistory: Word[] =
-        payload && payload.noHistory
-          ? searchHistory
-          : searchHistory.slice(0, historyIndex + 1)
+      const newSearchHistory: Word[] = searchOpt && searchOpt.noHistory
+        ? searchHistory
+        : searchHistory.slice(0, historyIndex + 1)
       let newHistoryIndex = historyIndex
 
-      if (payload && payload.word) {
-        word = payload.word
+      if (searchOpt && searchOpt.word) {
+        word = searchOpt.word
         const lastWord = searchHistory[historyIndex]
 
-        if (!payload.noHistory && (!lastWord || lastWord.text !== word.text)) {
+        if (!searchOpt.noHistory && (!lastWord || lastWord.text !== word.text)) {
           newSearchHistory.push(word)
           newHistoryIndex = newSearchHistory.length - 1
         }
       } else {
         word = searchHistory[historyIndex]
       }
+      // start search
       set((state) => {
         if (!word) {
-          console.warn('SEARCH_START: Empty word on first search', payload)
+          console.warn('SEARCH_START: Empty word on first search', searchOpt)
           return state
         }
-        if (payload && payload.id) {
-          dictList = state.renderedDicts.map(d => {
-            if (d.dictID === payload.id) {
-              return {
-                dictID: d.dictID,
-                searchStatus: 'SEARCHING',
-                searchResult: null,
-              }
+        if (searchOpt && searchOpt.id) {
+          const searchDicts = state.renderedDicts.filter(item => item.dictID === searchOpt.id)
+
+          dictList = searchDicts.map(d => {
+            return {
+              dictID: d.dictID,
+              searchStatus: 'SEARCHING',
+              searchResult: null,
             }
-            return d
-          }
-          )
+          })
         } else {
-          dictList = selectedDicts.filter(id => {
           // dicts that should be rendered
+          dictList = selectedDicts.filter(id => {
             const dict = activeProfile.dicts.all[id]
             if (checkSupportedLangs(dict.selectionLang, word.text)) {
               const wordCount = countWords(word.text)
@@ -133,6 +139,7 @@ const createSearchStore = () => {
                 searchResult: null,
               }
             })
+          console.log('search dicts', dictList)
         }
         return {
           ...state,
@@ -142,7 +149,8 @@ const createSearchStore = () => {
           renderedDicts: dictList,
         }
       })
-      selectedDicts.forEach((id, index) => {
+      // searching
+      selectedDicts.forEach((id) => {
         const searchFun: SearchFunction = api[id]
         searchFun(word.text, {
           profile: activeProfile.dicts.all,
@@ -154,7 +162,8 @@ const createSearchStore = () => {
               searchStatus: 'FINISH',
               searchResult: res.result,
             }
-            const newDict = state.renderedDicts.toSpliced(index, 1, dictResult)
+            const dictIndex = state.renderedDicts.findIndex((item) => item.dictID === id)
+            const newDict = state.renderedDicts.toSpliced(dictIndex, 1, dictResult)
 
             return {
               ...state,
@@ -162,42 +171,26 @@ const createSearchStore = () => {
             }
           })
         }).catch((err: unknown) => {
-          console.warn('⚡️ line:157 ~ err: ', err)
+          console.warn(`current dict ${id} ~ err: `, err)
+          set(state => {
+            const dictIndex = state.renderedDicts.findIndex((item) => item.dictID === id)
+            const newDict = state.renderedDicts.toSpliced(dictIndex, 1)
+            return {
+              ...state,
+              renderedDicts: newDict,
+            }
+          })
         })
-      })
-    },
-    searchEnd (payload: {
-      id: DictID
-      result: any
-      catalog?: DictSearchResult<DictID>['catalog']
-    }) {
-      set((state) => {
-        if (state.renderedDicts.every(({ dictID }) => dictID !== payload.id)) {
-          // this dict is for auto-pronunciation only
-          return state
-        }
-
-        return {
-          ...state,
-          renderedDicts: state.renderedDicts.map(d =>
-            (d.dictID === payload.id
-              ? {
-                dictID: d.dictID,
-                searchStatus: 'FINISH',
-                searchResult: payload.result,
-                catalog: payload.catalog,
-              }
-              : d)
-          ),
-        }
       })
     },
   }))
 }
-export function SearchProvider ({ children }: {
+
+export function SearchProvider ({ children, profile }: {
   children: ReactNode
+  profile: AppProfile
 }) {
-  const [store] = useState(() => createSearchStore())
+  const [store] = useState(() => createSearchStore(profile))
   return (
     <SearchContext.Provider value={store}>
       {children}

@@ -1,5 +1,5 @@
 import type { DictID } from '@/core/api-server/config'
-import type { SupportedLangs } from '@/utils/lang-check'
+import type { SupportedLangs } from '@/core/api-server/types/dict-base'
 
 export type LangCode = 'zh-CN' | 'zh-TW' | 'en'
 
@@ -132,9 +132,6 @@ export type SaladConfigType = {
   /** pin panel when shows up  */
   defaultPinned: boolean,
 
-  /** should panel be in a standalone window */
-  qsStandalone: boolean,
-
   /** resize main widnow to leave space to standalone window */
   qssaSidebar: '' | 'left' | 'right',
 
@@ -207,9 +204,6 @@ export type SaladConfigType = {
     selected: string[]
     all: Record<string, string>,
   }
-
-  /** Open settings on first switching "translation" profile */
-  showedDictAuth: boolean,
 
 
   /** enable Google analytics */

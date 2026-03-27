@@ -1,16 +1,16 @@
 import type { ReactNode } from 'react'
 import { createContext, useContext } from 'react'
-import { getDefaultProfile, type Profile } from '@/config/trans-profile'
+import { getDefaultProfile, type AppProfile } from '@/config/trans-profile'
 import { getDefaultConfig, type AppConfig } from '@/config/app-config'
 
 interface ConfContextType {
   config: AppConfig
-  profile: Profile
+  profile: AppProfile
   darkMode: boolean
   // Date management
   // appDisable: boolean;
   updateConfig(config: AppConfig): void
-  updateProfile(profile: Profile): void
+  updateProfile(profile: AppProfile): void
   // // Etiquette visibility management
   // visibleColors: string[];
   // toggleColorVisibility: (color: string) => void;
@@ -24,7 +24,7 @@ const ConfContext = createContext<ConfContextType>({
   updateConfig: function (config: AppConfig): void {
     throw new Error('Function not implemented.')
   },
-  updateProfile: function (profile: Profile): void {
+  updateProfile: function (profile: AppProfile): void {
     throw new Error('Function not implemented.')
   },
 })
@@ -33,10 +33,6 @@ export function useConfContext () {
   const context = useContext(ConfContext)
   if (context === undefined) {
     console.log('you are using original conf context')
-
-    // throw new Error(
-    //   'useConfContext must be used within a ConfProvider'
-    // )
   }
   return context
 }
@@ -51,12 +47,8 @@ export function ConfProvider ({ children, config, profile, updateConfig, updateP
     config,
     darkMode: false,
     profile,
-    updateConfig: function (config: AppConfig): void {
-      throw new Error('Function not implemented.')
-    },
-    updateProfile: function (profile: Profile): void {
-      throw new Error('Function not implemented.')
-    },
+    updateConfig,
+    updateProfile,
   }
 
   return (
