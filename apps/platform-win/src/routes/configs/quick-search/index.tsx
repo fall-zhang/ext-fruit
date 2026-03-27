@@ -30,17 +30,17 @@ function RouteComponent () {
     <>
       <SaladictForm
         items={[
-          {
-            name: getConfigPath('tripleCtrl'),
-            help: (
-              <Trans message={t(getConfigPath('tripleCtrl') + '_help')}>
-                <kbd>⌘ Command</kbd>
-                <kbd>Ctrl</kbd>
-              </Trans>
-            ),
-            valuePropName: 'checked',
-            children: <Switch />,
-          },
+          // {
+          //   name: getConfigPath('tripleCtrl'),
+          //   help: (
+          //     <Trans message={t(getConfigPath('tripleCtrl') + '_help')}>
+          //       <kbd>⌘ Command</kbd>
+          //       <kbd>Ctrl</kbd>
+          //     </Trans>
+          //   ),
+          //   valuePropName: 'checked',
+          //   children: <Switch />,
+          // },
           {
             name: getConfigPath('qsLocation'),
             children: (
@@ -58,7 +58,7 @@ function RouteComponent () {
             label: t('preload.title'),
             help: t('preload.help'),
             children: (
-              <Select>
+              <Select >
                 <Select.Option value="">{t('common:none')}</Select.Option>
                 <Select.Option value="clipboard">
                   {t('preload.clipboard')}
@@ -82,36 +82,36 @@ function RouteComponent () {
             valuePropName: 'checked',
             children: <Switch />,
           },
-          {
-            name: getConfigPath('qsStandalone'),
-            help: (
-              <Trans message={t(getConfigPath('qsStandalone') + '_help')}>
-                <a
-                  href="https://saladict.crimx.com/native.html"
-                  target="_blank"
-                  rel="nofollow noopener noreferrer"
-                >
-                  {t('nativeSearch')}
-                </a>
-              </Trans>
-            ),
-            valuePropName: 'checked',
-            children: <Switch />,
-          },
-          {
-            key: 'config.opt.openQsStandalone',
-            children: (
-              <Button onClick={() => setShowStandaloneModal(true)}>
-                {t('config.opt.openQsStandalone')}
-              </Button>
-            ),
-          },
+          // {
+          //   name: getConfigPath('qsStandalone'),
+          //   help: (
+          //     <Trans message={t(getConfigPath('qsStandalone') + '_help')}>
+          //       <a
+          //         href="https://saladict.crimx.com/native.html"
+          //         target="_blank"
+          //         rel="nofollow noopener noreferrer"
+          //       >
+          //         {t('nativeSearch')}
+          //       </a>
+          //     </Trans>
+          //   ),
+          //   valuePropName: 'checked',
+          //   children: <Switch />,
+          // },
+          // {
+          //   key: 'config.opt.openQsStandalone',
+          //   children: (
+          //     <Button onClick={() => setShowStandaloneModal(true)}>
+          //       {t('config.opt.openQsStandalone')}
+          //     </Button>
+          //   ),
+          // },
         ]}
       />
-      <StandaloneModal
+      {/* <StandaloneModal
         show={showStandaloneModal}
         onClose={() => setShowStandaloneModal(false)}
-      />
+      /> */}
     </>
   )
 }

@@ -1,14 +1,11 @@
 import { createFileRoute, Link, Outlet, useLocation } from '@tanstack/react-router'
 import {
-  ExceptionOutlined,
   KeyOutlined,
-  DatabaseOutlined,
   SettingOutlined,
   BookOutlined,
   ProfileOutlined,
   FlagOutlined,
   SoundOutlined,
-  FilePdfOutlined,
   LayoutOutlined,
   SwapOutlined,
   SafetyCertificateOutlined,
@@ -25,11 +22,17 @@ export const Route = createFileRoute('/configs')({
 
 // 菜单项配置
 const menuItems = [
+  // {
+  //   id: 'black-white-list',
+  //   path: '/configs/black-white-list',
+  //   label: '黑名单/白名单',
+  //   icon: <ExceptionOutlined className="w-4 h-4" />,
+  // },
   {
-    id: 'black-white-list',
-    path: '/configs/black-white-list',
-    label: '黑名单/白名单',
-    icon: <ExceptionOutlined className="w-4 h-4" />,
+    id: 'general',
+    path: '/configs/general',
+    label: '通用设置',
+    icon: <SettingOutlined className="w-4 h-4" />,
   },
   {
     id: 'dict-auth',
@@ -37,18 +40,12 @@ const menuItems = [
     label: '词典认证',
     icon: <KeyOutlined className="w-4 h-4" />,
   },
-  {
-    id: 'context-menus',
-    path: '/configs/context-menus',
-    label: '右键菜单',
-    icon: <DatabaseOutlined className="w-4 h-4" />,
-  },
-  {
-    id: 'general',
-    path: '/configs/general',
-    label: '通用设置',
-    icon: <SettingOutlined className="w-4 h-4" />,
-  },
+  // {
+  //   id: 'context-menus',
+  //   path: '/configs/context-menus',
+  //   label: '右键菜单',
+  //   icon: <DatabaseOutlined className="w-4 h-4" />,
+  // },
   {
     id: 'dictionaries',
     path: '/configs/dictionaries',
@@ -73,12 +70,12 @@ const menuItems = [
     label: '发音设置',
     icon: <SoundOutlined className="w-4 h-4" />,
   },
-  {
-    id: 'pdf',
-    path: '/configs/pdf',
-    label: 'PDF设置',
-    icon: <FilePdfOutlined className="w-4 h-4" />,
-  },
+  // {
+  //   id: 'pdf',
+  //   path: '/configs/pdf',
+  //   label: 'PDF设置',
+  //   icon: <FilePdfOutlined className="w-4 h-4" />,
+  // },
   {
     id: 'popup',
     path: '/configs/popup',
@@ -112,9 +109,9 @@ function RouteComponent () {
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* 左侧菜单栏 */}
-      <div className="w-64 bg-white border-r border-gray-200 shadow-sm flex flex-col">
+      <div className="w-52 bg-white border-r border-gray-200 shadow-sm flex flex-col">
         {/* 标题区域 */}
-        <div className="p-6 border-b border-gray-100">
+        <div className="px-6 py-4 border-b border-gray-100">
           <h1 className="text-xl font-bold text-gray-800">配置中心</h1>
           <p className="text-sm text-gray-500 mt-1">管理您的词典和设置</p>
         </div>
@@ -135,10 +132,11 @@ function RouteComponent () {
                     : 'text-gray-700 hover:border-l-4 hover:border-blue-200'
                 )}
               >
-                <div className={cn(
-                  'flex items-center justify-center',
-                  isActive ? 'text-blue-600' : 'text-gray-500'
-                )}>
+                <div
+                  className={cn(
+                    'flex items-center justify-center',
+                    isActive ? 'text-blue-600' : 'text-gray-500'
+                  )}>
                   {item.icon}
                 </div>
                 <span className="text-sm">{item.label}</span>
@@ -149,21 +147,11 @@ function RouteComponent () {
             )
           })}
         </nav>
-
-        {/* 底部信息 */}
-        <div className="p-4 border-t border-gray-100 bg-gray-50">
-          <div className="text-xs text-gray-500">
-            <p>当前版本: v0.2.1</p>
-            <p className="mt-1">© 2024 Fruit Saladict</p>
-          </div>
-        </div>
       </div>
 
       {/* 右侧内容区域 */}
-      <div className="flex-1 p-6 overflow-auto">
-        <div className="max-w-6xl mx-auto">
-          <Outlet />
-        </div>
+      <div className="flex-1 p-6 h-screen max-w-6xl mx-auto overflow-auto">
+        <Outlet />
       </div>
     </div>
   )

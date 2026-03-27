@@ -11,16 +11,16 @@ export const Route = createFileRoute('/configs/general/')({
 function RouteComponent () {
   const formRef = useRef<HTMLFormElement>(null)
   const formItems: SaladictFormItem[] = [
-    {
-      name: getConfigPath('active'),
-      valuePropName: 'checked',
-      children: <Switch />,
-    },
-    {
-      name: getConfigPath('animation'),
-      valuePropName: 'checked',
-      children: <Switch />,
-    },
+    // {
+    //   name: getConfigPath('active'),
+    //   valuePropName: 'checked',
+    //   children: <Switch />,
+    // },
+    // {
+    //   name: getConfigPath('animation'),
+    //   valuePropName: 'checked',
+    //   children: <Switch />,
+    // },
   ]
 
   formItems.push(
@@ -43,5 +43,14 @@ function RouteComponent () {
     }
   )
 
-  return <SaladictForm items={formItems} ref={formRef} />
+  return <div className='flex flex-col h-full'>
+    <SaladictForm items={formItems} ref={formRef} />
+    <div className="grow"></div>
+    <div className="p-4 border-t border-gray-100 bg-gray-50">
+      <div className="text-xs text-gray-500 text-center">
+        <p>当前版本: v0.2.1</p>
+        <p className="mt-1">© 2026 Fruit Saladict</p>
+      </div>
+    </div>
+  </div>
 }

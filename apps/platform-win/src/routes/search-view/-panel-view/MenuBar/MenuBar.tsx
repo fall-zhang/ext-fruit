@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { useDictStore } from '@/store'
 import { useShallow } from 'zustand/shallow'
 import { useConfContext } from '@/context/conf-context'
+import { useSearchContext } from '@/context/search-context'
 
 export interface MenuBarProps {
   menuBarProps?: Record<string, any>
@@ -56,6 +57,7 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
   //   histories: [],
   //   text: 'awesome',
   // }
+  const switchHistory = useSearchContext(store => store.switchHistory)
   const store = useDictStore(useShallow((store) => {
     return {
       text: store.text,
@@ -65,15 +67,12 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
       // (( store.config.qsFocus)), // is quick search panel or popup page
       histories: store.searchHistory,
       historyIndex: store.historyIndex,
-      switchHistory: store.SWITCH_HISTORY,
     }
   }))
   // function addToNoteBook () {
   //   // 将当前单词添加到 notebook
   // }
-  // // function switchHistory () {
-  // //   // store.SWITCH_HISTORY
-  // // }
+
   // function toggleQSFocus () {
   //   // dispatch({ type: 'TOGGLE_QS_FOCUS' })
   // }
@@ -112,11 +111,11 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
     <header className="menuBar">
       <HistoryBackBtn
         disabled={store.historyIndex <= 0}
-        onClick={() => store.switchHistory('prev')}
+        onClick={() => switchHistory('prev')}
       />
       <HistoryNextBtn
         disabled={store.historyIndex >= store.histories.length - 1}
-        onClick={() => store.switchHistory('next')}
+        onClick={() => switchHistory('next')}
       />
       <div className="grow h-full" data-tauri-drag-region={true}></div>
       {/* 自定义 button 列表 */}

@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { getCurrentWindow, Window } from '@tauri-apps/api/window'
-import { fetch } from '@tauri-apps/plugin-http'
 import { useEffect, useState } from 'react'
 import { PinBtn } from './-components/pin-button'
 import { CloseBtn } from './-components/close-button'
@@ -39,7 +38,6 @@ function RouteComponent () {
 
   }
   async function closeWindow () {
-    const closeAble = await appWindow.isClosable()
     const state = await getCurrentWindow().hide()
   }
   return <>

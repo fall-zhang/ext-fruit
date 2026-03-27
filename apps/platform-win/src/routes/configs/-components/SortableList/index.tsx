@@ -53,6 +53,7 @@ export function SortableList (props: SortableListProps) {
         </Button>
       }
     >
+      {/* 需要认证的模块，先完成认证才能进行添加 */}
       {props.description}
       <Radio.Group
         className="sortable-list-radio-group"

@@ -24,12 +24,10 @@ export const AllDicts: FC<AllDictsProps> = props => {
 
   return (
     <Card>
-      <List
-        size="large"
-        dataSource={allDictIds}
-        renderItem={dictID => (
-          <List.Item>
-            <div className="sortable-list-item">
+      {
+        allDictIds.map(dictID => {
+          return (
+            <div key={dictID} className="sortable-list-item">
               <DictTitle dictID={dictID} dictLangs={allDicts[dictID].lang} />
               <Switch
                 checked={selected.has(dictID)}
@@ -44,7 +42,28 @@ export const AllDicts: FC<AllDictsProps> = props => {
                 }}
               />
             </div>
-          </List.Item>
+          )
+        })
+      }
+      <List
+        size="large"
+        dataSource={allDictIds}
+        renderItem={dictID => (
+          <div className="sortable-list-item">
+            <DictTitle dictID={dictID} dictLangs={allDicts[dictID].lang} />
+            <Switch
+              checked={selected.has(dictID)}
+              onChange={checked => {
+                if (props.onChange && props.value) {
+                  props.onChange(
+                    checked
+                      ? [...props.value, dictID]
+                      : props.value.filter(id => id !== dictID)
+                  )
+                }
+              }}
+            />
+          </div>
         )}
       />
     </Card>

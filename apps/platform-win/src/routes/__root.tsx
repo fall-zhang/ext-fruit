@@ -12,7 +12,7 @@ const RootLayout = () => {
           <Outlet />
         </ConfirmProvider>
       </I18nextProvider>
-      <TanStackRouterDevtools />
+      <TanStackRouterDevtools position='bottom-right'/>
     </>
   )
 }

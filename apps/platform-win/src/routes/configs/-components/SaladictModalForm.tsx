@@ -7,11 +7,10 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 
 import { SaladictForm, type SaladictFormItem, type SaladictFormProps } from './SaladictForm'
-import { formItemModalLayout } from '../-utils/layout'
 import { setFormDirty, useFormDirty } from '../-utils/use-form-dirty'
 
 export interface SaladictModalFormProps
-  extends Omit<SaladictFormProps, 'title'> {
+  extends Omit<SaladictFormProps, 'title' | 'ref'> {
   visible: boolean
   title: ReactNode
   zIndex?: number
@@ -38,7 +37,6 @@ export const SaladictModalForm: FC<SaladictModalFormProps> = props => {
       title={title}
       zIndex={zIndex}
       width={600}
-      destroyOnClose
       onOk={() => {
         if (formRef.current) {
           formRef.current.submit()
@@ -61,7 +59,6 @@ export const SaladictModalForm: FC<SaladictModalFormProps> = props => {
       }}
     >
       <SaladictForm
-        {...formItemModalLayout}
         hideFooter
         {...restProps}
         ref={formRef}

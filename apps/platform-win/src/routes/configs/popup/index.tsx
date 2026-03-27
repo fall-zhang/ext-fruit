@@ -24,24 +24,31 @@ function RouteComponent () {
         {
           name: getConfigPath('baOpen'),
           children: (
-            <Select>
-              <Select.Option value="popup_panel">
-                {t('config.opt.baOpen.popup_panel')}
-              </Select.Option>
-              <Select.Option value="popup_fav">
-                {t('config.opt.baOpen.popup_fav')}
-              </Select.Option>
-              <Select.Option value="popup_options">
-                {t('config.opt.baOpen.popup_options')}
-              </Select.Option>
-              <Select.Option value="popup_standalone">
-                {t('config.opt.baOpen.popup_standalone')}
-              </Select.Option>
-              {menusIds.map(id => (
-                <Select.Option key={id} value={id}>
-                  {t(`menus:${id}`)}
-                </Select.Option>
-              ))}
+            <Select
+              options={[
+                {
+                  label: t('config.opt.baOpen.popup_panel'),
+                  value: 'popup_panel',
+                },
+                {
+                  label: t('config.opt.baOpen.popup_fav'),
+                  value: 'popup_fav',
+                },
+                {
+                  label: t('config.opt.baOpen.popup_options'),
+                  value: 'popup_options',
+                },
+                {
+                  label: t('config.opt.baOpen.popup_standalone'),
+                  value: 'popup_standalone',
+                },
+                ...menusIds.map(id => (
+                  {
+                    label: t(`menus:${id}`),
+                    value: id,
+                  }
+                )),
+              ]}>
             </Select>
           ),
         },

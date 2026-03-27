@@ -1,5 +1,5 @@
 import type { FC, ReactNode, Ref, RefObject } from 'react'
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Form, Button, Modal, Tooltip } from 'antd'
 import type { FormItemProps, Rule, FormProps, FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined, BlockOutlined } from '@ant-design/icons'
@@ -10,7 +10,6 @@ import { SaveBtn } from './SaveBtn'
 import './_style.scss'
 import { useDictStore } from '@/store'
 import { setFormDirty } from '../../-utils/use-form-dirty'
-import { isFirefox } from '@/utils/browser'
 import { useUpload } from '../../-utils/upload'
 
 interface FieldValues {
@@ -25,7 +24,7 @@ export interface SaladictFormItem
   extends Omit<FormItemProps, 'name' | 'children'> {
   /** Must set name or key. Set name if the item has value. */
   name?: string
-  /** Must set name or key. Set key if the item does not carry value. */
+  /** Must set name or key. Set key if the item does not carry value. 当没有值的时候，必须设置 key */
   key?: string
   /** Hide item based on other fields */
   hide?: (values: FieldValues) => boolean
@@ -38,7 +37,7 @@ export interface SaladictFormItem
 export interface SaladictFormProps
   extends Omit<FormProps, 'initialValues' | 'onFinish'> {
   items: SaladictFormItem[]
-  ref: RefObject<any>
+  ref?: RefObject<any>
   hideFooter?: boolean
 }
 
@@ -88,22 +87,9 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
   function genFormItems (items: SaladictFormItem[]) {
     return items.map(item => {
       const name = (item.key || item.name)!
-      const isProfile = name.startsWith('profile.')
       const newItem = { ...item }
       if (newItem.label === undefined) {
-        newItem.label = isProfile
-          ? (
-            <Tooltip
-              title={t('profile.opt.item_extra')}
-              className="saladict-form-profile-title"
-            >
-              <span>
-                <BlockOutlined />
-                {t(name)}
-              </span>
-            </Tooltip>
-          )
-          : (t(name))
+        newItem.label = (t(name))
       }
 
       if (newItem.help === undefined) {
@@ -152,20 +138,21 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
       ref={props.ref}
     >
       {formItems}
+      <div className='grow'></div>
       {!hideFooter && (
         <Form.Item wrapperCol={ { offset: 6, span: 18 } } className="saladict-form-btns">
           <SaveBtn />
-          <Button
+          {/* <Button
             onClick={() => {
               if (isFirefox) {
                 Modal.info({ content: t('firefox_shortcuts') })
               } else {
-                // openUrl('chrome://extensions/shortcuts')
+                openUrl('chrome://extensions/shortcuts')
               }
             }}
           >
             {t('shortcuts')}
-          </Button>
+          </Button> */}
           <Button
             type="primary"
             danger

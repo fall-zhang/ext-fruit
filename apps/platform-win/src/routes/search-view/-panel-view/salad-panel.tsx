@@ -5,6 +5,7 @@ import i18n from '@/locales/i18n'
 import { SearchProvider } from '@/context/search-context'
 import { SaladContent } from './salad-context'
 import type { SaladConfigType } from '@/config/app-config/config-type'
+import { useConfContext } from '@/context/conf-context'
 
 type SaladPanelProps = {
   customButton?: ReactNode
@@ -12,8 +13,9 @@ type SaladPanelProps = {
 }
 
 export const SaladPanel: FC<SaladPanelProps> = (props) => {
+  const configContext = useConfContext()
   return (
-    <SearchProvider>
+    <SearchProvider profile={configContext.profile}>
       <SaladContent {...props} />
     </SearchProvider>
   )
