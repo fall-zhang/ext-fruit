@@ -19,6 +19,28 @@ export const SaladBowlListen: FC = () => {
     const selectionEvent = createSelectTextStream({
       touchMode: false,
       doubleClickDelay: 300,
+      noTypeField: false,
+      panelMode: {
+        direct: false,
+        double: false,
+        holding: {
+          alt: false,
+          shift: false,
+          ctrl: false,
+          meta: false,
+        },
+      },
+      language: {
+        chinese: false,
+        english: false,
+        japanese: false,
+        korean: false,
+        french: false,
+        spanish: false,
+        deutsch: false,
+        others: false,
+        matchAll: false,
+      },
     }).subscribe(state => {
       console.log('⚡️ line:21 ~ state: ', state)
     })

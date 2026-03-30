@@ -47,10 +47,8 @@ export const DictPanelPortal: FC<DictPanelPortalProps> = props => {
       shadowRootClassName={SALADICT_PANEL}
       innerRootClassName={clsx({ isAnimate: withAnimation, darkMode })}
       panelCSS={panelCSS}
-      in={show}
-      timeout={props.withAnimation ? defaultTimeout : 0}
     >
-      {() => <DictPanel {...restProps} />}
+      <DictPanel {...restProps} />
     </ShadowPortal>
   )
 }

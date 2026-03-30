@@ -15,8 +15,8 @@ import type { FAdvanceForm, FBaseForm } from './type'
 import { useId } from 'react'
 
 
-export const FCheckbox:FAdvanceForm<{
-  items:Array<{ label:string, value:string }>
+export const FCheckbox: FAdvanceForm<{
+  items: Array<{ label: string, value: string }>
 }> = ({
   name,
   control,
@@ -54,7 +54,7 @@ export const FCheckbox:FAdvanceForm<{
                         const newValue = checked
                           ? [...field.value, task.value]
                           : field.value.filter(
-                            (value:string) => value !== task.value
+                            (value: string) => value !== task.value
                           )
                         field.onChange(newValue)
                       }}

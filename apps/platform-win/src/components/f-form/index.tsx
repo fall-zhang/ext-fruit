@@ -16,14 +16,13 @@ import {
 } from '@P/ui/components/card'
 import {
   Field,
-  FieldGroup
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel
 } from '@P/ui/components/field'
-import { FInput } from './form-item/f-input'
-import { FTextarea } from './form-item/f-textarea'
-
-export const Route = createFileRoute('/form-example/')({
-  component: RouteComponent,
-})
+import { FInput } from './form/form-item/f-input'
+import { FTextarea } from './form/form-item/f-textarea'
 
 const formSchema = z.object({
   title: z
@@ -36,7 +35,7 @@ const formSchema = z.object({
   // .max(100, 'Description must be at most 100 characters.'),
 })
 
-function RouteComponent () {
+export function ConfForm () {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

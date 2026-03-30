@@ -16,17 +16,10 @@ import {
 } from '@P/ui/components/card'
 import {
   Field,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLabel
+  FieldGroup
 } from '@P/ui/components/field'
-import { FInput } from './-form/form-item/f-input'
-import { FTextarea } from './-form/form-item/f-textarea'
-
-export const Route = createFileRoute('/form-example/')({
-  component: RouteComponent,
-})
+import { FInput } from './form-item/f-input'
+import { FTextarea } from './form-item/f-textarea'
 
 const formSchema = z.object({
   title: z

@@ -16,9 +16,9 @@ import {
 } from '@P/ui/components/input-group'
 import type { FAdvanceForm } from './type'
 
-export const FTextarea:FAdvanceForm<{
-  min?:number
-  max?:number
+export const FTextarea: FAdvanceForm<{
+  min?: number
+  max?: number
 }> = ({
   name,
   control,

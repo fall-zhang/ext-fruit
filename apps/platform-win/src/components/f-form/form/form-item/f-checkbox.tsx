@@ -13,7 +13,7 @@ import {
 } from '@P/ui/components/field'
 import type { FBaseForm } from './type'
 
-export const FCheckbox:FBaseForm = ({
+export const FCheckbox: FBaseForm = ({
   name,
   control,
   label,

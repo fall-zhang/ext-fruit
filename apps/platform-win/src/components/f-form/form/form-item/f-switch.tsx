@@ -26,8 +26,8 @@ const tasks = [
 ]
 
 
-export const FCheckbox:FAdvanceForm<{
-  children:ReactNode
+export const FCheckbox: FAdvanceForm<{
+  children: ReactNode
 }> = ({
   name,
   control,
