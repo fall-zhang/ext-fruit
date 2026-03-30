@@ -44,38 +44,38 @@ export class Waveform extends React.PureComponent<
   }
 
   initSoundTouch = (wavesurfer: WaveSurfer) => {
-    const buffer = wavesurfer.backend.buffer
-    const bufferLength = buffer.length
-    const lChannel = buffer.getChannelData(0)
-    const rChannel =
-      buffer.numberOfChannels > 1 ? buffer.getChannelData(1) : lChannel
-    let seekingDiff = 0
-    const source = {
-      extract: (target, numFrames, position) => {
-        if (this.shouldSTSync) {
-          // get the new diff
-          seekingDiff =
-            ~~(wavesurfer.backend.getPlayedPercents() * bufferLength) - position
-          this.shouldSTSync = false
-        }
+    // const buffer = wavesurfer.backend.buffer
+    // const bufferLength = buffer.length
+    // const lChannel = buffer.getChannelData(0)
+    // const rChannel =
+    //   buffer.numberOfChannels > 1 ? buffer.getChannelData(1) : lChannel
+    // let seekingDiff = 0
+    // const source = {
+    //   extract: (target, numFrames, position) => {
+    //     if (this.shouldSTSync) {
+    //       // get the new diff
+    //       seekingDiff =
+    //         ~~(wavesurfer.backend.getPlayedPercents() * bufferLength) - position
+    //       this.shouldSTSync = false
+    //     }
 
-        position += seekingDiff
+    //     position += seekingDiff
 
-        for (let i = 0; i < numFrames; i++) {
-          target[i * 2] = lChannel[i + position]
-          target[i * 2 + 1] = rChannel[i + position]
-        }
+    //     for (let i = 0; i < numFrames; i++) {
+    //       target[i * 2] = lChannel[i + position]
+    //       target[i * 2 + 1] = rChannel[i + position]
+    //     }
 
-        return Math.min(numFrames, bufferLength - position)
-      },
-    }
+    //     return Math.min(numFrames, bufferLength - position)
+    //   },
+    // }
 
-    this.soundTouch = new SoundTouch(wavesurfer.backend.ac.sampleRate)
-    this.soundTouchNode = getWebAudioNode(
-      wavesurfer.backend.ac,
-      new SimpleFilter(source, this.soundTouch)
-    )
-    wavesurfer.backend.setFilter(this.soundTouchNode)
+    // this.soundTouch = new SoundTouch(wavesurfer.backend.ac.sampleRate)
+    // this.soundTouchNode = getWebAudioNode(
+    //   wavesurfer.backend.ac,
+    //   new SimpleFilter(source, this.soundTouch)
+    // )
+    // wavesurfer.backend.setFilter(this.soundTouchNode)
   }
 
   initWavesurfer = () => {
@@ -88,21 +88,21 @@ export class Waveform extends React.PureComponent<
 
     this.wavesurfer = wavesurfer
 
-    wavesurfer.enableDragSelection({})
+    // wavesurfer.enableDragSelection({})
 
-    wavesurfer.on('region-created', region => {
-      this.removeRegion()
-      this.region = region
-    })
-    wavesurfer.on('region-update-end', this.play)
-    wavesurfer.on('region-out', this.onPlayEnd)
+    // wavesurfer.on('region-created', region => {
+    //   this.removeRegion()
+    //   this.region = region
+    // })
+    // wavesurfer.on('region-update-end', this.play)
+    // wavesurfer.on('region-out', this.onPlayEnd)
 
-    wavesurfer.on('seek', () => {
-      if (!this.isInRegion()) {
-        this.removeRegion()
-      }
-      this.shouldSTSync = true
-    })
+    // wavesurfer.on('seek', () => {
+    //   if (!this.isInRegion()) {
+    //     this.removeRegion()
+    //   }
+    //   this.shouldSTSync = true
+    // })
 
     wavesurfer.on('ready', this.onLoad)
 
@@ -119,20 +119,20 @@ export class Waveform extends React.PureComponent<
 
   play = () => {
     this.setState({ isPlaying: true })
-    if (this.wavesurfer) {
-      if (
-        this.state.pitchStretch &&
-        this.soundTouchNode &&
-        this.wavesurfer.getFilters().length <= 0
-      ) {
-        this.wavesurfer.backend.setFilter(this.soundTouchNode)
-      }
-      if (this.region && !this.isInRegion()) {
-        this.wavesurfer.play(this.region.start)
-      } else {
-        this.wavesurfer.play()
-      }
-    }
+    // if (this.wavesurfer) {
+    //   if (
+    //     this.state.pitchStretch &&
+    //     this.soundTouchNode &&
+    //     this.wavesurfer.getFilters().length <= 0
+    //   ) {
+    //     this.wavesurfer.backend.setFilter(this.soundTouchNode)
+    //   }
+    //   if (this.region && !this.isInRegion()) {
+    //     this.wavesurfer.play(this.region.start)
+    //   } else {
+    //     this.wavesurfer.play()
+    //   }
+    // }
     this.shouldSTSync = true
   }
 
@@ -143,7 +143,7 @@ export class Waveform extends React.PureComponent<
     }
     if (this.wavesurfer) {
       this.wavesurfer.pause()
-      this.wavesurfer.backend.disconnectFilters()
+      // this.wavesurfer.backend.disconnectFilters()
     }
   }
 
@@ -192,24 +192,24 @@ export class Waveform extends React.PureComponent<
   updatePitchStretch = (flag: boolean) => {
     this.setState({ pitchStretch: flag })
 
-    if (flag) {
-      if (
-        this.state.speed !== 1 &&
-        this.soundTouchNode &&
-        this.wavesurfer &&
-        this.wavesurfer.getFilters().length <= 0
-      ) {
-        this.wavesurfer.backend.setFilter(this.soundTouchNode)
-        this.shouldSTSync = true
-      }
-    } else {
-      if (this.soundTouchNode) {
-        this.soundTouchNode.disconnect()
-      }
-      if (this.wavesurfer) {
-        this.wavesurfer.backend.disconnectFilters()
-      }
-    }
+    // if (flag) {
+    //   if (
+    //     this.state.speed !== 1 &&
+    //     this.soundTouchNode &&
+    //     this.wavesurfer &&
+    //     this.wavesurfer.getFilters().length <= 0
+    //   ) {
+    //     this.wavesurfer.backend.setFilter(this.soundTouchNode)
+    //     this.shouldSTSync = true
+    //   }
+    // } else {
+    //   if (this.soundTouchNode) {
+    //     this.soundTouchNode.disconnect()
+    //   }
+    //   if (this.wavesurfer) {
+    //     this.wavesurfer.backend.disconnectFilters()
+    //   }
+    // }
   }
 
   isInRegion = (region = this.region): boolean => {
@@ -230,11 +230,11 @@ export class Waveform extends React.PureComponent<
   reset = () => {
     this.removeRegion()
     this.updateSpeed(1)
-    if (this.wavesurfer) {
-      this.wavesurfer.pause()
-      this.wavesurfer.empty()
-      this.wavesurfer.backend.disconnectFilters()
-    }
+    // if (this.wavesurfer) {
+    //   this.wavesurfer.pause()
+    //   this.wavesurfer.empty()
+    //   this.wavesurfer.backend.disconnectFilters()
+    // }
     if (this.soundTouch) {
       this.soundTouch.clear()
       this.soundTouch.tempo = 1
@@ -255,17 +255,17 @@ export class Waveform extends React.PureComponent<
         this.initWavesurfer()
       }
 
-      if (this.wavesurfer) {
-        this.wavesurfer.load(src)
-        // https://github.com/katspaugh/wavesurfer.js/issues/1657
-        if (
-          this.wavesurfer.backend.ac.state === 'suspended' &&
-          this.playOnLoad
-        ) {
-          // fallback
-          new Audio(src).play()
-        }
-      }
+      // if (this.wavesurfer) {
+      //   this.wavesurfer.load(src)
+      //   // https://github.com/katspaugh/wavesurfer.js/issues/1657
+      //   if (
+      //     this.wavesurfer.backend.ac.state === 'suspended' &&
+      //     this.playOnLoad
+      //   ) {
+      //     // fallback
+      //     new Audio(src).play()
+      //   }
+      // }
     } else {
       this.reset()
     }

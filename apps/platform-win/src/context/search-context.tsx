@@ -12,6 +12,7 @@ import { countWords } from '@/core/api-server/utils/get-word-count'
 
 type RenderDictItem = {
   readonly dictID: DictID
+  // idle 闲置
   readonly searchStatus: 'IDLE' | 'SEARCHING' | 'FINISH'
   readonly searchResult: any
   readonly catalog?: DictSearchResult<DictID>['catalog']
@@ -25,8 +26,12 @@ export type DictSearchState = {
   renderedDicts: RenderDictItem[],
 
   historyIndex: number
-  searchHistory: Word[],
-
+  /** 0 is the oldest */
+  searchHistory: Word[]
+  /**
+   * User manually folded or unfolded
+   * 用户手动折叠的组件
+   */
   userFoldedDicts: Partial<Record<DictID, boolean>>
   searchStart(option: {
     /** Search with specific dict */
@@ -80,7 +85,7 @@ const createSearchStore = (profile: AppProfile) => {
     searchStart (searchOpt) {
       let dictList: RenderDictItem[] = []
       let word: Word
-      const { activeProfile, searchHistory, historyIndex, selectedDicts } = get()
+      const { activeProfile, searchHistory, historyIndex, selectedDicts, renderedDicts, userFoldedDicts } = get()
       // 从历史缓存中查找
       const newSearchHistory: Word[] = searchOpt && searchOpt.noHistory
         ? searchHistory
@@ -98,48 +103,47 @@ const createSearchStore = (profile: AppProfile) => {
       } else {
         word = searchHistory[historyIndex]
       }
+      if (searchOpt && searchOpt.id) {
+        const searchDicts = renderedDicts.filter(item => item.dictID === searchOpt.id)
+        dictList = searchDicts.map(d => {
+          return {
+            dictID: d.dictID,
+            searchStatus: 'SEARCHING',
+            searchResult: null,
+          }
+        })
+      } else {
+        // dicts that should be rendered
+        dictList = selectedDicts.filter(id => {
+          const dict = activeProfile.dicts.all[id]
+          if (checkSupportedLangs(dict.selectionLang, word.text)) {
+            const wordCount = countWords(word.text)
+            const { min, max } = dict.selectionWC
+            return wordCount >= min && wordCount <= max
+          }
+          return false
+        })
+          .map(id => {
+            // fold or unfold
+            const status = checkSupportedLangs(
+              activeProfile.dicts.all[id].defaultUnfold,
+              word.text
+            ) && (!activeProfile.stickyFold || !userFoldedDicts[id])
+              ? 'SEARCHING'
+              : 'IDLE'
+            return {
+              dictID: id,
+              searchStatus: status,
+              searchResult: null,
+            }
+          })
+        console.log('search dicts', dictList)
+      }
       // start search
       set((state) => {
         if (!word) {
           console.warn('SEARCH_START: Empty word on first search', searchOpt)
           return state
-        }
-        if (searchOpt && searchOpt.id) {
-          const searchDicts = state.renderedDicts.filter(item => item.dictID === searchOpt.id)
-
-          dictList = searchDicts.map(d => {
-            return {
-              dictID: d.dictID,
-              searchStatus: 'SEARCHING',
-              searchResult: null,
-            }
-          })
-        } else {
-          // dicts that should be rendered
-          dictList = selectedDicts.filter(id => {
-            const dict = activeProfile.dicts.all[id]
-            if (checkSupportedLangs(dict.selectionLang, word.text)) {
-              const wordCount = countWords(word.text)
-              const { min, max } = dict.selectionWC
-              return wordCount >= min && wordCount <= max
-            }
-            return false
-          })
-            .map(id => {
-            // fold or unfold
-              const status = checkSupportedLangs(
-                activeProfile.dicts.all[id].defaultUnfold,
-                word.text
-              ) && (!state.activeProfile.stickyFold || !state.userFoldedDicts[id])
-                ? 'SEARCHING'
-                : 'IDLE'
-              return {
-                dictID: id,
-                searchStatus: status,
-                searchResult: null,
-              }
-            })
-          console.log('search dicts', dictList)
         }
         return {
           ...state,
@@ -150,7 +154,9 @@ const createSearchStore = (profile: AppProfile) => {
         }
       })
       // searching
-      selectedDicts.forEach((id) => {
+      // console.log('⚡️ line:157 ~ selectedDicts: ', selectedDicts)
+      dictList.forEach((item) => {
+        const id = item.dictID
         const searchFun: SearchFunction = api[id]
         searchFun(word.text, {
           profile: activeProfile.dicts.all,
@@ -162,8 +168,12 @@ const createSearchStore = (profile: AppProfile) => {
               searchStatus: 'FINISH',
               searchResult: res.result,
             }
-            const dictIndex = state.renderedDicts.findIndex((item) => item.dictID === id)
-            const newDict = state.renderedDicts.toSpliced(dictIndex, 1, dictResult)
+            const newDict = state.renderedDicts.map(item => {
+              if (item.dictID === id) {
+                return dictResult
+              }
+              return item
+            })
 
             return {
               ...state,
@@ -173,8 +183,16 @@ const createSearchStore = (profile: AppProfile) => {
         }).catch((err: unknown) => {
           console.warn(`current dict ${id} ~ err: `, err)
           set(state => {
-            const dictIndex = state.renderedDicts.findIndex((item) => item.dictID === id)
-            const newDict = state.renderedDicts.toSpliced(dictIndex, 1)
+            const newDict = state.renderedDicts.map(item => {
+              if (item.dictID === id) {
+                return {
+                  searchStatus: 'IDLE',
+                  dictID: id,
+                  searchResult: null,
+                } satisfies RenderDictItem
+              }
+              return item
+            })
             return {
               ...state,
               renderedDicts: newDict,

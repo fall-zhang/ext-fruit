@@ -16,6 +16,7 @@ import { cn } from '@P/ui/lib/utils'
 export const Route = createFileRoute('/configs')({
   component: RouteComponent,
   beforeLoad: ({ location }) => {
+    console.log('⚡️ line:18 ~ location: ', location)
     // 如果当前路径正好是 /configs，重定向到 /configs/general
     if (location.pathname === '/configs') {
       throw redirect({

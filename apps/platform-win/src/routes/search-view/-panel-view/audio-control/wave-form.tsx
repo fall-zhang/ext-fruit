@@ -54,28 +54,27 @@ export const WaveFormView: FC<{
       plugins: [RegionsPlugin.create()],
     })
 
-    wavesurfer.current.on('region-created', region => {
-      removeRegion()
-    })
-    wavesurfer.current.on('region-update-end', this.play)
-    wavesurfer.current.on('region-out', this.onPlayEnd)
+    // wavesurfer.current.on('region-created', region => {
+    //   removeRegion()
+    // })
+    // wavesurfer.current.on('region-update-end', this.play)
+    // wavesurfer.current.on('region-out', this.onPlayEnd)
+    // wavesurfer.current.on('seek', () => {
+    //   if (!this.isInRegion()) {
+    //     removeRegion()
+    //   }
+    //   this.shouldSTSync = true
+    // })
 
-    wavesurfer.current.on('seek', () => {
-      if (!this.isInRegion()) {
-        removeRegion()
-      }
-      this.shouldSTSync = true
-    })
+    // wavesurfer.current.on('ready', this.onLoad)
 
-    wavesurfer.current.on('ready', this.onLoad)
-
-    wavesurfer.current.on('finish', this.onPlayEnd)
+    // wavesurfer.current.on('finish', this.onPlayEnd)
   }
   const removeRegion = () => {
-    if (this.region) {
-      this.region.remove()
-    }
-    this.region = null
+    // if (this.region) {
+    //   this.region.remove()
+    // }
+    // this.region = null
   }
   useEffect(() => {
     const lastPlayVideo = state.lastPlayAudio
@@ -111,46 +110,46 @@ export const WaveFormView: FC<{
   const updatePitchStretch = (flag: boolean) => {
     setPitchStretch(flag)
 
-    if (flag) {
-      if (
-        speed !== 1 &&
-        wavesurfer.current &&
-        wavesurfer.current.get.length <= 0
-      ) {
-        this.shouldSTSync = true
-      }
-    } else {
-      if (wavesurfer.current) {
-        wavesurfer.current.backend.disconnectFilters()
-      }
-    }
+    // if (flag) {
+    //   if (
+    //     speed !== 1 &&
+    //     wavesurfer.current &&
+    //     wavesurfer.current.get.length <= 0
+    //   ) {
+    //     this.shouldSTSync = true
+    //   }
+    // } else {
+    //   if (wavesurfer.current) {
+    //     wavesurfer.current.backend.disconnectFilters()
+    //   }
+    // }
   }
 
   const audioPlay = () => {
-    setIsPlaying(true)
-    if (wavesurfer.current) {
-      if (pitchStretch && soundTouchNode && wavesurfer.current.getFilters().length <= 0
-      ) {
-        wavesurfer.current.backend.setFilter(soundTouchNode)
-      }
-      if (this.region && !this.isInRegion()) {
-        wavesurfer.current.play(this.region.start)
-      } else {
-        wavesurfer.current.play()
-      }
-    }
-    this.shouldSTSync = true
+    // setIsPlaying(true)
+    // if (wavesurfer.current) {
+    //   if (pitchStretch && soundTouchNode && wavesurfer.current.getFilters().length <= 0
+    //   ) {
+    //     wavesurfer.current.backend.setFilter(soundTouchNode)
+    //   }
+    //   if (this.region && !this.isInRegion()) {
+    //     wavesurfer.current.play(this.region.start)
+    //   } else {
+    //     wavesurfer.current.play()
+    //   }
+    // }
+    // this.shouldSTSync = true
   }
 
   const videoPause = () => {
-    setIsPlaying(false)
-    if (soundTouchNode) {
-      soundTouchNode.disconnect()
-    }
-    if (wavesurfer.current) {
-      wavesurfer.current.pause()
-      wavesurfer.current.backend.disconnectFilters()
-    }
+    // setIsPlaying(false)
+    // if (soundTouchNode) {
+    //   soundTouchNode.disconnect()
+    // }
+    // if (wavesurfer.current) {
+    //   wavesurfer.current.pause()
+    //   wavesurfer.current.backend.disconnectFilters()
+    // }
   }
   const onUpdateSpeed = (speed: number | null) => {
     if (speed === null) return
@@ -161,13 +160,13 @@ export const WaveFormView: FC<{
     }
 
     if (wavesurfer.current) {
-      wavesurfer.current.setPlaybackRate(speed)
-      if (speed !== 1 && pitchStretch && !this.soundTouch) {
-        this.initSoundTouch(wavesurfer.current)
-      }
+      // wavesurfer.current.setPlaybackRate(speed)
+      // if (speed !== 1 && pitchStretch && !this.soundTouch) {
+      //   this.initSoundTouch(wavesurfer.current)
+      // }
     }
 
-    this.shouldSTSync = true
+    // this.shouldSTSync = true
   }
   const onToggleLoop = (ev: ChangeEvent<HTMLInputElement>) => {
     setLoop(ev.currentTarget.checked)

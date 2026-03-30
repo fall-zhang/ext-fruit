@@ -2,13 +2,12 @@ import type { FC, ChangeEvent, KeyboardEvent } from 'react'
 import { useRef, useState, useEffect } from 'react'
 import classNames from 'clsx'
 import AutosizeTextarea from 'react-textarea-autosize'
-import { useDictStore } from '@/store'
-import { newWord } from '@/dict-utils/new-word'
 import { useSearchContext } from '@/context/search-context'
+import { useConfContext } from '@/context/conf-context'
+import { newWord } from '@/utils/dict-utils/new-word'
 
 export interface MtaBoxProps {
   text: string
-  expand: boolean,
   shouldFocus: boolean
   searchText: (text: string) => any
   onInput: (text: string) => void
@@ -22,33 +21,28 @@ export interface MtaBoxProps {
  */
 export const MtaBox: FC = () => {
   const searchStart = useSearchContext(store => store.searchStart)
-
-  const props: MtaBoxProps = useDictStore(state => {
-    const shouldFocus = !state.activeProfile.mtaAutoUnfold ||
-        state.activeProfile.mtaAutoUnfold !== 'hide' ||
-        state.config.qsFocus
-    return {
-      text: state.text,
-      expand: state.isExpandMtaBox,
-      shouldFocus,
-      searchText: (text: string) => {
-        searchStart({ word: newWord({ text }) })
-        // dispatch({ type: 'SEARCH_START', payload: { word: newWord({ text }) } })
-      },
-      onInput: text => {
-        // dispatch({ type: 'UPDATE_TEXT', payload: text })
-      },
-      onDrawerToggle: () => {
-        // dispatch({ type: 'TOGGLE_MTA_BOX' })
-      },
-      onHeightChanged: height => {
-        // dispatch({
-        //   type: 'UPDATE_PANEL_HEIGHT',
-        //   payload: { area: 'mtabox', height },
-        // })
-      },
-    }
-  })
+  const confContext = useConfContext()
+  confContext.profile.mtaAutoUnfold
+  const searchContext = useSearchContext(store => store)
+  const props: MtaBoxProps = {
+    text: searchContext.text,
+    shouldFocus: true,
+    searchText: (text: string) => {
+      searchStart({ word: newWord({ text }) })
+      // dispatch({ type: 'SEARCH_START', payload: { word: newWord({ text }) } })
+    },
+    onInput: () => {
+    },
+    onDrawerToggle: () => {
+      // dispatch({ type: 'TOGGLE_MTA_BOX' })
+    },
+    onHeightChanged: () => {
+      // dispatch({
+      //   type: 'UPDATE_PANEL_HEIGHT',
+      //   payload: { area: 'mtabox', height },
+      // })
+    },
+  }
   const isTypedRef = useRef(false)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [height, setHeight] = useState(0)
@@ -89,7 +83,6 @@ export const MtaBox: FC = () => {
     <div>
       <div
         className={classNames('mtaBox-TextArea-Wrap', { isTyping })}
-        style={{ height: props.expand ? height : 0 }}
       >
         <AutosizeTextarea
           autoFocus
@@ -120,9 +113,7 @@ export const MtaBox: FC = () => {
           width="10"
           height="10"
           viewBox="0 0 59.414 59.414"
-          className={classNames('mtaBox-DrawerBtn_Arrow', {
-            isExpand: props.expand,
-          })}
+          className={classNames('mtaBox-DrawerBtn_Arrow')}
         >
           <path d="M58 14.146L29.707 42.44 1.414 14.145 0 15.56 29.707 45.27 59.414 15.56" />
         </svg>
