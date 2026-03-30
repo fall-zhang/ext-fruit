@@ -1,5 +1,5 @@
-import { SaladBowlListen } from '@/components/salad-bowl/salad-bowl-listen'
 import { createFileRoute } from '@tanstack/react-router'
+import { SaladBowlListen } from './-components/salad-bowl-listen'
 
 export const Route = createFileRoute('/external-use/')({
   component: RouteComponent,

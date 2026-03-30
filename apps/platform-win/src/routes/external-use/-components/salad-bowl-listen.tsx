@@ -5,7 +5,7 @@ import { SaladBowl } from './SaladBowl'
 import saladBolStyle from './SaladBowl.shadow.scss?raw'
 import { cn } from '@P/ui/utils'
 import root from 'react-shadow'
-import { createSelectTextStream } from './utils/select-text-observer'
+import { createSelectTextStream } from '@/routes/external-use/-utils/select-text-observer'
 
 /**
  * 监听页面的事件，唤出 salad 页面
