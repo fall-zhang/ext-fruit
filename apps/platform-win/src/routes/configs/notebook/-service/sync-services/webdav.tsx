@@ -1,5 +1,6 @@
 
-import React, { FC, useState, useRef } from 'react'
+import type { FC } from 'react'
+import React, { useState, useRef } from 'react'
 import {
   Form,
   Input,
@@ -9,15 +10,13 @@ import {
   notification,
   Switch
 } from 'antd'
-import { FormInstance } from 'antd/lib/form'
+import type { FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { Service, SyncConfig } from '@/background/sync-manager/services/webdav'
-import {
-  removeSyncConfig,
-  setSyncConfig
-} from '@/background/sync-manager/helpers'
+import { removeSyncConfig, setSyncConfig } from '@/core/external-sync/sync-manager/helpers'
+import { InputNumberGroup } from '@/routes/configs/-components/InputNumberGroup'
 import { useTranslation } from 'react-i18next'
-import { InputNumberGroup } from '@/options/components/InputNumberGroup'
+import { Service, type SyncConfig } from '@/core/external-sync/sync-webdav'
+
 
 export interface WebdavModalProps {
   syncConfig?: SyncConfig
@@ -26,7 +25,7 @@ export interface WebdavModalProps {
 }
 
 export const WebdavModal: FC<WebdavModalProps> = props => {
-  const { t, i18n } = useTranslate(['options', 'common', 'sync'])
+  const { t, i18n } = useTranslation(['options', 'common', 'sync'])
   const [serviceChecking, setServiceChecking] = useState(false)
   const formRef = useRef<FormInstance>(null)
 
@@ -59,7 +58,7 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
         </Button>,
         <Button key="cancel" onClick={closeModal}>
           {t('common:cancel')}
-        </Button>
+        </Button>,
       ]}
     >
       <Form
@@ -91,7 +90,7 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
           label={t('syncService.webdav.url')}
           hasFeedback
           rules={[
-            { type: 'url', message: t('form.url_error'), required: true }
+            { type: 'url', message: t('form.url_error'), required: true },
           ]}
         >
           <Input />
@@ -107,7 +106,7 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
           label={t('syncService.webdav.duration')}
           extra={t('syncService.webdav.duration_help')}
           rules={[
-            { type: 'number', message: t('form.number_error'), required: true }
+            { type: 'number', message: t('form.number_error'), required: true },
           ]}
         >
           <InputNumberGroup suffix={t('common:unit.mins')} />
@@ -128,7 +127,7 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
         title: t('syncService.close_confirm'),
         icon: <ExclamationCircleOutlined />,
         okType: 'danger',
-        onOk: props.onClose
+        onOk: props.onClose,
       })
     } else {
       props.onClose()
@@ -142,7 +141,7 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
         tryTo(async () => {
           await removeSyncConfig(Service.id)
           props.onClose()
-        })
+        }),
     })
   }
 
@@ -160,7 +159,7 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
       }
       try {
         await service.init()
-      } catch (error) {
+      } catch (error: any) {
         const errorText = typeof error === 'string' ? error : error.message
         if (errorText !== 'exist') {
           throw error
@@ -173,7 +172,7 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
         await service.add({ force: true })
       }
       notification.success({ message: t('syncService.webdav.verified') })
-    } catch (error) {
+    } catch (error: any) {
       notifyError(error)
     }
 
@@ -198,7 +197,7 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
         if (!dir) {
           throw new Error('missing')
         }
-      } catch (e) {
+      } catch (e: any) {
         setServiceChecking(false)
         return notifyError(e)
       }
@@ -210,7 +209,7 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
     try {
       await setSyncConfig(Service.id, config)
       props.onClose()
-    } catch (error) {
+    } catch (error: any) {
       notifyError(error)
     }
   }
@@ -222,7 +221,7 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
       }
       notification.error({
         message: 'Error',
-        description: t('sync:webdav.error.internal')
+        description: t('sync:webdav.error.internal'),
       })
       return
     }
@@ -234,7 +233,7 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
       url:
         values.url && !values.url.endsWith('/')
           ? (values.url += '/')
-          : values.url
+          : values.url,
     } as SyncConfig
   }
 
@@ -243,10 +242,10 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
       await action()
       antdMsg.destroy()
       antdMsg.success(t('msg_updated'))
-    } catch (error) {
+    } catch (error: any) {
       notification.error({
         message: 'Error',
-        description: error.message
+        description: error.message,
       })
     }
   }

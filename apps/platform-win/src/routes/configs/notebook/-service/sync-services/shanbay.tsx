@@ -1,12 +1,10 @@
 import type { FC } from 'react'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Modal, Button, Switch, message as AntdMsg, notification } from 'antd'
-import type { SyncConfig } from '@/core/external-sync/services/shanbay'
-import { Service } from '@/background/sync-manager/services/shanbay'
-import { setSyncConfig as uploadSyncConfig } from '@/background/sync-manager/helpers'
-import type { Word } from '@/dict-utils/new-word'
-import { getWords } from '@/dict-utils/new-word'
+
 import { useTranslation } from 'react-i18next'
+import { Service, type SyncConfig } from '@/core/external-sync/sync-shanbay'
+import type { Word } from '@/types/word'
 
 export interface WebdavModalProps {
   syncConfig?: SyncConfig
@@ -68,45 +66,45 @@ export const ShanbayModal: FC<WebdavModalProps> = props => {
             Service.openLogin()
           },
         })
-        return
+        // return
       }
     }
 
-    try {
-      await uploadSyncConfig('shanbay', newConfig)
-      setSyncConfig(newConfig)
-      AntdMsg.destroy()
-      AntdMsg.success(t('msg_updated'))
-    } catch (e) {
-      notification.error({
-        message: t('config.opt.upload_error'),
-        description: `${e}`,
-      })
-    }
+    // try {
+    //   await uploadSyncConfig('shanbay', newConfig)
+    //   setSyncConfig(newConfig)
+    //   AntdMsg.destroy()
+    //   AntdMsg.success(t('msg_updated'))
+    // } catch (e) {
+    //   notification.error({
+    //     message: t('config.opt.upload_error'),
+    //     description: `${e}`,
+    //   })
+    // }
   }
 
   async function onSyncAll () {
-    const { total } = await getWords('notebook', {
-      itemsPerPage: 1,
-      filters: {},
-    })
-    if (total > 50 && !confirm(t('syncService.shanbay.sync_all_confirm'))) {
-      return
-    }
+    // const { total } = await getWords('notebook', {
+    //   itemsPerPage: 1,
+    //   filters: {},
+    // })
+    // if (total > 50 && !confirm(t('syncService.shanbay.sync_all_confirm'))) {
+    //   return
+    // }
 
     await syncWords()
   }
 
   async function onSyncLast () {
-    const { words } = await getWords('notebook', {
-      itemsPerPage: 1,
-      filters: {},
-    })
-    if (!words || words.length <= 0) {
-      return
-    }
+    // const { words } = await getWords('notebook', {
+    //   itemsPerPage: 1,
+    //   filters: {},
+    // })
+    // if (!words || words.length <= 0) {
+    //   return
+    // }
 
-    await syncWords(words)
+    // await syncWords(words)
   }
 
   async function syncWords (words?: Word[]) {

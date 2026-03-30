@@ -1,12 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useRef, type FC } from 'react'
-import { Input } from 'antd'
-
+import { Input } from '@salad/ui/components/input'
 
 import { Trans, useTranslation } from 'react-i18next'
-import { useDictStore } from '@/store'
 import { SaladictForm, type SaladictFormItem } from '../-components/SaladictForm'
-import { getConfigPath, getProfilePath } from '../-utils/path-joiner'
+import { getProfilePath } from '../-utils/path-joiner'
 import { useConfContext } from '@/context/conf-context'
 import { isKey } from '@/utils/type-utils'
 

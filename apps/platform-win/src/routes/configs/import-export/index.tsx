@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import type { FC } from 'react'
 import type { TFunction } from 'i18next'
 import { Row, Col, Upload, notification } from 'antd'
 import type { RcFile } from 'antd/lib/upload'
@@ -13,6 +12,7 @@ import { useConfContext } from '@/context/conf-context'
 import type { Profile } from '@/config/trans-profile'
 import { mergeProfile } from '@/config/trans-profile/merge-profile'
 import type { ProfileID } from '@/core/api-local/profile'
+import { updateConfig } from '@/core/file-system/app-config'
 
 export const Route = createFileRoute('/configs/import-export/')({
   component: RouteComponent,

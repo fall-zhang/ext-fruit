@@ -82,33 +82,6 @@ function RouteComponent () {
             />
           ),
         },
-        {
-          name: getConfigPath('baPreload'),
-          label: t('preload.title'),
-          help: t('preload.help'),
-          hide: values => values[getConfigPath('baOpen')] !== 'popup_panel',
-          children: (
-            <Select>
-              <Select.Option value="">{t('common:none')}</Select.Option>
-              <Select.Option value="clipboard">
-                {t('preload.clipboard')}
-              </Select.Option>
-              <Select.Option value="selection">
-                {t('preload.selection')}
-              </Select.Option>
-            </Select>
-          ),
-        },
-        {
-          name: getConfigPath('baAuto'),
-          label: t('preload.auto'),
-          help: t('preload.auto_help'),
-          hide: values =>
-            values[getConfigPath('baOpen')] !== 'popup_panel' ||
-            !values[getConfigPath('baPreload')],
-          valuePropName: 'checked',
-          children: <Switch />,
-        },
       ]}
     />
   )
