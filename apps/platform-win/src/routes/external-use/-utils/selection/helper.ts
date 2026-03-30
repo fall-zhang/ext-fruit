@@ -1,9 +1,9 @@
 import type { Observable } from 'rxjs'
 import { fromEvent, merge, of } from 'rxjs'
 import { map, filter, distinctUntilChanged } from 'rxjs/operators'
-import { isTagName } from '../dom'
-import { isMac } from '../browser'
 import type { AppConfig } from '@/config/app-config'
+import { isMac } from '@/utils/browser'
+import { isTagName } from '@/utils/dom'
 
 
 /**
@@ -39,7 +39,10 @@ export function whenKeyPressed (
 // common editors
 const editorTester = /CodeMirror|ace_editor|monaco-editor/
 
-export function isTypeField (element: EventTarget & Element | null): boolean {
+export function isTypeField (element: EventTarget | Element | null): boolean {
+  if (!(element instanceof Element)) {
+    return false
+  }
   if (!element || !element.tagName) {
     return false
   }
@@ -78,7 +81,6 @@ export function isBlacklisted (config: AppConfig): boolean {
   )
 }
 
-export async function newSelectionWord (
-) {
+export async function newSelectionWord () {
 
 }

@@ -13,18 +13,33 @@ import {
   distinctUntilChanged
 } from 'rxjs/operators'
 
-import { isTypeField } from './helper'
+import { isTypeField } from './selection/helper'
 import type { MouseEvent } from 'react'
-import { isFirefox } from '../browser'
-import { getSentenceFromSelection, getTextFromSelection } from '../get-selection-more'
 import { checkSupportedLangs } from '@/core/api-server/utils/lang-check'
-import { isInDictPanel } from './utils'
+import { isInDictPanel } from './selection/utils'
+import type { SupportedLangs } from '@/core/api-server/types/dict-base'
+import { isFirefox } from '@/utils/browser'
+import { getSentenceFromSelection, getTextFromSelection } from '@/utils/get-selection-more'
 
 type SelectionConf = {
   // 启用 touch 事件的监听
   touchMode: boolean
   // 双击的判定间隔
   doubleClickDelay: 300
+  // 非输入框
+  noTypeField: boolean
+  // 语言
+  language: SupportedLangs
+  panelMode: {
+    direct: boolean,
+    double: boolean,
+    holding: {
+      alt: boolean,
+      shift: boolean,
+      ctrl: boolean,
+      meta: boolean,
+    }
+  }
 }
 
 export function createSelectTextStream (config: SelectionConf | null) {
@@ -72,8 +87,10 @@ function withTouchMode (config: SelectionConf) {
     map(([, isWithMouse]) => [window.getSelection(), isWithMouse] as const),
     withLatestFrom(mouseup$, mousedown$, clickPeriodCount$),
     map(([[selection, isWithMouse], mouseup, mousedown, clickPeriodCount]) => {
-      const self = isInDictPanel(selection.anchorNode || mousedown.target)
-
+      const self = isInDictPanel(selection?.anchorNode || mousedown.target)
+      if (!selection) {
+        return {}
+      }
       if (
         config.noTypeField &&
         isTypeField(isWithMouse ? mousedown.target : selection.anchorNode)
@@ -88,6 +105,7 @@ function withTouchMode (config: SelectionConf) {
       }
 
       if (isWithMouse) {
+        const mouse = mouseup as MouseEvent
         return {
           word: {
             text,
@@ -95,12 +113,12 @@ function withTouchMode (config: SelectionConf) {
           },
           self,
           dbClick: clickPeriodCount >= 2,
-          mouseX: mouseup.clientX,
-          mouseY: mouseup.clientY,
-          altKey: !!mouseup.altKey,
-          shiftKey: !!mouseup.shiftKey,
-          ctrlKey: !!mouseup.ctrlKey,
-          metaKey: !!mouseup.metaKey,
+          mouseX: mouse.clientX,
+          mouseY: mouse.clientY,
+          altKey: !!mouse.altKey,
+          shiftKey: !!mouse.shiftKey,
+          ctrlKey: !!mouse.ctrlKey,
+          metaKey: !!mouse.metaKey,
         }
       }
 

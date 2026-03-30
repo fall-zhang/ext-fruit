@@ -33,7 +33,6 @@ function RouteComponent () {
       — Mom
     </blockquote>
 
-    <SaladBowlListen
-      ></SaladBowlListen>
+    <SaladBowlListen></SaladBowlListen>
   </div>
 }

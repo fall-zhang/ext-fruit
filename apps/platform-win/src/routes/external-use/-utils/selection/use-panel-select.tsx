@@ -1,3 +1,9 @@
+import type { AppConfig } from '@/config/app-config'
+import { checkSupportedLangs } from '@/core/api-server/utils/lang-check'
+import { isTagName } from '@/utils/dom'
+import { getTextFromSelection, getSentenceFromSelection } from '@/utils/get-selection-more'
+import { useCallback } from 'react'
+
 export function useInPanelSelect (
   touchMode: AppConfig['touchMode'],
   language: AppConfig['language']
