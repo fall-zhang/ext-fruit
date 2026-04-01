@@ -8,8 +8,8 @@ import { useConfContext } from '@/context/conf-context'
 import { DictList } from './DictList/DictList'
 import { debounce } from 'es-toolkit'
 import { newWord } from '@/utils/dict-utils/new-word'
-import { SearchBox } from './search-input/search-input'
 import { SALADICT_PANEL } from '@/config/const/saladict'
+import { SearchArea } from './search-input/search-area'
 
 type SaladPanelProps = {
   menuBarProps?: Record<string, any>
@@ -36,11 +36,11 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
         favicon: 'https://saladict.crimx.com/favicon.ico',
       }),
     })
-  }, 300), [])
-  const searchText = (text: string) => {
+  }, 600), [])
+  const searchText = () => {
     searchStart({
       word: newWord({
-        text,
+        text: inputText,
         title: 'Saladict',
         favicon: 'https://saladict.crimx.com/favicon.ico',
       }),
@@ -69,15 +69,14 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
         } as CSSProperties}
       >
         <div className="search-zone ">
-          <SearchBox
-            text={inputText}
+          <SearchArea
+            inputValue={inputText}
             enableSuggest={enableSuggest}
-            onInput={(text) => {
+            setInputValue={(text) => {
               setInputText(text)
-              updateText(text)
-            }}
-            onSearch={searchText}
-          />
+              // updateText(text)
+            } }
+            onSend={searchText} />
         </div>
         {/* <HoverBoxContext.Provider value={rootElRef}>
             <div className="dictPanel-Body fancy-scrollbar">

@@ -4,7 +4,14 @@ import type { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { OptionsBtn } from './MenubarBtns'
 import { HoverBox, type HoverBoxItem } from '@/components/HoverBox'
-import { getProfileName } from 'apps/browser-extension/src/utils/profile-manager'
+export function getProfileName (name: string, t: TFunction): string {
+  // default names
+  const match = /^%%_(\S+)_%%$/.exec(name)
+  if (match) {
+    return t(`common:profile.${match[1]}`) || name
+  }
+  return name
+}
 
 export interface ProfilesProps {
   t: TFunction
@@ -41,10 +48,6 @@ export const ProfilePopover: FC<ProfilesProps> = props => {
       Button={ProfilesBtn}
       items={listItems}
       onBtnClick={() => {
-        // message.send({
-        //   type: 'OPEN_URL',
-        //   payload: { url: 'options.html', self: true },
-        // })
         return false
       }}
       onSelect={props.onSelectProfile}

@@ -1,6 +1,7 @@
 import type {
   FC,
-  ComponentProps
+  ComponentProps,
+  ReactNode
 } from 'react'
 import React, {
   useCallback,
@@ -10,12 +11,22 @@ import React, {
 import { useUpdateEffect } from 'react-use'
 import { timer } from '../../utils/promise-more'
 import { isTagName } from '../../utils/dom'
+import { Volume2Icon } from 'lucide-react'
 
-type StaticSpeakerType = {
-  (src: string): Promise<void>
+type SpeakerType = {
+  onPlayStart: (src: string) => Promise<void>
+  isPlaying?: boolean
+  playingSrc?: string
+
 }
 /** onPlayStart */
-const StaticSpeakerContext = React.createContext<StaticSpeakerType>(async () => {})
+const StaticSpeakerContext = React.createContext<SpeakerType>({
+  onPlayStart (src: string) {
+    throw new Error('Function not implemented.')
+  },
+  playingSrc: '',
+  isPlaying: false,
+})
 
 export interface SpeakerProps {
   /** render nothing when no src */
@@ -31,18 +42,15 @@ export interface SpeakerProps {
  * 用于播放音频文件
  */
 export const Speaker: FC<SpeakerProps> = props => {
-  // console.log('⚡️ line:33 ~ props: ', props);
-  const [src, setSrc] = useState(() =>
-    (typeof props.src === 'string' ? props.src : '#')
-  )
-
-  const onPlayStart = useContext(StaticSpeakerContext)
-
-  useUpdateEffect(() => {
-    setSrc(typeof props.src === 'string' ? props.src : '#')
-  }, [props.src])
-
+  const { onPlayStart, isPlaying, playingSrc } = useContext(StaticSpeakerContext)
   if (!props.src) return null
+
+  let renderSrc
+  if (typeof props.src === 'function') {
+    renderSrc = '#'
+  } else {
+    renderSrc = props.src
+  }
 
   const width = props.width || props.height || '1.2em'
   const height = props.height || width
@@ -50,65 +58,41 @@ export const Speaker: FC<SpeakerProps> = props => {
   return (
     <a
       className="saladict-Speaker"
-      href={src}
+      href={renderSrc}
       target="_blank"
       rel="noopener noreferrer"
       style={{ width, height }}
       onClick={async e => {
-        if (src === '#' && typeof props.src === 'function') {
+        if (typeof props.src === 'function') {
           e.stopPropagation()
           e.preventDefault()
           const result = await props.src()
           onPlayStart(result)
-          setSrc(result)
+          return
         }
+        onPlayStart(renderSrc)
       }}
-    ></a>
+    >
+      {/* <Speak */}
+      <Volume2Icon />
+    </a>
   )
 }
 
 export default React.memo(Speaker)
 
-export interface StaticSpeakerContainerProps
-  extends Omit<ComponentProps<'div'>, 'onClick'> {
-  onPlayStart: (src: string) => Promise<void>
+export type SpeakerProviderProps = SpeakerType & {
+  children: ReactNode
 }
 
 /**
  * Listens to HTML injected Speakers in childern
  */
-export const StaticSpeakerContainer: FC<StaticSpeakerContainerProps> = props => {
-  const { onPlayStart, ...restProps } = props
-
-  const onClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (
-        e.target &&
-        isTagName(e.target, 'a') &&
-        e.target.href &&
-        e.target.href !== '#' &&
-        e.target.classList &&
-        e.target.classList.contains('saladict-Speaker')
-      ) {
-        e.preventDefault()
-        e.stopPropagation()
-
-        const target = e.target as HTMLAnchorElement
-        target.classList.add('isActive')
-
-        Promise.allSettled([timer(1000), onPlayStart(target.href)]).then(() => {
-          target.classList.remove('isActive')
-        }).catch(err => {
-          console.error('StaticSpeakerContainer ~ err:', err)
-        })
-      }
-    },
-    [onPlayStart]
-  )
-
+export const SpeakerProvider: FC<SpeakerProviderProps> = ({ children, ...props }) => {
   return (
-    <StaticSpeakerContext.Provider value={onPlayStart}>
-      <div onClick={onClick} {...restProps} />
+    <StaticSpeakerContext.Provider value={props}>
+      {children}
+      {/* <div onClick={onClick} {...restProps} /> */}
     </StaticSpeakerContext.Provider>
   )
 }

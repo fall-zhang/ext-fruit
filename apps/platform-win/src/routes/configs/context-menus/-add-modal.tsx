@@ -5,7 +5,6 @@ import { CheckOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons'
 import omit from 'lodash/omit'
 import { v4 as uuid } from 'uuid'
 import { isFirefox } from '@/utils/browser'
-import { useDictStore } from '@/store'
 import { useTranslation } from 'react-i18next'
 import { getConfigPath } from '../-utils/path-joiner'
 import { useUpload } from '../-utils/upload'
@@ -62,7 +61,7 @@ export const AddModal: FC<AddModalProps> = ({ show, onEdit, onClose }) => {
     if (!contextMenus) return null
 
     const item = contextMenus.all[menuID]
-    const itemName = typeof item === 'string' ? t(`menus:${menuID}`) : item.name
+    const itemName = typeof item === 'string' ? t(`menus:${menuID}`) : ''
     return (
       <List.Item>
         <div className="sortable-list-item">

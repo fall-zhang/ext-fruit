@@ -6,7 +6,7 @@ import root from 'react-shadow'
 import dictContentStyles from './DictItemContent.shadow.scss?raw'
 import type { Word } from '@/types/word'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
-import { StaticSpeakerContainer } from '@/components/Speaker'
+import { SpeakerProvider } from '@/components/Speaker'
 import type { ViewProps } from '@/components/dict-api-view/type'
 import { SALADICT_PANEL } from '@/config/const/saladict'
 import type { DictID } from '@/core/api-server/config'
@@ -89,21 +89,24 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
               <style>{dictContentStyles}</style>
               <DictStyle />
               {props.panelCSS ? <style>{props.panelCSS}</style> : null}
-              <StaticSpeakerContainer
+              <div
                 className={classNames(
                   `d-${props.dictID}`,
                   'dictRoot',
                   SALADICT_PANEL,
                   { isAnimate: props.withAnimation }
                 )}
-                onPlayStart={props.onSpeakerPlay}
                 onMouseUp={props.onInPanelSelect}
               >
-                <Dict
-                  result={props.searchResult}
-                  searchText={props.searchText}
-                />
-              </StaticSpeakerContainer>
+                <SpeakerProvider
+                  onPlayStart={props.onSpeakerPlay}
+                >
+                  <Dict
+                    result={props.searchResult}
+                    searchText={props.searchText}
+                  />
+                </SpeakerProvider>
+              </div>
             </div>
           </root.div>
         )}

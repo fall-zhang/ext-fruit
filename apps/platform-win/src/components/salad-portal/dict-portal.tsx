@@ -5,8 +5,9 @@ import { useUpdateEffect } from 'react-use'
 import clsx from 'clsx'
 import { useDictStore } from '../../store'
 import { DictPanel, type DictPanelProps } from '../DictPanel/DictPanel'
-import ShadowPortal, { defaultTimeout } from './shadow-portal'
+import ShadowPortal from './shadow-portal'
 import { SALADICT_PANEL } from '@/config/const/saladict'
+import { useConfContext } from '@/context/conf-context'
 
 export interface DictPanelPortalProps extends DictPanelProps {
   show: boolean
@@ -16,24 +17,22 @@ export interface DictPanelPortalProps extends DictPanelProps {
 }
 
 export const DictPanelPortal: FC = () => {
+  const config = useConfContext().config
   const props = useDictStore(store => {
     return {
-      coord: store.dictPanelCoord,
+      // width: store.config.panelWidth,
+      // fontSize: store.config.fontSize,
+      // panelCSS: store.config.panelCSS,
+      // withAnimation: store.config.animation,
+      // darkMode: store.config.darkMode,
       takeCoordSnapshot: store.wordEditor.isShow,
-      width: store.config.panelWidth,
       height: store.panelHeight,
       maxHeight: store.panelMaxHeight,
-      fontSize: store.config.fontSize,
-      withAnimation: store.config.animation,
-      panelCSS: store.config.panelCSS,
-      darkMode: store.config.darkMode,
+      coord: store.dictPanelCoord,
       dragStartCoord: store.dragStartCoord,
     }
   })
   const {
-    panelCSS,
-    withAnimation,
-    darkMode,
     ...restProps
   } = props
 
@@ -59,14 +58,15 @@ export const DictPanelPortal: FC = () => {
       id="saladict-dictpanel-root"
       head={<style>{import('./DictPanel.shadow.scss?raw').toString()}</style>}
       shadowRootClassName={SALADICT_PANEL}
-      innerRootClassName={clsx({ isAnimate: withAnimation, darkMode })}
-      panelCSS={panelCSS}
+      innerRootClassName={clsx({ isAnimate: config.animation, darkMode: config.darkMode })}
     >
       <DictPanel
         menuBar={undefined}
         mtaBox={undefined}
         dictList={undefined}
         waveformBox={undefined}
+        width={config.panelWidth}
+        fontSize={config.fontSize}
         onDragEnd={ () => {
           throw new Error('Function not implemented.')
         }} {...restProps} />

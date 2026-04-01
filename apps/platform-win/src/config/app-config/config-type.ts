@@ -39,7 +39,7 @@ export type ModeConfType = {
 export type SaladConfigType = {
   version: number,
 
-  /** activate app, won't affect triple-ctrl setting */
+  /** activate app */
   active: boolean,
 
   /**
@@ -132,15 +132,8 @@ export type SaladConfigType = {
   /** pin panel when shows up  */
   defaultPinned: boolean,
 
-  /** should standalone panel memo position and dimension on close */
-  qssaRectMemo: boolean,
-
-  /** browser action panel width defaults to as wide as possible */
-  baWidth: -1,
-
   baHeight: 550,
 
-  /** auto search when browser action panel shows */
   baAuto: boolean,
 
   /**

@@ -5,8 +5,8 @@ import { getDefaultConfig, type AppConfig } from '@/config/app-config'
 
 interface ConfContextType {
   config: AppConfig
+  // 应用翻译相关的配置
   profile: AppProfile
-  darkMode: boolean
   // Date management
   // appDisable: boolean;
   updateConfig(config: AppConfig): void
@@ -16,17 +16,16 @@ interface ConfContextType {
   // toggleColorVisibility: (color: string) => void;
   // isColorVisible: (color: string | undefined) => boolean;
 }
+function notImplement () {
+  throw new Error('Function not implemented.')
+}
+
 // 应用配置的 context
 const ConfContext = createContext<ConfContextType>({
   config: getDefaultConfig(),
   profile: getDefaultProfile(),
-  darkMode: false,
-  updateConfig: function (config: AppConfig): void {
-    throw new Error('Function not implemented.')
-  },
-  updateProfile: function (profile: AppProfile): void {
-    throw new Error('Function not implemented.')
-  },
+  updateConfig: notImplement,
+  updateProfile: notImplement,
 })
 
 export function useConfContext () {
@@ -37,18 +36,17 @@ export function useConfContext () {
   return context
 }
 
-type ConfProviderProps = ConfContextType & {
+type ConfProviderProps = Partial<ConfContextType> & {
   children: ReactNode;
 }
 
 export function ConfProvider ({ children, config, profile, updateConfig, updateProfile }: ConfProviderProps) {
   // Initialize visibleColors based on the isActive property in etiquettes
   const value: ConfContextType = {
-    config,
-    darkMode: false,
-    profile,
-    updateConfig,
-    updateProfile,
+    config: config || getDefaultConfig(),
+    profile: profile || getDefaultProfile(),
+    updateConfig: updateConfig || notImplement,
+    updateProfile: updateProfile || notImplement,
   }
 
   return (

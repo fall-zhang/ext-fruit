@@ -7,16 +7,16 @@ import { PlaceholderTableMemo } from './PlaceholderTable'
 import { I18nContext, useTranslation } from 'react-i18next'
 import type { Word } from '@/types/word'
 import { newWord } from '@/utils/dict-utils/new-word'
-import type { storage } from 'sinon-chrome'
 
 const keywordMatchStr = `%(${Object.keys(newWord()).join('|')}|contextCloze)%`
+type LineBreakOption = '' | 'n' | 'p' | 'br' | 'space'
 
 export type ExportModalTitle = 'all' | 'selected' | 'page' | ''
 
 export interface ExportModalProps {
   title: ExportModalTitle
   rawWords: Word[]
-  onCancel: (e: React.MouseEvent<any>) => any
+  onCancel: (e: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.KeyboardEvent<HTMLElement>) => void
 }
 
 export const ExportModal: FC<ExportModalProps> = props => {
@@ -32,8 +32,8 @@ export const ExportModal: FC<ExportModalProps> = props => {
     setOutput(props.rawWords.map(word =>
       template.replace(new RegExp(keywordMatchStr, 'g'), (match, k) => {
         switch (k) {
-          case 'date':
-            return new Date(word.date).toLocaleDateString(lang)
+          // case 'date':
+          //   return new Date(word.date).toLocaleDateString(lang)
           case 'trans':
           case 'note':
           case 'context':
@@ -75,7 +75,8 @@ export const ExportModal: FC<ExportModalProps> = props => {
             return text
           }
           default:
-            return word[k] || ''
+            // return word[k] || ''
+            return ''
         }
       })
     )
@@ -89,17 +90,17 @@ export const ExportModal: FC<ExportModalProps> = props => {
     if (wordpageTemplate) {
       setTemplate(wordpageTemplate)
     }
-    setLineBreak(wordpageLineBreak)
+    // setLineBreak(wordpageLineBreak)
 
-    storage.local
-      .get<{
-      wordpageHTMLEscape: boolean
-    }>('wordpageHTMLEscape')
-      .then(({ wordpageHTMLEscape }) => {
-        if (wordpageHTMLEscape != null) {
-          setEscape(wordpageHTMLEscape)
-        }
-      })
+    // storage.local
+    //   .get<{
+    //   wordpageHTMLEscape: boolean
+    // }>('wordpageHTMLEscape')
+    //   .then(({ wordpageHTMLEscape }) => {
+    //     if (wordpageHTMLEscape != null) {
+    //       setEscape(wordpageHTMLEscape)
+    //     }
+    //   })
   }, [])
 
   const exportWords = () => {
@@ -122,7 +123,6 @@ export const ExportModal: FC<ExportModalProps> = props => {
     <Modal
       title={props.title ? t(`export.${props.title}`) : ' '}
       visible={!!props.title}
-      destroyOnClose={true}
       onOk={exportWords}
       onCancel={props.onCancel}
       okText={t('common:export')}
@@ -157,7 +157,7 @@ export const ExportModal: FC<ExportModalProps> = props => {
               checked={escape}
               onChange={checked => {
                 setEscape(checked)
-                storage.local.set({ wordpageHTMLEscape: checked })
+                // storage.local.set({ wordpageHTMLEscape: checked })
               }}
               checkedChildren={t('export.htmlescape.text')}
               unCheckedChildren={t('export.htmlescape.text')}
@@ -168,7 +168,7 @@ export const ExportModal: FC<ExportModalProps> = props => {
             value={template}
             onChange={({ currentTarget: { value } }) => {
               setTemplate(value)
-              storage.sync.set({ wordpageTemplate: value })
+              // storage.sync.set({ wordpageTemplate: value })
             }}
           />
         </Layout.Content>
