@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { resolve as pathResolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 // import { visualizer } from 'rollup-plugin-visualizer'
@@ -7,6 +7,8 @@ import { analyzer } from 'vite-bundle-analyzer'
 
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import tailwindcss from '@tailwindcss/vite'
+import babel from '@rolldown/plugin-babel'
+
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -17,6 +19,7 @@ export default defineConfig({
       autoCodeSplitting: true,
     }),
     react(),
+    babel({ presets: [reactCompilerPreset()] }),
     analyzer({
       openAnalyzer: true,
     }),

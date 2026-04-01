@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
     "target": "ES2023",
     "module": "esnext",
     // This compiler run should only output d.ts files

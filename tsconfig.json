@@ -31,14 +31,13 @@
     "target": "ES2020",
     "paths": {
       "@P/*": [
-        "packages/*"
+        "./packages/*"
       ],
       "@salad/ui/*": [
-        "packages/ui/*"
+        "./packages/ui/*"
       ],
-
       "@/*": [
-        "apps/platform-win/src/*"
+        "./apps/platform-win/src/*"
       ]
     },
     "lib": [
