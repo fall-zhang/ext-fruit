@@ -1,4 +1,4 @@
-import type { Word } from '../types/word'
+import type { Word } from '@/types/word'
 
 export function newWord (word?: Partial<Word>): Word {
   return {

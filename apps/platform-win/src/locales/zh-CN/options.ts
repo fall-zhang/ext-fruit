@@ -92,13 +92,6 @@ export const options = {
         src_trans: '朗读翻译',
       },
     },
-    pdfSniff: '嗅探 PDF 链接',
-    pdfSniff_help:
-      '开启后所有 PDF 链接将自动跳转到本扩展打开（包括本地，如果在扩展管理页面勾选了允许）。',
-    pdfSniff_extra: '现在更推荐使用自己喜欢的本地阅读器搭配{浏览器外划词}。',
-    pdfStandalone: '独立窗口',
-    pdfStandalone_help:
-      '在独立窗口中打开 PDF 阅读器。独立窗口只有标题栏，占用更少空间，但不能复制链接等操作。',
     baWidth: '弹窗宽度',
     baWidth_help: '右上弹框面板宽度。若为负数则取查词面板的宽度。',
     baHeight: '弹窗高度',
@@ -136,8 +129,6 @@ export const options = {
       },
       sel_blackwhitelist: '划词黑白名单',
       sel_blackwhitelist_help: '黑名单匹配的页面 Saladict 将不会响应鼠标划词。',
-      pdf_blackwhitelist_help:
-        '黑名单匹配的 PDF 链接将不会跳转到 Saladict 打开。',
       contextMenus_description:
         '设置右键菜单，可添加可自定义链接。网页翻译其实不需要沙拉查词，故已有的有道和谷歌网页翻译目前处于维护状态，没有计划添加新功能，请用其它官方扩展如彩云小译和谷歌翻译。',
       contextMenus_edit: '编辑右键菜单项目',
@@ -149,11 +140,6 @@ export const options = {
         popup_standalone: '打开快捷查词独立窗口',
       },
       openQsStandalone: '打开独立窗口设置',
-      pdfStandalone: {
-        default: '从不',
-        always: '总是',
-        manual: '手动',
-      },
     },
   },
 
@@ -388,8 +374,7 @@ export const options = {
     BOTTOM_RIGHT: '右下',
   },
 
-  import_export_help:
-    '设定已通过浏览器自动同步，也可以手动导入导出。备份为明文保存，对安全性有要求的请自行加密。',
+  import_export_help: '配置已经保存到本地，也可以手动导入导出。备份为明文保存，对安全性有要求的请自行加密。',
 
   import: {
     title: '导入设定',
@@ -411,8 +396,7 @@ export const options = {
   },
 
   dictAuth: {
-    description:
-      '随着沙拉查词用户增多，如经常使用机器翻译，建议到官网申请帐号以获得更稳定的体验以及更准确的结果。以下帐号数据只会保留在浏览器中。',
+    description: '如经常使用机器翻译，建议到官网申请帐号以获得更稳定的体验以及更准确的结果。以下帐号数据只会保留在本地。',
     dictHelp: '见{词典}官网。',
     manage: '管理私用帐号',
   },

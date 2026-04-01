@@ -1,4 +1,4 @@
-import { options as _locale } from '../zh-CN/options'
+import type { options as _locale } from '../zh-CN/options'
 
 export const locale: typeof _locale = {
   title: 'Saladict Options',
@@ -99,12 +99,6 @@ export const locale: typeof _locale = {
         src_trans: 'Read Translation Text',
       },
     },
-    pdfSniff: 'Enable PDF Sniffer',
-    pdfSniff_help: 'If turned on， PDF links will be automatically captured.',
-    pdfSniff_extra:
-      'It is recommended to {search selected text outside of browser} with your own favorite local reader.',
-    pdfStandalone: 'Standalone Panel',
-    pdfStandalone_help: 'Open PDF viewer in standalone panel.',
     baWidth: 'Width',
     baWidth_help:
       'Browser Action Panel wdith. Dict Panel width will be used if a negative value is chosen.',
@@ -146,8 +140,6 @@ export const locale: typeof _locale = {
       sel_blackwhitelist: 'Selection Black/White List',
       sel_blackwhitelist_help:
         'Saladict will not react to selection in blacklisted pages.',
-      pdf_blackwhitelist_help:
-        'Blacklisted PDF links will not jump to Saladict PDF Viewer.',
       contextMenus_description:
         'Each context menus item can also be customized. Youdao and Google page translate are deprecated in favor of the official extensions.',
       contextMenus_edit: 'Edit Context Menus Items',
@@ -159,11 +151,7 @@ export const locale: typeof _locale = {
         popup_standalone: 'Open Saladict Standalone Panel',
       },
       openQsStandalone: 'Standalone Panel Options',
-      pdfStandalone: {
-        default: 'Never',
-        always: 'Always',
-        manual: 'Manual',
-      },
+
     },
   },
 

@@ -128,10 +128,10 @@ export const useDictStore = create<GlobalState>((set, get) => {
       }
     }),
 
-    PLAY_AUDIO: (payload: string) => set((state) => ({
+    playAudio: (url: string) => set((state) => ({
       ...state,
       lastPlayAudio: {
-        src: payload,
+        src: url,
         timestamp: (new Date()).getTime(),
       },
     })),

@@ -57,12 +57,10 @@ export interface GlobalState {
   /** Record init coordinate on dragstart */
   dragStartCoord: null | { x: number; y: number },
   lastPlayAudio: null | { src: string; timestamp: number },
-  NEW_CONFIG(payload: AppConfig): void
   /* ------------------------------------------------ *\
      Audio Playing
   \* ------------------------------------------------ */
-
-  PLAY_AUDIO: {
+  playAudio: {
     /** url: to backend */
     (payload: string): void
   }

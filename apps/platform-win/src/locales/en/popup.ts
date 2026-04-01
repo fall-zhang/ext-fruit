@@ -1,4 +1,4 @@
-import { popup as _locale } from '../zh-CN/popup'
+import type { popup as _locale } from '../zh-CN/popup'
 
 export const locale: typeof _locale = {
   title: 'Saladict Browser Action Panel',
@@ -10,5 +10,5 @@ export const locale: typeof _locale = {
   notebook_empty: 'No selection found on the current page',
   notebook_error: 'Cannot add selected text to Notebook',
   page_no_response: 'Page no response',
-  qrcode_title: 'Qrcode of the page'
+  qrcode_title: 'Qrcode of the page',
 }
