@@ -6,9 +6,9 @@ import type { ColumnsType, TableProps } from 'antd/lib/table'
 import Table from 'antd/lib/table'
 import type { Word } from '@/types/word'
 
-import type { DBArea } from 'apps/browser-extension/src/utils/record-manager'
 import { useTranslation } from 'react-i18next'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@P/ui/components/tooltip'
+import type { DBArea } from '@/core/index-db/types'
 
 export const colSelectionWidth = 48
 const colDateWidth = 150

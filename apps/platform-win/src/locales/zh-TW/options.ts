@@ -1,4 +1,4 @@
-import { options as _locale } from '../zh-CN/options'
+import type { options as _locale } from '../zh-CN/options'
 
 export const locale: typeof _locale = {
   title: '沙拉查詞設定',
@@ -94,14 +94,6 @@ export const locale: typeof _locale = {
         src_trans: '朗讀翻譯',
       },
     },
-    pdfSniff: '嗅探 PDF 連結',
-    pdfSniff_help:
-      '開啟後所有 PDF 連結將自動跳至本套件開啟（包括本機，如果在套件管理頁面勾選了允許）。',
-    pdfSniff_extra:
-      '現在更推薦使用自己喜歡的本地閱讀器搭配{瀏覽器外選字翻譯}。',
-    pdfStandalone: '獨立視窗',
-    pdfStandalone_help:
-      '在獨立視窗中開啟 PDF 閱讀器。獨立視窗只有標題欄，佔用更少空間，但不能複製連結等操作。',
     baWidth: '彈窗寬度',
     baWidth_help: '右上彈框面板寬度。若為負數則取查字介面的寬度。',
     baHeight: '彈窗高度',
@@ -139,8 +131,6 @@ export const locale: typeof _locale = {
       },
       sel_blackwhitelist: '選詞黑白名單',
       sel_blackwhitelist_help: '黑名單相符的頁面 Saladict 將不會響應滑鼠劃詞。',
-      pdf_blackwhitelist_help:
-        '黑名單相符的 PDF 連結將不會跳至 Saladict 開啟。',
       contextMenus_description:
         '設定右鍵選單，可新增可自定義連結。網頁翻譯其實不需要沙拉查詞，故已有的有道和谷歌網頁翻譯目前處於維護狀態，沒有計劃新增新功能，請用其它官方擴充套件如彩雲小譯和谷歌翻譯。',
       contextMenus_edit: '編輯右鍵選單項目',
@@ -152,11 +142,6 @@ export const locale: typeof _locale = {
         popup_standalone: '開啟快捷查詞獨立視窗',
       },
       openQsStandalone: '獨立視窗設定',
-      pdfStandalone: {
-        default: '從不',
-        always: '總是',
-        manual: '手動',
-      },
     },
   },
 

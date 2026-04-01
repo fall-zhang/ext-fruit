@@ -1,4 +1,4 @@
-import { locale as _locale } from '../zh-CN/common'
+import type { common as _locale } from '../zh-CN/common'
 
 export const locale: typeof _locale = {
   add: 'Añadir',
@@ -42,14 +42,14 @@ export const locale: typeof _locale = {
     matchAll: 'Coincidir con todos los caracteres',
     minor: 'Menor',
     others: 'Otros',
-    spanish: 'Español'
+    spanish: 'Español',
   },
 
   unit: {
     mins: 'minutes',
     ms: 'ms',
     s: 's',
-    word: 'words'
+    word: 'words',
   },
 
   note: {
@@ -61,7 +61,7 @@ export const locale: typeof _locale = {
     date: 'Date',
     srcTitle: 'Source Title',
     srcLink: 'Source Link',
-    srcFavicon: 'Source Favicon'
+    srcFavicon: 'Source Favicon',
   },
 
   profile: {
@@ -70,6 +70,6 @@ export const locale: typeof _locale = {
     default: 'Default Mode',
     scholar: 'Scholar Mode',
     translation: 'Translation Mode',
-    nihongo: 'Japanese Mode'
-  }
+    nihongo: 'Japanese Mode',
+  },
 }

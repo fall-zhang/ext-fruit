@@ -1,8 +1,9 @@
-import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
+import type { AtomGetSrcFunction } from '@P/salad-api/src/types/atom-type'
 import { moedictSearch } from '../guoyu/engine'
 import type { GuoYuResult } from '../guoyu/type'
+import type { SearchFunction } from '@/core/api-server/api-common/search-type';
 
-export const getSrcPage: GetSrcPageFunction = async text => {
+export const getSrcPage: AtomGetSrcFunction = async text => {
   return 'https://www.moedict.tw/~'
 }
 
@@ -18,9 +19,10 @@ export const search: SearchFunction<LiangAnResult> = (
     opt.profile.liangan.options
   ).then(result => {
     if (result.result.h) {
-      result.result.h.forEach(h => {
-        if (h.p) {
-          h.p = h.p.replace('<br>陸⃝', ' [大陆]: ')
+      result.result.h.forEach(item => {
+        if (item.p) {
+          // eslint-disable-next-line no-param-reassign
+          item.p = item.p.replace('<br>陸⃝', ' [大陆]: ')
         }
       })
     }

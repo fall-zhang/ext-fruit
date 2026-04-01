@@ -26,7 +26,7 @@ function getUrl (text: string, lang: JukuuLang) {
 }
 
 export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
-  return getUrl(text, profile.dicts.all.jukuu.options.lang)
+  return getUrl(text, profile.jukuu.options.lang)
 }
 
 interface JukuuTransItem {
@@ -64,13 +64,13 @@ function handleDOM (doc: Document): JukuuTransItem[] {
     .map($e => {
       const $trans = $e.lastElementChild
       if (!$trans) {
-        return
+        return null
       }
       removeChildren($trans, 'img')
 
       const $original = $e.nextElementSibling
       if (!$original || !$original.classList.contains('c')) {
-        return
+        return null
       }
 
       const $src = $original.nextElementSibling

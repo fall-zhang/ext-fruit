@@ -1,6 +1,7 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
+import type React from 'react'
 import { InputNumber } from 'antd'
-import { InputNumberProps } from 'antd/lib/input-number'
+import type { InputNumberProps } from 'antd/lib/input-number'
 
 import './_style.scss'
 

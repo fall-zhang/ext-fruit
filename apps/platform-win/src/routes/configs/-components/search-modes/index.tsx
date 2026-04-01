@@ -1,14 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
 import { Switch, Checkbox, Slider } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { searchMode } from './search-mode'
 import { getConfigPath, getProfilePath } from '../../-utils/path-joiner'
 import { SaladictForm } from '../SaladictForm'
 import { supportedLangs } from '@/core/api-server/utils/lang-check'
-
-export const Route = createFileRoute('/configs/search-modes/')({
-  component: RouteComponent,
-})
 
 function RouteComponent () {
   const { t } = useTranslation(['options', 'common'])

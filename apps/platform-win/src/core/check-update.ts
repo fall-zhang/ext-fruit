@@ -35,7 +35,8 @@ export async function checkUpdate (
   let res = data
   if (!data) {
     try {
-      const isZh = window.appConfig.langCode.startsWith('zh')
+      // const isZh = window.appConfig.langCode.startsWith('zh')
+      const isZh = true
       const response = await fetch(
         `https://saladict.crimx.com/releases/${isZh ? 'chs' : 'eng'}.json`
       )

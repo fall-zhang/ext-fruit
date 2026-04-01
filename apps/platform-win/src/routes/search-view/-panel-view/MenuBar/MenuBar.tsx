@@ -13,6 +13,7 @@ import { useDictStore } from '@/store'
 import { useShallow } from 'zustand/shallow'
 import { useConfContext } from '@/context/conf-context'
 import { useSearchContext } from '@/context/search-context'
+import { HistoryIcon } from 'lucide-react'
 
 export interface MenuBarProps {
   menuBarProps?: Record<string, any>
@@ -56,14 +57,18 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
 
   return (
     <header className="menuBar">
-      <HistoryBackBtn
+      <HistoryIcon
+        className="text-white dark:text-black"
+        strokeWidth={1}
+      />
+      {/* <HistoryBackBtn
         disabled={store.historyIndex <= 0}
         onClick={() => switchHistory('prev')}
       />
       <HistoryNextBtn
         disabled={store.historyIndex >= searchContext.searchHistory.length - 1}
         onClick={() => switchHistory('next')}
-      />
+      /> */}
       <div className="grow h-full" data-tauri-drag-region={true}></div>
       {/* 自定义 button 列表 */}
       {props.customButton}

@@ -75,7 +75,6 @@ export const CtxTransList: FC<CtxTransListProps> = props => {
             <h1 className="ctxTrans-Title">
               <input
                 type="checkbox"
-                checked={props.ctxTransConfig[name]}
                 id={'ctx-' + name}
                 data-name={name}
                 onChange={onTicked}
@@ -83,7 +82,6 @@ export const CtxTransList: FC<CtxTransListProps> = props => {
               <label htmlFor={'ctx-' + name}>{name}</label>
             </h1>
           </div>
-          <p className="ctxTrans-Content">{props.ctxTransResult[name]}</p>
         </li>
       ))}
     </ul>

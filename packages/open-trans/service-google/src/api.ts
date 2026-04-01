@@ -5,7 +5,7 @@ import translate from '../google-translate-open-api/src'
  * @param tld 'com' or 'cn'
  */
 export async function getTK (text: string, tld: 'cn' | 'com'): Promise<string> {
-  const { value } = await translate(text, { tld })
+  const { value } = await translate(text, { tld, to: 'zh-CN' })
   return value
 }
 

@@ -1,7 +1,9 @@
-import {
+import type {
   Language,
+  TranslateQueryResult
+} from '../../translator'
+import {
   Translator,
-  TranslateQueryResult,
   TranslateError
 } from '../../translator'
 type NiuTranslateResult = {
@@ -11,7 +13,7 @@ type NiuTranslateResult = {
   tgt_text: string;
   error_code?: string;
   error_msg?: string;
-};
+}
 
 // https://niutrans.com/documents/contents/trans_text#languageList
 const langMap: [Language, string][] = [
@@ -29,7 +31,7 @@ const langMap: [Language, string][] = [
   ['ar', 'ar'],
   ['id', 'id'],
   ['vi', 'vi'],
-  ['it', 'it']
+  ['it', 'it'],
 ]
 
 export interface NiuConfig {
@@ -62,14 +64,14 @@ export class Niu extends Translator<NiuConfig> {
       url: 'https://api.niutrans.com/NiuTransServer/translation',
       method: 'POST',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
       },
       data: {
         src_text: text,
         from: Niu.langMap.get(from),
         to: Niu.langMap.get(to),
-        apikey: config.apikey
-      }
+        apikey: config.apikey,
+      },
     }).catch(error => {
       console.log(error)
       throw new TranslateError('UNKNOWN')
@@ -80,11 +82,11 @@ export class Niu extends Translator<NiuConfig> {
     // https://niutrans.com/documents/contents/trans_text#error
     if (errorCode) {
       switch (errorCode) {
-      case '13001':
+        case '13001':
         // 字符流量不足或者没有访问权限
-        throw new TranslateError('AUTH_ERROR', result.error_msg)
-      default:
-        throw new TranslateError('UNKNOWN', result.error_msg)
+          throw new TranslateError('AUTH_ERROR', result.error_msg)
+        default:
+          throw new TranslateError('UNKNOWN', result.error_msg)
       }
     }
 
@@ -93,11 +95,11 @@ export class Niu extends Translator<NiuConfig> {
       from,
       to,
       origin: {
-        paragraphs: [text]
+        paragraphs: [text],
       },
       trans: {
-        paragraphs: [result.tgt_text]
-      }
+        paragraphs: [result.tgt_text],
+      },
     }
   }
 }

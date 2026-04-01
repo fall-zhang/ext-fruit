@@ -22,18 +22,18 @@ class SignerV4 {
     header['X-Date'] = currTime
     header['X-Content-Sha256'] = XContentSha256
 
-    const signingStr = this.getSigningStr(apiInfo, header, metaData)
-    const signingKey = this.getSigningKey(credentials.sk, metaData)
-    const sign = CryptoJS.HmacSHA256(signingStr, signingKey).toString(
-      CryptoJS.enc.Hex
-    )
+    // const signingStr = this.getSigningStr(apiInfo, header, metaData)
+    // const signingKey = this.getSigningKey(credentials.sk, metaData)
+    // const sign = CryptoJS.HmacSHA256(signingStr, signingKey).toString(
+    //   CryptoJS.enc.Hex
+    // )
 
     const authorization = [
       `${metaData.algorithm} Credential=${
         credentials.ak
       }/${metaData.getCredentialScope()}`,
       'SignedHeaders=' + header.getSignedHeaders(),
-      `Signature=${sign}`,
+      // `Signature=${sign}`,
     ].join(', ')
 
     header.Authorization = authorization
@@ -65,12 +65,12 @@ class SignerV4 {
     return signingStr
   }
 
-  static getSigningKey (sk: string, metaData: MetaData): CryptoJS.WordArray {
-    const kDate = CryptoJS.HmacSHA256(metaData.date, sk)
-    const kRegion = CryptoJS.HmacSHA256(metaData.region, kDate)
-    const kService = CryptoJS.HmacSHA256(metaData.service, kRegion)
-    return CryptoJS.HmacSHA256('request', kService)
-  }
+  // static getSigningKey (sk: string, metaData: MetaData): CryptoJS.WordArray {
+  //   const kDate = CryptoJS.HmacSHA256(metaData.date, sk)
+  //   const kRegion = CryptoJS.HmacSHA256(metaData.region, kDate)
+  //   const kService = CryptoJS.HmacSHA256(metaData.service, kRegion)
+  //   return CryptoJS.HmacSHA256('request', kService)
+  // }
 }
 
 export default SignerV4

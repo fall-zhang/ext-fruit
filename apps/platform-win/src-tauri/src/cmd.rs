@@ -19,7 +19,7 @@ pub async fn suggest_req(url: String) -> std::string::String {
                     );
                     body_text
                 }
-                Err(e) => {
+                Err(_e) => {
                     // eprintln!("读取百度响应体失败: {}", e);
                     let default_val: String = String::new();
                     default_val

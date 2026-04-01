@@ -192,7 +192,7 @@ async function getSuggests (text: string): Promise<SuggestsResult> {
 
     return result || handleNoResult()
   } catch (e) {
-    return handleNetWorkError()
+    return handleNetWorkError(e)
   }
 }
 

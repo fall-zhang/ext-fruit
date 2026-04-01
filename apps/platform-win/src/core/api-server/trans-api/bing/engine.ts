@@ -154,7 +154,7 @@ function handleLexResult (
       })
       el.querySelectorAll('.client_sen_cn_word').forEach($word => {
         // eslint-disable-next-line no-param-reassign
-        $word.outerHTML = getText($word, transform)
+        $word.outerHTML = getText($word)
       })
       el.querySelectorAll('.client_sentence_search').forEach($word => {
         // eslint-disable-next-line no-param-reassign

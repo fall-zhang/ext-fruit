@@ -100,7 +100,6 @@ export const WordPage: FC<WordPageProps> = props => {
     <div className="wordPage-Container">
       <title>{t(`title.${props.area}`)}</title>
       <Header
-        t={t}
         area={props.area}
         searchText={searchText}
         totalCount={(tableInfo.pagination && tableInfo.pagination.total) || 0}
@@ -109,7 +108,7 @@ export const WordPage: FC<WordPageProps> = props => {
           setSearchText(text)
           fetchWords({ searchText: text })
         }}
-        onExport={async ({ key }) => {
+        onExport={async (key) => {
           if (key === 'all') {
             const { total, words } = await getWords({
               area: props.area,
@@ -174,9 +173,9 @@ export const WordPage: FC<WordPageProps> = props => {
             fetchWords({
               itemsPerPage: pagination?.pageSize || ITEMS_PER_PAGE,
               pageNum: pagination?.current || 1,
-              filters,
-              sortField: realSorter?.field,
-              sortOrder: realSorter?.order,
+              // filters,
+              // sortField: realSorter?.field,
+              // sortOrder: realSorter?.order,
               searchText,
             })
           }}

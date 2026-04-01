@@ -12,19 +12,19 @@ import {
 import { DownloadIcon } from 'lucide-react'
 import type { DBArea } from '@/core/index-db/types'
 import { useConfirmContext } from '@/context/confirm-context'
+import { useTranslation } from 'react-i18next'
 export interface WordPageProps {
-  t: TFunction
   area: DBArea
   searchText: string
   totalCount: number
   selectedCount: number
   onSearchTextChanged: (text: string) => void
-  onExport(ev: React.MouseEvent): void
+  onExport(type: 'all' | 'selected' | 'page'): void
   onDelete: (key: string) => void
 }
 
 export const Header: FC<WordPageProps> = props => {
-  const { t } = props
+  const { t } = useTranslation()
   const confirm = useConfirmContext()
   const deleteConfirm = (key: 'selected' | 'page' | 'all') => {
     if (key) {
@@ -66,9 +66,8 @@ export const Header: FC<WordPageProps> = props => {
           <NavigationMenuItem>
             <NavigationMenuTrigger>
               <div>
-                <div className='ml-2' onClick={props.onExport}>
+                <div className='ml-2' onClick={() => props.onExport('all')}>
                   {t('export.title')} <DownloadIcon/>
-
                 </div>
               </div>
             </NavigationMenuTrigger>

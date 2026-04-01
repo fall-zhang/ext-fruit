@@ -23,7 +23,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar
-} from '@/components/sidebar'
+} from '@salad/ui/components/sidebar'
 
 export function NavProjects ({
   projects,

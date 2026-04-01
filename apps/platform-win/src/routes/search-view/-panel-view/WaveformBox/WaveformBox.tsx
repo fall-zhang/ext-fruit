@@ -11,7 +11,6 @@ export interface WaveformBoxProps {
 }
 
 export const WaveformBox: FC = () => {
-  const config = useConfContext()
   const props: WaveformBoxProps = useDictStore(store => {
     return {
       isExpand: store.isExpandWaveformBox,

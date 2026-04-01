@@ -8,8 +8,6 @@ import {
 import axios from 'axios'
 import DOMPurify from 'dompurify'
 import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
-import type { HTMLString } from '../../types'
-import type { AllDictsConf } from '../../types/all-dict-conf'
 import { fetchDirtyDOM } from '../../utils/fetch-dom'
 import type { ShanbayResult, ShanbaySearchResult } from './type'
 
@@ -28,25 +26,23 @@ const HOST = 'http://www.shanbay.com'
  * ！！！！！！！！！！！！！！！！
  */
 export const search: SearchFunction<ShanbayResult> = async (
-  text,
-  opt
+  text
 ) => {
-  const options = opt.profile.shanbay.options
+  // const options = opt.profile.shanbay.options
   return fetchDirtyDOM(
     'https://www.shanbay.com/bdc/mobile/preview/word?word=' +
       encodeURIComponent(text.replace(/\s+/g, ' '))
   )
     .catch(handleNetWorkError)
-    .then(doc => checkResult(doc, options))
+    .then(doc => checkResult(doc))
 }
 
 function checkResult (
-  doc: Document,
-  options: AllDictsConf['shanbay']['options']
+  doc: Document
 ): ShanbaySearchResult | Promise<ShanbaySearchResult> {
   const $typo = doc.querySelector('.error-typo')
   if (!$typo) {
-    return handleDOM(doc, options)
+    return handleDOM(doc)
   }
   return handleNoResult()
 }
@@ -72,8 +68,7 @@ function loadSentences (id: string) {
 }
 
 async function handleDOM (
-  doc: Document,
-  options: AllDictsConf['shanbay']['options']
+  doc: Document
 ): Promise<ShanbaySearchResult> {
   const word = doc.querySelector('.word-spell')
   const result: ShanbayResult = {
@@ -95,14 +90,10 @@ async function handleDOM (
     url: audio.us,
   })
 
-  if (options.basic) {
-    result.basic = getInnerHTML(HOST, doc, '.definition-cn')
-  }
+  result.basic = getInnerHTML(HOST, doc, '.definition-cn')
 
   result.wordId = word && word.getAttribute('data-id')
-  if (options.sentence && result.wordId) {
-    result.sentences = await loadSentences(result.wordId)
-  }
+
 
   if (result.title) {
     return { result, audio }

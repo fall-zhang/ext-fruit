@@ -81,117 +81,110 @@ export const EditModal: FC<EditModalProps> = ({ dictID, onClose }) => {
             children: <InputNumberGroup suffix={t('common:max')} />,
           },
         ],
-      },
-      {
-        name: getProfilePath('dicts', 'all', dictID, 'preferredHeight'),
-        label: t('dict.preferredHeight'),
-        help: t('dict.preferredHeight_help'),
-        rules: NUMBER_RULES,
-        children: <InputNumberGroup suffix={t('common:max')} />,
       }
     )
 
     // Dict Auth for Machine Translators
-    if (dictAuth[dictID]) {
-      formItems.push({
-        key: dictID + '_auth',
-        label: t('nav.DictAuths'),
-        children: (
-          <Button
-            href="./?menuselected=DictAuths"
-            onClick={e => {
-              e.preventDefault()
-              e.stopPropagation()
-              if (formDirtyRef.value) {
-                Modal.confirm({
-                  title: t('unsave_confirm'),
-                  icon: <ExclamationCircleOutlined />,
-                  okType: 'danger',
-                  onOk: () => {
-                    setFormDirty(false)
-                    changeEntry('DictAuths')
-                  },
-                })
-              } else {
-                changeEntry('DictAuths')
-              }
-            }}
-          >
-            {t('dictAuth.manage')}
-          </Button>
-        ),
-      })
-    }
+    // if (dictAuth[dictID]) {
+    //   formItems.push({
+    //     key: dictID + '_auth',
+    //     label: t('nav.DictAuths'),
+    //     children: (
+    //       <Button
+    //         href="./?menuselected=DictAuths"
+    //         onClick={e => {
+    //           e.preventDefault()
+    //           e.stopPropagation()
+    //           if (formDirtyRef.value) {
+    //             Modal.confirm({
+    //               title: t('unsave_confirm'),
+    //               icon: <ExclamationCircleOutlined />,
+    //               okType: 'danger',
+    //               onOk: () => {
+    //                 setFormDirty(false)
+    //                 changeEntry('DictAuths')
+    //               },
+    //             })
+    //           } else {
+    //             changeEntry('DictAuths')
+    //           }
+    //         }}
+    //       >
+    //         {t('dictAuth.manage')}
+    //       </Button>
+    //     ),
+    //   })
+    // }
 
     // custom options
-    const options = allDicts[dictID].options
-    if (options) {
-      formItems.push(
-        ...Object.keys(options).map(optKey => {
-          // can be number | boolean | string(select)
-          const value = options[optKey]
+    // const options = allDicts[dictID].options
+    // if (options) {
+    //   formItems.push(
+    //     ...Object.keys(options).map(optKey => {
+    //       // can be number | boolean | string(select)
+    //       const value = options[optKey]
 
-          const item: SaladictFormItem = {
-            name: `profile.dicts.all.${dictID}.options.${optKey}`,
-            label: t(`dicts:${dictID}.options.${optKey}`),
-            help: i18n.exists(`dicts:${dictID}.helps.${optKey}`)
-              ? t(`dicts:${dictID}.helps.${optKey}`)
-              : null,
-          }
+    //       const item: SaladictFormItem = {
+    //         name: `profile.dicts.all.${dictID}.options.${optKey}`,
+    //         label: t(`dicts:${dictID}.options.${optKey}`),
+    //         help: i18n.exists(`dicts:${dictID}.helps.${optKey}`)
+    //           ? t(`dicts:${dictID}.helps.${optKey}`)
+    //           : null,
+    //       }
 
-          switch (typeof value) {
-            case 'number':
-              item.rules = NUMBER_RULES
-              item.children = (
-                <InputNumberGroup
-                  suffix={t(`dicts:${dictID}.options.${optKey}_unit`)}
-                />
-              )
-              break
-            case 'string':
-              if (optKey === 'tl' || optKey === 'tl2') {
-                const getTranslator:
-                  | undefined |
-                  (() => Translator) = import(`@/core/api-server/trans-api/${dictID}/engine`)
-                    .getTranslator
+    //       switch (typeof value) {
+    //         case 'number':
+    //           item.rules = NUMBER_RULES
+    //           item.children = (
+    //             <InputNumberGroup
+    //               suffix={t(`dicts:${dictID}.options.${optKey}_unit`)}
+    //             />
+    //           )
+    //           break
+    //         case 'string':
+    //           if (optKey === 'tl' || optKey === 'tl2') {
+    //             const getTranslator:
+    //               | undefined |
+    //               (() => Translator) = import(`@/core/api-server/trans-api/${dictID}/engine`)
+    //                 .getTranslator
 
-                const langs = getTranslator
-                  ? getTranslator()
-                    .getSupportLanguages()
-                    .map(lang => (lang === 'auto' ? 'default' : lang))
-                  : allDicts[dictID].optionalVal[optKey]
+    //             const langs = getTranslator
+    //               ? getTranslator()
+    //                 .getSupportLanguages()
+    //                 .map(lang => (lang === 'auto' ? 'default' : lang))
+    //               : allDicts[dictID].optionalVal[optKey]
 
-                item.children = (
-                  <Select
-                    options={langs.map((option: string) => ({
-                      label: (option === 'default' ? '' : option + ' ') + t(`langcode:${option}`),
-                      value: option,
-                    }
-                    ))}>
-                  </Select>
-                )
-              } else {
-                item.children = (
-                  <Select>
-                    {allDicts[dictID].optionalVal[optKey].map(
-                      (option: string) => (
-                        <Select.Option value={option} key={option}>
-                          {t(`dicts:${dictID}.options.${optKey}-${option}`)}
-                        </Select.Option>
-                      )
-                    )}
-                  </Select>
-                )
-              }
-              break
-            default:
-              item.valuePropName = 'checked'
-              item.children = <Switch />
-          }
-          return item
-        })
-      )
-    }
+    //             item.children = (
+    //               <Select
+    //                 options={langs.map((option: string) => ({
+    //                   label: (option === 'default' ? '' : option + ' ') + t(`langcode:${option}`),
+    //                   value: option,
+    //                 }
+    //                 ))}>
+    //               </Select>
+    //             )
+    //           } else {
+    //             item.children = (
+    //               <Select >
+    //                 {allDicts[dictID].optionalVal[optKey].map(
+    //                   (option: string) => (
+    //                     <Select.Option value={option} key={option}>
+    //                       {t(`dicts:${dictID}.options.${optKey}-${option}`)}
+    //                     </Select.Option>
+    //                   )
+    //                 )}
+    //               </Select>
+    //             )
+    //           }
+    //           break
+    //         default:
+    //           item.valuePropName = 'checked'
+    //           item.children = <Switch />
+    //       }
+    //       return item
+    //     })
+    //   )
+    // }
   }
 
   return (

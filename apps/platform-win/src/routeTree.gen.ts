@@ -19,9 +19,7 @@ import { Route as NotebookAddIndexRouteImport } from './routes/notebook-add/inde
 import { Route as ExternalUseIndexRouteImport } from './routes/external-use/index'
 import { Route as ConfigsFormTestRouteImport } from './routes/configs/form-test'
 import { Route as ConfigsPronunciationIndexRouteImport } from './routes/configs/pronunciation/index'
-import { Route as ConfigsProfilesIndexRouteImport } from './routes/configs/profiles/index'
 import { Route as ConfigsPrivacyIndexRouteImport } from './routes/configs/privacy/index'
-import { Route as ConfigsPopupIndexRouteImport } from './routes/configs/popup/index'
 import { Route as ConfigsNotebookIndexRouteImport } from './routes/configs/notebook/index'
 import { Route as ConfigsImportExportIndexRouteImport } from './routes/configs/import-export/index'
 import { Route as ConfigsGeneralIndexRouteImport } from './routes/configs/general/index'
@@ -82,19 +80,9 @@ const ConfigsPronunciationIndexRoute =
     path: '/pronunciation/',
     getParentRoute: () => ConfigsRoute,
   } as any)
-const ConfigsProfilesIndexRoute = ConfigsProfilesIndexRouteImport.update({
-  id: '/profiles/',
-  path: '/profiles/',
-  getParentRoute: () => ConfigsRoute,
-} as any)
 const ConfigsPrivacyIndexRoute = ConfigsPrivacyIndexRouteImport.update({
   id: '/privacy/',
   path: '/privacy/',
-  getParentRoute: () => ConfigsRoute,
-} as any)
-const ConfigsPopupIndexRoute = ConfigsPopupIndexRouteImport.update({
-  id: '/popup/',
-  path: '/popup/',
   getParentRoute: () => ConfigsRoute,
 } as any)
 const ConfigsNotebookIndexRoute = ConfigsNotebookIndexRouteImport.update({
@@ -160,9 +148,7 @@ export interface FileRoutesByFullPath {
   '/configs/general/': typeof ConfigsGeneralIndexRoute
   '/configs/import-export/': typeof ConfigsImportExportIndexRoute
   '/configs/notebook/': typeof ConfigsNotebookIndexRoute
-  '/configs/popup/': typeof ConfigsPopupIndexRoute
   '/configs/privacy/': typeof ConfigsPrivacyIndexRoute
-  '/configs/profiles/': typeof ConfigsProfilesIndexRoute
   '/configs/pronunciation/': typeof ConfigsPronunciationIndexRoute
 }
 export interface FileRoutesByTo {
@@ -183,9 +169,7 @@ export interface FileRoutesByTo {
   '/configs/general': typeof ConfigsGeneralIndexRoute
   '/configs/import-export': typeof ConfigsImportExportIndexRoute
   '/configs/notebook': typeof ConfigsNotebookIndexRoute
-  '/configs/popup': typeof ConfigsPopupIndexRoute
   '/configs/privacy': typeof ConfigsPrivacyIndexRoute
-  '/configs/profiles': typeof ConfigsProfilesIndexRoute
   '/configs/pronunciation': typeof ConfigsPronunciationIndexRoute
 }
 export interface FileRoutesById {
@@ -207,9 +191,7 @@ export interface FileRoutesById {
   '/configs/general/': typeof ConfigsGeneralIndexRoute
   '/configs/import-export/': typeof ConfigsImportExportIndexRoute
   '/configs/notebook/': typeof ConfigsNotebookIndexRoute
-  '/configs/popup/': typeof ConfigsPopupIndexRoute
   '/configs/privacy/': typeof ConfigsPrivacyIndexRoute
-  '/configs/profiles/': typeof ConfigsProfilesIndexRoute
   '/configs/pronunciation/': typeof ConfigsPronunciationIndexRoute
 }
 export interface FileRouteTypes {
@@ -232,9 +214,7 @@ export interface FileRouteTypes {
     | '/configs/general/'
     | '/configs/import-export/'
     | '/configs/notebook/'
-    | '/configs/popup/'
     | '/configs/privacy/'
-    | '/configs/profiles/'
     | '/configs/pronunciation/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -255,9 +235,7 @@ export interface FileRouteTypes {
     | '/configs/general'
     | '/configs/import-export'
     | '/configs/notebook'
-    | '/configs/popup'
     | '/configs/privacy'
-    | '/configs/profiles'
     | '/configs/pronunciation'
   id:
     | '__root__'
@@ -278,9 +256,7 @@ export interface FileRouteTypes {
     | '/configs/general/'
     | '/configs/import-export/'
     | '/configs/notebook/'
-    | '/configs/popup/'
     | '/configs/privacy/'
-    | '/configs/profiles/'
     | '/configs/pronunciation/'
   fileRoutesById: FileRoutesById
 }
@@ -367,25 +343,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConfigsPronunciationIndexRouteImport
       parentRoute: typeof ConfigsRoute
     }
-    '/configs/profiles/': {
-      id: '/configs/profiles/'
-      path: '/profiles'
-      fullPath: '/configs/profiles/'
-      preLoaderRoute: typeof ConfigsProfilesIndexRouteImport
-      parentRoute: typeof ConfigsRoute
-    }
     '/configs/privacy/': {
       id: '/configs/privacy/'
       path: '/privacy'
       fullPath: '/configs/privacy/'
       preLoaderRoute: typeof ConfigsPrivacyIndexRouteImport
-      parentRoute: typeof ConfigsRoute
-    }
-    '/configs/popup/': {
-      id: '/configs/popup/'
-      path: '/popup'
-      fullPath: '/configs/popup/'
-      preLoaderRoute: typeof ConfigsPopupIndexRouteImport
       parentRoute: typeof ConfigsRoute
     }
     '/configs/notebook/': {
@@ -457,9 +419,7 @@ interface ConfigsRouteChildren {
   ConfigsGeneralIndexRoute: typeof ConfigsGeneralIndexRoute
   ConfigsImportExportIndexRoute: typeof ConfigsImportExportIndexRoute
   ConfigsNotebookIndexRoute: typeof ConfigsNotebookIndexRoute
-  ConfigsPopupIndexRoute: typeof ConfigsPopupIndexRoute
   ConfigsPrivacyIndexRoute: typeof ConfigsPrivacyIndexRoute
-  ConfigsProfilesIndexRoute: typeof ConfigsProfilesIndexRoute
   ConfigsPronunciationIndexRoute: typeof ConfigsPronunciationIndexRoute
 }
 
@@ -473,9 +433,7 @@ const ConfigsRouteChildren: ConfigsRouteChildren = {
   ConfigsGeneralIndexRoute: ConfigsGeneralIndexRoute,
   ConfigsImportExportIndexRoute: ConfigsImportExportIndexRoute,
   ConfigsNotebookIndexRoute: ConfigsNotebookIndexRoute,
-  ConfigsPopupIndexRoute: ConfigsPopupIndexRoute,
   ConfigsPrivacyIndexRoute: ConfigsPrivacyIndexRoute,
-  ConfigsProfilesIndexRoute: ConfigsProfilesIndexRoute,
   ConfigsPronunciationIndexRoute: ConfigsPronunciationIndexRoute,
 }
 

@@ -1,7 +1,6 @@
 
 import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
 import type { HTMLString } from '../../types'
-import type { AllDictsConf } from '../../types/all-dict-conf'
 import {
   getText,
   getInnerHTML,
@@ -11,6 +10,7 @@ import {
 } from '../../utils'
 import { getStaticSpeaker } from '@/components/Speaker'
 import { fetchDirtyDOM } from '../../utils/fetch-dom'
+import type { AllDictsConf } from '../../config'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.ldoceonline.com/dictionary/${text
@@ -198,7 +198,7 @@ function handleDOMLex (
     entry.pos = getText($head, '.POS')
 
     $head.querySelectorAll<HTMLSpanElement>('.speaker').forEach($pron => {
-      let lang = 'us'
+      let lang: 'us' | 'uk' = 'us'
       const title = $pron.title
       if (title.includes('British')) {
         lang = 'uk'

@@ -42,7 +42,7 @@ pub fn create_tray_menu(app: &AppHandle) -> Result<(), tauri::Error> {
     menu.append(&quit)?;
 
     // 创建托盘图标
-    let tray = TrayIconBuilder::new()
+    let _tray = TrayIconBuilder::new()
         .icon(app.default_window_icon().unwrap().clone())
         .tooltip("Fruit Saladict")
         .menu(&menu)

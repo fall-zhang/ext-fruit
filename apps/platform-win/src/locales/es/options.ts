@@ -1,4 +1,4 @@
-import { options as _locale } from '../zh-CN/options'
+import type { options as _locale } from '../zh-CN/options'
 
 export const locale: typeof _locale = {
   title: 'Saladict Opciones',
@@ -99,12 +99,6 @@ export const locale: typeof _locale = {
         src_trans: 'Leer el texto de la traducción',
       },
     },
-    pdfSniff: 'Activar PDF Sniffer',
-    pdfSniff_help: 'Si está activada, los enlaces PDF se capturarán automáticamente.',
-    pdfSniff_extra:
-      'Se recomienda {search selected text outside of browser} con su propio lector local favorito.',
-    pdfStandalone: 'Panel independiente',
-    pdfStandalone_help: 'Abrir visor de PDF en panel independiente.',
     baWidth: 'Anchura',
     baWidth_help:
       'Navegador Acción Panel con. Si se elige un valor negativo, se utilizará la anchura del panel.',
@@ -146,8 +140,6 @@ export const locale: typeof _locale = {
       sel_blackwhitelist: 'Lista negra y blanca de selección',
       sel_blackwhitelist_help:
         'Saladict no reaccionará a la selección en páginas de la lista negra.',
-      pdf_blackwhitelist_help:
-        'Los enlaces PDF de la lista negra no saltarán a Saladict PDF Viewer.',
       contextMenus_description:
         'Cada elemento del menú contextual también se puede personalizar. Youdao y Google Traductor están obsoletos en favor de las extensiones oficiales.',
       contextMenus_edit: 'Editar elementos de menús contextuales',
@@ -159,11 +151,7 @@ export const locale: typeof _locale = {
         popup_standalone: 'Panel independiente Open Saladict',
       },
       openQsStandalone: 'Opciones de panel independiente',
-      pdfStandalone: {
-        default: 'Nunca',
-        always: 'Siempre',
-        manual: 'Manual',
-      },
+
     },
   },
 

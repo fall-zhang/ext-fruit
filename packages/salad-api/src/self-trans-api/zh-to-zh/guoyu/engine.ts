@@ -1,21 +1,17 @@
 
-import {
-
-} from '../../utils'
 import type { GuoYuResult } from './type'
 import type { SearchFunction, DictSearchResult } from '@/core/api-server/api-common/search-type'
 import type { Profile } from '@/config/trans-profile'
-import { fetch } from '@tauri-apps/plugin-http'
 
 import {
   handleNoResult,
-  handleNetWorkError, getChsToChz
+  handleNetWorkError
 } from '@/core/api-server/utils'
 import type { AtomGetSrcFunction } from '../../../types/atom-type'
+import chsToChz from '@/core/api-server/utils/chs-to-chz'
 
 export const getSrcPage: AtomGetSrcFunction = async text => {
-  const transform = getChsToChz()
-  return `https://www.moedict.tw/${transform(text)}`
+  return `https://www.moedict.tw/${chsToChz(text)}`
 }
 
 export const search: SearchFunction<GuoYuResult> = (
@@ -34,7 +30,6 @@ export async function moedictSearch<R extends GuoYuResult> (
   text: string,
   options: Profile['dicts']['all']['guoyu']['options']
 ): Promise<DictSearchResult<R>> {
-  const chsToChz = getChsToChz()
   const data = await fetch(`https://www.moedict.tw/${moedictID}/${encodeURIComponent(
     chsToChz(text.replace(/\s+/g, ''))
   )}.json`).then(res => res.json())

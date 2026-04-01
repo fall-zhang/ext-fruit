@@ -1,6 +1,6 @@
-import { AddConfig, SyncService } from '../../interface'
-import { getNotebook } from '../../helpers'
 import axios from 'axios'
+import { SyncService, type AddConfig } from '../sync-manager/interface'
+import { getNotebook } from '../sync-manager/helpers'
 
 export interface SyncConfig {
   enable: boolean
@@ -17,15 +17,15 @@ interface Books {
 export class Service extends SyncService<SyncConfig> {
   static readonly id = 'eudic'
 
-  static getDefaultConfig(): SyncConfig {
+  static getDefaultConfig (): SyncConfig {
     return {
       enable: false,
       token: '',
-      syncAll: false
+      syncAll: false,
     }
   }
 
-  async init() {
+  async init () {
     const wordbooks = await this.getWordbooks<Books[]>()
 
     if (wordbooks.length === 0 || !wordbooks) {
@@ -33,14 +33,14 @@ export class Service extends SyncService<SyncConfig> {
     }
   }
 
-  async add(config: AddConfig) {
+  async add (config: AddConfig) {
     await this.addWordOrPatch(config)
   }
 
   /**
    * sync a word or patch words
    */
-  async addWordOrPatch({ words, force }: AddConfig) {
+  async addWordOrPatch ({ words, force }: AddConfig) {
     if (!this.config.enable) {
       return 0
     }
@@ -64,13 +64,13 @@ export class Service extends SyncService<SyncConfig> {
   async getWordbooks<R = void>(): Promise<R> {
     const result = await axios({
       method: 'get',
-      url: `https://api.frdic.com/api/open/v1/studylist/category`,
+      url: 'https://api.frdic.com/api/open/v1/studylist/category',
       params: {
-        language: 'en'
+        language: 'en',
       },
       headers: {
-        Authorization: this.config.token
-      }
+        Authorization: this.config.token,
+      },
     }).catch(e => {
       if (e.response && e.response.status === 401) {
         throw new Error('illegal_token')
@@ -84,7 +84,7 @@ export class Service extends SyncService<SyncConfig> {
     const { data } = result
 
     if (import.meta.env.VITE_DEBUG) {
-      console.log(`Eudic Connect response(wordbook list)`, data)
+      console.log('Eudic Connect response(wordbook list)', data)
     }
 
     if (!data || !Object.prototype.hasOwnProperty.call(data, 'data')) {
@@ -94,18 +94,18 @@ export class Service extends SyncService<SyncConfig> {
     return data.data
   }
 
-  async requestAddWords(words: string | string[]) {
+  async requestAddWords (words: string | string[]) {
     return await axios({
       method: 'post',
-      url: `https://api.frdic.com/api/open/v1/studylist/words`,
+      url: 'https://api.frdic.com/api/open/v1/studylist/words',
       data: {
         id: '0', // id of default wordbook
         language: 'en',
-        words: typeof words === 'string' ? [words] : words
+        words: typeof words === 'string' ? [words] : words,
       },
       headers: {
-        Authorization: this.config.token
-      }
+        Authorization: this.config.token,
+      },
     }).catch(e => {
       if (import.meta.env.VITE_DEBUG) {
         console.error(e)

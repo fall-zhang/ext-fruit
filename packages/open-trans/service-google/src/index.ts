@@ -149,7 +149,7 @@ export class Google extends Translator<GoogleConfig> {
 
   private async fetchWithToken (
     /** 'com' or 'cn' */
-    tld: string,
+    tld: 'com' | 'cn',
     text: string,
     from: string,
     to: string
@@ -246,18 +246,12 @@ export class Google extends Translator<GoogleConfig> {
       origin: {
         paragraphs: text.split(/\n+/),
         tts:
-          (await this.textToSpeech(text, from, {
-            base: result.base,
-            token: this.token.value,
-          })) || '',
+          (await this.textToSpeech(text, from)) || '',
       },
       trans: {
         paragraphs: transText.split(/(\n ?)+/),
         tts:
-          (await this.textToSpeech(transText, to, {
-            base: result.base,
-            token: this.token.value,
-          })) || '',
+          (await this.textToSpeech(transText, to)) || '',
       },
     }
   }
@@ -278,25 +272,25 @@ export class Google extends Translator<GoogleConfig> {
 
   async textToSpeech (
     text: string,
-    lang: Language,
-    meta?: {
-      base: string;
-      token?: {
-        tk1: number;
-        tk2: number;
-      };
-    }
+    lang: Language
+    // meta?: {
+    //   base: string;
+    //   token?: {
+    //     tk1: number;
+    //     tk2: number;
+    //   };
+    // }
   ): Promise<string | null> {
-    let tld = 'com'
-    let base = 'https://translate.google.com'
+    const tld: 'com' | 'cn' = 'com'
+    const base = 'https://translate.google.com'
 
-    if (meta && meta.base) {
-      const tldMatch = /\.(\w+)$/.exec(meta.base)
-      if (tldMatch) {
-        tld = tldMatch[1]
-        base = meta.base
-      }
-    }
+    // if (meta && meta.base) {
+    //   const tldMatch = /\.(\w+)$/.exec(meta.base)
+    //   if (tldMatch) {
+    //     tld = tldMatch[1]
+    //     base = meta.base
+    //   }
+    // }
 
     return (
       `${base}/translate_tts?ie=UTF-8&total=1&idx=0&client=t&` +

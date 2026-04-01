@@ -11,11 +11,10 @@ import {
 } from 'antd'
 import type { FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import type { SyncConfig } from '@/background/sync-manager/services/eudic'
-import { Service } from '@/background/sync-manager/services/eudic'
-import { setSyncConfig } from '@/background/sync-manager/helpers'
 import { useTranslation } from 'react-i18next'
 import { getWords } from '@/core/index-db'
+import { type SyncConfig, Service } from '@/core/external-sync/sync-anki'
+import { setSyncConfig } from '@/core/external-sync/sync-manager/helpers'
 
 export interface EudicModalProps {
   syncConfig?: SyncConfig
@@ -128,7 +127,7 @@ export const EuDicModal: FC<EudicModalProps> = props => {
       await service.init()
       notification.success({ message: t('syncService.eudic.verified') })
       isError = false
-    } catch (error) {
+    } catch (error: any) {
       isError = true
       notifyError(error)
     }
@@ -165,15 +164,15 @@ export const EuDicModal: FC<EudicModalProps> = props => {
         return
       }
 
-      if (config.syncAll) {
-        await onSyncAll(service)
-      }
+      // if (config.syncAll) {
+      //   await onSyncAll(service)
+      // }
     }
 
     try {
       await setSyncConfig(Service.id, config)
       props.onClose()
-    } catch (error) {
+    } catch (error: any) {
       notifyError(error)
     }
   }
@@ -209,16 +208,16 @@ export const EuDicModal: FC<EudicModalProps> = props => {
     AntdMsg.destroy()
     AntdMsg.success(t('syncService.start'), 0)
 
-    try {
-      await service.addWordOrPatch({
-        words: [],
-        force: true,
-      })
-      AntdMsg.destroy()
-      AntdMsg.success(t('syncService.success'))
-    } catch (error) {
-      notifyError(error, t('syncService.failed'))
-    }
+    // try {
+    //   await service.addWordOrPatch({
+    //     words: [],
+    //     force: true,
+    //   })
+    //   AntdMsg.destroy()
+    //   AntdMsg.success(t('syncService.success'))
+    // } catch (error: any) {
+    //   notifyError(error, t('syncService.failed'))
+    // }
   }
 
   function notifyError (error: Error | string, message: string = 'Error') {

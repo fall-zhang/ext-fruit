@@ -4,7 +4,7 @@ import { getText } from '@/utils/get-selection-more'
 
 export async function getWebsterWordOfTheDay (): Promise<string> {
   const doc = await fetchDirtyDOM('https://www.merriam-webster.com/word-of-the-day')
-  const text = getText(doc, 'title')
+  const text = getText(doc)
   const matchResult = text.match(/Word of the Day: (.+) \| Merriam-Webster/)
   return (matchResult && matchResult[1]) || handleNoResult()
 }

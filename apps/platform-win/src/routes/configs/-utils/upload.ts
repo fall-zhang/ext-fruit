@@ -7,12 +7,15 @@ import { useDictStore } from '@/store'
 import { cloneDeep } from 'es-toolkit'
 import type { AppProfile } from '@/config/trans-profile'
 import { toast } from 'sonner'
+import { useConfContext } from '@/context/conf-context'
 
 
 export const useUpload = () => {
   const { t } = useTranslation('options')
   // const confContext = useConfContext()
-  const dictStore = useDictStore(state => state.config)
+  // const dictStore = useDictStore(state => state.config)
+  const { config, profile } = useConfContext()
+
   // [stateObjectPaths: string]
   return async (values: Record<string, any>) => {
     const data: { config?: AppConfig; profile?: AppProfile } = {}
@@ -27,12 +30,12 @@ export const useUpload = () => {
     for (const path of paths) {
       if (path.startsWith('config.')) {
         if (!data.config) {
-          data.config = cloneDeep(dictStore)
+          data.config = cloneDeep(config)
         }
         set(data, path, values[path])
       } else if (path.startsWith('profile.')) {
         if (!data.profile) {
-          data.profile = cloneDeep(dictStore.activeProfile)
+          data.profile = cloneDeep(profile)
         }
         set(data, path, values[path])
       } else {

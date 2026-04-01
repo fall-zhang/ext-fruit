@@ -12,10 +12,11 @@ import {
 } from 'antd'
 import type { FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import type { SyncConfig } from '@/background/sync-manager/services/ankiconnect'
-import { Service } from '@/background/sync-manager/services/ankiconnect'
+import type { SyncConfig } from '@/core/external-sync/sync-anki'
+import { Service } from '@/core/external-sync/sync-anki'
 import { useTranslation } from 'react-i18next'
-import { setSyncConfig } from '@/core/sync-manager/helpers'
+import { setSyncConfig } from '@/core/external-sync/sync-manager/helpers'
+
 
 export interface AnkiConnectModalProps {
   syncConfig?: SyncConfig
@@ -191,7 +192,7 @@ export const AnkiConnectModal: FC<AnkiConnectModalProps> = props => {
     try {
       await service.init()
       notification.success({ message: t('syncService.ankiconnect.verified') })
-    } catch (error) {
+    } catch (error: any) {
       const errorText = typeof error === 'string' ? error : error.message
       switch (errorText) {
         case 'deck':
@@ -258,7 +259,7 @@ export const AnkiConnectModal: FC<AnkiConnectModalProps> = props => {
       if (confirm(t('syncService.ankiconnect.upload_confirm'))) {
         await service.add({ force: true })
       }
-    } catch (e) {
+    } catch (e: any) {
       notifyError(e)
     }
 
@@ -276,7 +277,7 @@ export const AnkiConnectModal: FC<AnkiConnectModalProps> = props => {
 
       try {
         await verify(service)
-      } catch (e) {
+      } catch (e: any) {
         setServiceChecking(false)
         return notifyError(e)
       }
@@ -287,7 +288,7 @@ export const AnkiConnectModal: FC<AnkiConnectModalProps> = props => {
     try {
       await setSyncConfig(Service.id, config)
       props.onClose()
-    } catch (error) {
+    } catch (error: any) {
       notifyError(error)
     }
   }

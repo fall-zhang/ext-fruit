@@ -59,7 +59,7 @@ export function SearchArea ({
             }}
             onKeyDown={handleKeyPress}
             // placeholder={t('inputPlaceholder')}
-            className="w-full bg-white dark:bg-[#2a2a2a] border border-[#e0e0e0] dark:border-[#333333] rounded-md pl-3 pr-1 py-2 text-sm focus:outline-none focus:border-[#07c160] resize-none min-h-10 max-h-25 leading-5 dark:text-white dark:placeholder-gray-500"
+            className="w-full bg-white dark:bg-[#2a2a2a] border border-[#e0e0e0] dark:border-[#333333] rounded-md pl-3 pr-1 py-2 text-sm focus:outline-none focus:border-[#5caf9e] resize-none min-h-10 max-h-25 leading-5 dark:text-white dark:placeholder-gray-500"
             style={{ height: '40px', overflowY: 'hidden' }}
           />
         </div>

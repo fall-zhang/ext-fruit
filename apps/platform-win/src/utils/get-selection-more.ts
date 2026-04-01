@@ -29,8 +29,8 @@ export function getTextFromSelection (selection: Selection | null, win = window)
 /**
  * Returns the selected text
  */
-export function getText (win = window): string {
-  return getTextFromSelection(win.getSelection(), win)
+export function getText (win: Document | Window = window): string {
+  return getTextFromSelection(win.getSelection())
 }
 
 /**

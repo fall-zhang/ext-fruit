@@ -59,7 +59,7 @@ function RouteComponent () {
       return
     }
 
-    let {
+    const {
       baseconfig,
       activeProfileID,
       hasInstructionsShown,
@@ -86,31 +86,31 @@ function RouteComponent () {
       await updateConfig(mergeConfig(baseconfig))
     }
 
-    if (syncConfig) {
-      localStorage.setItem('syncConfig', syncConfig)
-    }
+    // if (syncConfig) {
+    //   localStorage.setItem('syncConfig', syncConfig)
+    // }
 
     if (hasInstructionsShown != null) {
       localStorage.setItem('hasInstructionsShown', JSON.stringify(hasInstructionsShown))
     }
 
-    if (profileIDList) {
-      profileIDList = profileIDList.filter(({ id }) => result[id])
-      if (profileIDList.length > 0) {
-        for (const { id } of profileIDList) {
-          await updateProfile(mergeProfile(result[id] as Profile))
-        }
-        if (
-          !activeProfileID ||
-        profileIDList.every(({ id }) => id !== activeProfileID)
-        ) {
-        // use first item instead
-          activeProfileID = profileIDList[0].id
-        }
-        await localStorage.setItem('activeProfileID', JSON.stringify(activeProfileID))
-        await localStorage.setItem('profileIDList', profileIDList)
-      }
-    }
+    // if (profileIDList) {
+    //   profileIDList = profileIDList.filter(({ id }) => result[id])
+    //   if (profileIDList.length > 0) {
+    //     for (const { id } of profileIDList) {
+    //       await updateProfile(mergeProfile(result[id] as Profile))
+    //     }
+    //     if (
+    //       !activeProfileID ||
+    //     profileIDList.every(({ id }) => id !== activeProfileID)
+    //     ) {
+    //     // use first item instead
+    //       activeProfileID = profileIDList[0].id
+    //     }
+    //     await localStorage.setItem('activeProfileID', JSON.stringify(activeProfileID))
+    //     await localStorage.setItem('profileIDList', profileIDList)
+    //   }
+    // }
   }
   const confContext = useConfContext()
   const updateProfile = confContext.updateProfile
@@ -139,11 +139,12 @@ function RouteComponent () {
     }
 
     try {
-      let text = JSON.stringify(result)
-      const { os } = await browser.runtime.getPlatformInfo()
-      if (os === 'win') {
-        text = text.replace(/\r\n|\n/g, '\r\n')
-      }
+      const text = JSON.stringify(result)
+      // const { os } = await browser.runtime.getPlatformInfo()
+
+      // if (os === 'win') {
+      //   text = text.replace(/\r\n|\n/g, '\r\n')
+      // }
       const file = new Blob([text], { type: 'text/plain;charset=utf-8' })
       const a = document.createElement('a')
       a.href = URL.createObjectURL(file)

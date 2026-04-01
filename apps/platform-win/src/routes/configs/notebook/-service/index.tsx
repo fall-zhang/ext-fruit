@@ -81,7 +81,7 @@ export const Notebook: FC = () => {
     <>
       <SaladictForm items={formItems} ref={formRef}/>
       {'需要重写的模块，同步配置'}
-      <AnkiSyncView
+      {/* <AnkiSyncView
         syncConfig={syncConfig}
         show={showSyncServices.ankiconnect}
         onClose={function (): void {
@@ -104,7 +104,7 @@ export const Notebook: FC = () => {
         show={showSyncServices.webdav}
         onClose={function (): void {
           throw new Error('Function not implemented.')
-        }}/>
+        }}/> */}
       {/* {syncServiceIds.map(id =>
         React.createElement(reqSyncService(`./${id}.tsx`).default, {
           key: id,

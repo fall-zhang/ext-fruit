@@ -40,8 +40,7 @@ export const Popup: FC = () => {
   const [isShowPageNoResponse, setShowPageNoResponse] = useState(false)
 
   useLayoutEffect(() => {
-    document.body.style.width =
-      (config.baWidth >= 0 ? config.baWidth : config.panelWidth) + 'px'
+    document.body.style.width = (config.panelWidth) + 'px'
   }, [config])
 
   useEffect(() => {

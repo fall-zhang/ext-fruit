@@ -127,12 +127,6 @@ export function getDefaultConfig (): SaladConfigType {
     /** pin panel when shows up  */
     defaultPinned: false,
 
-    /** should standalone panel memo position and dimension on close */
-    qssaRectMemo: false,
-
-    /** browser action panel width defaults to as wide as possible */
-    baWidth: -1,
-
     baHeight: 550,
 
     /** auto search when browser action panel shows */
