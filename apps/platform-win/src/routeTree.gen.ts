@@ -16,14 +16,12 @@ import { Route as SystemTrayIndexRouteImport } from './routes/system-tray/index'
 import { Route as SearchViewIndexRouteImport } from './routes/search-view/index'
 import { Route as NotebookIndexRouteImport } from './routes/notebook/index'
 import { Route as NotebookAddIndexRouteImport } from './routes/notebook-add/index'
-import { Route as FormExampleIndexRouteImport } from './routes/form-example/index'
 import { Route as ExternalUseIndexRouteImport } from './routes/external-use/index'
-import { Route as ConfigsQuickSearchIndexRouteImport } from './routes/configs/quick-search/index'
+import { Route as ConfigsFormTestRouteImport } from './routes/configs/form-test'
 import { Route as ConfigsPronunciationIndexRouteImport } from './routes/configs/pronunciation/index'
 import { Route as ConfigsProfilesIndexRouteImport } from './routes/configs/profiles/index'
 import { Route as ConfigsPrivacyIndexRouteImport } from './routes/configs/privacy/index'
 import { Route as ConfigsPopupIndexRouteImport } from './routes/configs/popup/index'
-import { Route as ConfigsPermissionsIndexRouteImport } from './routes/configs/permissions/index'
 import { Route as ConfigsNotebookIndexRouteImport } from './routes/configs/notebook/index'
 import { Route as ConfigsImportExportIndexRouteImport } from './routes/configs/import-export/index'
 import { Route as ConfigsGeneralIndexRouteImport } from './routes/configs/general/index'
@@ -68,19 +66,14 @@ const NotebookAddIndexRoute = NotebookAddIndexRouteImport.update({
   path: '/notebook-add/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FormExampleIndexRoute = FormExampleIndexRouteImport.update({
-  id: '/form-example/',
-  path: '/form-example/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ExternalUseIndexRoute = ExternalUseIndexRouteImport.update({
   id: '/external-use/',
   path: '/external-use/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ConfigsQuickSearchIndexRoute = ConfigsQuickSearchIndexRouteImport.update({
-  id: '/quick-search/',
-  path: '/quick-search/',
+const ConfigsFormTestRoute = ConfigsFormTestRouteImport.update({
+  id: '/form-test',
+  path: '/form-test',
   getParentRoute: () => ConfigsRoute,
 } as any)
 const ConfigsPronunciationIndexRoute =
@@ -102,11 +95,6 @@ const ConfigsPrivacyIndexRoute = ConfigsPrivacyIndexRouteImport.update({
 const ConfigsPopupIndexRoute = ConfigsPopupIndexRouteImport.update({
   id: '/popup/',
   path: '/popup/',
-  getParentRoute: () => ConfigsRoute,
-} as any)
-const ConfigsPermissionsIndexRoute = ConfigsPermissionsIndexRouteImport.update({
-  id: '/permissions/',
-  path: '/permissions/',
   getParentRoute: () => ConfigsRoute,
 } as any)
 const ConfigsNotebookIndexRoute = ConfigsNotebookIndexRouteImport.update({
@@ -158,8 +146,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/configs': typeof ConfigsRouteWithChildren
+  '/configs/form-test': typeof ConfigsFormTestRoute
   '/external-use/': typeof ExternalUseIndexRoute
-  '/form-example/': typeof FormExampleIndexRoute
   '/notebook-add/': typeof NotebookAddIndexRoute
   '/notebook/': typeof NotebookIndexRoute
   '/search-view/': typeof SearchViewIndexRoute
@@ -172,19 +160,17 @@ export interface FileRoutesByFullPath {
   '/configs/general/': typeof ConfigsGeneralIndexRoute
   '/configs/import-export/': typeof ConfigsImportExportIndexRoute
   '/configs/notebook/': typeof ConfigsNotebookIndexRoute
-  '/configs/permissions/': typeof ConfigsPermissionsIndexRoute
   '/configs/popup/': typeof ConfigsPopupIndexRoute
   '/configs/privacy/': typeof ConfigsPrivacyIndexRoute
   '/configs/profiles/': typeof ConfigsProfilesIndexRoute
   '/configs/pronunciation/': typeof ConfigsPronunciationIndexRoute
-  '/configs/quick-search/': typeof ConfigsQuickSearchIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/configs': typeof ConfigsRouteWithChildren
+  '/configs/form-test': typeof ConfigsFormTestRoute
   '/external-use': typeof ExternalUseIndexRoute
-  '/form-example': typeof FormExampleIndexRoute
   '/notebook-add': typeof NotebookAddIndexRoute
   '/notebook': typeof NotebookIndexRoute
   '/search-view': typeof SearchViewIndexRoute
@@ -197,20 +183,18 @@ export interface FileRoutesByTo {
   '/configs/general': typeof ConfigsGeneralIndexRoute
   '/configs/import-export': typeof ConfigsImportExportIndexRoute
   '/configs/notebook': typeof ConfigsNotebookIndexRoute
-  '/configs/permissions': typeof ConfigsPermissionsIndexRoute
   '/configs/popup': typeof ConfigsPopupIndexRoute
   '/configs/privacy': typeof ConfigsPrivacyIndexRoute
   '/configs/profiles': typeof ConfigsProfilesIndexRoute
   '/configs/pronunciation': typeof ConfigsPronunciationIndexRoute
-  '/configs/quick-search': typeof ConfigsQuickSearchIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/configs': typeof ConfigsRouteWithChildren
+  '/configs/form-test': typeof ConfigsFormTestRoute
   '/external-use/': typeof ExternalUseIndexRoute
-  '/form-example/': typeof FormExampleIndexRoute
   '/notebook-add/': typeof NotebookAddIndexRoute
   '/notebook/': typeof NotebookIndexRoute
   '/search-view/': typeof SearchViewIndexRoute
@@ -223,12 +207,10 @@ export interface FileRoutesById {
   '/configs/general/': typeof ConfigsGeneralIndexRoute
   '/configs/import-export/': typeof ConfigsImportExportIndexRoute
   '/configs/notebook/': typeof ConfigsNotebookIndexRoute
-  '/configs/permissions/': typeof ConfigsPermissionsIndexRoute
   '/configs/popup/': typeof ConfigsPopupIndexRoute
   '/configs/privacy/': typeof ConfigsPrivacyIndexRoute
   '/configs/profiles/': typeof ConfigsProfilesIndexRoute
   '/configs/pronunciation/': typeof ConfigsPronunciationIndexRoute
-  '/configs/quick-search/': typeof ConfigsQuickSearchIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -236,8 +218,8 @@ export interface FileRouteTypes {
     | '/'
     | '/404'
     | '/configs'
+    | '/configs/form-test'
     | '/external-use/'
-    | '/form-example/'
     | '/notebook-add/'
     | '/notebook/'
     | '/search-view/'
@@ -250,19 +232,17 @@ export interface FileRouteTypes {
     | '/configs/general/'
     | '/configs/import-export/'
     | '/configs/notebook/'
-    | '/configs/permissions/'
     | '/configs/popup/'
     | '/configs/privacy/'
     | '/configs/profiles/'
     | '/configs/pronunciation/'
-    | '/configs/quick-search/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/404'
     | '/configs'
+    | '/configs/form-test'
     | '/external-use'
-    | '/form-example'
     | '/notebook-add'
     | '/notebook'
     | '/search-view'
@@ -275,19 +255,17 @@ export interface FileRouteTypes {
     | '/configs/general'
     | '/configs/import-export'
     | '/configs/notebook'
-    | '/configs/permissions'
     | '/configs/popup'
     | '/configs/privacy'
     | '/configs/profiles'
     | '/configs/pronunciation'
-    | '/configs/quick-search'
   id:
     | '__root__'
     | '/'
     | '/404'
     | '/configs'
+    | '/configs/form-test'
     | '/external-use/'
-    | '/form-example/'
     | '/notebook-add/'
     | '/notebook/'
     | '/search-view/'
@@ -300,12 +278,10 @@ export interface FileRouteTypes {
     | '/configs/general/'
     | '/configs/import-export/'
     | '/configs/notebook/'
-    | '/configs/permissions/'
     | '/configs/popup/'
     | '/configs/privacy/'
     | '/configs/profiles/'
     | '/configs/pronunciation/'
-    | '/configs/quick-search/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -313,7 +289,6 @@ export interface RootRouteChildren {
   R404Route: typeof R404Route
   ConfigsRoute: typeof ConfigsRouteWithChildren
   ExternalUseIndexRoute: typeof ExternalUseIndexRoute
-  FormExampleIndexRoute: typeof FormExampleIndexRoute
   NotebookAddIndexRoute: typeof NotebookAddIndexRoute
   NotebookIndexRoute: typeof NotebookIndexRoute
   SearchViewIndexRoute: typeof SearchViewIndexRoute
@@ -371,13 +346,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NotebookAddIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/form-example/': {
-      id: '/form-example/'
-      path: '/form-example'
-      fullPath: '/form-example/'
-      preLoaderRoute: typeof FormExampleIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/external-use/': {
       id: '/external-use/'
       path: '/external-use'
@@ -385,11 +353,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExternalUseIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/configs/quick-search/': {
-      id: '/configs/quick-search/'
-      path: '/quick-search'
-      fullPath: '/configs/quick-search/'
-      preLoaderRoute: typeof ConfigsQuickSearchIndexRouteImport
+    '/configs/form-test': {
+      id: '/configs/form-test'
+      path: '/form-test'
+      fullPath: '/configs/form-test'
+      preLoaderRoute: typeof ConfigsFormTestRouteImport
       parentRoute: typeof ConfigsRoute
     }
     '/configs/pronunciation/': {
@@ -418,13 +386,6 @@ declare module '@tanstack/react-router' {
       path: '/popup'
       fullPath: '/configs/popup/'
       preLoaderRoute: typeof ConfigsPopupIndexRouteImport
-      parentRoute: typeof ConfigsRoute
-    }
-    '/configs/permissions/': {
-      id: '/configs/permissions/'
-      path: '/permissions'
-      fullPath: '/configs/permissions/'
-      preLoaderRoute: typeof ConfigsPermissionsIndexRouteImport
       parentRoute: typeof ConfigsRoute
     }
     '/configs/notebook/': {
@@ -487,6 +448,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface ConfigsRouteChildren {
+  ConfigsFormTestRoute: typeof ConfigsFormTestRoute
   ConfigsBlackWhiteListIndexRoute: typeof ConfigsBlackWhiteListIndexRoute
   ConfigsContextMenusIndexRoute: typeof ConfigsContextMenusIndexRoute
   ConfigsDictAuthIndexRoute: typeof ConfigsDictAuthIndexRoute
@@ -495,15 +457,14 @@ interface ConfigsRouteChildren {
   ConfigsGeneralIndexRoute: typeof ConfigsGeneralIndexRoute
   ConfigsImportExportIndexRoute: typeof ConfigsImportExportIndexRoute
   ConfigsNotebookIndexRoute: typeof ConfigsNotebookIndexRoute
-  ConfigsPermissionsIndexRoute: typeof ConfigsPermissionsIndexRoute
   ConfigsPopupIndexRoute: typeof ConfigsPopupIndexRoute
   ConfigsPrivacyIndexRoute: typeof ConfigsPrivacyIndexRoute
   ConfigsProfilesIndexRoute: typeof ConfigsProfilesIndexRoute
   ConfigsPronunciationIndexRoute: typeof ConfigsPronunciationIndexRoute
-  ConfigsQuickSearchIndexRoute: typeof ConfigsQuickSearchIndexRoute
 }
 
 const ConfigsRouteChildren: ConfigsRouteChildren = {
+  ConfigsFormTestRoute: ConfigsFormTestRoute,
   ConfigsBlackWhiteListIndexRoute: ConfigsBlackWhiteListIndexRoute,
   ConfigsContextMenusIndexRoute: ConfigsContextMenusIndexRoute,
   ConfigsDictAuthIndexRoute: ConfigsDictAuthIndexRoute,
@@ -512,12 +473,10 @@ const ConfigsRouteChildren: ConfigsRouteChildren = {
   ConfigsGeneralIndexRoute: ConfigsGeneralIndexRoute,
   ConfigsImportExportIndexRoute: ConfigsImportExportIndexRoute,
   ConfigsNotebookIndexRoute: ConfigsNotebookIndexRoute,
-  ConfigsPermissionsIndexRoute: ConfigsPermissionsIndexRoute,
   ConfigsPopupIndexRoute: ConfigsPopupIndexRoute,
   ConfigsPrivacyIndexRoute: ConfigsPrivacyIndexRoute,
   ConfigsProfilesIndexRoute: ConfigsProfilesIndexRoute,
   ConfigsPronunciationIndexRoute: ConfigsPronunciationIndexRoute,
-  ConfigsQuickSearchIndexRoute: ConfigsQuickSearchIndexRoute,
 }
 
 const ConfigsRouteWithChildren =
@@ -528,7 +487,6 @@ const rootRouteChildren: RootRouteChildren = {
   R404Route: R404Route,
   ConfigsRoute: ConfigsRouteWithChildren,
   ExternalUseIndexRoute: ExternalUseIndexRoute,
-  FormExampleIndexRoute: FormExampleIndexRoute,
   NotebookAddIndexRoute: NotebookAddIndexRoute,
   NotebookIndexRoute: NotebookIndexRoute,
   SearchViewIndexRoute: SearchViewIndexRoute,

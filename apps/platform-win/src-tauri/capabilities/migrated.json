@@ -24,12 +24,7 @@
     {
       "identifier": "fs:scope",
       "allow": [
-        "$APPDATA/**",
-        "C:/**",
-        "D:/**",
-        "E:/**",
-        "F:/**",
-        "G:/**"
+        "$APPDATA/**"
       ]
     },
     "shell:allow-open",
@@ -42,10 +37,7 @@
     "shell:default",
     {
       "identifier": "http:default",
-      "allow": [
-        "http://**",
-        "https://**"
-     ]
+      "allow": [{ "url": "http://**" },{"url":"https://**"}]
     }
   ]
 }
