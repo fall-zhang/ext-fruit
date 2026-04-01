@@ -44,7 +44,7 @@ export class Service extends SyncService<SyncConfig> {
     }
 
     if (force) {
-      words = await getNotebook()
+      // words = await getNotebook()
     }
 
     if (!words || words.length <= 0) {
@@ -55,20 +55,20 @@ export class Service extends SyncService<SyncConfig> {
 
     for (let i = 0; i < words.length; i++) {
       try {
-        await this.addWord(words[i].text)
+        // await this.addWord(words[i].text)
       } catch (error) {
-        if (error.message !== 'word') {
-          throw error
-        }
+        // if (error.message !== 'word') {
+        //   throw error
+        // }
         errorCount += 1
-        notifyError(Service.id, 'word', `「${words[i].text}」`)
+        // notifyError(Service.id, 'word', `「${words[i].text}」`)
       }
 
-      if ((i + 1) % 50 === 0) {
-        await timer(15 * 60000)
-      } else {
-        await timer(500)
-      }
+      // if ((i + 1) % 50 === 0) {
+      //   await timer(15 * 60000)
+      // } else {
+      //   await timer(500)
+      // }
     }
 
     return errorCount
@@ -117,41 +117,41 @@ export class Service extends SyncService<SyncConfig> {
 
   async isLogin (): Promise<boolean> {
     return Boolean(
-      await browser.cookies.get({
-        url: 'http://www.shanbay.com',
-        name: 'auth_token',
-      })
+      // await browser.cookies.get({
+      //   url: 'http://www.shanbay.com',
+      //   name: 'auth_token',
+      // })
     )
   }
 
   async notifyLogin () {
-    const { i18n } = await I18nManager.getInstance()
-    await i18n.loadNamespaces('sync')
+    // const { i18n } = await I18nManager.getInstance()
+    // await i18n.loadNamespaces('sync')
 
-    if (browser.notifications) {
-      browser.notifications.onClicked.addListener(handleLoginNotification)
-      browser.notifications.onClosed.removeListener(removeNotificationHandler)
-      if (browser.notifications.onButtonClicked) {
-        browser.notifications.onButtonClicked.addListener(
-          handleLoginNotification
-        )
-      }
+    // if (browser.notifications) {
+    //   browser.notifications.onClicked.addListener(handleLoginNotification)
+    //   browser.notifications.onClosed.removeListener(removeNotificationHandler)
+    //   if (browser.notifications.onButtonClicked) {
+    //     browser.notifications.onButtonClicked.addListener(
+    //       handleLoginNotification
+    //     )
+    //   }
 
-      const options: browser.notifications.CreateNotificationOptions = {
-        type: 'basic',
-        iconUrl: browser.runtime.getURL('assets/icon-128.png'),
-        title: `Saladict ${i18n.t('sync:shanbay.title')}`,
-        message: i18n.t('sync:shanbay.error.login'),
-        eventTime: Date.now() + 10000,
-        priority: 2,
-      }
+    //   const options: browser.notifications.CreateNotificationOptions = {
+    //     type: 'basic',
+    //     iconUrl: browser.runtime.getURL('assets/icon-128.png'),
+    //     title: `Saladict ${i18n.t('sync:shanbay.title')}`,
+    //     message: i18n.t('sync:shanbay.error.login'),
+    //     eventTime: Date.now() + 10000,
+    //     priority: 2,
+    //   }
 
-      if (!isFirefox) {
-        options.buttons = [{ title: i18n.t('sync:shanbay.open') }]
-      }
+    //   if (!isFirefox) {
+    //     options.buttons = [{ title: i18n.t('sync:shanbay.open') }]
+    //   }
 
-      browser.notifications.create('shanbay-login', options)
-    }
+    //   browser.notifications.create('shanbay-login', options)
+    // }
   }
 }
 
@@ -163,15 +163,15 @@ function handleLoginNotification (id: string) {
 }
 
 function removeNotificationHandler (id: string) {
-  if (id === 'shanbay-login') {
-    if (browser.notifications) {
-      browser.notifications.onClicked.removeListener(handleLoginNotification)
-      browser.notifications.onClosed.removeListener(removeNotificationHandler)
-      if (browser.notifications.onButtonClicked) {
-        browser.notifications.onButtonClicked.removeListener(
-          handleLoginNotification
-        )
-      }
-    }
-  }
+  // if (id === 'shanbay-login') {
+  //   if (browser.notifications) {
+  //     browser.notifications.onClicked.removeListener(handleLoginNotification)
+  //     browser.notifications.onClosed.removeListener(removeNotificationHandler)
+  //     if (browser.notifications.onButtonClicked) {
+  //       browser.notifications.onButtonClicked.removeListener(
+  //         handleLoginNotification
+  //       )
+  //     }
+  //   }
+  // }
 }

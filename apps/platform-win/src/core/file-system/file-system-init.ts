@@ -8,7 +8,7 @@ import type { FileItem } from './types/file-type'
 import { addJSONFile, addTextFile } from './utils/file-utils'
 import { defaultConfig, defaultProfile } from './init-files/config'
 import type { OperateResult, PromiseOptResult } from './types'
-import { getAppProfile, getAppConfig } from './get-config-files'
+import { getAppConfig, getAppProfile } from './tauri-conf-system'
 
 export type AllInfo = {
   fileList: FileItem[]

@@ -1,7 +1,7 @@
 
 import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
+import type { AllDictsConf } from '../../config'
 import type { HTMLString } from '../../types'
-import type { AllDictsConf } from '../../types/all-dict-conf'
 import {
   handleNoResult,
   handleNetWorkError,

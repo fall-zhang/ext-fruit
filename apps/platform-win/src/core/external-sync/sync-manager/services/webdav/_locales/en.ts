@@ -1,4 +1,4 @@
-import { locale as _locale } from './zh-CN'
+import type { locale as _locale } from './zh-CN'
 
 export const locale: typeof _locale = {
   title: 'WebDAV Word Syncing',
@@ -12,6 +12,6 @@ export const locale: typeof _locale = {
       'Cannot create "Saladict" directory on server. Please create the directory manualy on server.',
     network: 'Network error. Cannot connect to server.',
     parse: 'Incorrect response XML from server.',
-    unauthorized: 'Incorrect account or password.'
-  }
+    unauthorized: 'Incorrect account or password.',
+  },
 }

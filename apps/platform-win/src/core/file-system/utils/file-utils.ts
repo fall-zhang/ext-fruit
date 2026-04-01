@@ -54,7 +54,10 @@ export async function readTextFile (fileInfo: FileItem): Promise<OperateResult> 
 
 export async function readJSONFile (fileInfo: FileItem): Promise<OperateResult> {
   const localPath = await join(fileInfo.path)
-  const res = await readFile(localPath)
+
+  const res = await readFile(localPath, {
+    baseDir: BaseDirectory.AppData,
+  })
   try {
     const fileContent = new TextDecoder().decode(res)
     return {

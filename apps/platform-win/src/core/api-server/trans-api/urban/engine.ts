@@ -78,7 +78,10 @@ export const search: SearchFunction<UrbanResult> = async (
 
 /** get thumbs-up and thumbs-down nums  */
 async function getThumbsNums (ids: string): Promise<ThumbMap | null> {
-  const thumbsMap = {}
+  const thumbsMap: Record<number, {
+    up: string,
+    down: string,
+  }> = {}
 
   const result = await axios
     .get<thumbRes>('https://api.urbandictionary.com/v0/uncacheable', {
@@ -94,8 +97,8 @@ async function getThumbsNums (ids: string): Promise<ThumbMap | null> {
 
   result?.data?.thumbs?.forEach(t => {
     thumbsMap[t.defid] = {
-      up: t.up,
-      down: t.down,
+      up: t.up + '',
+      down: t.down + '',
     }
   })
   return thumbsMap

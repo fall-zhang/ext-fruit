@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { parseCtxText } from '@/utils/translateCtx'
+import { parseCtxText, type CtxTranslatorId } from '@/utils/translateCtx'
 import { SyncService, type AddConfig } from '../sync-manager/interface'
 import { getNotebook } from './utils'
 import type { Word } from '@/types/word'
@@ -317,7 +317,7 @@ export class Service extends SyncService<SyncConfig> {
     const trans = ids
       .map(
         id =>
-          `<span class="trans_title">${id}</span><div class="trans_content">${ctx[id]}</div>`
+          `<span class="trans_title">${id}</span><div class="trans_content">${ctx[id as CtxTranslatorId]}</div>`
       )
       .join('')
     return text

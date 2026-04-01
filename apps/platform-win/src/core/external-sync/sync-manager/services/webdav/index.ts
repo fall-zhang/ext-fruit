@@ -1,9 +1,11 @@
-import {
+import type {
   NotebookFile,
   AddConfig,
   DownloadConfig,
-  SyncService,
   SyncServiceConfigBase
+} from '../../interface'
+import {
+  SyncService
 } from '../../interface'
 import {
   getNotebook,
@@ -12,9 +14,8 @@ import {
   getMeta
 } from '../../helpers'
 
-import { Mutable } from '@/types/helpers'
-import { storage } from '@/_helpers/browser-api'
-import { Writable } from 'type-fest'
+// import { storage } from '@/_helpers/browser-api'
+import type { Writable } from 'type-fest'
 
 export interface SyncConfig extends SyncServiceConfigBase {
   /** Server address. Ends with '/'. */
@@ -59,55 +60,55 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
 
     this.meta = (await getMeta(Service.id)) || this.meta
 
-    await browser.alarms.clear('webdav')
+    // await browser.alarms.clear('webdav')
 
-    browser.alarms.onAlarm.addListener(this.handleSyncAlarm)
+    // browser.alarms.onAlarm.addListener(this.handleSyncAlarm)
 
     if (typeof this.config.url === 'string' && !this.config.url.endsWith('/')) {
       ;(this.config as Writable<SyncConfig>).url += '/'
     }
 
-    if (this.config.url) {
-      const duration = +this.config.duration || 15
-      const now = Date.now()
-      let nextInterval: number = +(await storage.local.get('webdavInterval'))
-        .webdavInterval
-      if (
-        !nextInterval ||
-        nextInterval < now ||
-        now + duration * 60000 < nextInterval
-      ) {
-        nextInterval = now + 1000
-      }
-      await storage.local.set({ webdavInterval: nextInterval })
-      browser.alarms.create('webdav', {
-        when: nextInterval,
-        periodInMinutes: duration,
-      })
-    } else {
-      await storage.local.set({ webdavInterval: 0 })
-    }
+    // if (this.config.url) {
+    //   const duration = +this.config.duration || 15
+    //   const now = Date.now()
+    //   let nextInterval: number = +(await storage.local.get('webdavInterval'))
+    //     .webdavInterval
+    //   if (
+    //     !nextInterval ||
+    //     nextInterval < now ||
+    //     now + duration * 60000 < nextInterval
+    //   ) {
+    //     nextInterval = now + 1000
+    //   }
+    //   await storage.local.set({ webdavInterval: nextInterval })
+    //   browser.alarms.create('webdav', {
+    //     when: nextInterval,
+    //     periodInMinutes: duration,
+    //   })
+    // } else {
+    //   await storage.local.set({ webdavInterval: 0 })
+    // }
   }
 
-  handleSyncAlarm = async (alarm: browser.alarms.Alarm) => {
-    if (alarm.name !== 'webdav') {
-      return
-    }
+  // handleSyncAlarm = async (alarm: browser.alarms.Alarm) => {
+  //   if (alarm.name !== 'webdav') {
+  //     return
+  //   }
 
-    if (import.meta.env.VITE_DEBUG) {
-      console.log('Sync Service WebDAV Interval Alarm triggered.')
-    }
+  //   if (import.meta.env.VITE_DEBUG) {
+  //     console.log('Sync Service WebDAV Interval Alarm triggered.')
+  //   }
 
-    try {
-      await this.download({})
-    } catch (e) {
-      console.error(e)
-      notifyError(Service.id, 'download')
-    }
+  //   try {
+  //     await this.download({})
+  //   } catch (e) {
+  //     console.error(e)
+  //     notifyError(Service.id, 'download')
+  //   }
 
-    const duration = this.config.duration * 60000 || 15 * 60000
-    await storage.local.set({ webdavInterval: Date.now() + duration })
-  }
+  //   const duration = this.config.duration * 60000 || 15 * 60000
+  //   await storage.local.set({ webdavInterval: Date.now() + duration })
+  // }
 
   async checkDir (): Promise<boolean> {
     let text = ''
@@ -214,144 +215,144 @@ export class Service extends SyncService<SyncConfig, SyncMeta> {
 
     const timestamp = Date.now()
 
-    try {
-      var body = JSON.stringify({ timestamp, words } as NotebookFile)
-    } catch (e) {
-      if (import.meta.env.VITE_DEBUG) {
-        console.error('WebDAV: Stringify notebook failed', words)
-      }
-      throw new Error('parse')
-    }
+    // try {
+    //   var body = JSON.stringify({ timestamp, words } as NotebookFile)
+    // } catch (e) {
+    //   if (import.meta.env.VITE_DEBUG) {
+    //     console.error('WebDAV: Stringify notebook failed', words)
+    //   }
+    //   throw new Error('parse')
+    // }
 
-    try {
-      const response = await fetch(this.config.url + 'Saladict/notebook.json', {
-        method: 'PUT',
-        headers: {
-          Authorization:
-            'Basic ' + window.btoa(`${this.config.user}:${this.config.passwd}`),
-        },
-        body,
-      })
-      if (!response.ok) {
-        throw new Error('network')
-      }
-    } catch (e) {
-      if (import.meta.env.VITE_DEBUG) {
-        console.error('WebDAV: upload failed', e)
-      }
-      throw new Error('network')
-    }
+    // try {
+    //   const response = await fetch(this.config.url + 'Saladict/notebook.json', {
+    //     method: 'PUT',
+    //     headers: {
+    //       Authorization:
+    //         'Basic ' + window.btoa(`${this.config.user}:${this.config.passwd}`),
+    //     },
+    //     body,
+    //   })
+    //   if (!response.ok) {
+    //     throw new Error('network')
+    //   }
+    // } catch (e) {
+    //   if (import.meta.env.VITE_DEBUG) {
+    //     console.error('WebDAV: upload failed', e)
+    //   }
+    //   throw new Error('network')
+    // }
 
     await this.setMeta({ timestamp, etag: '' })
   }
 
-  delete ({ force }) {
-    // full sync anyway
-    return this.add({ force })
-  }
+  // delete ({ force }) {
+  //   // full sync anyway
+  //   return this.add({ force })
+  // }
 
-  async download ({ testConfig, noCache }: DownloadConfig): Promise<void> {
-    const config = testConfig || this.config
+  // async download ({ testConfig, noCache }: DownloadConfig): Promise<void> {
+  //   const config = testConfig || this.config
 
-    if (!config.url) {
-      if (import.meta.env.VITE_DEBUG) {
-        console.warn(`sync service ${Service.id} download: empty url`)
-      }
-      return
-    }
+  //   if (!config.url) {
+  //     if (import.meta.env.VITE_DEBUG) {
+  //       console.warn(`sync service ${Service.id} download: empty url`)
+  //     }
+  //     return
+  //   }
 
-    const headers: { [name: string]: string } = {
-      Authorization: 'Basic ' + window.btoa(`${config.user}:${config.passwd}`),
-    }
-    if (!testConfig && !noCache && this.meta.etag != null) {
-      headers['If-None-Match'] = this.meta.etag
-      headers['If-Modified-Since'] = this.meta.etag
-    }
+  //   const headers: { [name: string]: string } = {
+  //     Authorization: 'Basic ' + window.btoa(`${config.user}:${config.passwd}`),
+  //   }
+  //   if (!testConfig && !noCache && this.meta.etag != null) {
+  //     headers['If-None-Match'] = this.meta.etag
+  //     headers['If-Modified-Since'] = this.meta.etag
+  //   }
 
-    try {
-      var response = await fetch(
-        config.url +
-          (config.url.endsWith('/') ? '' : '/') +
-          'Saladict/notebook.json',
-        {
-          method: 'GET',
-          headers,
-        }
-      )
+  //   try {
+  //     var response = await fetch(
+  //       config.url +
+  //         (config.url.endsWith('/') ? '' : '/') +
+  //         'Saladict/notebook.json',
+  //       {
+  //         method: 'GET',
+  //         headers,
+  //       }
+  //     )
 
-      if (response.status === 304) {
-        return
-      }
+  //     if (response.status === 304) {
+  //       return
+  //     }
 
-      if (!response.ok) {
-        throw new Error()
-      }
-    } catch (e) {
-      if (import.meta.env.VITE_DEBUG) {
-        console.error(e)
-      }
-      throw new Error('network')
-    }
+  //     if (!response.ok) {
+  //       throw new Error()
+  //     }
+  //   } catch (e) {
+  //     if (import.meta.env.VITE_DEBUG) {
+  //       console.error(e)
+  //     }
+  //     throw new Error('network')
+  //   }
 
-    try {
-      var json: NotebookFile = await response.json()
-    } catch (e) {
-      if (import.meta.env.VITE_DEBUG) {
-        console.error('Fetch webdav notebook.json error', response)
-      }
-      throw new Error('parse')
-    }
+  //   try {
+  //     var json: NotebookFile = await response.json()
+  //   } catch (e) {
+  //     if (import.meta.env.VITE_DEBUG) {
+  //       console.error('Fetch webdav notebook.json error', response)
+  //     }
+  //     throw new Error('parse')
+  //   }
 
-    if (import.meta.env.VITE_DEBUG) {
-      if (!response.headers.get('ETag')) {
-        console.warn('webdav notebook.json no etag', response)
-      }
-    }
+  //   if (import.meta.env.VITE_DEBUG) {
+  //     if (!response.headers.get('ETag')) {
+  //       console.warn('webdav notebook.json no etag', response)
+  //     }
+  //   }
 
-    if (!Array.isArray(json.words) || json.words.some(w => !w.date)) {
-      if (import.meta.env.VITE_DEBUG) {
-        console.error('Parse webdav notebook.json error: incorrect words', json)
-      }
-      throw new Error('format')
-    }
+  //   if (!Array.isArray(json.words) || json.words.some(w => !w.date)) {
+  //     if (import.meta.env.VITE_DEBUG) {
+  //       console.error('Parse webdav notebook.json error: incorrect words', json)
+  //     }
+  //     throw new Error('format')
+  //   }
 
-    if (!json.timestamp) {
-      if (import.meta.env.VITE_DEBUG) {
-        console.error('webdav notebook.json no timestamp', json)
-      }
-      throw new Error('timestamp')
-    }
+  //   if (!json.timestamp) {
+  //     if (import.meta.env.VITE_DEBUG) {
+  //       console.error('webdav notebook.json no timestamp', json)
+  //     }
+  //     throw new Error('timestamp')
+  //   }
 
-    if (testConfig) {
-      // connectivity is ok
-      return
-    }
+  //   if (testConfig) {
+  //     // connectivity is ok
+  //     return
+  //   }
 
-    const oldMeta = this.meta
+  //   const oldMeta = this.meta
 
-    if (!oldMeta.timestamp || json.timestamp >= oldMeta.timestamp) {
-      await this.setMeta({
-        timestamp: json.timestamp,
-        etag: response.headers.get('ETag') || oldMeta.etag || '',
-      })
-    }
+  //   if (!oldMeta.timestamp || json.timestamp >= oldMeta.timestamp) {
+  //     await this.setMeta({
+  //       timestamp: json.timestamp,
+  //       etag: response.headers.get('ETag') || oldMeta.etag || '',
+  //     })
+  //   }
 
-    if (!noCache && oldMeta.timestamp && json.timestamp <= oldMeta.timestamp) {
-      // older file
-      return
-    }
+  //   if (!noCache && oldMeta.timestamp && json.timestamp <= oldMeta.timestamp) {
+  //     // older file
+  //     return
+  //   }
 
-    await setNotebook(json.words)
+  //   await setNotebook(json.words)
 
-    if (import.meta.env.VITE_DEBUG) {
-      console.log('Webdav download', json)
-    }
-  }
+  //   if (import.meta.env.VITE_DEBUG) {
+  //     console.log('Webdav download', json)
+  //   }
+  // }
 
-  async destroy () {
-    browser.alarms.onAlarm.removeListener(this.handleSyncAlarm)
-    await browser.alarms.clear('webdav')
-  }
+  // async destroy () {
+  //   browser.alarms.onAlarm.removeListener(this.handleSyncAlarm)
+  //   await browser.alarms.clear('webdav')
+  // }
 
   setMeta (meta: SyncMeta) {
     this.meta = meta

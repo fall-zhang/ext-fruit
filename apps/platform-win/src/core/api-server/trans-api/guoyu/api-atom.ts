@@ -1,7 +1,6 @@
-import type { GetSrcPageFunction } from '@/core/api-server/trans-api/atom-type'
-import { getChsToChz } from '@/core/api-server/utils'
+import type { GetSrcPageFunction } from '../../api-common/search-type'
+import chsToChz from '../../utils/chs-to-chz'
 
 export const getSrcPage: GetSrcPageFunction = async text => {
-  const transform = getChsToChz()
-  return `https://www.moedict.tw/${transform(text)}`
+  return `https://www.moedict.tw/${chsToChz(text)}`
 }

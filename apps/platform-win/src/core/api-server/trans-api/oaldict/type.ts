@@ -7,7 +7,7 @@ export interface Idiom {
   examples?: HTMLString
 }
 
-interface Mean {
+export interface Mean {
   symbols?: string
   grammar?: string
   labels?: string
@@ -19,7 +19,7 @@ interface Mean {
   examples?: HTMLString
 }
 
-interface Sense {
+export interface Sense {
   title?: string
   symbol?: string
   variants?: string

@@ -1,9 +1,9 @@
 import type { Word } from '../../types/word'
 import { getDB } from './core'
-import type { DBArea } from 'apps/browser-extension/src/utils/record-manager'
+import type { DBArea } from './types'
 
 /** Is a word in Notebook */
-export async function isInNotebook (word: Word):Promise<boolean> {
+export async function isInNotebook (word: Word): Promise<boolean> {
   const db = await getDB()
   return db.notebook
     .where('text')
@@ -47,7 +47,7 @@ export async function getWords ({
   words: Word[]
 }> {
   const db = await getDB()
-  let sortFields :string | string[]
+  let sortFields: string | string[]
   if (sortField) {
     if (Array.isArray(sortField)) {
       sortFields = sortField.map(str => String(str))

@@ -7,7 +7,7 @@ import {
   handleNoResult,
   handleNetWorkError
 } from '../../utils'
-import type { OaldictResult, Idiom } from './type'
+import type { OaldictResult, Idiom, Mean, Sense } from './type'
 import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 
 
@@ -60,12 +60,12 @@ function handleDOM (
 
     const $pron = Array.from($title.querySelectorAll(':scope>.phonetics>div'))
 
-    $pron.map((pr, prI) => {
+    $pron.forEach((pr, prI) => {
       const pronKey = prI ? 'us' : 'uk'
       const $sound = pr.querySelector('.sound') as HTMLElement
       let sound
       if ($sound) {
-        sound = $sound.getAttribute('data-src-mp3')
+        sound = $sound.getAttribute('data-src-mp3') || undefined
       }
       const phon = getText(pr, '.phon')
 
@@ -74,14 +74,14 @@ function handleDOM (
     })
   }
 
-  // senses_multiple senses_single and senses_phrasal
-  const $senses_li = Array.from(main.querySelectorAll('.entry>ol>.sense'))
+  // senses_multiple senses_single and sensesPhrasal
+  const $sensesLi = Array.from(main.querySelectorAll('.entry>ol>.sense'))
 
   const $senses = Array.from(main.querySelectorAll('.senses_multiple .shcut-g'))
 
-  const $senses_phrasal = Array.from(main.querySelectorAll('.entry>.pv-g'))
+  const $sensesPhrasal = Array.from(main.querySelectorAll('.entry>.pv-g'))
 
-  function handleGetMeans ($mean, sense) {
+  function handleGetMeans ($mean: Element, sense: Sense) {
     const mean: Mean = {}
 
     const $symbols = $mean.querySelector('.sensetop .symbols>a') as HTMLElement
@@ -116,10 +116,10 @@ function handleDOM (
   }
 
   // Judge whether it is wrapped by span label
-  if ($senses_phrasal.length) {
+  if ($sensesPhrasal.length) {
     result.isPhrasal = true
 
-    $senses_phrasal.map($mean => {
+    $sensesPhrasal.forEach($mean => {
       const sense: Sense = {
         title: '',
         means: [],
@@ -138,29 +138,29 @@ function handleDOM (
         sense.variants = getInnerHTML(HOST, $mean, '.variants')
       }
 
-      const $senses_mul_p = Array.from(
+      const $sensesMultiP = Array.from(
         $mean.querySelectorAll('.senses_multiple .sense')
       )
-      const $senses_single_p = Array.from(
+      const $sensesSingleP = Array.from(
         $mean.querySelectorAll('.sense_single .sense')
       )
       ;(
-        ($senses_mul_p.length && $senses_mul_p) ||
-        ($senses_single_p.length && $senses_single_p) ||
+        ($sensesMultiP.length && $sensesMultiP) ||
+        ($sensesSingleP.length && $sensesSingleP) ||
         []
       ).map($m => handleGetMeans($m, sense))
 
       result.senses.push(sense)
     })
-  } else if ($senses_li.length) {
+  } else if ($sensesLi.length) {
     const sense: Sense = {
       title: '',
       means: [],
     }
-    $senses_li.map($mean => handleGetMeans($mean, sense))
+    $sensesLi.map($mean => handleGetMeans($mean, sense))
     result.senses.push(sense)
   } else {
-    $senses.map($sense => {
+    $senses.forEach($sense => {
       const sense: Sense = {
         title: '',
         means: [],
@@ -185,7 +185,7 @@ function handleDOM (
 
   const $idioms = Array.from(main.querySelectorAll('.idioms .idm-g'))
 
-  $idioms.map($idiom => {
+  $idioms.forEach($idiom => {
     const idiom: Idiom = {}
 
     const $topC = $idiom.querySelector('.top-container')

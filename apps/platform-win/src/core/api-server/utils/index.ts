@@ -133,8 +133,7 @@ export function getHTML (
     ...config,
     RETURN_DOM_FRAGMENT: true,
   })
-
-  const content = fragment.firstChild ? fragment.firstChild[mode] : ''
+  const content = fragment.firstElementChild ? fragment.firstElementChild?.[mode] : ''
 
   return transform ? transform(content) : content
 }

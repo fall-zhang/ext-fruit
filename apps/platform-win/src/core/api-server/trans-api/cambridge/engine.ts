@@ -4,6 +4,7 @@ import { getChsToChz, handleNetWorkError, getText, getFullLink, removeChild, get
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 import { getStaticSpeaker } from '@/components/Speaker'
 import type { AllDictsConf } from '../../config'
+import chsToChz from '../../utils/chs-to-chz'
 
 export const getSrcPage: GetSrcPageFunction = async (text, localLang, profile) => {
   let { lang } = profile.cambridge.options
@@ -39,7 +40,7 @@ export const getSrcPage: GetSrcPageFunction = async (text, localLang, profile) =
         encodeURIComponent(text)
       )
     case 'en-chz': {
-      const chsToChz = getChsToChz(localLang)
+      // const chsToChz = getChsToChz(localLang)
 
       return (
         'https://dictionary.cambridge.org/zht/%E6%90%9C%E7%B4%A2/direct/?datasetsearch=english-chinese-traditional&q=' +

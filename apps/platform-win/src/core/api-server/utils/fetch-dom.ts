@@ -19,7 +19,7 @@ export async function fetchDirtyDOM (
   return fetch(request).then((res) => {
     return res.text()
   }).then(res => {
-    console.log('⚡️ line:21 ~ res: ', res)
+    // console.log('⚡️ line:21 ~ res: ', res)
     return new DOMParser().parseFromString(res, 'text/html')
   })
 }

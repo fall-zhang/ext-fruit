@@ -1,10 +1,7 @@
-import type { AddConfig } from '../../interface'
-import { SyncService } from '../../interface'
-import { getNotebook, notifyError } from '../../helpers'
-import { openUrl } from '@/_helpers/browser-api'
-import { timer } from '@/_helpers/promise-more'
-import { isFirefox } from '@/_helpers/saladict'
-import { I18nManager } from '@/background/i18n-manager'
+import { getNotebook } from '../sync-anki/utils'
+import type { AddConfig } from '../sync-manager/interface'
+import { SyncService } from '../sync-manager/interface'
+import { timer } from '@/utils/promise-more'
 
 export interface SyncConfig {
   enable: boolean
@@ -20,7 +17,7 @@ export class Service extends SyncService<SyncConfig> {
   }
 
   static openLogin () {
-    return openUrl('https://www.shanbay.com/web/account/login')
+    return window.open('https://www.shanbay.com/web/account/login')
   }
 
   async init () {
@@ -47,6 +44,7 @@ export class Service extends SyncService<SyncConfig> {
     }
 
     if (force) {
+      // eslint-disable-next-line no-param-reassign
       words = await getNotebook()
     }
 
@@ -58,18 +56,21 @@ export class Service extends SyncService<SyncConfig> {
 
     for (let i = 0; i < words.length; i++) {
       try {
+        // eslint-disable-next-line no-await-in-loop
         await this.addWord(words[i].text)
-      } catch (error) {
+      } catch (error: any) {
         if (error.message !== 'word') {
           throw error
         }
         errorCount += 1
-        notifyError(Service.id, 'word', `「${words[i].text}」`)
+        console.error(Service.id, 'word', `「${words[i].text}」`)
       }
 
       if ((i + 1) % 50 === 0) {
+        // eslint-disable-next-line no-await-in-loop
         await timer(15 * 60000)
       } else {
+        // eslint-disable-next-line no-await-in-loop
         await timer(500)
       }
     }
@@ -122,41 +123,41 @@ export class Service extends SyncService<SyncConfig> {
 
   async isLogin (): Promise<boolean> {
     return Boolean(
-      await browser.cookies.get({
-        url: 'http://www.shanbay.com',
-        name: 'auth_token',
-      })
+      // await browser.cookies.get({
+      //   url: 'http://www.shanbay.com',
+      //   name: 'auth_token',
+      // })
     )
   }
 
   async notifyLogin () {
-    const { i18n } = await I18nManager.getInstance()
-    await i18n.loadNamespaces('sync')
+    // const { i18n } = await I18nManager.getInstance()
+    // await i18n.loadNamespaces('sync')
 
-    if (browser.notifications) {
-      browser.notifications.onClicked.addListener(handleLoginNotification)
-      browser.notifications.onClosed.removeListener(removeNotificationHandler)
-      if (browser.notifications.onButtonClicked) {
-        browser.notifications.onButtonClicked.addListener(
-          handleLoginNotification
-        )
-      }
+    // if (browser.notifications) {
+    //   browser.notifications.onClicked.addListener(handleLoginNotification)
+    //   browser.notifications.onClosed.removeListener(removeNotificationHandler)
+    //   if (browser.notifications.onButtonClicked) {
+    //     browser.notifications.onButtonClicked.addListener(
+    //       handleLoginNotification
+    //     )
+    //   }
 
-      const options: browser.notifications.CreateNotificationOptions = {
-        type: 'basic',
-        iconUrl: browser.runtime.getURL('assets/icon-128.png'),
-        title: `Saladict ${i18n.t('sync:shanbay.title')}`,
-        message: i18n.t('sync:shanbay.error.login'),
-        eventTime: Date.now() + 10000,
-        priority: 2,
-      }
+    //   const options: browser.notifications.CreateNotificationOptions = {
+    //     type: 'basic',
+    //     iconUrl: getURL('assets/icon-128.png'),
+    //     title: `Saladict ${i18n.t('sync:shanbay.title')}`,
+    //     message: i18n.t('sync:shanbay.error.login'),
+    //     eventTime: Date.now() + 10000,
+    //     priority: 2,
+    //   }
 
-      if (!isFirefox) {
-        options.buttons = [{ title: i18n.t('sync:shanbay.open') }]
-      }
+    //   if (!isFirefox) {
+    //     options.buttons = [{ title: i18n.t('sync:shanbay.open') }]
+    //   }
 
-      browser.notifications.create('shanbay-login', options)
-    }
+    //   browser.notifications.create('shanbay-login', options)
+    // }
   }
 }
 
@@ -169,14 +170,14 @@ function handleLoginNotification (id: string) {
 
 function removeNotificationHandler (id: string) {
   if (id === 'shanbay-login') {
-    if (browser.notifications) {
-      browser.notifications.onClicked.removeListener(handleLoginNotification)
-      browser.notifications.onClosed.removeListener(removeNotificationHandler)
-      if (browser.notifications.onButtonClicked) {
-        browser.notifications.onButtonClicked.removeListener(
-          handleLoginNotification
-        )
-      }
-    }
+    // if (browser.notifications) {
+    //   browser.notifications.onClicked.removeListener(handleLoginNotification)
+    //   browser.notifications.onClosed.removeListener(removeNotificationHandler)
+    //   if (browser.notifications.onButtonClicked) {
+    //     browser.notifications.onButtonClicked.removeListener(
+    //       handleLoginNotification
+    //     )
+    //   }
+    // }
   }
 }

@@ -7,7 +7,8 @@ import { getStaticSpeaker } from '@/components/Speaker'
 import type { HjdictPayload, HjdictResult, HjdictResultRelated } from './type'
 import { isContainFrench, isContainDeutsch, isContainSpanish, isContainEnglish, isContainJapanese, isContainKorean, isContainChinese } from '@/core/api-server/utils/lang-check'
 import type { HjdictConfig } from './config'
-
+import type { AllDictsConf } from '../../config'
+import { v4 as getUUID } from 'uuid'
 
 const HOST = 'https://www.hjdict.com'
 
@@ -29,30 +30,27 @@ export const search: SearchFunction<HjdictResult> = async (
     HJ_ST: 1,
     HJ_CST: 1,
     HJ_T: +new Date(),
-    _: getUUID(16),
+    _: getUUID(),
   }
 
-  await Promise.all(
-    Object.keys(cookies).map(name =>
-      window.cookieStore.set({
-        url: 'https://www.hjdict.com',
-        domain: 'hjdict.com',
-        name,
-        value: String(cookies[name]),
-      })
-    )
-  )
+  // await Promise.all(
+  //   Object.keys(cookies).map(name =>
+  //     window.cookieStore.set({
+  //       url: 'https://www.hjdict.com',
+  //       domain: 'hjdict.com',
+  //       name,
+  //       value: String(cookies[name]),
+  //     })
+  //   )
+  // )
 
   const langCode = getLangCode(text, opt.profile.hjdict)
 
   return fetchDirtyDOM(
-    `https://www.hjdict.com/${langCode}/${encodeURIComponent(text)}`,
-    {
-      withCredentials: true,
-    }
+    `https://www.hjdict.com/${langCode}/${encodeURIComponent(text)}`
   )
     .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, profile.options, langCode))
+    .then(doc => handleDOM(doc, opt.profile.hjdict.options, langCode))
 }
 
 function handleDOM (
@@ -84,6 +82,7 @@ function handleDOM (
     $header
       .querySelectorAll<HTMLLIElement>('.word-details-tab')
       .forEach(($tab, i) => {
+        // eslint-disable-next-line no-param-reassign
         $tab.dataset.categories = String(i)
       })
     header = getInnerHTML(HOST, $header)
@@ -195,22 +194,4 @@ function getLangCode (text: string, profile: HjdictConfig): string {
   return 'w'
 }
 
-function getUUID (e?: number): string {
-  let t = arguments.length > 1 && undefined !== arguments[1] ? arguments[1] : 16
-  let n = ''
-  if (typeof e === 'number') {
-    for (let i = 0; i < e; i++) {
-      const r = Math.floor(10 * Math.random())
-      n += r % 2 === 0 ? 'x' : 'y'
-    }
-  } else {
-    n = e || 'xxxxxxxx-xyxx-yxxx-xxxy-xxyxxxxxxxxx'
-  }
-  return (
-    (typeof t !== 'number' || t < 2 || t > 36) && (t = 16),
-    n.replace(/[xy]/g, function (e) {
-      const n = (Math.random() * t) | 0
-      return (e === 'x' ? n : (3 & n) | 8).toString(t)
-    })
-  )
-}
+

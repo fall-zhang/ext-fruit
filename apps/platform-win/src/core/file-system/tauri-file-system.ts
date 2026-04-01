@@ -116,10 +116,6 @@ class TauriFileSystem {
   }
 
   async updateFileInfo (oldInfo: FileItem, newInfo: FileItem): PromiseOptResult {
-    const result: OperateResult<string> = {
-      state: 'failure',
-      msg: '更新文件名称失败',
-    }
     // let localDirItemList = oldInfo.filePath.split('/')
     // if (localDirItemList[0] === '') {
     //   localDirItemList = localDirItemList.slice(1)

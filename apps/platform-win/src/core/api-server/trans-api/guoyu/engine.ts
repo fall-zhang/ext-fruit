@@ -8,6 +8,7 @@ import type { GuoYuResult } from './type'
 import type { SearchFunction, DictSearchResult } from '@/core/api-server/api-common/search-type'
 import type { Profile } from '@/config/trans-profile'
 import { fetch } from '@tauri-apps/plugin-http'
+import chsToChz from '../../utils/chs-to-chz'
 export const search: SearchFunction<GuoYuResult> = (
   text,
   opt
@@ -24,7 +25,6 @@ export async function moedictSearch<R extends GuoYuResult> (
   text: string,
   options: Profile['dicts']['all']['guoyu']['options']
 ): Promise<DictSearchResult<R>> {
-  const chsToChz = getChsToChz()
   const data = await fetch(`https://www.moedict.tw/${moedictID}/${encodeURIComponent(
     chsToChz(text.replace(/\s+/g, ''))
   )}.json`).then(res => res.json())
