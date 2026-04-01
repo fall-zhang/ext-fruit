@@ -127,12 +127,6 @@ export function getDefaultConfig (): SaladConfigType {
     /** pin panel when shows up  */
     defaultPinned: false,
 
-    /** resize main widnow to leave space to standalone window */
-    qssaSidebar: '',
-
-    /** should standalone panel response to page selection */
-    qssaPageSel: true,
-
     /** should standalone panel memo position and dimension on close */
     qssaRectMemo: false,
 
@@ -140,9 +134,6 @@ export function getDefaultConfig (): SaladConfigType {
     baWidth: -1,
 
     baHeight: 550,
-
-    /** browser action panel preload source */
-    baPreload: 'selection',
 
     /** auto search when browser action panel shows */
     baAuto: false,

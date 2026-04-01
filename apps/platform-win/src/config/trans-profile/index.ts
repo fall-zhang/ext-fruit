@@ -35,9 +35,10 @@ export type AppProfile = ProfileMutable
 
 export function getDefaultSelectDict (): Array<DictID> {
   return [
-    'cobuild', // 科林斯高阶 ✅ 默认启用
+    'bing', // 必应词典 ✅ 默认启用
     'cambridge', // 剑桥词典 ✅  默认启用
     'youdao', // 有道词典 ✅  默认启用
+    'cobuild', // 科林斯高阶 ✅ 默认启用
     'vocabulary', // vocabulary ✅ 默认启用（可以爬取更多有用的信息） 默认启用
     // 'baidu', // 百度 ❌ 需要登录
     // 'urban', // urban ❌ 需要代理，且 DOM 已经更新，无法抓取 默认启用

@@ -132,12 +132,6 @@ export type SaladConfigType = {
   /** pin panel when shows up  */
   defaultPinned: boolean,
 
-  /** resize main widnow to leave space to standalone window */
-  qssaSidebar: '' | 'left' | 'right',
-
-  /** should standalone panel response to page selection */
-  qssaPageSel: boolean,
-
   /** should standalone panel memo position and dimension on close */
   qssaRectMemo: boolean,
 
@@ -145,9 +139,6 @@ export type SaladConfigType = {
   baWidth: -1,
 
   baHeight: 550,
-
-  /** browser action panel preload source */
-  baPreload: PreloadSource,
 
   /** auto search when browser action panel shows */
   baAuto: boolean,
@@ -202,7 +193,7 @@ export type SaladConfigType = {
 
   contextMenus: {
     selected: string[]
-    all: Record<string, string>,
+    all: Record<string, any>,
   }
 
 
