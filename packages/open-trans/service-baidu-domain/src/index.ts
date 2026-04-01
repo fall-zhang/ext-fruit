@@ -1,20 +1,22 @@
-import {
+import type {
   Language,
-  Translator,
-  TranslateError,
   TranslateQueryResult
+} from '../../translator'
+import {
+  Translator,
+  TranslateError
 } from '../../translator'
 import md5 from 'md5'
 import qs from 'qs'
 
 // 百度垂直领域翻译
 export const domains = ['medicine', 'electronics', 'mechanics']
-export type Domain = typeof domains[number];
+export type Domain = typeof domains[number]
 
 const langMap: [Language, string][] = [
   ['auto', 'auto'],
   ['zh-CN', 'zh'],
-  ['en', 'en']
+  ['en', 'en'],
 ]
 
 export interface BaiduDomainConfig {
@@ -38,7 +40,7 @@ export class BaiduDomain extends Translator<BaiduDomainConfig> {
     type BaiduDomainTranslateError = {
       error_code: '54001' | string;
       error_msg: 'Invalid Sign' | string;
-    };
+    }
 
     type BaiduDomainTranslateResult = {
       from: string;
@@ -47,7 +49,7 @@ export class BaiduDomain extends Translator<BaiduDomainConfig> {
         dst: string;
         src: string;
       }>;
-    };
+    }
 
     const salt = Date.now()
     const { endpoint } = this
@@ -64,8 +66,8 @@ export class BaiduDomain extends Translator<BaiduDomainConfig> {
         salt,
         appid,
         domain,
-        sign: md5(appid + text + salt + domain + key)
-      }
+        sign: md5(appid + text + salt + domain + key),
+      },
     }).catch(() => {
       throw new TranslateError('NETWORK_ERROR')
     })
@@ -77,19 +79,19 @@ export class BaiduDomain extends Translator<BaiduDomainConfig> {
       // https://api.fanyi.baidu.com/api/trans/product/apidoc#joinFile
       console.error(new Error('[BaiduDomain service]' + error))
       switch (error) {
-      case '52003':
-      case '54000':
-        throw new TranslateError('AUTH_ERROR')
-      case '54004':
-        throw new TranslateError('USAGE_LIMIT')
-      default:
-        throw new TranslateError('UNKNOWN')
+        case '52003':
+        case '54000':
+          throw new TranslateError('AUTH_ERROR')
+        case '54004':
+          throw new TranslateError('USAGE_LIMIT')
+        default:
+          throw new TranslateError('UNKNOWN')
       }
     }
 
     const {
       trans_result: transResult,
-      from: langDetected
+      from: langDetected,
     } = data as BaiduDomainTranslateResult
     const detectedFrom = BaiduDomain.langMapReverse.get(
       langDetected
@@ -102,12 +104,12 @@ export class BaiduDomain extends Translator<BaiduDomainConfig> {
       to,
       origin: {
         paragraphs: transResult.map(({ src }) => src),
-        tts: await this.textToSpeech(text, detectedFrom)
+        tts: await this.textToSpeech(text, detectedFrom),
       },
       trans: {
         paragraphs: transParagraphs,
-        tts: await this.textToSpeech(transParagraphs.join(' '), to)
-      }
+        tts: await this.textToSpeech(transParagraphs.join(' '), to),
+      },
     }
   }
 
@@ -127,7 +129,7 @@ export class BaiduDomain extends Translator<BaiduDomainConfig> {
     return `https://fanyi.baidu.com/gettts?${qs.stringify({
       lan: BaiduDomain.langMap.get(lang !== 'auto' ? lang : 'zh-CN') || 'zh',
       text,
-      spd: 5
+      spd: 5,
     })}`
   }
 }

@@ -10,11 +10,16 @@ import 'bulma/css/bulma.css'
 import './style.css'
 import { Speaker } from './components/Speaker'
 
+
 const locales = {
   en,
   'zh-CN': zhCN,
-}
-const serviceSourceMap = import.meta.glob('../../service-*/index.ts')
+} as const
+type ServiceList = {
+  name: string;
+  loading?: boolean;
+  result?: TranslateResult
+}[]
 
 function App () {
   const [locale, setLocale] = useState<keyof typeof locales>('zh-CN')
@@ -22,14 +27,7 @@ function App () {
   const [to, setTo] = useState<Language>('zh-CN')
   const [text, setText] = useState('I love you.')
 
-  const [services, updateServices] = useState<
-    Array<{ name: string; loading?: boolean; result?: TranslateResult }>
-  >(() =>
-    translatorReq.keys().map(path => ({
-      name: /service-([^/\\]+)/.exec(path)![1],
-      loading: false,
-    }))
-  )
+  const [services, updateServices] = useState<ServiceList>([])
 
   return (<div className="root-columns columns is-marginless">
     <div className="column is-paddingless">
@@ -46,7 +44,6 @@ function App () {
               >
                 <option value="zh-CN">{locales['zh-CN']['zh-CN']}</option>
                 <option value="en">{locales.en.en}</option>
-                <option value="zh-TW">{locales['zh-TW']['zh-TW']}</option>
               </select>
             </div>
           </div>
@@ -63,7 +60,7 @@ function App () {
                 >
                   {Object.keys(en).map(lang => (
                     <option key={lang} value={lang}>
-                      {locales[locale][lang as Language]}
+                      {/* {locales[locale][lang as Language]} */}
                     </option>
                   ))}
                 </select>
@@ -80,7 +77,7 @@ function App () {
                 >
                   {Object.keys(en).map(lang => (
                     <option key={lang} value={lang}>
-                      {locales[locale][lang as Language]}
+                      {/* {locales[locale][lang as Language]} */}
                     </option>
                   ))}
                 </select>
@@ -166,7 +163,7 @@ function App () {
                           <strong>Origin</strong>
                           {' · '}
                           <small>
-                            {locales[locale][service.result.from]}
+                            {/* {locales[locale][service.result.from]} */}
                           </small>{' '}
                           <Speaker src={service.result.origin.tts} />
                           {service.result.origin.paragraphs.map(line => (
@@ -175,7 +172,7 @@ function App () {
                           <strong>Translation</strong>
                           {' · '}
                           <small>
-                            {locales[locale][service.result.to]}
+                            {/* {locales[locale][service.result.to]} */}
                           </small>{' '}
                           <Speaker src={service.result.trans.tts} />
                           {service.result.trans.paragraphs.map(line => (

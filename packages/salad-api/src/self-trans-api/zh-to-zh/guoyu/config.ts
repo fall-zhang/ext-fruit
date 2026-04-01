@@ -1,41 +1,11 @@
-import type { DictItemBase } from '@/core/api-server/types/dict-base'
+import type { ApiInfo } from '../../../types/api-info'
 
-export type GuoyuConfig = DictItemBase & {
-  options: {
-  /** show translation */
-    trans: boolean
-  }
+const guoyuConfig: ApiInfo = {
+  type: 'self-trans',
+  from: ['zh-TW'],
+  to: ['zh-TW'],
+  maxWord: 5,
+  minWOrd: 1,
 }
 
-export default (): GuoyuConfig => ({
-  lang: '00100000',
-  selectionLang: {
-    english: false,
-    chinese: true,
-    japanese: false,
-    korean: false,
-    french: false,
-    spanish: false,
-    deutsch: false,
-    others: false,
-    matchAll: false,
-  },
-  defaultUnfold: {
-    english: true,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: true,
-    spanish: true,
-    deutsch: true,
-    others: true,
-    matchAll: false,
-  },
-  selectionWC: {
-    min: 1,
-    max: 5,
-  },
-  options: {
-    trans: true,
-  },
-})
+export default guoyuConfig

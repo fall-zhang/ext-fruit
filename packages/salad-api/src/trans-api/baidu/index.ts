@@ -8,7 +8,6 @@ import type { GetSrcPageFunction } from '@/core/api-server/api-common/search-typ
 import type { AuthBody } from './config'
 import type { BaiduTranslateError, BaiduTranslateResult } from './type'
 import type { AtomFetchRequest, AtomFetchResponse } from '../../types/atom-type'
-import { machineResult, type MachineTranslateResult } from '../../types/legacy-result'
 
 
 export const getRequest: AtomFetchRequest<AuthBody> = (text, {
@@ -42,7 +41,7 @@ export const getRequest: AtomFetchRequest<AuthBody> = (text, {
   })
 }
 
-export const handleResponse: AtomFetchResponse<MachineTranslateResult> = async (res, {
+export const handleResponse: AtomFetchResponse<unknown> = async (res, {
   text,
   from,
   to,
@@ -76,7 +75,7 @@ export const handleResponse: AtomFetchResponse<MachineTranslateResult> = async (
     lang: to,
     text: transParagraphs.join(' '),
   })
-  return machineResult({
+  return {
     result: {
       id: 'baidu',
       sl: from,
@@ -97,7 +96,7 @@ export const handleResponse: AtomFetchResponse<MachineTranslateResult> = async (
       py: transTTS,
       us: transTTS,
     },
-  })
+  }
 }
 
 export const getSrcPage: GetSrcPageFunction = (text, langCode, dictProfile) => {
