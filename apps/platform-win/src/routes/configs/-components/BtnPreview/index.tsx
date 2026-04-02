@@ -9,8 +9,8 @@ import { newWord } from '@/utils/dict-utils/new-word'
 import { useSearchContext } from '@/context/search-context'
 
 // pre-fetch the word
-// const pWordOfTheDay = getWordOfTheDay()
-const pWordOfTheDay = 'awesome'
+// const wordOfToday = getWordOfTheDay()
+const wordOfToday = 'awesome'
 
 export const BtnPreview: FC = () => {
   const { t } = useTranslation('options')
@@ -28,7 +28,7 @@ export const BtnPreview: FC = () => {
           // panel will adjust the position itself
           // store.OPEN_PANEL({ x: x + width, y: 80 })
           searchContext({
-            word: newWord({ text: pWordOfTheDay }),
+            word: newWord({ text: wordOfToday }),
           })
         }}
       />

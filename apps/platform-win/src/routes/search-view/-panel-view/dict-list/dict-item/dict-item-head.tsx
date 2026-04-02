@@ -48,78 +48,14 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
   }, [props.isSearching])
 
 
-  // const menuItems = useMemo(() => {
-  //   const menuItems: HoverBoxItem[] = []
-  //   const localedLabel = (text: string) =>
-  //     text.replace(/%t\((\S+)\)/g, (m, s1) => t(s1))
-
-  //   if (props.catalog) {
-  //     for (const item of props.catalog) {
-  //       if (item.options) {
-  //         menuItems.push({
-  //           key: item.key,
-  //           value: item.value,
-  //           title: item.title && localedLabel(item.title),
-  //           options: item.options.map(opt => ({
-  //             value: opt.value,
-  //             label: localedLabel(opt.label),
-  //           })),
-  //         })
-  //       } else {
-  //         menuItems.push({
-  //           key: item.key,
-  //           value: item.value,
-  //           label: localedLabel(item.label),
-  //         })
-  //       }
-  //     }
-  //   }
-
-  //   menuItems.push({
-  //     key: '_options',
-  //     value: '_options',
-  //     label: t('content:tip.openOptions'),
-  //   })
-
-  //   return menuItems
-  // }, [props.catalog, ready])
   return (
     <header
       className={clsx('dictItemHead', {
         isSearching: props.isSearching,
       })}
     >
-      <img className="dictItemHead-Logo" src={`/src/core/api-server/trans-api/${props.dictID}/favicon.png`} alt="dict logo" />
-      <h1 className="dictItemHead-Title">
-        <a
-          href="#"
-          onClick={(e: React.MouseEvent<HTMLElement>) => {
-            e.stopPropagation()
-            e.preventDefault()
-            props.openDictSrcPage(props.dictID, e.ctrlKey)
-          }}
-        >
-          {t(`${props.dictID}.name`)}
-        </a>
-      </h1>
-      {/* 打开对应语言的配置 */}
-      {/* <HoverBox
-        compact
-        Button={MenusBtn}
-        items={menuItems}
-        top={25}
-        onSelect={(key, value) => {
-          props.onCatalogSelect({ key, value })
-        }}
-      /> */}
-      {showLoader && (
-        <div className="dictItemHead-Loader">
-          <div />
-        </div>
-      )}
-      <div className="dictItemHead-EmptyArea" onClick={props.toggleFold} />
       <button
-        className="dictItemHead-FoldArrowBtn"
+        className="cursor-pointer size-5"
         onMouseOut={e => e.currentTarget.blur()}
         onClick={props.toggleFold}
       >
@@ -136,6 +72,36 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
           />
         </svg>
       </button>
+      <img className="dictItemHead-Logo" src={`/src/core/api-server/trans-api/${props.dictID}/favicon.png`} alt="dict logo" />
+      <h4 className="dictItemHead-Title">
+        <a
+          href="#"
+          onClick={(e: React.MouseEvent<HTMLElement>) => {
+            e.stopPropagation()
+            e.preventDefault()
+            props.openDictSrcPage(props.dictID, e.ctrlKey)
+          }}
+        >
+          {t(`${props.dictID}.name`)}
+        </a>
+      </h4>
+      {/* 打开对应语言的配置 */}
+      {/* <HoverBox
+        compact
+        Button={MenusBtn}
+        items={menuItems}
+        top={25}
+        onSelect={(key, value) => {
+          props.onCatalogSelect({ key, value })
+        }}
+      /> */}
+      {showLoader && (
+        <div className="dictItemHead-Loader">
+          <div />
+        </div>
+      )}
+      <div className="dictItemHead-EmptyArea" onClick={props.toggleFold} />
+
     </header>
   )
 }

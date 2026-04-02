@@ -1,66 +1,28 @@
 import { useEffect, useState, type FC, type ReactNode } from 'react'
 
-import {
-  FocusBtn,
-  HistoryBackBtn,
-  HistoryNextBtn
-} from './MenubarBtns'
+
 import './MenuBar.scss'
 // import type { ProfilesProps } from './Profiles'
 // import { ProfilePopover } from './Profiles'
-import { useTranslation } from 'react-i18next'
-import { useDictStore } from '@/store'
-import { useShallow } from 'zustand/shallow'
-import { useConfContext } from '@/context/conf-context'
-import { useSearchContext } from '@/context/search-context'
 import { HistoryIcon } from 'lucide-react'
 
 export interface MenuBarProps {
   menuBarProps?: Record<string, any>
   customButton?: ReactNode
-
-  // /** is in Notebook */
-  // isInNotebook: boolean
-  // addToNoteBook: () => any
-
-  // enableSuggest: boolean
-  // isTrackHistory: boolean
-  // histories: Word[]
-  // historyIndex: number
-  // switchHistory: (direction: 'prev' | 'next') => void
-  // // 选中对应的预设模式
-  // // onSelectProfile: (id: string) => void
-  // // activeProfileId: ProfilesProps['activeProfileId']
-  // // profiles: ProfilesProps['profiles']
-
-  // togglePin: () => any
-
-  // toggleQSFocus: () => any
-
-  // onClose: () => any
-  // onSwitchSidebar: (side: 'left' | 'right') => any
-
-  // onHeightChanged: (height: number) => void
+  onShowHistory(): void
 }
 
 export const MenuBar: FC<MenuBarProps> = (props) => {
-  const searchContext = useSearchContext(store => store)
-  const switchHistory = searchContext.switchHistory
-
-  const store = useDictStore(useShallow((store) => {
-    return {
-      isInNotebook: store.isFav,
-      shouldFocus: false, // is quick search panel or popup page
-      historyIndex: store.historyIndex,
-    }
-  }))
-
   return (
     <header className="menuBar">
-      <HistoryIcon
-        className="text-white dark:text-black"
-        strokeWidth={1}
-      />
+      <button className="menuBar-Btn flex items-center justify-center" >
+        <HistoryIcon
+          className="text-white dark:text-black"
+          strokeWidth={1}
+          size={18}
+          onClick={props.onShowHistory}
+        />
+      </button>
       {/* <HistoryBackBtn
         disabled={store.historyIndex <= 0}
         onClick={() => switchHistory('prev')}

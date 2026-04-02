@@ -1,10 +1,7 @@
 import type { FC } from 'react'
 import React, { useRef } from 'react'
-import type { AppConfig } from '@/config/app-config'
-import type { Word } from '@/types/word'
-// import { useInPanelSelect } from '@/utils/selection/select-text'
 import { useConfContext } from '@/context/conf-context'
-import { DictItem, type DictItemProps } from './dict-item/dict-item'
+import { DictItem, type DictItemProps } from './dict-list-item'
 import type { DictID } from '@/core/api-server/config'
 
 const MemoDictItem = React.memo(DictItem)
@@ -54,10 +51,6 @@ export const DictList: FC<DictListProps> = (props) => {
     darkMode,
   } = configContext.config
   const dicts = props.dicts
-
-  const onItemHeightChanged = useRef((id: DictID, height: number) => {
-  }).current
-
   return (
     <div className="dictList">
       {dicts.map(data => (
@@ -76,9 +69,7 @@ export const DictList: FC<DictListProps> = (props) => {
           onSpeakerPlay={async (src) => {
           } }
           key={data.dictID}
-          {...data}
-          // onInPanelSelect={onInPanelSelect}
-          onHeightChanged={onItemHeightChanged} />
+          {...data} />
       ))}
     </div>
   )

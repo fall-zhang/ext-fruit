@@ -5,7 +5,7 @@ import { useCallback, useRef, useState } from 'react'
 import clsx from 'clsx'
 import { MenuBar } from './MenuBar/MenuBar'
 import { useConfContext } from '@/context/conf-context'
-import { DictList } from './DictList/DictList'
+import { DictList } from './dict-list/dict-list'
 import { debounce } from 'es-toolkit'
 import { newWord } from '@/utils/dict-utils/new-word'
 import { SALADICT_PANEL } from '@/config/const/saladict'
@@ -23,6 +23,7 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
   const fontSize = config.fontSize
   const enableSuggest = config.searchSuggests
   const [inputText, setInputText] = useState('')
+  const [historyShow, setHistoryShow] = useState(false)
 
   const searchStart = useSearchContext((store) => store.searchStart)
   const renderedDicts = useSearchContext((store) => store.renderedDicts)
@@ -59,6 +60,7 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
     <div ref={rootElRef} className="saladict-theme">
       <div className="dictPanel-Head sticky top-0">
         <MenuBar
+          onShowHistory={() => setHistoryShow(true)}
           customButton={props.customButton}
         />
       </div>

@@ -11,10 +11,10 @@ import {
 } from 'react'
 import clsx from 'clsx'
 import { newWord } from '@/utils/dict-utils/new-word'
-import type { DictItemHeadProps } from './dict-item-head'
-import { DictItemHead } from './dict-item-head'
-import type { DictItemBodyProps } from './dict-item-body'
-import { DictItemBody } from './dict-item-body'
+import type { DictItemHeadProps } from './dict-item/dict-item-head'
+import { DictItemHead } from './dict-item/dict-item-head'
+import type { DictItemBodyProps } from './dict-item/dict-item-body'
+import { DictItemBody } from './dict-item/dict-item-body'
 import { timer } from '@/utils/promise-more'
 import { isTagName } from '@/utils/dom'
 import './dict-item.scss'
@@ -31,8 +31,6 @@ export interface DictItemProps
 
   catalog?: DictItemHeadProps['catalog']
   openDictSrcPage: DictItemHeadProps['openDictSrcPage']
-
-  onHeightChanged: (id: DictID, height: number) => void
 
   /** User manually folds or unfolds */
   onUserFold: (id: DictID, fold: boolean) => void
@@ -69,10 +67,6 @@ export const DictItem: FC<DictItemProps> = props => {
       setFoldState('COLLAPSE')
     }
   }, [props.searchStatus])
-
-  // useEffect(() => {
-  //   props.onHeightChanged(props.dictID, visibleHeight + DICT_ITEM_HEAD_HEIGHT)
-  // }, [visibleHeight])
 
   const dictItemRef = useRef<HTMLDivElement | null>(null)
   // container element in shadow dom
@@ -207,7 +201,6 @@ export const DictItem: FC<DictItemProps> = props => {
         onClick={searchLinkText}
       >
         <section className="dictItem-BodyMesure">
-          {/* <ResizeReporter reportInit onHeightChanged={setOffsetHeight} /> */}
           <DictItemBody
             {...props}
             dictRootRef={dictRootRef}
