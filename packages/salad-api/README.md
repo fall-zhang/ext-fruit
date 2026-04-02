@@ -15,6 +15,7 @@
 - 一系列请求相关工具
   - request-to-axios 将 fetch 的请求参数转换为 axios 的参数
   - axios-to-fetch 将 axios 的请求参数转换为 fetch 的参数
+  - chsToChz 将繁体中文解释为简体中文
 
 
 自翻译 trans by itself

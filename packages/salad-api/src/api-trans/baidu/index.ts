@@ -7,7 +7,7 @@ import { TranslateError } from '@P/open-trans/translator'
 import type { GetSrcPageFunction } from '@/core/api-server/api-common/search-type'
 import type { AuthBody } from './config'
 import type { BaiduTranslateError, BaiduTranslateResult } from './type'
-import type { AtomFetchRequest, AtomFetchResponse } from '../../types/atom-type'
+import type { AtomFetchRequest, AtomResponseHandle } from '../../types/atom-type'
 
 
 export const getRequest: AtomFetchRequest<AuthBody> = (text, {
@@ -41,7 +41,7 @@ export const getRequest: AtomFetchRequest<AuthBody> = (text, {
   })
 }
 
-export const handleResponse: AtomFetchResponse<unknown> = async (res, {
+export const handleResponse: AtomResponseHandle<unknown> = async (res, {
   text,
   from,
   to,

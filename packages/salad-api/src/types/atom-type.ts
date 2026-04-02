@@ -21,7 +21,7 @@ export type AtomFetchRequest<T = unknown> = {
  * 获取该引擎对于返回结果的处理
  * 这些内容是 open-trans 共同需要的内容
  */
-export type AtomFetchResponse<Result = unknown> = {
+export type AtomResponseHandle<Result = unknown> = {
   (
     res: Response,
     context: {
