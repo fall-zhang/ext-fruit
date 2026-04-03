@@ -2,6 +2,12 @@
 
 各个 API 的详情可查看 [DICT_STATE](./DICT_STATE.md)
 
+主要支持语言：
+
+en,    zh-CN,      zh-TW,     ja,     ko, fr,   de, es
+英语，中文（简体），中文（繁体），日语，韩文，法文，德语，西班牙语
+
+
 - 不应该包含视图，或者任何翻译 API 以外的内容
 - 所有文件夹都包含以下内容
   - _locales.json 提供语言的名称
