@@ -419,8 +419,4 @@ export const options = {
     clipboardWrite_help:
       '机器翻译词典标题栏菜单复制原文译文或生词本导出到剪贴板需要写入剪贴板权限。',
   },
-
-  unsupportedFeatures: {
-    ff: '火狐尚不支持「{{feature}}」功能。',
-  },
 }

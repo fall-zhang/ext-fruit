@@ -444,8 +444,4 @@ export const locale: typeof _locale = {
     clipboardWrite_help:
       'Este permiso es necesario cuando se utilizan los menús de la barra de títulos para copiar texto de origen/destino del traductor automático.',
   },
-
-  unsupportedFeatures: {
-    ff: 'La característica "{{feature}}" no es compatible con Firefox.',
-  },
 }

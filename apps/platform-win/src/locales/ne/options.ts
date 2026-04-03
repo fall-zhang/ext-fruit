@@ -444,8 +444,4 @@ export const locale: typeof _locale = {
     clipboardWrite_help:
       'This permission is needed when using titlebar menus to copy source/target text from machine translator.',
   },
-
-  unsupportedFeatures: {
-    ff: 'Feature "{{feature}}" is not supported in Firefox.',
-  },
 }
