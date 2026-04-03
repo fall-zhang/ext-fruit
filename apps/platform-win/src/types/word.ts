@@ -6,15 +6,18 @@ export interface Word {
   /** the sentence where the text string is located */
   context: string
   /** page title */
-  title: string
+  // title: string
   /** page url */
-  url: string
+  // url: string
   /** favicon url */
-  favicon: string
+  // favicon: string
   /** translation */
   trans: string
   /** custom note */
   note: string
+  // 翻译源，翻译后的语言
+  from?: string
+  to?: string
 }
 
 export interface WordSelection {

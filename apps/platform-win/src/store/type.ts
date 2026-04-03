@@ -1,4 +1,3 @@
-import type { AppConfig } from '@/config/app-config'
 import type { Word } from '@/types/word'
 
 export interface GlobalState {
@@ -52,8 +51,6 @@ export interface GlobalState {
   panelHeight: number,
 
   panelMaxHeight: number
-  /** User can view back search history */
-  historyIndex: number,
   /** Record init coordinate on dragstart */
   dragStartCoord: null | { x: number; y: number },
   lastPlayAudio: null | { src: string; timestamp: number },
@@ -64,6 +61,5 @@ export interface GlobalState {
     /** url: to backend */
     (payload: string): void
   }
-
 }
 

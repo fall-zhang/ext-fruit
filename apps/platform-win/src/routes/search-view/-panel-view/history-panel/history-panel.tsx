@@ -33,12 +33,13 @@ export const HistoryPanel: FC<{
           animate={{ x: 0 }}
           exit={{ x: '100%' }}
           transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-          className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-white dark:bg-slate-900 shadow-2xl z-[70] border-l border-slate-100 dark:border-slate-800 flex flex-col"
+          className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-white dark:bg-neutral-900 shadow-2xl z-[70] border-l border-slate-100 dark:border-slate-800 flex flex-col"
         >
           <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <ClockIcon size={16} className="opacity-40" />
-              <span className="font-bold text-sm">History</span>
+              {/* <span className="font-bold text-sm">History</span> */}
+              <span className="font-bold text-sm">搜索历史</span>
             </div>
             <button
               onClick={props.onClose}

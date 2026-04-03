@@ -20,7 +20,7 @@ type SaladPanelProps = {
 export const SaladContent: FC<SaladPanelProps> = (props) => {
   const config = useConfContext().config
   const withAnimation = config.animation
-  const darkMode = config.darkMode
+  // const darkMode = config.darkMode
   // const panelCSS = config.panelCSS
   const fontSize = config.fontSize
   const enableSuggest = config.searchSuggests
@@ -30,14 +30,13 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
   const renderedDicts = useSearchContext((store) => store.renderedDicts)
   const store = useSearchContext((store) => store)
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const updateText = useCallback(debounce((text: string) => {
-    searchStart({
-      word: newWord({
-        text,
-      }),
-    })
-  }, 600), [])
+  // const updateText = useCallback(debounce((text: string) => {
+  //   searchStart({
+  //     word: newWord({
+  //       text,
+  //     }),
+  //   })
+  // }, 600), [])
   const searchText = (text: string) => {
     searchStart({
       word: newWord({
@@ -72,11 +71,6 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
             enableSuggest={enableSuggest}
             onSend={searchText} />
         </div>
-        {/* <HoverBoxContext.Provider value={rootElRef}>
-            <div className="dictPanel-Body fancy-scrollbar">
-              {store.isShowMtaBox && <MtaBox /> }
-            </div>
-          </HoverBoxContext.Provider> */}
         <DictList
           dicts={renderedDicts} />
         {/* {store.waveformBox && <WaveformBox />} */}

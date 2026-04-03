@@ -13,7 +13,7 @@ export function SearchArea ({
   ...props
 }: ChatInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const [isShowSuggest, setIsShowSuggest] = useState(false)
+  const [suggestState, setSuggestState] = useState<'not-search-show' | 'not-search-hidden' | 'searched-hidden'>('not-search-hidden')
   const [inputText, setInputText] = useState('')
 
   useLayoutEffect(() => {
@@ -34,22 +34,27 @@ export function SearchArea ({
   const handleKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
-      setIsShowSuggest(false)
+      setSuggestState('searched-hidden')
       props.onSend(inputText)
     }
   }
   const onSelectSuggest = (text: string) => {
-    setIsShowSuggest(false)
+    setSuggestState('searched-hidden')
     setInputText(text)
     props.onSend(text)
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const onShowSuggest = useCallback(debounce((newVal: boolean) => {
-    setIsShowSuggest(newVal)
+    setSuggestState((oldVal) => {
+      if (oldVal === 'searched-hidden') {
+        return oldVal
+      }
+      return 'not-search-show'
+    })
   }, 600), [])
   useEffect(() => {
     const closeSuggest = () => {
-      setIsShowSuggest(false)
+      setSuggestState('searched-hidden')
     }
     document.addEventListener('click', closeSuggest)
     return () => {
@@ -62,8 +67,8 @@ export function SearchArea ({
       <div className="flex items-end gap-3 max-w-5xl mx-auto">
         <div className="flex-1 relative">
           <SuggestPanel
-            open={enableSuggest && isShowSuggest }
-            onClose={() => setIsShowSuggest(false)}
+            open={enableSuggest && suggestState === 'not-search-show' }
+            onClose={() => setSuggestState('searched-hidden')}
             onSelectSuggest={onSelectSuggest}
             text={inputText}
           >
@@ -77,6 +82,7 @@ export function SearchArea ({
               }}
               onChange={(e) => {
                 setInputText(e.target.value)
+                setSuggestState('not-search-hidden')
                 onShowSuggest(true)
               }}
               onKeyDown={handleKeyPress}

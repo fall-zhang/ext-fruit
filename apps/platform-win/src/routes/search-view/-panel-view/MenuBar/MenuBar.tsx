@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC, type ReactNode } from 'react'
+import type { FC, ReactNode } from 'react'
 
 
 import './MenuBar.scss'
@@ -32,12 +32,6 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
         }}
       /> */}
       {/*
-        <HistoryBtn
-          t={t}
-          onClick={() => {
-            // 查看搜索历史记录
-          }}
-        />
         <NotebookBtn
           t={t}
           onClick={() => {

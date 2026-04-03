@@ -1,4 +1,4 @@
-import { useEffect, useState, type FC, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type FC, type ReactNode } from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,13 +29,16 @@ export type SuggestProps = {
  */
 export const SuggestPanel: FC<SuggestProps> = (props) => {
   useEffect(() => {
+    if (!props.open) {
+      return
+    }
     getSuggests(props.text).then(res => {
       // console.log('⚡️ line:28 ~ res: ', res)
       setSuggestItems(res)
     }).catch(err => {
       // console.warn('⚡️ line:32 ~ err: ', err)
     })
-  }, [props.text])
+  }, [props.text, props.open])
   const [suggestItems, setSuggestItems] = useState<Array<{
     entry: string
     explain: string
@@ -49,7 +52,7 @@ export const SuggestPanel: FC<SuggestProps> = (props) => {
         return (<div
           key={item.entry}
           onClick={() => props.onSelectSuggest(item.entry)}
-          className='flex py-1 justify-between items-center dark:bg-neutral-900 px-3 bg-neutral-100 hover:bg-neutral-300 cursor-pointer  dark:hover:bg-neutral-700 ' >
+          className='flex py-1 justify-between items-center dark:bg-neutral-900 px-3 bg-neutral-100 hover:bg-neutral-300 cursor-pointer  dark:hover:bg-neutral-700' >
           <span className="mr-1.5 text-[#f9690e] shrink-0 w-20 ">
             {item.entry}
           </span>
