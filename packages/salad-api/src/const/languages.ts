@@ -1,5 +1,5 @@
 /**
- * 对所有语言统一命名
+ * 统一所有语言命名
  */
 export const languages = [
   'af',
@@ -124,6 +124,5 @@ export const languages = [
 ] as const
 
 export type Language = typeof languages[number]
-
 
 export type ExtendSupportLang<U extends Language> = U

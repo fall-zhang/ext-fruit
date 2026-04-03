@@ -1,10 +1,10 @@
 
 import { getStaticSpeaker } from '@/components/Speaker'
-import type { HTMLString } from '../../../types/res-type'
 
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
 import { handleNetWorkError, getInnerHTML, handleNoResult } from '@/core/api-server/utils'
+import type { HTMLString } from '../../types/res-type'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `https://www.zdic.net/hans/${text}`

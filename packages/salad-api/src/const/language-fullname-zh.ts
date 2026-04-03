@@ -1,7 +1,6 @@
 import type { Language } from './languages'
 
 export type Locale = { [key in Language]: string }
-
 /**
  * 所有语言对应的中文名称
  */

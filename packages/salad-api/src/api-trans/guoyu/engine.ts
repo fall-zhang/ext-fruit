@@ -7,8 +7,8 @@ import {
   handleNoResult,
   handleNetWorkError
 } from '@/core/api-server/utils'
-import type { AtomGetSrcFunction } from '../../../types/atom-type'
 import chsToChz from '@/core/api-server/utils/chs-to-chz'
+import type { AtomGetSrcFunction } from '../../types/atom-type'
 
 export const getSrcPage: AtomGetSrcFunction = async text => {
   return `https://www.moedict.tw/${chsToChz(text)}`

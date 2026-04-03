@@ -1,4 +1,4 @@
-import type { ApiInfo } from '../../../types/api-info'
+import type { ApiInfo } from '../../types/api-info'
 
 const guoyuConfig: ApiInfo = {
   type: 'self-trans',
