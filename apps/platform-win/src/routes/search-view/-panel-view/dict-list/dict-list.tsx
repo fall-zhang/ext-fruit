@@ -52,7 +52,7 @@ export const DictList: FC<DictListProps> = (props) => {
   } = configContext.config
   const dicts = props.dicts
   return (
-    <div className="dictList">
+    <div className="dictList overflow-hidden">
       {dicts.map(data => (
         <MemoDictItem
           withAnimation={animation}

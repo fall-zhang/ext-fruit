@@ -1,5 +1,5 @@
+import { isContainEnglish } from '@/core/api-server/utils/lang-check'
 import { invoke } from '@tauri-apps/api/core'
-import { fetch } from '@tauri-apps/plugin-http'
 
 interface Suggest {
   entry: string
@@ -12,6 +12,10 @@ interface Suggest {
  * @returns
  */
 export async function getSuggests (text: string): Promise<Suggest[]> {
+  const lang = isContainEnglish(text)
+  if (!lang) {
+    return []
+  }
   try {
     return await Promise.any([getYoudaoSuggest(text)])
   } catch (err) {

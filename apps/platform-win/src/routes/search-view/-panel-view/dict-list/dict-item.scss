@@ -2,7 +2,6 @@
 
 .dictItem {
   position: relative;
-  background: var(--color-background);
 }
 
 .dictItem-Body {
@@ -11,7 +10,6 @@
   padding: 0 10px;
   font-size: 13px;
   line-height: 1.6;
-  color: var(--color-font);
   transition: height 0.4s, opacity 0.4s;
 }
 
@@ -97,9 +95,9 @@
   height: 30px;
   padding: 0;
   border: none;
-  background: linear-gradient(rgba(var(--color-rgb-background), 0) 0%,
-      rgba(var(--color-rgb-background), 0.7) 30%,
-      var(--color-background) 100%);
+  // background: linear-gradient(rgba(var(--color-rgb-background), 0) 0%,
+  //     rgba(var(--color-rgb-background), 0.7) 30%,
+  //     var(--color-background) 100%);
   cursor: pointer;
   user-select: none;
 

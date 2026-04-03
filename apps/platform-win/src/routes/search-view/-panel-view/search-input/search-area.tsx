@@ -4,26 +4,23 @@ import { SuggestPanel } from './search-suggest'
 import { debounce } from 'lodash'
 
 interface ChatInputProps {
-  inputValue: string;
   enableSuggest: boolean
-  setInputValue: (value: string) => void;
-  onSend: () => void;
+  onSend: (text: string) => void;
 }
 
 export function SearchArea ({
-  inputValue,
   enableSuggest,
-  setInputValue,
   ...props
 }: ChatInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [isShowSuggest, setIsShowSuggest] = useState(false)
+  const [inputText, setInputText] = useState('')
 
   useLayoutEffect(() => {
     const textarea = textareaRef.current
     if (textarea) {
       textarea.style.height = '40px'
-      if (inputValue) {
+      if (inputText) {
         const scrollHeight = textarea.scrollHeight
         const newHeight = Math.min(scrollHeight, 100)
         textarea.style.height = `${newHeight}px`
@@ -32,20 +29,19 @@ export function SearchArea ({
         textarea.style.overflowY = 'hidden'
       }
     }
-  }, [inputValue])
-
+  }, [inputText])
 
   const handleKeyPress = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       setIsShowSuggest(false)
-      props.onSend()
+      props.onSend(inputText)
     }
   }
   const onSelectSuggest = (text: string) => {
     setIsShowSuggest(false)
-    setInputValue(text)
-    props.onSend()
+    setInputText(text)
+    props.onSend(text)
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const onShowSuggest = useCallback(debounce((newVal: boolean) => {
@@ -69,14 +65,18 @@ export function SearchArea ({
             open={enableSuggest && isShowSuggest }
             onClose={() => setIsShowSuggest(false)}
             onSelectSuggest={onSelectSuggest}
-            text={inputValue}
+            text={inputText}
           >
             <textarea
               ref={textareaRef}
+              autoFocus
               rows={1}
-              value={inputValue}
+              value={inputText}
+              onFocus={event => {
+                event.currentTarget.select()
+              }}
               onChange={(e) => {
-                setInputValue(e.target.value)
+                setInputText(e.target.value)
                 onShowSuggest(true)
               }}
               onKeyDown={handleKeyPress}

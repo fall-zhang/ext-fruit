@@ -81,7 +81,7 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
     <ErrorBoundary error={DictRenderError}>
       <Suspense fallback={null}>
         {props.searchStatus === 'FINISH' && props.searchResult && (
-          <root.div>
+          <root.div className=''>
             <div
               ref={props.dictRootRef}
               className={classNames({ darkMode: props.darkMode })}

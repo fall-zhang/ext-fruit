@@ -24,7 +24,6 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
   // const panelCSS = config.panelCSS
   const fontSize = config.fontSize
   const enableSuggest = config.searchSuggests
-  const [inputText, setInputText] = useState('')
   const [historyShow, setHistoryShow] = useState(false)
 
   const searchStart = useSearchContext((store) => store.searchStart)
@@ -39,10 +38,10 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
       }),
     })
   }, 600), [])
-  const searchText = () => {
+  const searchText = (text: string) => {
     searchStart({
       word: newWord({
-        text: inputText,
+        text,
       }),
     })
   }
@@ -51,12 +50,11 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
 
   // an extra layer as float box offest parent
   return (<div
-    className={clsx('dictPanel-FloatBox-Container', {
+    className={clsx('dictPanel-FloatBox-Container bg-neutral-100 dark:bg-neutral-900 ', {
       isAnimate: withAnimation,
-      darkMode,
     })}
   >
-    <div ref={rootElRef} className="saladict-theme">
+    <div ref={rootElRef} className="saladict-theme overflow-hidden h-screen">
       <div className="dictPanel-Head sticky top-0">
         <MenuBar
           onShowHistory={() => setHistoryShow(true)}
@@ -71,12 +69,7 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
       >
         <div className="search-zone ">
           <SearchArea
-            inputValue={inputText}
             enableSuggest={enableSuggest}
-            setInputValue={(text) => {
-              setInputText(text)
-              // updateText(text)
-            }}
             onSend={searchText} />
         </div>
         {/* <HoverBoxContext.Provider value={rootElRef}>

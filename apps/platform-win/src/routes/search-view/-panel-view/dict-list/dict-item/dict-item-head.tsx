@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import './dict-item-head.scss'
 import type { DictID } from '@/core/api-server/config'
-import { BookmarkIcon } from 'lucide-react'
+import { BookmarkIcon, ChevronRight, ChevronRightIcon } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@P/ui/components/tooltip'
 import { cn } from '@P/ui/utils'
 export interface DictItemHeadProps {
@@ -36,17 +36,18 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
   }
   return (
     <header
-      className={clsx('dictItemHead', {
+      className={clsx('dictItemHead flex items-center dark:bg-neutral-800 dark:text-neutral-100 h-7', {
         isSearching: props.isSearching,
       })}
     >
       <button
-        className="cursor-pointer size-5"
+        className="cursor-pointer size-5 mr-2"
         onMouseOut={e => e.currentTarget.blur()}
         onClick={props.toggleFold}
       >
-        <svg
-          className={cn('dictItemHead-FoldArrow', props.isFold && 'rotate-90')}
+        <ChevronRightIcon className={cn('text-neutral-900 dark:text-neutral-300 ', !props.isFold && 'rotate-90')} />
+        {/* <svg
+          className={cn('dictItemHead-FoldArrow')}
           width="18"
           height="18"
           viewBox="0 0 59.414 59.414"
@@ -56,7 +57,7 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
             className="dictItemHead-FoldArrowPath"
             d="M43.854 59.414L14.146 29.707 43.854 0l1.414 1.414-28.293 28.293L45.268 58"
           />
-        </svg>
+        </svg> */}
       </button>
       <img className="dictItemHead-Logo" src={`/src/core/api-server/trans-api/${props.dictID}/favicon.png`} alt="dict logo" />
       <h4 className="dictItemHead-Title">

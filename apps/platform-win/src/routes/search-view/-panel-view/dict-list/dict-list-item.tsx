@@ -43,13 +43,13 @@ export const DictItem: FC<DictItemProps> = props => {
   // const [offsetHeight, setOffsetHeight] = useState(10)
 
   const visibleHeight = useMemo(() => {
-    let compareNum = 10
+    let compareNum = 0
     if (foldState === 'COLLAPSE') {
-      compareNum = 10
+      compareNum = 0
     } else if (foldState === 'HALF') {
       compareNum = 200
     } else if (foldState === 'FULL') {
-      compareNum = 0
+      compareNum = -1
     } else {
       compareNum = 200
     }
@@ -189,9 +189,9 @@ export const DictItem: FC<DictItemProps> = props => {
         onCatalogSelect={preCatalogSelect}
       />
       <div
-        className="dictItem-Body relative"
+        className="dictItem-Body relative dark:bg-neutral-800 dark:text-neutral-100"
         key={props.dictID}
-        style={{ height: visibleHeight > 0 ? visibleHeight : undefined }}
+        style={{ height: visibleHeight > -1 ? visibleHeight : undefined }}
         onClick={searchLinkText}
       >
         <section className="dictItem-BodyMesure">
@@ -202,7 +202,7 @@ export const DictItem: FC<DictItemProps> = props => {
         </section>
         {foldState === 'HALF' && props.searchResult && (
           <button
-            className="dictItem-FoldMask text-neutral-900 flex justify-center"
+            className="dictItem-FoldMask text-neutral-900 dark:text-neutral-200 flex justify-center"
             onClick={() => setFoldState('FULL')}
           >
             <ChevronDownIcon />
@@ -211,7 +211,7 @@ export const DictItem: FC<DictItemProps> = props => {
       </div>
       {foldState === 'FULL' && props.searchResult && (
         <button
-          className="sticky bottom-0 h-6 w-full text-neutral-900 flex justify-center cursor-pointer"
+          className="sticky bottom-0 h-6 w-full text-neutral-900 dark:text-neutral-200 flex justify-center cursor-pointer"
           onClick={() => setFoldState('COLLAPSE')}
         >
           <ChevronUpIcon />
