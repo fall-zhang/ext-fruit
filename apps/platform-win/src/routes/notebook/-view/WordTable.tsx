@@ -74,12 +74,6 @@ export const WordTable: FC<WordTableProps> = props => {
       sorter: true,
       render: renderDate,
     },
-    {
-      title: t(`column.${props.area === 'notebook' ? 'edit' : 'add'}`),
-      key: 'edit',
-      align: 'center',
-      render: (_, record) => renderEdit(t, props.area, record),
-    },
   ],
   [ready, props.area]
   )
@@ -105,14 +99,7 @@ function renderSource (_: any, record: Word): ReactNode {
       {record.context && (
         <p className="wordpage-Record_Context">{record.context}</p>
       )}
-      {record.title && (
-        <p className="wordpage-Source_Footer">
-          {record.favicon && (
-            <img className="wordpage-Record_Favicon" src={record.favicon} />
-          )}
-          <span className="wordpage-Record_Title">{record.title}</span>
-        </p>
-      )}
+
     </React.Fragment>
   )
 }
@@ -148,23 +135,5 @@ function renderDate (dateNum: number): ReactNode {
     // >
     //   <>{date.toLocaleDateString(i18next.language)}</>
     // </Tooltip>
-  )
-}
-
-function renderEdit (t: TFunction, area: DBArea, record: Word): ReactNode {
-  return (
-    <button
-      key={record.date}
-      onClick={() => {
-        const word = {
-          ...record,
-          // give it a new date if it's from history
-          date: area === 'notebook' ? record.date : Date.now(),
-        }
-        // wait till selection ends
-      }}
-    >
-      {t(`column.${area === 'notebook' ? 'edit' : 'add'}`)}
-    </button>
   )
 }

@@ -2,8 +2,7 @@ import { defineConfig } from 'vite'
 import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import { resolve as pathResolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-// import { visualizer } from 'rollup-plugin-visualizer'
-import { analyzer } from 'vite-bundle-analyzer'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import tailwindcss from '@tailwindcss/vite'
@@ -20,8 +19,10 @@ export default defineConfig({
     }),
     react(),
     babel({ presets: [reactCompilerPreset()] }),
-    analyzer({
-      openAnalyzer: true,
+    visualizer({
+      open: true,
+      filename: './build/analyze.html',
+      template: 'sunburst',
     }),
     // visualizer({
     //   open: true,

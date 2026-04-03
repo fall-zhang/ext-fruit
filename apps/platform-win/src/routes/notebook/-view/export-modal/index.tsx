@@ -129,10 +129,10 @@ export const ExportModal: FC<ExportModalProps> = props => {
       style={{ width: '90vw', maxWidth: 1200, top: 24 }}
       width="90vw"
     >
-      <Layout
-        style={{ height: '70vh', maxHeight: 1000, background: 'transparent' }}
+      <div
+        className='h-[70vh] bg-transparent'
       >
-        <Layout.Content style={{ display: 'flex', flexDirection: 'column' }}>
+        <div >
           <p className="export-Description">
             {t('export.description')}
             <a
@@ -143,7 +143,7 @@ export const ExportModal: FC<ExportModalProps> = props => {
               {t('export.explain')}
             </a>
           </p>
-          <PlaceholderTableMemo t={t} />
+          <PlaceholderTableMemo />
           <div
             style={{
               display: 'flex',
@@ -164,14 +164,14 @@ export const ExportModal: FC<ExportModalProps> = props => {
             />
           </div>
           <textarea
-            style={{ flex: 1, width: '100%' }}
+            className='grow w-full'
             value={template}
             onChange={({ currentTarget: { value } }) => {
               setTemplate(value)
               // storage.sync.set({ wordpageTemplate: value })
             }}
           />
-        </Layout.Content>
+        </div>
         <Layout.Sider
           width="50%"
           style={{ paddingLeft: 24, background: 'transparent' }}
@@ -182,7 +182,7 @@ export const ExportModal: FC<ExportModalProps> = props => {
             value={output}
           />
         </Layout.Sider>
-      </Layout>
+      </div>
     </Modal>
   )
 }

@@ -80,20 +80,6 @@ export const WordCards: FC<WordCardsProps> = ({ words, onCardDelete }) => {
                 </div>
               </div>
             )}
-            <div className="wordCards-CardFooter">
-              {word.favicon && (
-                <img className="wordCards-Favicon" src={word.favicon} />
-              )}
-              <a
-                className="wordCards-URL"
-                href={word.url}
-                target="_blank"
-                rel="nofollow noopener noreferrer"
-                title={word.title}
-              >
-                {word.title}
-              </a>
-            </div>
           </li>
         ))}
       </ul>

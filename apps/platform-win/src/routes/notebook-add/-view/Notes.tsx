@@ -15,9 +15,7 @@ import type {
   WordEditorPanelProps,
   WordEditorPanelBtns
 } from './WordEditorPanel'
-import {
-  WordEditorPanel
-} from './WordEditorPanel'
+import { WordEditorPanel } from './WordEditorPanel'
 import { useTranslation } from 'react-i18next'
 import type { Word } from '@/types/word'
 import { useNavigate } from '@tanstack/react-router'
@@ -217,46 +215,6 @@ export const Notes: FC<NotesProps> = props => {
               name="note"
               id="wordEditorNote_Note"
               value={word.note}
-              onChange={formChanged}
-              onKeyDown={stopPropagation}
-            />
-            <label htmlFor="wordEditorNote_SrcTitle">
-              {t('note.srcTitle')}
-            </label>
-            <input
-              type="text"
-              name="title"
-              id="wordEditorNote_SrcTitle"
-              value={word.title}
-              onChange={formChanged}
-              onKeyDown={stopPropagation}
-            />
-            <label htmlFor="wordEditorNote_SrcLink">{t('note.srcLink')}</label>
-            <input
-              type="text"
-              name="url"
-              id="wordEditorNote_SrcLink"
-              value={word.url}
-              onChange={formChanged}
-              onKeyDown={stopPropagation}
-            />
-            <label htmlFor="wordEditorNote_SrcFavicon">
-              {t('note.srcFavicon')}
-              {word.favicon
-                ? (
-                  <img
-                    className="wordEditorNote_SrcFavicon"
-                    src={word.favicon}
-                    alt={t('note.srcTitle')}
-                  />
-                )
-                : null}
-            </label>
-            <input
-              type="text"
-              name="favicon"
-              id="wordEditorNote_SrcFavicon"
-              value={word.favicon}
               onChange={formChanged}
               onKeyDown={stopPropagation}
             />
