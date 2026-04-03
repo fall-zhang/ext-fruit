@@ -10,8 +10,8 @@ import { debounce } from 'es-toolkit'
 import { newWord } from '@/utils/dict-utils/new-word'
 import { SALADICT_PANEL } from '@/config/const/saladict'
 import { SearchArea } from './search-input/search-area'
-import { WordHistoryPanel } from './MenuBar/word-history'
 import type { Word } from '@/types/word'
+import { HistoryPanel } from './history-panel/history-panel'
 
 type SaladPanelProps = {
   menuBarProps?: Record<string, any>
@@ -89,7 +89,7 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
         {/* {store.waveformBox && <WaveformBox />} */}
       </div>
     </div>
-    <WordHistoryPanel
+    <HistoryPanel
       open={historyShow}
       history={store.searchHistory}
       onClose={() => {

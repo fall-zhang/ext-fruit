@@ -5,6 +5,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@salad/ui/components/dropdown-menu'
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger
+} from '@P/ui/components/hover-card'
 import { getSuggests } from './suggest-api'
 export interface SuggestItem {
   explain: string
@@ -13,8 +18,10 @@ export interface SuggestItem {
 
 export type SuggestProps = {
   open: boolean
-  onClose(): void
   text: string
+  children: ReactNode
+  onClose(): void
+  onSelectSuggest(word: string): void
 }
 
 /**
@@ -33,18 +40,24 @@ export const SuggestPanel: FC<SuggestProps> = (props) => {
     entry: string
     explain: string
   }>>([])
-  return <DropdownMenu open={props.open} onOpenChange={(newVal) => !newVal && props.onClose()} modal={false}>
-    <DropdownMenuContent >
+  return <HoverCard open={props.open && suggestItems.length > 0}>
+    <HoverCardTrigger onClick={ev => ev.stopPropagation()}>
+      {props.children}
+    </HoverCardTrigger>
+    <HoverCardContent className="w-[80vw] dark:bg-neutral-900 bg-neutral-200 flex flex-col p-0 gap-1 overflow-hidden text-sm">
       {suggestItems.map(item => {
-        return (<DropdownMenuItem key={item.entry} className='flex justify-between'>
-          <span className="mr-1.5 text-[#f9690e]">
+        return (<div
+          key={item.entry}
+          onClick={() => props.onSelectSuggest(item.entry)}
+          className='flex py-1 justify-between items-center dark:bg-neutral-900 px-3 bg-neutral-100 hover:bg-neutral-300 cursor-pointer  dark:hover:bg-neutral-700 ' >
+          <span className="mr-1.5 text-[#f9690e] shrink-0 w-20 ">
             {item.entry}
           </span>
-          <span className="text-neutral-800 dark:text-neutral-100">
+          <span className="text-neutral-800 dark:text-neutral-100 line-clamp-3">
             {item.explain}
           </span>
-        </DropdownMenuItem>)
+        </div>)
       })}
-    </DropdownMenuContent>
-  </DropdownMenu>
+    </HoverCardContent>
+  </HoverCard>
 }
