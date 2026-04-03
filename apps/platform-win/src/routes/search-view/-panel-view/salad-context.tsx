@@ -10,6 +10,8 @@ import { debounce } from 'es-toolkit'
 import { newWord } from '@/utils/dict-utils/new-word'
 import { SALADICT_PANEL } from '@/config/const/saladict'
 import { SearchArea } from './search-input/search-area'
+import { WordHistoryPanel } from './MenuBar/word-history'
+import type { Word } from '@/types/word'
 
 type SaladPanelProps = {
   menuBarProps?: Record<string, any>
@@ -27,14 +29,13 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
 
   const searchStart = useSearchContext((store) => store.searchStart)
   const renderedDicts = useSearchContext((store) => store.renderedDicts)
+  const store = useSearchContext((store) => store)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const updateText = useCallback(debounce((text: string) => {
     searchStart({
       word: newWord({
         text,
-        title: 'Saladict',
-        favicon: 'https://saladict.crimx.com/favicon.ico',
       }),
     })
   }, 600), [])
@@ -42,8 +43,6 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
     searchStart({
       word: newWord({
         text: inputText,
-        title: 'Saladict',
-        favicon: 'https://saladict.crimx.com/favicon.ico',
       }),
     })
   }
@@ -77,7 +76,7 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
             setInputValue={(text) => {
               setInputText(text)
               // updateText(text)
-            } }
+            }}
             onSend={searchText} />
         </div>
         {/* <HoverBoxContext.Provider value={rootElRef}>
@@ -90,5 +89,19 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
         {/* {store.waveformBox && <WaveformBox />} */}
       </div>
     </div>
+    <WordHistoryPanel
+      open={historyShow}
+      history={store.searchHistory}
+      onClose={() => {
+        setHistoryShow(false)
+      }}
+      onSelect={(item: Word) => {
+        searchStart({
+          word: item,
+        })
+      }}
+      onClear={() => {
+
+      }} />
   </div>)
 }

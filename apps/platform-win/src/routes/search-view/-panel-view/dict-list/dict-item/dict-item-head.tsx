@@ -5,35 +5,20 @@ import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import './dict-item-head.scss'
 import type { DictID } from '@/core/api-server/config'
+import { BookmarkIcon } from 'lucide-react'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@P/ui/components/tooltip'
+import { cn } from '@P/ui/utils'
 export interface DictItemHeadProps {
   dictID: DictID
+  isFold: boolean
   isSearching: boolean
   toggleFold: () => void
   openDictSrcPage: (id: DictID, ctrlKey: boolean) => void
   onCatalogSelect: (item: { key: string; value: string }) => void
-  catalog?: Array<
-    | {
-      // <button>
-      key: string
-      value: string
-      label: string
-      options?: undefined
-    } |
-    {
-      // <select>
-      key: string
-      value: string
-      options: Array<{
-        value: string
-        label: string
-      }>
-      title?: string
-    }
-  >
 }
 
 export const DictItemHead: FC<DictItemHeadProps> = props => {
-  const { t, ready } = useTranslation(['dicts', 'content', 'langcode'])
+  const { t } = useTranslation(['dicts', 'content', 'langcode'])
 
   const [showLoader, setShowLoader] = useState(false)
   useEffect(() => {
@@ -47,7 +32,8 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
     }
   }, [props.isSearching])
 
-
+  function addToNotebook () {
+  }
   return (
     <header
       className={clsx('dictItemHead', {
@@ -60,7 +46,7 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
         onClick={props.toggleFold}
       >
         <svg
-          className="dictItemHead-FoldArrow"
+          className={cn('dictItemHead-FoldArrow', props.isFold && 'rotate-90')}
           width="18"
           height="18"
           viewBox="0 0 59.414 59.414"
@@ -85,23 +71,20 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
           {t(`${props.dictID}.name`)}
         </a>
       </h4>
-      {/* 打开对应语言的配置 */}
-      {/* <HoverBox
-        compact
-        Button={MenusBtn}
-        items={menuItems}
-        top={25}
-        onSelect={(key, value) => {
-          props.onCatalogSelect({ key, value })
-        }}
-      /> */}
+      <Tooltip >
+        <TooltipTrigger>
+          <BookmarkIcon onClick={addToNotebook} />
+        </TooltipTrigger>
+        <TooltipContent >
+          <p>收藏</p>
+        </TooltipContent>
+      </Tooltip>
       {showLoader && (
         <div className="dictItemHead-Loader">
           <div />
         </div>
       )}
       <div className="dictItemHead-EmptyArea" onClick={props.toggleFold} />
-
     </header>
   )
 }

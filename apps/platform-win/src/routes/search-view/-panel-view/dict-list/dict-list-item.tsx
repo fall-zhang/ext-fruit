@@ -1,6 +1,4 @@
-import type {
-  FC
-} from 'react'
+import type { FC } from 'react'
 import type React from 'react'
 import {
   useState,
@@ -28,8 +26,6 @@ export interface DictItemProps
   // preferredHeight: number
   withAnimation: boolean
   /** Inject dict component. Mainly for testing */
-
-  catalog?: DictItemHeadProps['catalog']
   openDictSrcPage: DictItemHeadProps['openDictSrcPage']
 
   /** User manually folds or unfolds */
@@ -147,8 +143,6 @@ export const DictItem: FC<DictItemProps> = props => {
           props.searchText({
             word: newWord({
               text: $a.textContent || '',
-              title: 'Saladict',
-              favicon: 'https://saladict.crimx.com/favicon.ico',
             }),
           })
         }
@@ -188,7 +182,7 @@ export const DictItem: FC<DictItemProps> = props => {
     >
       <DictItemHead
         dictID={props.dictID}
-        catalog={props.catalog}
+        isFold={foldState === 'COLLAPSE'}
         isSearching={props.searchStatus === 'SEARCHING'}
         toggleFold={toggleFold}
         openDictSrcPage={props.openDictSrcPage}

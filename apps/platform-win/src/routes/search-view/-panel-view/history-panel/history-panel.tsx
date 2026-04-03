@@ -11,7 +11,7 @@ export interface HistoryItem {
   timestamp: number;
 }
 
-export const WordHistoryPanel: FC<{
+export const HistoryPanel: FC<{
   open: boolean
   history: Word[],
   onClose(): void

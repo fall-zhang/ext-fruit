@@ -7,7 +7,6 @@ import './MenuBar.scss'
 import { HistoryIcon } from 'lucide-react'
 
 export interface MenuBarProps {
-  menuBarProps?: Record<string, any>
   customButton?: ReactNode
   onShowHistory(): void
 }
@@ -15,22 +14,13 @@ export interface MenuBarProps {
 export const MenuBar: FC<MenuBarProps> = (props) => {
   return (
     <header className="menuBar">
-      <button className="menuBar-Btn flex items-center justify-center" >
+      <button className="px-2 hover:bg-black/10 h-full  flex items-center justify-center" onClick={props.onShowHistory} >
         <HistoryIcon
           className="text-white dark:text-black"
           strokeWidth={1}
           size={18}
-          onClick={props.onShowHistory}
         />
       </button>
-      {/* <HistoryBackBtn
-        disabled={store.historyIndex <= 0}
-        onClick={() => switchHistory('prev')}
-      />
-      <HistoryNextBtn
-        disabled={store.historyIndex >= searchContext.searchHistory.length - 1}
-        onClick={() => switchHistory('next')}
-      /> */}
       <div className="grow h-full" data-tauri-drag-region={true}></div>
       {/* 自定义 button 列表 */}
       {props.customButton}

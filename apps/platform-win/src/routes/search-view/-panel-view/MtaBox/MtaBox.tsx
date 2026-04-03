@@ -9,7 +9,7 @@ import { newWord } from '@/utils/dict-utils/new-word'
 export interface MtaBoxProps {
   text: string
   shouldFocus: boolean
-  searchText: (text: string) => any
+  searchText: (text: string) => void
   onInput: (text: string) => void
   /** Expand or Shrink */
   onDrawerToggle: () => void
