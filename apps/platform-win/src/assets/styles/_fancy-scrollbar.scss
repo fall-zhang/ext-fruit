@@ -3,7 +3,6 @@
   overflow-y: scroll;
   scroll-behavior: smooth;
   scrollbar-width: auto;
-  // Firefox has incorrect track color
 
   &::-webkit-scrollbar {
     height: 8px;
