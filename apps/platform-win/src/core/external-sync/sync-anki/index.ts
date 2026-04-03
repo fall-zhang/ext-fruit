@@ -239,12 +239,6 @@ export class Service extends SyncService<SyncConfig> {
         ) || `{{c1::${word.text}}}`,
       // Note
       [this.noteFileds[5]]: this.multiline(word.note, this.config.escapeNote),
-      // Title
-      [this.noteFileds[6]]: word.title || '',
-      // Url
-      [this.noteFileds[7]]: word.url || '',
-      // Favicon
-      [this.noteFileds[8]]: word.favicon || '',
       // Audio
       [this.noteFileds[9]]: '', // @TODO
     }

@@ -10,15 +10,6 @@ import { getConfigPath } from '../-utils/path-joiner'
 import { useUpload } from '../-utils/upload'
 import { useConfContext } from '@/context/conf-context'
 
-/**
- * key: menu id
- * value: reason
- */
-const unsupportedFeatures: Readonly<{ [id: string]: 'ff' | '' }> = {
-  caiyuntrs: isFirefox ? 'ff' : '',
-  youdao_page_translate: isFirefox ? 'ff' : '',
-}
-
 export interface AddModalProps {
   show: boolean
   onEdit: (menuID: string) => void
@@ -65,49 +56,25 @@ export const AddModal: FC<AddModalProps> = ({ show, onEdit, onClose }) => {
     return (
       <List.Item>
         <div className="sortable-list-item">
-          {itemName}
-          <div>
-            <div>
-              <Tooltip
-                title={
-                  unsupportedFeatures[menuID]
-                    ? t(
-                      `options:unsupportedFeatures.${unsupportedFeatures[menuID]}`,
-                      { feature: itemName }
-                    )
-                    : ''
-                }
-              >
-                <Button
-                  title={t('common:add')}
-                  className="sortable-list-item-btn"
-                  shape="circle"
-                  size="small"
-                  icon={<CheckOutlined />}
-                  disabled={!!unsupportedFeatures[menuID]}
-                  onClick={selectItem}
-                />
-              </Tooltip>
-              <Button
-                title={t('common:edit')}
-                className="sortable-list-item-btn"
-                shape="circle"
-                size="small"
-                icon={<EditOutlined />}
-                disabled={item === 'x' /** internal options */}
-                onClick={() => onEdit(menuID)}
-              />
-              <Button
-                title={t('common:delete')}
-                disabled={item === 'x' /** internal options */}
-                className="sortable-list-item-btn"
-                shape="circle"
-                size="small"
-                icon={<CloseOutlined />}
-                onClick={deleteItem}
-              />
-            </div>
-          </div>
+          <span>{itemName}</span>
+          <Button
+            title={t('common:edit')}
+            className="sortable-list-item-btn"
+            shape="circle"
+            size="small"
+            icon={<EditOutlined />}
+            disabled={item === 'x' /** internal options */}
+            onClick={() => onEdit(menuID)}
+          />
+          <Button
+            title={t('common:delete')}
+            disabled={item === 'x' /** internal options */}
+            className="sortable-list-item-btn"
+            shape="circle"
+            size="small"
+            icon={<CloseOutlined />}
+            onClick={deleteItem}
+          />
         </div>
       </List.Item>
     )

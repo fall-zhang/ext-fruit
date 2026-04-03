@@ -7,14 +7,14 @@ pub async fn suggest_req(url: String) -> std::string::String {
     // 使用 reqwest 发送GET请求到百度
     match reqwest::get(url).await {
         Ok(response) => {
-            println!("百度请求成功，状态码: {}", response.status());
+            println!("suggest 请求成功，状态码: {}", response.status());
 
             // 读取响应体文本
             match response.text().await {
                 Ok(body_text) => {
-                    println!("百度返回内容长度: {} 字节", body_text.len());
+                    // println!("suggest 返回内容长度: {} 字节", body_text.len());
                     println!(
-                        "百度返回内容前200字符: {}",
+                        "suggest 内容摘要: {}",
                         &body_text[..body_text.len().min(200)]
                     );
                     body_text

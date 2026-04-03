@@ -11,6 +11,7 @@ import {
   HoverCardTrigger
 } from '@P/ui/components/hover-card'
 import { getSuggests } from './suggest-api'
+import { getWordCount } from '@/core/api-server/utils/get-word-count'
 export interface SuggestItem {
   explain: string
   entry: string
@@ -32,11 +33,13 @@ export const SuggestPanel: FC<SuggestProps> = (props) => {
     if (!props.open) {
       return
     }
+    if (getWordCount(props.text) > 2) {
+      return
+    }
     getSuggests(props.text).then(res => {
-      // console.log('⚡️ line:28 ~ res: ', res)
       setSuggestItems(res)
     }).catch(err => {
-      // console.warn('⚡️ line:32 ~ err: ', err)
+      console.log('get suggest err: ', err)
     })
   }, [props.text, props.open])
   const [suggestItems, setSuggestItems] = useState<Array<{

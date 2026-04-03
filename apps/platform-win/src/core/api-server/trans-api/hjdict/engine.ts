@@ -124,29 +124,6 @@ function wrapNoResult (langCode: string): DictSearchResult<HjdictResultRelated> 
   }
 }
 
-/**
- * Firefox adds 'Origin' field with `fetch` which would be rejected by the server.
- */
-// function xhrDirtyDOM (url: string): Promise<Document> {
-//   return new Promise((resolve, reject) => {
-//     const xhr = new XMLHttpRequest()
-//     xhr.open('GET', url, true)
-//     xhr.responseType = 'document'
-//     xhr.withCredentials = true
-//     xhr.onload = () => {
-//       if (xhr.readyState === xhr.DONE && xhr.status >= 200 && xhr.status < 300) {
-//         if (xhr.responseXML) {
-//           resolve(xhr.responseXML)
-//         } else {
-//           reject(xhr)
-//         }
-//       }
-//     }
-//     xhr.onerror = err => reject(err)
-//     xhr.send(null)
-//   })
-// }
-
 function getLangCode (text: string, profile: HjdictConfig): string {
   // ü
   if (/\u00fc/i.test(text)) {

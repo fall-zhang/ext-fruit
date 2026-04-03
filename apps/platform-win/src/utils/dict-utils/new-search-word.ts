@@ -7,6 +7,7 @@ export function newWord (word?: Partial<Word>): Word {
     context: word?.context ?? '',
     trans: word?.trans ?? '',
     note: word?.note ?? '',
+    from: 'auto',
+    to: 'auto',
   }
 }
-

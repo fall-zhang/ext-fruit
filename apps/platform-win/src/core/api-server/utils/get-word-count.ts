@@ -13,3 +13,5 @@ export const countWords = memoizeOne((text: string): number => {
       .match(/\S+/g) || ''
   ).length
 })
+
+export const getWordCount = countWords
