@@ -24,10 +24,10 @@ export type DictSearchState = {
   activeProfile: Profile
   selectedDicts: Array<keyof AllDictsConf>
   renderedDicts: RenderDictItem[],
-
-  historyIndex: number
+  // 搜索历史记录
   /** 0 is the oldest */
   searchHistory: Word[]
+  // searchResultStore: [],
   /**
    * User manually folded or unfolded
    * 用户手动折叠的组件
@@ -48,8 +48,6 @@ export type DictSearchState = {
      */
     noCache?: boolean
   }): void
-  /** switch to the next or previous history */
-  switchHistory(payload: 'prev' | 'next'): void
 }
 
 export const SearchContext = createContext<SearchStore | null>(null)
@@ -60,49 +58,29 @@ const createSearchStore = (profile: AppProfile) => {
   return createStore<DictSearchState>()((set, get) => ({
     text: '',
     activeProfile: profile,
-    historyIndex: -1,
+    searchHistory: [],
     renderedDicts: [],
     selectedDicts: getDefaultSelectDict(),
-    searchHistory: [],
     userFoldedDicts: {},
-    switchHistory (arg) {
-      set((state) => {
-        const historyIndex = Math.min(
-          Math.max(0, state.historyIndex + (arg === 'prev' ? -1 : 1)),
-          state.searchHistory.length - 1
-        )
-
+    clearHistory () {
+      set(state => {
         return {
           ...state,
-          historyIndex,
-          text: state.searchHistory[historyIndex]
-            ? state.searchHistory[historyIndex].text
-            : state.text,
+          searchHistory: [],
         }
       })
-      return true
     },
     searchStart (searchOpt) {
       let dictList: RenderDictItem[] = []
       let word: Word
-      const { activeProfile, searchHistory, historyIndex, selectedDicts, renderedDicts, userFoldedDicts } = get()
-      // 从历史缓存中查找
-      const newSearchHistory: Word[] = searchOpt && searchOpt.noHistory
-        ? searchHistory
-        : searchHistory.slice(0, historyIndex + 1)
-      let newHistoryIndex = historyIndex
-
+      const { activeProfile, searchHistory, selectedDicts, renderedDicts, userFoldedDicts } = get()
       if (searchOpt && searchOpt.word) {
         word = searchOpt.word
-        const lastWord = searchHistory[historyIndex]
-
-        if (!searchOpt.noHistory && (!lastWord || lastWord.text !== word.text)) {
-          newSearchHistory.push(word)
-          newHistoryIndex = newSearchHistory.length - 1
-        }
       } else {
-        word = searchHistory[historyIndex]
+        // 默认为最后一次查找
+        word = searchHistory[0]
       }
+
       if (searchOpt && searchOpt.id) {
         const searchDicts = renderedDicts.filter(item => item.dictID === searchOpt.id)
         dictList = searchDicts.map(d => {
@@ -145,13 +123,18 @@ const createSearchStore = (profile: AppProfile) => {
           console.warn('SEARCH_START: Empty word on first search', searchOpt)
           return state
         }
+        let newHistory
+        if (searchOpt.noHistory) {
+          newHistory = searchHistory
+        } else {
+          newHistory = [...searchHistory, word]
+        }
         return {
           ...state,
           text: word.text,
-          searchHistory: newSearchHistory,
-          historyIndex: newHistoryIndex,
+          searchHistory: newHistory,
           renderedDicts: dictList,
-        }
+        } satisfies DictSearchState
       })
       // searching
       // console.log('⚡️ line:157 ~ selectedDicts: ', selectedDicts)

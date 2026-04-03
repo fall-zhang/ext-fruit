@@ -11,6 +11,8 @@ import { updateProfile } from '@/core/file-system/tauri-conf-system'
 import { initFileSystem } from '@/core/file-system/file-system-init'
 import type { AppConfig } from '@/config/app-config'
 import type { AppProfile } from '@/config/trans-profile'
+import { TooltipProvider } from '@P/ui/components/tooltip'
+import { ThemeProvider } from '@/context/theme-context'
 const RootLayout = () => {
   const [config, setConfig] = useState<AppConfig>()
   const [profile, setProfile] = useState<AppProfile>()
@@ -28,15 +30,19 @@ const RootLayout = () => {
   return (
     <>
       <I18nextProvider i18n={i18n}>
-        <ConfProvider
-          config={config}
-          profile={profile}
-          updateConfig={updateConfig}
-          updateProfile={updateProfile}>
-          <ConfirmProvider>
-            <Outlet />
-          </ConfirmProvider>
-        </ConfProvider>
+        <ThemeProvider>
+          <TooltipProvider>
+            <ConfProvider
+              config={config}
+              profile={profile}
+              updateConfig={updateConfig}
+              updateProfile={updateProfile}>
+              <ConfirmProvider>
+                <Outlet />
+              </ConfirmProvider>
+            </ConfProvider>
+          </TooltipProvider>
+        </ThemeProvider>
       </I18nextProvider>
       <TanStackRouterDevtools position='bottom-right'/>
     </>
