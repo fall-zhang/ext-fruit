@@ -1,0 +1,44 @@
+{
+  "name": {
+    "en": "Longman Dictionary",
+    "zh-CN": "朗文词典",
+    "zh-TW": "朗文詞典"
+  },
+  "options": {
+    "wordfams": {
+      "en": "Show word family",
+      "zh-CN": "显示单词家族",
+      "zh-TW": "展示單字家族"
+    },
+    "collocations": {
+      "en": "Show collocations",
+      "zh-CN": "显示惯用搭配",
+      "zh-TW": "展示慣用搭配"
+    },
+    "grammar": {
+      "en": "Show grammar",
+      "zh-CN": "显示语法解释",
+      "zh-TW": "展示文法講解"
+    },
+    "thesaurus": {
+      "en": "Show thesaurus",
+      "zh-CN": "显示同义词",
+      "zh-TW": "展示同義詞"
+    },
+    "examples": {
+      "en": "Show examples",
+      "zh-CN": "显示例句",
+      "zh-TW": "展示例句"
+    },
+    "bussinessFirst": {
+      "en": "Show bussiness result first",
+      "zh-CN": "优先显示商务词典",
+      "zh-TW": "優先展示商務字典"
+    },
+    "related": {
+      "en": "Show related results",
+      "zh-CN": "失败时显示备选",
+      "zh-TW": "失敗時顯示備選"
+    }
+  }
+}

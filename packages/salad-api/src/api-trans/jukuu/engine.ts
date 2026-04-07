@@ -1,0 +1,88 @@
+import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { HTMLString } from '../../types'
+import {
+  getText,
+  getInnerHTML,
+  handleNoResult,
+  handleNetWorkError,
+  removeChildren
+} from '../../utils'
+import { fetchDirtyDOM } from '../../utils/fetch-dom'
+
+export type JukuuLang = 'engjp' | 'zhjp' | 'zheng'
+
+function getUrl (text: string, lang: JukuuLang) {
+  const newText = encodeURIComponent(text.replace(/\s+/g, '+'))
+
+  switch (lang) {
+    case 'engjp':
+      return 'http://www.jukuu.com/jsearch.php?q=' + newText
+    case 'zhjp':
+      return 'http://www.jukuu.com/jcsearch.php?q=' + newText
+    // case 'zheng':
+    default:
+      return 'http://www.jukuu.com/search.php?q=' + newText
+  }
+}
+
+export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
+  return getUrl(text, profile.jukuu.options.lang)
+}
+
+interface JukuuTransItem {
+  trans: HTMLString
+  original: string
+  src: string
+}
+
+export interface JukuuResult {
+  lang: JukuuLang
+  sens: JukuuTransItem[]
+}
+
+export interface JukuuPayload {
+  lang?: JukuuLang
+}
+
+type JukuuSearchResult = DictSearchResult<JukuuResult>
+
+export const search: SearchFunction<JukuuResult> = async (
+  text,
+  opt
+) => {
+  const lang = opt.profile.jukuu.options.lang
+  return fetchDirtyDOM(getUrl(text, lang))
+    .catch(handleNetWorkError)
+    .then(handleDOM)
+    .then(sens =>
+      (sens.length > 0 ? { result: { lang, sens } } : handleNoResult())
+    )
+}
+
+function handleDOM (doc: Document): JukuuTransItem[] {
+  return [...doc.querySelectorAll('tr.e')]
+    .map($e => {
+      const $trans = $e.lastElementChild
+      if (!$trans) {
+        return null
+      }
+      removeChildren($trans, 'img')
+
+      const $original = $e.nextElementSibling
+      if (!$original || !$original.classList.contains('c')) {
+        return null
+      }
+
+      const $src = $original.nextElementSibling
+
+      return {
+        trans: getInnerHTML('http://www.jukuu.com', $trans),
+        original: getText($original),
+        src:
+          $src && $src.classList.contains('s')
+            ? getText($src).replace(/^[\s-]*/, '')
+            : '',
+      }
+    })
+    .filter((item): item is JukuuTransItem => Boolean(item && item.trans))
+}
