@@ -1,13 +1,14 @@
 import { createContext, useContext, useState, type ReactNode } from 'react'
 import { createStore, useStore } from 'zustand'
 
-import type { Word } from '../types/word'
+import type { HistoryWord, Word } from '../types/word'
 import { getDefaultProfile, getDefaultSelectDict, type AppProfile, type Profile } from '@/config/trans-profile'
 import type { AllDictsConf, DictID } from '@/core/api-server/config'
 import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
 import { api } from '@/core/api-server/trans-api'
 import { checkSupportedLangs } from '@/core/api-server/utils/lang-check'
 import { countWords } from '@/core/api-server/utils/get-word-count'
+import { isInNotebook } from '@/core/index-db'
 
 
 type RenderDictItem = {
@@ -25,8 +26,8 @@ export type DictSearchState = {
   selectedDicts: Array<keyof AllDictsConf>
   renderedDicts: RenderDictItem[],
   // 搜索历史记录
-  /** 0 is the oldest */
-  searchHistory: Word[]
+  /** 0 is the latest, max: 100 */
+  searchHistory: HistoryWord[]
   // searchResultStore: [],
   /**
    * User manually folded or unfolded
@@ -117,25 +118,34 @@ const createSearchStore = (profile: AppProfile) => {
           })
         console.log('search dicts', dictList)
       }
-      // start search
-      set((state) => {
-        if (!word) {
-          console.warn('SEARCH_START: Empty word on first search', searchOpt)
-          return state
-        }
-        let newHistory
-        if (searchOpt.noHistory) {
-          newHistory = searchHistory
-        } else {
-          newHistory = [...searchHistory, word]
-        }
-        return {
-          ...state,
-          text: word.text,
-          searchHistory: newHistory,
-          renderedDicts: dictList,
-        } satisfies DictSearchState
+      isInNotebook(word).then(isInNote => {
+        // res
+        set((state) => {
+          if (!word) {
+            console.warn('SEARCH_START: Empty word on first search', searchOpt)
+            return state
+          }
+          let newHistory: HistoryWord[]
+          if (searchOpt.noHistory) {
+            newHistory = searchHistory
+          } else {
+            newHistory = [...searchHistory, {
+              ...word,
+              isInNotebook: isInNote,
+            }]
+          }
+          return {
+            ...state,
+            text: word.text,
+            searchHistory: newHistory,
+            renderedDicts: dictList,
+          } satisfies DictSearchState
+        })
+      }).catch(err => {
+
       })
+      // start search
+
       // searching
       // console.log('⚡️ line:157 ~ selectedDicts: ', selectedDicts)
       dictList.forEach((item) => {

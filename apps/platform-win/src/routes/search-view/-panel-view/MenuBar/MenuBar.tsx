@@ -4,11 +4,12 @@ import type { FC, ReactNode } from 'react'
 import './MenuBar.scss'
 // import type { ProfilesProps } from './Profiles'
 // import { ProfilePopover } from './Profiles'
-import { HistoryIcon } from 'lucide-react'
+import { HistoryIcon, BookMarkedIcon } from 'lucide-react'
 
 export interface MenuBarProps {
   customButton?: ReactNode
   onShowHistory(): void
+  onShowNotebook(): void
 }
 
 export const MenuBar: FC<MenuBarProps> = (props) => {
@@ -16,6 +17,13 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
     <header className="menuBar">
       <button className="px-2 hover:bg-black/10 h-full  flex items-center justify-center" onClick={props.onShowHistory} >
         <HistoryIcon
+          className="text-white dark:text-black"
+          strokeWidth={1}
+          size={18}
+        />
+      </button>
+      <button className="px-2 hover:bg-black/10 h-full  flex items-center justify-center" onClick={props.onShowNotebook} >
+        <BookMarkedIcon
           className="text-white dark:text-black"
           strokeWidth={1}
           size={18}

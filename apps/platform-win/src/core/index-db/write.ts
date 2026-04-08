@@ -32,7 +32,7 @@ export async function saveWords ({
 export async function deleteWords ({
   area,
   keyList,
-}:{
+}: {
   area: DBArea
   keyList?: number[]
 }) {

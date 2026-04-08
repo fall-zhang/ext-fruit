@@ -5,12 +5,6 @@ export interface Word {
   text: string
   /** the sentence where the text string is located */
   context: string
-  /** page title */
-  // title: string
-  /** page url */
-  // url: string
-  /** favicon url */
-  // favicon: string
   /** translation */
   trans: string
   /** custom note */
@@ -18,6 +12,10 @@ export interface Word {
   // 翻译源，翻译后的语言
   from?: string
   to?: string
+}
+
+export type HistoryWord = Word & {
+  isInNotebook: boolean
 }
 
 export interface WordSelection {
