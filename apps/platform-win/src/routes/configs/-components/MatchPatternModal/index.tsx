@@ -1,14 +1,12 @@
 /* eslint-disable no-param-reassign */
 import type { FC } from 'react'
 import React, { useRef } from 'react'
-import { useUpdateEffect } from 'react-use'
 import { Form, Modal, Button } from 'antd'
 import type { FormInstance, Rule } from 'antd/lib/form'
 import { ExclamationCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { matchPatternToRegExpStr } from '@/utils/matchPatternToRegExpStr'
 import { PatternItem } from './ PatternItem'
 import { useTranslation } from 'react-i18next'
-import { useUpdateSetting } from '../../-utils/upload'
 
 
 export interface MatchPatternModalProps {

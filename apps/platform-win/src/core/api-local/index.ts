@@ -1,5 +1,5 @@
 import { fetch } from '@tauri-apps/plugin-http'
-
+// 从本地大模型请求
 interface OllamaConfig {
   baseURL: string;
   model: string;

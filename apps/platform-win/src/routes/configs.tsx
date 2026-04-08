@@ -9,7 +9,8 @@ import {
   LayoutOutlined,
   SwapOutlined,
   SafetyCertificateOutlined,
-  LockOutlined
+  LockOutlined,
+  CloudServerOutlined
 } from '@ant-design/icons'
 import { cn } from '@P/ui/lib/utils'
 
@@ -109,6 +110,12 @@ const menuItems = [
     path: '/configs/permissions',
     label: '权限管理',
     icon: <LockOutlined className="w-4 h-4" />,
+  },
+  {
+    id: 'window-communication',
+    path: '/configs/window-communication',
+    label: '窗口通信示例',
+    icon: <CloudServerOutlined className="w-4 h-4" />,
   },
 ]
 

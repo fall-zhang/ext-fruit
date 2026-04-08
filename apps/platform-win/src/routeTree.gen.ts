@@ -17,6 +17,7 @@ import { Route as SearchViewIndexRouteImport } from './routes/search-view/index'
 import { Route as NotebookIndexRouteImport } from './routes/notebook/index'
 import { Route as NotebookAddIndexRouteImport } from './routes/notebook-add/index'
 import { Route as ExternalUseIndexRouteImport } from './routes/external-use/index'
+import { Route as ConfigsWindowCommunicationRouteImport } from './routes/configs/window-communication'
 import { Route as ConfigsFormTestRouteImport } from './routes/configs/form-test'
 import { Route as ConfigsPronunciationIndexRouteImport } from './routes/configs/pronunciation/index'
 import { Route as ConfigsPrivacyIndexRouteImport } from './routes/configs/privacy/index'
@@ -69,6 +70,12 @@ const ExternalUseIndexRoute = ExternalUseIndexRouteImport.update({
   path: '/external-use/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConfigsWindowCommunicationRoute =
+  ConfigsWindowCommunicationRouteImport.update({
+    id: '/window-communication',
+    path: '/window-communication',
+    getParentRoute: () => ConfigsRoute,
+  } as any)
 const ConfigsFormTestRoute = ConfigsFormTestRouteImport.update({
   id: '/form-test',
   path: '/form-test',
@@ -135,6 +142,7 @@ export interface FileRoutesByFullPath {
   '/404': typeof R404Route
   '/configs': typeof ConfigsRouteWithChildren
   '/configs/form-test': typeof ConfigsFormTestRoute
+  '/configs/window-communication': typeof ConfigsWindowCommunicationRoute
   '/external-use/': typeof ExternalUseIndexRoute
   '/notebook-add/': typeof NotebookAddIndexRoute
   '/notebook/': typeof NotebookIndexRoute
@@ -156,6 +164,7 @@ export interface FileRoutesByTo {
   '/404': typeof R404Route
   '/configs': typeof ConfigsRouteWithChildren
   '/configs/form-test': typeof ConfigsFormTestRoute
+  '/configs/window-communication': typeof ConfigsWindowCommunicationRoute
   '/external-use': typeof ExternalUseIndexRoute
   '/notebook-add': typeof NotebookAddIndexRoute
   '/notebook': typeof NotebookIndexRoute
@@ -178,6 +187,7 @@ export interface FileRoutesById {
   '/404': typeof R404Route
   '/configs': typeof ConfigsRouteWithChildren
   '/configs/form-test': typeof ConfigsFormTestRoute
+  '/configs/window-communication': typeof ConfigsWindowCommunicationRoute
   '/external-use/': typeof ExternalUseIndexRoute
   '/notebook-add/': typeof NotebookAddIndexRoute
   '/notebook/': typeof NotebookIndexRoute
@@ -201,6 +211,7 @@ export interface FileRouteTypes {
     | '/404'
     | '/configs'
     | '/configs/form-test'
+    | '/configs/window-communication'
     | '/external-use/'
     | '/notebook-add/'
     | '/notebook/'
@@ -222,6 +233,7 @@ export interface FileRouteTypes {
     | '/404'
     | '/configs'
     | '/configs/form-test'
+    | '/configs/window-communication'
     | '/external-use'
     | '/notebook-add'
     | '/notebook'
@@ -243,6 +255,7 @@ export interface FileRouteTypes {
     | '/404'
     | '/configs'
     | '/configs/form-test'
+    | '/configs/window-communication'
     | '/external-use/'
     | '/notebook-add/'
     | '/notebook/'
@@ -329,6 +342,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExternalUseIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/configs/window-communication': {
+      id: '/configs/window-communication'
+      path: '/window-communication'
+      fullPath: '/configs/window-communication'
+      preLoaderRoute: typeof ConfigsWindowCommunicationRouteImport
+      parentRoute: typeof ConfigsRoute
+    }
     '/configs/form-test': {
       id: '/configs/form-test'
       path: '/form-test'
@@ -411,6 +431,7 @@ declare module '@tanstack/react-router' {
 
 interface ConfigsRouteChildren {
   ConfigsFormTestRoute: typeof ConfigsFormTestRoute
+  ConfigsWindowCommunicationRoute: typeof ConfigsWindowCommunicationRoute
   ConfigsBlackWhiteListIndexRoute: typeof ConfigsBlackWhiteListIndexRoute
   ConfigsContextMenusIndexRoute: typeof ConfigsContextMenusIndexRoute
   ConfigsDictAuthIndexRoute: typeof ConfigsDictAuthIndexRoute
@@ -425,6 +446,7 @@ interface ConfigsRouteChildren {
 
 const ConfigsRouteChildren: ConfigsRouteChildren = {
   ConfigsFormTestRoute: ConfigsFormTestRoute,
+  ConfigsWindowCommunicationRoute: ConfigsWindowCommunicationRoute,
   ConfigsBlackWhiteListIndexRoute: ConfigsBlackWhiteListIndexRoute,
   ConfigsContextMenusIndexRoute: ConfigsContextMenusIndexRoute,
   ConfigsDictAuthIndexRoute: ConfigsDictAuthIndexRoute,

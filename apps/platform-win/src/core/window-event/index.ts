@@ -1,9 +1,8 @@
+// 不同 window 的事件交互
 // 该文件用作 tauri 和 js 进行通信，调用 rust 的方法
 // tauri 提供的 fs API 无法访问文件系统的任意路径
 import { emit, listen } from '@tauri-apps/api/event'
 import { WebviewWindow } from '@tauri-apps/api/webviewWindow'
-
-// ==================== 窗口间通信示例 ====================
 
 /**
  * 向指定窗口发送事件
