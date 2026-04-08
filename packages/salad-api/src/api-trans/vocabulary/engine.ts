@@ -1,5 +1,6 @@
 
-import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { AtomFetchRequest, AtomGetSrcFunction } from '../../types/atom-type'
 import {
   getText,
   handleNoResult,
@@ -7,7 +8,7 @@ import {
 } from '../../utils'
 import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
-export const getSrcPage: GetSrcPageFunction = text => {
+export const getSrcPage: AtomGetSrcFunction = text => {
   return `https://www.vocabulary.com/dictionary/${text}`
 }
 
@@ -18,7 +19,7 @@ export interface VocabularyResult {
 
 type VocabularySearchResult = DictSearchResult<VocabularyResult>
 
-export const search: SearchFunction<VocabularyResult> = async (text) => {
+export const search: AtomFetchRequest<VocabularyResult> = async (text) => {
   return fetchDirtyDOM(
     'https://www.vocabulary.com/dictionary/' +
       encodeURIComponent(text.replace(/\s+/g, ' '))

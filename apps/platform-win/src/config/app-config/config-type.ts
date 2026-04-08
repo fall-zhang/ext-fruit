@@ -56,7 +56,7 @@ export type SaladConfigType = {
   updateCheck: boolean,
 
   /** disable selection on type fields, like input and textarea */
-  noTypeField: boolean,
+  // noTypeField: boolean,
 
   /**
    * use animation for transition

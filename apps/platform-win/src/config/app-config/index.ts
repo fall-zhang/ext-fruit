@@ -13,7 +13,6 @@ export function getDefaultConfig (): SaladConfigType {
     runInBg: false,
     analytics: true,
     updateCheck: true,
-    noTypeField: false,
     animation: true,
     langCode: 'zh-CN',
     panelWidth: 450,

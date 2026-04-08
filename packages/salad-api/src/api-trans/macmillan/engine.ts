@@ -1,7 +1,8 @@
 
-import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
 import type { AllDictsConf } from '../../config'
 import type { HTMLString } from '../../types'
+import type { AtomGetSrcFunction } from '../../types/atom-type'
 import {
   getInnerHTML,
   handleNoResult,
@@ -15,8 +16,9 @@ import {
 } from '../../utils'
 import { fetchDirtyDOM } from '../../utils/fetch-dom'
 
-export const getSrcPage: GetSrcPageFunction = (text, localLang, profile) => {
-  const lang = profile?.macmillan.options.locale === 'us' ? 'american' : 'british'
+export const getSrcPage: AtomGetSrcFunction = (text, localLang, profile) => {
+  const lang = 'american'
+  //  : 'british'
   return (
     `http://www.macmillandictionary.com/dictionary/${lang}/` +
     encodeURIComponent(text.toLocaleLowerCase().replace(/[^A-Za-z0-9]+/g, '-'))

@@ -11,11 +11,6 @@ function RouteComponent () {
     <SaladictForm
       items={[
         {
-          name: getConfigPath('noTypeField'),
-          valuePropName: 'checked',
-          children: <Switch />,
-        },
-        {
           name: getConfigPath('touchMode'),
           valuePropName: 'checked',
           children: <Switch />,
@@ -50,7 +45,6 @@ function RouteComponent () {
         },
         searchMode('mode', t),
         searchMode('panelMode', t),
-        searchMode('qsPanelMode', t),
       ]}
     />
   )

@@ -40,7 +40,7 @@ function RouteComponent () {
         ]}
       />
       <MatchPatternModal
-        area={editingArea}
+        // area={editingArea}
         onClose={() => setEditingArea(null)}
       />
     </>

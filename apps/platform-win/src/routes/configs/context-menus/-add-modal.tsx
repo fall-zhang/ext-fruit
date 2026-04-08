@@ -1,14 +1,9 @@
 import type { FC } from 'react'
 import React, { useMemo } from 'react'
 import { List, Modal, Button, Tooltip } from 'antd'
-import { CheckOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons'
-import omit from 'lodash/omit'
 import { v4 as uuid } from 'uuid'
-import { isFirefox } from '@/utils/browser'
 import { useTranslation } from 'react-i18next'
-import { getConfigPath } from '../-utils/path-joiner'
 import { useUpdateSetting } from '../-utils/upload'
-import { useConfContext } from '@/context/conf-context'
 
 export interface AddModalProps {
   show: boolean
@@ -19,15 +14,16 @@ export interface AddModalProps {
 export const AddModal: FC<AddModalProps> = ({ show, onEdit, onClose }) => {
   const { t } = useTranslation(['common', 'menus', 'options'])
   // const contextMenus = useDictStore(state => state.config.contextMenus)
-  const contextMenus = useConfContext().config.contextMenus
+  // const contextMenus = useConfContext().config.contextMenus
   const unselected = useMemo(() => {
-    if (!contextMenus) {
-      return []
-    }
+    // if (!contextMenus) {
+    //   return []
+    // }
+    return []
 
-    const selectedSet = new Set(contextMenus.selected as string[])
-    return Object.keys(contextMenus.all).filter(id => !selectedSet.has(id))
-  }, [contextMenus])
+    // const selectedSet = new Set(contextMenus.selected as string[])
+    // return Object.keys(contextMenus.all).filter(id => !selectedSet.has(id))
+  }, [])
   const upload = useUpdateSetting()
 
   return (
@@ -41,7 +37,7 @@ export const AddModal: FC<AddModalProps> = ({ show, onEdit, onClose }) => {
       <Button type="dashed" block onClick={addItem}>
         {t('common:add')}
       </Button>
-      <List dataSource={unselected} renderItem={renderListItem} />
+      {/* <List dataSource={unselected} renderItem={renderListItem} /> */}
       <Button type="dashed" block onClick={addItem}>
         {t('common:add')}
       </Button>
@@ -49,66 +45,66 @@ export const AddModal: FC<AddModalProps> = ({ show, onEdit, onClose }) => {
   )
 
   function renderListItem (menuID: string) {
-    if (!contextMenus) return null
+    // if (!contextMenus) return null
 
-    const item = contextMenus.all[menuID]
-    const itemName = typeof item === 'string' ? t(`menus:${menuID}`) : ''
-    return (
-      <List.Item>
-        <div className="sortable-list-item">
-          <span>{itemName}</span>
-          <Button
-            title={t('common:edit')}
-            className="sortable-list-item-btn"
-            shape="circle"
-            size="small"
-            icon={<EditOutlined />}
-            disabled={item === 'x' /** internal options */}
-            onClick={() => onEdit(menuID)}
-          />
-          <Button
-            title={t('common:delete')}
-            disabled={item === 'x' /** internal options */}
-            className="sortable-list-item-btn"
-            shape="circle"
-            size="small"
-            icon={<CloseOutlined />}
-            onClick={deleteItem}
-          />
-        </div>
-      </List.Item>
-    )
+    // const item = contextMenus.all[menuID]
+    // const itemName = typeof item === 'string' ? t(`menus:${menuID}`) : ''
+    // return (
+    //   <List.Item>
+    //     <div className="sortable-list-item">
+    //       <span>{itemName}</span>
+    //       <Button
+    //         title={t('common:edit')}
+    //         className="sortable-list-item-btn"
+    //         shape="circle"
+    //         size="small"
+    //         icon={<EditOutlined />}
+    //         disabled={item === 'x' /** internal options */}
+    //         onClick={() => onEdit(menuID)}
+    //       />
+    //       <Button
+    //         title={t('common:delete')}
+    //         disabled={item === 'x' /** internal options */}
+    //         className="sortable-list-item-btn"
+    //         shape="circle"
+    //         size="small"
+    //         icon={<CloseOutlined />}
+    //         onClick={deleteItem}
+    //       />
+    //     </div>
+    //   </List.Item>
+    // )
 
-    function selectItem () {
-      if (!contextMenus) return
+    // function selectItem () {
+    //   if (!contextMenus) return
 
-      upload({
-        [getConfigPath('contextMenus', 'selected')]: [
-          ...contextMenus.selected,
-          menuID,
-        ],
-      })
-    }
+    //   upload({
+    //     [getConfigPath('contextMenus', 'selected')]: [
+    //       ...contextMenus.selected,
+    //       menuID,
+    //     ],
+    //   })
+    // }
 
-    function deleteItem () {
-      if (!contextMenus) return
+    // function deleteItem () {
+    //   if (!contextMenus) return
 
-      Modal.confirm({
-        title: t('common:delete_confirm'),
-        okType: 'danger',
-        onOk: () => {
-          if (contextMenus.all[menuID] !== 'x') {
-            upload({
-              [getConfigPath('contextMenus')]: {
-                ...contextMenus,
-                selected: contextMenus.selected.filter(id => id !== menuID),
-                all: omit(contextMenus.all, [menuID]),
-              },
-            })
-          }
-        },
-      })
-    }
+    //   Modal.confirm({
+    //     title: t('common:delete_confirm'),
+    //     okType: 'danger',
+    //     onOk: () => {
+    //       if (contextMenus.all[menuID] !== 'x') {
+    //         upload({
+    //           [getConfigPath('contextMenus')]: {
+    //             ...contextMenus,
+    //             selected: contextMenus.selected.filter(id => id !== menuID),
+    //             all: omit(contextMenus.all, [menuID]),
+    //           },
+    //         })
+    //       }
+    //     },
+    //   })
+    // }
   }
 
   function addItem () {

@@ -1,6 +1,3 @@
-import type {
-  HTMLString
-} from '../../types'
 import {
   handleNoResult,
   getInnerHTML,
@@ -15,7 +12,7 @@ import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-com
 import { fetchPlainText } from '@/core/api-server/utils/fetch-dom'
 
 export interface GoogleDictResult {
-  entry: HTMLString
+  entry: string
   styles: string[]
 }
 

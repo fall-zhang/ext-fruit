@@ -18,7 +18,7 @@ export const EditModal: FC<EditModalProps> = ({ menuID, onClose }) => {
   const { t } = useTranslation(['options', 'dicts', 'common', 'langcode'])
   const formRef = useRef<FormInstance>(null)
   // const allMenus = useDictStore(state => state.config.contextMenus.all)
-  const allMenus = useConfContext().config.contextMenus.all
+  // const allMenus = useConfContext().config.contextMenus.all
 
   const uploadStatus = 'idle'
   const upload = useUpdateSetting()
@@ -27,26 +27,26 @@ export const EditModal: FC<EditModalProps> = ({ menuID, onClose }) => {
   const urlPath = `config.contextMenus.all.${menuID}.url`
 
   const initialValues = useMemo(() => {
-    if (allMenus && menuID) {
-      const item = allMenus[menuID]
-      if (typeof item === 'string') {
-        return {
-          [namePath]: t(`menus:${menuID}`),
-          [urlPath]: item,
-        }
-      }
-      if (item) {
-        return {
-          [namePath]: item.name,
-          [urlPath]: item.url,
-        }
-      }
-    }
+    // if (allMenus && menuID) {
+    //   const item = allMenus[menuID]
+    //   if (typeof item === 'string') {
+    //     return {
+    //       [namePath]: t(`menus:${menuID}`),
+    //       [urlPath]: item,
+    //     }
+    //   }
+    //   if (item) {
+    //     return {
+    //       [namePath]: item.name,
+    //       [urlPath]: item.url,
+    //     }
+    //   }
+    // }
     return {
       [namePath]: '',
       [urlPath]: '',
     }
-  }, [allMenus, menuID])
+  }, [menuID])
 
   useUpdateEffect(() => {
     if (menuID && uploadStatus === 'idle') {
