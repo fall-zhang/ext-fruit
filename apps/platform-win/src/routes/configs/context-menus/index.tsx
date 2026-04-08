@@ -8,7 +8,7 @@ import { AddModal } from './-add-modal'
 import { EditModal } from './-edit-modal'
 import { useDictStore } from '@/store'
 import { getConfigPath } from '../-utils/path-joiner'
-import { useUpload } from '../-utils/upload'
+import { useUpdateSetting } from '../-utils/upload'
 import { useListLayout } from '../-utils/layout'
 import { useConfContext } from '@/context/conf-context'
 
@@ -18,7 +18,7 @@ export const Route = createFileRoute('/configs/context-menus/')({
 
 function RouteComponent () {
   const { t } = useTranslation(['options', 'common', 'menus'])
-  const upload = useUpload()
+  const upload = useUpdateSetting()
   const [showAddModal, setShowAddModal] = useState(false)
   const [editingMenu, setEditingMenu] = useState<string | null>(null)
   const listLayout = useListLayout()

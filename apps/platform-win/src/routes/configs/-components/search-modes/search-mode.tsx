@@ -4,7 +4,7 @@ import type { TFunction } from 'i18next'
 import type { SaladictFormItem } from '../SaladictForm'
 import { getConfigPath } from '../../-utils/path-joiner'
 
-type Mode = 'mode' | 'pinMode' | 'panelMode' | 'qsPanelMode'
+type Mode = 'mode' | 'panelMode'
 
 export const searchMode = (mode: Mode, t: TFunction): SaladictFormItem => {
   const items: SaladictFormItem[] = []

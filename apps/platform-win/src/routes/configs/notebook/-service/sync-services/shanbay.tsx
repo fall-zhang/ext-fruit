@@ -27,7 +27,6 @@ export const ShanbayModal: FC<WebdavModalProps> = props => {
     <Modal
       visible={props.show}
       title={t('sync:shanbay.title')}
-      destroyOnClose
       onCancel={props.onClose}
       footer={null}
     >
@@ -69,18 +68,6 @@ export const ShanbayModal: FC<WebdavModalProps> = props => {
         // return
       }
     }
-
-    // try {
-    //   await uploadSyncConfig('shanbay', newConfig)
-    //   setSyncConfig(newConfig)
-    //   AntdMsg.destroy()
-    //   AntdMsg.success(t('msg_updated'))
-    // } catch (e) {
-    //   notification.error({
-    //     message: t('config.opt.upload_error'),
-    //     description: `${e}`,
-    //   })
-    // }
   }
 
   async function onSyncAll () {

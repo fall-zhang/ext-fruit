@@ -56,12 +56,12 @@ const menuItems = [
   //   label: '右键菜单',
   //   icon: <DatabaseOutlined className="w-4 h-4" />,
   // },
-  {
-    id: 'dictionaries',
-    path: '/configs/dictionaries',
-    label: '词典管理',
-    icon: <BookOutlined className="w-4 h-4" />,
-  },
+  // {
+  //   id: 'dictionaries',
+  //   path: '/configs/dictionaries',
+  //   label: '词典管理',
+  //   icon: <BookOutlined className="w-4 h-4" />,
+  // },
   {
     id: 'dict-panel',
     path: '/configs/dict-panel',

@@ -49,7 +49,6 @@ function RouteComponent () {
           ),
         },
         searchMode('mode', t),
-        searchMode('pinMode', t),
         searchMode('panelMode', t),
         searchMode('qsPanelMode', t),
       ]}

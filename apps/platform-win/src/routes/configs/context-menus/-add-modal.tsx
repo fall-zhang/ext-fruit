@@ -7,7 +7,7 @@ import { v4 as uuid } from 'uuid'
 import { isFirefox } from '@/utils/browser'
 import { useTranslation } from 'react-i18next'
 import { getConfigPath } from '../-utils/path-joiner'
-import { useUpload } from '../-utils/upload'
+import { useUpdateSetting } from '../-utils/upload'
 import { useConfContext } from '@/context/conf-context'
 
 export interface AddModalProps {
@@ -28,7 +28,7 @@ export const AddModal: FC<AddModalProps> = ({ show, onEdit, onClose }) => {
     const selectedSet = new Set(contextMenus.selected as string[])
     return Object.keys(contextMenus.all).filter(id => !selectedSet.has(id))
   }, [contextMenus])
-  const upload = useUpload()
+  const upload = useUpdateSetting()
 
   return (
     <Modal

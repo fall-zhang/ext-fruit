@@ -8,19 +8,22 @@ import { cloneDeep } from 'es-toolkit'
 import type { AppProfile } from '@/config/trans-profile'
 import { toast } from 'sonner'
 import { useConfContext } from '@/context/conf-context'
+import { updateConfig, updateProfile } from '@/core/file-system/tauri-conf-system'
 
 
-export const useUpload = () => {
+export const useUpdateSetting = () => {
   const { t } = useTranslation('options')
   // const confContext = useConfContext()
   // const dictStore = useDictStore(state => state.config)
-  const { config, profile } = useConfContext()
+  // const { config, profile } = useConfContext()
+  const confContext = useConfContext()
+  const config = confContext.config
+  const profile = confContext.profile
 
   // [stateObjectPaths: string]
   return async (values: Record<string, any>) => {
     const data: { config?: AppConfig; profile?: AppProfile } = {}
     const paths = Object.keys(values)
-
     if (import.meta.env.VITE_DEBUG) {
       if (paths.length <= 0) {
         console.warn('Saving empty fields.', values)
@@ -43,15 +46,17 @@ export const useUpload = () => {
       }
     }
 
-    const requests: Promise<void>[] = []
+    const requests = []
 
-    // if (data.config) {
-    //   requests.push(updateConfig(data.config))
-    // }
+    if (data.config) {
+      requests.push(updateConfig(data.config))
+      confContext.updateConfig(data.config)
+    }
 
-    // if (data.profile) {
-    //   requests.push(updateProfile(data.profile))
-    // }
+    if (data.profile) {
+      requests.push(updateProfile(data.profile))
+      confContext.updateProfile(data.profile)
+    }
 
     try {
       await Promise.all(requests)

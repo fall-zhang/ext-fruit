@@ -17,37 +17,38 @@ export const DictTitle: FC<DictTitleProps> = ({ dictID, dictLangs }) => {
   const title = t(`dicts:${dictID}.name`)
 
   return (
-    <span className="saladict-dict-title">
-      <span>
-        <img
-          className="saladict-dict-title-icon"
-          src={'@/core/api-server/trans-api/' + dictID + '/favicon.png'}
-          alt={`logo ${title}`}
-        />
-        <a
-          className="saladict-dict-title-link"
-          href="#"
-          onClick={e => {
-            e.stopPropagation()
-            e.preventDefault()
-            openDictSrcPage(dictID, dictLangs)
-          }}
-        >
-          {title}
-        </a>
-      </span>
+    <div className="saladict-dict-title flex items-center justify-start">
+      <img
+        className="saladict-dict-title-icon"
+        src={'/src/core/api-server/trans-api/' + dictID + '/favicon.png'}
+        // /src/core/api-server/trans-api/bing/favicon.png
+        alt={`logo ${title}`}
+      />
+      <a
+        className="saladict-dict-title-link"
+        href="#"
+        onClick={e => {
+          e.stopPropagation()
+          e.preventDefault()
+          // openDictSrcPage(dictID, dictLangs)
+        }}
+      >
+        {title}
+      </a>
       <span>
         {dictLangs.split('').map((c, i) =>
           (c
-            ? (
-              <span className="saladict-dict-langs-char" key={langCodes[i]}>
-                {t(`dict.lang.${langCodes[i]}`)}
-              </span>
-            )
+            ? (<span className="ml-1 px-0.5 text-sm text-neutral-500 border border-neutral-500 rounded-xs" key={langCodes[i]}>
+              {t(`dict.lang.${langCodes[i]}`)}
+            </span>)
             : null)
         )}
       </span>
-    </span>
+      <div className="grow"></div>
+      <div className="opt flex ">
+
+      </div>
+    </div>
   )
 }
 
@@ -63,14 +64,14 @@ function openDictSrcPage (dictID: DictID, dictLangs: string) {
   //       : +dictLangs[4]
   //         ? '샐러드'
   //         : 'salad'
-  let text = '沙拉'
-  if (+dictLangs[0]) {
-    text = 'salad'
-  } else if (+dictLangs[1] || +dictLangs[2]) {
-    text = '沙拉'
-  } else if (+dictLangs[3]) {
-    text = 'サラダ'
-  } else if (+dictLangs[4]) {
-    text = '샐러드'
-  }
+  // let text = '沙拉'
+  // if (+dictLangs[0]) {
+  //   text = 'salad'
+  // } else if (+dictLangs[1] || +dictLangs[2]) {
+  //   text = '沙拉'
+  // } else if (+dictLangs[3]) {
+  //   text = 'サラダ'
+  // } else if (+dictLangs[4]) {
+  //   text = '샐러드'
+  // }
 }

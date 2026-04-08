@@ -4,7 +4,7 @@ import { useState, useLayoutEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DictTitleMemo } from './-dict-title'
 import { EditModal } from './-edit-modal'
-import { useUpload } from '../-utils/upload'
+import { useUpdateSetting } from '../-utils/upload'
 import { getProfilePath } from '../-utils/path-joiner'
 import { SaladictModalForm } from '../-components/SaladictModalForm'
 import { reorder, SortableList } from '../-components/SortableList'
@@ -24,7 +24,7 @@ function RouteComponent () {
   const dicts = confContext.profile.dicts
 
   // const dicts = useDictStore(state => state.activeProfile.dicts)
-  const upload = useUpload()
+  const upload = useUpdateSetting()
 
   // make a local copy to avoid flickering on drag end
   const [selectedDicts, setSelectedDicts] = useState<ReadonlyArray<DictID>>(

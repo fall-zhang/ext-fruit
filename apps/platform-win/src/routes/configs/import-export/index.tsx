@@ -12,7 +12,7 @@ import { useConfContext } from '@/context/conf-context'
 import type { Profile } from '@/config/trans-profile'
 import { mergeProfile } from '@/config/trans-profile/merge-profile'
 import type { ProfileID } from '@/core/api-local/profile'
-import { updateConfig } from '@/core/file-system/app-config'
+import { updateConfig } from '@/core/file-system/tauri-conf-system'
 
 export const Route = createFileRoute('/configs/import-export/')({
   component: RouteComponent,

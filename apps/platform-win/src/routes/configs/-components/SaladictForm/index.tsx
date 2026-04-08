@@ -10,7 +10,7 @@ import { SaveBtn } from './SaveBtn'
 import './_style.scss'
 import { useDictStore } from '@/store'
 import { setFormDirty } from '../../-utils/use-form-dirty'
-import { useUpload } from '../../-utils/upload'
+import { useUpdateSetting } from '../../-utils/upload'
 
 interface FieldValues {
   [name: string]: any
@@ -41,7 +41,7 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
   const { items, hideFooter, ...restProps } = props
   const { t, i18n, ready } = useTranslation(['options', 'common'])
   const store = useDictStore()
-  const upload = useUpload()
+  const upload = useUpdateSetting()
 
   const { initialValues } = useMemo(() => {
     function extractInitial (

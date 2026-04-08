@@ -8,35 +8,18 @@ import { ExclamationCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { matchPatternToRegExpStr } from '@/utils/matchPatternToRegExpStr'
 import { PatternItem } from './ PatternItem'
 import { useTranslation } from 'react-i18next'
-import { getConfigPath } from '../../-utils/path-joiner'
-import { useUpload } from '../../-utils/upload'
+import { useUpdateSetting } from '../../-utils/upload'
 
 
 export interface MatchPatternModalProps {
-  area: null | 'whitelist' | 'blacklist'
   onClose: () => void
 }
 
 export const MatchPatternModal: FC<MatchPatternModalProps> = ({
-  area,
   onClose,
 }) => {
   const { t } = useTranslation()
   const formRef = useRef<FormInstance>(null)
-  const uploadStatus = 'idle'
-
-  const upload = useUpload()
-
-  useUpdateEffect(() => {
-    if (area && uploadStatus === 'idle') {
-      onClose()
-    }
-  }, [uploadStatus])
-
-  const title = area
-    ? (area.startsWith('pdf') ? 'PDF ' : '') +
-      t(area.endsWith('hitelist') ? 'common:whitelist' : 'common:blacklist')
-    : t('nav.BlackWhiteList')
 
   async function validatePatterns (rule: Rule, value: [string, string]) {
     if (value[1]) {
@@ -57,9 +40,7 @@ export const MatchPatternModal: FC<MatchPatternModalProps> = ({
 
   return (
     <Modal
-      visible={!!area}
-      title={title}
-      destroyOnClose
+      visible={true}
       onOk={() => {
         if (formRef.current) {
           formRef.current.submit()
@@ -99,12 +80,6 @@ export const MatchPatternModal: FC<MatchPatternModalProps> = ({
         wrapperCol={{ span: 24 }}
         initialValues={{}}
         onFinish={values => {
-          if (area) {
-            const patterns: [string, string][] | undefined = values.patterns
-            upload({
-              [getConfigPath(area)]: (patterns || []).filter(p => p[0]),
-            })
-          }
         }}
       >
         <Form.List name="patterns">

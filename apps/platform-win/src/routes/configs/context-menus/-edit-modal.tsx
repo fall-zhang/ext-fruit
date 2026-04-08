@@ -6,7 +6,7 @@ import { ExclamationCircleOutlined } from '@ant-design/icons'
 import type { FormInstance } from 'antd/lib/form/Form'
 import { useTranslation } from 'react-i18next'
 import { useDictStore } from '@/store'
-import { useUpload } from '../-utils/upload'
+import { useUpdateSetting } from '../-utils/upload'
 import { useConfContext } from '@/context/conf-context'
 
 export interface EditModalProps {
@@ -21,7 +21,7 @@ export const EditModal: FC<EditModalProps> = ({ menuID, onClose }) => {
   const allMenus = useConfContext().config.contextMenus.all
 
   const uploadStatus = 'idle'
-  const upload = useUpload()
+  const upload = useUpdateSetting()
 
   const namePath = `config.contextMenus.all.${menuID}.name`
   const urlPath = `config.contextMenus.all.${menuID}.url`

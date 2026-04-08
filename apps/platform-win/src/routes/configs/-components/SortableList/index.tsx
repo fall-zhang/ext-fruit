@@ -53,61 +53,63 @@ export function SortableList (props: SortableListProps) {
         </Button>
       }
     >
-      {/* 需要认证的模块，先完成认证才能进行添加 */}
-      {props.description}
-      <Radio.Group
+      <span>需要认证的模块，先完成认证才能进行添加</span>
+      <span>建议最多启用十个模块，以避免请求过多</span>
+      {/* {props.description} */}
+      {/* <Radio.Group
         className="sortable-list-radio-group"
         value={props.selected}
         onChange={props.onSelect}
       >
-        <List size="large">
-          {props.list.map((item, index) => (
-            <List.Item key={item.value}>
-              <div className="sortable-list-item">
-                {props.selected == null
-                  ? (
-                    item.title
-                  )
-                  : (
-                    <Radio value={item.value}>{item.title}</Radio>
-                  )}
-                <div className="sortable-list-item-btns">
-                  <SwapOutlined
-                    rotate={90}
-                    title={t('sort')}
-                    style={{ cursor: 'move' }}
-                  />
-                  <Button
-                    className="sortable-list-item-btn"
-                    title={t('edit')}
-                    shape="circle"
-                    size="small"
-                    icon={<EditOutlined />}
-                    disabled={
-                      props.disableEdit != null &&
-                                    props.disableEdit(index, item)
-                    }
-                    onClick={() =>
-                      props.onEdit && props.onEdit(index, item)
-                    }
-                  />
-                  <Button
-                    title={t('delete')}
-                    className="sortable-list-item-btn"
-                    shape="circle"
-                    size="small"
-                    disabled={ props.selected != null && item.value === props.selected }
-                    onClick={() =>
-                      props.onDelete?.(index, item)
-                    }
-                  ><CloseOutlined /></Button>
-                </div>
-              </div>
-            </List.Item>
-          ))}
-        </List>
+      </Radio.Group> */}
 
-      </Radio.Group>
+      <ul >
+        {props.list.map((item, index) => (
+          <li key={item.value}>
+            <div className="sortable-list-item">
+              {props.selected == null
+                ? (
+                  item.title
+                )
+                : (
+                  <Radio value={item.value}>{item.title}</Radio>
+                )}
+              <div className="sortable-list-item-btns">
+                <SwapOutlined
+                  rotate={90}
+                  title={t('sort')}
+                  style={{ cursor: 'move' }}
+                />
+                <Button
+                  className="sortable-list-item-btn"
+                  title={t('edit')}
+                  shape="circle"
+                  size="small"
+                  icon={<EditOutlined />}
+                  disabled={
+                    props.disableEdit != null &&
+                                    props.disableEdit(index, item)
+                  }
+                  onClick={() =>
+                    props.onEdit && props.onEdit(index, item)
+                  }
+                />
+                <Button
+                  title={t('delete')}
+                  className="sortable-list-item-btn"
+                  shape="circle"
+                  size="small"
+                  disabled={ props.selected != null && item.value === props.selected }
+                  onClick={() =>
+                    props.onDelete?.(index, item)
+                  }
+                ><CloseOutlined /></Button>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+
       {(props.isShowAdd == null || props.isShowAdd) && (
         <Button type="dashed" style={{ width: '100%' }} onClick={props.onAdd}>
           <PlusOutlined /> {t('add')}
