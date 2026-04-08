@@ -30,6 +30,11 @@ function RouteComponent () {
       children: <Switch />,
     },
     {
+      name: getConfigPath('startOnBoot'),
+      valuePropName: 'checked',
+      children: <Switch />,
+    },
+    {
       name: getConfigPath('langCode'),
       children: (
         <Select

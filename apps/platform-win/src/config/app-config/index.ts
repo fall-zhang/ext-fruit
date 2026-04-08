@@ -9,6 +9,7 @@ export function getDefaultConfig (): SaladConfigType {
   return {
     version: 1,
     active: true,
+    startOnBoot: false,
     runInBg: false,
     analytics: true,
     updateCheck: true,

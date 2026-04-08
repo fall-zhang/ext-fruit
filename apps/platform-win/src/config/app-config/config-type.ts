@@ -47,6 +47,11 @@ export type SaladConfigType = {
    */
   runInBg: boolean
 
+  /**
+   * 随着开机进行自启动
+   */
+  startOnBoot: boolean
+
   /** enable update check */
   updateCheck: boolean,
 
