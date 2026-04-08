@@ -1,3 +1,4 @@
+use std::sync::Mutex;
 use std::sync::OnceLock;
 use std::time::{Duration, Instant};
 use tauri::{
@@ -6,7 +7,6 @@ use tauri::{
     AppHandle, Manager,
 };
 use tauri_plugin_positioner::{Position, WindowExt};
-use std::sync::Mutex;
 
 // 点击状态管理
 struct ClickState {
@@ -103,12 +103,12 @@ fn handle_left_click(app: &AppHandle) {
     let mut state_guard = state.lock().unwrap();
     let now = Instant::now();
     let double_click_threshold = Duration::from_millis(200);
-    
+
     let time_since_last = now.duration_since(state_guard.last_click_time);
     // println!("托盘单击: time_since_last = {:?}, threshold = {:?}, pending_timer = {}, click_count = {}",
     //          time_since_last, double_click_threshold, state_guard.pending_timer, state_guard.click_count);
     // 添加 12 ms 的防抖
-    if time_since_last < Duration::from_millis(12){
+    if time_since_last < Duration::from_millis(12) {
         return;
     }
     // 检查是否在双击阈值内
@@ -119,7 +119,7 @@ fn handle_left_click(app: &AppHandle) {
         state_guard.click_count = 0;
         state_guard.pending_timer = false;
         drop(state_guard); // 释放锁
-        
+
         show_config_page(app);
     } else {
         // println!("第一次单击或超过阈值，启动定时器");
@@ -129,11 +129,11 @@ fn handle_left_click(app: &AppHandle) {
         state_guard.pending_timer = true;
         let app_clone = app.clone();
         drop(state_guard); // 释放锁，避免在异步任务中持有锁
-        
+
         // 启动定时器任务
         tauri::async_runtime::spawn(async move {
             tokio::time::sleep(double_click_threshold).await;
-            
+
             // 检查是否仍然是待处理状态
             let state = init_click_state();
             let mut state_guard = state.lock().unwrap();

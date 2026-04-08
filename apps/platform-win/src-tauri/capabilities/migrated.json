@@ -3,7 +3,8 @@
   "description": "permissions that were migrated from v1",
   "local": true,
   "windows": [
-    "search-view","config-view"
+    "search-view",
+    "config-view"
   ],
   "permissions": [
     "core:default",
@@ -37,7 +38,20 @@
     "shell:default",
     {
       "identifier": "http:default",
-      "allow": [{ "url": "http://**" },{"url":"https://**"}]
-    }
+      "allow": [
+        {
+          "url": "http://**"
+        },
+        {
+          "url": "https://**"
+        }
+      ]
+    },
+    "store:default",
+    "store:allow-get",
+    "store:allow-set",
+    "store:allow-save",
+    "store:allow-keys",
+    "store:allow-load"
   ]
 }

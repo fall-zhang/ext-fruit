@@ -1,7 +1,7 @@
-mod tray;
 mod cmd;
-use tray::create_tray_menu;
+mod tray;
 use cmd::*;
+use tray::create_tray_menu;
 
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 // #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
@@ -25,15 +25,13 @@ async fn file_operate(state: tauri::State<'_, MyState>) -> Result<(), String> {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_store::Builder::new().build())
         .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_positioner::init())
-        .invoke_handler(tauri::generate_handler![
-            file_operate,
-            suggest_req
-        ])
+        .invoke_handler(tauri::generate_handler![file_operate, suggest_req])
         .setup(|app| {
             // 创建托盘图标
             if let Err(e) = create_tray_menu(&app.handle()) {
