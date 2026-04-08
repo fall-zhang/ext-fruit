@@ -33,7 +33,7 @@ export const Popup: FC = () => {
   )
 
   /** Instant Capture Mode */
-  const [insCapMode, setInsCapMode] = useState<'mode' | 'pinMode'>('mode')
+  const [insCapMode, setInsCapMode] = useState<'mode'>('mode')
 
   const [isTempOff, setTempOff] = useState(false)
 
@@ -76,8 +76,7 @@ export const Popup: FC = () => {
         </div>
         <div className="active-switch">
           <span className="switch-title">
-            {t('instant_capture_title') +
-              (insCapMode === 'pinMode' ? t('instant_capture_pinned') : '')}
+            {t('instant_capture_title')}
           </span>
           <input
             type="checkbox"

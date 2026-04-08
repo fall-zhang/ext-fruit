@@ -41,26 +41,6 @@ export function getDefaultConfig (): SaladConfigType {
         delay: 600,
       },
     },
-    pinMode: {
-      /** direct: on mouseup */
-      direct: true,
-      /** double: double click */
-      double: false,
-      /** holding a key */
-      holding: {
-        alt: false,
-        shift: false,
-        ctrl: false,
-        meta: false,
-      },
-      /** cursor instant capture */
-      instant: {
-        enable: false,
-        key: 'alt',
-        delay: 600,
-      },
-    },
-
     /** when and how to search text inside dict panel */
     panelMode: {
       /** direct: on mouseup */
@@ -82,41 +62,12 @@ export function getDefaultConfig (): SaladConfigType {
       },
     },
 
-    /** when this is a quick search standalone panel running */
-    qsPanelMode: {
-      /** direct: on mouseup */
-      direct: true,
-      /** double: double click */
-      double: false,
-      /** holding a key */
-      holding: {
-        alt: false,
-        shift: false,
-        ctrl: true,
-        meta: false,
-      },
-      /** cursor instant capture */
-      instant: {
-        enable: false,
-        key: 'alt',
-        delay: 600,
-      },
-    },
-
-    /** hover instead of click */
-    bowlHover: true,
-
     /** double click delay, in ms */
     doubleClickDelay: 450,
 
     /** show quick search panel when triple press ctrl */
     tripleCtrl: true,
 
-    /** preload content on quick search panel */
-    qsPreload: 'selection',
-
-    /** auto search when quick search panel opens */
-    qsAuto: false,
 
     /** where should the dict appears */
     qsLocation: 'CENTER',
@@ -131,8 +82,6 @@ export function getDefaultConfig (): SaladConfigType {
 
     /** auto search when browser action panel shows */
     baAuto: false,
-
-    baOpen: 'popup_panel',
 
     /** context tranlate engines */
     ctxTrans: {
@@ -186,17 +135,5 @@ export function getDefaultConfig (): SaladConfigType {
         src: 'trans',
       },
     },
-
-    /** URLs, [regexp.source, match_pattern] */
-    whitelist: [],
-    /** URLs, [regexp.source, match_pattern] */
-    blacklist: [],
-
-    contextMenus: {
-      selected: ['google_translate', 'saladict'],
-      // : ['view_as_pdf', 'caiyuntrs', 'google_translate', 'saladict'],
-      all: getAllContextMenus(),
-    },
-
   }
 }

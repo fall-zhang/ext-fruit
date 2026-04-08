@@ -10,7 +10,7 @@ import {
 import { Input } from '@P/ui/components/input'
 import { useId, type FC } from 'react'
 import type { FBaseForm } from './type'
-export const FInput:FBaseForm = ({
+export const FInput: FBaseForm = ({
   name,
   control,
   label,

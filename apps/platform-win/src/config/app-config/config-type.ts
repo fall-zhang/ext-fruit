@@ -14,7 +14,6 @@ export type TCDirection = |
   'TOP_RIGHT' |
   'BOTTOM_LEFT' |
   'BOTTOM_RIGHT'
-type PreloadSource = '' | 'clipboard' | 'selection'
 
 export type ModeConfType = {
   /** direct: on mouseup */
@@ -99,29 +98,14 @@ export type SaladConfigType = {
    */
   mode: ModeConfType
 
-  /** when and how to search text if the panel is pinned */
-  pinMode: ModeConfType
-
   /** when and how to search text inside dict panel */
   panelMode: ModeConfType
-
-  /** when this is a quick search standalone panel running */
-  qsPanelMode: ModeConfType
-
-  /** hover instead of click */
-  bowlHover: boolean,
 
   /** double click delay, in ms */
   doubleClickDelay: 450,
 
   /** show quick search panel when triple press ctrl */
   tripleCtrl: boolean,
-
-  /** preload content on quick search panel */
-  qsPreload: PreloadSource,
-
-  /** auto search when quick search panel opens */
-  qsAuto: boolean,
 
   /** where should the dict appears */
   qsLocation: TCDirection,
@@ -135,16 +119,6 @@ export type SaladConfigType = {
   baHeight: 550,
 
   baAuto: boolean,
-
-  /**
-   * browser action behavior
-   * 'popup_panel' - show dict panel
-   * 'popup_fav' - add selection to notebook
-   * 'popup_options' - opten options
-   * 'popup_standalone' - open standalone panel
-   * others are same as context menus
-   */
-  baOpen: 'popup_panel' | 'popup_fav' | 'popup_options'
 
   /** context tranlate engines */
   ctxTrans: {
@@ -177,18 +151,6 @@ export type SaladConfigType = {
       src: 'trans' | 'searchText',
     },
   },
-
-  /** URLs, [regexp.source, match_pattern] */
-  whitelist: Array<[string, string]>,
-  /** URLs, [regexp.source, match_pattern] */
-  // tslint:disable-next-line: no-unnecessary-type-assertion
-  blacklist: Array<[string, string]>
-
-  contextMenus: {
-    selected: string[]
-    all: Record<string, any>,
-  }
-
 
   /** enable Google analytics */
   analytics: boolean,

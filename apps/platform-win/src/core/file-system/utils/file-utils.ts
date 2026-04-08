@@ -1,5 +1,4 @@
 import type { FileItem } from '../types/file-type'
-import {} from '@tauri-apps/api'
 import { create, readDir, readFile, exists, rename, BaseDirectory, remove } from '@tauri-apps/plugin-fs'
 import type { OperateResult, PromiseOptResult } from '../types'
 import type { FileJSON } from '../types/file-content-type'
@@ -7,7 +6,9 @@ import { join, sep } from '@tauri-apps/api/path'
 
 export async function touchDir (filePath: string): PromiseOptResult {
   const convertPath = await join(filePath)
-  if (await exists(convertPath)) {
+  if (await exists(convertPath, {
+    baseDir: BaseDirectory.AppData,
+  })) {
     return {
       state: 'success',
       msg: '文件可正常访问',
@@ -31,7 +32,10 @@ export async function addTextFile (fileInfo: FileItem, fileContent: string): Pro
   }
 }
 export async function addJSONFile (fileInfo: FileItem, fileContent: FileJSON): Promise<OperateResult> {
-  const file = await create(fileInfo.path)
+  console.log('⚡️ line:35 ~ file: ')
+  const file = await create(fileInfo.path, {
+    baseDir: BaseDirectory.AppData,
+  })
   const textContent = JSON.stringify(fileContent)
   await file.write(new TextEncoder().encode(textContent))
   await file.close()

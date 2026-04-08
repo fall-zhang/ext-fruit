@@ -1,15 +1,20 @@
 import type { Language } from '@P/open-trans/languages'
 
 /**
- * 当前 API 的信息
+ * 每个 API 翻译时需要的通用信息
  */
 export type ApiInfo = {
+  enName: string,
+  zhName: string,
+
   from: Array<Language>
   to: Array<Language>
   /**
-   * 字翻译类型，比如中译中，英译英
+   * 'self-trans' 自翻译类型，比如中译中，英译英
+   * 'word-trans' 单词翻译
+   * 'paragraph-trans' 段落翻译
    */
   type: 'self-trans' | 'word-trans' | 'paragraph-trans'
   maxWord: number
-  minWOrd: number
+  minWord: number
 }
