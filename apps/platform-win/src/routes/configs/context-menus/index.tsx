@@ -22,16 +22,9 @@ function RouteComponent () {
   const [showAddModal, setShowAddModal] = useState(false)
   const [editingMenu, setEditingMenu] = useState<string | null>(null)
   const listLayout = useListLayout()
-  // const contextMenus = useDictStore(state => state.config.contextMenus)
-  const contextMenus = useConfContext().config.contextMenus
 
   // make a local copy to avoid flickering on drag end
-  const [selectedMenus, setSelectedMenus] = useState<ReadonlyArray<string>>(
-    contextMenus.selected
-  )
-  useLayoutEffect(() => {
-    setSelectedMenus(contextMenus.selected)
-  }, [contextMenus.selected])
+  const [selectedMenus, setSelectedMenus] = useState<ReadonlyArray<string>>([])
 
   return (
     <Row>
@@ -40,13 +33,12 @@ function RouteComponent () {
           title={t('nav.ContextMenus')}
           description={<p>{t('config.opt.contextMenus_description')}</p>}
           list={selectedMenus.map(id => {
-            const item = contextMenus.all[id]
             return {
               value: id,
-              title: typeof item === 'string' ? t(`menus:${id}`) : item.name,
+              title: t(`menus:${id}`),
             }
           })}
-          disableEdit={(index, item) => contextMenus.all[item.value] === 'x'}
+          disableEdit={(index, item) => { return false }}
           onAdd={() => setShowAddModal(true)}
           onEdit={index => {
             setEditingMenu(selectedMenus[index])
@@ -54,16 +46,10 @@ function RouteComponent () {
           onDelete={index => {
             const newList = selectedMenus.slice()
             newList.splice(index, 1)
-            upload({
-              [getConfigPath('contextMenus', 'selected')]: newList,
-            })
             setSelectedMenus(newList)
           }}
           onOrderChanged={(oldIndex, newIndex) => {
             const newList = reorder(selectedMenus, oldIndex, newIndex)
-            upload({
-              [getConfigPath('contextMenus', 'selected')]: newList,
-            })
             setSelectedMenus(newList)
           }}
         />

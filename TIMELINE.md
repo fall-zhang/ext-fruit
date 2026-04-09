@@ -18,9 +18,9 @@
 - [x] 移除 process.env
 - [x] 走通一个翻译，以及对应的视图
 - [x] 自动 dark mode
-- [ ] 需要移除的 package
+- [x] 需要移除的 package
   - [x] 用 zustand 的 useDictStore 替换 useDispatch
-  - [ ] 使用 es-toolkit 替换 lodash
+  - [x] 使用 es-toolkit 替换 lodash
   - [x] react-redux 原因，使用 zustand 代替，更少的模板代码
   - [X] observable-hooks 原因，作者自己写的库，不具有普遍性，和 rxjs 深度绑定，额外增加软件复杂度
   - [x] react-transition-group 原因，之后会使用新的动画，motion 代替

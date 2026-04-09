@@ -80,7 +80,7 @@ export function SortableList (props: SortableListProps) {
                   title={t('sort')}
                   style={{ cursor: 'move' }}
                 />
-                <Button
+                {/* <Button
                   className="sortable-list-item-btn"
                   title={t('edit')}
                   shape="circle"
@@ -93,7 +93,7 @@ export function SortableList (props: SortableListProps) {
                   onClick={() =>
                     props.onEdit && props.onEdit(index, item)
                   }
-                />
+                /> */}
                 <Button
                   title={t('delete')}
                   className="sortable-list-item-btn"

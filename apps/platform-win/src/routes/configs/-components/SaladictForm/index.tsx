@@ -11,6 +11,7 @@ import './_style.scss'
 import { useDictStore } from '@/store'
 import { setFormDirty } from '../../-utils/use-form-dirty'
 import { useUpdateSetting } from '../../-utils/upload'
+import { useConfirmContext } from '@/context/confirm-context'
 
 interface FieldValues {
   [name: string]: any
@@ -42,7 +43,7 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
   const { t, i18n, ready } = useTranslation(['options', 'common'])
   const store = useDictStore()
   const upload = useUpdateSetting()
-
+  const dialogContext = useConfirmContext()
   const { initialValues } = useMemo(() => {
     function extractInitial (
       items: SaladictFormItem[],
@@ -135,11 +136,9 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
             type="primary"
             danger
             onClick={() => {
-              Modal.confirm({
+              dialogContext.confirm({
                 title: t('config.opt.reset_confirm'),
-                icon: <ExclamationCircleOutlined />,
-                okType: 'danger',
-                onOk: async () => {
+                onConfirm: async () => {
                   // await resetConfig()
                   // await resetAllProfiles()
                   setFormDirty(false)
