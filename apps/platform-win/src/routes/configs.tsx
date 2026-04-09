@@ -124,7 +124,7 @@ function RouteComponent () {
   const currentPath = location.pathname
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-50 dark:bg-neutral-900 dark:text-neutral-100">
       {/* 左侧菜单栏 */}
       <div className="w-52 bg-white border-r border-gray-200 shadow-sm flex flex-col">
         {/* 标题区域 */}
