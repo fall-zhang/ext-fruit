@@ -1,56 +1,11 @@
-import type { DictItemBase, DictItemOption } from '../../types/dict-base'
-import type { ExtendSupportLang } from '@P/open-trans/languages/src/languages'
-export type GoogleLanguage = ExtendSupportLang<
-  'zh-CN' | 'zh-TW' | 'en' | 'ja' | 'ko' | 'fr' | 'de' | 'es' | 'ru' | 'nl'
->
+import type { ApiInfo } from '../../types/api-info'
 
-export type GoogleConfig = DictItemBase & DictItemOption<GoogleLanguage> & {
-  options: {
-    concurrent: boolean
-  }
-}
-
-export default (): GoogleConfig => {
-  return {
-    lang: '11111111',
-    selectionLang: {
-      english: true,
-      chinese: true,
-      japanese: true,
-      korean: true,
-      french: true,
-      spanish: true,
-      deutsch: true,
-      others: true,
-      matchAll: false,
-    },
-    defaultUnfold: {
-      english: true,
-      chinese: true,
-      japanese: true,
-      korean: true,
-      french: true,
-      spanish: true,
-      deutsch: true,
-      others: true,
-      matchAll: false,
-    },
-    selectionWC: {
-      min: 1,
-      max: 9999999,
-    },
-    options: {
-      keepLF: 'all',
-      slInitial: 'collapse',
-      tl: 'default',
-      tl2: 'default',
-      concurrent: false,
-    },
-    optionalVal: {
-      keepLF: ['none', 'all'],
-      slInitial: ['collapse', 'hide', 'full'],
-      tl: ['default', 'zh-CN', 'zh-TW', 'en', 'ja', 'ko', 'fr', 'de', 'es', 'ru', 'nl'],
-      tl2: ['default', 'zh-CN', 'zh-TW', 'en', 'ja', 'ko', 'fr', 'de', 'es', 'ru', 'nl'],
-    },
-  }
-}
+export default (): ApiInfo => ({
+  from: ['en', 'zh-CN', 'zh-TW', 'ja', 'fr', 'de', 'es'],
+  to: ['en', 'zh-CN', 'zh-TW', 'ja', 'fr', 'de', 'es'],
+  enName: 'American Heritage Dict',
+  zhName: '美国传统词典',
+  type: 'self-trans',
+  maxWord: 9999999,
+  minWord: 1,
+})

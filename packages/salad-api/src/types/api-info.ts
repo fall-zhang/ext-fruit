@@ -18,3 +18,8 @@ export type ApiInfo = {
   maxWord: number
   minWord: number
 }
+
+export type AuthApiInfo<T = undefined> = ApiInfo & {
+  auth: T
+}
+
