@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { Form, Button, Modal, Tooltip } from 'antd'
 import type { FormItemProps, Rule, FormProps, FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined, BlockOutlined } from '@ant-design/icons'
-import get from 'lodash/get'
+import { get } from '@/utils/lodash-polyfill'
 import { useTranslation } from 'react-i18next'
 import { SaveBtn } from './SaveBtn'
 

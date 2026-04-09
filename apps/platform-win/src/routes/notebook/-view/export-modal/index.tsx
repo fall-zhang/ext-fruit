@@ -2,7 +2,6 @@ import type { FC } from 'react'
 import type React from 'react'
 import { useState, useEffect, useContext } from 'react'
 import { Modal, Layout, Switch } from 'antd'
-import escapeHTML from 'lodash/escape'
 import { PlaceholderTableMemo } from './PlaceholderTable'
 import { I18nContext, useTranslation } from 'react-i18next'
 import type { Word } from '@/types/word'
@@ -40,9 +39,6 @@ export const ExportModal: FC<ExportModalProps> = props => {
           case 'contextCloze': {
             const key: 'trans' | 'note' | 'context' = k === 'contextCloze' ? 'context' : k
             let text = word[key] || ''
-            if (escape) {
-              text = escapeHTML(text)
-            }
             switch (lineBreak) {
               case 'n':
                 text = text.replace(/\n|\r\n/g, '\\n')

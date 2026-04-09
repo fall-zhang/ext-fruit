@@ -1,7 +1,7 @@
 import type { KeyboardEvent } from 'react'
 import { useRef, useLayoutEffect, useState, useEffect, useCallback } from 'react'
 import { SuggestPanel } from './search-suggest'
-import { debounce } from 'lodash'
+import { debounce } from 'es-toolkit'
 
 interface ChatInputProps {
   enableSuggest: boolean

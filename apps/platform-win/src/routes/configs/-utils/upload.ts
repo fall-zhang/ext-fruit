@@ -1,5 +1,5 @@
 import { message as antMsg } from 'antd'
-import set from 'lodash/set'
+import { set } from '@/utils/lodash-polyfill'
 import { useTranslation } from 'react-i18next'
 import { setFormDirty } from './use-form-dirty'
 import type { AppConfig } from '@/config/app-config'
