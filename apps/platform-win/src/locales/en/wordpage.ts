@@ -1,9 +1,9 @@
-import { wordPage as _locale } from '../zh-CN/word-page'
+import type { wordPage as _locale } from '../zh-CN/word-page'
 
 export const locale: typeof _locale = {
   title: {
     history: 'Saladict Search History',
-    notebook: 'Saladict Notebook'
+    notebook: 'Saladict Notebook',
   },
 
   localOnly: 'local only',
@@ -15,7 +15,7 @@ export const locale: typeof _locale = {
     note: 'Note',
     source: 'Source',
     trans: 'Translation',
-    word: 'Word'
+    word: 'Word',
   },
 
   delete: {
@@ -23,7 +23,7 @@ export const locale: typeof _locale = {
     all: 'Delete all',
     confirm: '. Confirm?',
     page: 'Delete page',
-    selected: 'Delete selected'
+    selected: 'Delete selected',
   },
 
   export: {
@@ -37,28 +37,28 @@ export const locale: typeof _locale = {
       n: 'replace linebreaks with \\n',
       br: 'replace linebreaks with <br>',
       p: 'replace linebreaks with <p>',
-      space: 'replace linebreaks with space'
+      space: 'replace linebreaks with space',
     },
     page: 'Export page',
     placeholder: 'Placeholder',
     htmlescape: {
       title: 'Escape HTML characters in notes',
-      text: 'Escape HTML'
+      text: 'Escape HTML',
     },
-    selected: 'Export selected'
+    selected: 'Export selected',
   },
 
   filterWord: {
     chs: 'Chinese',
     eng: 'English',
     word: 'Word',
-    phrase: 'Phrase'
+    phrase: 'Phrase',
   },
 
   wordCount: {
     selected: '{{count}} item selected',
     selected_plural: '{{count}} item selected',
     total: '{{count}} item total',
-    total_plural: '{{count}} item total'
-  }
+    total_plural: '{{count}} item total',
+  },
 }

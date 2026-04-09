@@ -1,9 +1,9 @@
-import { wordPage as _locale } from '../zh-CN/word-page'
+import type { wordPage as _locale } from '../zh-CN/word-page'
 
 export const locale: typeof _locale = {
   title: {
     history: 'Historial de búsqueda de Saladict',
-    notebook: 'Bloc de notas Saladict'
+    notebook: 'Bloc de notas Saladict',
   },
 
   localOnly: 'Solo local',
@@ -15,7 +15,7 @@ export const locale: typeof _locale = {
     note: 'Nota',
     source: 'Fuente',
     trans: 'Traducción',
-    word: 'Palabra'
+    word: 'Palabra',
   },
 
   delete: {
@@ -23,7 +23,7 @@ export const locale: typeof _locale = {
     all: 'Eliminar todo',
     confirm: '. ¿Desea eliminarlo?',
     page: 'Eliminar página',
-    selected: 'Eliminar seleccionado'
+    selected: 'Eliminar seleccionado',
   },
 
   export: {
@@ -37,28 +37,28 @@ export const locale: typeof _locale = {
       n: 'sustituir los saltos de línea por \\n',
       br: 'sustituir los saltos de línea por <br>',
       p: 'sustituir los saltos de línea por <p>',
-      space: 'sustituir los saltos de línea por espacios'
+      space: 'sustituir los saltos de línea por espacios',
     },
     page: 'Exportar página',
     placeholder: 'Marcador',
     htmlescape: {
       title: 'Caracteres HTML de escape en las notas',
-      text: 'Escape HTML'
+      text: 'Escape HTML',
     },
-    selected: 'Exportar seleccionado'
+    selected: 'Exportar seleccionado',
   },
 
   filterWord: {
     chs: 'Chino',
     eng: 'Inglés',
     word: 'Palabra',
-    phrase: 'Frase'
+    phrase: 'Frase',
   },
 
   wordCount: {
     selected: '{{count}} elemento seleccionado',
     selected_plural: '{{count}} elemento seleccionado',
     total: '{{count}} elemento total',
-    total_plural: '{{count}} elemento total'
-  }
+    total_plural: '{{count}} elemento total',
+  },
 }

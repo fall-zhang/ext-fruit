@@ -1,9 +1,8 @@
 import type { FC } from 'react'
 import { useState, useEffect } from 'react'
-// import { DBArea, getWords, Word, deleteWords } from '@/dict-utils/new-word'
 import { Header } from './Header'
-import type { WordTableProps } from './WordTable'
-import { colSelectionWidth, WordTable } from './WordTable'
+import type { WordCardProps } from './WordCard'
+import { WordCard } from './WordCard'
 import type { ExportModalTitle } from './export-modal'
 import { ExportModal } from './export-modal'
 
@@ -15,8 +14,8 @@ import type { DBArea } from '@/core/index-db/types'
 
 const ITEMS_PER_PAGE = 200
 
-type TableInfo = Pick<
-  WordTableProps,
+type CardInfo = Pick<
+  WordCardProps,
   'dataSource' | 'pagination' | 'rowSelection' | 'loading'
 >
 
@@ -44,7 +43,7 @@ export const WordPage: FC<WordPageProps> = props => {
   const { t } = useTranslation('wordPage')
   const [searchText, setSearchText] = useState('')
   const [selectedRows, setSelectedRows] = useState<Word[]>([])
-  const [tableInfo, setTableInfo] = useState<TableInfo>(() => ({
+  const [cardInfo, setCardInfo] = useState<CardInfo>(() => ({
     dataSource: [],
     pagination: {
       showSizeChanger: true,
@@ -57,14 +56,13 @@ export const WordPage: FC<WordPageProps> = props => {
     },
     rowSelection: {
       selectedRowKeys: [],
-      columnWidth: colSelectionWidth,
-      onChange: (selectedRowKeys, selectedRows) => {
-        setTableInfo(lastInfo => ({
+      onChange: (selectedRowKeys: React.Key[], selectedRows: Word[]) => {
+        setCardInfo(lastInfo => ({
           ...lastInfo,
           rowSelection: {
             ...lastInfo.rowSelection,
             selectedRowKeys,
-          },
+          } as NonNullable<typeof lastInfo.rowSelection>,
         }))
         setSelectedRows(selectedRows)
       },
@@ -102,7 +100,7 @@ export const WordPage: FC<WordPageProps> = props => {
       <Header
         area={props.area}
         searchText={searchText}
-        totalCount={(tableInfo.pagination && tableInfo.pagination.total) || 0}
+        totalCount={(cardInfo.pagination && cardInfo.pagination.total) || 0}
         selectedCount={selectedRows.length}
         onSearchTextChanged={text => {
           setSearchText(text)
@@ -126,61 +124,56 @@ export const WordPage: FC<WordPageProps> = props => {
             setExportModalWords(selectedRows)
           } else if (key === 'page') {
             setExportModalTitle(key)
-            const dataSource = tableInfo.dataSource || []
-            const copyData = dataSource.map(item => ({ ...item }))
+            const dataSource = cardInfo.dataSource || []
+            const copyData = dataSource.map((item: Word) => ({ ...item }))
             setExportModalWords(copyData)
           } else {
             setExportModalTitle('')
           }
         }}
-        onDelete={key => {
-          let keys: number[] | undefined = []
-          if (key === 'selected') {
-            keys = tableInfo.rowSelection?.selectedRowKeys?.map(date =>
-              Number(date)
-            )
-          } else if (key === 'page') {
-            keys = tableInfo.dataSource?.map(({ date }) => date)
-          } else {
-            keys = undefined
-          }
+        // onDelete={key => {
+        //   let keys: number[] | undefined = []
+        //   if (key === 'selected') {
+        //     keys = cardInfo.rowSelection?.selectedRowKeys?.map(date =>
+        //       Number(date)
+        //     )
+        //   } else if (key === 'page') {
+        //     keys = cardInfo.dataSource?.map(({ date }) => date)
+        //   } else {
+        //     keys = undefined
+        //   }
 
-          deleteWords({
-            area: props.area,
-            keyList: keys,
-          }).then(() => fetchWords({})).catch(err => {
-            console.warn(err)
+        //   deleteWords({
+        //     area: props.area,
+        //     keyList: keys,
+        //   }).then(() => fetchWords({})).catch(err => {
+        //     console.warn(err)
+        //   })
+        // }}
+      />
+      <WordCard
+        area={props.area}
+        {...cardInfo}
+        onChange={(pagination, filters, sorter) => {
+          window.scrollTo(0, 0)
+
+          setCardInfo(lastInfo => ({
+            ...lastInfo,
+            pagination: {
+              ...lastInfo.pagination,
+              current: pagination.current || 1,
+            },
+          }))
+
+          // const realSorter = Array.isArray(sorter) ? sorter[0] : sorter
+
+          fetchWords({
+            itemsPerPage: pagination?.pageSize || ITEMS_PER_PAGE,
+            pageNum: pagination?.current || 1,
+            searchText,
           })
         }}
       />
-      <div>
-        <WordTable
-          area={props.area}
-          {...tableInfo}
-          onChange={(pagination, filters, sorter) => {
-            window.scrollTo(0, 0)
-
-            setTableInfo(lastInfo => ({
-              ...lastInfo,
-              pagination: {
-                ...lastInfo.pagination,
-                current: pagination.current || 1,
-              },
-            }))
-
-            const realSorter = Array.isArray(sorter) ? sorter[0] : sorter
-
-            fetchWords({
-              itemsPerPage: pagination?.pageSize || ITEMS_PER_PAGE,
-              pageNum: pagination?.current || 1,
-              // filters,
-              // sortField: realSorter?.field,
-              // sortOrder: realSorter?.order,
-              searchText,
-            })
-          }}
-        />
-      </div>
       <ExportModal
         title={exportModalTitle}
         rawWords={exportModalWords}
