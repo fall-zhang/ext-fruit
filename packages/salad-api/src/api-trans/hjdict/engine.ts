@@ -7,8 +7,8 @@ import { getStaticSpeaker } from '@/components/Speaker'
 import type { HjdictPayload, HjdictResult, HjdictResultRelated } from './type'
 import { isContainFrench, isContainDeutsch, isContainSpanish, isContainEnglish, isContainJapanese, isContainKorean, isContainChinese } from '@/core/api-server/utils/lang-check'
 import type { HjdictConfig } from './config'
-import type { AllDictsConf } from '../../config'
 import { v4 as getUUID } from 'uuid'
+import type { AllDictsConf } from '@/core/api-server/config'
 
 const HOST = 'https://www.hjdict.com'
 
