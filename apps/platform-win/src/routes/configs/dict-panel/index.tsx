@@ -3,8 +3,8 @@ import { useRef, type FC } from 'react'
 import { Input, Select, Switch, Slider } from 'antd'
 
 
-import { Trans, useTranslation } from 'react-i18next'
-import { SaladictForm, type SaladictFormItem } from '../-components/SaladictForm'
+import { useTranslation } from 'react-i18next'
+import { SaladictForm } from '../-components/SaladictForm'
 import { getConfigPath, getProfilePath } from '../-utils/path-joiner'
 
 
@@ -17,61 +17,30 @@ export const RouteComponent: FC = () => {
       ref={ref}
       items={[
         {
-          name: getProfilePath('mtaAutoUnfold'),
-          children: (
-            <Select>
-              <Select.Option value="">
-                {t('profile.opt.mtaAutoUnfold.never')}
-              </Select.Option>
-              <Select.Option value="once">
-                {t('profile.opt.mtaAutoUnfold.once')}
-              </Select.Option>
-              <Select.Option value="always">
-                {t('profile.opt.mtaAutoUnfold.always')}
-              </Select.Option>
-              <Select.Option value="popup">
-                {t('profile.opt.mtaAutoUnfold.popup')}
-              </Select.Option>
-              <Select.Option value="hide">
-                {t('profile.opt.mtaAutoUnfold.hide')}
-              </Select.Option>
-            </Select>
-          ),
-        },
-        {
-          name: getProfilePath('waveform'),
-          valuePropName: 'checked',
+          name: getConfigPath('waveform'),
           children: <Switch />,
         },
         {
           name: getConfigPath('searchSuggests'),
-          valuePropName: 'checked',
           children: <Switch />,
         },
         {
-          name: getConfigPath('defaultPinned'),
-          valuePropName: 'checked',
+          name: getConfigPath('windowPinned'),
           children: <Switch />,
         },
         {
           name: getConfigPath('animation'),
-          valuePropName: 'checked',
           children: <Switch />,
         },
-        {
-          name: getConfigPath('darkMode'),
-          valuePropName: 'checked',
-          children: <Switch />,
-        },
-        {
-          name: getConfigPath('panelMaxHeightRatio'),
-          children: (
-            <Slider
-              min={0}
-              max={100}
-              marks={{ 0: '0%', 80: '80%', 100: '100%' }} />
-          ),
-        },
+        // {
+        //   name: getConfigPath('panelMaxHeightRatio'),
+        //   children: (
+        //     <Slider
+        //       min={0}
+        //       max={100}
+        //       marks={{ 0: '0%', 80: '80%', 100: '100%' }} />
+        //   ),
+        // },
         {
           name: getConfigPath('panelWidth'),
           children: (

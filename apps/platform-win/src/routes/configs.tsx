@@ -13,6 +13,7 @@ import {
   CloudServerOutlined
 } from '@ant-design/icons'
 import { cn } from '@P/ui/lib/utils'
+import i18n from '@/locales/i18n'
 
 export const Route = createFileRoute('/configs')({
   component: RouteComponent,
@@ -33,90 +34,72 @@ export const Route = createFileRoute('/configs')({
 
 // 菜单项配置
 const menuItems = [
-  // {
-  //   id: 'black-white-list',
-  //   path: '/configs/black-white-list',
-  //   label: '黑名单/白名单',
-  //   icon: <ExceptionOutlined className="w-4 h-4" />,
-  // },
   {
     id: 'general',
     path: '/configs/general',
-    label: '通用设置',
+    label: i18n.t('options:nav.General'),
     icon: <SettingOutlined className="w-4 h-4" />,
   },
   {
     id: 'dict-auth',
     path: '/configs/dict-auth',
-    label: '词典认证',
+    label: i18n.t('options:nav.DictAuths'),
     icon: <KeyOutlined className="w-4 h-4" />,
   },
-  // {
-  //   id: 'context-menus',
-  //   path: '/configs/context-menus',
-  //   label: '右键菜单',
-  //   icon: <DatabaseOutlined className="w-4 h-4" />,
-  // },
-  // {
-  //   id: 'dictionaries',
-  //   path: '/configs/dictionaries',
-  //   label: '词典管理',
-  //   icon: <BookOutlined className="w-4 h-4" />,
-  // },
   {
     id: 'dict-panel',
     path: '/configs/dict-panel',
-    label: '词典面板',
+    label: i18n.t('options:nav.DictPanel'),
     icon: <ProfileOutlined className="w-4 h-4" />,
-  },
-  {
-    id: 'quick-search',
-    path: '/configs/quick-search',
-    label: '快速搜索',
-    icon: <FlagOutlined className="w-4 h-4" />,
   },
   {
     id: 'pronunciation',
     path: '/configs/pronunciation',
-    label: '发音设置',
+    label: i18n.t('options:nav.Pronunciation'),
     icon: <SoundOutlined className="w-4 h-4" />,
   },
+  {
+    id: 'import-export',
+    path: '/configs/import-export',
+    label: i18n.t('options:nav.ImportExport'),
+    icon: <SwapOutlined className="w-4 h-4" />,
+  },
+  // {
+  //   id: 'quick-search',
+  //   path: '/configs/quick-search',
+  //   label: '快速搜索',
+  //   icon: <FlagOutlined className="w-4 h-4" />,
+  // },
   // {
   //   id: 'pdf',
   //   path: '/configs/pdf',
   //   label: 'PDF设置',
   //   icon: <FilePdfOutlined className="w-4 h-4" />,
   // },
-  {
-    id: 'popup',
-    path: '/configs/popup',
-    label: '弹出窗口',
-    icon: <LayoutOutlined className="w-4 h-4" />,
-  },
-  {
-    id: 'import-export',
-    path: '/configs/import-export',
-    label: '导入/导出',
-    icon: <SwapOutlined className="w-4 h-4" />,
-  },
-  {
-    id: 'privacy',
-    path: '/configs/privacy',
-    label: '隐私设置',
-    icon: <SafetyCertificateOutlined className="w-4 h-4" />,
-  },
-  {
-    id: 'permissions',
-    path: '/configs/permissions',
-    label: '权限管理',
-    icon: <LockOutlined className="w-4 h-4" />,
-  },
-  {
-    id: 'window-communication',
-    path: '/configs/window-communication',
-    label: '窗口通信示例',
-    icon: <CloudServerOutlined className="w-4 h-4" />,
-  },
+  // {
+  //   id: 'popup',
+  //   path: '/configs/popup',
+  //   label: '弹出窗口',
+  //   icon: <LayoutOutlined className="w-4 h-4" />,
+  // },
+  // {
+  //   id: 'privacy',
+  //   path: '/configs/privacy',
+  //   label: '隐私设置',
+  //   icon: <SafetyCertificateOutlined className="w-4 h-4" />,
+  // },
+  // {
+  //   id: 'permissions',
+  //   path: '/configs/permissions',
+  //   label: '权限管理',
+  //   icon: <LockOutlined className="w-4 h-4" />,
+  // },
+  // {
+  //   id: 'window-communication',
+  //   path: '/configs/window-communication',
+  //   label: '窗口通信示例',
+  //   icon: <CloudServerOutlined className="w-4 h-4" />,
+  // },
 ]
 
 function RouteComponent () {
@@ -126,11 +109,11 @@ function RouteComponent () {
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-neutral-900 dark:text-neutral-100">
       {/* 左侧菜单栏 */}
-      <div className="w-52 bg-white border-r border-gray-200 shadow-sm flex flex-col">
+      <div className="w-52 bg-white border-r border-gray-200 shadow-sm flex flex-col dark:bg-neutral-900 dark:text-neutral-100">
         {/* 标题区域 */}
         <div className="px-6 py-4 border-b border-gray-100">
-          <h1 className="text-xl font-bold text-gray-800">配置中心</h1>
-          <p className="text-sm text-gray-500 mt-1">管理您的词典和设置</p>
+          <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">配置中心</h2>
+          {/* <p className="text-sm text-gray-500 mt-1">管理您的词典和设置</p> */}
         </div>
 
         {/* 菜单列表 */}
@@ -143,10 +126,10 @@ function RouteComponent () {
                 to={item.path}
                 className={cn(
                   'flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200',
-                  'hover:bg-blue-50 hover:text-blue-600',
+                  'hover:bg-blue-50 dark:hover:bg-neutral-700 dark:text-white hover:text-neutral-200',
                   isActive
-                    ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-500 font-medium'
-                    : 'text-gray-700 hover:border-l-4 hover:border-blue-200'
+                    ? 'bg-blue-50  dark:bg-neutral-700 border-l-4 border-blue-500 font-medium'
+                    : 'text-neutral-700 dark:text-neutral-400 hover:border-l-4 hover:border-blue-200 hover:dark:border-neutral-500 '
                 )}
               >
                 <div

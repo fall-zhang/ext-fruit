@@ -8,7 +8,8 @@ import {
   FieldLegend,
   FieldSet
 } from '@P/ui/components/field'
-import type { FC } from 'react'
+import { Switch } from '@P/ui/components/switch'
+import { useId, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export interface DictTitleProps {
@@ -19,14 +20,15 @@ export interface DictTitleProps {
 export const SortableListItem = (props: DictTitleProps) => {
   const { t } = useTranslation(['options', 'dicts'])
   const title = t(`dicts:${props.dictID}.name`)
+  const formId = useId()
   return <Field orientation="horizontal">
-    <Checkbox
-      id="finder-pref-9k2-external-disks-1yg-checkbox"
-      name="finder-pref-9k2-external-disks-1yg-checkbox"
+    <Switch
+      id={formId}
+      name={formId}
       defaultChecked
     />
     <FieldLabel
-      htmlFor="finder-pref-9k2-external-disks-1yg-checkbox"
+      htmlFor={formId}
       className="font-normal"
     >
       <span className="saladict-dict-title flex items-center justify-start">

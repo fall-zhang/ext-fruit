@@ -164,41 +164,31 @@ function RouteComponent () {
   }
 
   return (
-    <Row>
-      <Col {...layout}>
-        <Row gutter={10}>
-          <Col span={12}>
-            <Upload.Dragger
-              showUploadList={false}
-              beforeUpload={file => {
-                importConfig(file, t)
-                return false
-              }}
-            >
+    <>
+      <div className='grid gap-5 grid-cols-2'>
+        <div>
+          <button >
+            <p className="ant-upload-drag-icon">
+              <DownloadOutlined />
+            </p>
+            <p className="ant-upload-text">{t('import.title')}</p>
+          </button>
+        </div>
+        <div>
+          <button
+            className="ant-upload ant-upload-drag"
+            onClick={() => exportConfig(t)}
+          >
+            <div className="ant-upload ant-upload-btn">
               <p className="ant-upload-drag-icon">
-                <DownloadOutlined />
+                <UploadOutlined />
               </p>
-              <p className="ant-upload-text">{t('import.title')}</p>
-            </Upload.Dragger>
-          </Col>
-          <Col span={12}>
-            <button
-              className="ant-upload ant-upload-drag"
-              onClick={() => exportConfig(t)}
-            >
-              <div className="ant-upload ant-upload-btn">
-                <p className="ant-upload-drag-icon">
-                  <UploadOutlined />
-                </p>
-                <p className="ant-upload-text">{t('export.title')}</p>
-              </div>
-            </button>
-          </Col>
-        </Row>
-        <Row justify="center">
-          <p style={{ margin: '1em 0' }}>{t('import_export_help')}</p>
-        </Row>
-      </Col>
-    </Row>
+              <p className="ant-upload-text">{t('export.title')}</p>
+            </div>
+          </button>
+        </div>
+      </div>
+      <p className='p-4 text-sm'>{t('import_export_help')}</p>
+    </>
   )
 }

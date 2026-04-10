@@ -2,10 +2,8 @@ import type { FC, ReactNode, Ref, RefObject } from 'react'
 import { useCallback, useMemo, useState } from 'react'
 import { Form, Button, Modal, Tooltip } from 'antd'
 import type { FormItemProps, Rule, FormProps, FormInstance } from 'antd/lib/form'
-import { ExclamationCircleOutlined, BlockOutlined } from '@ant-design/icons'
 import { get } from '@/utils/lodash-polyfill'
 import { useTranslation } from 'react-i18next'
-import { SaveBtn } from './SaveBtn'
 
 import './_style.scss'
 import { useDictStore } from '@/store'
@@ -130,17 +128,15 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
       {formItems}
       <div className='grow'></div>
       {!hideFooter && (
-        <Form.Item wrapperCol={ { offset: 6, span: 18 } } className="saladict-form-btns">
-          <SaveBtn />
+        <div className="saladict-form-btns flex gap-2 mt-4">
+          <Button>
+            {t('common:save')}
+          </Button>
           <Button
-            type="primary"
-            danger
             onClick={() => {
               dialogContext.confirm({
                 title: t('config.opt.reset_confirm'),
                 onConfirm: async () => {
-                  // await resetConfig()
-                  // await resetAllProfiles()
                   setFormDirty(false)
                 },
               })
@@ -148,7 +144,7 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
           >
             {t('config.opt.reset')}
           </Button>
-        </Form.Item>
+        </div>
       )}
     </Form>
   )

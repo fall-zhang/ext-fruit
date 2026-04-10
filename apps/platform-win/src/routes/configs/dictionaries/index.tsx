@@ -3,10 +3,8 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useState, useLayoutEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DictTitleMemo } from './-dict-title'
-import { EditModal } from './-edit-modal'
 import { useUpdateSetting } from '../-utils/upload'
 import { getProfilePath } from '../-utils/path-joiner'
-import { SaladictModalForm } from '../-components/SaladictModalForm'
 import { reorder, SortableList } from '../-components/SortableList'
 import type { DictID } from '@/core/api-server/config'
 import { useConfContext } from '@/context/conf-context'
@@ -67,21 +65,6 @@ function RouteComponent () {
           setSelectedDicts(newList)
         }}
       />
-      <SaladictModalForm
-        visible={showAddModal}
-        title={t('dict.add')}
-        onClose={() => setShowAddModal(false)}
-        wrapperCol={{ span: 24 }}
-        items={[
-          {
-            name: getProfilePath('dicts', 'selected'),
-            label: null,
-            help: null,
-            extra: null,
-            children: <AllDicts />,
-          },
-        ]} />
-      <EditModal dictID={editingDict} onClose={() => setEditingDict(null)} />
     </div>
   )
 }
