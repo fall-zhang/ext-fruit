@@ -41,11 +41,18 @@ export type SaladConfigType = {
   /** activate app */
   active: boolean,
 
+  appTheme: 'light' | 'dark' | 'system'
   /**
    * 应用后台运行
    * Run extension in background
    */
   runInBg: boolean
+
+  /** show waveform control panel */
+  waveform: boolean,
+
+  /** remember user manual dict folding on the same page */
+  stickyFold: boolean,
 
   /**
    * 随着开机进行自启动
@@ -71,13 +78,11 @@ export type SaladConfigType = {
   panelWidth: number,
 
   /** panel max height in percentage, 0 < n < 100 */
-  panelMaxHeightRatio: number,
+  // panelMaxHeightRatio: number,
 
-  bowlOffsetX: number,
+  // bowlOffsetX: number,
 
-  bowlOffsetY: number,
-
-  darkMode: boolean,
+  // bowlOffsetY: number,
 
   /** custom panel css */
   panelCSS: '',
@@ -109,9 +114,6 @@ export type SaladConfigType = {
   /** double click delay, in ms */
   doubleClickDelay: 450,
 
-  /** show quick search panel when triple press ctrl */
-  tripleCtrl: boolean,
-
   /** where should the dict appears */
   qsLocation: TCDirection,
 
@@ -119,7 +121,7 @@ export type SaladConfigType = {
   qsFocus: boolean,
 
   /** pin panel when shows up  */
-  defaultPinned: boolean,
+  windowPinned: boolean,
 
   baHeight: 550,
 
@@ -148,12 +150,6 @@ export type SaladConfigType = {
       dict: DictID | '',
       list: DictID[],
       accent: 'us' | 'uk',
-    },
-    machine: {
-      dict: DictID | '',
-      list: ['google', 'sogou', 'tencent', 'baidu', 'caiyun'],
-      // play translation or source
-      src: 'trans' | 'searchText',
     },
   },
 

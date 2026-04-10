@@ -1,5 +1,4 @@
 import type { ReadonlyDeep } from 'type-fest'
-import { getAllContextMenus } from './context-menus'
 import type { SaladConfigType } from './config-type'
 
 export type AppConfigMutable = SaladConfigType
@@ -14,12 +13,14 @@ export function getDefaultConfig (): SaladConfigType {
     analytics: true,
     updateCheck: true,
     animation: true,
+    appTheme: 'system',
+    waveform: true,
+    stickyFold: false,
     langCode: 'zh-CN',
     panelWidth: 450,
-    panelMaxHeightRatio: 80,
-    bowlOffsetX: 15,
-    bowlOffsetY: -45,
-    darkMode: false,
+    // panelMaxHeightRatio: 80,
+    // bowlOffsetX: 15,
+    // bowlOffsetY: -45,
     panelCSS: '',
     fontSize: 13,
     searchHistory: false,
@@ -65,10 +66,6 @@ export function getDefaultConfig (): SaladConfigType {
     /** double click delay, in ms */
     doubleClickDelay: 450,
 
-    /** show quick search panel when triple press ctrl */
-    tripleCtrl: true,
-
-
     /** where should the dict appears */
     qsLocation: 'CENTER',
 
@@ -76,14 +73,14 @@ export function getDefaultConfig (): SaladConfigType {
     qsFocus: true,
 
     /** pin panel when shows up  */
-    defaultPinned: false,
+    windowPinned: false,
 
     baHeight: 550,
 
     /** auto search when browser action panel shows */
     baAuto: false,
 
-    /** context tranlate engines */
+    /** context translate engines */
     ctxTrans: {
       google: true,
       youdaotrans: true,
@@ -127,12 +124,6 @@ export function getDefaultConfig (): SaladConfigType {
           'youdao',
         ],
         accent: 'uk',
-      },
-      machine: {
-        dict: '',
-        list: ['google', 'sogou', 'tencent', 'baidu', 'caiyun'],
-        // play translation or source
-        src: 'trans',
       },
     },
   }

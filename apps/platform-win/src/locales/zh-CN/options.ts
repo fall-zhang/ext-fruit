@@ -181,7 +181,6 @@ export const options = {
   },
 
   profile: {
-    mtaAutoUnfold: '自动展开多行搜索框',
     waveform: '波形控制按钮',
     waveform_help:
       '在词典面板下方显示音频控制面板展开按钮。控制面板只會在展開時才載入。',
@@ -191,13 +190,6 @@ export const options = {
 
     opt: {
       item_extra: '此选项会因「情景模式」而改变。',
-      mtaAutoUnfold: {
-        always: '保持展开',
-        never: '从不展开',
-        once: '展开一次',
-        popup: '只在右上弹框展开',
-        hide: '隐藏',
-      },
       dict_selected: '已选词典',
     },
   },

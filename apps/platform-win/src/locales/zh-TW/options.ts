@@ -184,7 +184,6 @@ export const locale: typeof _locale = {
   },
 
   profile: {
-    mtaAutoUnfold: '自動展開多行搜尋框',
     waveform: '波形控制',
     waveform_help:
       '在字典介面下方顯示音訊控制面板展開按鈕。關閉依然可以播放音訊。',
@@ -194,13 +193,6 @@ export const locale: typeof _locale = {
 
     opt: {
       item_extra: '此選項會因「情景模式」而改變。',
-      mtaAutoUnfold: {
-        always: '保持展開',
-        never: '永遠不展開',
-        once: '展開一次',
-        popup: '只在右上彈框展開',
-        hide: '隱藏',
-      },
       dict_selected: '已選字典',
     },
   },

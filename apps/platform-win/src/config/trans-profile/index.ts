@@ -6,21 +6,10 @@ import { getDefaultDictAuths, type DictAuths } from './auth'
 import type { ProfileID } from '@/core/api-local/profile'
 
 
-export type MtaAutoUnfold = '' | 'once' | 'always' | 'popup' | 'hide'
-
 export type ProfileMutable = {
   version: number
 
   id: string
-
-  /** auto unfold multiline textarea search box */
-  mtaAutoUnfold: MtaAutoUnfold,
-
-  /** show waveform control panel */
-  waveform: boolean,
-
-  /** remember user manual dict folding on the same page */
-  stickyFold: boolean,
 
   dicts: {
     /** default selected dictionaries */
@@ -66,15 +55,6 @@ export function getDefaultProfile (id?: string): Profile {
     version: 1,
 
     id: id || uuid(),
-
-    /** auto unfold multiline textarea search box */
-    mtaAutoUnfold: '' as MtaAutoUnfold,
-
-    /** show waveform control panel */
-    waveform: true,
-
-    /** remember user manual dict folding on the same page */
-    stickyFold: false,
 
     dicts: {
       /** default selected dictionaries */

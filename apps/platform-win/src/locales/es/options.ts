@@ -194,7 +194,6 @@ export const locale: typeof _locale = {
   },
 
   profile: {
-    mtaAutoUnfold: 'Despliegue automático del cuadro de búsqueda multilínea',
     waveform: 'Forma de onda',
     waveform_help:
       'Muestra un botón en la parte inferior del panel de dictado para expandir el panel de control de forma de onda que sólo se carga después de la expansión.',
@@ -204,13 +203,6 @@ export const locale: typeof _locale = {
 
     opt: {
       item_extra: 'Esta opción puede cambiar en función del "Perfil".',
-      mtaAutoUnfold: {
-        always: 'Siempre Desplegar',
-        never: 'Nunca Desplegar',
-        once: 'Desplegar una vez',
-        popup: 'Sólo en la acción del navegador',
-        hide: 'Ocultar',
-      },
       dict_selected: 'Seleccionar diccionarios',
     },
   },
