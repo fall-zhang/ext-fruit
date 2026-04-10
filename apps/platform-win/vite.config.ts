@@ -22,7 +22,7 @@ export default defineConfig({
     visualizer({
       open: true,
       filename: './build/analyze.html',
-      template: 'sunburst',
+      template: 'treemap-3d',
     }),
     // visualizer({
     //   open: true,

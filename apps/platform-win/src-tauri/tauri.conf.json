@@ -28,7 +28,15 @@
       }
     }
   },
-  "plugins": {},
+  "plugins": {
+    "updater": {
+      "active": true,
+      "endpoints": [
+        "https://github.com/fall-zhang/ext-fruit/releases/latest/download/latest.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDk4RjFEMDQ2NzlDOTdERTYKUldRcllCSXpkL0FJYjhaZ2FvN3JGUmtiSWVyZkU0U1BwcXVpQ1VrZGxhM0xXdGhZbUJ1Ykp2R0cK"
+    }
+  },
   "app": {
     "security": {
       "csp": null

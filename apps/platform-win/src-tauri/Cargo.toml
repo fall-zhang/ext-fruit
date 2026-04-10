@@ -21,6 +21,8 @@ tokio = "1.44.2"
 tauri-plugin-dialog = "2.3.2"
 tauri-plugin-http = "2"
 tauri-plugin-store = "2"
+tauri-plugin-updater = "2"
+tauri-plugin-process = "2"
 
 [dependencies.tauri-plugin-sql]
 features = ["sqlite"] # or "postgres", or "mysql"
