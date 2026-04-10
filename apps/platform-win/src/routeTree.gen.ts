@@ -19,8 +19,8 @@ import { Route as NotebookAddIndexRouteImport } from './routes/notebook-add/inde
 import { Route as ExternalUseIndexRouteImport } from './routes/external-use/index'
 import { Route as ConfigsWindowCommunicationRouteImport } from './routes/configs/window-communication'
 import { Route as ConfigsFormTestRouteImport } from './routes/configs/form-test'
+import { Route as ConfigsAppInfoRouteImport } from './routes/configs/app-info'
 import { Route as ConfigsPronunciationIndexRouteImport } from './routes/configs/pronunciation/index'
-import { Route as ConfigsPrivacyIndexRouteImport } from './routes/configs/privacy/index'
 import { Route as ConfigsNotebookIndexRouteImport } from './routes/configs/notebook/index'
 import { Route as ConfigsImportExportIndexRouteImport } from './routes/configs/import-export/index'
 import { Route as ConfigsGeneralIndexRouteImport } from './routes/configs/general/index'
@@ -28,7 +28,6 @@ import { Route as ConfigsDictionariesIndexRouteImport } from './routes/configs/d
 import { Route as ConfigsDictPanelIndexRouteImport } from './routes/configs/dict-panel/index'
 import { Route as ConfigsDictAuthIndexRouteImport } from './routes/configs/dict-auth/index'
 import { Route as ConfigsContextMenusIndexRouteImport } from './routes/configs/context-menus/index'
-import { Route as ConfigsBlackWhiteListIndexRouteImport } from './routes/configs/black-white-list/index'
 
 const ConfigsRoute = ConfigsRouteImport.update({
   id: '/configs',
@@ -81,17 +80,17 @@ const ConfigsFormTestRoute = ConfigsFormTestRouteImport.update({
   path: '/form-test',
   getParentRoute: () => ConfigsRoute,
 } as any)
+const ConfigsAppInfoRoute = ConfigsAppInfoRouteImport.update({
+  id: '/app-info',
+  path: '/app-info',
+  getParentRoute: () => ConfigsRoute,
+} as any)
 const ConfigsPronunciationIndexRoute =
   ConfigsPronunciationIndexRouteImport.update({
     id: '/pronunciation/',
     path: '/pronunciation/',
     getParentRoute: () => ConfigsRoute,
   } as any)
-const ConfigsPrivacyIndexRoute = ConfigsPrivacyIndexRouteImport.update({
-  id: '/privacy/',
-  path: '/privacy/',
-  getParentRoute: () => ConfigsRoute,
-} as any)
 const ConfigsNotebookIndexRoute = ConfigsNotebookIndexRouteImport.update({
   id: '/notebook/',
   path: '/notebook/',
@@ -130,17 +129,12 @@ const ConfigsContextMenusIndexRoute =
     path: '/context-menus/',
     getParentRoute: () => ConfigsRoute,
   } as any)
-const ConfigsBlackWhiteListIndexRoute =
-  ConfigsBlackWhiteListIndexRouteImport.update({
-    id: '/black-white-list/',
-    path: '/black-white-list/',
-    getParentRoute: () => ConfigsRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/configs': typeof ConfigsRouteWithChildren
+  '/configs/app-info': typeof ConfigsAppInfoRoute
   '/configs/form-test': typeof ConfigsFormTestRoute
   '/configs/window-communication': typeof ConfigsWindowCommunicationRoute
   '/external-use/': typeof ExternalUseIndexRoute
@@ -148,7 +142,6 @@ export interface FileRoutesByFullPath {
   '/notebook/': typeof NotebookIndexRoute
   '/search-view/': typeof SearchViewIndexRoute
   '/system-tray/': typeof SystemTrayIndexRoute
-  '/configs/black-white-list/': typeof ConfigsBlackWhiteListIndexRoute
   '/configs/context-menus/': typeof ConfigsContextMenusIndexRoute
   '/configs/dict-auth/': typeof ConfigsDictAuthIndexRoute
   '/configs/dict-panel/': typeof ConfigsDictPanelIndexRoute
@@ -156,13 +149,13 @@ export interface FileRoutesByFullPath {
   '/configs/general/': typeof ConfigsGeneralIndexRoute
   '/configs/import-export/': typeof ConfigsImportExportIndexRoute
   '/configs/notebook/': typeof ConfigsNotebookIndexRoute
-  '/configs/privacy/': typeof ConfigsPrivacyIndexRoute
   '/configs/pronunciation/': typeof ConfigsPronunciationIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/configs': typeof ConfigsRouteWithChildren
+  '/configs/app-info': typeof ConfigsAppInfoRoute
   '/configs/form-test': typeof ConfigsFormTestRoute
   '/configs/window-communication': typeof ConfigsWindowCommunicationRoute
   '/external-use': typeof ExternalUseIndexRoute
@@ -170,7 +163,6 @@ export interface FileRoutesByTo {
   '/notebook': typeof NotebookIndexRoute
   '/search-view': typeof SearchViewIndexRoute
   '/system-tray': typeof SystemTrayIndexRoute
-  '/configs/black-white-list': typeof ConfigsBlackWhiteListIndexRoute
   '/configs/context-menus': typeof ConfigsContextMenusIndexRoute
   '/configs/dict-auth': typeof ConfigsDictAuthIndexRoute
   '/configs/dict-panel': typeof ConfigsDictPanelIndexRoute
@@ -178,7 +170,6 @@ export interface FileRoutesByTo {
   '/configs/general': typeof ConfigsGeneralIndexRoute
   '/configs/import-export': typeof ConfigsImportExportIndexRoute
   '/configs/notebook': typeof ConfigsNotebookIndexRoute
-  '/configs/privacy': typeof ConfigsPrivacyIndexRoute
   '/configs/pronunciation': typeof ConfigsPronunciationIndexRoute
 }
 export interface FileRoutesById {
@@ -186,6 +177,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/configs': typeof ConfigsRouteWithChildren
+  '/configs/app-info': typeof ConfigsAppInfoRoute
   '/configs/form-test': typeof ConfigsFormTestRoute
   '/configs/window-communication': typeof ConfigsWindowCommunicationRoute
   '/external-use/': typeof ExternalUseIndexRoute
@@ -193,7 +185,6 @@ export interface FileRoutesById {
   '/notebook/': typeof NotebookIndexRoute
   '/search-view/': typeof SearchViewIndexRoute
   '/system-tray/': typeof SystemTrayIndexRoute
-  '/configs/black-white-list/': typeof ConfigsBlackWhiteListIndexRoute
   '/configs/context-menus/': typeof ConfigsContextMenusIndexRoute
   '/configs/dict-auth/': typeof ConfigsDictAuthIndexRoute
   '/configs/dict-panel/': typeof ConfigsDictPanelIndexRoute
@@ -201,7 +192,6 @@ export interface FileRoutesById {
   '/configs/general/': typeof ConfigsGeneralIndexRoute
   '/configs/import-export/': typeof ConfigsImportExportIndexRoute
   '/configs/notebook/': typeof ConfigsNotebookIndexRoute
-  '/configs/privacy/': typeof ConfigsPrivacyIndexRoute
   '/configs/pronunciation/': typeof ConfigsPronunciationIndexRoute
 }
 export interface FileRouteTypes {
@@ -210,6 +200,7 @@ export interface FileRouteTypes {
     | '/'
     | '/404'
     | '/configs'
+    | '/configs/app-info'
     | '/configs/form-test'
     | '/configs/window-communication'
     | '/external-use/'
@@ -217,7 +208,6 @@ export interface FileRouteTypes {
     | '/notebook/'
     | '/search-view/'
     | '/system-tray/'
-    | '/configs/black-white-list/'
     | '/configs/context-menus/'
     | '/configs/dict-auth/'
     | '/configs/dict-panel/'
@@ -225,13 +215,13 @@ export interface FileRouteTypes {
     | '/configs/general/'
     | '/configs/import-export/'
     | '/configs/notebook/'
-    | '/configs/privacy/'
     | '/configs/pronunciation/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/404'
     | '/configs'
+    | '/configs/app-info'
     | '/configs/form-test'
     | '/configs/window-communication'
     | '/external-use'
@@ -239,7 +229,6 @@ export interface FileRouteTypes {
     | '/notebook'
     | '/search-view'
     | '/system-tray'
-    | '/configs/black-white-list'
     | '/configs/context-menus'
     | '/configs/dict-auth'
     | '/configs/dict-panel'
@@ -247,13 +236,13 @@ export interface FileRouteTypes {
     | '/configs/general'
     | '/configs/import-export'
     | '/configs/notebook'
-    | '/configs/privacy'
     | '/configs/pronunciation'
   id:
     | '__root__'
     | '/'
     | '/404'
     | '/configs'
+    | '/configs/app-info'
     | '/configs/form-test'
     | '/configs/window-communication'
     | '/external-use/'
@@ -261,7 +250,6 @@ export interface FileRouteTypes {
     | '/notebook/'
     | '/search-view/'
     | '/system-tray/'
-    | '/configs/black-white-list/'
     | '/configs/context-menus/'
     | '/configs/dict-auth/'
     | '/configs/dict-panel/'
@@ -269,7 +257,6 @@ export interface FileRouteTypes {
     | '/configs/general/'
     | '/configs/import-export/'
     | '/configs/notebook/'
-    | '/configs/privacy/'
     | '/configs/pronunciation/'
   fileRoutesById: FileRoutesById
 }
@@ -356,18 +343,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConfigsFormTestRouteImport
       parentRoute: typeof ConfigsRoute
     }
+    '/configs/app-info': {
+      id: '/configs/app-info'
+      path: '/app-info'
+      fullPath: '/configs/app-info'
+      preLoaderRoute: typeof ConfigsAppInfoRouteImport
+      parentRoute: typeof ConfigsRoute
+    }
     '/configs/pronunciation/': {
       id: '/configs/pronunciation/'
       path: '/pronunciation'
       fullPath: '/configs/pronunciation/'
       preLoaderRoute: typeof ConfigsPronunciationIndexRouteImport
-      parentRoute: typeof ConfigsRoute
-    }
-    '/configs/privacy/': {
-      id: '/configs/privacy/'
-      path: '/privacy'
-      fullPath: '/configs/privacy/'
-      preLoaderRoute: typeof ConfigsPrivacyIndexRouteImport
       parentRoute: typeof ConfigsRoute
     }
     '/configs/notebook/': {
@@ -419,20 +406,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConfigsContextMenusIndexRouteImport
       parentRoute: typeof ConfigsRoute
     }
-    '/configs/black-white-list/': {
-      id: '/configs/black-white-list/'
-      path: '/black-white-list'
-      fullPath: '/configs/black-white-list/'
-      preLoaderRoute: typeof ConfigsBlackWhiteListIndexRouteImport
-      parentRoute: typeof ConfigsRoute
-    }
   }
 }
 
 interface ConfigsRouteChildren {
+  ConfigsAppInfoRoute: typeof ConfigsAppInfoRoute
   ConfigsFormTestRoute: typeof ConfigsFormTestRoute
   ConfigsWindowCommunicationRoute: typeof ConfigsWindowCommunicationRoute
-  ConfigsBlackWhiteListIndexRoute: typeof ConfigsBlackWhiteListIndexRoute
   ConfigsContextMenusIndexRoute: typeof ConfigsContextMenusIndexRoute
   ConfigsDictAuthIndexRoute: typeof ConfigsDictAuthIndexRoute
   ConfigsDictPanelIndexRoute: typeof ConfigsDictPanelIndexRoute
@@ -440,14 +420,13 @@ interface ConfigsRouteChildren {
   ConfigsGeneralIndexRoute: typeof ConfigsGeneralIndexRoute
   ConfigsImportExportIndexRoute: typeof ConfigsImportExportIndexRoute
   ConfigsNotebookIndexRoute: typeof ConfigsNotebookIndexRoute
-  ConfigsPrivacyIndexRoute: typeof ConfigsPrivacyIndexRoute
   ConfigsPronunciationIndexRoute: typeof ConfigsPronunciationIndexRoute
 }
 
 const ConfigsRouteChildren: ConfigsRouteChildren = {
+  ConfigsAppInfoRoute: ConfigsAppInfoRoute,
   ConfigsFormTestRoute: ConfigsFormTestRoute,
   ConfigsWindowCommunicationRoute: ConfigsWindowCommunicationRoute,
-  ConfigsBlackWhiteListIndexRoute: ConfigsBlackWhiteListIndexRoute,
   ConfigsContextMenusIndexRoute: ConfigsContextMenusIndexRoute,
   ConfigsDictAuthIndexRoute: ConfigsDictAuthIndexRoute,
   ConfigsDictPanelIndexRoute: ConfigsDictPanelIndexRoute,
@@ -455,7 +434,6 @@ const ConfigsRouteChildren: ConfigsRouteChildren = {
   ConfigsGeneralIndexRoute: ConfigsGeneralIndexRoute,
   ConfigsImportExportIndexRoute: ConfigsImportExportIndexRoute,
   ConfigsNotebookIndexRoute: ConfigsNotebookIndexRoute,
-  ConfigsPrivacyIndexRoute: ConfigsPrivacyIndexRoute,
   ConfigsPronunciationIndexRoute: ConfigsPronunciationIndexRoute,
 }
 

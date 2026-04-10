@@ -1,3 +1,4 @@
+// 系统托盘图标相关配置
 // import { TrayIcon } from '@tauri-apps/api/tray'
 // import { Menu } from '@tauri-apps/api/menu'
 // import { defaultWindowIcon } from '@tauri-apps/api/app'

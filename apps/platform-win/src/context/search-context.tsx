@@ -2,7 +2,7 @@ import { createContext, useContext, useState, type ReactNode } from 'react'
 import { createStore, useStore } from 'zustand'
 
 import type { HistoryWord, Word } from '../types/word'
-import { getDefaultProfile, getDefaultSelectDict, type AppProfile, type Profile } from '@/config/trans-profile'
+import { getDefaultSelectDict, type AppProfile, type Profile } from '@/config/trans-profile'
 import type { AllDictsConf, DictID } from '@/core/api-server/config'
 import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
 import { api } from '@/core/api-server/trans-api'

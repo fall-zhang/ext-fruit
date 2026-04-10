@@ -76,12 +76,12 @@ const menuItems = [
   //   label: 'PDF设置',
   //   icon: <FilePdfOutlined className="w-4 h-4" />,
   // },
-  // {
-  //   id: 'popup',
-  //   path: '/configs/popup',
-  //   label: '弹出窗口',
-  //   icon: <LayoutOutlined className="w-4 h-4" />,
-  // },
+  {
+    id: 'app-info',
+    path: '/configs/app-info',
+    label: '应用信息',
+    icon: <LayoutOutlined className="w-4 h-4" />,
+  },
   // {
   //   id: 'privacy',
   //   path: '/configs/privacy',

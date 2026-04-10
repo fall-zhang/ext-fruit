@@ -15,7 +15,6 @@ import DefaultView from '@/components/dict-api-view/default/View'
 export interface DictItemBodyProps {
   dictID: DictID
 
-  darkMode: boolean
   withAnimation: boolean
 
   panelCSS: string
@@ -84,7 +83,6 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
           <root.div className=''>
             <div
               ref={props.dictRootRef}
-              className={classNames({ darkMode: props.darkMode })}
             >
               <style>{dictContentStyles}</style>
               <DictStyle />

@@ -2,9 +2,7 @@ import type { FC } from 'react'
 import React, { useRef } from 'react'
 import { useConfContext } from '@/context/conf-context'
 import { DictItem, type DictItemProps } from './dict-list-item'
-import type { DictID } from '@/core/api-server/config'
 
-const MemoDictItem = React.memo(DictItem)
 // const memoizedDicts = memoizeOne((
 //   renderedDicts: GlobalState['renderedDicts'],
 //   allDict: GlobalState['activeProfile']['dicts']['all']
@@ -46,28 +44,24 @@ export interface DictListProps {
 export const DictList: FC<DictListProps> = (props) => {
   const configContext = useConfContext()
 
-  const {
-    animation,
-    darkMode,
-  } = configContext.config
+  const { animation } = configContext.config
   const dicts = props.dicts
   return (
     <div className="dictList overflow-hidden">
       {dicts.map(data => (
-        <MemoDictItem
+        <DictItem
           withAnimation={animation}
-          darkMode={darkMode}
           panelCSS={''}
           onInPanelSelect={() => {
           }}
-          openDictSrcPage={(id, ctrlKey: boolean) => {
-          } }
-          onUserFold={function (id: DictID, fold: boolean): void {
-          } }
-          searchText={function (arg) {
-          } }
+          openDictSrcPage={(id, ctrlKey) => {
+          }}
+          onUserFold={ (id, fold) => {
+          }}
+          searchText={ (arg) => {
+          }}
           onSpeakerPlay={async (src) => {
-          } }
+          }}
           key={data.dictID}
           {...data} />
       ))}
