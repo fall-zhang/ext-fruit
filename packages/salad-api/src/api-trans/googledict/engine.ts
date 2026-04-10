@@ -1,12 +1,13 @@
-import {
-  handleNoResult,
-  getInnerHTML,
-  removeChildren,
-  handleNetWorkError,
-  getFullLink,
-  getText,
-  removeChild
-} from '../../utils'
+// import {
+//   handleNoResult,
+//   getInnerHTML,
+//   removeChildren,
+//   handleNetWorkError,
+//   getFullLink,
+//   getText,
+//   removeChild
+// } from '../../utils'
+import { handleNetWorkError } from '@/core/api-server/utils'
 import { getStaticSpeaker } from '@/components/Speaker'
 import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
 import { fetchPlainText } from '@/core/api-server/utils/fetch-dom'
