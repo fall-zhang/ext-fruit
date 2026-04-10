@@ -1,9 +1,14 @@
 import type { FC, ReactNode } from 'react'
 import { useRef, useState } from 'react'
 import { useUpdateEffect } from 'react-use'
-import { Modal } from 'antd'
-import type { FormInstance } from 'antd/lib/form'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter
+} from '@salad/ui/components/dialog'
+import { Button } from '@salad/ui/components/button'
 import { useTranslation } from 'react-i18next'
 
 import { SaladictForm, type SaladictFormItem, type SaladictFormProps } from './SaladictForm'
@@ -23,7 +28,7 @@ export const SaladictModalForm: FC<SaladictModalFormProps> = props => {
   const { t } = useTranslation('options')
   const [uploadStatus] = useState('idle')
   const formDirtyRef = useFormDirty()
-  const formRef = useRef<FormInstance>(null)
+  const formRef = useRef<any>(null)
 
   useUpdateEffect(() => {
     if (visible && uploadStatus === 'idle') {
@@ -31,38 +36,44 @@ export const SaladictModalForm: FC<SaladictModalFormProps> = props => {
     }
   }, [uploadStatus])
 
+  const handleCancel = () => {
+    if (formDirtyRef.value) {
+      // 使用浏览器原生 confirm 或者项目中的 confirm context
+      if (window.confirm(t('unsave_confirm'))) {
+        setFormDirty(false)
+        onClose()
+      }
+    } else {
+      onClose()
+    }
+  }
+
   return (
-    <Modal
-      open={visible}
-      title={title}
-      zIndex={zIndex}
-      width={600}
-      onOk={() => {
-        if (formRef.current) {
-          formRef.current.submit()
-        }
-      }}
-      onCancel={() => {
-        if (formDirtyRef.value) {
-          Modal.confirm({
-            title: t('unsave_confirm'),
-            icon: <ExclamationCircleOutlined />,
-            okType: 'danger',
-            onOk: () => {
-              setFormDirty(false)
-              onClose()
-            },
-          })
-        } else {
-          onClose()
-        }
-      }}
-    >
-      <SaladictForm
-        hideFooter
-        {...restProps}
-        ref={formRef}
-      />
-    </Modal>
+    <Dialog open={visible} onOpenChange={(open) => !open && handleCancel()}>
+      <DialogContent style={{ zIndex }} className="max-w-[600px]">
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+        </DialogHeader>
+        <SaladictForm
+          hideFooter
+          {...restProps}
+          ref={formRef}
+        />
+        <DialogFooter>
+          <Button variant="outline" onClick={handleCancel}>
+            {t('common:cancel')}
+          </Button>
+          <Button
+            onClick={() => {
+              if (formRef.current) {
+                formRef.current.requestSubmit()
+              }
+            }}
+          >
+            {t('common:save')}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
