@@ -178,31 +178,31 @@ importers:
         specifier: ^1.166.7
         version: 1.166.7(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@tauri-apps/api':
-        specifier: ^2.10.1
+        specifier: ~2.10.1
         version: 2.10.1
       '@tauri-apps/plugin-dialog':
-        specifier: ^2.6.0
+        specifier: ~2.6.0
         version: 2.6.0
       '@tauri-apps/plugin-fs':
-        specifier: ^2.4.5
+        specifier: ~2.4.5
         version: 2.4.5
       '@tauri-apps/plugin-http':
         specifier: ~2.5.7
         version: 2.5.7
       '@tauri-apps/plugin-process':
-        specifier: ^2.3.1
+        specifier: ~2.3.1
         version: 2.3.1
       '@tauri-apps/plugin-shell':
         specifier: ^2.3.5
         version: 2.3.5
       '@tauri-apps/plugin-sql':
-        specifier: ^2.4.0
+        specifier: ~2.4.0
         version: 2.4.0
       '@tauri-apps/plugin-store':
         specifier: ~2.4.2
         version: 2.4.2
       '@tauri-apps/plugin-updater':
-        specifier: ^2.10.1
+        specifier: ~2.10.1
         version: 2.10.1
       antd:
         specifier: ^6.3.2
@@ -296,7 +296,7 @@ importers:
         specifier: ^1.166.7
         version: 1.166.7(@tanstack/react-router@1.166.7(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(vite@8.0.8(@types/node@25.5.2)(esbuild@0.27.4)(jiti@2.6.1)(less@4.2.2)(sass@1.99.0)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.3))
       '@tauri-apps/cli':
-        specifier: ^2.10.1
+        specifier: ~2.10.1
         version: 2.10.1
       babel-plugin-react-compiler:
         specifier: ^1.0.0
