@@ -1,13 +1,13 @@
 import { createFileRoute, Link, Outlet, useLocation, redirect } from '@tanstack/react-router'
 import {
   KeyOutlined,
-  SettingOutlined,
   BookOutlined,
-  ProfileOutlined,
   FlagOutlined,
-  SoundOutlined,
+  SettingOutlined,
   LayoutOutlined,
+  ProfileOutlined,
   SwapOutlined,
+  SoundOutlined,
   SafetyCertificateOutlined,
   LockOutlined,
   CloudServerOutlined
@@ -40,12 +40,19 @@ const menuItems = [
     label: i18n.t('options:nav.General'),
     icon: <SettingOutlined className="w-4 h-4" />,
   },
-  {
-    id: 'dict-auth',
-    path: '/configs/dict-auth',
-    label: i18n.t('options:nav.DictAuths'),
-    icon: <KeyOutlined className="w-4 h-4" />,
-  },
+  // 需要在重构完成配置后才能启用
+  // {
+  //   id: 'dictionaries',
+  //   path: '/configs/dictionaries',
+  //   label: '词典配置',
+  //   icon: <FlagOutlined className="w-4 h-4" />,
+  // },
+  // {
+  //   id: 'dict-auth',
+  //   path: '/configs/dict-auth',
+  //   label: i18n.t('options:nav.DictAuths'),
+  //   icon: <KeyOutlined className="w-4 h-4" />,
+  // },
   {
     id: 'dict-panel',
     path: '/configs/dict-panel',

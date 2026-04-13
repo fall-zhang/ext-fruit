@@ -107,7 +107,7 @@ const createSearchStore = (profile: AppProfile) => {
             const status = checkSupportedLangs(
               activeProfile.dicts.all[id].defaultUnfold,
               word.text
-            ) && (!activeProfile.stickyFold || !userFoldedDicts[id])
+            ) && (!userFoldedDicts[id])
               ? 'SEARCHING'
               : 'IDLE'
             return {

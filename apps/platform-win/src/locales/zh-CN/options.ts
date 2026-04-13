@@ -8,8 +8,6 @@ export const options = {
   msg_err_permission: '权限“{{permission}}”申请失败。',
   unsave_confirm: '修改尚未保存，确定放弃？',
   nativeSearch: '浏览器外划词',
-  firefox_shortcuts:
-    '地址栏输入 about:addons 打开，点击右上方的齿轮，选择最后一项管理扩展快捷键。',
   tutorial: '教程',
   page_selection: '网页划词',
 
@@ -33,6 +31,7 @@ export const options = {
   },
 
   config: {
+    appTheme: '应用主题',
     active: '启用划词翻译',
     active_help: '关闭后「快捷查词」功能依然可用。',
     animation: '开启动画过渡',

@@ -1,10 +1,9 @@
 import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '@/core/api-server/api-common/search-type'
 import type { HTMLString } from '@/core/api-server/types'
-import { getChsToChz, handleNetWorkError, getText, getFullLink, removeChild, getInnerHTML, handleNoResult, externalLink } from '@/core/api-server/utils'
+import { handleNetWorkError, getText, getFullLink, removeChild, getInnerHTML, handleNoResult, externalLink } from '@/core/api-server/utils'
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 import { getStaticSpeaker } from '@/components/Speaker'
-import type { AllDictsConf } from '../../config'
-import chsToChz from '../../utils/chs-to-chz'
+import { chsToChz } from '../../utils/chs-to-chz'
 
 export const getSrcPage: GetSrcPageFunction = async (text, localLang, profile) => {
   let { lang } = profile.cambridge.options
@@ -47,8 +46,10 @@ export const getSrcPage: GetSrcPageFunction = async (text, localLang, profile) =
         encodeURIComponent(chsToChz(text))
       )
     }
+    default: {
+      return ''
+    }
   }
-  return ''
 }
 
 const HOST = 'https://dictionary.cambridge.org'
@@ -68,12 +69,11 @@ export const search: SearchFunction<CambridgeResult> = async (
 ) => {
   return fetchDirtyDOM(await getSrcPage(text, opt.localLang || 'zh-CN', opt.profile))
     .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, opt.profile.cambridge.options))
+    .then(doc => handleDOM(doc))
 }
 
 function handleDOM (
-  doc: Document,
-  options: AllDictsConf['cambridge']['options']
+  doc: Document
 ): CambridgeSearchResult | Promise<CambridgeSearchResult> {
   const result: CambridgeResult = []
   const catalog: NonNullable<CambridgeSearchResult['catalog']> = []
@@ -143,7 +143,7 @@ function handleDOM (
     }
   }
 
-  if (result.length <= 0 && options.related) {
+  if (result.length <= 0) {
     const $link = doc.querySelector('link[rel=canonical]')
     if (
       $link &&

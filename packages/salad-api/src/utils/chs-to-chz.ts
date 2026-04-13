@@ -2657,7 +2657,7 @@ const charMap = new Map([
   ['龟', '龜'],
 ])
 
-function chsToChz (text: string): string {
+export function chsToChz (text: string): string {
   if (!text) return ''
 
   let result = ''

@@ -75,10 +75,7 @@ export function isBlacklisted (config: AppConfig): boolean {
   if (!url) {
     return false
   }
-  return (
-    config.blacklist.some(([r]) => new RegExp(r).test(url)) &&
-    config.whitelist.every(([r]) => !new RegExp(r).test(url))
-  )
+  return false
 }
 
 export async function newSelectionWord () {
