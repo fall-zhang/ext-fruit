@@ -1,20 +1,18 @@
-import { Controller, type ControllerProps } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
 import {
   Field,
   FieldDescription,
   FieldError,
-  FieldGroup,
   FieldLabel
 } from '@P/ui/components/field'
 import { Input } from '@P/ui/components/input'
-import { useId, type FC } from 'react'
+import { useId } from 'react'
 import type { FBaseForm } from './type'
 export const FInput: FBaseForm = ({
   name,
   control,
   label,
-  onChange,
   description,
   placeholder,
 }) => {

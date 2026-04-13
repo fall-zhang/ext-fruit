@@ -71,8 +71,8 @@ export const FSelect: FAdvanceForm<{
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent position="item-aligned">
-              <SelectItem value="auto">Auto</SelectItem>
-              <SelectSeparator />
+              {/* <SelectItem value="auto">Auto</SelectItem>
+              <SelectSeparator /> */}
               {items.map((language) => (
                 <SelectItem key={language.value} value={language.value}>
                   {language.label}

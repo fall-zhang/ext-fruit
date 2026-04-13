@@ -1,29 +1,53 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useRef, type FC } from 'react'
-import { Input, Select, Switch, Slider } from 'antd'
 
 
 import { useTranslation } from 'react-i18next'
-import { SaladictForm } from '../-components/SaladictForm'
-import { getConfigPath, getProfilePath } from '../-utils/path-joiner'
+import { ConfForm } from '../-components/conf-form/conf-form'
+import { Slider } from '@P/ui/components/slider'
 
 
 export const RouteComponent: FC = () => {
   const { t } = useTranslation('options')
   const { availWidth } = window.screen
   const ref = useRef({})
-  return (
-    <SaladictForm
-      ref={ref}
+  return (<>
+    <ConfForm
       items={[
         {
-          name: getConfigPath('waveform'),
-          children: <Switch />,
+          name: 'waveform',
+          fromType: 'switch',
         },
         {
-          name: getConfigPath('searchSuggests'),
-          children: <Switch />,
+          name: 'searchSuggests',
+          fromType: 'switch',
         },
+        {
+          name: 'animation',
+          fromType: 'switch',
+        },
+        {
+          name: 'panelWidth',
+          fromType: 'switch',
+        },
+        {
+          name: 'panelWidth',
+          fromType: 'custom',
+          customRender: ({ field }) => (
+            <Slider
+              {...field}
+              defaultValue={[field.value]}
+              onValueChange={newVal => {
+                field.onChange(newVal[0])
+              }}
+              min={250}
+              max={availWidth}
+            />
+          ),
+        },
+      ]}>
+    </ConfForm>
+    {/*
         {
           name: getConfigPath('windowPinned'),
           children: <Switch />,
@@ -31,28 +55,6 @@ export const RouteComponent: FC = () => {
         {
           name: getConfigPath('animation'),
           children: <Switch />,
-        },
-        // {
-        //   name: getConfigPath('panelMaxHeightRatio'),
-        //   children: (
-        //     <Slider
-        //       min={0}
-        //       max={100}
-        //       marks={{ 0: '0%', 80: '80%', 100: '100%' }} />
-        //   ),
-        // },
-        {
-          name: getConfigPath('panelWidth'),
-          children: (
-            <Slider
-              min={250}
-              max={availWidth}
-              marks={{
-                250: '250px',
-                450: '450px',
-                [availWidth]: `${availWidth}px`,
-              }} />
-          ),
         },
         {
           name: getConfigPath('fontSize'),
@@ -81,24 +83,8 @@ export const RouteComponent: FC = () => {
               marks={{ '-100': '-100px', 0: '0px', 100: '100px' }} />
           ),
         },
-        {
-          name: getConfigPath('panelCSS'),
-          extra: (
-            <a
-              href="https://github.com/crimx/ext-saladict/wiki/PanelCSS#wiki-content"
-              target="_blank"
-              rel="nofollow noopener noreferrer"
-            >
-              Examples
-            </a>
-          ),
-          children: (
-            <Input.TextArea
-              placeholder=".dictPanel-Root { }"
-              autoSize={{ minRows: 4, maxRows: 15 }} />
-          ),
-        },
-      ]} />
+   */}
+  </>
   )
 }
 

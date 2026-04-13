@@ -1,12 +1,12 @@
 import { Controller, useForm } from 'react-hook-form'
 
-import { Checkbox } from '@P/ui/components/checkbox'
 import {
   Field,
+  FieldContent,
   FieldDescription,
   FieldError,
-  FieldGroup,
   FieldLabel,
+  FieldGroup,
   FieldLegend,
   FieldSeparator,
   FieldSet
@@ -27,35 +27,26 @@ export const FSwitch: FAdvanceForm = ({
       name={name}
       control={control}
       render={({ field, fieldState }) => (
-        <div>
-          <FieldSet data-invalid={fieldState.invalid}>
-            <FieldLegend variant="label">{label}</FieldLegend>
+        <Field orientation="horizontal" className='flex justify-start'>
+          <FieldContent data-invalid={fieldState.invalid}>
+            <FieldLabel >{label}</FieldLabel>
             <FieldDescription>
               {description}
             </FieldDescription>
-            <FieldGroup data-slot="checkbox-group">
-              <Field orientation="horizontal">
-                <Switch
-                  id={formId}
-                  name={field.name}
-                  checked={field.value}
-                  onCheckedChange={(ev) => {
-                    field.onChange(ev)
-                  }}
-                  aria-invalid={fieldState.invalid}
-                />
-                <FieldLabel
-                  htmlFor={formId}
-                  className="font-normal"
-                >
-                </FieldLabel>
-              </Field>
-            </FieldGroup>
-          </FieldSet>
+          </FieldContent>
+          <Switch
+            id={formId}
+            name={field.name}
+            checked={field.value}
+            onCheckedChange={(ev) => {
+              field.onChange(ev)
+            }}
+            aria-invalid={fieldState.invalid}
+          />
           {fieldState.invalid && (
             <FieldError errors={[fieldState.error]} />
           )}
-        </div>
+        </Field>
       )}
     />
   )

@@ -9,6 +9,7 @@ import { reorder, SortableList } from '../-components/SortableList'
 import type { DictID } from '@/core/api-server/config'
 import { useConfContext } from '@/context/conf-context'
 import { AllDicts } from './-all-dicts'
+import { DictSortableList } from './-components/sortable-list'
 
 export const Route = createFileRoute('/configs/dictionaries/')({
   component: RouteComponent,
@@ -33,12 +34,12 @@ function RouteComponent () {
   }, [dicts.selected])
   return (
     <div className='flex flex-col'>
+      <span>
+        {t('profile.opt.dict_selected')}
+      </span>
+      <DictSortableList></DictSortableList>
       <SortableList
-        title={
-          <span>
-            {t('profile.opt.dict_selected')}
-          </span>
-        }
+        title={''}
         list={selectedDicts.map(id => ({
           value: id,
           title: <DictTitleMemo dictID={id} dictLangs={dicts.all[id].lang} />,

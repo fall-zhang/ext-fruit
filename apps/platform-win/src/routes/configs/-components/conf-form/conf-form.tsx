@@ -38,7 +38,7 @@ type ConfFormProps = {
 export function ConfForm (props: ConfFormProps) {
   const configContext = useConfContext()
   const { t, i18n, ready } = useTranslation(['options', 'common'])
-  const dialogContext = useConfirmContext()
+  // const dialogContext = useConfirmContext()
 
   const form = useForm<AppConfig>({
     defaultValues: configContext.config,
@@ -64,7 +64,7 @@ export function ConfForm (props: ConfFormProps) {
   const formId = useId()
   const genFormItems = useCallback((items: SaladictFormItem[]) => {
     return items.map((item) => {
-      const name = (item.key || item.name)!
+      const name = 'config.' + (item.key || item.name)!
       const newItem: SaladictFormItem = { ...item }
       if (newItem.label === undefined) {
         newItem.label = t(name)
@@ -110,6 +110,13 @@ export function ConfForm (props: ConfFormProps) {
           items={newItem.options}
         >
         </FSelect>
+      }
+      if (newItem.fromType === 'custom' && newItem.customRender) {
+        <Controller
+          name={newItem.name}
+          control={form.control}
+          render={newItem.customRender as any}
+        />
       }
       return <div key={newItem.name}>
         暂无对应的 formType - {newItem.fromType}

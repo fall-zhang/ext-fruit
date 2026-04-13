@@ -23,7 +23,7 @@ export const AllDicts: FC<AllDictsProps> = props => {
   const selected = useMemo(() => new Set(props.value || []), [props.value])
 
   return (
-    <Card>
+    <>
       {
         allDictIds.map(dictID => {
           return (
@@ -45,27 +45,24 @@ export const AllDicts: FC<AllDictsProps> = props => {
           )
         })
       }
-      <List
-        size="large"
-        dataSource={allDictIds}
-        renderItem={dictID => (
-          <div className="sortable-list-item">
-            <DictTitle dictID={dictID} dictLangs={allDicts[dictID].lang} />
-            <Switch
-              checked={selected.has(dictID)}
-              onChange={checked => {
-                if (props.onChange && props.value) {
-                  props.onChange(
-                    checked
-                      ? [...props.value, dictID]
-                      : props.value.filter(id => id !== dictID)
-                  )
-                }
-              }}
-            />
-          </div>
-        )}
-      />
-    </Card>
+      <ul>
+        {allDictIds.map(item => (<div className="sortable-list-item" key={item}>
+          <DictTitle dictID={item} dictLangs={allDicts[item].lang} />
+          <Switch
+            checked={selected.has(item)}
+            onChange={checked => {
+              if (props.onChange && props.value) {
+                props.onChange(
+                  checked
+                    ? [...props.value, item]
+                    : props.value.filter(id => id !== item)
+                )
+              }
+            }}
+          />
+        </div>)
+        )
+        }</ul>
+    </>
   )
 }

@@ -1,5 +1,5 @@
 import type { JSXElementConstructor, ReactElement, ReactNode } from 'react'
-import type { FieldValues, FieldPath, ControllerProps } from 'react-hook-form'
+import type { FieldValues, FieldPath, ControllerProps, ControllerFieldState, ControllerRenderProps, UseFormStateReturn } from 'react-hook-form'
 
 export type FBaseForm = <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>, TTransformedValues = TFieldValues>(props: Omit<ControllerProps<TFieldValues, TName, TTransformedValues>, 'render'> & {
   name: string
@@ -26,3 +26,11 @@ export type OptionItem = {
   label: string
   value: string | number
 }
+
+
+export type CustomRender = ({ field, fieldState, formState }: {
+  // field: ControllerRenderProps<FieldValues, FieldPath<FieldValues>>;
+  field: any;
+  fieldState: ControllerFieldState;
+  formState: UseFormStateReturn<FieldValues>;
+}) => React.ReactElement

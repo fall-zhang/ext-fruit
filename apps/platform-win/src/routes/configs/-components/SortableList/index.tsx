@@ -87,14 +87,13 @@ export function SortableList (props: SortableListProps) {
                   size="small"
                   icon={<EditOutlined />}
                   disabled={
-                    props.disableEdit != null &&
-                                    props.disableEdit(index, item)
+                    props.disableEdit != null && props.disableEdit(index, item)
                   }
                   onClick={() =>
                     props.onEdit && props.onEdit(index, item)
                   }
                 /> */}
-                <Button
+                {/* <Button
                   title={t('delete')}
                   className="sortable-list-item-btn"
                   shape="circle"
@@ -103,7 +102,7 @@ export function SortableList (props: SortableListProps) {
                   onClick={() =>
                     props.onDelete?.(index, item)
                   }
-                ><CloseOutlined /></Button>
+                ><CloseOutlined /></Button> */}
               </div>
             </div>
           </li>

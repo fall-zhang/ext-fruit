@@ -166,7 +166,7 @@ function RouteComponent () {
   return (
     <>
       <div className='grid gap-5 grid-cols-2'>
-        <div>
+        <div className='h-20 flex items-center justify-center border border-neutral-500 rounded'>
           <button >
             <p className="ant-upload-drag-icon">
               <DownloadOutlined />
@@ -174,11 +174,8 @@ function RouteComponent () {
             <p className="ant-upload-text">{t('import.title')}</p>
           </button>
         </div>
-        <div>
-          <button
-            className="ant-upload ant-upload-drag"
-            onClick={() => exportConfig(t)}
-          >
+        <div className='h-20 flex items-center justify-center border border-neutral-500 rounded'>
+          <button onClick={() => exportConfig(t)}>
             <div className="ant-upload ant-upload-btn">
               <p className="ant-upload-drag-icon">
                 <UploadOutlined />

@@ -1,11 +1,13 @@
 import type { AppConfig } from '@/config/app-config'
 import type { ReactNode } from 'react'
+import type { ControllerProps } from 'react-hook-form'
 
 export interface SaladictFormItem
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'name' | 'children'> {
   /** Must set name or key. Set name if the item has value. */
   name: keyof AppConfig
-  fromType: 'switch' | 'input' | 'textarea' | 'slide' | 'select'
+  fromType: 'switch' | 'input' | 'textarea' | 'slide' | 'select' | 'custom'
+  customRender?: ControllerProps['render']
   options?: Array<{ label: string, value: string }>
   /** label 名称. */
   label?: ReactNode
