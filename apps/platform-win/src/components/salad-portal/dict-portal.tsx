@@ -58,7 +58,7 @@ export const DictPanelPortal: FC = () => {
       id="saladict-dictpanel-root"
       head={<style>{import('./DictPanel.shadow.scss?raw').toString()}</style>}
       shadowRootClassName={SALADICT_PANEL}
-      innerRootClassName={clsx({ isAnimate: config.animation, darkMode: config.darkMode })}
+      innerRootClassName={clsx({ isAnimate: config.animation })}
     >
       <DictPanel
         menuBar={undefined}
