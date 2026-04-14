@@ -17,6 +17,10 @@ export type ApiInfo = {
   type: 'self-trans' | 'word-trans' | 'paragraph-trans'
   maxWord: number
   minWord: number
+  /**
+   * 是否需要登录认证
+   */
+  needAuth?: boolean
 }
 
 export type AuthApiInfo<T = undefined> = ApiInfo & {

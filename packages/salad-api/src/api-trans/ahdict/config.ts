@@ -1,6 +1,6 @@
 import type { ApiInfo } from '../../types/api-info'
 
-export default (): ApiInfo => ({
+export const getPreference = (): ApiInfo => ({
   from: ['en'],
   to: ['en'],
   enName: 'American Heritage Dict',

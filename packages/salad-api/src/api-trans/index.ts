@@ -1,6 +1,6 @@
-import baidu from './baidu/config'
+import { getPreference as baidu } from './baidu/config'
 import bing from './bing/config'
-import ahdict from './ahdict/config'
+import { getPreference as ahdict } from './ahdict/config'
 import oaldict from './oaldict/config'
 import caiyun from './caiyun/config'
 import cambridge from './cambridge/config'
@@ -33,7 +33,6 @@ import wikipedia from './wikipedia/config'
 import youdao from './youdao/config'
 import youdaotrans from './youdaotrans/config'
 import zdic from './zdic/config'
-import { cloneDeep } from 'es-toolkit'
 
 // For TypeScript to generate typings
 // Follow alphabetical order for easy reading
