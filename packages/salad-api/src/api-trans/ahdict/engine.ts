@@ -1,31 +1,30 @@
-import { fetchDirtyDOM } from '../../utils/fetch-dom'
-
 import {
   getText,
-  getInnerHTML,
-  handleNoResult,
-  handleNetWorkError
-} from '../../utils'
-import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
+  getInnerHTML
+
+} from '../../utils/dom-utils'
+// import type { DictSearchResult } from '../../api-common/search-type'
 import type { AhdictResult, AhdictResultItem, Idiom } from './type'
+import { handleNetWorkError, handleNoResult } from '../../utils/error-response'
+import type { AtomSearchResult } from '../../types/res-type'
 
 
 const HOST = 'https://ahdictionary.com'
 
 
-type AhdictSearchResult = DictSearchResult<AhdictResult>
+type AhdictSearchResult = AtomSearchResult<AhdictResult>
 
-export const search: SearchFunction<AhdictResult> = async (text, opt) => {
-  const options = opt.profile.ahdict
+// export const search: SearchFunction<AhdictResult> = async (text, opt) => {
+//   const options = opt.profile.ahdict
 
-  return fetchDirtyDOM(
-    'https://ahdictionary.com/word/search.html?q=' + encodeURIComponent(text.replace(/\s+/g, ' '))
-  )
-    .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, options.options))
-}
+//   return fetchDirtyDOM(
+//     'https://ahdictionary.com/word/search.html?q=' + encodeURIComponent(text.replace(/\s+/g, ' '))
+//   )
+//     .catch(handleNetWorkError)
+//     .then(doc => handleDOM(doc, options.options))
+// }
 
-function handleDOM (
+export function handleDOM (
   doc: Document,
   options: { resultCount: number }
 ): AhdictSearchResult | Promise<AhdictSearchResult> {
