@@ -367,6 +367,9 @@ importers:
 
   packages/salad-api:
     dependencies:
+      dompurify:
+        specifier: ^3.3.3
+        version: 3.3.3
       md5:
         specifier: ^2.3.0
         version: 2.3.0

@@ -64,3 +64,8 @@
 ### 大模型词典
 
 如果部署了本地大模型，可以通过本地模型来获取翻译
+
+自翻译 trans by itself
+
+- zh-to-zh [汉典](./src/self-trans-api/zh-to-zh/zdic/engine.ts)
+

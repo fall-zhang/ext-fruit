@@ -11,6 +11,7 @@
     "commit": "git-cz"
   },
   "dependencies": {
+    "dompurify": "^3.3.3",
     "md5": "^2.3.0",
     "qs": "^6.14.0"
   },
