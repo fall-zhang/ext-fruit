@@ -1,78 +1,12 @@
-import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '@/core/api-server/api-common/search-type'
+import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
 import type { HTMLString } from '@/core/api-server/types'
-import { handleNetWorkError, getText, getFullLink, removeChild, getInnerHTML, handleNoResult, externalLink } from '@/core/api-server/utils'
-import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
+import { getText, getFullLink, removeChild, getInnerHTML, handleNoResult, externalLink } from '@/core/api-server/utils'
 import { getStaticSpeaker } from '@/components/Speaker'
-import { chsToChz } from '../../utils/chs-to-chz'
-
-export const getSrcPage: GetSrcPageFunction = async (text, localLang, profile) => {
-  let { lang } = profile.cambridge.options
-
-  if (lang === 'default') {
-    switch (localLang) {
-      case 'zh-CN':
-        lang = 'en-chs'
-        break
-      case 'zh-TW':
-        lang = 'en-chz'
-        break
-      default:
-        lang = 'en'
-        break
-    }
-  }
-
-  switch (lang) {
-    case 'en':
-      return (
-        'https://dictionary.cambridge.org/search/direct/?datasetsearch=english&q=' +
-        encodeURIComponent(
-          text
-            .trim()
-            .split(/\s+/)
-            .join('-')
-        )
-      )
-    case 'en-chs':
-      return (
-        'https://dictionary.cambridge.org/zhs/%E6%90%9C%E7%B4%A2/direct/?datasetsearch=english-chinese-simplified&q=' +
-        encodeURIComponent(text)
-      )
-    case 'en-chz': {
-      // const chsToChz = getChsToChz(localLang)
-
-      return (
-        'https://dictionary.cambridge.org/zht/%E6%90%9C%E7%B4%A2/direct/?datasetsearch=english-chinese-traditional&q=' +
-        encodeURIComponent(chsToChz(text))
-      )
-    }
-    default: {
-      return ''
-    }
-  }
-}
+import type { CambridgeResult, CambridgeSearchResult } from './type'
 
 const HOST = 'https://dictionary.cambridge.org'
 
-type CambridgeResultItem = {
-  id: string
-  html: HTMLString
-}
-
-export type CambridgeResult = CambridgeResultItem[]
-
-type CambridgeSearchResult = DictSearchResult<CambridgeResult>
-
-export const search: SearchFunction<CambridgeResult> = async (
-  text,
-  opt
-) => {
-  return fetchDirtyDOM(await getSrcPage(text, opt.localLang || 'zh-CN', opt.profile))
-    .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc))
-}
-
-function handleDOM (
+export function handleDOM (
   doc: Document
 ): CambridgeSearchResult | Promise<CambridgeSearchResult> {
   const result: CambridgeResult = []

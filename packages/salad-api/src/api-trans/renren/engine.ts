@@ -1,22 +1,9 @@
-import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
-import type { HTMLString } from '../../types'
-import { handleNetWorkError, handleNoResult, getText, getFullLink, getInnerHTML } from '../../utils'
+import { handleNoResult, getText, getFullLink, getInnerHTML } from '../../utils/dom-utils'
 import { fetchDirtyDOM } from '../../utils/fetch-dom'
-
-export const getSrcPage: GetSrcPageFunction = text => {
-  return `https://www.91dict.com/words?w=${encodeURIComponent(
-    text.replace(/\s+/g, '+')
-  )}`
-}
+import type { AtomSearchResult } from '../../types/res-type'
+import type { RenrenSlide, RenrenResult } from './type'
 
 const HOST = 'https://www.91dict.com'
-
-export interface RenrenSlide {
-  cover: string
-  mp3: string
-  en: HTMLString
-  chs: string
-}
 
 interface RenrenResultItem {
   key: string
@@ -29,23 +16,9 @@ interface RenrenResultItem {
   }>
 }
 
-export type RenrenResult = RenrenResultItem[]
+type RenrenSearchResult = AtomSearchResult<RenrenResult>
 
-type RenrenSearchResult = DictSearchResult<RenrenResult>
-
-export const search: SearchFunction<RenrenResult> = async (
-  text
-) => {
-  return fetchDirtyDOM(
-    `https://www.91dict.com/words?w=${encodeURIComponent(
-      text.replace(/\s+/g, '+')
-    )}`
-  )
-    .catch(handleNetWorkError)
-    .then(handleDOM)
-}
-
-function handleDOM (
+export function handleDOM (
   doc: Document
 ): RenrenSearchResult | Promise<RenrenSearchResult> {
   const result: RenrenResult = []

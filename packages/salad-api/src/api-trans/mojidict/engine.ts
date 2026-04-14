@@ -1,11 +1,11 @@
-
 import {
   handleNoResult,
   handleNetWorkError
-} from '../../utils'
+} from '../../utils/dom-utils'
 import type { AxiosResponse } from 'axios'
 import axios from 'axios'
 import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
+import type { MojidictResult, SuggestsResult, FetchWordResult, FetchTtsResult, GetTTS } from './type'
 
 export const getSrcPage: GetSrcPageFunction = async text => {
   const suggests = await getSuggests(text).catch(() => null)
@@ -19,90 +19,6 @@ export const getSrcPage: GetSrcPageFunction = async text => {
     }
   }
   return 'https://www.mojidict.com'
-}
-
-interface FetchWordResult {
-  details?: Array<{
-    objectId: string
-    title: string
-    wordId: string
-  }>
-  examples?: Array<{
-    objectId: string
-    subdetailsId: string
-    title: string
-    trans: string
-    wordId: string
-  }>
-  subdetails?: Array<{
-    detailsId: string
-    objectId: string
-    title: string
-    wordId: string
-  }>
-  word?: {
-    accent: string
-    objectId: string
-    pron: string
-    spell: string
-    tts: string
-  }
-}
-
-interface SuggestsResult {
-  originalSearchText: string
-  searchResults?: Array<{
-    objectId: string
-    searchText: string
-    tarId: string
-  }>
-  words?: Array<{
-    accent: string
-    excerpt: string
-    objectId: string
-    pron: string
-    romaji: string
-    spell: string
-  }>
-}
-
-interface FetchTtsResult {
-  result: {
-    code: number
-    result?: {
-      text: string
-      url: string
-      identity: string
-      existed: boolean
-      msg: string
-    }
-  }
-}
-
-export interface MojidictResult {
-  word?: {
-    tarId: string
-    spell: string
-    pron: string
-    tts?: string
-  }
-  details?: Array<{
-    objectId: string
-    title: string
-    subdetails?: Array<{
-      objectId: string
-      title: string
-      examples?: Array<{
-        objectId: string
-        title: string
-        trans: string
-      }>
-    }>
-  }>
-  releated?: Array<{
-    title: string
-    excerpt: string
-  }>
 }
 
 export const search: SearchFunction<MojidictResult> = async (

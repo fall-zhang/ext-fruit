@@ -1,43 +1,19 @@
 
 import { getStaticSpeaker } from '@/components/Speaker'
 
-import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
-import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
 import { handleNetWorkError, getInnerHTML, handleNoResult } from '@/core/api-server/utils'
-import type { HTMLString } from '../../types/res-type'
-
-export const getSrcPage: GetSrcPageFunction = text => {
-  return `https://www.zdic.net/hans/${text}`
-}
+import type { HTMLString, AtomSearchResult } from '../../types/res-type'
+import type { ZdicResult } from './type'
 
 const HOST = 'https://www.zdic.net'
 
-export type ZdicResult = Array<{
-  title: string
-  content: HTMLString
-}>
+type ZdicSearchResult = AtomSearchResult<ZdicResult>
 
-type ZdicSearchResult = DictSearchResult<ZdicResult>
-
-let isRefererModified = false
-
-export const search: SearchFunction<ZdicResult> = async (text, opt) => {
-  const isAudio = opt.profile.zdic.options.audio
-  if (!isRefererModified && isAudio) {
-    isRefererModified = true
-  }
-
-  return fetchDirtyDOM(
-    'https://www.zdic.net/hans/' + encodeURIComponent(text.replace(/\s+/g, ' '))
-  )
-    .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, isAudio))
-}
-
-function handleDOM (
+export function handleDOM (
   doc: Document,
-  isAudio: boolean
+  options: { isAudio: boolean }
 ): ZdicSearchResult | Promise<ZdicSearchResult> {
+  const { isAudio } = options
   const response: ZdicSearchResult = {
     result: [],
   }

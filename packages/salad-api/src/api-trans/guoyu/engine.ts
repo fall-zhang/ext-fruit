@@ -1,30 +1,30 @@
 
 import type { GuoYuResult } from './type'
-import type { SearchFunction, DictSearchResult } from '@/core/api-server/api-common/search-type'
+import type { AtomSearchResult } from '@/types/res-type'
+import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
 import type { Profile } from '@/config/trans-profile'
-
-import {
-  handleNoResult,
-  handleNetWorkError
-} from '@/core/api-server/utils'
+import { handleNetWorkError, handleNoResult } from '@/core/api-server/utils'
 import chsToChz from '@/core/api-server/utils/chs-to-chz'
-import type { AtomGetSrcFunction } from '../../types/atom-type'
 
-export const getSrcPage: AtomGetSrcFunction = async text => {
-  return `https://www.moedict.tw/${chsToChz(text)}`
+export function handleResponse (data: GuoYuResult): AtomSearchResult<GuoYuResult> {
+  for (const h of data.h!) {
+    if (h['=']) {
+      h['='] = `https://203146b5091e8f0aafda-15d41c68795720c6e932125f5ace0c70.ssl.cf1.rackcdn.com/${h['=']}.ogg`
+    }
+  }
+
+  const result: AtomSearchResult<GuoYuResult> = { result: data }
+
+  if (data.h && data.h.length > 0) {
+    result.audio = {
+      py: data.h[0]['='] || '',
+    }
+  }
+
+  return result
 }
 
-export const search: SearchFunction<GuoYuResult> = (
-  text,
-  opt
-) => {
-  return moedictSearch<GuoYuResult>(
-    'a',
-    text,
-    opt.profile.guoyu.options
-  )
-}
-
+/** @deprecated Use api-atom.ts handleResponse instead. Kept for liangan compatibility. */
 export async function moedictSearch<R extends GuoYuResult> (
   moedictID: string,
   text: string,
@@ -34,7 +34,6 @@ export async function moedictSearch<R extends GuoYuResult> (
     chsToChz(text.replace(/\s+/g, ''))
   )}.json`).then(res => res.json())
     .catch(handleNetWorkError)
-  console.log('⚡️ line:28 ~ data: ', data)
 
   if (!data || !data.h) {
     return handleNoResult()

@@ -7,6 +7,18 @@ export type YoudaotransLanguage = ExtendSupportLang<
 
 export type YoudaotransConfig = DictItemBase & DictItemOption<YoudaotransLanguage>
 
+export interface AuthBody {
+  appKey: string
+  key: string
+}
+
+export const auth: AuthBody = {
+  appKey: '',
+  key: '',
+}
+
+export const url = 'http://ai.youdao.com/gw.s'
+
 export default (): YoudaotransConfig => ({
   lang: '11011111',
   selectionLang: {

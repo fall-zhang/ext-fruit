@@ -1,66 +1,24 @@
 
-import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
+import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
 import type { HTMLString } from '../../types'
 import {
   getText,
   getInnerHTML,
   handleNoResult,
   handleNetWorkError
-} from '../../utils'
+} from '../../utils/dom-utils'
 
 import axios from 'axios'
 import { fetchDirtyDOM } from '../../utils/fetch-dom'
+import type { UrbanResult, UrbanResultItem, ThumbMap, thumbRes } from './type'
+
+export type { UrbanResult, UrbanResultItem } from './type'
 
 // 需要代理 proxy
-export const getSrcPage: GetSrcPageFunction = text => {
+export const getSrcPage = (text: string): string => {
   return `http://www.urbandictionary.com/define.php?term=${text}`
-  // https://www.urbandictionary.com/define.php?term=trying
 }
 const HOST = 'https://www.urbandictionary.com'
-
-interface UrbanResultItem {
-  /** keyword */
-  title: string
-  /** pronunciation */
-  pron?: string
-  meaning?: HTMLString
-  example?: HTMLString
-  gif?: {
-    src: string
-    attr: string
-  }
-  tags?: string[]
-  /** who write this explanation */
-  contributor?: string
-  /** numbers of thumbs up */
-  thumbsUp?: string
-  /** numbers of thumbs down */
-  thumbsDown?: string
-}
-
-interface thumbItem {
-  current: string
-  defid: number
-  down: number
-  up: number
-}
-
-interface thumbRes {
-  thumbs: thumbItem[]
-}
-
-interface thumbMapItem {
-  up: string
-  down: string
-}
-
-interface ThumbMap {
-  [defid: string]: thumbMapItem
-}
-
-export type UrbanResult = UrbanResultItem[]
-
-type UrbanSearchResult = DictSearchResult<UrbanResult>
 
 export const search: SearchFunction<UrbanResult> = async (
   text,
@@ -104,10 +62,10 @@ async function getThumbsNums (ids: string): Promise<ThumbMap | null> {
   return thumbsMap
 }
 
-async function handleDOM (
+export async function handleDOM (
   doc: Document,
   { resultCount }: { resultCount: number }
-): Promise<UrbanSearchResult> {
+): Promise<DictSearchResult<UrbanResult>> {
   const result: UrbanResult = []
   const audio: { us?: string } = {}
 

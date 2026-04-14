@@ -13,12 +13,12 @@ export const auth: AuthBody = {
 }
 
 export const getPreference = (): ApiInfo => ({
-  from: ['en'],
-  to: ['en'],
-  enName: 'American Heritage Dict',
-  zhName: '美国传统词典',
-  type: 'self-trans',
-  maxWord: 5,
+  from: ['en', 'zh-CN', 'zh-TW'],
+  to: ['en', 'zh-CN', 'zh-TW'],
+  enName: 'Baidu Translate',
+  zhName: '百度翻译',
+  type: 'paragraph-trans',
+  maxWord: 99999999,
   minWord: 1,
   needAuth: true,
 })

@@ -1,41 +1,18 @@
-
-import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
-import type { HTMLString } from '../../types'
+import type { WeblioResult } from './type'
 import {
   getInnerHTML,
   handleNoResult,
-  handleNetWorkError,
   getOuterHTML,
   getText,
   removeChild
-} from '../../utils'
-import { fetchDirtyDOM } from '../../utils/fetch-dom'
-
-export const getSrcPage: GetSrcPageFunction = text => {
-  return `https://www.weblio.jp/content/${text}`
-}
+} from '../../utils/dom-utils'
+import type { AtomSearchResult } from '../../types/res-type'
 
 const HOST = 'https://www.weblio.jp'
 
-export type WeblioResult = Array<{
-  title: HTMLString
-  def: HTMLString
-}>
+type WeblioSearchResult = AtomSearchResult<WeblioResult>
 
-type WeblioSearchResult = DictSearchResult<WeblioResult>
-
-export const search: SearchFunction<WeblioResult> = async (
-  text
-) => {
-  return fetchDirtyDOM(
-    'https://www.weblio.jp/content/' +
-      encodeURIComponent(text.replace(/\s+/g, ' '))
-  )
-    .catch(handleNetWorkError)
-    .then(handleDOM)
-}
-
-function handleDOM (
+export function handleDOM (
   doc: Document
 ): WeblioSearchResult | Promise<WeblioSearchResult> {
   const result: WeblioResult = []

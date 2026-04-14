@@ -1,50 +1,22 @@
 import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
 import type { AllDictsConf } from '../../config'
-import type {
-  HTMLString
-
-} from '../../types'
+import { getChsToChz } from '../../utils/chs-to-chz'
 import {
   getText,
-  getInnerHTML,
+  getInnerHTML
+
+} from '../../utils/dom-utils'
+import {
   handleNoResult,
-  handleNetWorkError,
-  getChsToChz,
-  removeChild
-} from '../../utils'
-import { fetchDirtyDOM } from '../../utils/fetch-dom'
+  handleNetWorkError
+
+} from '../../utils/error-response'
+import type { YoudaoResult } from './type'
 
 export const getSrcPage: GetSrcPageFunction = text =>
   'https://dict.youdao.com/w/' + encodeURIComponent(text.replace(/\s+/g, ' '))
 
 const HOST = 'http://www.youdao.com'
-
-export interface YoudaoResultLex {
-  type: 'lex'
-  title: string
-  stars: number
-  rank: string
-  pattern: string
-  prons: Array<{
-    phsym: string
-    url: string
-  }>
-  basic?: HTMLString
-  collins: Array<{
-    title: string
-    content: HTMLString
-  }>
-  discrimination?: HTMLString
-  sentence?: HTMLString
-  translation?: HTMLString
-}
-
-export interface YoudaoResultRelated {
-  type: 'related'
-  list: HTMLString
-}
-
-export type YoudaoResult = YoudaoResultLex | YoudaoResultRelated
 
 type YoudaoSearchResult = DictSearchResult<YoudaoResult>
 
@@ -81,7 +53,7 @@ function checkResult (
   return handleNoResult()
 }
 
-function handleDOM (
+export function handleDOM (
   doc: Document,
   options: AllDictsConf['youdao']['options'],
   transform: null | ((text: string) => string)

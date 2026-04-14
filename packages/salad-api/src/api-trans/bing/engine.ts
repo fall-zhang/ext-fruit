@@ -1,15 +1,15 @@
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
-
 import {
   handleNoResult,
   handleNetWorkError,
   getText,
   getInnerHTML,
   getChsToChz
-} from '../../utils'
+} from '@/core/api-server/utils'
 import type { BingResult, BingResultLex, BingResultMachine, BingResultRelated } from './type'
 import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
 import type { AllDictsConf } from '../../config'
+import type { AtomSearchResult } from '../../types/res-type'
 
 export const getSrcPage: GetSrcPageFunction = text =>
   'https://cn.bing.com/dict/search?q=' +
@@ -41,25 +41,33 @@ export const search: SearchFunction<BingResult> = async (
     DICT_LINK + encodeURIComponent(text.replace(/\s+/g, ' '))
   )
     .then(async doc => {
-      const transform = getChsToChz(opt.localLang || '')
-
-      if (doc.querySelector('.client_def_hd_hd')) {
-        return handleLexResult(doc, bingConfig.options, transform)
-      }
-
-      if (doc.querySelector('.client_trans_head')) {
-        return handleMachineResult(doc, transform)
-      }
-
-      if (bingConfig.options.related) {
-        if (doc.querySelector('.client_do_you_mean_title_bar')) {
-          return handleRelatedResult(doc, transform)
-        }
-      }
-
-      return handleNoResult<DictSearchResult<BingResult>>()
+      return handleDOM(doc, { profile: opt.profile, localLang: opt.localLang || '' })
     })
     .catch(handleNetWorkError)
+}
+
+export function handleDOM(
+  doc: Document,
+  context: { profile: AllDictsConf; localLang: string }
+): AtomSearchResult<BingResult> | Promise<AtomSearchResult<BingResult>> {
+  const bingConfig = context.profile.bing
+  const transform = getChsToChz(context.localLang)
+
+  if (doc.querySelector('.client_def_hd_hd')) {
+    return handleLexResult(doc, bingConfig.options, transform)
+  }
+
+  if (doc.querySelector('.client_trans_head')) {
+    return handleMachineResult(doc, transform)
+  }
+
+  if (bingConfig.options.related) {
+    if (doc.querySelector('.client_do_you_mean_title_bar')) {
+      return handleRelatedResult(doc, transform)
+    }
+  }
+
+  return handleNoResult()
 }
 
 function handleLexResult (

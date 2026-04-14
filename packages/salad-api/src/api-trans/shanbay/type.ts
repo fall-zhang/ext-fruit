@@ -1,5 +1,4 @@
-import type { DictSearchResult } from '../../api-common/search-type'
-import type { HTMLString } from '../../types'
+import type { AtomSearchResult, HTMLString } from '../../types/res-type'
 
 export interface ShanbayResultLex {
   type: 'lex'
@@ -21,4 +20,4 @@ export interface ShanbayResultLex {
 
 export type ShanbayResult = ShanbayResultLex
 
-export type ShanbaySearchResult = DictSearchResult<ShanbayResult>
+export type ShanbaySearchResult = AtomSearchResult<ShanbayResult>

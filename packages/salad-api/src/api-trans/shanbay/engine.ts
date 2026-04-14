@@ -1,81 +1,35 @@
 
 import {
   getText,
-  getInnerHTML,
-  handleNoResult,
-  handleNetWorkError
-} from '../../utils'
-import axios from 'axios'
-import DOMPurify from 'dompurify'
-import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
-import { fetchDirtyDOM } from '../../utils/fetch-dom'
+  getInnerHTML
+} from '../../utils/dom-utils'
 import type { ShanbayResult, ShanbaySearchResult } from './type'
+import { handleNoResult } from '../../utils/error-response'
 
-export const getSrcPage: GetSrcPageFunction = text => {
-  return `https://www.shanbay.com/bdc/mobile/preview/word?word=${text}`
-}
+const HOST = 'https://www.shanbay.com'
 
-const HOST = 'http://www.shanbay.com'
-
-/**
- * ！！！！！！！！！！！！！！！！
- * Disable
- * 当前翻译暂时不可用
- * @param text
- * @returns
- * ！！！！！！！！！！！！！！！！
- */
-export const search: SearchFunction<ShanbayResult> = async (
-  text
-) => {
-  // const options = opt.profile.shanbay.options
-  return fetchDirtyDOM(
-    'https://www.shanbay.com/bdc/mobile/preview/word?word=' +
-      encodeURIComponent(text.replace(/\s+/g, ' '))
-  )
-    .catch(handleNetWorkError)
-    .then(doc => checkResult(doc))
-}
-
-function checkResult (
-  doc: Document
-): ShanbaySearchResult | Promise<ShanbaySearchResult> {
+export function handleDOM(doc: Document): ShanbaySearchResult | Promise<ShanbaySearchResult> {
   const $typo = doc.querySelector('.error-typo')
-  if (!$typo) {
-    return handleDOM(doc)
+  if ($typo) {
+    return handleNoResult()
   }
-  return handleNoResult()
+  return handleLexicon(doc)
 }
 
-function loadSentences (id: string) {
-  return axios
-    .get(
-      `https://www.shanbay.com/api/v1/bdc/example/?vocabulary_id=${id}&type=sys`
-    )
-    .then(({ data: { data } }) => {
-      if (Array.isArray(data)) {
-        return data.map(
-          (sentence: { annotation: string; translation: string }) => {
-            return {
-              annotation: DOMPurify.sanitize(sentence.annotation),
-              translation: DOMPurify.sanitize(sentence.translation),
-            }
-          }
-        )
-      }
-      return []
-    })
-}
-
-async function handleDOM (
-  doc: Document
-): Promise<ShanbaySearchResult> {
+async function handleLexicon(doc: Document): Promise<ShanbaySearchResult> {
   const word = doc.querySelector('.word-spell')
+  const title = getText(doc, '.word-spell')
+  const pattern = getText(doc, '.pattern')
+
+  if (!title) {
+    return handleNoResult()
+  }
+
   const result: ShanbayResult = {
     id: 'shanbay',
     type: 'lex',
-    title: getText(doc, '.word-spell'),
-    pattern: getText(doc, '.pattern'),
+    title,
+    pattern,
     prons: [],
     sentences: [],
   }
@@ -94,10 +48,5 @@ async function handleDOM (
 
   result.wordId = word && word.getAttribute('data-id')
 
-
-  if (result.title) {
-    return { result, audio }
-  }
-
-  return handleNoResult()
+  return { result, audio }
 }

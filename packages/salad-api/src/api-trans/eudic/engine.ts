@@ -1,44 +1,19 @@
 
-import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
-
 import type { EudicResult, EudicResultItem } from './type'
-import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '@/core/api-server/api-common/search-type'
-import { handleNetWorkError, getText, handleNoResult } from '@/core/api-server/utils'
+import { getText } from '../../utils/dom-utils'
+import type { AtomSearchResult } from '../../types/res-type'
 
-export const getSrcPage: GetSrcPageFunction = text => {
-  return `https://dict.eudic.net/dicts/en/${text}`
-}
+type EudicSearchResult = AtomSearchResult<EudicResult>
 
-type EudicSearchResult = DictSearchResult<EudicResult>
-
-
-export const search: SearchFunction<EudicResult> = async (
-  text,
-  opt
-) => {
-  const newText = encodeURIComponent(
-    text
-      .split(/\s+/)
-      .slice(0, 2)
-      .join(' ')
-  )
-  const options = opt.profile.eudic.options
-
-  return fetchDirtyDOM('https://dict.eudic.net/dicts/en/' + newText)
-    .catch(handleNetWorkError)
-    .then(validator)
-    .then(doc => handleDOM(doc, options))
-}
-
-function handleDOM (
+export function handleDOM (
   doc: Document,
-  { resultCount }: { resultCount: number }
+  options: { resultCount: number }
 ): EudicSearchResult | Promise<EudicSearchResult> {
   const result: EudicResult = []
   const audio: { uk?: string; us?: string } = {}
 
   const $items = Array.from(doc.querySelectorAll('#lj_ting .lj_item'))
-  for (let i = 0; i < $items.length && result.length < resultCount; i++) {
+  for (let i = 0; i < $items.length && result.length < options.resultCount; i++) {
     const $item = $items[i]
     const item: EudicResultItem = { chs: '', eng: '' }
 
@@ -74,25 +49,5 @@ function handleDOM (
     return { result, audio }
   }
 
-  return handleNoResult()
-}
-
-function validator (doc: Document): Document | Promise<Document> {
-  if (doc.querySelector('#TingLiju')) {
-    return doc
-  }
-
-  const status = doc.querySelector('#page-status') as HTMLInputElement
-  if (!status || !status.value) {
-    return handleNoResult()
-  }
-
-  const formData = new FormData()
-  formData.append('status', status.value)
-
-  return fetchDirtyDOM('https://dict.eudic.net/Dicts/en/tab-detail/-12', {
-    method: 'POST',
-    body: formData,
-    credentials: 'omit',
-  })
+  return { result: [] }
 }

@@ -1,50 +1,18 @@
 
-import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
-import type { HTMLString } from '../../types'
+import type { AtomSearchResult } from '../../types/res-type'
 import {
   getText,
   getInnerHTML,
   handleNoResult,
-  handleNetWorkError,
   getFullLink
-} from '../../utils'
-import { fetchDirtyDOM } from '../../utils/fetch-dom'
-
-export const getSrcPage: GetSrcPageFunction = text => {
-  return `https://jikipedia.com/search?phrase=${encodeURIComponent(text)}`
-}
+} from '../../utils/dom-utils'
+import type { JikipediaResult, JikipediaResultItem } from './type'
 
 const HOST = 'https://jikipedia.com'
 
-interface JikipediaResultItem {
-  title: string
-  content: HTMLString
-  likes: number
-  url?: string
-  author?: {
-    name: string
-    url: string
-  }
-}
+type JikipediaSearchResult = AtomSearchResult<JikipediaResult>
 
-export type JikipediaResult = JikipediaResultItem[]
-
-type JikipediaSearchResult = DictSearchResult<JikipediaResult>
-
-export const search: SearchFunction<JikipediaResult> = async (
-  text,
-  opt
-) => {
-  const options = opt.profile.jikipedia.options
-
-  return fetchDirtyDOM(
-    `https://jikipedia.com/search?phrase=${encodeURIComponent(text)}`
-  )
-    .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, options))
-}
-
-function handleDOM (
+export function handleDOM (
   doc: Document,
   { resultCount }: { resultCount: number }
 ): JikipediaSearchResult | Promise<JikipediaSearchResult> {

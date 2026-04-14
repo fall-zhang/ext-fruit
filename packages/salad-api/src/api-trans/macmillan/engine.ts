@@ -1,20 +1,40 @@
 
-import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
-import type { AllDictsConf } from '../../config'
-import type { HTMLString } from '../../types'
 import type { AtomGetSrcFunction } from '../../types/atom-type'
+import type { MacmillanResult, MacmillanResultLex } from './type'
 import {
   getInnerHTML,
-  handleNoResult,
-  handleNetWorkError,
-  externalLink,
-  removeChildren,
   getText,
-  removeChild,
   getFullLink,
   getOuterHTML
-} from '../../utils'
-import { fetchDirtyDOM } from '../../utils/fetch-dom'
+} from '../../utils/dom-utils'
+import { handleNoResult, handleNetWorkError } from '../../utils/error-response'
+
+function removeChildren(parent: ParentNode, selector: string): void {
+  parent.querySelectorAll(selector).forEach($el => $el.remove())
+}
+
+function removeChild(parent: ParentNode, selector: string): void {
+  const $el = parent.querySelector(selector)
+  if ($el) $el.remove()
+}
+
+function externalLink($a: HTMLAnchorElement): void {
+  if ($a.getAttribute('href')) {
+    $a.setAttribute('href', getFullLink(HOST, $a, 'href'))
+  }
+  $a.setAttribute('target', '_blank')
+  $a.setAttribute('rel', 'noopener noreferrer')
+}
+
+async function fetchDirtyDOM(url: string): Promise<Document> {
+  const res = await fetch(url)
+  const domText = await res.text()
+  const doc = new DOMParser().parseFromString(domText, 'text/html')
+  removeChildren(doc, '.visible-xs')
+  return doc
+}
+
+export type { MacmillanResult, MacmillanResultLex, MacmillanResultRelated, MacmillanPayload } from './type'
 
 export const getSrcPage: AtomGetSrcFunction = (text, localLang, profile) => {
   const lang = 'american'
@@ -27,54 +47,37 @@ export const getSrcPage: AtomGetSrcFunction = (text, localLang, profile) => {
 
 const HOST = 'http://www.macmillandictionary.com'
 
-export interface MacmillanResultLex {
-  type: 'lex'
-  title: string
-  senses: HTMLString
-  /** part of speech */
-  pos?: string
-  /** syntax coding */
-  sc?: string
-  phsym?: string
-  pron?: string
-  ratting?: number
-  toggleables: HTMLString[]
-  relatedEntries: Array<{
-    title: string
-    href: string
-  }>
+interface MacmillanOptions {
+  related: boolean
+  locale: 'uk' | 'us'
 }
 
-export interface MacmillanResultRelated {
-  type: 'related'
-  list: Array<{
-    title: string
-    href: string
-  }>
+type MacmillanSearchResult = {
+  result: MacmillanResult
+  audio?: { uk?: string }
 }
 
-export type MacmillanResult = MacmillanResultLex | MacmillanResultRelated
-
-type MacmillanSearchResult = DictSearchResult<MacmillanResult>
-
-export interface MacmillanPayload {
-  href?: string
+interface SearchOpt {
+  profile: {
+    macmillan: { options: MacmillanOptions }
+  } & Record<string, any>
+  localLang?: 'zh-CN' | 'zh-TW' | 'en'
 }
 
-export const search: SearchFunction<MacmillanResult> = async (
-  text,
-  opt
-) => {
+export const search = async (
+  text: string,
+  opt: SearchOpt
+): Promise<MacmillanSearchResult> => {
   const options = opt.profile.macmillan.options
 
-  return fetchMacmillanDom((await getSrcPage(text, opt.localLang || 'zh-CN', opt.profile)))
+  return fetchMacmillanDom((await getSrcPage(text, opt.localLang || 'zh-CN', opt.profile as any)))
     .catch(handleNetWorkError)
     .then(doc => checkResult(doc, options))
 }
 
 async function checkResult (
   doc: Document,
-  options: AllDictsConf['macmillan']['options']
+  options: MacmillanOptions
 ): Promise<MacmillanSearchResult> {
   if (doc.querySelector('.senses')) {
     return handleDOM(doc)
@@ -97,7 +100,7 @@ async function checkResult (
   return handleNoResult()
 }
 
-function handleDOM (
+export function handleDOM (
   doc: Document
 ): MacmillanSearchResult | Promise<MacmillanSearchResult> {
   const $entry = doc.querySelector('#entryContent .left-content')
@@ -166,7 +169,5 @@ function handleDOM (
 }
 
 async function fetchMacmillanDom (url: string): Promise<Document> {
-  const doc = await fetchDirtyDOM(url)
-  removeChildren(doc, '.visible-xs')
-  return doc
+  return fetchDirtyDOM(url)
 }

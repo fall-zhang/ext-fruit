@@ -1,48 +1,14 @@
-import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
-import type { HTMLString } from '../../types'
+import type { DictSearchResult, SearchFunction } from '../../types/atom-type'
 import {
   getText,
   getInnerHTML,
   handleNoResult,
   handleNetWorkError,
   removeChildren
-} from '../../utils'
+} from '../../utils/dom-utils'
 import { fetchDirtyDOM } from '../../utils/fetch-dom'
+import type { JukuuLang, JukuuTransItem, JukuuResult } from './type'
 
-export type JukuuLang = 'engjp' | 'zhjp' | 'zheng'
-
-function getUrl (text: string, lang: JukuuLang) {
-  const newText = encodeURIComponent(text.replace(/\s+/g, '+'))
-
-  switch (lang) {
-    case 'engjp':
-      return 'http://www.jukuu.com/jsearch.php?q=' + newText
-    case 'zhjp':
-      return 'http://www.jukuu.com/jcsearch.php?q=' + newText
-    // case 'zheng':
-    default:
-      return 'http://www.jukuu.com/search.php?q=' + newText
-  }
-}
-
-export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
-  return getUrl(text, profile.jukuu.options.lang)
-}
-
-interface JukuuTransItem {
-  trans: HTMLString
-  original: string
-  src: string
-}
-
-export interface JukuuResult {
-  lang: JukuuLang
-  sens: JukuuTransItem[]
-}
-
-export interface JukuuPayload {
-  lang?: JukuuLang
-}
 
 type JukuuSearchResult = DictSearchResult<JukuuResult>
 
@@ -53,13 +19,13 @@ export const search: SearchFunction<JukuuResult> = async (
   const lang = opt.profile.jukuu.options.lang
   return fetchDirtyDOM(getUrl(text, lang))
     .catch(handleNetWorkError)
-    .then(handleDOM)
+    .then(doc => handleDOM(doc, lang))
     .then(sens =>
       (sens.length > 0 ? { result: { lang, sens } } : handleNoResult())
     )
 }
 
-function handleDOM (doc: Document): JukuuTransItem[] {
+export function handleDOM (doc: Document, lang: JukuuLang): JukuuTransItem[] {
   return [...doc.querySelectorAll('tr.e')]
     .map($e => {
       const $trans = $e.lastElementChild

@@ -1,6 +1,6 @@
 import type { Language } from '@P/open-trans/languages'
 import type { AtomSearchResult } from './res-type'
-import type { AllDictsConf } from './all-config'
+import type { AllDictsConf } from '../api-trans'
 
 /**
  * 获取该引擎 fetch 方法所需的参数
@@ -33,7 +33,7 @@ export type AtomResponseHandle<Result = unknown> = {
   ): Promise<AtomSearchResult<Result>>
 }
 /**
- * 获取当前查词引擎的源页面
+ * 获取当前单词对应查词引擎的源页面
  *
  * Return a dictionary source page url for the dictionary header
  */

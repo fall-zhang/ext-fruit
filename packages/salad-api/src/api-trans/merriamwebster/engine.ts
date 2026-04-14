@@ -1,72 +1,31 @@
-import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
-import {
-  handleNetWorkError
-} from '../../utils'
-import { fetchDirtyDOM } from '../../utils/fetch-dom'
+import type { Meaning, MeaningGroup, Section, Phonetic, Pronunciation, Group, MerriamWebsterResultV2 } from './type'
+export type { Meaning, MeaningGroup, Section, Phonetic, Pronunciation, Group, MerriamWebsterResultV2 } from './type'
+import type { AtomSearchResult } from '../../types/res-type'
+import { handleNoResult } from '../../utils/dom-utils'
 
-export const getSrcPage: GetSrcPageFunction = text => {
-  return `https://www.merriam-webster.com/dictionary/${text}`
+export function handleDOM(
+  doc: Document,
+  options: { resultCount: number }
+): AtomSearchResult<MerriamWebsterResultV2> | Promise<AtomSearchResult<MerriamWebsterResultV2>> {
+  const eleContent = _getContentEle(doc)
+
+  if (!eleContent) {
+    return handleNoResult()
+  }
+
+  const result = getResult(doc)
+
+  if (result.groups.length > 0) {
+    return { result }
+  }
+  return handleNoResult()
 }
 
-export interface Meaning {
-  explaining?: string
-  examples?: string[]
-}
-
-export type MeaningGroup = Meaning[]
-
-export interface Section {
-  // could be transitive or intranstive if pos was verb
-  title?: string
-  meaningGroups: MeaningGroup[]
-}
-
-export interface Phonetic {
-  symbol?: string
-  audio?: string
-}
-
-export interface Pronunciation {
-  syllable?: string
-  phonetics: Phonetic[]
-}
-
-export interface Group {
-  title?: string
-  pos?: string
-  pr?: Pronunciation
-  conjugation?: string
-  sections: Section[]
-  forms?: string[]
-}
-
-export interface MerriamWebsterResultV2 {
-  groups: Group[]
-  synonyms?: Array<[string, string[]]>
-  etymology?: Array<[string, string]>
-}
-
-export const search: SearchFunction<MerriamWebsterResultV2> = (
-  text
-) => {
-  // const options = profile.dicts.all.merriamwebster.options
-
-  return fetchDirtyDOM(
-    'https://www.merriam-webster.com/dictionary/' +
-      encodeURIComponent(text.replace(/\s+/g, ' '))
-  )
-    .catch(handleNetWorkError)
-    .then(doc => {
-      return { result: getResult(doc) }
-      // return handleDOM(doc, options)
-    })
-}
-
-export function _getContentEle (doc: Document): Element {
+export function _getContentEle (doc: Document): Element | null {
   const content = doc.querySelector('#left-content') as HTMLElement
 
   if (!content || !content.querySelector('div[id^=dictionary-entry]')) {
-    throw new Error('NO_RESULT')
+    return null
   }
   return content
 }
@@ -251,6 +210,10 @@ export function _getExamples (meaning: Element): string[] | undefined {
 
 export function getResult (dom: Document): MerriamWebsterResultV2 {
   const eleContent = _getContentEle(dom)
+
+  if (!eleContent) {
+    return { groups: [] }
+  }
 
   const groups: Group[] = []
   const synonyms = _getSynonyms(eleContent)

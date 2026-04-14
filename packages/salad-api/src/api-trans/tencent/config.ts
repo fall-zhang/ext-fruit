@@ -7,6 +7,18 @@ export type TencentLanguage = ExtendSupportLang<
 
 export type TencentConfig = DictItemBase & DictItemOption<TencentLanguage>
 
+export type AuthBody = {
+  secretId: string
+  secretKey: string
+}
+
+export const auth: AuthBody = {
+  secretId: '',
+  secretKey: '',
+}
+
+export const url = 'https://curl.qcloud.com/imsowZzT'
+
 export default (): TencentConfig => ({
   lang: '11011111',
   selectionLang: {

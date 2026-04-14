@@ -1,90 +1,23 @@
 
-import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
-import type { HTMLString } from '../../types'
+import type { AtomSearchResult } from '../../types/res-type'
+import type { LongmanResult, LongmanResultLex, LongmanResultRelated, LongmanResultEntry } from './type'
 import {
   getText,
   getInnerHTML,
   handleNoResult,
   handleNetWorkError,
   getFullLink
-} from '../../utils'
+} from '../../utils/dom-utils'
 import { getStaticSpeaker } from '@/components/Speaker'
-import { fetchDirtyDOM } from '../../utils/fetch-dom'
 import type { AllDictsConf } from '../../config'
-
-export const getSrcPage: GetSrcPageFunction = text => {
-  return `https://www.ldoceonline.com/dictionary/${text
-    .trim()
-    .split(/\s+/)
-    .join('-')}`
-}
 
 const HOST = 'https://www.ldoceonline.com'
 
-export interface LongmanResultEntry {
-  title: {
-    HWD: string
-    HYPHENATION: string
-    HOMNUM: string
-  }
-  senses: HTMLString[]
-  prons: Array<{
-    lang: string
-    pron: string
-  }>
-  topic?: {
-    title: string
-    href: string
-  }
-  phsym?: string
-  level?: {
-    rate: number
-    title: string
-  }
-  freq?: Array<{
-    title: string
-    rank: string
-  }>
-  pos?: string
-  collocations?: HTMLString
-  grammar?: HTMLString
-  thesaurus?: HTMLString
-  examples?: HTMLString[]
-}
+type LongmanSearchResult = AtomSearchResult<LongmanResult>
+type LongmanSearchResultLex = AtomSearchResult<LongmanResultLex>
+type LongmanSearchResultRelated = AtomSearchResult<LongmanResultRelated>
 
-export interface LongmanResultLex {
-  type: 'lex'
-  bussinessFirst: boolean
-  contemporary: LongmanResultEntry[]
-  bussiness: LongmanResultEntry[]
-  wordfams?: HTMLString
-}
-
-export interface LongmanResultRelated {
-  type: 'related'
-  list: HTMLString
-}
-
-export type LongmanResult = LongmanResultLex | LongmanResultRelated
-
-type LongmanSearchResult = DictSearchResult<LongmanResult>
-type LongmanSearchResultLex = DictSearchResult<LongmanResultLex>
-type LongmanSearchResultRelated = DictSearchResult<LongmanResultRelated>
-
-export const search: SearchFunction<LongmanResult> = (
-  text,
-  opt
-) => {
-  const options = opt.profile.longman.options
-  return fetchDirtyDOM(
-    'http://www.ldoceonline.com/dictionary/' +
-      text.toLocaleLowerCase().replace(/[^A-Za-z0-9]+/g, '-')
-  )
-    .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, options))
-}
-
-function handleDOM (
+export function handleDOM(
   doc: Document,
   options: AllDictsConf['longman']['options']
 ): LongmanSearchResult | Promise<LongmanSearchResult> {
@@ -96,7 +29,7 @@ function handleDOM (
   return handleNoResult()
 }
 
-function handleDOMLex (
+function handleDOMLex(
   doc: Document,
   options: AllDictsConf['longman']['options']
 ): LongmanSearchResultLex | Promise<LongmanSearchResultLex> {
@@ -241,7 +174,7 @@ function handleDOMLex (
   return { result, audio }
 }
 
-function handleDOMRelated (
+function handleDOMRelated(
   doc: Document
 ): LongmanSearchResultRelated | Promise<LongmanSearchResultRelated> {
   const $didyoumean = doc.querySelector('.didyoumean')

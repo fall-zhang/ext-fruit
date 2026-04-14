@@ -1,62 +1,21 @@
-
-import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
-import type { AllDictsConf } from '../../config'
-import type { HTMLString } from '../../types'
+import type { AtomSearchResult } from '../../types/res-type'
 import {
   getInnerHTML,
   getFullLink,
   handleNoResult,
-  getText,
-  handleNetWorkError
-} from '../../utils'
-import { fetchDirtyDOM } from '../../utils/fetch-dom'
-
-export const getSrcPage: GetSrcPageFunction = (text: string) => {
-  return (
-    'http://dict.cnki.net/old/dict_result.aspx?scw=' + encodeURIComponent(text)
-  )
-}
+  getText
+} from '../../utils/dom-utils'
+import type { CNKIResult, CNKIDictItem, CNKISensItem } from './type'
+import type { CnkiConfig } from './config'
 
 const HOST = 'http://dict.cnki.net/old'
 
-interface CNKIDictItem {
-  word: string
-  href: string
-}
+type CnkiSearchResult = AtomSearchResult<CNKIResult>
 
-interface CNKISensItem {
-  title: string
-  more: string
-  sens: HTMLString[]
-}
-
-export interface CNKIResult {
-  dict: CNKIDictItem[]
-  senbi: CNKISensItem[]
-  seneng: CNKISensItem[]
-  // digests?: {
-  //   more: string
-  //   content: HTMLString
-  // }
-}
-
-type CNKISearchResult = DictSearchResult<CNKIResult>
-
-export const search: SearchFunction<CNKIResult> = async (
-  text,
-  opt
-) => {
-  return fetchDirtyDOM(
-    'http://dict.cnki.net/old/dict_result.aspx?scw=' + encodeURIComponent(text)
-  )
-    .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, opt.profile.cnki.options))
-}
-
-function handleDOM (
+export function handleDOM (
   doc: Document,
-  options: AllDictsConf['cnki']['options']
-): CNKISearchResult | Promise<CNKISearchResult> {
+  options: CnkiConfig['options']
+): CnkiSearchResult | Promise<CnkiSearchResult> {
   const $entries = [...doc.querySelectorAll('.main-table')]
 
   const result: CNKIResult = {
@@ -103,32 +62,8 @@ function handleDOM (
       'showlj_'
     )
   }
-  // if (options.digests) {
-  //   const $digests = $entries.find($e => Boolean($e.querySelector('img[src="images/04.gif"]')))
-  //   if ($digests) {
-  //     let more = ''
-
-  //     $digests.querySelectorAll('td[align=right]').forEach($td => {
-  //       if (($td.textContent || '').trim().endsWith('更多相关文摘')) {
-  //         const $a = $td.querySelector('a')
-  //         if ($a) {
-  //           more = getFullLink($a, 'href')
-  //         }
-  //       }
-  //       $td.remove()
-  //     })
-
-  //     result.digests = {
-  //       more,
-  //       content: [...$digests.querySelectorAll('p')]
-  //         .map($p => getOuterHTML($p).replace(/&nbsp;/g, ''))
-  //         .join('')
-  //     }
-  //   }
-  // }
 
   if (
-    // result.digests ||
     result.dict.length > 0 ||
     result.senbi.length > 0 ||
     result.seneng.length > 0

@@ -1,34 +1,15 @@
 
 import { getStaticSpeakerString, getStaticSpeaker } from '@/components/Speaker'
-import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
 import type { HTMLString } from '../../types'
-import { handleNetWorkError, getOuterHTML, removeChildren, getText, externalLink, handleNoResult } from '../../utils'
-import { fetchDirtyDOM } from '../../utils/fetch-dom'
-
-export const getSrcPage = (text: string) => {
-  return `https://ejje.weblio.jp/content/${encodeURIComponent(
-    text.replace(/\s+/g, '+')
-  )}`
-}
+import { handleNetWorkError, getOuterHTML, removeChildren, getText, externalLink, handleNoResult } from '../../utils/error-response'
+import type { WeblioejjeResult } from './type'
+import type { AtomSearchResult } from '../../types/res-type'
 
 const HOST = 'https://ejje.weblio.jp'
 
-export type WeblioejjeResult = Array<{
-  title?: string
-  content: HTMLString
-}>
+type WeblioejjeSearchResult = AtomSearchResult<WeblioejjeResult>
 
-type WeblioejjeSearchResult = DictSearchResult<WeblioejjeResult>
-
-export const search: SearchFunction<WeblioejjeResult> = async (
-  text
-) => {
-  return fetchDirtyDOM(getSrcPage(text))
-    .catch(handleNetWorkError)
-    .then(handleDOM)
-}
-
-function handleDOM (
+export function handleDOM (
   doc: Document
 ): WeblioejjeSearchResult | Promise<WeblioejjeSearchResult> {
   const result: WeblioejjeResult = []

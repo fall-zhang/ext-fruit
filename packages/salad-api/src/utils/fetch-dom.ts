@@ -1,4 +1,4 @@
-export function fetchDirtyDOMReq (
+export function getFetchDOMReq (
   url: string,
   config?: Partial<RequestInit>
 ) {
@@ -11,6 +11,7 @@ export function fetchDirtyDOMReq (
   })
   return request
 }
+
 
 export async function parseDirtyDom (res: Response): Promise<Document> {
   const domText = await res.text()

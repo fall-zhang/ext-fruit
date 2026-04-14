@@ -1,84 +1,25 @@
 import { handleNetWorkError, getChsToChz, externalLink, getInnerHTML, handleNoResult } from '@/core/api-server/utils'
-import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
 import type { AppConfig } from '@/config/app-config'
 import { getStaticSpeaker } from '@/components/Speaker'
-import type { GetSrcPageFunction, SearchFunction, DictSearchResult } from '../../api-common/search-type'
-import type { HTMLString } from '../../types'
+import type { AtomSearchResult } from '../../types/res-type'
+import type { COBUILDResult, COBUILDColResult, COBUILDSection } from './type'
 
-export const getSrcPage: GetSrcPageFunction = text => {
-  return (
-    'https://www.collinsdictionary.com/dictionary/english/' +
-    encodeURIComponent(text.replace(/\s+/g, '-'))
-  )
-}
+type CobuildSearchResult = AtomSearchResult<COBUILDResult>
 
-export interface COBUILDCibaResult {
-  type: 'ciba'
-  title: string
-  defs: HTMLString[]
-  level?: string
-  star?: number
-  prons?: Array<{
-    phsym: string
-    audio: string
-  }>
-}
-
-export interface COBUILDColResult {
-  type: 'collins'
-  sections: Array<{
-    id: string
-    className: string
-    type: string
-    title: string
-    num: string
-    content: HTMLString
-  }>
-}
-
-export type COBUILDResult = COBUILDCibaResult | COBUILDColResult
-
-export const search: SearchFunction<COBUILDResult> = async (
-  recText,
-  opt
-) => {
-  const text = encodeURIComponent(recText.replace(/\s+/g, '-'))
-  const { options } = opt.profile.cobuild
-  const sources: string[] = [
-    'https://www.collinsdictionary.com/dictionary/english/',
-    'https://www.collinsdictionary.com/zh/dictionary/english/',
-  ]
-
-  if (options.cibaFirst) {
-    sources.reverse()
-  }
-
-  try {
-    return handleDOM(await fetchDirtyDOM(sources[0] + text), opt.localLang)
-  } catch (e) {
-    let doc: Document
-    try {
-      doc = await fetchDirtyDOM(sources[1] + text)
-    } catch (e) {
-      return handleNetWorkError(e)
-    }
-    return handleDOM(doc, opt.localLang)
-  }
-}
-
-async function handleDOM (
+export function handleDOM (
   doc: Document,
-  localLang?: 'en' | 'zh-CN' | 'zh-TW'
-): Promise<DictSearchResult<COBUILDColResult>> {
+  options: { localLang?: 'en' | 'zh-CN' | 'zh-TW' }
+): CobuildSearchResult | Promise<CobuildSearchResult> {
+  const { localLang } = options
   const transform = getChsToChz(localLang)
 
-  const result: COBUILDColResult = {
+  const colResult: COBUILDColResult = {
     type: 'collins',
     sections: [],
   }
   const audio: { uk?: string; us?: string } = {}
 
-  result.sections = [
+  colResult.sections = [
     ...doc.querySelectorAll<HTMLDivElement>('[data-type-block]'),
   ]
     .filter($section => {
@@ -160,8 +101,8 @@ async function handleDOM (
       }
     })
 
-  if (result.sections.length > 0) {
-    return { result, audio }
+  if (colResult.sections.length > 0) {
+    return { result: colResult, audio }
   }
 
   return handleNoResult()

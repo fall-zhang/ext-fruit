@@ -1,13 +1,19 @@
 
 import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
 import type { AllDictsConf } from '../../config'
-import type { HTMLString } from '../../types'
+import type { AtomSearchResult } from '../../types/res-type'
 import {
   getInnerHTML,
   handleNoResult,
   handleNetWorkError
-} from '../../utils'
+} from '../../utils/error-response'
 import { fetchDirtyDOM } from '../../utils/fetch-dom'
+import type {
+  WebsterLearnerResult,
+  WebsterLearnerResultItem,
+  WebsterLearnerResultLex,
+  WebsterLearnerResultRelated,
+} from './type'
 
 export const getSrcPage: GetSrcPageFunction = text => {
   return `http://www.learnersdictionary.com/definition/${text
@@ -18,36 +24,8 @@ export const getSrcPage: GetSrcPageFunction = text => {
 
 const HOST = 'http://www.learnersdictionary.com'
 
-interface WebsterLearnerResultItem {
-  title: HTMLString
-  pron?: string
-
-  infs?: HTMLString
-  infsPron?: string
-
-  labels?: HTMLString
-  senses?: HTMLString
-  phrases?: HTMLString
-  derived?: HTMLString
-  arts?: string[]
-}
-
-export interface WebsterLearnerResultLex {
-  type: 'lex'
-  items: WebsterLearnerResultItem[]
-}
-
-export interface WebsterLearnerResultRelated {
-  type: 'related'
-  list: HTMLString
-}
-
-export type WebsterLearnerResult =
-  | WebsterLearnerResultLex |
-  WebsterLearnerResultRelated
-
-type WebsterLearnerSearchResult = DictSearchResult<WebsterLearnerResult>
-type WebsterLearnerSearchResultLex = DictSearchResult<WebsterLearnerResultLex>
+type WebsterLearnerSearchResult = AtomSearchResult<WebsterLearnerResult>
+type WebsterLearnerSearchResultLex = AtomSearchResult<WebsterLearnerResultLex>
 
 export const search: SearchFunction<WebsterLearnerResult> = async (
   text,
@@ -60,10 +38,10 @@ export const search: SearchFunction<WebsterLearnerResult> = async (
       text.toLocaleLowerCase().replace(/[^A-Za-z0-9]+/g, '-')
   )
     .catch(handleNetWorkError)
-    .then(doc => checkResult(doc, options))
+    .then(doc => handleDOM(doc, options))
 }
 
-function checkResult (
+export function handleDOM(
   doc: Document,
   options: AllDictsConf['websterlearner']['options']
 ): WebsterLearnerSearchResult | Promise<WebsterLearnerSearchResult> {
@@ -71,7 +49,7 @@ function checkResult (
     '[id^="spelling"] .links'
   )
   if (!$alternative) {
-    return handleDOM(doc, options)
+    return handleDOMContent(doc, options)
   } else if (options.related) {
     return {
       result: {
@@ -83,7 +61,7 @@ function checkResult (
   return handleNoResult()
 }
 
-function handleDOM (
+function handleDOMContent(
   doc: Document,
   options: AllDictsConf['websterlearner']['options']
 ): WebsterLearnerSearchResultLex | Promise<WebsterLearnerSearchResultLex> {

@@ -1,37 +1,19 @@
-import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
-
 import {
   getText,
   getInnerHTML,
-  getOuterHTML,
-  handleNoResult,
-  handleNetWorkError
-} from '../../utils'
+  getOuterHTML
+} from '../../utils/dom-utils'
 import type { OaldictResult, Idiom, Mean, Sense } from './type'
-import type { DictSearchResult, GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
+import type { AtomSearchResult } from '../../types/res-type'
+import { handleNoResult } from '../../utils/error-response'
 
-
-export const getSrcPage: GetSrcPageFunction = text => {
-  return `https://www.oxfordlearnersdictionaries.com/search/english/direct/?q=${text}`
-}
 
 const HOST = 'https://www.oxfordlearnersdictionaries.com'
 
 
-type OaldictSearchResult = DictSearchResult<OaldictResult>
+type OaldictSearchResult = AtomSearchResult<OaldictResult>
 
-export const search: SearchFunction<OaldictResult> = (
-  text
-) => {
-  return fetchDirtyDOM(
-    'https://www.oxfordlearnersdictionaries.com/search/english/direct/?q=' +
-      encodeURIComponent(text.replace(/\s+/g, ' '))
-  )
-    .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc))
-}
-
-function handleDOM (
+export function handleDOM (
   doc: Document
 ): OaldictSearchResult | Promise<OaldictSearchResult> {
   const result: OaldictResult = {

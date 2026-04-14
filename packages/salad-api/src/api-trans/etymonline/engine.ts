@@ -1,32 +1,21 @@
 import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
-import type {
-  HTMLString
-} from '../../types'
+import type { HTMLString } from '../../types'
 import {
   getText,
   getInnerHTML,
   getFullLink,
   handleNoResult,
   handleNetWorkError
-} from '../../utils'
+} from '../../utils/dom-utils'
 import type { AllDictsConf } from '@/core/api-server/config'
-import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
+import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
+import type { EtymonlineResult, EtymonlineResultItem } from './type'
 
 const HOST = 'https://www.etymonline.com'
 
-type EtymonlineResultItem = {
-  id: string
-  title: string
-  def: HTMLString
-  href?: string
-  chart?: string
-}
-
-export type EtymonlineResult = EtymonlineResultItem[]
-
 type EtymonlineSearchResult = DictSearchResult<EtymonlineResult>
 
-export const search: SearchFunction<EtymonlineResult> = async (
+export const search: (text: string, opt: any) => Promise<EtymonlineSearchResult> = async (
   text,
   opt
 ) => {
@@ -40,7 +29,7 @@ export const search: SearchFunction<EtymonlineResult> = async (
     .then(doc => handleDOM(doc, options))
 }
 
-function handleDOM (
+export function handleDOM (
   doc: Document,
   options: AllDictsConf['etymonline']['options']
 ): EtymonlineSearchResult | Promise<EtymonlineSearchResult> {

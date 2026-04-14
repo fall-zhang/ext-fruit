@@ -3,19 +3,13 @@ import { Caiyun } from '@salad/trans/service-caiyun/index'
 
 import { getTranslator as getBaiduTranslator } from '../baidu/engine'
 import type { SearchFunction } from '../../api-common/search-type'
-import { machineResult, type MachineTranslateResult } from '../../api-common/result-handle'
+import { machineResult } from '../../api-common/result-handle'
 import { detectLangInfo } from '../../api-common/detect-lang'
-import type { AtomGetSrcFunction } from '../../types/atom-type'
+import type { CaiyunResult } from './type'
 
 export const getTranslator = memoizeOne(() =>
   new Caiyun({ })
 )
-
-export const getSrcPage: AtomGetSrcFunction = () => {
-  return 'https://fanyi.caiyunapp.com/'
-}
-
-export type CaiyunResult = MachineTranslateResult
 
 export const search: SearchFunction<
   CaiyunResult
