@@ -8,6 +8,7 @@ import type { SaladConfigType } from '@/config/app-config/config-type'
 import { SaladPanel } from './-panel-view/salad-panel'
 import { listenFromWindow } from '@/core/bridge'
 import { message } from 'antd'
+import { TooltipProvider } from '@P/ui/components/tooltip'
 /**
  * 生词本
  */
@@ -19,11 +20,12 @@ const appWindow = new Window('search-view')
 function RouteComponent () {
   const [isAlwaysOnTop, setAlwaysOnTop] = useState(false)
   const [isInNotebook, setIsInNotebook] = useState(false)
-  const [saladictConf] = useState<SaladConfigType>()
 
   // 窗口间通信示例：监听来自配置窗口的消息
   useEffect(() => {
     // let unlisten: (() => void) | null = null
+    // console.timeEnd('start render')
+
     let unListenRec: (() => void) | null = null
 
     const setupListener = async () => {
@@ -53,7 +55,6 @@ function RouteComponent () {
     // 组件卸载时清理监听器
     return () => {
       if (unListenRec) {
-        console.log('⚡️ line:63 ~ unListenRec: 取消监听')
         unListenRec()
       }
     }
@@ -82,9 +83,8 @@ function RouteComponent () {
     const state = await getCurrentWindow().hide()
   }
   return <>
-    <div className='w-full relative h-screen '>
+    <div className='w-full relative h-screen'>
       <SaladPanel
-        config={saladictConf}
         customButton={
           <>
             <FavBtn

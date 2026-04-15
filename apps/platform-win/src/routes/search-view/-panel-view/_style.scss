@@ -103,3 +103,24 @@
   transform-style: flat !important;
   word-break: normal !important;
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: #c0c0c0;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 6px;
+  border-radius: 3px;
+  background-color: #4b4b4b;
+}
+
+.dark {
+  ::-webkit-scrollbar {
+    background-color: #626262;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #cacaca;
+  }
+}

@@ -9,7 +9,6 @@ const router = createRouter({ routeTree })
 const container = document.getElementById('root')!
 const root = createRoot(container)
 
-console.time('start render')
 // async function render () {
 root.render(<StrictMode>
   <RouterProvider router={router} />

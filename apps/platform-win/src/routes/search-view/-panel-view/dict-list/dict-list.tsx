@@ -48,19 +48,18 @@ export const DictList: FC<DictListProps> = (props) => {
   const dicts = props.dicts
 
   return (
-    <div className="dictList overflow-hidden">
+    <div className="dict-list-container overflow-hidden">
       <Suspense fallback={<h1>🌀 Loading...</h1>}>
         <Activity mode={props.dicts.length > 0 ? 'visible' : 'hidden'}>
           {dicts.map(data => (
             <DictItem
               withAnimation={animation}
               panelCSS={''}
-            
               openDictSrcPage={(id, ctrlKey) => {
               }}
-              onUserFold={ (id, fold) => {
+              onUserFold={(id, fold) => {
               }}
-              searchText={ (arg) => {
+              searchText={(arg) => {
               }}
               onSpeakerPlay={async (src) => {
               }}

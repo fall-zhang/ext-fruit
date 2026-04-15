@@ -1,7 +1,5 @@
 import { createFileRoute, Link, Outlet, useLocation, redirect } from '@tanstack/react-router'
 import {
-  LayoutOutlined,
-  ProfileOutlined,
   SwapOutlined,
   SoundOutlined
 } from '@ant-design/icons'
@@ -10,7 +8,7 @@ import i18n from '@/locales/i18n'
 import { ConfirmProvider } from '@/context/confirm-context'
 
 import { TooltipProvider } from '@P/ui/components/tooltip'
-import { InfoIcon, SettingsIcon } from 'lucide-react'
+import { InfoIcon, ListIcon, SettingsIcon } from 'lucide-react'
 
 export const Route = createFileRoute('/configs')({
   component: RouteComponent,
@@ -54,7 +52,7 @@ const menuItems = [
     id: 'dict-panel',
     path: '/configs/dict-panel',
     label: i18n.t('options:nav.DictPanel'),
-    icon: <ProfileOutlined className="w-4 h-4" />,
+    icon: <ListIcon className="w-4 h-4" />,
   },
   {
     id: 'pronunciation',

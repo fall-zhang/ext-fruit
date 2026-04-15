@@ -6,7 +6,6 @@ import clsx from 'clsx'
 import { MenuBar } from './MenuBar/MenuBar'
 import { useConfContext } from '@/context/conf-context'
 import { DictList } from './dict-list/dict-list'
-import { debounce } from 'es-toolkit'
 import { newWord } from '@/utils/dict-utils/new-word'
 import { SALADICT_PANEL } from '@/config/const/saladict'
 import { SearchArea } from './search-input/search-area'
@@ -105,8 +104,7 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
             enableSuggest={enableSuggest}
             onSend={searchText} />
         </div>
-        <DictList
-          dicts={renderedDicts} />
+        <DictList dicts={renderedDicts} />
         {/* {store.waveformBox && <WaveformBox />} */}
       </div>
     </div>
