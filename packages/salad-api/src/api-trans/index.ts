@@ -1,5 +1,5 @@
 import { getPreference as baidu } from './baidu/config'
-import bing from './bing/config'
+import { getPreference as bing } from './bing/config'
 import { getPreference as ahdict } from './ahdict/config'
 import oaldict from './oaldict/config'
 import caiyun from './caiyun/config'

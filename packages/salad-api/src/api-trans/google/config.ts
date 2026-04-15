@@ -7,7 +7,7 @@ export default (): ApiInfo => ({
   to: ['en', 'zh-CN', 'zh-TW', 'ja', 'fr', 'de', 'es'],
   enName: 'Google Translate',
   zhName: '谷歌翻译',
-  type: 'machine-trans',
+  type: 'paragraph-trans',
   maxWord: 9999999,
   minWord: 1,
 })

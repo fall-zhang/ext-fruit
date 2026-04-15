@@ -10,8 +10,16 @@ export const getTranslator = memoizeOne(
   () => new Tencent({})
 )
 
-export const getSrcPage: AtomGetSrcFunction = (text, _opt) => {
-  return `https://fanyi.qq.com/#auto/en/${text}`
+export const getSrcPage: AtomGetSrcFunction = (text, localLang) => {
+  let lang
+  if (localLang === 'zh-CN') {
+    lang = 'zh-CHS'
+  } else if (localLang === 'zh-TW') {
+    lang = 'zh-CHT'
+  } else {
+    lang = 'en'
+  }
+  return `https://fanyi.qq.com/#auto/${lang}/${text}`
 }
 
 export const getFetchRequest: AtomFetchRequest<TencentResult> = (text, opt) => {

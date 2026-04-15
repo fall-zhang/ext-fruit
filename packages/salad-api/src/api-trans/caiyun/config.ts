@@ -1,12 +1,6 @@
 
-
-import type { DictItemBase, DictItemOption } from '@/core/api-server/types/dict-base'
-import type { ExtendSupportLang } from '@P/open-trans/languages/src/languages'
 import type { ApiInfo } from '../../types/api-info'
 
-export type CaiyunLanguage = ExtendSupportLang<'zh-CN' | 'en' | 'ja'>
-
-export type CaiyunConfig = DictItemBase & DictItemOption<CaiyunLanguage>
 
 export interface AuthBody {
   token: string

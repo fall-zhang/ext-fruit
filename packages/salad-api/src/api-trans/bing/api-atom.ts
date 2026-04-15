@@ -16,5 +16,6 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to, 
   const dom = await parseDirtyDom(res)
   // Derive localLang from the 'to' language: zh-TW for Traditional Chinese, otherwise zh-CN
   const localLang = to === 'zh-TW' ? to : 'zh-CN'
-  return handleDOM(dom, { profile, localLang })
+  return handleDOM(dom, { localLang })
 }
+

@@ -1,12 +1,12 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
+import type { AuthBody } from './config'
 import type { CaiyunResult } from './type'
-import type { CaiyunConfig } from './config'
 
 export const getSrcPage: AtomGetSrcFunction = () => {
   return 'https://fanyi.caiyunapp.com/'
 }
 
-export const getFetchRequest: AtomFetchRequest<CaiyunConfig> = (text, {
+export const getFetchRequest: AtomFetchRequest<AuthBody> = (text, {
   from,
   to,
   option,

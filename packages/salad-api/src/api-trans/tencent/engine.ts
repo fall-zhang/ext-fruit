@@ -1,31 +1,14 @@
 import memoizeOne from 'memoize-one'
-import { Tencent } from '@salad/trans/service-tencent/index'
+import { Tencent } from '@P/open-trans/service-tencent/index'
 
 import { getTranslator as getBaiduTranslator } from '../baidu/engine'
 import { machineResult, type MachineTranslateResult } from '../../api-common/result-handle'
-import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
+import type { SearchFunction } from '../../api-common/search-type'
 import { detectLangInfo } from '../../api-common/detect-lang'
 
 export const getTranslator = memoizeOne(
   () => new Tencent({})
 )
-
-export const getSrcPage: GetSrcPageFunction = (text, localLang, profile) => {
-  let lang
-  if (profile.tencent.options.tl === 'default') {
-    if (localLang === 'zh-CN') {
-      lang = 'zh-CHS'
-    } else if (localLang === 'zh-TW') {
-      lang = 'zh-CHT'
-    } else {
-      lang = 'en'
-    }
-  } else {
-    lang = profile.tencent.options.tl
-  }
-
-  return `https://fanyi.qq.com/#auto/${lang}/${text}`
-}
 
 export type TencentResult = MachineTranslateResult
 
