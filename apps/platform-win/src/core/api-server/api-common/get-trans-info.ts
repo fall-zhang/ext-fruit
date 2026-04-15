@@ -1,8 +1,6 @@
 import type { Language } from '@P/open-trans/languages'
 import type { Translator } from '@P/open-trans/translator'
 import { isContainJapanese, isContainKorean } from '../utils/lang-check'
-import { detectLang } from '@P/open-trans/utils/detect-lang'
-import { el } from 'date-fns/locale'
 export interface MachineTranslatePayload<Lang extends string> {
   sl?: Lang
   tl?: Lang

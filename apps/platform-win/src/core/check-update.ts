@@ -1,3 +1,4 @@
+import semver from 'semver'
 export interface ReleaseData {
   version: string
   data: string[]
@@ -16,7 +17,7 @@ export type VersionDiff = number
 
 export type ReleaseResponse = {
   diff: VersionDiff
-  data?: ReleaseData
+  // data?: ReleaseData
 }
 
 /**
@@ -49,25 +50,33 @@ export async function checkUpdate (
   if (!res) {
     return { diff: 0 }
   }
-
-  if (!compareVersion) {
-    return { diff: 3, data: res }
-  }
-
-  const prev = compareVersion.split('.').map(Number)
-  const curr = res.version
-    .slice(1)
-    .split('.')
-    .map(Number)
-
-  for (let i = 0; i < 3; i++) {
-    if (curr[i] > prev[i]) {
-      return { diff: 3 - i, data }
-    }
-    if (curr[i] < prev[i]) {
-      return { diff: i - 3, data }
+  if (compareVersion) {
+    return {
+      diff: 0,
     }
   }
+  // if (!compareVersion) {
+  //   return { diff: 3, data: res }
+  // }
 
-  return { diff: 0, data }
+  // const prev = compareVersion.split('.').map(Number)
+  // const curr = res.version
+  //   .slice(1)
+  //   .split('.')
+  //   .map(Number)
+
+  // for (let i = 0; i < 3; i++) {
+  //   if (curr[i] > prev[i]) {
+  //     return { diff: 3 - i, data }
+  //   }
+  //   if (curr[i] < prev[i]) {
+  //     return { diff: i - 3, data }
+  //   }
+  // }
+  // return semver.gt(compareVersion, res.version)
+
+  // return { diff: 0 }
+  return {
+    diff: 0,
+  }
 }
