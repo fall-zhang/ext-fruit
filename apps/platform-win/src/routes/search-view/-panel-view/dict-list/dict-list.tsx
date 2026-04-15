@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import React, { useRef } from 'react'
+import React, { Activity, Suspense, useRef } from 'react'
 import { useConfContext } from '@/context/conf-context'
 import { DictItem, type DictItemProps } from './dict-list-item'
 
@@ -46,25 +46,29 @@ export const DictList: FC<DictListProps> = (props) => {
 
   const { animation } = configContext.config
   const dicts = props.dicts
+
   return (
     <div className="dictList overflow-hidden">
-      {dicts.map(data => (
-        <DictItem
-          withAnimation={animation}
-          panelCSS={''}
-          onInPanelSelect={() => {
-          }}
-          openDictSrcPage={(id, ctrlKey) => {
-          }}
-          onUserFold={ (id, fold) => {
-          }}
-          searchText={ (arg) => {
-          }}
-          onSpeakerPlay={async (src) => {
-          }}
-          key={data.dictID}
-          {...data} />
-      ))}
+      <Suspense fallback={<h1>🌀 Loading...</h1>}>
+        <Activity mode={props.dicts.length > 0 ? 'visible' : 'hidden'}>
+          {dicts.map(data => (
+            <DictItem
+              withAnimation={animation}
+              panelCSS={''}
+            
+              openDictSrcPage={(id, ctrlKey) => {
+              }}
+              onUserFold={ (id, fold) => {
+              }}
+              searchText={ (arg) => {
+              }}
+              onSpeakerPlay={async (src) => {
+              }}
+              key={data.dictID}
+              {...data} />
+          ))}
+        </Activity>
+      </Suspense>
     </div>
   )
 }

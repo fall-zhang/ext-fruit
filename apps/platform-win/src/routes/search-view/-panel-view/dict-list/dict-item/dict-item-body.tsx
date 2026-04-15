@@ -115,7 +115,7 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
 
 function DictRenderError () {
   return (
-    <p className='text-neutral-900'>
+    <p className='text-neutral-900 dark:text-neutral-200 h-7'>
       Render error. Please{' '}
       <a
         href="https://github.com/fall-zhang/fruit-saladict/issues"

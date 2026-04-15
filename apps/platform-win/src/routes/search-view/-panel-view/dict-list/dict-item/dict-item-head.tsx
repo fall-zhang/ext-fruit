@@ -8,6 +8,9 @@ import type { DictID } from '@/core/api-server/config'
 import { BookmarkIcon, ChevronRight, ChevronRightIcon } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@P/ui/components/tooltip'
 import { cn } from '@P/ui/utils'
+import { dictImage } from '../dictImg'
+
+// const error = import.meta.glob('@/core/api-server/trans-api/*/favicon.png')
 export interface DictItemHeadProps {
   dictID: DictID
   isFold: boolean
@@ -25,7 +28,7 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
     // small time offset to add a little organic feeling
     const ticket = setTimeout(
       () => setShowLoader(props.isSearching),
-      Math.random() * 1500
+      Math.random() * 800
     )
     return () => {
       clearTimeout(ticket)
@@ -36,31 +39,19 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
   }
   return (
     <header
-      className={clsx('dictItemHead flex items-center dark:bg-neutral-800 dark:text-neutral-100 h-7', {
+      className={clsx('dictItemHead flex items-center dark:bg-neutral-900 dark:text-neutral-200 h-7', {
         isSearching: props.isSearching,
       })}
     >
       <button
-        className="cursor-pointer size-5 mr-2"
+        className="cursor-pointer size-6 mr-1"
         onMouseOut={e => e.currentTarget.blur()}
         onClick={props.toggleFold}
       >
         <ChevronRightIcon className={cn('text-neutral-900 dark:text-neutral-300 ', !props.isFold && 'rotate-90')} />
-        {/* <svg
-          className={cn('dictItemHead-FoldArrow')}
-          width="18"
-          height="18"
-          viewBox="0 0 59.414 59.414"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            className="dictItemHead-FoldArrowPath"
-            d="M43.854 59.414L14.146 29.707 43.854 0l1.414 1.414-28.293 28.293L45.268 58"
-          />
-        </svg> */}
       </button>
-      <img className="dictItemHead-Logo" src={`/src/core/api-server/trans-api/${props.dictID}/favicon.png`} alt="dict logo" />
-      <h4 className="dictItemHead-Title">
+      <img className="dictItemHead-Logo" src={dictImage[props.dictID]} alt="dict logo" />
+      <h4 className="dictItemHead-Title ml-2">
         <a
           href="#"
           onClick={(e: React.MouseEvent<HTMLElement>) => {
@@ -72,6 +63,12 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
           {t(`${props.dictID}.name`)}
         </a>
       </h4>
+      {showLoader && (
+        <div className="dictItemHead-Loader">
+          <div />
+        </div>
+      )}
+      <div className="grow"></div>
       <Tooltip >
         <TooltipTrigger>
           <BookmarkIcon onClick={addToNotebook} />
@@ -80,12 +77,7 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
           <p>收藏</p>
         </TooltipContent>
       </Tooltip>
-      {showLoader && (
-        <div className="dictItemHead-Loader">
-          <div />
-        </div>
-      )}
-      <div className="dictItemHead-EmptyArea" onClick={props.toggleFold} />
+      {/* <div className="dictItemHead-EmptyArea" onClick={props.toggleFold} /> */}
     </header>
   )
 }

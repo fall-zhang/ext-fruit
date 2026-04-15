@@ -21,7 +21,7 @@ import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
 import { useNavigate } from '@tanstack/react-router'
 
 export interface DictItemProps
-  extends Omit<DictItemBodyProps, 'dictRootRef'> {
+  extends Omit<DictItemBodyProps, 'dictRootRef' | 'onInPanelSelect'> {
   /** default height when search result is received */
   // preferredHeight: number
   withAnimation: boolean
@@ -171,6 +171,9 @@ export const DictItem: FC<DictItemProps> = props => {
       props.searchText({ id: props.dictID })
     }
   }
+  function onInPanelSelect () {
+    toggleFold
+  }
   // console.log('⚡️ line:199 ~ foldState: ', foldState)
   return (
     <section
@@ -197,6 +200,7 @@ export const DictItem: FC<DictItemProps> = props => {
         <section className="dictItem-BodyMesure">
           <DictItemBody
             {...props}
+            onInPanelSelect={onInPanelSelect}
             dictRootRef={dictRootRef}
           />
         </section>
