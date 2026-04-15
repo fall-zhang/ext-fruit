@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import { createStore, useStore } from 'zustand'
 
 import type { HistoryWord, Word } from '../types/word'
@@ -9,6 +9,7 @@ import { api } from '@/core/api-server/trans-api'
 import { checkSupportedLangs } from '@/core/api-server/utils/lang-check'
 import { countWords } from '@/core/api-server/utils/get-word-count'
 import { isInNotebook } from '@/core/index-db'
+import { getLocalHistory, updateHistory } from '@/core/local-store/history-store'
 
 
 type RenderDictItem = {
@@ -64,6 +65,7 @@ const createSearchStore = (profile: AppProfile) => {
     selectedDicts: getDefaultSelectDict(),
     userFoldedDicts: {},
     clearHistory () {
+      updateHistory([])
       set(state => {
         return {
           ...state,
@@ -133,6 +135,7 @@ const createSearchStore = (profile: AppProfile) => {
               ...word,
               isInNotebook: isInNote,
             }]
+            updateHistory(newHistory)
           }
           return {
             ...state,
@@ -142,7 +145,7 @@ const createSearchStore = (profile: AppProfile) => {
           } satisfies DictSearchState
         })
       }).catch(err => {
-
+        console.error('⚡️ line:145 ~ err: ', err)
       })
       // start search
 
@@ -150,10 +153,11 @@ const createSearchStore = (profile: AppProfile) => {
       // console.log('⚡️ line:157 ~ selectedDicts: ', selectedDicts)
       dictList.forEach((item) => {
         const id = item.dictID
-        const searchFun: SearchFunction = api[id]
-        searchFun(word.text, {
+        const searchFunc: SearchFunction = api[id]
+        searchFunc(word.text, {
           profile: activeProfile.dicts.all,
           dictAuth: activeProfile.dictAuth,
+          localLang: 'zh-CN',
         }).then((res: DictSearchResult) => {
           set(state => {
             const dictResult: RenderDictItem = {
@@ -202,6 +206,27 @@ export function SearchProvider ({ children, profile }: {
   profile: AppProfile
 }) {
   const [store] = useState(() => createSearchStore(profile))
+  // 从本地获取历史记录
+  useEffect(() => {
+    let abortState = false
+    getLocalHistory().then(res => {
+      console.log('⚡️ line:211 ~ res: ', res)
+      if (abortState) {
+        return
+      }
+      store.setState((state) => {
+        return {
+          ...state,
+          searchHistory: res,
+        }
+      })
+    }).catch(err => {
+      console.log('Get history from local err: ', err)
+    })
+    return () => {
+      abortState = true
+    }
+  }, [])
   return (
     <SearchContext.Provider value={store}>
       {children}
