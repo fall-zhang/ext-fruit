@@ -48,7 +48,7 @@
         "decorations": false,
         "width": 420,
         "height": 680,
-        "visible": true,
+        "visible": false,
         "url": "/search-view",
         "useHttpsScheme": true
       },
