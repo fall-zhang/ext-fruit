@@ -53,7 +53,7 @@ export const Popup: FC = () => {
 
   return (
     <div
-      className={classNames('popup-root', { 'dark-mode': config.darkMode })}
+      className={classNames('popup-root')}
       style={{ height: config.baHeight }}
     >
       {/* <DictPanel /> */}
@@ -108,7 +108,7 @@ export const Popup: FC = () => {
           <QRCode
             value={currentTabUrl}
             size={250}
-            bgColor={config.darkMode ? '#ddd' : '#fff'}
+            // bgColor={config.darkMode ? '#ddd' : '#fff'}
             fgColor="#222"
           />
           <p className="qrcode-panel-title">
