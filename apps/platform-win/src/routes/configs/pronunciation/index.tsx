@@ -83,23 +83,23 @@ function RouteComponent () {
         //     />
         //   ),
         // },
-        {
-          name: getConfigPath('autoPronounce', 'machine', 'src'),
-          hide: values => !values[getConfigPath('autoPronounce', 'machine', 'dict')],
-          children: (
-            <Select
-              options={[
-                { label: t('config.autoPronounce.machine.src_trans'), value: 'trans' },
-                { label: t('config.autoPronounce.machine.src_search'), value: 'searchText' },
-              ]}
-            />
-          ),
-        },
-        {
-          name: getProfilePath('waveform'),
-          valuePropName: 'checked',
-          children: <Switch />,
-        },
+        // {
+        //   name: getConfigPath('autoPronounce', 'machine', 'src'),
+        //   hide: values => !values[getConfigPath('autoPronounce', 'machine', 'dict')],
+        //   children: (
+        //     <Select
+        //       options={[
+        //         { label: t('config.autoPronounce.machine.src_trans'), value: 'trans' },
+        //         { label: t('config.autoPronounce.machine.src_search'), value: 'searchText' },
+        //       ]}
+        //     />
+        //   ),
+        // },
+        // {
+        //   name: getProfilePath('waveform'),
+        //   valuePropName: 'checked',
+        //   children: <Switch />,
+        // },
       ]}
     />
   )

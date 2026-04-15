@@ -30,6 +30,7 @@ import type { SaladictFormItem } from './type'
 import { FInput } from './form-item/f-input'
 import { FSwitch } from './form-item/f-switch'
 import { FSelect } from './form-item/f-select'
+import { useUpdateSetting } from '../../-utils/upload'
 
 type ConfFormProps = {
   items: SaladictFormItem[]
@@ -39,6 +40,8 @@ export function ConfForm (props: ConfFormProps) {
   const configContext = useConfContext()
   const { t, i18n, ready } = useTranslation(['options', 'common'])
   // const dialogContext = useConfirmContext()
+  const updateSetting = useUpdateSetting()
+
 
   const form = useForm<AppConfig>({
     defaultValues: configContext.config,
@@ -46,20 +49,21 @@ export function ConfForm (props: ConfFormProps) {
 
   function onSubmit (data: AppConfig) {
     console.log('⚡️ line:46 ~ data: ', data)
-    toast('You submitted the following values:', {
-      description: (
-        <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
-          <code>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-      position: 'bottom-right',
-      classNames: {
-        content: 'flex flex-col gap-2',
-      },
-      style: {
-        '--border-radius': 'calc(var(--radius)  + 4px)',
-      } as React.CSSProperties,
-    })
+    updateSetting(data)
+    // toast('You submitted the following values:', {
+    //   description: (
+    //     <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
+    //       <code>{JSON.stringify(data, null, 2)}</code>
+    //     </pre>
+    //   ),
+    //   position: 'bottom-right',
+    //   classNames: {
+    //     content: 'flex flex-col gap-2',
+    //   },
+    //   style: {
+    //     '--border-radius': 'calc(var(--radius)  + 4px)',
+    //   } as React.CSSProperties,
+    // })
   }
   const formId = useId()
   const genFormItems = useCallback((items: SaladictFormItem[]) => {
@@ -135,7 +139,7 @@ export function ConfForm (props: ConfFormProps) {
       </CardContent>
       <CardFooter>
         <Field orientation="horizontal">
-          <Button type="submit" form={formId}>
+          <Button type="submit" variant='outline' form={formId}>
             {t('common:save')}
           </Button>
         </Field>
