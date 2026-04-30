@@ -36,6 +36,7 @@ export const locale: typeof _locale = {
 
   config: {
     active: 'Enable Inline Translator',
+    appTheme: 'Theme',
     active_help:
       '"Quick Search" is still available even if Inline translation is turned off.',
     animation: 'Animation transitions',
