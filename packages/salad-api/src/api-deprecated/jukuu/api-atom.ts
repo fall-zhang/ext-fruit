@@ -10,8 +10,7 @@ function getUrl (text: string, lang: JukuuLang) {
     case 'engjp':
       return 'http://www.jukuu.com/jsearch.php?q=' + newText
     case 'zhjp':
-      return 'http://www.jukuu.com/jcsearch.php?q=' + newText
-    // case 'zheng':
+      return 'http://www.jukuu.com/jcsearch.php?q=帅' + newText
     default:
       return 'http://www.jukuu.com/search.php?q=' + newText
   }
@@ -30,5 +29,10 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
 export const handleResponse: AtomResponseHandle<JukuuResult> = async (res, { text, from, to, profile }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
-  return handleDOM(dom, profile.jukuu.options.lang)
+  return {
+    result: {
+      lang: 'engjp',
+      sens: handleDOM(dom, profile.jukuu.options.lang),
+    },
+  }
 }

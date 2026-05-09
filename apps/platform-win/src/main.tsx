@@ -9,6 +9,11 @@ const router = createRouter({ routeTree })
 const container = document.getElementById('root')!
 const root = createRoot(container)
 
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}
 // async function render () {
 root.render(<StrictMode>
   <RouterProvider router={router} />
