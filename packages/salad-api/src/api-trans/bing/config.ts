@@ -5,7 +5,8 @@ export const getPreference = (): ApiInfo => ({
   to: ['en', 'zh-CN'],
   enName: 'Bing Dict',
   zhName: '必应词典',
-  type: 'self-trans',
+  type: 'word-trans',
   maxWord: 5,
   minWord: 1,
 })
+export default getPreference

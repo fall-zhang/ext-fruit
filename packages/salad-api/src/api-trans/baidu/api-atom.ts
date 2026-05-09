@@ -5,6 +5,7 @@ import md5 from 'md5'
 import { TranslateError } from '@P/open-trans/translator'
 import type { AuthBody } from './config'
 import type { BaiduTranslateError, BaiduTranslateResult } from './type'
+import type { UnitSearchResult } from '../../types/res-type'
 
 export const getSrcPage: AtomGetSrcFunction = (text, langCode) => {
   let lang
@@ -49,11 +50,10 @@ export const getFetchRequest: AtomFetchRequest<AuthBody> = (text, {
   })
 }
 
-export const handleResponse: AtomResponseHandle<BaiduTranslateResult> = async (res, {
+export const handleResponse: AtomResponseHandle = async (res, {
   text,
   from,
   to,
-  profile,
 }) => {
   const data = await res.json()
   const translateError = data as BaiduTranslateError
@@ -73,36 +73,27 @@ export const handleResponse: AtomResponseHandle<BaiduTranslateResult> = async (r
 
   const {
     trans_result: transResult,
-    from: langDetected,
+    // from: langDetected,
   } = data as BaiduTranslateResult
   const transParagraphs = transResult.map(({ dst }) => dst)
-  const detectedFrom = Baidu.langMapReverse.get(langDetected) || 'auto'
+  // const detectedFrom = Baidu.langMapReverse.get(langDetected) || 'auto'
   const transTTS = getTextSpeech({
     lang: to,
     text: transParagraphs.join(' '),
   })
+
   return {
-    result: {
-      id: 'baidu',
-      sl: from,
-      tl: to,
-      searchText: {
-        paragraphs: transResult.map(({ src }) => src),
-        tts: getTextSpeech({ text, lang: detectedFrom }),
-      },
-      trans: {
-        paragraphs: transParagraphs,
-        tts: getTextSpeech({
-          lang: to,
-          text: transParagraphs.join(' '),
-        }),
-      },
-    },
-    audio: {
-      py: transTTS,
-      us: transTTS,
-    },
-  }
+    engin: 'baidu',
+    type: 'paragraph-trans',
+    from,
+    to,
+    text,
+    pronounce: [{
+      lang: to,
+      src: transTTS,
+    }],
+    translate: transParagraphs[0],
+  } satisfies UnitSearchResult
 }
 
 const getTextSpeech = ({

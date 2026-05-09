@@ -4,9 +4,8 @@ import {
   getInnerHTML,
   getChsToChz
 } from '@/core/api-server/utils'
-import type { BingResult, BingResultLex, BingResultMachine } from './type'
+import type { BingResult, BingResultLex } from './type'
 import type { AtomSearchResult } from '../../types/res-type'
-import type { ApiInfo } from '../../types/api-info'
 
 const HOST = 'https://cn.bing.com'
 
@@ -15,40 +14,19 @@ const HOST = 'https://cn.bing.com'
 const SENTENCE_COUNT = 5
 
 
-type BingConfig = ApiInfo
-
 type BingSearchResultLex = AtomSearchResult<BingResultLex>
-type BingSearchResultMachine = AtomSearchResult<BingResultMachine>
-// type BingSearchResultRelated = AtomSearchResult<BingResultRelated>
-
-// export const getSearchURL = (word: string) => {
-//   return DICT_LINK + encodeURIComponent(word.replace(/\s+/g, ' '))
-// }
-
-// export const search: SearchFunction<BingResult> = async (text, opt) => {
-//   return fetchDirtyDOM(
-//     DICT_LINK + encodeURIComponent(text.replace(/\s+/g, ' '))
-//   )
-//     .then(async doc => {
-//       return handleDOM(doc, { profile: opt.profile, localLang: opt.localLang || '' })
-//     })
-//     .catch(handleNetWorkError)
-// }
 
 export function handleDOM (
-  doc: Document,
-  context: { localLang: 'en' | 'zh-CN' | 'zh-TW' }
+  doc: Document
 ): AtomSearchResult<BingResult> | Promise<AtomSearchResult<BingResult>> {
-  // const bingConfig = context.profile
-  // const transform = getChsToChz(context.localLang)
-
   if (doc.querySelector('.client_def_hd_hd')) {
     return handleLexResult(doc)
   }
 
-  if (doc.querySelector('.client_trans_head')) {
-    return handleMachineResult(doc)
-  }
+  // if (doc.querySelector('.client_trans_head')) {
+  //   return handleMachineResult(doc)
+  // }
+  console.log('without result bing document: ', doc)
 
   return handleNoResult()
 }
@@ -81,7 +59,7 @@ function handleLexResult (
       }
     })
 
-    searchResult.audio = searchResult.result.phsym.reduce(
+    searchResult.audio = searchResult.result.phsym?.reduce(
       (audio, { lang, pron }) => {
         const newAudio = { ...audio }
         if (/us|美/i.test(lang)) {
@@ -169,20 +147,22 @@ function handleLexResult (
   return handleNoResult()
 }
 
-function handleMachineResult (
-  doc: Document
-): BingSearchResultMachine | Promise<BingSearchResultMachine> {
-  const mt = getText(doc, '.client_sen_cn')
+// type BingSearchResultMachine = AtomSearchResult<BingResultMachine>
 
-  if (mt) {
-    return {
-      result: {
-        type: 'machine',
-        mt,
-      },
-    }
-  }
+// function handleMachineResult (
+//   doc: Document
+// ): BingSearchResultMachine | Promise<BingSearchResultMachine> {
+//   const mt = getText(doc, '.client_sen_cn')
 
-  return handleNoResult()
-}
+//   if (mt) {
+//     return {
+//       result: {
+//         type: 'machine',
+//         mt,
+//       },
+//     }
+//   }
+
+//   return handleNoResult()
+// }
 

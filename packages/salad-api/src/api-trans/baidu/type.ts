@@ -1,5 +1,9 @@
 import type { Language } from '@P/open-trans/languages'
 
+
+/**
+ * official doc: https://fanyi-api.baidu.com/doc/23
+ */
 export type BaiduTranslateResult = {
   from: string;
   to: string;

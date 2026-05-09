@@ -1,4 +1,4 @@
-import type { ApiInfo } from '../../types/api-info'
+import type { ApiInfo, AuthApiInfo } from '../../types/api-info'
 
 export const url = 'http://api.fanyi.baidu.com/api/trans/product/prodinfo'
 
@@ -12,7 +12,7 @@ export const auth: AuthBody = {
   key: '',
 }
 
-export const getPreference = (): ApiInfo => ({
+export const getPreference = (): AuthApiInfo<AuthBody> => ({
   from: ['en', 'zh-CN', 'zh-TW'],
   to: ['en', 'zh-CN', 'zh-TW'],
   enName: 'Baidu Translate',
@@ -21,4 +21,7 @@ export const getPreference = (): ApiInfo => ({
   maxWord: 99999999,
   minWord: 1,
   needAuth: true,
+  auth,
 })
+
+export default getPreference

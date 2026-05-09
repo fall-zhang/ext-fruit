@@ -6,7 +6,6 @@ import {
 // import type { DictSearchResult } from '../../api-common/search-type'
 import type { AhdictResult, AhdictResultItem, Idiom } from './type'
 import { handleNetWorkError, handleNoResult } from '../../utils/error-response'
-import type { AtomSearchResult, SelfTransResponse, UnitSearchResult } from '../../types/res-type'
 
 
 const HOST = 'https://ahdictionary.com'

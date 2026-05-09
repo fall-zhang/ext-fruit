@@ -8,7 +8,7 @@ export interface BingResultLex {
     /** Phonetic Alphabet, UK|US|PY */
     lang: string
     /** pronunciation */
-    pron: string
+    pron: string // 'en' | 'uk'
   }>
   /** common definitions */
   cdef?: Array<{
@@ -27,25 +27,5 @@ export interface BingResultLex {
   }>
 }
 
-/** Alternate machine translation result */
-export interface BingResultMachine {
-  type: 'machine'
-  /** machine translation */
-  mt: string
-}
 
-/** Alternate result */
-export interface BingResultRelated {
-  type: 'related'
-  title: string
-  defs: Array<{
-    title: string
-    meanings: Array<{
-      href: string
-      word: string
-      def: string
-    }>
-  }>
-}
-
-export type BingResult = BingResultLex | BingResultMachine | BingResultRelated
+export type BingResult = BingResultLex
