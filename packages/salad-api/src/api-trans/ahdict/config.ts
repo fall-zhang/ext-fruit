@@ -9,3 +9,5 @@ export const getPreference = (): ApiInfo => ({
   maxWord: 5,
   minWord: 1,
 })
+
+export default getPreference

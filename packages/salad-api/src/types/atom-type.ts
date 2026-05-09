@@ -1,5 +1,5 @@
 import type { Language } from '@P/open-trans/languages'
-import type { AtomSearchResult } from './res-type'
+import type { UnitResponse, UnitSearchResult } from './res-type'
 import type { AllDictsConf } from '../api-trans'
 
 /**
@@ -21,7 +21,7 @@ export type AtomFetchRequest<T = unknown> = {
  * 获取该引擎对于返回结果的处理
  * 这些内容是 open-trans 共同需要的内容
  */
-export type AtomResponseHandle<Result = unknown> = {
+export type AtomResponseHandle = {
   (
     res: Response,
     context: {
@@ -30,7 +30,7 @@ export type AtomResponseHandle<Result = unknown> = {
       to: Language
       profile: AllDictsConf
     }
-  ): Promise<AtomSearchResult<Result>>
+  ): Promise<UnitSearchResult>
 }
 /**
  * 获取当前单词对应查词引擎的源页面

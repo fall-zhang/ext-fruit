@@ -6,13 +6,10 @@ import {
 // import type { DictSearchResult } from '../../api-common/search-type'
 import type { AhdictResult, AhdictResultItem, Idiom } from './type'
 import { handleNetWorkError, handleNoResult } from '../../utils/error-response'
-import type { AtomSearchResult } from '../../types/res-type'
+import type { AtomSearchResult, SelfTransResponse, UnitSearchResult } from '../../types/res-type'
 
 
 const HOST = 'https://ahdictionary.com'
-
-
-type AhdictSearchResult = AtomSearchResult<AhdictResult>
 
 // export const search: SearchFunction<AhdictResult> = async (text, opt) => {
 //   const options = opt.profile.ahdict
@@ -27,8 +24,7 @@ type AhdictSearchResult = AtomSearchResult<AhdictResult>
 export function handleDOM (
   doc: Document,
   options: { resultCount: number }
-): AhdictSearchResult | Promise<AhdictSearchResult> {
-  // console.log('⚡️ line:29 ~ doc: ', doc)
+): AhdictResult | Promise<AhdictResult> {
   const result: AhdictResult = []
 
   const tables = Array.from(doc.querySelectorAll('#results>table'))
@@ -102,7 +98,7 @@ export function handleDOM (
   }
 
   if (result.length > 0) {
-    return { result }
+    return result
   }
   return handleNoResult()
 }

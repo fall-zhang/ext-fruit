@@ -23,7 +23,7 @@ export type ApiInfo = {
   needAuth?: boolean
 }
 
-export type AuthApiInfo<T = undefined> = ApiInfo & {
+export type AuthApiInfo<T = unknown> = ApiInfo & {
   auth: T
 }
 
