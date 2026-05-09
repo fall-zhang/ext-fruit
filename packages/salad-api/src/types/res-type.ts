@@ -24,14 +24,17 @@ export type WordResponse = {
   /** 翻译的文本 */
   text: string
   /** 单词出现频率，重要程度 */
-  wordStars: 1 | 2 | 3 | 4 | 5
+  wordStars?: 1 | 2 | 3 | 4 | 5
   /** 单词翻译结果 */
   translate: string
+  /** 单词原型 */
+  infinitive?: string
   /** 发音 */
   pronounce: Array<{
-    lang: Language
+    lang: Language | 'en-US' | 'en-UK'
     src: string
   }>
+  phoneticSymbols?: Array<string>
   /**
    * 同义词，对内容进行扩展
    */
@@ -72,6 +75,8 @@ export type WordResponse = {
   }>
 }
 
+
+// 只有 self-trans 才可以 from 和 to 相同
 export type SelfTransResponse = {
   /**
    * 翻译的引擎
@@ -85,6 +90,7 @@ export type SelfTransResponse = {
   /** 单词翻译结果 */
   translate: string
   /** 发音 */
+  infinitive?: string
   pronounce: Array<{
     lang: Language
     src: string

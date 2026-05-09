@@ -1,5 +1,5 @@
 import type { Language } from '@P/open-trans/languages'
-import type { UnitResponse, UnitSearchResult } from './res-type'
+import type { UnitSearchResult } from './res-type'
 import type { AllDictsConf } from '../api-trans'
 
 /**

@@ -177,3 +177,10 @@ export function getFullLink (hostStr: string, el: Element, attr: string): string
 
   return host + '/' + link
 }
+
+/**
+ * Remove all the matching child nodes from a parent node
+ */
+export function removeChildren (parent: ParentNode, selector: string) {
+  parent.querySelectorAll(selector).forEach(el => el.remove())
+}
