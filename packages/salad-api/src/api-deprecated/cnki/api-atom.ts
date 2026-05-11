@@ -1,4 +1,5 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
+import type { ParagraphResponse } from '../../types/res-type'
 import { getFetchDOMReq, parseDirtyDom } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
 
@@ -11,7 +12,18 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { profile }) => {
+export const handleResponse: AtomResponseHandle = async (res, { text, from, to, profile }) => {
   const dom = await parseDirtyDom(res)
-  return handleDOM(dom, profile.cnki.options)
+
+  const domRes = await handleDOM(dom)
+  const result: ParagraphResponse = {
+    engin: 'cnki',
+    type: 'paragraph-trans',
+    from,
+    to,
+    text,
+    translate: '',
+    pronounce: [],
+  }
+  return result
 }

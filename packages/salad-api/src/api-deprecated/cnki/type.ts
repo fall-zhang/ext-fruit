@@ -13,6 +13,8 @@ export interface CNKISensItem {
 
 export interface CNKIResult {
   dict: CNKIDictItem[]
+  // 双语例句
   senbi: CNKISensItem[]
+  // 英文例句
   seneng: CNKISensItem[]
 }

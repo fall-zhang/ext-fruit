@@ -2,19 +2,17 @@ import type { AtomSearchResult } from '../../types/res-type'
 import {
   getInnerHTML,
   getFullLink,
-  handleNoResult,
   getText
 } from '../../utils/dom-utils'
 import type { CNKIResult, CNKIDictItem, CNKISensItem } from './type'
-import type { CnkiConfig } from './config'
+import { handleNoResult } from '../../utils/error-response'
 
 const HOST = 'http://dict.cnki.net/old'
 
 type CnkiSearchResult = AtomSearchResult<CNKIResult>
 
 export function handleDOM (
-  doc: Document,
-  options: CnkiConfig['options']
+  doc: Document
 ): CnkiSearchResult | Promise<CnkiSearchResult> {
   const $entries = [...doc.querySelectorAll('.main-table')]
 
@@ -24,44 +22,38 @@ export function handleDOM (
     seneng: [],
   }
 
-  if (options.dict) {
-    const $dict = $entries.find($e =>
-      Boolean($e.querySelector('img[src="images/02.gif"]'))
-    )
-    if ($dict) {
-      result.dict = [...$dict.querySelectorAll('.zztj li')]
-        .map($li => {
-          const word = ($li.textContent || '').trim()
-          if (word) {
-            const $a = $li.querySelector('a:nth-of-type(2)')
-            if ($a) {
-              const href = getFullLink(HOST, $a, 'href')
-              if (href) {
-                return { word, href }
-              }
+  const $dict = $entries.find($e =>
+    Boolean($e.querySelector('img[src="images/02.gif"]'))
+  )
+  if ($dict) {
+    result.dict = [...$dict.querySelectorAll('.zztj li')]
+      .map($li => {
+        const word = ($li.textContent || '').trim()
+        if (word) {
+          const $a = $li.querySelector('a:nth-of-type(2)')
+          if ($a) {
+            const href = getFullLink(HOST, $a, 'href')
+            if (href) {
+              return { word, href }
             }
           }
-          return null
-        })
-        .filter((x): x is CNKIDictItem => Boolean(x))
-    }
+        }
+        return null
+      })
+      .filter((x): x is CNKIDictItem => Boolean(x))
   }
 
-  if (options.senbi) {
-    result.senbi = extractSens(
-      $entries,
-      'img[src="images/word.jpg"]',
-      'showjd_'
-    )
-  }
+  result.senbi = extractSens(
+    $entries,
+    'img[src="images/word.jpg"]',
+    'showjd_'
+  )
 
-  if (options.seneng) {
-    result.seneng = extractSens(
-      $entries,
-      'img[src="images/dian_ywlj.gif"]',
-      'showlj_'
-    )
-  }
+  result.seneng = extractSens(
+    $entries,
+    'img[src="images/dian_ywlj.gif"]',
+    'showlj_'
+  )
 
   if (
     result.dict.length > 0 ||
