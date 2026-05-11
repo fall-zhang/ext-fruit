@@ -1,16 +1,14 @@
-import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
-import type { HTMLString } from '@/core/api-server/types'
-import { getText, getFullLink, removeChild, getInnerHTML, handleNoResult, externalLink } from '@/core/api-server/utils'
+import { getText, getFullLink, removeChild, getInnerHTML, externalLink } from '@/core/api-server/utils'
 import { getStaticSpeaker } from '@/components/Speaker'
-import type { CambridgeResult, CambridgeSearchResult } from './type'
+import type { WordResponse } from '../../types/res-type'
+import type { CambridgeResult } from './type'
 
 const HOST = 'https://dictionary.cambridge.org'
 
 export function handleDOM (
   doc: Document
-): CambridgeSearchResult | Promise<CambridgeSearchResult> {
+): Partial<WordResponse> {
   const result: CambridgeResult = []
-  const catalog: NonNullable<CambridgeSearchResult['catalog']> = []
   const audio: { us?: string; uk?: string } = {}
 
   doc.querySelectorAll('.entry-body__el').forEach(($entry, i) => {
@@ -53,13 +51,6 @@ export function handleDOM (
       id: entryId,
       html: getInnerHTML(HOST, $entry),
     })
-
-    catalog.push({
-      key: `#${i}`,
-      value: entryId,
-      label:
-        '#' + getText($entry, '.di-title') + ' ' + getText($entry, '.posgram'),
-    })
   })
 
   if (result.length <= 0) {
@@ -96,10 +87,14 @@ export function handleDOM (
   }
 
   if (result.length > 0) {
-    return { result, audio, catalog }
+    return {
+      type: 'word-trans',
+      translate: '',
+      pronounce: [],
+    }
+    // return { result, audio, catalog }
   }
-
-  return handleNoResult()
+  return {}
 }
 
 function sanitizeEntry<E extends Element> ($entry: E): E {

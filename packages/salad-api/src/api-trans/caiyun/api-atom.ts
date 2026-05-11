@@ -1,6 +1,6 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
+import type { UnitSearchResult } from '../../types/res-type'
 import type { AuthBody } from './config'
-import type { CaiyunResult } from './type'
 
 export const getSrcPage: AtomGetSrcFunction = () => {
   return 'https://fanyi.caiyunapp.com/'
@@ -32,7 +32,7 @@ export const getFetchRequest: AtomFetchRequest<AuthBody> = (text, {
   })
 }
 
-export const handleResponse: AtomResponseHandle<CaiyunResult> = async (res, {
+export const handleResponse: AtomResponseHandle = async (res, {
   text,
   from,
   to,
@@ -47,14 +47,23 @@ export const handleResponse: AtomResponseHandle<CaiyunResult> = async (res, {
   if (res.status === 500) {
     throw new Error('Caiyun usage limit exceeded')
   }
-
-  return {
-    result: {
-      id: 'caiyun',
-      sl: from || 'auto',
-      tl: to || 'en',
-      searchText: { paragraphs: text.split(/\n+/) },
-      trans: { paragraphs: data.target || [] },
-    },
+  const result: UnitSearchResult = {
+    type: 'paragraph-trans',
+    engin: 'caiyun',
+    from,
+    to,
+    text,
+    translate: data.target,
+    pronounce: [],
   }
+  // {
+  //   result: {
+  //     id: 'caiyun',
+  //     sl: from || 'auto',
+  //     tl: to || 'en',
+  //     searchText: { paragraphs: text.split(/\n+/) },
+  //     trans: { paragraphs: data.target || [] },
+  //   },
+  // }
+  return result
 }

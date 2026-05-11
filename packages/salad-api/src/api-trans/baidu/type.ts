@@ -8,7 +8,9 @@ export type BaiduTranslateResult = {
   from: string;
   to: string;
   trans_result: Array<{
+    // 翻译
     dst: string;
+    // 原文
     src: string;
   }>;
   lan?: Language;

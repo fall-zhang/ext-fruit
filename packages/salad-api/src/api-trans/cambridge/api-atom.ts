@@ -2,9 +2,11 @@ import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '.
 import { getFetchDOMReq, parseDirtyDom } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
 import { chsToChz } from '../../utils/chs-to-chz'
+import type { WordResponse } from '../../types/res-type'
+import { handleNoResult } from '../../utils/error-response'
 
-export const getSrcPage: AtomGetSrcFunction = async (text, localLang, profile) => {
-  let { lang } = profile.cambridge.options
+export const getSrcPage: AtomGetSrcFunction = async (text, localLang) => {
+  let lang = 'default'
 
   if (lang === 'default') {
     switch (localLang) {
@@ -60,7 +62,20 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { text }) => {
+export const handleResponse: AtomResponseHandle = async (res, { text, from, to }) => {
   const dom = await parseDirtyDom(res)
-  return handleDOM(dom)
+  const domRes = handleDOM(dom)
+  if (!domRes.translate) {
+    return handleNoResult()
+  }
+  const result: WordResponse = {
+    engin: 'cambridge',
+    type: 'word-trans',
+    from,
+    to,
+    text,
+    translate: domRes.translate || '',
+    pronounce: [],
+  }
+  return result
 }

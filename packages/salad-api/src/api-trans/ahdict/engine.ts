@@ -10,16 +10,6 @@ import { handleNetWorkError, handleNoResult } from '../../utils/error-response'
 
 const HOST = 'https://ahdictionary.com'
 
-// export const search: SearchFunction<AhdictResult> = async (text, opt) => {
-//   const options = opt.profile.ahdict
-
-//   return fetchDirtyDOM(
-//     'https://ahdictionary.com/word/search.html?q=' + encodeURIComponent(text.replace(/\s+/g, ' '))
-//   )
-//     .catch(handleNetWorkError)
-//     .then(doc => handleDOM(doc, options.options))
-// }
-
 export function handleDOM (
   doc: Document,
   options: { resultCount: number }
