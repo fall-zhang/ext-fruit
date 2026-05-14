@@ -4,16 +4,15 @@ import { getText } from '../../utils/dom-utils'
 import type { AtomSearchResult } from '../../types/res-type'
 
 type EudicSearchResult = AtomSearchResult<EudicResult>
-
+const RESULT_COUNT = 10
 export function handleDOM (
-  doc: Document,
-  options: { resultCount: number }
+  doc: Document
 ): EudicSearchResult | Promise<EudicSearchResult> {
   const result: EudicResult = []
   const audio: { uk?: string; us?: string } = {}
 
   const $items = Array.from(doc.querySelectorAll('#lj_ting .lj_item'))
-  for (let i = 0; i < $items.length && result.length < options.resultCount; i++) {
+  for (let i = 0; i < $items.length && result.length < RESULT_COUNT; i++) {
     const $item = $items[i]
     const item: EudicResultItem = { chs: '', eng: '' }
 

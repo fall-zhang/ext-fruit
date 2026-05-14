@@ -1,18 +1,13 @@
-import { handleNetWorkError, getChsToChz, externalLink, getInnerHTML, handleNoResult } from '@/core/api-server/utils'
-import type { AppConfig } from '@/config/app-config'
+import { externalLink, getInnerHTML, handleNoResult } from '@/core/api-server/utils'
 import { getStaticSpeaker } from '@/components/Speaker'
 import type { AtomSearchResult } from '../../types/res-type'
-import type { COBUILDResult, COBUILDColResult, COBUILDSection } from './type'
+import type { COBUILDResult, COBUILDColResult } from './type'
 
 type CobuildSearchResult = AtomSearchResult<COBUILDResult>
 
 export function handleDOM (
-  doc: Document,
-  options: { localLang?: 'en' | 'zh-CN' | 'zh-TW' }
+  doc: Document
 ): CobuildSearchResult | Promise<CobuildSearchResult> {
-  const { localLang } = options
-  const transform = getChsToChz(localLang)
-
   const colResult: COBUILDColResult = {
     type: 'collins',
     sections: [],
@@ -95,9 +90,8 @@ export function handleDOM (
         type,
         title,
         num,
-        content: getInnerHTML('https://www.collinsdictionary.com', $section, {
-          transform,
-        }),
+        content: getInnerHTML('https://www.collinsdictionary.com', $section
+        ),
       }
     })
 

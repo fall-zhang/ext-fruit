@@ -1,17 +1,5 @@
 import type { HTMLString } from '../../types/res-type'
 
-export interface COBUILDCibaResult {
-  type: 'ciba'
-  title: string
-  defs: HTMLString[]
-  level?: string
-  star?: number
-  prons?: Array<{
-    phsym: string
-    audio: string
-  }>
-}
-
 export interface COBUILDSection {
   id: string
   className: string
@@ -26,4 +14,4 @@ export interface COBUILDColResult {
   sections: COBUILDSection[]
 }
 
-export type COBUILDResult = COBUILDCibaResult | COBUILDColResult
+export type COBUILDResult = COBUILDColResult

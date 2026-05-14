@@ -1,4 +1,6 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
+import type { WordResponse } from '../../types/res-type'
+import { handleNoResult } from '../../utils/error-response'
 import { getFetchDOMReq, parseDirtyDom } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
 
@@ -25,7 +27,7 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to, 
   if (!dom.querySelector('#TingLiju')) {
     const status = dom.querySelector('#page-status') as HTMLInputElement
     if (!status || !status.value) {
-      return { result: [] }
+      return handleNoResult()
     }
 
     const formData = new FormData()
@@ -38,7 +40,19 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to, 
     })
     dom = await parseDirtyDom(postRes)
   }
-
-
-  return handleDOM(dom, { resultCount: 5 })
+  const domRes = await handleDOM(dom)
+  const result: WordResponse = {
+    engin: 'etymonline',
+    type: 'word-trans',
+    from,
+    to,
+    text,
+    translate: domRes.result.map(item => {
+      return {
+        translate: item.chs,
+      }
+    }),
+    pronounce: [],
+  }
+  return result
 }

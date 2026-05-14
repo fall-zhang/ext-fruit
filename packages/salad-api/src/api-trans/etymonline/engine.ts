@@ -1,43 +1,24 @@
-import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
-import type { HTMLString } from '../../types'
 import {
   getText,
   getInnerHTML,
-  getFullLink,
-  handleNoResult,
-  handleNetWorkError
+  getFullLink
 } from '../../utils/dom-utils'
-import type { AllDictsConf } from '@/core/api-server/config'
 import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
 import type { EtymonlineResult, EtymonlineResultItem } from './type'
+import { handleNoResult } from '../../utils/error-response'
 
 const HOST = 'https://www.etymonline.com'
 
-type EtymonlineSearchResult = DictSearchResult<EtymonlineResult>
 
-export const search: (text: string, opt: any) => Promise<EtymonlineSearchResult> = async (
-  text,
-  opt
-) => {
-  const options = opt.profile.etymonline.options
-  const newText = encodeURIComponent(text.replace(/\s+/g, ' '))
-
-  // http to bypass the referer checking
-  return fetchDirtyDOM('https://www.etymonline.com/word/' + newText)
-    .catch(() => fetchDirtyDOM('https://www.etymonline.com/search?q=' + newText))
-    .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, options))
-}
+const RESULT_COUNT = 5
 
 export function handleDOM (
-  doc: Document,
-  options: AllDictsConf['etymonline']['options']
-): EtymonlineSearchResult | Promise<EtymonlineSearchResult> {
+  doc: Document
+): EtymonlineResult | Promise<EtymonlineResult> {
   const result: EtymonlineResult = []
-  const catalog: NonNullable<EtymonlineSearchResult['catalog']> = []
   const $items = Array.from(doc.querySelectorAll('[class*="word--"]'))
 
-  for (let i = 0; i < $items.length && result.length < options.resultCount; i++) {
+  for (let i = 0; i < $items.length && result.length < RESULT_COUNT; i++) {
     const $item = $items[i]
 
     const title = getText($item, '[class*="word__name--"]')
@@ -66,29 +47,13 @@ export function handleDOM (
 
     const href = getFullLink(HOST, $item, 'href')
 
-    let chart = ''
-    if (options.chart) {
-      const $chart = $item.querySelector<HTMLImageElement>(
-        '[class*="chart--"] img'
-      )
-      if ($chart) {
-        chart = getFullLink(HOST, $chart, 'src')
-      }
-    }
-
     const id = `d-etymonline-entry${i}`
 
-    result.push({ id, href, title, def, chart })
-
-    catalog.push({
-      key: `#${i}`,
-      value: id,
-      label: `#${title}`,
-    })
+    result.push({ id, href, title, def })
   }
 
   if (result.length > 0) {
-    return { result, catalog }
+    return result
   }
 
   return handleNoResult()

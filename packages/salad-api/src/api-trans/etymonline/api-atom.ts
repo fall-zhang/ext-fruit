@@ -1,4 +1,5 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
+import type { WordResponse } from '../../types/res-type'
 import { getFetchDOMReq } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
 
@@ -14,6 +15,20 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
 export const handleResponse: AtomResponseHandle = async (res, { text, from, to, profile }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
-  const options = profile.etymonline.options
-  return handleDOM(dom, options)
+
+  const domRes = await handleDOM(dom)
+  const result: WordResponse = {
+    engin: 'etymonline',
+    type: 'word-trans',
+    from,
+    to,
+    text,
+    translate: domRes.map(item => {
+      return {
+        translate: item.def,
+      }
+    }),
+    pronounce: [],
+  }
+  return result
 }
