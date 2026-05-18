@@ -4,22 +4,9 @@ import {
 } from '../../utils/dom-utils'
 import type { AxiosResponse } from 'axios'
 import axios from 'axios'
-import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
-import type { MojidictResult, SuggestsResult, FetchWordResult, FetchTtsResult, GetTTS } from './type'
+import type { SearchFunction } from '../../api-common/search-type'
+import type { MojidictResult, SuggestsResult, FetchWordResult, FetchTtsResult } from './type'
 
-export const getSrcPage: GetSrcPageFunction = async text => {
-  const suggests = await getSuggests(text).catch(() => null)
-  if (suggests) {
-    const tarId =
-      suggests.searchResults &&
-      suggests.searchResults[0] &&
-      suggests.searchResults[0].tarId
-    if (tarId) {
-      return `https://www.mojidict.com/details/${tarId}`
-    }
-  }
-  return 'https://www.mojidict.com'
-}
 
 export const search: SearchFunction<MojidictResult> = async (
   text

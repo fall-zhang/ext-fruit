@@ -3,9 +3,9 @@ import type { AtomSearchResult } from '../../types/res-type'
 import {
   getText,
   getInnerHTML,
-  handleNoResult,
   getFullLink
 } from '../../utils/dom-utils'
+import { handleNoResult } from '../../utils/error-response'
 import type { JikipediaResult, JikipediaResultItem } from './type'
 
 const HOST = 'https://jikipedia.com'

@@ -35,7 +35,7 @@ export const getFetchRequest: AtomFetchRequest = (text, _opt) => {
   })
 }
 
-export const handleResponse: AtomResponseHandle<MojidictResult> = async (res, { text }) => {
+export const handleResponse: AtomResponseHandle<MojidictResult> = async (res) => {
   // Parse the suggests response
   let suggests: SuggestsResult | null = null
   try {

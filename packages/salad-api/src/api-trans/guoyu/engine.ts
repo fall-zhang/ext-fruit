@@ -1,10 +1,10 @@
 
 import type { GuoYuResult } from './type'
-import type { AtomSearchResult } from '@/types/res-type'
 import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
 import type { Profile } from '@/config/trans-profile'
 import { handleNetWorkError, handleNoResult } from '@/core/api-server/utils'
 import chsToChz from '@/core/api-server/utils/chs-to-chz'
+import type { AtomSearchResult } from '../../types/res-type'
 
 export function handleResponse (data: GuoYuResult): AtomSearchResult<GuoYuResult> {
   for (const h of data.h!) {

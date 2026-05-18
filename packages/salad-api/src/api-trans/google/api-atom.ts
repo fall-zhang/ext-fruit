@@ -1,18 +1,17 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
-import type { GoogleResult } from './type'
-import type { GoogleConfig } from './config'
+import type { GoogleResult, SupportLang } from './type'
+import type { ParagraphResponse } from '../../types/res-type'
 
-export const getSrcPage: AtomGetSrcFunction = (text, localLangCode, profile) => {
+export const getSrcPage: AtomGetSrcFunction = (text, targetLang: SupportLang) => {
   const domain = 'com'
-  const lang =
-    profile.google.options.tl === 'default'
-      ? localLangCode
-      : profile.google.options.tl
+  const lang: SupportLang = targetLang
 
   return `https://translate.google.${domain}/#auto/${lang}/${text}`
 }
 
-export const getFetchRequest: AtomFetchRequest<GoogleConfig> = (text, {
+export const getFetchRequest: AtomFetchRequest<{
+  token: string
+}> = (text, {
   from,
   to,
   option,
@@ -28,7 +27,11 @@ export const getFetchRequest: AtomFetchRequest<GoogleConfig> = (text, {
     dt: 't',
     q: text,
   })
-
+  // const result = await translator.translate(text, sl, tl, {
+  //   concurrent: options.concurrent,
+  //   apiAsFallback: true,
+  //   order: [],
+  // })
   return new Request(`${url}?${params.toString()}`, {
     method: 'GET',
     headers: {
@@ -37,39 +40,21 @@ export const getFetchRequest: AtomFetchRequest<GoogleConfig> = (text, {
   })
 }
 
-export const handleResponse: AtomResponseHandle<GoogleResult> = async (res, {
+export const handleResponse: AtomResponseHandle = async (res, {
   text,
   from,
   to,
-  profile,
 }) => {
   const data = await res.json()
 
-  if (res.status === 401 || res.status === 429) {
-    throw new Error('Google auth error: rate limited or invalid token')
+  const result: ParagraphResponse = {
+    engin: 'google',
+    type: 'paragraph-trans',
+    from,
+    to,
+    text,
+    translate: data.trans,
+    pronounce: [],
   }
-
-  const paragraphs: string[] = []
-  if (data?.[0]) {
-    for (const item of data[0]) {
-      if (item?.[0]) {
-        paragraphs.push(item[0])
-      }
-    }
-  }
-
-  return {
-    result: {
-      id: 'google',
-      sl: from || 'auto',
-      tl: to || 'en',
-      slInitial: profile?.google?.options?.slInitial || 'hide',
-      searchText: { paragraphs: [text] },
-      trans: { paragraphs },
-    },
-    audio: {
-      py: paragraphs.join('\n'),
-      us: paragraphs.join('\n'),
-    },
-  }
+  return result
 }

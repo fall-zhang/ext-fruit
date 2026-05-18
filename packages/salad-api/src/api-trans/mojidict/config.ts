@@ -1,33 +1,13 @@
-import type { DictItemBase } from '@/core/api-server/types/dict-base'
-export type LianganConfig = DictItemBase
+import type { ApiInfo } from '../../types/api-info'
 
-export default (): LianganConfig => ({
-  lang: '10010000',
-  selectionLang: {
-    english: false,
-    chinese: true,
-    japanese: true,
-    korean: false,
-    french: false,
-    spanish: false,
-    deutsch: false,
-    others: false,
-    matchAll: false,
-  },
-  defaultUnfold: {
-    english: true,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: true,
-    spanish: true,
-    deutsch: true,
-    others: true,
-    matchAll: false,
-  },
-  // preferredHeight: 265,
-  selectionWC: {
-    min: 1,
-    max: 5,
-  },
+export const getPreference = (): ApiInfo => ({
+  from: ['en', 'ja', 'zh-CN'],
+  to: ['en', 'ja', 'zh-CN'],
+  enName: 'MOJi辞書',
+  zhName: 'MOJi辞書',
+  type: 'paragraph-trans',
+  maxWord: 5,
+  minWord: 1,
+  needAuth: true,
 })
+export default getPreference
