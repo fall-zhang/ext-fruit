@@ -25,5 +25,6 @@ export type ApiInfo = {
 
 export type AuthApiInfo<T = unknown> = ApiInfo & {
   auth: T
+  needAuth: true
 }
 
