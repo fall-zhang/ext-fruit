@@ -41,7 +41,7 @@ export function getDefaultSelectDict (): Array<DictID> {
 
     'ahdict', // 美国传统词典 ✅
     'oaldict', // 牛津高阶词典 ✅
-    'cnki', // 牛津高阶词典 ✅
+    // 'cnki', // CNKI 翻译(知网翻译)
     // "etymonline",
     // "eudic",
     // "hjdict",

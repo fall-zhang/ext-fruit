@@ -153,7 +153,7 @@ const RenderCredential: FC = (props) => {
   return (<>
     <Trans message={t('machineTrans.login')}>
       <Link
-        to='options?menuselected=DictAuths'
+        to='/configs/dict-auth'
         // to: 'options.html?menuselected=DictAuths',
       >
         {t('machineTrans.dictAccount')}

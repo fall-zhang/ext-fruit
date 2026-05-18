@@ -110,7 +110,7 @@ export const Notes: FC<NotesProps> = props => {
       onClick: () => {
         console.log('jump to options page')
         navigate({
-          to: '/configs/',
+          to: '/configs/general',
         })
       },
     },

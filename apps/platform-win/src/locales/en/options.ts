@@ -10,8 +10,6 @@ export const locale: typeof _locale = {
   msg_err_permission: 'Unable to request "{{permission}}" permission.',
   unsave_confirm: 'Settings not saved. Sure to leave?',
   nativeSearch: 'search selected text outside of browser',
-  firefox_shortcuts:
-    'Open about:addons, click the top right "gear" button, choose the last "Manage extension shortcuts".',
   tutorial: 'Tutorial',
   page_selection: 'Page Selection',
 
