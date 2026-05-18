@@ -2,6 +2,7 @@ import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '.
 import type { GoogleDictResult } from './type'
 import { getFetchDOMReq } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
+import type { WordResponse } from '../../types/res-type'
 
 
 /**
@@ -31,7 +32,18 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
 /**
  * @deprecated 无法获取请求内容，废弃
  */
-export const handleResponse: AtomResponseHandle<GoogleDictResult> = async (res, { text }) => {
+export const handleResponse: AtomResponseHandle = async (res, { from, to, text }) => {
   const domText = await res.text()
-  return handleDOM(domText, text)
+  const domRes = handleDOM(domText, text)
+  const result: WordResponse = {
+    engin: 'google',
+    type: 'word-trans',
+    from,
+    to,
+    text,
+    translate: [],
+    pronounce: [],
+  }
+
+  return result
 }

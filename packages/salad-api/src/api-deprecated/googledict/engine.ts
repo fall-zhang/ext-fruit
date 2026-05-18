@@ -1,12 +1,12 @@
-import { handleNoResult } from '@/core/api-server/utils/error-response'
 import { getStaticSpeaker } from '@/components/Speaker'
-import type { AtomSearchResult } from '@/types/res-type'
 import type { GoogleDictResult, FragmentInfo, ImageInfo } from './type'
-import { getFullLink, getText, getInnerHTML, removeChildren, removeChild } from '../../utils/dom-utils'
+import { getFullLink, getText, getInnerHTML, removeChildren } from '../../utils/dom-utils'
+import { handleNoResult } from '../../utils/error-response'
+import type { AtomSearchResult } from '../../types/res-type'
 
 type GoogleDictSearchResult = AtomSearchResult<GoogleDictResult>
 
-export function handleDOM(
+export function handleDOM (
   bodyText: string,
   text: string
 ): GoogleDictSearchResult | Promise<GoogleDictSearchResult> {
@@ -42,7 +42,7 @@ export function handleDOM(
     removeChildren($obcontainer, '.S5TwIf') // Learn to pronounce
     removeChildren($obcontainer, '.VZVCid') // From Oxford
     removeChildren($obcontainer, '.u7XA4b') // footer
-    removeChild($obcontainer, '[jsname=L4Nn5e]') // remove translate to
+    // removeChild($obcontainer, '[jsname=L4Nn5e]') // remove translate to
 
     // tts
     $obcontainer.querySelectorAll('audio').forEach($audio => {
@@ -115,10 +115,10 @@ export function handleDOM(
     return { result: { entry: cleanText, styles } }
   }
 
-  return handleNoResult<GoogleDictSearchResult>()
+  return handleNoResult()
 }
 
-function extFragements(text: string): FragmentInfo[] {
+function extFragements (text: string): FragmentInfo[] {
   const result: FragmentInfo[] = []
   const matcher = /\(function\(\)\{window\.jsl\.dh\('([^']+)','([^']+)'\);\}\)\(\);/g
   let match: RegExpExecArray | null | undefined
@@ -135,7 +135,7 @@ function extFragements(text: string): FragmentInfo[] {
   return result
 }
 
-function extractImg(text: string): ImageInfo[] {
+function extractImg (text: string): ImageInfo[] {
   const kvPairMatch = /google.ldi={([^}]+)}/.exec(text)
   if (kvPairMatch) {
     try {
@@ -148,6 +148,6 @@ function extractImg(text: string): ImageInfo[] {
   return []
 }
 
-function decodeHex(m: string, code: string): string {
+function decodeHex (m: string, code: string): string {
   return String.fromCharCode(parseInt(code, 16))
 }
