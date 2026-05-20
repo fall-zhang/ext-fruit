@@ -85,7 +85,7 @@ export default [
   },
   {
     name: 'app/files-to-ignore',
-    ignores: ['**/dist/**', '**/node_modules/**', '**/dist-ssr/**', '**/coverage/**', '**/temp.js', '**/release/**', '**/target/**'],
+    ignores: ['**/dist/**', '**/node_modules/**', '**/dist-ssr/**', '**/test/**', '**/temp.js', '**/release/**', '**/target/**'],
   },
   jslint.configs.recommended,
   lintReact.configs.flat.recommended,
