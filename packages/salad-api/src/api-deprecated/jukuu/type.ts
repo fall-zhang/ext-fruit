@@ -1,6 +1,6 @@
 import type { HTMLString } from '../../types'
 
-export type JukuuLang = 'engjp' | 'zhjp' | 'zheng'
+export type JukuuLang = 'eng-jp' | 'zh-jp' | 'zh-eng'
 
 export interface JukuuTransItem {
   trans: HTMLString

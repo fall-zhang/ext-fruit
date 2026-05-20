@@ -17,7 +17,8 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to, 
 
   const domRes = await handleDOM(dom)
   const result: ParagraphResponse = {
-    engin: 'cnki',
+    // engin: 'cnki',
+    engin: 'bing',
     type: 'paragraph-trans',
     from,
     to,

@@ -2,7 +2,7 @@ import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '.
 import { getFetchDOMReq, parseDirtyDom } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
 
-function removeChildren(parent: ParentNode, selector: string): void {
+function removeChildren (parent: ParentNode, selector: string): void {
   parent.querySelectorAll(selector).forEach($el => $el.remove())
 }
 

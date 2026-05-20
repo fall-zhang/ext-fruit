@@ -1,4 +1,5 @@
 import type { DictItemBase } from '@/core/api-server/types/dict-base'
+import type { ApiInfo } from '../../types/api-info'
 export type JukuuConfig = DictItemBase & {
   options: {
     lang: 'zheng' | 'engjp' | 'zhjp'
@@ -8,38 +9,14 @@ export type JukuuConfig = DictItemBase & {
   },
 }
 
-export default (): JukuuConfig => ({
-  lang: '11010000',
-  selectionLang: {
-    english: true,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: true,
-    spanish: true,
-    deutsch: true,
-    others: false,
-    matchAll: false,
-  },
-  defaultUnfold: {
-    english: true,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: true,
-    spanish: true,
-    deutsch: true,
-    others: true,
-    matchAll: false,
-  },
-  selectionWC: {
-    min: 1,
-    max: 99999,
-  },
-  options: {
-    lang: 'zheng',
-  },
-  optionalVal: {
-    lang: ['zheng', 'engjp', 'zhjp'],
-  },
+const getPreference = (): ApiInfo => ({
+  from: ['en', 'zh-CN', 'ja'],
+  to: ['en', 'zh-CN', 'ja'],
+  enName: 'Jukuu',
+  zhName: '句酷',
+  type: 'paragraph-trans',
+  maxWord: 99999,
+  minWord: 1,
 })
+
+export default getPreference

@@ -6,9 +6,6 @@ import {
 } from '../../utils/dom-utils'
 import type { JukuuLang, JukuuTransItem, JukuuResult } from './type'
 
-
-type JukuuSearchResult = AtomResponseHandle<JukuuResult>
-
 // export const search: SearchFunction<JukuuResult> = async (
 //   text,
 //   opt
