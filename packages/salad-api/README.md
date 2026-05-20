@@ -16,7 +16,7 @@ en,    zh-CN,      zh-TW,     ja,     ko, fr,   de,   es
   - config.ts 该语言的偏好配置
     - getPreference 当前翻译的偏好配置
     - auth 当前翻译的默认认证信息
-  - type.ts 该语言的返回结果类型
+  - type.ts 该语言的返回结果类型（之后会使用统一的返回类型）
   - engine.ts 该语言返回内容的主要处理逻辑
 - 一系列请求相关工具
   - request-to-axios 将 fetch 的请求参数转换为 axios 的参数

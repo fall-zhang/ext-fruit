@@ -1,4 +1,4 @@
-> 最近更新时间：2026 Mar 24
+> 最近更新：2026-05-13
 
 ## 所有词典的状态
 
@@ -6,48 +6,43 @@
 
 当前共收录 X 个词典 API，共 X 个可用
 
-### 词典 API
+### 词典  API 迁移
 
 | 迁移状态 | 词典路径   | 名称                      | 是否可用 | 默认启用 | 免认证 |
 | ---------- | ----------------------------- | -------- | -------- | ---- | ---- |
-| ❌   | cobuild    | 科林斯高阶                    | ✅        | ✅        | ✅ |
+| ❌ | baidu | 百度 | ❌ | ❌ | ❌ |
 | ❌ | cambridge  | 剑桥词典                      | ✅        | ✅        | ✅  |
-| ❌    | youdao     | 有道词典                      | ✅        | ✅        |  ✅  |
+| ❌   | cobuild    | 科林斯高阶                    | ✅        | ✅        | ✅ |
 | ❌ | vocabulary | vocabulary                    | ✅        | ✅        |  ✅  |
 | ❌     | urban      | urban                         | ❌        | ❌        |  ✅  |
 | ❌      | zdic       | [漢典](https://www.zdic.net/) | ✅        | ✅        | ✅ |
 | ❌ | guoyu | 汉语词典 | ✅ | ✅ | ✅ |
 | ❌ | liangan | 两岸词典 | ✅ | ✅ | ✅ |
-|            |            |                               |          |          |      |
-
-（vocabulary 可以爬取更多有用的信息）
-
-### 需要认证的词典
-
-| 词典名称 | 中文名称 | 是否可用 | 默认启用 |
-| -------- | -------- | -------- | -------- |
-| baidu    | 百度     | ✅        | ❌        |
-| caiyun   | 彩云     |          | ❌        |
-| youdaotrans  | 有道  |          |  ❌    |
-| google | 谷歌 | ✅ | ❌ |
-|          |          |          |          |
-|          |          |          |          |
-|          |          |          |          |
-|          |          |          |          |
-
-## 废弃的词典
-
- 'googledict', // 当前无法爬取数据，需要更新
-
-
-'ahdict', // 美国传统词典 ✅
-'oaldict', // 牛津高阶词典 ✅
-'cnki', // 知网翻译 https://dict.cnki.net/index ✅
-// "etymonline",
-// "eudic",
-// "hjdict",
-// "jikipedia",
-//  "jukuu", "lexico", "longman", "macmillan", "mojidict", "naver", "renren", "sogou", "tencent", "weblio", "weblioejje", "merriamwebster", "websterlearner", "wikipedia"
+|  ❌      |     cnki  |     [CNKI 知网翻译](https://dict.cnki.net)     |   ❌    |  ❌    |  ❌ |
+| ❌ | caiyun | 彩云 | ❌ | ❌ | ❌ |
+| ❌ | youdaotrans | 有道 | ❌ | ❌ | ❌ |
+| ❌ | google | 谷歌 | ✅ | ❌ | ❌ |
+| ❌    | youdao     | 有道词典                      | ✅        | ✅        |  ✅  |
+| ✅ | ahdict | 美国传统词典 | ✅ | ✅ | ✅ |
+| ❌ | etymonline | etymonline | ❌ | ❌ | ❌ |
+| ❌ | oaldict | 牛津高阶词典 | ❌ | ❌ | ❌ |
+|  | eudic |  |  |  |  |
+|  | hjdict |  |  |  |  |
+| | merriamwebster | | | | |
+| | weblioejje | | | | |
+| | weblio | | | | |
+| | tencent | | | | |
+| | sogou | | | | |
+| | renren | | | | |
+| | naver | | | | |
+| | mojidict | | | | |
+| | macmillan | | | | |
+| | longman | | | | |
+| | lexico | | | | |
+| | jukuu | | | | |
+| | websterlearner | | | | |
+| | wikipedia | | | | |
+| |  | | | | |
 
 ### 搜索建议
 
@@ -65,7 +60,65 @@
 
 如果部署了本地大模型，可以通过本地模型来获取翻译
 
-自翻译 trans by itself
+### API 迁移
 
-- zh-to-zh [汉典](./src/self-trans-api/zh-to-zh/zdic/engine.ts)
+所有的配置，开发者认为已经是最佳状态，所以如果想要修改，请进行 PR 更新配置
+
+每天改造一个词典的配置
+
+- [x] cambridge (返回的是纯 html，不可用)
+- [x] cobuild
+- [x] etymonline 
+- [x] eudic 
+- [x] google 
+- [x] googledict 
+- [x] guoyu 
+- [x] hjdict 
+- [x] jikipedia (小鸡词典解散)
+- [x] lexico (无法访问官网)
+- [ ] liangan 
+- [ ] longman 
+- [ ] macmillan 
+- [ ] mojidict 
+- [ ] naver 
+- [ ] oaldict 
+- [ ] renren 
+- [ ] sogou 
+- [ ] tencent 
+- [ ] urban 
+- [ ] vocabulary 
+- [ ] weblio 
+- [ ] weblioejje 
+- [ ] merriamwebster 
+- [ ] websterlearner 
+- [ ] wikipedia 
+- [ ] youdao 
+- [ ] youdaotrans 
+- [ ] zdic 
+
+### example 
+
+```ts
+const transRes: SelfTransResponse = {
+  engin: 'bing',
+  engin: 'bing',
+}
+```
+
+### 词典优化
+
+vocabulary 可以爬取更多有用的信息
+
+
+
+### 废弃的词典
+
+| 词典名称 | 中文名称 | 是否可用 | 废弃原因                                  |
+| -------- | -------- | -------- | ----------------------------------------- |
+| caiyun   |          |          | 暂不可用                                  |
+| cnki     |          |          | 当前翻译不可用，无法通过 url 控制访问内容 |
+|          |          |          |                                           |
+|          |          |          |                     |
+|  googledict | 谷歌查词 | ❌ | 暂时不可用，无法解析 DOM |
+|  jikipedia | 小鸡词典 | ❌  | 团队解散，都奔向更好的未来了 |
 
