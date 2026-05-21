@@ -71,7 +71,7 @@ export function getText (
   const textContent = child.textContent || ''
   return transform ? transform(textContent) : textContent
 }
-
+export const getDOMText = getText
 
 export function getHTML (
   parent: ParentNode,
@@ -183,4 +183,28 @@ export function getFullLink (hostStr: string, el: Element, attr: string): string
  */
 export function removeChildren (parent: ParentNode, selector: string) {
   parent.querySelectorAll(selector).forEach(el => el.remove())
+}
+
+/**
+ * Will jump to the website instead of searching
+ * when clicking on the dict panel
+ */
+export function externalLink ($a: HTMLElement) {
+  $a.setAttribute('target', '_blank')
+  $a.setAttribute('rel', 'nofollow noopener noreferrer')
+}
+
+/**
+ * Returns a anchor element
+ */
+export const getStaticSpeaker = (src?: string | null) => {
+  if (!src) {
+    return ''
+  }
+
+  const $a = document.createElement('a')
+  $a.target = '_blank'
+  $a.href = src
+  $a.className = 'saladict-Speaker'
+  return $a
 }

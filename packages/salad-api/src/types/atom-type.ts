@@ -9,11 +9,11 @@ export type AtomFetchRequest<T = unknown> = {
   (
     text: string,
     opt: {
-      from?: Language
-      to?: Language
+      from: Language
+      to: Language
       option?: T
     }
-  ): Request
+  ): Request | Promise<Request>
 }
 
 
@@ -42,6 +42,5 @@ export interface AtomGetSrcFunction {
   (
     text: string,
     localLangCode: 'zh-CN' | 'zh-TW' | 'en',
-    profile: AllDictsConf
   ): string | Promise<string>
 }
