@@ -1,51 +1,11 @@
-import type { DictItemBase } from '@/core/api-server/types/dict-base'
-export type LongmanConfig = DictItemBase & {
-  options: {
-    wordfams: boolean
-    collocations: boolean
-    grammar: boolean
-    thesaurus: boolean
-    examples: boolean
-    bussinessFirst: boolean
-    related: boolean
-  }
-}
+import type { ApiInfo } from '../../types/api-info'
 
-export default (): LongmanConfig => ({
-  lang: '10000000',
-  selectionLang: {
-    english: true,
-    chinese: false,
-    japanese: false,
-    korean: false,
-    french: false,
-    spanish: false,
-    deutsch: false,
-    others: false,
-    matchAll: false,
-  },
-  defaultUnfold: {
-    english: true,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: true,
-    spanish: true,
-    deutsch: true,
-    others: true,
-    matchAll: false,
-  },
-  selectionWC: {
-    min: 1,
-    max: 5,
-  },
-  options: {
-    wordfams: false,
-    collocations: true,
-    grammar: true,
-    thesaurus: true,
-    examples: true,
-    bussinessFirst: true,
-    related: true,
-  },
+export default (): ApiInfo => ({
+  enName: 'Longman Dictionary',
+  zhName: '朗文词典',
+  from: ['en'],
+  to: ['en'],
+  type: 'word-trans',
+  maxWord: 5,
+  minWord: 1,
 })

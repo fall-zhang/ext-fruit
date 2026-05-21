@@ -1,14 +1,10 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
-import memoizeOne from 'memoize-one'
-import { Tencent } from '@salad/trans/service-tencent/index'
-import { detectLangInfo } from '../../api-common/detect-lang'
-import { getTranslator as getBaiduTranslator } from '../baidu/engine'
-import { machineResult } from '../../api-common/result-handle'
+import type { AuthBody } from './config'
+import { getUTCDate, tencentLangMap } from './engine'
 import type { TencentResult } from './type'
-
-export const getTranslator = memoizeOne(
-  () => new Tencent({})
-)
+import { TranslateError } from '@P/open-trans/translator'
+import type { ParagraphResponse } from '../../types/res-type'
+import HMACSHA256 from 'crypto-js/hmac-sha256'
 
 export const getSrcPage: AtomGetSrcFunction = (text, localLang) => {
   let lang
@@ -22,89 +18,58 @@ export const getSrcPage: AtomGetSrcFunction = (text, localLang) => {
   return `https://fanyi.qq.com/#auto/${lang}/${text}`
 }
 
-export const getFetchRequest: AtomFetchRequest<TencentResult> = (text, opt) => {
-  const translator = getTranslator()
-
-  const { from: sl, to: tl } = detectLangInfo(
-    text,
-    {
-      from: opt.from,
-      to: opt.to,
-      localLang: opt.localLang,
-    }
-  )
-
-  const secretId = opt.dictAuth?.tencent.secretId
-  const secretKey = opt.dictAuth?.tencent.secretKey
+/**
+ * 该方法暂时不可用
+ */
+export const getFetchRequest: AtomFetchRequest<AuthBody> = async (text, opt) => {
+  const secretId = opt.option?.secretId
+  const secretKey = opt.option?.secretKey
   const translatorConfig = (secretId && secretKey) ? { secretId, secretKey } : undefined
+  const from = tencentLangMap.get(opt.from) || 'auto'
+  const to = tencentLangMap.get(opt.to) || 'auto'
 
-  if (!translatorConfig) {
-    return Promise.resolve(
-      machineResult(
-        {
-          result: {
-            requireCredential: true,
-            id: 'tencent',
-            sl: 'auto',
-            tl: 'auto',
-            slInitial: 'hide',
-            searchText: { paragraphs: [''] },
-            trans: { paragraphs: [''] },
-          },
-        },
-        []
-      )
-    )
-  }
+  // API auth handle
+  const now = new Date()
+  const datestamp = getUTCDate(now)
+  const timestamp = `${new Date().valueOf()}`.slice(0, 10)
 
-  return translator.translate(text, sl, tl, translatorConfig).then(async (result) => {
-    // Tencent needs extra api credits for TTS which does
-    // not fit in the current Saladict architecture.
-    // Use Baidu instead.
-    const baidu = getBaiduTranslator()
-    result.origin.tts = await baidu.textToSpeech(
-      result.origin.paragraphs.join('\n'),
-      result.from
-    )
-    result.trans.tts = await baidu.textToSpeech(
-      result.trans.paragraphs.join('\n'),
-      result.to
-    )
+  const SecretDate = HMACSHA256(datestamp, `TC3${secretKey}`)
 
-    return machineResult(
-      {
-        result: {
-          id: 'tencent',
-          sl: result.from,
-          tl: result.to,
-          slInitial: opt.profile.tencent.options.slInitial,
-          searchText: result.origin,
-          trans: result.trans,
-        },
-        audio: {
-          py: result.trans.tts,
-          us: result.trans.tts,
-        },
-      },
-      translator.getSupportLanguages()
-    )
-  }).catch(() => {
-    return machineResult(
-      {
-        result: {
-          id: 'tencent',
-          sl,
-          tl,
-          slInitial: 'hide',
-          searchText: { paragraphs: [''] },
-          trans: { paragraphs: [''] },
-        },
-      },
-      []
-    )
+  return new Request('https://tmt.tencentcloudapi.com', {
+    headers: {
+      'content-type': 'application/json; charset=utf-8',
+    },
+    body: JSON.stringify({
+      ProjectId: 0,
+      Source: from,
+      SourceText: text,
+      Target: to,
+    }),
   })
 }
-
-export const handleResponse: AtomResponseHandle<TencentResult> = async (res, _opt) => {
-  return res
+export const handleResponse: AtomResponseHandle = async (response, { from, to, text }) => {
+  const res: TencentResult = await response.json()
+  if (res.Response.Error && res.Response.Error.Code) {
+    switch (res.Response.Error.Code) {
+      case 'AuthFailure.SecretIdNotFound':
+      case 'AuthFailure.InvalidSecretId':
+        throw new TranslateError('AUTH_ERROR', res.Response.Error.Code)
+      case 'FailedOperation.NoFreeAmount':
+      case 'FailedOperation.UserHasNoFreeAmount':
+      case 'FailedOperation.ServiceIsolate':
+        throw new TranslateError('USAGE_LIMIT', res.Response.Error.Code)
+      default:
+        throw new TranslateError('UNKNOWN', res.Response.Error.Code)
+    }
+  }
+  const result: ParagraphResponse = {
+    engin: 'tencent',
+    type: 'paragraph-trans',
+    from: 'af',
+    to: 'af',
+    text: '',
+    translate: '',
+    pronounce: [],
+  }
+  return result
 }

@@ -1,103 +1,8 @@
-import {
-  handleNoResult,
-  handleNetWorkError
-} from '../../utils/dom-utils'
+
 import type { AxiosResponse } from 'axios'
 import axios from 'axios'
-import type { SearchFunction } from '../../api-common/search-type'
-import type { MojidictResult, SuggestsResult, FetchWordResult, FetchTtsResult } from './type'
-
-
-export const search: SearchFunction<MojidictResult> = async (
-  text
-) => {
-  const suggests = await getSuggests(text)
-
-  const tarId = suggests.searchResults?.[0]?.tarId
-  if (!tarId) {
-    return handleNoResult()
-  }
-
-  const {
-    data: { result: wordResult },
-  }: AxiosResponse<{ result: FetchWordResult }> = await axios({
-    method: 'post',
-    url: 'https://api.mojidict.com/parse/functions/fetchWord_v2',
-    headers: {
-      'content-type': 'text/plain',
-    },
-    data: requestPayload({ wordId: tarId }),
-  })
-
-  const result: MojidictResult = {}
-
-  if (wordResult && (wordResult.details || wordResult.word)) {
-    if (wordResult.word) {
-      result.word = {
-        tarId,
-        spell: wordResult.word.spell,
-        pron: `${wordResult.word.pron || ''} ${wordResult.word.accent || ''}`,
-      }
-    }
-
-    if (wordResult.details) {
-      result.details = wordResult.details.map(detail => ({
-        objectId: detail.objectId,
-        title: detail.title,
-        subdetails: wordResult?.subdetails
-          ?.filter(subdetail => subdetail.detailsId === detail.objectId)
-          .map(subdetail => ({
-            objectId: subdetail.objectId,
-            title: subdetail.title,
-            examples: wordResult?.examples?.filter(
-              example => example.subdetailsId === subdetail.objectId
-            ),
-          })),
-      }))
-    }
-
-    if (suggests.words && suggests?.words.length > 1) {
-      result.releated = suggests.words
-        .map(word => ({
-          title: `${word.spell} | ${word.pron || ''} ${word.accent || ''}`,
-          excerpt: word.excerpt,
-        }))
-        .slice(1)
-    }
-
-    if (result.word) {
-      result.word.tts = await getTTS(tarId, 102)
-      return { result, audio: { py: result.word.tts } }
-    }
-
-    return { result }
-  }
-
-  return handleNoResult()
-}
-
-async function getSuggests (text: string): Promise<SuggestsResult> {
-  try {
-    const {
-      data: { result },
-    }: AxiosResponse<{ result?: SuggestsResult }> = await axios({
-      method: 'post',
-      url: 'https://api.mojidict.com/parse/functions/search_v3',
-      headers: {
-        'content-type': 'text/plain',
-      },
-      data: requestPayload({
-        langEnv: 'zh-CN_ja',
-        needWords: true,
-        searchText: text,
-      }),
-    })
-
-    return result || handleNoResult()
-  } catch (e) {
-    return handleNetWorkError(e)
-  }
-}
+import type { SuggestsResult, FetchTtsResult } from './type'
+import { handleNetWorkError, handleNoResult } from '../../utils/error-response'
 
 /**
  * 文字转语音生成
@@ -125,9 +30,7 @@ export async function getTTS (
   return ''
 }
 
-export type GetTTS = typeof getTTS
-
-function requestPayload (data: object) {
+export function requestPayload (data: object) {
   return JSON.stringify({
     // _ApplicationId: process.env.VITE_MOJI_ID,
     _ClientVersion: 'js2.12.0',
@@ -144,4 +47,30 @@ function s () {
   return Math.floor(65536 * (1 + Math.random()))
     .toString(16)
     .substring(1)
+}
+/**
+ * 获取对应单词的 id
+ * @returns
+ */
+export async function getSuggests (text: string): Promise<SuggestsResult> {
+  try {
+    const {
+      data: { result },
+    }: AxiosResponse<{ result?: SuggestsResult }> = await axios({
+      method: 'post',
+      url: 'https://api.mojidict.com/parse/functions/search_v3',
+      headers: {
+        'content-type': 'text/plain',
+      },
+      data: requestPayload({
+        langEnv: 'zh-CN_ja',
+        needWords: true,
+        searchText: text,
+      }),
+    })
+
+    return result || handleNoResult()
+  } catch (e) {
+    return handleNetWorkError(e)
+  }
 }

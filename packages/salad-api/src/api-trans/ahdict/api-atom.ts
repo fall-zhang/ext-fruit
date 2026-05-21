@@ -1,5 +1,5 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
-import type { SelfTransResponse } from '../../types/res-type'
+import type { WordResponse } from '../../types/res-type'
 import { getFetchDOMReq } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
 
@@ -17,17 +17,17 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to, 
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
   const domRes = await handleDOM(dom, { resultCount: 5 })
-  const result: SelfTransResponse = {
-    type: 'self-trans',
+  const result: WordResponse = {
+    type: 'word-trans',
     engin: 'ahdict',
     from,
     to,
     text,
-    translate: '',
+    translate: [],
     pronounce: [],
   }
   domRes.forEach(item => {
-    result.translate = item.meaning.join('; ')
+    result.translate = item.meaning.map(item => ({ translate: item }))
     if (item.pron) {
       result.pronounce = [
         {

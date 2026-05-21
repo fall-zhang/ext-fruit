@@ -1,4 +1,5 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
+import type { WordResponse } from '../../types/res-type'
 import { getFetchDOMReq, parseDirtyDom } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
 
@@ -13,5 +14,15 @@ export const getFetchRequest: AtomFetchRequest = (text, _opt) => {
 
 export const handleResponse: AtomResponseHandle = async (res, _context) => {
   const dom = await parseDirtyDom(res)
-  return handleDOM(dom)
+  const domRes = handleDOM(dom)
+  const result: WordResponse = {
+    engin: 'weblio',
+    type: 'word-trans',
+    from: 'en',
+    to: 'en',
+    text: '',
+    translate: [],
+    pronounce: [],
+  }
+  return result
 }

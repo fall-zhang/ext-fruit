@@ -4,4 +4,3 @@ export interface VocabularyResult {
   long: string
 }
 
-export type VocabularySearchResult = DictSearchResult<VocabularyResult>

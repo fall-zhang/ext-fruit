@@ -1,41 +1,16 @@
-import type { DictItem } from '@/config/app-config/dicts'
+import type { ApiInfo } from '../../types/api-info'
 
-export type ShanbayConfig = DictItem<{
-  basic: boolean
-  sentence: boolean
-}>
 
-export default (): ShanbayConfig => ({
-  lang: '10000000',
-  selectionLang: {
-    english: true,
-    chinese: false,
-    japanese: false,
-    korean: false,
-    french: false,
-    spanish: false,
-    deutsch: false,
-    others: false,
-    matchAll: false,
-  },
-  defaultUnfold: {
-    english: true,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: true,
-    spanish: true,
-    deutsch: true,
-    others: true,
-    matchAll: false,
-  },
-  preferredHeight: 150,
-  selectionWC: {
-    min: 1,
-    max: 30,
-  },
-  options: {
-    basic: true,
-    sentence: true,
-  },
+export const getPreference = (): ApiInfo => ({
+  from: ['en'],
+  to: ['en'],
+  enName: 'Shanbay Dictionary',
+  zhName: '扇贝词典',
+  type: 'paragraph-trans',
+  maxWord: 5,
+  minWord: 1,
+  needAuth: true,
 })
+
+export default getPreference
+

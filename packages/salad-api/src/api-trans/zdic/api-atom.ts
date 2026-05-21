@@ -12,8 +12,7 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle<ZdicResult> = async (res, { text, from, to, profile }) => {
+export const handleResponse: AtomResponseHandle<ZdicResult> = async (res) => {
   const dom = await parseDirtyDom(res)
-  const isAudio = profile.zdic.options.audio
-  return handleDOM(dom, { isAudio })
+  return handleDOM(dom)
 }

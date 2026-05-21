@@ -89,7 +89,7 @@ export function handleDOM (
   if (result.length > 0) {
     return {
       type: 'word-trans',
-      translate: '',
+      translate: [],
       pronounce: [],
     }
     // return { result, audio, catalog }

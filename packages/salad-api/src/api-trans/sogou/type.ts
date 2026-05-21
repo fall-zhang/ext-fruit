@@ -1,3 +1,7 @@
-import type { MachineTranslateResult } from '../../api-common/result-handle'
 
-export type SogouResult = MachineTranslateResult
+export interface SogouRes {
+  query: string;
+  translation: string;
+  errorCode: string;
+  detect: string;
+}

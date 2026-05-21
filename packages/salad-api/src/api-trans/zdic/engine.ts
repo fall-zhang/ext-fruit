@@ -11,9 +11,9 @@ type ZdicSearchResult = AtomSearchResult<ZdicResult>
 
 export function handleDOM (
   doc: Document,
-  options: { isAudio: boolean }
+  options?: { isAudio: boolean }
 ): ZdicSearchResult | Promise<ZdicSearchResult> {
-  const { isAudio } = options
+  const isAudio = options?.isAudio
   const response: ZdicSearchResult = {
     result: [],
   }

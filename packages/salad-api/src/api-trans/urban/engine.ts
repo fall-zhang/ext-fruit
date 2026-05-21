@@ -1,38 +1,21 @@
 
-import type { DictSearchResult, SearchFunction } from '../../api-common/search-type'
-import type { HTMLString } from '../../types'
 import {
   getText,
-  getInnerHTML,
-  handleNoResult,
-  handleNetWorkError
+  getInnerHTML
 } from '../../utils/dom-utils'
 
 import axios from 'axios'
-import { fetchDirtyDOM } from '../../utils/fetch-dom'
 import type { UrbanResult, UrbanResultItem, ThumbMap, thumbRes } from './type'
+import { handleNoResult, handleNetWorkError } from '../../utils/error-response'
+import type { AtomSearchResult } from '../../types/res-type'
 
 export type { UrbanResult, UrbanResultItem } from './type'
-
+const RESULT_COUNT = 5
 // 需要代理 proxy
 export const getSrcPage = (text: string): string => {
   return `http://www.urbandictionary.com/define.php?term=${text}`
 }
 const HOST = 'https://www.urbandictionary.com'
-
-export const search: SearchFunction<UrbanResult> = async (
-  text,
-  opt
-) => {
-  const options = opt.profile.urban.options
-
-  return fetchDirtyDOM(
-    'http://www.urbandictionary.com/define.php?term=' +
-      encodeURIComponent(text.replace(/\s+/g, ' '))
-  )
-    .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, options))
-}
 
 /** get thumbs-up and thumbs-down nums  */
 async function getThumbsNums (ids: string): Promise<ThumbMap | null> {
@@ -63,14 +46,12 @@ async function getThumbsNums (ids: string): Promise<ThumbMap | null> {
 }
 
 export async function handleDOM (
-  doc: Document,
-  { resultCount }: { resultCount: number }
-): Promise<DictSearchResult<UrbanResult>> {
+  doc: Document
+): Promise<AtomSearchResult<UrbanResult>> {
   const result: UrbanResult = []
   const audio: { us?: string } = {}
 
   const defPanels = Array.from(doc.querySelectorAll('.def-panel'))
-  console.log('⚡️ line:111 ~ defPanels: ', defPanels)
 
   if (defPanels.length <= 0) {
     return handleNoResult()
@@ -78,14 +59,14 @@ export async function handleDOM (
 
   const defIds: string[] = []
 
-  for (let i = 0; i < defPanels.length && result.length < resultCount; i++) {
+  for (let i = 0; i < defPanels.length && result.length < RESULT_COUNT; i++) {
     const defId = defPanels[i]?.getAttribute('data-defid')
 
     defId && defIds.push(defId)
   }
   const thumbsMap = await getThumbsNums(defIds.join(','))
 
-  for (let i = 0; i < defPanels.length && result.length < resultCount; i++) {
+  for (let i = 0; i < defPanels.length && result.length < RESULT_COUNT; i++) {
     const $panel = defPanels[i]
     const defId = defPanels[i]?.getAttribute('data-defid') || ''
 

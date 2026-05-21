@@ -1,4 +1,5 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
+import type { WordResponse } from '../../types/res-type'
 import { getFetchDOMReq, parseDirtyDom } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
 
@@ -14,5 +15,15 @@ export const getFetchRequest: AtomFetchRequest = (text) => {
 
 export const handleResponse: AtomResponseHandle = async (res, { text, from, to, profile }) => {
   const dom = await parseDirtyDom(res)
-  return handleDOM(dom)
+  const domRes = handleDOM(dom)
+  const result: WordResponse = {
+    engin: 'urban',
+    type: 'word-trans',
+    from: 'af',
+    to: 'af',
+    text: '',
+    translate: [],
+    pronounce: [],
+  }
+  return result
 }

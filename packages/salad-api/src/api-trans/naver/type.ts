@@ -1,4 +1,3 @@
-import type { DictSearchResult } from '../../api-common/search-type'
 
 /** Alternate machine translation result */
 export interface NaverResult {
@@ -14,4 +13,4 @@ export interface NaverPayload {
   lang?: 'zh' | 'ja'
 }
 
-export type NaverSearchResult = DictSearchResult<NaverResult>
+export type NaverSearchResult = NaverResult

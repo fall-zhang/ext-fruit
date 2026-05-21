@@ -1,9 +1,9 @@
 import type { Meaning, MeaningGroup, Section, Phonetic, Pronunciation, Group, MerriamWebsterResultV2 } from './type'
-export type { Meaning, MeaningGroup, Section, Phonetic, Pronunciation, Group, MerriamWebsterResultV2 } from './type'
 import type { AtomSearchResult } from '../../types/res-type'
-import { handleNoResult } from '../../utils/dom-utils'
+import { handleNoResult } from '../../utils/error-response'
+export type { Meaning, MeaningGroup, Section, Phonetic, Pronunciation, Group, MerriamWebsterResultV2 } from './type'
 
-export function handleDOM(
+export function handleDOM (
   doc: Document,
   options: { resultCount: number }
 ): AtomSearchResult<MerriamWebsterResultV2> | Promise<AtomSearchResult<MerriamWebsterResultV2>> {

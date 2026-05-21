@@ -1,4 +1,3 @@
-import type { DictItemBase } from '@/core/api-server/types/dict-base'
 import type { ApiInfo } from '../../types/api-info'
 
 export const getPreference = (): ApiInfo => ({
@@ -12,5 +11,4 @@ export const getPreference = (): ApiInfo => ({
   needAuth: false,
 })
 
-
-export type EudicConfig = DictItemBase
+export default getPreference

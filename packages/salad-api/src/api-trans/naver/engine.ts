@@ -1,16 +1,6 @@
-
-import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
-import {
-  handleNoResult,
-  handleNetWorkError
-} from '../../utils/dom-utils'
-import { isContainJapanese, isContainKorean } from '../../utils/lang-check'
 import type { NaverResult, NaverSearchResult } from './type'
-import { getSrcPage as atomGetSrcPage } from './api-atom'
-
-export { NaverResult } from './type'
-
-export const getSrcPage: GetSrcPageFunction = atomGetSrcPage
+import { handleNetWorkError, handleNoResult } from '../../utils/error-response'
+import { isContainJapanese, isContainKorean } from '../../utils/detect-lang/lang-check'
 
 async function zhDict (text: string): Promise<NaverSearchResult> {
   const response = await fetch(
@@ -27,10 +17,8 @@ async function zhDict (text: string): Promise<NaverSearchResult> {
   }
 
   return {
-    result: {
-      lang: 'zh',
-      entry: ListMap,
-    },
+    lang: 'zh',
+    entry: ListMap,
   }
 }
 
@@ -49,24 +37,15 @@ async function jaDict (text: string): Promise<NaverSearchResult> {
   }
 
   return {
-    result: {
-      lang: 'ja',
-      entry: ListMap,
-    },
+    lang: 'ja',
+    entry: ListMap,
   }
 }
 
-export const search: SearchFunction<NaverResult> = (
-  text,
-  opt
-) => {
-  const { options } = opt.profile.naver
-
-  if (
-    options.hanAsJa ||
-    isContainJapanese(text) ||
-    (options.korAsJa && isContainKorean(text))
-  ) {
+export const search = (
+  text: string
+): Promise<NaverResult> => {
+  if (isContainJapanese(text)) {
     return jaDict(text)
   }
 

@@ -1,4 +1,5 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
+import type { WordResponse } from '../../types/res-type'
 import { getFetchDOMReq } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
 
@@ -15,9 +16,21 @@ export const getFetchRequest: AtomFetchRequest = (text) => {
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { profile }) => {
+export const handleResponse: AtomResponseHandle = async (res, { profile, text }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
-  const options = profile.longman.options
-  return handleDOM(dom, options)
+  const domRes = await handleDOM(dom)
+  const result: WordResponse = {
+    engin: 'longman',
+    type: 'word-trans',
+    from: 'en',
+    to: 'en',
+    text,
+    translate: [],
+    pronounce: [],
+  }
+  if (domRes.result.type === 'lex') {
+    result.translate = domRes.result.bussiness.map(item => ({ translate: item.thesaurus || '' }))
+  }
+  return result
 }

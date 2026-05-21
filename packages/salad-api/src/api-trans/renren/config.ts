@@ -1,34 +1,15 @@
-import type { DictItemBase } from '@/core/api-server/types/dict-base'
+import type { ApiInfo } from '../../types/api-info'
 
-export type RenrenConfig = DictItemBase
-
-export default (): RenrenConfig => ({
-  lang: '11000000',
-  selectionLang: {
-    english: true,
-    chinese: true,
-    japanese: false,
-    korean: false,
-    french: false,
-    spanish: false,
-    deutsch: false,
-    others: false,
-    matchAll: false,
-  },
-  defaultUnfold: {
-    english: true,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: true,
-    spanish: true,
-    deutsch: true,
-    others: true,
-    matchAll: false,
-  },
-  // preferredHeight: 400,
-  selectionWC: {
-    min: 1,
-    max: 999,
-  },
+export const getPreference = (): ApiInfo => ({
+  from: ['zh-CN', 'en'],
+  to: ['zh-CN', 'en'],
+  enName: '91dict',
+  zhName: '人人词典',
+  type: 'paragraph-trans',
+  maxWord: 999,
+  minWord: 1,
+  needAuth: true,
 })
+
+export default getPreference
+

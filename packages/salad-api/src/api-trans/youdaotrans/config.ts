@@ -1,11 +1,9 @@
-import type { DictItemBase, DictItemOption } from '@/core/api-server/types/dict-base'
 import type { ExtendSupportLang } from '@P/open-trans/languages/src/languages'
+import type { AuthApiInfo } from '../../types/api-info'
 
 export type YoudaotransLanguage = ExtendSupportLang<
   'zh-CN' | 'en' | 'pt' | 'es' | 'ja' | 'ko' | 'fr' | 'ru'
 >
-
-export type YoudaotransConfig = DictItemBase & DictItemOption<YoudaotransLanguage>
 
 export interface AuthBody {
   appKey: string
@@ -19,44 +17,15 @@ export const auth: AuthBody = {
 
 export const url = 'http://ai.youdao.com/gw.s'
 
-export default (): YoudaotransConfig => ({
-  lang: '11011111',
-  selectionLang: {
-    english: true,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: true,
-    spanish: true,
-    deutsch: true,
-    others: true,
-    matchAll: false,
-  },
-  defaultUnfold: {
-    english: true,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: true,
-    spanish: true,
-    deutsch: true,
-    others: true,
-    matchAll: false,
-  },
-  selectionWC: {
-    min: 1,
-    max: 9999999,
-  },
-  options: {
-    keepLF: 'all',
-    slInitial: 'collapse',
-    tl: 'default',
-    tl2: 'default',
-  },
-  optionalVal: {
-    keepLF: ['none', 'all'],
-    slInitial: ['collapse', 'hide', 'full'],
-    tl: ['default', 'zh-CN', 'en', 'ja', 'ko', 'fr', 'es', 'ru'],
-    tl2: ['default', 'zh-CN', 'en', 'ja', 'ko', 'fr', 'es', 'ru'],
-  },
+export const getPreference = (): AuthApiInfo<AuthBody> => ({
+  from: ['en', 'zh-CN', 'ja', 'ko', 'fr', 'es', 'ru'] satisfies YoudaotransLanguage[],
+  to: ['en', 'zh-CN', 'ja', 'ko', 'fr', 'es', 'ru'] satisfies YoudaotransLanguage[],
+  enName: 'Youdao Translate',
+  zhName: '有道翻译',
+  type: 'paragraph-trans',
+  maxWord: 99999999,
+  minWord: 1,
+  needAuth: true,
+  auth,
 })
+export default getPreference

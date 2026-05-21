@@ -24,7 +24,7 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to, 
     from,
     to,
     text,
-    translate: '',
+    translate: [],
     pronounce: [],
   }
   if (domRes.audio?.uk) {

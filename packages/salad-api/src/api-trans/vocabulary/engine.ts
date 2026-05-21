@@ -1,13 +1,12 @@
 
 import {
-  getText,
-  handleNoResult
+  getText
 } from '../../utils/dom-utils'
-import type { VocabularySearchResult } from './type'
+import { handleNoResult } from '../../utils/error-response'
 
 export function handleDOM (
   doc: Document
-): VocabularySearchResult | Promise<VocabularySearchResult> {
+) {
   const short = getText(doc, '.short')
   if (!short) {
     return handleNoResult()

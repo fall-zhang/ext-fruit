@@ -4,12 +4,10 @@ import type { LongmanResult, LongmanResultLex, LongmanResultRelated, LongmanResu
 import {
   getText,
   getInnerHTML,
-  handleNoResult,
-  handleNetWorkError,
   getFullLink
 } from '../../utils/dom-utils'
 import { getStaticSpeaker } from '@/components/Speaker'
-import type { AllDictsConf } from '../../config'
+import { handleNoResult } from '../../utils/error-response'
 
 const HOST = 'https://www.ldoceonline.com'
 
@@ -17,25 +15,20 @@ type LongmanSearchResult = AtomSearchResult<LongmanResult>
 type LongmanSearchResultLex = AtomSearchResult<LongmanResultLex>
 type LongmanSearchResultRelated = AtomSearchResult<LongmanResultRelated>
 
-export function handleDOM(
-  doc: Document,
-  options: AllDictsConf['longman']['options']
+export function handleDOM (
+  doc: Document
 ): LongmanSearchResult | Promise<LongmanSearchResult> {
   if (doc.querySelector('.dictentry')) {
-    return handleDOMLex(doc, options)
-  } else if (options.related) {
-    return handleDOMRelated(doc)
+    return handleDOMLex(doc)
   }
-  return handleNoResult()
+  return handleDOMRelated(doc)
 }
 
-function handleDOMLex(
-  doc: Document,
-  options: AllDictsConf['longman']['options']
+function handleDOMLex (
+  doc: Document
 ): LongmanSearchResultLex | Promise<LongmanSearchResultLex> {
   const result: LongmanResultLex = {
     type: 'lex',
-    bussinessFirst: options.bussinessFirst,
     contemporary: [],
     bussiness: [],
   }
@@ -55,9 +48,8 @@ function handleDOMLex(
       }
     })
 
-  if (options.wordfams) {
-    result.wordfams = getInnerHTML(HOST, doc, '.wordfams')
-  }
+  // if (options.wordfams) {
+  result.wordfams = getInnerHTML(HOST, doc, '.wordfams')
 
   const $dictentries = doc.querySelectorAll('.dictentry')
   let currentDict: 'contemporary' | 'bussiness' | '' = ''
@@ -146,23 +138,19 @@ function handleDOMLex(
       getInnerHTML(HOST, $sen)
     )
 
-    if (options.collocations) {
-      entry.collocations = getInnerHTML(HOST, $entry, '.ColloBox')
-    }
+    // if (options.collocations) {
+    entry.collocations = getInnerHTML(HOST, $entry, '.ColloBox')
 
-    if (options.grammar) {
-      entry.grammar = getInnerHTML(HOST, $entry, '.GramBox')
-    }
+    // if (options.grammar) {
+    entry.grammar = getInnerHTML(HOST, $entry, '.GramBox')
 
-    if (options.thesaurus) {
-      entry.thesaurus = getInnerHTML(HOST, $entry, '.ThesBox')
-    }
+    // if (options.thesaurus) {
+    entry.thesaurus = getInnerHTML(HOST, $entry, '.ThesBox')
 
-    if (options.examples) {
-      entry.examples = Array.from(
-        $entry.querySelectorAll('.exaGroup')
-      ).map($exa => getInnerHTML(HOST, $exa))
-    }
+    // if (options.examples) {
+    entry.examples = Array.from(
+      $entry.querySelectorAll('.exaGroup')
+    ).map($exa => getInnerHTML(HOST, $exa))
 
     result[currentDict].push(entry)
   }
@@ -174,7 +162,7 @@ function handleDOMLex(
   return { result, audio }
 }
 
-function handleDOMRelated(
+function handleDOMRelated (
   doc: Document
 ): LongmanSearchResultRelated | Promise<LongmanSearchResultRelated> {
   const $didyoumean = doc.querySelector('.didyoumean')

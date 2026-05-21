@@ -1,72 +1,27 @@
-import memoizeOne from 'memoize-one'
-import { Youdao } from '@salad/trans/service-youdao/index'
+import type { Language } from '../../const/languages'
 
+const langMapList: [Language, string][] = [
+  ['auto', 'auto'],
+  ['en', 'en'],
+  ['zh-CN', 'zh-CHS'],
+  ['zh-TW', 'zh-CHT'],
+  ['ru', 'ru'],
+  ['pt', 'pt'],
+  ['es', 'es'],
+  ['de', 'de'],
+  ['ja', 'ja'],
+  ['ko', 'ko'],
+  ['fr', 'fr'],
+  ['ar', 'ar'],
+  ['id', 'id'],
+  ['vi', 'vi'],
+  ['it', 'it'],
+]
 
-import { machineResult, type MachineTranslateResult } from '../../api-common/result-handle'
-import type { GetSrcPageFunction, SearchFunction } from '../../api-common/search-type'
-import { detectLangInfo } from '../../api-common/detect-lang'
+export const langMap = new Map(langMapList)
 
-export const getTranslator = memoizeOne(
-  () =>
-    new Youdao({})
-)
-
-export const getSrcPage: GetSrcPageFunction = (text, config, profile) => {
-  return 'http://fanyi.youdao.com'
-}
-
-export type YoudaotransResult = MachineTranslateResult
-
-export const search: SearchFunction<YoudaotransResult> = async (rawText, opt) => {
-  const translator = getTranslator()
-
-  const { from: sl, to: tl, text } = detectLangInfo(
-    rawText,
-    {
-      from: opt.from,
-      to: opt.to,
-      localLang: opt.localLang,
-    }
-  )
-
-
-  const appKey = opt.dictAuth?.youdaotrans.appKey
-  const key = opt.dictAuth?.youdaotrans.key
-  const translatorConfig = appKey && key ? { appKey, key } : undefined
-
-  try {
-    const result = await translator.translate(text, sl, tl, translatorConfig)
-    console.log('⚡️ line:38 ~ result: ', result)
-    return machineResult(
-      {
-        result: {
-          id: 'youdaotrans',
-          sl: result.from,
-          tl: result.to,
-          slInitial: opt.profile.youdaotrans.options.slInitial,
-          searchText: result.origin,
-          trans: result.trans,
-        },
-        audio: {
-          py: result.trans.tts,
-          us: result.trans.tts,
-        },
-      },
-      translator.getSupportLanguages()
-    )
-  } catch (e) {
-    return machineResult(
-      {
-        result: {
-          id: 'youdaotrans',
-          sl,
-          tl,
-          slInitial: 'hide',
-          searchText: { paragraphs: [''] },
-          trans: { paragraphs: [''] },
-        },
-      },
-      translator.getSupportLanguages()
-    )
-  }
+export function truncate (q: string): string {
+  const len = q.length
+  if (len <= 20) return q
+  return q.substring(0, 10) + len + q.substring(len - 10, len)
 }

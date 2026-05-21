@@ -1,43 +1,14 @@
-import type { DictItemBase } from '@/core/api-server/types/dict-base'
-export type NaverConfig = DictItemBase & {
-  options: {
-    hanAsJa: boolean
-    korAsJa: boolean
-  }
-}
+import type { ApiInfo } from '../../types/api-info'
 
-
-export default (): NaverConfig => ({
-  lang: '01011000',
-  selectionLang: {
-    english: false,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: false,
-    spanish: false,
-    deutsch: false,
-    others: false,
-    matchAll: false,
-  },
-  defaultUnfold: {
-    english: true,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: true,
-    spanish: true,
-    deutsch: true,
-    others: true,
-    matchAll: false,
-  },
-  // preferredHeight: 465,
-  selectionWC: {
-    min: 1,
-    max: 10,
-  },
-  options: {
-    hanAsJa: false,
-    korAsJa: false,
-  },
+export const getPreference = (): ApiInfo => ({
+  from: ['zh-CN', 'ja', 'ko'],
+  to: ['zh-CN', 'ja', 'ko'],
+  enName: 'Naver韩国语词典',
+  zhName: 'Naver韩国语词典',
+  type: 'word-trans',
+  maxWord: 10,
+  minWord: 1,
+  needAuth: true,
 })
+export default getPreference
+

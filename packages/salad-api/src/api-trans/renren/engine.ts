@@ -1,7 +1,7 @@
-import { handleNoResult, getText, getFullLink, getInnerHTML } from '../../utils/dom-utils'
-import { fetchDirtyDOM } from '../../utils/fetch-dom'
+import { getText, getFullLink, getInnerHTML } from '../../utils/dom-utils'
 import type { AtomSearchResult } from '../../types/res-type'
 import type { RenrenSlide, RenrenResult } from './type'
+import { handleNoResult } from '../../utils/error-response'
 
 const HOST = 'https://www.91dict.com'
 
@@ -68,24 +68,6 @@ export function handleDOM (
     return { result }
   }
   return handleNoResult()
-}
-
-export async function getDetail (src: string): Promise<RenrenSlide[]> {
-  const result: RenrenSlide[] = []
-
-  try {
-    const doc = await fetchDirtyDOM(src)
-    doc.querySelectorAll('.item li').forEach($li => {
-      const slide = extractSlide($li)
-      if (slide) {
-        result.push(slide)
-      }
-    })
-  } catch (e) {
-    console.warn(e)
-  }
-
-  return result
 }
 
 function extractSlide ($li: Element): RenrenSlide | null {

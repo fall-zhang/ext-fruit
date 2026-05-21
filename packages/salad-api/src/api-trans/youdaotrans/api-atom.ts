@@ -1,47 +1,73 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
-import { detectLangInfo } from '../../api-common/detect-lang'
-import { Youdao } from '@salad/trans/service-youdao/index'
-import { machineResult } from '../../api-common/result-handle'
-import type { YoudaoTransResult } from './type'
+import type { ParagraphResponse } from '../../types/res-type'
+import type { AuthBody } from './config'
+import { langMap, truncate } from './engine'
+import sha256 from 'crypto-js/sha256'
+import { TranslateError } from '@P/open-trans/translator'
 
 export const getSrcPage: AtomGetSrcFunction = () => {
   return 'http://fanyi.youdao.com'
 }
 
-export const getFetchRequest: AtomFetchRequest = async (text, opt) => {
-  const translator = new Youdao({})
+export const getFetchRequest: AtomFetchRequest<AuthBody> = (text, opt) => {
+  const appKey = opt.option?.appKey
+  const key = opt.option?.key
+  if (!appKey || !key) {
+    throw new Error('youdaotrans error, 未填写认证参数')
+  }
+  // const translatorConfig = appKey && key ? { appKey, key } : undefined
 
-  const { from: sl, to: tl } = detectLangInfo(text, {
-    from: opt.from,
-    to: opt.to,
-    localLang: opt.localLang,
+  // const result = await translator.translate(text, opt.from, opt.to, translatorConfig)
+  const salt = new Date().getTime().toString()
+  const curTime = Math.round(new Date().getTime() / 1000).toString()
+
+  const str1 = appKey + truncate(text) + salt + curTime + key
+  const sign = sha256(str1).toString()
+  const search = new URLSearchParams({
+    q: text,
+    appKey,
+    salt,
+    from: langMap.get(opt.from) || 'auto',
+    to: langMap.get(opt.to) || 'auto',
+    sign,
+    signType: 'v3',
+    curtime: curTime,
+  })
+  const url = new URL('https://openapi.youdao.com/api?' + search.toString())
+  const request = new Request(url, {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   })
 
-  const appKey = opt.dictAuth?.youdaotrans?.appKey
-  const key = opt.dictAuth?.youdaotrans?.key
-  const translatorConfig = appKey && key ? { appKey, key } : undefined
-
-  const result = await translator.translate(text, sl, tl, translatorConfig)
-
-  return machineResult(
-    {
-      result: {
-        id: 'youdaotrans',
-        sl: result.from,
-        tl: result.to,
-        slInitial: opt.profile.youdaotrans.options.slInitial,
-        searchText: result.origin,
-        trans: result.trans,
-      },
-      audio: {
-        py: result.trans.tts,
-        us: result.trans.tts,
-      },
-    },
-    translator.getSupportLanguages()
-  )
+  return request
 }
 
-export const handleResponse: AtomResponseHandle<YoudaoTransResult> = async (res) => {
-  return res
+export const handleResponse: AtomResponseHandle = async (res, { from, to, text }) => {
+  const jsonRes = await res.json()
+
+  if (jsonRes.data.errorCode) {
+    switch (jsonRes.data.errorCode) {
+      case '0':
+        break // means success
+      case '101': // params error
+      case '108':
+        throw new TranslateError('AUTH_ERROR', jsonRes.data.errorCode)
+      case '401':
+        throw new TranslateError('USAGE_LIMIT', jsonRes.data.errorCode)
+      default:
+        throw new TranslateError('UNKNOWN', jsonRes.data.errorCode)
+    }
+  }
+  const paragraphRes: ParagraphResponse = {
+    engin: 'youdaotrans',
+    type: 'paragraph-trans',
+    from,
+    to,
+    text,
+    translate: jsonRes.data.translation,
+    pronounce: [],
+  }
+  return paragraphRes
 }

@@ -1,41 +1,15 @@
-import type { DictItemBase } from '@/core/api-server/types/dict-base'
-export type UrbanConfig = DictItemBase & {
-  options: {
-    resultCount: number
-  }
-}
+import type { ApiInfo } from '../../types/api-info'
 
 
-export default (): UrbanConfig => ({
-  lang: '10000000',
-  selectionLang: {
-    english: true,
-    chinese: false,
-    japanese: false,
-    korean: false,
-    french: false,
-    spanish: false,
-    deutsch: false,
-    others: false,
-    matchAll: false,
-  },
-  defaultUnfold: {
-    english: true,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: true,
-    spanish: true,
-    deutsch: true,
-    others: true,
-    matchAll: false,
-  },
-  // preferredHeight: 180,
-  selectionWC: {
-    min: 1,
-    max: 5,
-  },
-  options: {
-    resultCount: 4,
-  },
+export const getPreference = (): ApiInfo => ({
+  from: ['zh-CN', 'en'],
+  to: ['zh-CN', 'en'],
+  enName: 'Urban',
+  zhName: 'Urban',
+  type: 'word-trans',
+  maxWord: 5,
+  minWord: 1,
+  needAuth: true,
 })
+export default getPreference
+

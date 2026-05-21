@@ -1,23 +1,17 @@
-import { getPreference as baidu } from './baidu/config'
-import { getPreference as bing } from './bing/config'
-import { getPreference as ahdict } from './ahdict/config'
+import baidu from './baidu/config'
+import bing from './bing/config'
+import ahdict from './ahdict/config'
 import oaldict from './oaldict/config'
 import caiyun from './caiyun/config'
 import cambridge from './cambridge/config'
-import cnki from './cnki/config'
 import cobuild from './cobuild/config'
 import etymonline from './etymonline/config'
 import eudic from './eudic/config'
 import google from './google/config'
-import googledict from './googledict/config'
 import guoyu from './guoyu/config'
 import hjdict from './hjdict/config'
-import jikipedia from './jikipedia/config'
-import jukuu from './jukuu/config'
-import lexico from './lexico/config'
 import liangan from './liangan/config'
 import longman from './longman/config'
-import macmillan from './macmillan/config'
 import mojidict from './mojidict/config'
 import naver from './naver/config'
 import renren from './renren/config'
@@ -34,6 +28,14 @@ import youdao from './youdao/config'
 import youdaotrans from './youdaotrans/config'
 import zdic from './zdic/config'
 
+// @deprecated 已经弃用的翻译 API
+// import googledict from './googledict/config'
+// import cnki from './cnki/config'
+// import jikipedia from './jikipedia/config'
+// import jukuu from './jukuu/config'
+// import lexico from './lexico/config'
+// import macmillan from './macmillan/config'
+
 // For TypeScript to generate typings
 // Follow alphabetical order for easy reading
 export const defaultAllDicts = {
@@ -43,20 +45,20 @@ export const defaultAllDicts = {
   oaldict: oaldict(),
   caiyun: caiyun(),
   cambridge: cambridge(),
-  cnki: cnki(),
+  // cnki: cnki(),
   cobuild: cobuild(),
   etymonline: etymonline(),
   eudic: eudic(),
   google: google(),
-  googledict: googledict(),
+  // googledict: googledict(),
   guoyu: guoyu(),
   hjdict: hjdict(),
-  jikipedia: jikipedia(),
-  jukuu: jukuu(),
-  lexico: lexico(),
+  // jikipedia: jikipedia(),
+  // jukuu: jukuu(),
+  // lexico: lexico(),
   liangan: liangan(),
   longman: longman(),
-  macmillan: macmillan(),
+  // macmillan: macmillan(),
   mojidict: mojidict(),
   naver: naver(),
   renren: renren(),
@@ -78,3 +80,5 @@ export const defaultAllDicts = {
 export type AllDictsConf = typeof defaultAllDicts
 
 export type DictID = keyof AllDictsConf
+
+export const getAllDictsConf = (): AllDictsConf => structuredClone(defaultAllDicts)

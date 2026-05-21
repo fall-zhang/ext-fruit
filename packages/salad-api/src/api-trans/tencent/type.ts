@@ -1,3 +1,12 @@
-import type { MachineTranslateResult } from '../../api-common/result-handle'
 
-export type TencentResult = MachineTranslateResult
+export type TencentResult = {
+  Response: {
+    TargetText: string;
+    Source: string;
+    Target: string;
+    RequestId: string;
+    Error: {
+      Code: string;
+    };
+  };
+}

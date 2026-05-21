@@ -1,6 +1,6 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
+import { isContainJapanese, isContainKorean } from '../../utils/detect-lang/lang-check'
 import { handleNoResult, handleNetWorkError } from '../../utils/error-response'
-import { isContainJapanese, isContainKorean } from '../../utils/lang-check'
 import type { NaverResult, NaverSearchResult } from './type'
 
 export const getSrcPage: AtomGetSrcFunction = text => {
@@ -10,14 +10,9 @@ export const getSrcPage: AtomGetSrcFunction = text => {
 }
 
 export const getFetchRequest: AtomFetchRequest = (text, opt) => {
-  const { options } = opt.profile.naver
-
-  const url =
-    options.hanAsJa ||
-    isContainJapanese(text) ||
-    (options.korAsJa && isContainKorean(text))
-      ? `https://ja.dict.naver.com/api3/jako/search?query=${encodeURIComponent(text)}`
-      : `https://zh.dict.naver.com/api3/zhko/search?query=${encodeURIComponent(text)}&lang=zh_CN`
+  const url = isContainJapanese(text)
+    ? `https://ja.dict.naver.com/api3/jako/search?query=${encodeURIComponent(text)}`
+    : `https://zh.dict.naver.com/api3/zhko/search?query=${encodeURIComponent(text)}&lang=zh_CN`
 
   return new Request(url, {
     method: 'GET',
@@ -27,13 +22,8 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
   })
 }
 
-export const handleResponse: AtomResponseHandle<NaverResult> = async (res, { text, from, to, profile }) => {
-  const { options } = profile.naver
-
-  const isJa =
-    options.hanAsJa ||
-    isContainJapanese(text) ||
-    (options.korAsJa && isContainKorean(text))
+export const handleResponse: AtomResponseHandle = async (res, { text, from, to }) => {
+  const isJa = isContainJapanese(text)
 
   let data
   try {
@@ -49,10 +39,8 @@ export const handleResponse: AtomResponseHandle<NaverResult> = async (res, { tex
   }
 
   const result: NaverSearchResult = {
-    result: {
-      lang: isJa ? 'ja' : 'zh',
-      entry: ListMap,
-    },
+    lang: isJa ? 'ja' : 'zh',
+    entry: ListMap,
   }
 
   return result

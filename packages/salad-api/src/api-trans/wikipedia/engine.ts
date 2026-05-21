@@ -1,13 +1,13 @@
 
 import type { WikipediaSearchResult, LangListItem } from './type'
 import {
-  handleNoResult,
   getOuterHTML,
   getText,
   getFullLink
 } from '../../utils/dom-utils'
+import { handleNoResult } from '../../utils/error-response'
 
-export function fetchLangList(langSelector: string) {
+export function fetchLangList (langSelector: string) {
   return import('../../utils/fetch-dom')
     .then(({ fetchDirtyDOM }) => fetchDirtyDOM(langSelector))
     .then(getLangList)
@@ -17,7 +17,7 @@ export function fetchLangList(langSelector: string) {
     })
 }
 
-export function handleDOM(
+export function handleDOM (
   doc: Document,
   subdomain: string
 ): WikipediaSearchResult | Promise<WikipediaSearchResult> {
@@ -31,12 +31,12 @@ export function handleDOM(
       )
     })
   ) {
-    return handleNoResult<WikipediaSearchResult>()
+    return handleNoResult()
   }
 
   const title = getText(doc, '#section_0')
   if (!title) {
-    return handleNoResult<WikipediaSearchResult>()
+    return handleNoResult()
   }
 
   doc.querySelectorAll('#bodyContent .section-heading').forEach($header => {
@@ -54,7 +54,7 @@ export function handleDOM(
     config: {},
   })
   if (!content) {
-    return handleNoResult<WikipediaSearchResult>()
+    return handleNoResult()
   }
 
   let langSelector = ''
@@ -73,7 +73,7 @@ export function handleDOM(
   return { result: { title, content, langSelector } }
 }
 
-function getLangList(doc: Document): LangListItem[] {
+function getLangList (doc: Document): LangListItem[] {
   return [...doc.querySelectorAll('#mw-content-text li a')]
     .map<LangListItem | undefined>($a => {
       const url = $a.getAttribute('href')

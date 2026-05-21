@@ -4,6 +4,7 @@ import axios from 'axios'
 import { handleNoResult, handleNetWorkError } from '../../utils/error-response'
 import type { MojidictResult, SuggestsResult, FetchWordResult, FetchTtsResult } from './type'
 import type { AtomSearchResult } from '../../types/res-type'
+import { getSuggests } from './engine'
 
 export const getSrcPage: AtomGetSrcFunction = async (text) => {
   const suggests = await getSuggests(text).catch(() => null)
@@ -35,7 +36,7 @@ export const getFetchRequest: AtomFetchRequest = (text, _opt) => {
   })
 }
 
-export const handleResponse: AtomResponseHandle<MojidictResult> = async (res) => {
+export const handleResponse: AtomResponseHandle = async (res) => {
   // Parse the suggests response
   let suggests: SuggestsResult | null = null
   try {
@@ -117,71 +118,4 @@ export const handleResponse: AtomResponseHandle<MojidictResult> = async (res) =>
   }
 
   return handleNoResult()
-}
-
-/**
- * 文字转语音生成
- * @param tarId word id
- * @param tarType 102 word, 103 sentence
- */
-async function getTTS (
-  tarId: string,
-  tarType: 102 | 103
-): Promise<string> {
-  try {
-    const { data }: AxiosResponse<FetchTtsResult> = await axios({
-      method: 'post',
-      url: 'https://api.mojidict.com/parse/functions/fetchTts_v2',
-      headers: {
-        'content-type': 'text/plain',
-      },
-      data: requestPayload({ tarId, tarType }),
-    })
-
-    return data.result?.result?.url || ''
-  } catch {
-    console.error('Failed to fetch TTS')
-  }
-  return ''
-}
-
-async function getSuggests (text: string): Promise<SuggestsResult> {
-  try {
-    const {
-      data: { result },
-    }: AxiosResponse<{ result?: SuggestsResult }> = await axios({
-      method: 'post',
-      url: 'https://api.mojidict.com/parse/functions/search_v3',
-      headers: {
-        'content-type': 'text/plain',
-      },
-      data: requestPayload({
-        langEnv: 'zh-CN_ja',
-        needWords: true,
-        searchText: text,
-      }),
-    })
-
-    return result || handleNoResult()
-  } catch (e) {
-    return handleNetWorkError(e)
-  }
-}
-
-function requestPayload (data: object) {
-  return JSON.stringify({
-    _ClientVersion: 'js2.12.0',
-    _InstallationId: getInstallationId(),
-    ...data,
-  })
-}
-
-function getInstallationId () {
-  return s() + s() + '-' + s() + '-' + s() + '-' + s() + '-' + s() + s() + s()
-}
-
-function s () {
-  return Math.floor(65536 * (1 + Math.random()))
-    .toString(16)
-    .substring(1)
 }

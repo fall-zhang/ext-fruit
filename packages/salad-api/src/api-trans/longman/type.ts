@@ -33,7 +33,6 @@ export interface LongmanResultEntry {
 
 export interface LongmanResultLex {
   type: 'lex'
-  bussinessFirst: boolean
   contemporary: LongmanResultEntry[]
   bussiness: LongmanResultEntry[]
   wordfams?: HTMLString
