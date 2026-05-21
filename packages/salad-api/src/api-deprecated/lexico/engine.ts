@@ -15,26 +15,24 @@ const HOST = 'https://www.lexico.com'
 type LexicoSearchResult = AtomSearchResult<LexicoResult>
 
 export function handleDOM (
-  doc: Document,
-  options: { related: boolean }
+  doc: Document
 ): LexicoSearchResult | Promise<LexicoSearchResult> {
   // Check for no-exact-matches first
   const $noResult = doc.querySelector('.no-exact-matches')
   if ($noResult) {
-    if (options.related) {
-      const $similar = $noResult.querySelectorAll<HTMLAnchorElement>(
-        '.similar-results .search-results li a'
-      )
-      if ($similar.length > 0) {
-        const result: LexicoResultRelated = {
-          type: 'related',
-          list: [...$similar].map($a => ({
-            href: getFullLink(HOST, $a, 'href'),
-            text: getText($a),
-          })),
-        }
-        return { result }
+    // related
+    const $similar = $noResult.querySelectorAll<HTMLAnchorElement>(
+      '.similar-results .search-results li a'
+    )
+    if ($similar.length > 0) {
+      const result: LexicoResultRelated = {
+        type: 'related',
+        list: [...$similar].map($a => ({
+          href: getFullLink(HOST, $a, 'href'),
+          text: getText($a),
+        })),
       }
+      return { result }
     }
     return handleNoResult()
   }

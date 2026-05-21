@@ -13,11 +13,9 @@ export const getFetchRequest: AtomFetchRequest = text => {
 }
 
 export const handleResponse: AtomResponseHandle = async (res, { profile }) => {
-  const { options } = profile.lexico
-
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
-  const domRes = handleDOM(dom, options)
+  const domRes = await handleDOM(dom)
   const result: WordResponse = {
     engin: 'baidu',
     type: 'word-trans',

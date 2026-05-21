@@ -15,7 +15,7 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
 export const handleResponse: AtomResponseHandle = async (res, { profile }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
-  const resultCount = profile.jikipedia?.options?.resultCount ?? 4
+  const resultCount = 4
   const domRes = handleDOM(dom, { resultCount })
   const result: WordResponse = {
     // engin: 'jikipedia',
