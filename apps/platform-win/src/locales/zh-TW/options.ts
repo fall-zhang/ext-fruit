@@ -10,8 +10,6 @@ export const locale: typeof _locale = {
   msg_err_permission: '許可權“{{permission}}”申請失敗。',
   unsave_confirm: '修改尚未儲存，確定放棄？',
   nativeSearch: '瀏覽器外選字翻譯',
-  firefox_shortcuts:
-    '位址列跳轉到 about:addons，點選右上方的齒輪，選擇最後一項管理擴充套件快捷鍵',
   tutorial: '教程',
   page_selection: '網頁選字',
 
@@ -35,6 +33,7 @@ export const locale: typeof _locale = {
   },
 
   config: {
+    appTheme: '应用主题',
     active: '啟用滑鼠選字翻譯',
     active_help: '關閉後「迅速查字」功能依然可用。',
     animation: '啟用轉換動畫',

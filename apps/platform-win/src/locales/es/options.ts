@@ -10,8 +10,6 @@ export const locale: typeof _locale = {
   msg_err_permission: 'No se ha podido solicitar el permiso "{{permission}}".',
   unsave_confirm: 'Hay cambios sin guardar. ¿Estás seguro de que quieres salir?',
   nativeSearch: 'Buscar con el motor de búsqueda nativo',
-  firefox_shortcuts:
-    'Abra about:addons, haga clic en el botón superior derecho "engranaje", elija la última "Administrar accesos directos de extensión".',
   tutorial: 'Tutorial',
   page_selection: 'Selección de página',
 
@@ -35,6 +33,7 @@ export const locale: typeof _locale = {
   },
 
   config: {
+    appTheme: 'App Theme',
     active: 'Activar el traductor en línea',
     active_help:
       'Si está desactivado, el traductor en línea no se mostrará en el panel de búsqueda rápida.',

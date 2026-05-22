@@ -25,8 +25,6 @@ import macmillan from '@/core/api-server/trans-api/macmillan/_locales.json'
 import mojidict from '@/core/api-server/trans-api/mojidict/_locales.json'
 import naver from '@/core/api-server/trans-api/naver/_locales.json'
 import renren from '@/core/api-server/trans-api/renren/_locales.json'
-import sogou from '@/core/api-server/trans-api/sogou/_locales.json'
-import tencent from '@/core/api-server/trans-api/tencent/_locales.json'
 import weblio from '@/core/api-server/trans-api/weblio/_locales.json'
 import weblioejje from '@/core/api-server/trans-api/weblioejje/_locales.json'
 import merriamwebster from '@/core/api-server/trans-api/merriamwebster/_locales.json'
@@ -64,9 +62,6 @@ export const dicts = {
   merriamwebster: {
     name: merriamwebster.name['zh-CN'],
   },
-  tencent: {
-    name: tencent.name['zh-CN'],
-  },
   macmillan: {
     name: macmillan.name['zh-CN'],
   },
@@ -102,9 +97,6 @@ export const dicts = {
   },
   renren: {
     name: renren.name['zh-CN'],
-  },
-  sogou: {
-    name: sogou.name['zh-CN'],
   },
   weblio: {
     name: weblio.name['zh-CN'],
