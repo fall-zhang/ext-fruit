@@ -1,4 +1,3 @@
-import type { DictSearchResult } from '../../api-common/search-type'
 import type { HTMLString } from '../../types'
 
 export type LangListItem = {
@@ -14,7 +13,7 @@ export interface WikipediaResult {
   langSelector: string
 }
 
-export type WikipediaSearchResult = DictSearchResult<WikipediaResult>
+export type WikipediaSearchResult = WikipediaResult
 
 export type WikipediaPayload = {
   /** Search a specific url */

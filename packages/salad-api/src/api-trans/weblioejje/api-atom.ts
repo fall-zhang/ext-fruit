@@ -1,4 +1,5 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
+import type { ParagraphResponse } from '../../types/res-type'
 import { getFetchDOMReq } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
 
@@ -14,5 +15,15 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
 export const handleResponse: AtomResponseHandle = async (res, { text, from, to, profile }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
-  return handleDOM(dom)
+  const domRes = handleDOM(dom)
+  const result: ParagraphResponse = {
+    engin: 'weblioejje',
+    type: 'paragraph-trans',
+    from,
+    to,
+    text,
+    translate: '',
+    pronounce: [],
+  }
+  return result
 }

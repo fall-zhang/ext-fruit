@@ -1,13 +1,4 @@
-import type { DictItemBase } from '@/core/api-server/types/dict-base'
 import type { ApiInfo } from '../../types/api-info'
-export type JukuuConfig = DictItemBase & {
-  options: {
-    lang: 'zheng' | 'engjp' | 'zhjp'
-  },
-  optionalVal: {
-    lang: Array<'zheng' | 'engjp' | 'zhjp'>,
-  },
-}
 
 const getPreference = (): ApiInfo => ({
   from: ['en', 'zh-CN', 'ja'],

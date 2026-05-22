@@ -9,16 +9,16 @@ import {
 } from '../../utils/dom-utils'
 import { handleNoResult, handleNetWorkError } from '../../utils/error-response'
 
-function removeChildren(parent: ParentNode, selector: string): void {
+function removeChildren (parent: ParentNode, selector: string): void {
   parent.querySelectorAll(selector).forEach($el => $el.remove())
 }
 
-function removeChild(parent: ParentNode, selector: string): void {
+function removeChild (parent: ParentNode, selector: string): void {
   const $el = parent.querySelector(selector)
   if ($el) $el.remove()
 }
 
-function externalLink($a: HTMLAnchorElement): void {
+function externalLink ($a: HTMLAnchorElement): void {
   if ($a.getAttribute('href')) {
     $a.setAttribute('href', getFullLink(HOST, $a, 'href'))
   }
@@ -26,7 +26,7 @@ function externalLink($a: HTMLAnchorElement): void {
   $a.setAttribute('rel', 'noopener noreferrer')
 }
 
-async function fetchDirtyDOM(url: string): Promise<Document> {
+async function fetchDirtyDOM (url: string): Promise<Document> {
   const res = await fetch(url)
   const domText = await res.text()
   const doc = new DOMParser().parseFromString(domText, 'text/html')
@@ -36,7 +36,7 @@ async function fetchDirtyDOM(url: string): Promise<Document> {
 
 export type { MacmillanResult, MacmillanResultLex, MacmillanResultRelated, MacmillanPayload } from './type'
 
-export const getSrcPage: AtomGetSrcFunction = (text, localLang, profile) => {
+export const getSrcPage: AtomGetSrcFunction = (text) => {
   const lang = 'american'
   //  : 'british'
   return (
@@ -70,7 +70,7 @@ export const search = async (
 ): Promise<MacmillanSearchResult> => {
   const options = opt.profile.macmillan.options
 
-  return fetchMacmillanDom((await getSrcPage(text, opt.localLang || 'zh-CN', opt.profile as any)))
+  return fetchMacmillanDom((await getSrcPage(text, opt.localLang || 'zh-CN')))
     .catch(handleNetWorkError)
     .then(doc => checkResult(doc, options))
 }

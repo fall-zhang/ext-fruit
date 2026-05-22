@@ -14,8 +14,13 @@ export function getFetchDOMReq (
 
 
 export async function parseDirtyDom (res: Response): Promise<Document> {
-  const domText = await res.text()
-  return new DOMParser().parseFromString(domText, 'text/html')
+  try {
+    const domText = await res.text()
+    return new DOMParser().parseFromString(domText, 'text/html')
+  } catch (err) {
+    console.warn('解析 DOM 出错', err)
+    return new DOMParser().parseFromString('', 'text/html')
+  }
 }
 
 export async function fetchPlainText (

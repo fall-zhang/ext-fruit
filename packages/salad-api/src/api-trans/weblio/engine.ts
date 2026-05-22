@@ -1,12 +1,11 @@
 import type { WeblioResult } from './type'
 import {
   getInnerHTML,
-  handleNoResult,
   getOuterHTML,
-  getText,
-  removeChild
+  getText
 } from '../../utils/dom-utils'
 import type { AtomSearchResult } from '../../types/res-type'
+import { handleNoResult } from '../../utils/error-response'
 
 const HOST = 'https://www.weblio.jp'
 
@@ -43,7 +42,7 @@ export function handleDOM (
     doc.querySelectorAll('.section-card .basic-card').forEach($card => {
       const title = getText($card, '.pbarT h2')
       if (title) {
-        removeChild($card, '.pbarT')
+        // removeChild($card, '.pbarT')
         result.push({
           title,
           def: getInnerHTML(HOST, $card, { config: {} }),

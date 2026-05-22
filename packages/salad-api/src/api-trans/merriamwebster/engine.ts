@@ -4,8 +4,7 @@ import { handleNoResult } from '../../utils/error-response'
 export type { Meaning, MeaningGroup, Section, Phonetic, Pronunciation, Group, MerriamWebsterResultV2 } from './type'
 
 export function handleDOM (
-  doc: Document,
-  options: { resultCount: number }
+  doc: Document
 ): AtomSearchResult<MerriamWebsterResultV2> | Promise<AtomSearchResult<MerriamWebsterResultV2>> {
   const eleContent = _getContentEle(doc)
 

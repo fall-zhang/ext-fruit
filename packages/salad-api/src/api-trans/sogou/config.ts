@@ -1,4 +1,4 @@
-import type { ApiInfo } from '../../types/api-info'
+import type { ApiInfo, AuthApiInfo } from '../../types/api-info'
 
 export interface AuthBody {
   pid: string
@@ -12,7 +12,7 @@ export const auth: AuthBody = {
 
 export const url = 'https://deepi.sogou.com/?from=translatepc'
 
-export default (): ApiInfo => ({
+export default (): AuthApiInfo => ({
   from: ['zh-CN', 'zh-TW', 'en', 'ja', 'ko', 'fr', 'de', 'es', 'ru'],
   to: ['zh-CN', 'zh-TW', 'en', 'ja', 'ko', 'fr', 'de', 'es', 'ru'],
   enName: 'Sogou Translation',
@@ -21,4 +21,5 @@ export default (): ApiInfo => ({
   maxWord: 9999999,
   minWord: 1,
   needAuth: true,
+  auth,
 })

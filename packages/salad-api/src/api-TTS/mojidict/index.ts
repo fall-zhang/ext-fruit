@@ -1,3 +1,7 @@
+import type { AxiosResponse } from 'axios'
+import type { FetchTtsResult } from '../../api-trans/mojidict/type'
+import axios from 'axios'
+
 /**
  * 文字转语音生成
  * @param tarId word id
@@ -29,4 +33,15 @@ function requestPayload (data: object) {
     _InstallationId: getInstallationId(),
     ...data,
   })
+}
+
+
+function getInstallationId () {
+  return s() + s() + '-' + s() + '-' + s() + '-' + s() + '-' + s() + s() + s()
+}
+
+function s () {
+  return Math.floor(65536 * (1 + Math.random()))
+    .toString(16)
+    .substring(1)
 }

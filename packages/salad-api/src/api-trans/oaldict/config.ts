@@ -1,33 +1,12 @@
-import type { DictItemBase } from '@/core/api-server/types/dict-base'
+import type { ApiInfo } from '../../types/api-info'
 
-export type OalDictConfig = DictItemBase
-
-export default (): OalDictConfig => ({
-  lang: '10000000',
-  selectionLang: {
-    english: true,
-    chinese: false,
-    japanese: false,
-    korean: false,
-    french: false,
-    spanish: false,
-    deutsch: false,
-    others: false,
-    matchAll: false,
-  },
-  defaultUnfold: {
-    english: true,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: true,
-    spanish: true,
-    deutsch: true,
-    others: true,
-    matchAll: false,
-  },
-  selectionWC: {
-    min: 1,
-    max: 5,
-  },
+export const getPreference = (): ApiInfo => ({
+  from: ['en'],
+  to: ['en'],
+  enName: 'Oxford Learner\'s Dict',
+  zhName: '牛津高阶词典',
+  type: 'word-trans',
+  maxWord: 5,
+  minWord: 1,
 })
+export default getPreference

@@ -3,7 +3,7 @@ import type { WordResponse } from '../../types/res-type'
 import { getFetchDOMReq, parseDirtyDom } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
 
-export const getSrcPage: AtomGetSrcFunction = (text, localLangCode, profile) => {
+export const getSrcPage: AtomGetSrcFunction = (text, localLangCode) => {
   return `https://cn.bing.com/dict/search?q=${encodeURIComponent(text.replace(/\s+/g, ' '))}`
 }
 

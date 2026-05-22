@@ -1,34 +1,12 @@
-import type { DictItemBase } from '@/core/api-server/types/dict-base'
+import type { ApiInfo } from '../../types/api-info'
 
-export type VocabularyConfig = DictItemBase
-
-export default (): VocabularyConfig => ({
-  lang: '10000000',
-  selectionLang: {
-    english: true,
-    chinese: false,
-    japanese: false,
-    korean: false,
-    french: false,
-    spanish: false,
-    deutsch: false,
-    others: false,
-    matchAll: false,
-  },
-  defaultUnfold: {
-    english: true,
-    chinese: true,
-    japanese: true,
-    korean: true,
-    french: true,
-    spanish: true,
-    deutsch: true,
-    others: true,
-    matchAll: false,
-  },
-  // preferredHeight: 180,
-  selectionWC: {
-    min: 1,
-    max: 5,
-  },
+export const getPreference = (): ApiInfo => ({
+  from: ['en'],
+  to: ['en'],
+  enName: 'Vocabulary',
+  zhName: 'Vocabulary.com',
+  type: 'word-trans',
+  maxWord: 5,
+  minWord: 1,
 })
+export default getPreference

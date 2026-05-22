@@ -1,9 +1,9 @@
 import type { AtomFetchRequest, AtomResponseHandle } from '../types/atom-type'
 import type { AtomSearchResult } from '../types/res-type'
-import { getChsToChz } from '../utils/chs-to-chz'
 import { getText } from '../utils/dom-utils'
 import { handleNoResult } from '../utils/error-response'
 import { getFetchDOMReq, parseDirtyDom } from '../utils/fetch-dom'
+import type { Suggest } from './types'
 
 interface BingResultRelated {
   type: 'related'
@@ -26,9 +26,13 @@ export const getFetchRequest: AtomFetchRequest = (text) => {
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { text, from, to, profile }) => {
+export const handleResponse = async (res: Response, { text }: {
+  text: string
+}): Promise<Suggest[]> => {
   const dom = await parseDirtyDom(res)
-  return handleRelatedResult(dom)
+  const domRes = handleRelatedResult(dom)
+
+  return []
 }
 
 function handleRelatedResult (

@@ -4,7 +4,7 @@ import axios from 'axios'
 import { handleNoResult, handleNetWorkError } from '../../utils/error-response'
 import type { MojidictResult, SuggestsResult, FetchWordResult, FetchTtsResult } from './type'
 import type { AtomSearchResult } from '../../types/res-type'
-import { getSuggests } from './engine'
+import { getSuggests, getTTS, requestPayload } from './engine'
 
 export const getSrcPage: AtomGetSrcFunction = async (text) => {
   const suggests = await getSuggests(text).catch(() => null)

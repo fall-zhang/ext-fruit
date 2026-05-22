@@ -8,6 +8,5 @@ export const getPreference = (): ApiInfo => ({
   type: 'paragraph-trans',
   maxWord: 5,
   minWord: 1,
-  needAuth: true,
 })
 export default getPreference

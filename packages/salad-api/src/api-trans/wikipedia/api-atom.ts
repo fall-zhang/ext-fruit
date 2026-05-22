@@ -1,13 +1,13 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
+import type { ParagraphResponse } from '../../types/res-type'
+import { isContainChinese, isContainJapanese } from '../../utils/detect-lang/lang-check'
 import { getFetchDOMReq } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
 import type { WikipediaOptions } from './type'
-import { isContainChinese, isContainJapanese } from '../../utils/lang-check'
 
-export const getSrcPage: AtomGetSrcFunction = (text, _localLangCode, profile) => {
-  const { lang } = profile.wikipedia.options
-  const subdomain = getSubdomain(text, lang)
-  const path = lang.startsWith('zh-') ? lang : 'wiki'
+export const getSrcPage: AtomGetSrcFunction = (text, localLangCode) => {
+  const subdomain = getSubdomain(text, localLangCode)
+  const path = localLangCode.startsWith('zh-') ? localLangCode : 'wiki'
   return `https://${subdomain}.wikipedia.org/${path}/${encodeURIComponent(text)}`
 }
 
@@ -19,19 +19,28 @@ export const getFetchRequest: AtomFetchRequest<WikipediaOptions> = (text, opt) =
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { text, profile }) => {
+export const handleResponse: AtomResponseHandle = async (res, { text, profile, from, to }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
 
-  const { lang } = profile.wikipedia.options
-  const subdomain = getSubdomain(text, lang)
-
-  return handleDOM(dom, subdomain)
+  // const { lang } = profile.wikipedia.options
+  const subdomain = getSubdomain(text, to)
+  const domRes = handleDOM(dom, subdomain)
+  const result: ParagraphResponse = {
+    engin: 'wikipedia',
+    type: 'paragraph-trans',
+    from,
+    to,
+    text: '',
+    translate: '',
+    pronounce: [],
+  }
+  return result
 }
 
-function getSubdomain(
+function getSubdomain (
   text: string,
-  lang: WikipediaOptions['lang']
+  lang: string
 ): string {
   if (lang.startsWith('zh-')) {
     return 'zh'

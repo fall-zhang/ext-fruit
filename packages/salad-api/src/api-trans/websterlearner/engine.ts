@@ -1,69 +1,39 @@
 
-import type { GetSrcPageFunction, DictSearchResult, SearchFunction } from '../../api-common/search-type'
-import type { AllDictsConf } from '../../config'
 import type { AtomSearchResult } from '../../types/res-type'
+import { getInnerHTML } from '../../utils/dom-utils'
 import {
-  getInnerHTML,
-  handleNoResult,
-  handleNetWorkError
+  handleNoResult
 } from '../../utils/error-response'
-import { fetchDirtyDOM } from '../../utils/fetch-dom'
 import type {
   WebsterLearnerResult,
   WebsterLearnerResultItem,
-  WebsterLearnerResultLex,
-  WebsterLearnerResultRelated,
+  WebsterLearnerResultLex
 } from './type'
 
-export const getSrcPage: GetSrcPageFunction = text => {
-  return `http://www.learnersdictionary.com/definition/${text
-    .trim()
-    .split(/\s+/)
-    .join('-')}`
-}
 
 const HOST = 'http://www.learnersdictionary.com'
 
 type WebsterLearnerSearchResult = AtomSearchResult<WebsterLearnerResult>
 type WebsterLearnerSearchResultLex = AtomSearchResult<WebsterLearnerResultLex>
-
-export const search: SearchFunction<WebsterLearnerResult> = async (
-  text,
-  opt
-) => {
-  const options = opt.profile.websterlearner.options
-
-  return fetchDirtyDOM(
-    'http://www.learnersdictionary.com/definition/' +
-      text.toLocaleLowerCase().replace(/[^A-Za-z0-9]+/g, '-')
-  )
-    .catch(handleNetWorkError)
-    .then(doc => handleDOM(doc, options))
-}
-
-export function handleDOM(
-  doc: Document,
-  options: AllDictsConf['websterlearner']['options']
+export function handleDOM (
+  doc: Document
 ): WebsterLearnerSearchResult | Promise<WebsterLearnerSearchResult> {
   const $alternative = doc.querySelector<HTMLAnchorElement>(
     '[id^="spelling"] .links'
   )
   if (!$alternative) {
-    return handleDOMContent(doc, options)
-  } else if (options.related) {
-    return {
-      result: {
-        type: 'related',
-        list: getInnerHTML(HOST, $alternative),
-      },
-    }
+    return handleDOMContent(doc)
   }
-  return handleNoResult()
+  return {
+    result: {
+      type: 'related',
+      list: getInnerHTML(HOST, $alternative),
+    },
+  }
 }
 
-function handleDOMContent(
-  doc: Document,
-  options: AllDictsConf['websterlearner']['options']
+function handleDOMContent (
+  doc: Document
 ): WebsterLearnerSearchResultLex | Promise<WebsterLearnerSearchResultLex> {
   doc.querySelectorAll('.d_hidden').forEach(el => el.remove())
 
@@ -108,23 +78,19 @@ function handleDOMContent(
 
     entry.labels = getInnerHTML(HOST, $entry, '.labels')
 
-    if (options.defs) {
-      entry.senses = getInnerHTML(HOST, $entry, '.sblocks')
-    }
+    // if (options.defs) {
+    entry.senses = getInnerHTML(HOST, $entry, '.sblocks')
 
-    if (options.phrase) {
-      entry.phrases = getInnerHTML(HOST, $entry, '.dros')
-    }
+    // if (options.phrase) {
+    entry.phrases = getInnerHTML(HOST, $entry, '.dros')
 
-    if (options.derived) {
-      entry.derived = getInnerHTML(HOST, $entry, '.uros')
-    }
+    // if (options.derived) {
+    entry.derived = getInnerHTML(HOST, $entry, '.uros')
 
-    if (options.arts) {
-      entry.arts = Array.from(
-        $entry.querySelectorAll<HTMLImageElement>('.arts img')
-      ).map($img => $img.src)
-    }
+    // if (options.arts) {
+    entry.arts = Array.from(
+      $entry.querySelectorAll<HTMLImageElement>('.arts img')
+    ).map($img => $img.src)
 
     if (
       entry.senses ||

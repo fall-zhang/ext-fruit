@@ -7,15 +7,6 @@ import {
 } from '../../utils/dom-utils'
 import { handleNoResult } from '../../utils/error-response'
 
-export function fetchLangList (langSelector: string) {
-  return import('../../utils/fetch-dom')
-    .then(({ fetchDirtyDOM }) => fetchDirtyDOM(langSelector))
-    .then(getLangList)
-    .catch((e: unknown) => {
-      console.error('Dict wikipedia: fetch langList failed', e)
-      return []
-    })
-}
 
 export function handleDOM (
   doc: Document,
@@ -70,7 +61,7 @@ export function handleDOM (
     )
   }
 
-  return { result: { title, content, langSelector } }
+  return { title, content, langSelector }
 }
 
 function getLangList (doc: Document): LangListItem[] {

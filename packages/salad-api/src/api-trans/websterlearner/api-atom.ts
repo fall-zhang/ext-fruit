@@ -1,4 +1,5 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
+import type { WordResponse } from '../../types/res-type'
 import { getFetchDOMReq } from '../../utils/fetch-dom'
 import { handleDOM } from './engine'
 
@@ -18,6 +19,16 @@ export const getFetchRequest: AtomFetchRequest = (text) => {
 export const handleResponse: AtomResponseHandle = async (res, { profile }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
-  const options = profile.websterlearner.options
-  return handleDOM(dom, options)
+  // const options = profile.websterlearner.options
+  const domRes = handleDOM(dom)
+  const result: WordResponse = {
+    engin: 'websterlearner',
+    type: 'word-trans',
+    from: 'zh-CN',
+    to: 'zh-CN',
+    text: '',
+    translate: [],
+    pronounce: [],
+  }
+  return result
 }

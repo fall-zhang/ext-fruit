@@ -13,7 +13,7 @@ type CombineParam = {
 
 export const combine = (request: AtomFetchRequest, response: AtomResponseHandle): CombineParam => {
   return async (text, opt) => {
-    const reqParam = request(text, opt)
+    const reqParam = await request(text, opt)
     const result = await fetch(reqParam).then(res => response(res, {
       text,
       from: opt.from,

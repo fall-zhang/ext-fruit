@@ -1,9 +1,10 @@
 
-import { getStaticSpeakerString, getStaticSpeaker } from '@/components/Speaker'
-import type { HTMLString } from '../../types'
-import { handleNetWorkError, getOuterHTML, removeChildren, getText, externalLink, handleNoResult } from '../../utils/error-response'
+import { handleNoResult } from '../../utils/error-response'
 import type { WeblioejjeResult } from './type'
 import type { AtomSearchResult } from '../../types/res-type'
+import { getOuterHTML, removeChildren, externalLink } from '@/core/api-server/utils'
+import { getStaticSpeakerString, getStaticSpeaker } from '@/components/Speaker'
+import { getText } from '../../utils/dom-utils'
 
 const HOST = 'https://ejje.weblio.jp'
 
@@ -76,6 +77,7 @@ export function handleDOM (
 
     $entry.querySelectorAll('br').forEach($br => {
       $br.classList.add('br')
+      // eslint-disable-next-line no-param-reassign
       $br.outerHTML = `<div class="${$br.className}"></div>`
     })
 

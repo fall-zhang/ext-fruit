@@ -1,4 +1,4 @@
-import type { HTMLString } from '@/core/api-server/types'
+import type { HTMLString } from '../../types'
 
 export interface CNKIDictItem {
   word: string
