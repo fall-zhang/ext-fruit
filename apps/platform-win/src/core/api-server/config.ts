@@ -22,7 +22,7 @@ import mojidict from './trans-api/mojidict/config'
 import naver from './trans-api/naver/config'
 import renren from './trans-api/renren/config'
 import sogou from './trans-api/sogou/config'
-import tencent from './trans-api/tencent/config'
+// import tencent from './trans-api/tencent/config'
 import urban from './trans-api/urban/config'
 import vocabulary from './trans-api/vocabulary/config'
 import weblio from './trans-api/weblio/config'
@@ -63,7 +63,7 @@ export const defaultAllDicts = {
   renren: renren(),
   // shanbay: shanbay(),
   sogou: sogou(),
-  tencent: tencent(),
+  // tencent: tencent(),
   urban: urban(),
   vocabulary: vocabulary(),
   weblio: weblio(),
