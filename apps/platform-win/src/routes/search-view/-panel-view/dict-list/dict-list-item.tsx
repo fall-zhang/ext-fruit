@@ -137,15 +137,11 @@ export const DictItem: FC<DictItemProps> = props => {
         e.stopPropagation()
 
         const $a = el as HTMLAnchorElement
-        if (['nofollow', 'noopener', 'noreferrer'].includes($a.rel)) {
-          navigate({ to: '' })
-        } else {
-          props.searchText({
-            word: newWord({
-              text: $a.textContent || '',
-            }),
-          })
-        }
+        props.searchText({
+          word: newWord({
+            text: $a.textContent || '',
+          }),
+        })
 
         return
       }

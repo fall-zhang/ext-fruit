@@ -23,7 +23,7 @@ import * as naver from './naver/engine'
 import * as oaldict from './oaldict/engine'
 import * as renren from './renren/engine'
 import * as shanbay from './shanbay/engine'
-import * as sogou from './sogou/engine'
+// import * as sogou from './sogou/engine'
 // import * as tencent from './tencent/engine'
 import * as urban from './urban/engine'
 import * as vocabulary from './vocabulary/engine'
@@ -61,7 +61,7 @@ export const api = {
   oaldict: oaldict.search,
   renren: renren.search,
   shanbay: shanbay.search,
-  sogou: sogou.search,
+  // sogou: sogou.search,
   // tencent: tencent.search,
   urban: urban.search,
   vocabulary: vocabulary.search,

@@ -64,8 +64,8 @@ const CompMap: Record<DictID, FC<ViewProps<any>>> = {
   caiyun: DefaultView,
   google: DefaultView,
   mojidict: DefaultView,
-  sogou: DefaultView,
-  tencent: DefaultView,
+  // sogou: DefaultView,
+  // tencent: DefaultView,
   youdaotrans: DefaultView,
 }
 

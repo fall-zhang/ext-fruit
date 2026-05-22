@@ -25,8 +25,6 @@ export const CtxTransList: FC<CtxTransListProps> = props => {
       baidu: false,
       caiyun: false,
       google: false,
-      sogou: false,
-      tencent: false,
       youdaotrans: false,
     }
     Object.keys(props.ctxTransConfig).forEach((key, index) => {

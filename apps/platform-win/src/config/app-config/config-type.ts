@@ -132,9 +132,9 @@ export type SaladConfigType = {
     google: boolean,
     youdaotrans: boolean,
     baidu: boolean,
-    tencent: boolean,
+    // tencent: boolean,
     caiyun: boolean,
-    sogou: boolean,
+    // sogou: boolean,
   },
 
   /** start searching when source containing the languages */

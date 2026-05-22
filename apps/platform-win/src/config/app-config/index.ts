@@ -85,9 +85,9 @@ export function getDefaultConfig (): SaladConfigType {
       google: true,
       youdaotrans: true,
       baidu: true,
-      tencent: false,
+      // tencent: false,
       caiyun: false,
-      sogou: false,
+      // sogou: false,
     },
 
     /** start searching when source containing the languages */

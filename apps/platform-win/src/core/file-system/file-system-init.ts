@@ -1,5 +1,5 @@
 // 每次打开时，都会初始化内容
-import { BaseDirectory, mkdir as createDir, exists, readDir, readTextFile, writeFile } from '@tauri-apps/plugin-fs'
+import { mkdir as createDir, exists } from '@tauri-apps/plugin-fs'
 import { appDataDir, join } from '@tauri-apps/api/path'
 import { APP_CONFIG_DIR, APP_CONFIG_FILE_NAME, APP_PROFILE_FILE_NAME } from './const/file-name'
 import type { AppConfig } from '@/config/app-config'

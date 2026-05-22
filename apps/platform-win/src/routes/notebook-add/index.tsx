@@ -14,9 +14,7 @@ function RouteComponent () {
     google: false,
     youdaotrans: false,
     baidu: false,
-    tencent: false,
     caiyun: false,
-    sogou: false,
   }
   return <div className={`${SALADICT_EXTERNAL} saladict-theme`}>
     <Notes

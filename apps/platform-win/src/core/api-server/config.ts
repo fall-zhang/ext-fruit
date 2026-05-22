@@ -21,7 +21,6 @@ import macmillan from './trans-api/macmillan/config'
 import mojidict from './trans-api/mojidict/config'
 import naver from './trans-api/naver/config'
 import renren from './trans-api/renren/config'
-import sogou from './trans-api/sogou/config'
 // import tencent from './trans-api/tencent/config'
 import urban from './trans-api/urban/config'
 import vocabulary from './trans-api/vocabulary/config'
@@ -62,7 +61,6 @@ export const defaultAllDicts = {
   naver: naver(),
   renren: renren(),
   // shanbay: shanbay(),
-  sogou: sogou(),
   // tencent: tencent(),
   urban: urban(),
   vocabulary: vocabulary(),
