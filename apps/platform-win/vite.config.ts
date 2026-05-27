@@ -21,15 +21,24 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     visualizer({
       open: true,
-      filename: './build/analyze.html',
+      filename: './build/report.html',
       template: 'treemap',
+      gzipSize: true,
     }),
     // visualizer({
     //   open: true,
-    //   filename: 'build/analyze.html',
+    //   template: 'raw-data',
+    //   filename: 'build/stats.json',
     // }),
   ],
-
+  build: {
+    sourcemap: true,
+    // rolldownOptions: {
+    //   output: {
+    //     manualChunks: undefined, // 让所有模块可追踪
+    //   },
+    // },
+  },
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //
   // 1. prevent vite from obscuring rust errors
