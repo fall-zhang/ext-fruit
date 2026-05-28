@@ -111,6 +111,7 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
     <HistoryPanel
       open={historyShow}
       history={store.searchHistory}
+      onRemoveHistoryItem={store.removeHistoryItem}
       onClose={() => {
         setHistoryShow(false)
       }}

@@ -35,6 +35,7 @@ export type DictSearchState = {
    * 用户手动折叠的组件
    */
   userFoldedDicts: Partial<Record<DictID, boolean>>
+  removeHistoryItem(id: string): void
   searchStart(option: {
     /** Search with specific dict */
     id?: DictID
@@ -71,6 +72,20 @@ const createSearchStore = (profile: AppProfile) => {
           ...state,
           searchHistory: [],
         }
+      })
+    },
+    removeHistoryItem (id: string) {
+      const { searchHistory } = get()
+      const newHistory = searchHistory.filter(item => item.id !== id)
+      updateHistory(newHistory).then(res => {
+        set((state) => {
+          return {
+            ...state,
+            searchHistory: newHistory,
+          }
+        })
+      }).catch(err => {
+        console.warn(' update history error: ', err)
       })
     },
     searchStart (searchOpt) {
@@ -131,10 +146,10 @@ const createSearchStore = (profile: AppProfile) => {
           if (searchOpt.noHistory) {
             newHistory = searchHistory
           } else {
-            newHistory = [...searchHistory, {
+            newHistory = [{
               ...word,
               isInNotebook: isInNote,
-            }]
+            }, ...searchHistory]
             updateHistory(newHistory)
           }
           return {

@@ -16,6 +16,7 @@ export const HistoryPanel: FC<{
   history: Word[],
   onClose(): void
   onSelect(item: Word): void
+  onRemoveHistoryItem(id: string): void
   onClear(): void
 }> = (props) => {
   const toggleWordMark = async () => {
@@ -74,23 +75,25 @@ export const HistoryPanel: FC<{
                         {item.from || 'auto'} → {item.to || 'auto'}
                       </span>
                       <div className="grow"></div>
-                      <button
-                        // onClick={(e) => deleteHistoryItem(e, item.id)}
-                        className="opacity-0 group-hover:opacity-40 hover:!opacity-100 p-1 transition-opacity"
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation()
+                      <div className="opt-group" onClick={ev => ev.stopPropagation()}>
+                        <button
+                          onClick={() => props.onRemoveHistoryItem(item.id)}
+                          className="opacity-0 group-hover:opacity-40 hover:opacity-100! p-1 transition-opacity cursor-pointer"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
                           // addToNotebook(e, item.id)
-                        }}
-                        className="opacity-0 group-hover:opacity-40 hover:!opacity-100 p-1 transition-opacity"
-                      >
-                        {/* 添加到收藏夹 */}
-                        <BookmarkPlus size={16} />
-                      </button>
-                      <BookmarkIcon size={16} fill='#ffffff'></BookmarkIcon>
+                          }}
+                          className="opacity-0 group-hover:opacity-40 hover:opacity-100! p-1 transition-opacity cursor-pointer"
+                        >
+                          {/* 添加到收藏夹 */}
+                          <BookmarkPlus size={16} />
+                        </button>
+                      </div>
+                      {/* <BookmarkIcon size={16} fill='#ffffff'></BookmarkIcon> */}
                     </div>
                     <p className="text-sm line-clamp-2 leading-snug opacity-80">{item.text}</p>
                   </div>
