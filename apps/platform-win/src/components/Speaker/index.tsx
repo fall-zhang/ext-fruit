@@ -1,16 +1,10 @@
 import type {
   FC,
-  ComponentProps,
   ReactNode
 } from 'react'
 import React, {
-  useCallback,
-  useState,
   useContext
 } from 'react'
-import { useUpdateEffect } from 'react-use'
-import { timer } from '../../utils/promise-more'
-import { isTagName } from '../../utils/dom'
 import { Volume2Icon } from 'lucide-react'
 
 type SpeakerType = {
@@ -74,7 +68,7 @@ export const Speaker: FC<SpeakerProps> = props => {
       }}
     >
       {/* <Speak */}
-      <Volume2Icon />
+      <Volume2Icon className='text-neutral-700 dark:text-neutral-300' />
     </a>
   )
 }

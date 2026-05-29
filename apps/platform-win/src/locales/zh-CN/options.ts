@@ -32,6 +32,7 @@ export const options = {
 
   config: {
     appTheme: '应用主题',
+    startOnBoot: '开机自启动',
     active: '启用划词翻译',
     active_help: '关闭后「快捷查词」功能依然可用。',
     animation: '开启动画过渡',

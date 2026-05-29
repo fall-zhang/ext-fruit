@@ -6,8 +6,6 @@ export const locale: typeof _locale = {
     notebook: 'Saladict Notebook',
   },
 
-  localOnly: 'local only',
-
   column: {
     add: 'Add',
     date: 'Date',

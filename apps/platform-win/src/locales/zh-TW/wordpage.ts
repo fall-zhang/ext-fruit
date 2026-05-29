@@ -1,12 +1,10 @@
-import { wordPage as _locale } from '../zh-CN/word-page'
+import type { wordPage as _locale } from '../zh-CN/word-page'
 
 export const locale: typeof _locale = {
   title: {
     history: '沙拉查詞-查單字紀錄',
-    notebook: '沙拉查詞-生字本'
+    notebook: '沙拉查詞-生字本',
   },
-
-  localOnly: '僅本機儲存',
 
   column: {
     add: '新增',
@@ -15,7 +13,7 @@ export const locale: typeof _locale = {
     note: '筆記',
     source: '來源',
     trans: '翻譯',
-    word: '單字'
+    word: '單字',
   },
 
   delete: {
@@ -23,7 +21,7 @@ export const locale: typeof _locale = {
     all: '刪除所有單字',
     confirm: '，確認？',
     page: '刪除本頁單字',
-    selected: '刪除選取單字'
+    selected: '刪除選取單字',
   },
 
   export: {
@@ -37,28 +35,28 @@ export const locale: typeof _locale = {
       n: '換行替換為 \\n',
       br: '換行替換為 <br>',
       p: '換行替換為 <p>',
-      space: '換行替換為空格'
+      space: '換行替換為空格',
     },
     page: '輸出本頁單字',
     placeholder: '預留位置',
     htmlescape: {
       title: '對筆記內容中的 HTML 字元進行轉義',
-      text: '轉義 HTML'
+      text: '轉義 HTML',
     },
-    selected: '輸出選中單字'
+    selected: '輸出選中單字',
   },
 
   filterWord: {
     chs: '中文',
     eng: '英文',
     word: '單字',
-    phrase: '片語和句子'
+    phrase: '片語和句子',
   },
 
   wordCount: {
     selected: '選中 {{count}} 個',
     selected_plural: '選中 {{count}} 個',
     total: '共 {{count}} 個',
-    total_plural: '共 {{count}} 個'
-  }
+    total_plural: '共 {{count}} 個',
+  },
 }

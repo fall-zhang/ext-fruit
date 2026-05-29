@@ -4,8 +4,6 @@ export const wordPage = {
     notebook: '沙拉查词-生词本',
   },
 
-  localOnly: '仅本地保存',
-
   column: {
     add: '添加',
     date: '日期',

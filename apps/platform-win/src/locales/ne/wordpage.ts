@@ -1,12 +1,10 @@
-import { wordPage as _locale } from '../zh-CN/word-page'
+import type { wordPage as _locale } from '../zh-CN/word-page'
 
 export const locale: typeof _locale = {
   title: {
     history: 'सलाडिक्ट खोज इतिहास',
     notebook: 'सलाडिक्ट नोटबुक',
   },
-
-  localOnly: 'स्थानीयमा मात्र',
 
   column: {
     add: 'थप्नुहोस्',

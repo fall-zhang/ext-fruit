@@ -6,8 +6,6 @@ export const locale: typeof _locale = {
     notebook: 'Bloc de notas Saladict',
   },
 
-  localOnly: 'Solo local',
-
   column: {
     add: 'Añadir',
     date: 'Fecha',
