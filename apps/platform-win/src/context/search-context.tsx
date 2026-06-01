@@ -225,7 +225,6 @@ export function SearchProvider ({ children, profile }: {
   useEffect(() => {
     let abortState = false
     getLocalHistory().then(res => {
-      console.log('⚡️ line:211 ~ res: ', res)
       if (abortState) {
         return
       }

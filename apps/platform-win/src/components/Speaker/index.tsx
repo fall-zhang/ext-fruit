@@ -46,16 +46,12 @@ export const Speaker: FC<SpeakerProps> = props => {
     renderSrc = props.src
   }
 
-  const width = props.width || props.height || '1.2em'
-  const height = props.height || width
-
   return (
-    <a
-      className="saladict-Speaker"
-      href={renderSrc}
-      target="_blank"
-      rel="noopener noreferrer"
-      style={{ width, height }}
+    <div
+      className="saladict-Speaker dark:text-neutral-300 text-neutral-800 cursor-pointer"
+      // href={renderSrc}
+      // target="_blank"
+      // rel="noopener noreferrer"
       onClick={async e => {
         if (typeof props.src === 'function') {
           e.stopPropagation()
@@ -69,7 +65,7 @@ export const Speaker: FC<SpeakerProps> = props => {
     >
       {/* <Speak */}
       <Volume2Icon className='text-neutral-700 dark:text-neutral-300' />
-    </a>
+    </div>
   )
 }
 
