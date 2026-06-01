@@ -14,6 +14,7 @@ import { HistoryPanel } from './history-panel/history-panel'
 import { NotebookPanel } from './notebook-panel/notebook-panel'
 import { getWords } from '@/core/index-db/read'
 import { deleteWords } from '@/core/index-db/write'
+import { Badge } from '@P/ui/components/badge'
 
 type SaladPanelProps = {
   menuBarProps?: Record<string, any>
@@ -104,7 +105,21 @@ export const SaladContent: FC<SaladPanelProps> = (props) => {
             enableSuggest={enableSuggest}
             onSend={searchText} />
         </div>
-        <DictList dicts={renderedDicts} />
+        {
+          renderedDicts.length === 0
+            ? <div className='flex flex-col items-center'>
+              <span className='text-neutral-500 '>将自动检测输入语言，并在以下词典中进行查找</span>
+              <div className="flex">
+                <Badge variant='outline'>
+                  <img src="" alt="" height='18' width='18' />
+                  {/* {dictname} */}
+
+                </Badge>
+              </div>
+            </div>
+            : <DictList dicts={renderedDicts} />
+
+        }
         {/* {store.waveformBox && <WaveformBox />} */}
       </div>
     </div>

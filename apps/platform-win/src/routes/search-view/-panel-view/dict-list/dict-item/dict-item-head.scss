@@ -1,24 +1,5 @@
 @use '@/components/HoverBox/HoverBox.scss';
 
-.dictItemHead {
-  box-sizing: border-box;
-  position: sticky;
-  border-top: 1px var(--color-divider) dashed;
-}
-
-.dictItemHead-Logo {
-  width: 20px;
-  height: 20px;
-  margin-top: -1px;
-  user-select: none;
-}
-
-.dictItemHead-Title {
-  line-height: 20px;
-  font-size: 12px;
-  font-weight: normal;
-}
-
 .dictItemHead-Menus_Btn {
   width: 18px;
   height: 18px;

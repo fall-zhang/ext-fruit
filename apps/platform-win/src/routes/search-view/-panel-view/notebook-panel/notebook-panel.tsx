@@ -63,7 +63,7 @@ export const NotebookPanel: FC<{
                           e.stopPropagation()
                           props.onDelete(item.date)
                         }}
-                        className="opacity-0 group-hover:opacity-40 hover:!opacity-100 p-1 transition-opacity"
+                        className="opacity-0 group-hover:opacity-40 hover:opacity-100! p-1 transition-opacity"
                       >
                         <Trash2 size={12} />
                       </button>

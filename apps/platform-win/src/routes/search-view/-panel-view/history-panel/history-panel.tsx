@@ -10,7 +10,7 @@ export interface HistoryItem {
   to: string;
   timestamp: number;
 }
-
+// 将自动检测
 export const HistoryPanel: FC<{
   open: boolean
   history: Word[],
@@ -19,7 +19,7 @@ export const HistoryPanel: FC<{
   onRemoveHistoryItem(id: string): void
   onClear(): void
 }> = (props) => {
-  const toggleWordMark = async () => {
+  const toggleWordMark = async (word: Word) => {
     // 切换当前单词是否为收藏
   }
 
@@ -82,16 +82,16 @@ export const HistoryPanel: FC<{
                         >
                           <Trash2 size={16} />
                         </button>
-                        <button
+                        {/* 添加到收藏夹，等统一查询结果格式后实现 */}
+                        {/* <button
                           onClick={(e) => {
                             e.stopPropagation()
-                          // addToNotebook(e, item.id)
+                            toggleWordMark(item)
                           }}
                           className="opacity-0 group-hover:opacity-40 hover:opacity-100! p-1 transition-opacity cursor-pointer"
                         >
-                          {/* 添加到收藏夹 */}
                           <BookmarkPlus size={16} />
-                        </button>
+                        </button> */}
                       </div>
                       {/* <BookmarkIcon size={16} fill='#ffffff'></BookmarkIcon> */}
                     </div>

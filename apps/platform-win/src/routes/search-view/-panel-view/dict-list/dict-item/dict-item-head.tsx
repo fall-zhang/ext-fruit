@@ -39,7 +39,7 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
   }
   return (
     <header
-      className={clsx('dictItemHead flex items-center dark:bg-neutral-900 dark:text-neutral-200 h-7', {
+      className={clsx('dictItemHead border-t box-border sticky dark:border-t-neutral-500 border-t-neutral-400 border-dashed flex items-center dark:bg-neutral-900 dark:text-neutral-200 h-7', {
         isSearching: props.isSearching,
       })}
     >
@@ -50,8 +50,8 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
       >
         <ChevronRightIcon className={cn('text-neutral-900 dark:text-neutral-300 ', !props.isFold && 'rotate-90')} />
       </button>
-      <img className="dictItemHead-Logo" src={dictImage[props.dictID]} alt="dict logo" />
-      <h4 className="dictItemHead-Title ml-2">
+      <img className="size-5 select-none" src={dictImage[props.dictID]} alt="dict logo" />
+      <h4 className="dictItemHead-Title ml-2 text-xs">
         <a
           href="#"
           onClick={(e: React.MouseEvent<HTMLElement>) => {
@@ -71,7 +71,7 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
       <div className="grow"></div>
       <Tooltip >
         <TooltipTrigger>
-          <BookmarkIcon onClick={addToNotebook} />
+          <BookmarkIcon onClick={addToNotebook} className='text-neutral-900 dark:text-neutral-300 ' />
         </TooltipTrigger>
         <TooltipContent >
           <p>收藏</p>
@@ -79,15 +79,5 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
       </Tooltip>
       {/* <div className="dictItemHead-EmptyArea" onClick={props.toggleFold} /> */}
     </header>
-  )
-}
-
-function MenusBtn (props: React.ComponentProps<'button'>) {
-  return (
-    <button className="dictItemHead-Menus_Btn" {...props}>
-      <svg width="16" height="16" viewBox="0 0 512 512">
-        <path d="M301.256 394.29A45.256 45.256 0 01256 439.546a45.256 45.256 0 01-45.256-45.256A45.256 45.256 0 01256 349.034a45.256 45.256 0 0145.256 45.256zM301.256 257.48A45.256 45.256 0 01256 302.736a45.256 45.256 0 01-45.256-45.256A45.256 45.256 0 01256 212.224a45.256 45.256 0 0145.256 45.256zM301.256 117.71A45.256 45.256 0 01256 162.964a45.256 45.256 0 01-45.256-45.256A45.256 45.256 0 01256 72.453a45.256 45.256 0 0145.256 45.256z" />
-      </svg>
-    </button>
   )
 }

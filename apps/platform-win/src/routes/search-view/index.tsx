@@ -4,11 +4,9 @@ import { useEffect, useState } from 'react'
 import { PinBtn } from './-components/pin-button'
 import { CloseBtn } from './-components/close-button'
 import { FavBtn } from './-components/fav-button'
-import type { SaladConfigType } from '@/config/app-config/config-type'
 import { SaladPanel } from './-panel-view/salad-panel'
 import { listenFromWindow } from '@/core/bridge'
 import { message } from 'antd'
-import { TooltipProvider } from '@P/ui/components/tooltip'
 /**
  * 生词本
  */
