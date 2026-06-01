@@ -34,6 +34,7 @@ export const locale: typeof _locale = {
 
   config: {
     appTheme: 'App Theme',
+    startOnBoot: 'Start On Boot',
     active: 'Activar el traductor en línea',
     active_help:
       'Si está desactivado, el traductor en línea no se mostrará en el panel de búsqueda rápida.',

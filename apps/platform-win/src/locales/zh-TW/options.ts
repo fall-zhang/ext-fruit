@@ -34,6 +34,7 @@ export const locale: typeof _locale = {
 
   config: {
     appTheme: '应用主题',
+    startOnBoot: 'Start On Boot',
     active: '啟用滑鼠選字翻譯',
     active_help: '關閉後「迅速查字」功能依然可用。',
     animation: '啟用轉換動畫',
