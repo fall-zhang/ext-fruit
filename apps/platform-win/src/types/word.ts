@@ -1,5 +1,7 @@
 export interface Word {
-  /** primary key, milliseconds elapsed since the UNIX epoch */
+  // primary key uuid
+  id: string
+  /** milliseconds elapsed since the UNIX epoch */
   date: number
   /** word text */
   text: string

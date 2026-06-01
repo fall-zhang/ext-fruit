@@ -21,7 +21,8 @@ async function initializeTables (db: Database): Promise<void> {
   // 创建 notebook 表
   await db.execute(`
     CREATE TABLE IF NOT EXISTS notebook (
-      date INTEGER PRIMARY KEY,
+      id TEXT PRIMARY KEY,
+      date INTEGER NOT NULL,
       text TEXT NOT NULL,
       context TEXT DEFAULT '',
       trans TEXT DEFAULT '',
@@ -34,7 +35,8 @@ async function initializeTables (db: Database): Promise<void> {
   // 创建 history 表
   await db.execute(`
     CREATE TABLE IF NOT EXISTS history (
-      date INTEGER PRIMARY KEY,
+      id TEXT PRIMARY KEY,
+      date INTEGER NOT NULL,
       text TEXT NOT NULL,
       context TEXT DEFAULT '',
       trans TEXT DEFAULT '',
@@ -59,6 +61,7 @@ async function initializeTables (db: Database): Promise<void> {
  */
 export function rowToWord (row: Record<string, unknown>): Word {
   return {
+    id: String(row.id),
     date: Number(row.date),
     text: String(row.text),
     context: String(row.context || ''),
