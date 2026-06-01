@@ -1,9 +1,5 @@
 ## 开发内容
 
-- 因为安全策略，只能选择相对路径中的文件进行操作，如果想要对任意绝对路径下的内容操作，需要使用 rust 重写这些内容
-
-默认工作区
-
 ## 支持的系统
 
 - 支持系统：win11，win10（Version 1803 and later with all updates applied）
