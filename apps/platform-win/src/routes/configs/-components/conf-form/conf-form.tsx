@@ -1,8 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
-import type * as React from 'react'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm, type Control } from 'react-hook-form'
-import { toast } from 'sonner'
 
 import { Button } from '@P/ui/components/button'
 import {
@@ -24,8 +20,6 @@ import type { AppConfig } from '@/config/app-config'
 import { useConfContext } from '@/context/conf-context'
 import { useCallback, useId } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useConfirmContext } from '@/context/confirm-context'
-import { setFormDirty } from './useDirtyForm'
 import type { SaladictFormItem } from './type'
 import { FInput } from './form-item/f-input'
 import { FSwitch } from './form-item/f-switch'
@@ -34,6 +28,7 @@ import { useUpdateSetting } from '../../-utils/upload'
 
 type ConfFormProps = {
   items: SaladictFormItem[]
+  onChange(newVal: AppConfig): void
 }
 
 export function ConfForm (props: ConfFormProps) {
@@ -48,8 +43,9 @@ export function ConfForm (props: ConfFormProps) {
   })
 
   function onSubmit (data: AppConfig) {
-    console.log('⚡️ line:46 ~ data: ', data)
+    // console.log('⚡️ line:46 ~ data: ', data)
     updateSetting(data)
+    props.onChange(data)
     // toast('You submitted the following values:', {
     //   description: (
     //     <pre className="bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4">
@@ -123,7 +119,7 @@ export function ConfForm (props: ConfFormProps) {
         />
       }
       return <div key={newItem.name}>
-        暂无对应的 formType - {newItem.fromType}
+        formType - {newItem.fromType} not exist
       </div>
     })
   }, [form.control, i18n, ready, t])

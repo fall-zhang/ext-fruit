@@ -21,8 +21,6 @@ export interface SaladictFormItem
   name?: string
   /** Must set name or key. Set key if the item does not carry value. 当没有值的时候，必须设置 key */
   key?: string
-  /** Hide item based on other fields */
-  hide?: (values: FieldValues) => boolean
   /** Nested items. Must set items or children. */
   items?: SaladictFormItem[]
   /** Must set items or children. */
@@ -57,10 +55,6 @@ export const SaladictForm: FC<SaladictFormProps> = (props) => {
         if (item.items) {
           extractInitial(item.items, newResult)
         } else {
-          if (item.hide) {
-            newResult.hideFieldFns[(item.key || item.name)!] = item.hide
-          }
-
           if (item.name) {
             const value = get(store, item.name, store)
             if (value !== store) {

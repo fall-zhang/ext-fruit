@@ -1,18 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useRef, type FC } from 'react'
 
-
-import { useTranslation } from 'react-i18next'
 import { ConfForm } from '../-components/conf-form/conf-form'
 import { Slider } from '@P/ui/components/slider'
 
 
 export const RouteComponent: FC = () => {
-  const { t } = useTranslation('options')
   const { availWidth } = window.screen
-  const ref = useRef({})
   return (<>
     <ConfForm
+      onChange={() => {}}
       items={[
         {
           name: 'waveform',

@@ -59,7 +59,6 @@ function RouteComponent () {
         },
         {
           name: getConfigPath('autoPronounce', 'en', 'accent'),
-          hide: values => !values[getConfigPath('autoPronounce', 'en', 'dict')],
           children: (
             <Select
               options={[

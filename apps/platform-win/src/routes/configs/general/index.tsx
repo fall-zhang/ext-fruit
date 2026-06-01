@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { ConfForm } from '../-components/conf-form/conf-form'
 import type { SaladictFormItem } from '../-components/conf-form/type'
+import type { AppConfig } from '@/config/app-config'
 export const Route = createFileRoute('/configs/general/')({
   component: RouteComponent,
 })
@@ -40,10 +41,12 @@ function RouteComponent () {
       ],
     },
   ]
-
+  function onConfUpdate (appConfig: AppConfig) {
+    // console.log('⚡️ line:44 ~ appConfig: ', appConfig)
+  }
   return <div className='flex flex-col h-full'>
     {/* <SaladictForm items={formItems} ref={formRef} /> */}
-    <ConfForm items={formItems}></ConfForm>
+    <ConfForm items={formItems} onChange={onConfUpdate}></ConfForm>
     {/* <div className="">
       <Button variant={'destructive'}>重置所有配置</Button>
     </div> */}
