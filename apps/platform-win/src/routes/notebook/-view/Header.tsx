@@ -1,7 +1,6 @@
 import type { FC } from 'react'
 
 import type { DBArea } from '@/core/index-db/types'
-import { useConfirmContext } from '@/context/confirm-context'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@P/ui/components/button'
 import { Input } from '@P/ui/components/input'
@@ -32,7 +31,6 @@ export const Header: FC<WordPageProps> = props => {
       <div className="wordpage-Title">
         <h2 className="wordpage-Title_head">
           {t(`title.${props.area}`)}{' '}
-          <small className="wordpage-Title_small">({t('localOnly')})</small>
         </h2>
         <div style={{ whiteSpace: 'nowrap' }}>
           {props.totalCount > 0 && (

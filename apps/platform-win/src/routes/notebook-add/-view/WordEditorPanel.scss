@@ -12,10 +12,6 @@
 .wordEditorPanel {
   display: flex;
   flex-direction: column;
-  width: 80%;
-  max-width: 800px;
-  min-width: 400px;
-  max-height: 90vh;
   border-radius: 6px;
   color: var(--color-font);
   background-color: var(--color-background);
@@ -23,17 +19,6 @@
   font-size: 13px;
   font-family: 'Helvetica Neue', Helvetica, Arial, 'Hiragino Sans GB',
     'Hiragino Sans GB W3', 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
-}
-
-.wordEditorPanel-Header {
-  display: flex;
-  border-bottom: 1px solid #ccc;
-}
-
-.wordEditorPanel-Title {
-  margin: 0;
-  font-size: 18px;
-  padding: 15px;
 }
 
 .wordEditorPanel-BtnClose {
@@ -68,7 +53,8 @@
   border-top: 1px solid #ccc;
 }
 
-%wordEditorPanel-Btn {
+
+.wordEditorPanel-Btn {
   display: inline-block;
   margin-bottom: 0;
   font-weight: normal;
@@ -84,10 +70,6 @@
   line-height: 1.42857;
   border-radius: 4px;
   user-select: none;
-}
-
-.wordEditorPanel-Btn {
-  @extend %wordEditorPanel-Btn;
   margin-right: 10px;
   color: #333;
   background-color: #fff;
@@ -110,34 +92,29 @@
     border-color: #8c8c8c;
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   }
-}
 
-.wordEditorPanel-Btn_normal {
-  @extend .wordEditorPanel-Btn;
-}
+  &.primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
 
-.wordEditorPanel-Btn_primary {
-  @extend %wordEditorPanel-Btn;
-  color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
+    &:focus {
+      background-color: #286090;
+      border-color: #122b40;
+    }
 
-  &:focus {
-    background-color: #286090;
-    border-color: #122b40;
-  }
+    &:hover {
+      outline: 0;
+      background-color: #286090;
+      border-color: #204d74;
+    }
 
-  &:hover {
-    outline: 0;
-    background-color: #286090;
-    border-color: #204d74;
-  }
-
-  &:active {
-    outline: 0;
-    background-color: #204d74;
-    border-color: #122b40;
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    &:active {
+      outline: 0;
+      background-color: #204d74;
+      border-color: #122b40;
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    }
   }
 }
 
@@ -149,7 +126,6 @@
   }
 
   .wordEditorPanel-Btn {
-    @extend %wordEditorPanel-Btn;
     margin-right: 10px;
     color: #333;
     background-color: #ddd;

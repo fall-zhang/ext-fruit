@@ -106,16 +106,6 @@ export const Notes: FC<NotesProps> = props => {
     },
     {
       type: 'normal',
-      title: t('content:neverShow'),
-      onClick: () => {
-        console.log('jump to options page')
-        navigate({
-          to: '/configs/general',
-        })
-      },
-    },
-    {
-      type: 'normal',
       title: t('cancel'),
       onClick: closeEditor,
     },
@@ -132,35 +122,6 @@ export const Notes: FC<NotesProps> = props => {
       },
     },
   ]
-
-  const [ankiCardId, setAnkiCardId] = useState<number | undefined>()
-
-  if (ankiCardId) {
-    panelBtns.unshift({
-      type: 'normal',
-      title: t('content:updateAnki.title'),
-      onClick: async () => {
-        let status = 'content:updateAnki.success'
-        try {
-          console.log('update anki word', { cardId: ankiCardId, word })
-          // if(ankiSyncEnable){
-          // this.updateWord(ankiCardId, word)
-          // }
-        } catch (e) {
-          if (import.meta.env.VITE_DEBUG) {
-            console.error(e)
-          }
-          status = 'content:updateAnki.failed'
-        }
-        toast(t(status), {
-          duration: 2000,
-        })
-        // iconUrl: browser.runtime.getURL('assets/icon-128.png'),
-        // title: 'Saladict',
-        // message: t(status),
-      },
-    })
-  }
 
   return (
     <>

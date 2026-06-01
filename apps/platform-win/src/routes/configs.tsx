@@ -9,6 +9,8 @@ import { ConfirmProvider } from '@/context/confirm-context'
 
 import { TooltipProvider } from '@P/ui/components/tooltip'
 import { InfoIcon, ListIcon, SettingsIcon } from 'lucide-react'
+import type { FileRoutesByTo } from '@/routeTree.gen'
+import type { ReactNode } from 'react'
 
 export const Route = createFileRoute('/configs')({
   component: RouteComponent,
@@ -28,7 +30,12 @@ export const Route = createFileRoute('/configs')({
 })
 
 // 菜单项配置
-const menuItems = [
+const menuItems: Array<{
+  id: string,
+  path: keyof FileRoutesByTo
+  label: string
+  icon: ReactNode
+}> = [
   {
     id: 'general',
     path: '/configs/general',
@@ -105,12 +112,12 @@ function RouteComponent () {
   return (
     <ConfirmProvider>
       <TooltipProvider>
-        <div className="flex min-h-screen bg-gray-50 dark:bg-neutral-900 dark:text-neutral-100">
+        <div className="flex min-h-screen bg-gray-50 dark:bg-neutral-900 dark:text-neutral-100 dark:border-neutral-600">
           {/* 左侧菜单栏 */}
-          <div className="w-52 bg-white border-r border-gray-200 shadow-sm flex flex-col dark:bg-neutral-900 dark:text-neutral-100">
+          <div className="w-52 bg-white border-r border-gray-200 dark:border-neutral-600 shadow-sm flex flex-col dark:bg-neutral-900 dark:text-neutral-100">
             {/* 标题区域 */}
-            <div className="px-6 py-4 border-b border-gray-100">
-              <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">配置中心</h2>
+            <div className="px-6 py-4 border-b border-neutral-100 dark:border-neutral-600">
+              <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">{'配置中心'}</h2>
               {/* <p className="text-sm text-gray-500 mt-1">管理您的词典和设置</p> */}
             </div>
 
@@ -154,6 +161,5 @@ function RouteComponent () {
         </div>
       </TooltipProvider>
     </ConfirmProvider>
-
   )
 }

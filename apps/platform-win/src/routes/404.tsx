@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import './404.scss'
 
 export const Route = createFileRoute('/404')({
@@ -6,8 +6,8 @@ export const Route = createFileRoute('/404')({
 })
 
 function RouteComponent () {
-  return <div className='container_404'>
-    <div className="card">
+  return <div className='container_404 h-screen w-screen'>
+    <div className="card h-screen w-screen">
       <div className="orb orb--1" />
       <div className="orb orb--2" />
       <div className="orb orb--3" />
@@ -15,7 +15,7 @@ function RouteComponent () {
       <div className="error-container">
         <div className="error-code">404</div>
         <div className="error-msg">Nothing to see here.</div>
-        <a href="/" className="home-btn">Go Home</a>
+        <Link to='/configs' className="home-btn">Go Home</Link>
       </div>
       <div className="duck__wrapper">
         <div className="duck">

@@ -11,7 +11,7 @@ export interface WordEditorPanelProps {
   containerWidth: number
   title: React.ReactNode
   btns?: WordEditorPanelBtns
-  children:ReactNode
+  children: ReactNode
   onClose: () => void
 }
 
@@ -19,15 +19,8 @@ export const WordEditorPanel: FC<WordEditorPanelProps> = props => {
   return (
     <div className="wordEditorPanel-Background" >
       <div className="wordEditorPanel">
-        <header className="wordEditorPanel-Header">
-          <h1 className="wordEditorPanel-Title">{props.title}</h1>
-          <button
-            type="button"
-            className="wordEditorPanel-BtnClose"
-            onClick={props.onClose}
-          >
-            ×
-          </button>
+        <header className="flex border-b border-b-neutral-300 dark:border-b-neutral-800">
+          <h2 className="m-0 text-xl p-4">{props.title}</h2>
         </header>
         <div className="wordEditorPanel-Main ">
           {props.children}
@@ -40,7 +33,7 @@ export const WordEditorPanel: FC<WordEditorPanelProps> = props => {
                 type="button"
                 className={
                   btn.type
-                    ? `wordEditorPanel-Btn_${btn.type}`
+                    ? `wordEditorPanel-Btn ${btn.type}`
                     : 'wordEditorPanel-Btn'
                 }
                 onClick={btn.onClick}
