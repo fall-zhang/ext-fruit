@@ -50,7 +50,6 @@ export const handleResponse: AtomResponseHandle = async (res, {
   text,
   from,
   to,
-  profile,
 }) => {
   const data: SogouRes = await res.json()
 

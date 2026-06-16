@@ -19,7 +19,7 @@ export const getFetchRequest: AtomFetchRequest<WikipediaOptions> = (text, opt) =
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { text, profile, from, to }) => {
+export const handleResponse: AtomResponseHandle = async (res, { text, from, to }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
 

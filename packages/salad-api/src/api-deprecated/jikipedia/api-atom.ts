@@ -12,7 +12,7 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { profile }) => {
+export const handleResponse: AtomResponseHandle = async (res, { from, to, text }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
   const resultCount = 4
@@ -21,9 +21,9 @@ export const handleResponse: AtomResponseHandle = async (res, { profile }) => {
     // engin: 'jikipedia',
     engin: 'baidu',
     type: 'word-trans',
-    from: 'af',
-    to: 'af',
-    text: '',
+    from,
+    to,
+    text,
     translate: [],
     pronounce: [],
   }

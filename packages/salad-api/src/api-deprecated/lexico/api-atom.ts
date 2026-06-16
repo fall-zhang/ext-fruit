@@ -12,15 +12,15 @@ export const getFetchRequest: AtomFetchRequest = text => {
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { profile }) => {
+export const handleResponse: AtomResponseHandle = async (res, { from, to }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
   const domRes = await handleDOM(dom)
   const result: WordResponse = {
     engin: 'baidu',
     type: 'word-trans',
-    from: 'zh-CN',
-    to: 'zh-CN',
+    from,
+    to,
     text: '',
     translate: [],
     pronounce: [],

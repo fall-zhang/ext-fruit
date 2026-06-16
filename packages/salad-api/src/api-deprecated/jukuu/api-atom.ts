@@ -27,7 +27,7 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { text, from, to, profile }) => {
+export const handleResponse: AtomResponseHandle = async (res, { text, from, to }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
   const domRes = handleDOM(dom, 'zh-eng')

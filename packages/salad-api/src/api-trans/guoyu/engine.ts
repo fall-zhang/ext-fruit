@@ -27,8 +27,7 @@ export function handleResponse (data: GuoYuResult): AtomSearchResult<GuoYuResult
 /** @deprecated Use api-atom.ts handleResponse instead. Kept for liangan compatibility. */
 export async function moedictSearch<R extends GuoYuResult> (
   moedictID: string,
-  text: string,
-  options: Profile['dicts']['all']['guoyu']['options']
+  text: string
 ): Promise<DictSearchResult<R>> {
   const data = await fetch(`https://www.moedict.tw/${moedictID}/${encodeURIComponent(
     chsToChz(text.replace(/\s+/g, ''))
@@ -37,10 +36,6 @@ export async function moedictSearch<R extends GuoYuResult> (
 
   if (!data || !data.h) {
     return handleNoResult()
-  }
-
-  if (!options.trans) {
-    data.translation = undefined
   }
 
   const result: DictSearchResult<R> = { result: data }

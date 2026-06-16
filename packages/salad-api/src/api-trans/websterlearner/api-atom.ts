@@ -16,7 +16,7 @@ export const getFetchRequest: AtomFetchRequest = (text) => {
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { profile }) => {
+export const handleResponse: AtomResponseHandle = async (res, { text }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
   // const options = profile.websterlearner.options
@@ -26,7 +26,7 @@ export const handleResponse: AtomResponseHandle = async (res, { profile }) => {
     type: 'word-trans',
     from: 'zh-CN',
     to: 'zh-CN',
-    text: '',
+    text,
     translate: [],
     pronounce: [],
   }

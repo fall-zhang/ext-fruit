@@ -13,15 +13,15 @@ export const getFetchRequest: AtomFetchRequest = (text) => {
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { text, from, to, profile }) => {
+export const handleResponse: AtomResponseHandle = async (res, { text, from, to }) => {
   const dom = await parseDirtyDom(res)
   const domRes = handleDOM(dom)
   const result: WordResponse = {
-    engin: 'urban',
+    engin: 'shanbay',
     type: 'word-trans',
-    from: 'af',
-    to: 'af',
-    text: '',
+    from,
+    to,
+    text,
     translate: [],
     pronounce: [],
   }

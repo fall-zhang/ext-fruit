@@ -17,7 +17,7 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { text, from, to, profile }) => {
+export const handleResponse: AtomResponseHandle = async (res, { text, from, to }) => {
   const dom = await parseDirtyDom(res)
   const langCode = getLangCode(text)
   const domRes = await handleDOM(dom, langCode)

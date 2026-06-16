@@ -13,7 +13,7 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
   return new Request(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { text, from, to, profile }) => {
+export const handleResponse: AtomResponseHandle = async (res, { text, from, to }) => {
   const data = await res.json().catch(handleNetWorkError) as LiangAnResult
 
   if (!data || !data.h) {

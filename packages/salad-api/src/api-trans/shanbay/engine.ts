@@ -8,7 +8,7 @@ import { handleNoResult } from '../../utils/error-response'
 
 const HOST = 'https://www.shanbay.com'
 
-export function handleDOM(doc: Document): ShanbaySearchResult | Promise<ShanbaySearchResult> {
+export function handleDOM (doc: Document): ShanbaySearchResult | Promise<ShanbaySearchResult> {
   const $typo = doc.querySelector('.error-typo')
   if ($typo) {
     return handleNoResult()
@@ -16,7 +16,7 @@ export function handleDOM(doc: Document): ShanbaySearchResult | Promise<ShanbayS
   return handleLexicon(doc)
 }
 
-async function handleLexicon(doc: Document): Promise<ShanbaySearchResult> {
+async function handleLexicon (doc: Document): Promise<ShanbaySearchResult> {
   const word = doc.querySelector('.word-spell')
   const title = getText(doc, '.word-spell')
   const pattern = getText(doc, '.pattern')

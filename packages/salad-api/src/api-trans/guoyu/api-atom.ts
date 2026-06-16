@@ -14,7 +14,7 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
   return new Request(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { text, from, to, profile }) => {
+export const handleResponse: AtomResponseHandle = async (res, { text, from, to }) => {
   const data = await res.json().catch(handleNetWorkError) as GuoYuResult
 
   if (!data || !data.h) {
@@ -23,10 +23,10 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to, 
 
   handleGuoYuResponse(data)
   const result: WordResponse = {
-    engin: 'google',
+    engin: 'guoyu',
     type: 'word-trans',
-    from: 'af',
-    to: 'af',
+    from: 'zh-CN',
+    to: 'zh-CN',
     text: '',
     translate: [],
     pronounce: [],

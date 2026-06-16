@@ -1,6 +1,5 @@
 import type { Language } from '@P/open-trans/languages'
 import type { UnitSearchResult } from './res-type'
-import type { AllDictsConf } from '../api-trans'
 
 /**
  * 获取该引擎 fetch 方法所需的参数
@@ -28,7 +27,6 @@ export type AtomResponseHandle = {
       text: string
       from: Language
       to: Language
-      profile: AllDictsConf
     }
   ): Promise<UnitSearchResult>
 }

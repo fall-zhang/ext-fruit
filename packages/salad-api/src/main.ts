@@ -1,4 +1,7 @@
 import type { DictID } from './api-trans'
+import type { SupportLanguage } from './const/languages'
+import type { AtomFetchRequest, AtomResponseHandle } from './types/atom-type'
+
 
 export const getRecommendApi = (): Array<DictID> => {
   return [
@@ -14,3 +17,11 @@ export const getRecommendApi = (): Array<DictID> => {
     'oaldict', // 牛津高阶词典 ✅
   ]
 }
+
+export type {
+  SupportLanguage,
+  AtomFetchRequest,
+  AtomResponseHandle
+}
+
+// Woman, can't live with them, can't live without them.

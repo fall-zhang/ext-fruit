@@ -1,4 +1,3 @@
-import { defaultAllDicts } from '../api-trans'
 import type { Language } from '../const/languages'
 import type { AtomFetchRequest, AtomResponseHandle } from '../types/atom-type'
 
@@ -18,7 +17,6 @@ export const combine = (request: AtomFetchRequest, response: AtomResponseHandle)
       text,
       from: opt.from,
       to: opt.to,
-      profile: defaultAllDicts,
     })).catch(err => {
       console.warn('combine request err: ', err)
     })

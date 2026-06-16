@@ -124,5 +124,6 @@ export const languages = [
 ] as const
 
 export type Language = typeof languages[number]
+export type SupportLanguage = Language
 
 export type ExtendSupportLang<U extends Language> = U

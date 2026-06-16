@@ -12,7 +12,7 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { profile }) => {
+export const handleResponse: AtomResponseHandle = async (res, { text }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
   const domRes = handleDOM(dom)
@@ -21,7 +21,7 @@ export const handleResponse: AtomResponseHandle = async (res, { profile }) => {
     type: 'word-trans',
     from: 'en',
     to: 'en',
-    text: '',
+    text,
     translate: [],
     pronounce: [],
   }

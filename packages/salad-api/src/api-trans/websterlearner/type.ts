@@ -24,6 +24,6 @@ export interface WebsterLearnerResultRelated {
   list: HTMLString
 }
 
-export type WebsterLearnerResult =
-  | WebsterLearnerResultLex
-  | WebsterLearnerResultRelated
+export type WebsterLearnerResult = |
+  WebsterLearnerResultLex |
+  WebsterLearnerResultRelated

@@ -16,7 +16,7 @@ export const getFetchRequest: AtomFetchRequest = (text) => {
   return getFetchDOMReq(url)
 }
 
-export const handleResponse: AtomResponseHandle = async (res, { profile, text }) => {
+export const handleResponse: AtomResponseHandle = async (res, { text }) => {
   const domText = await res.text()
   const dom = new DOMParser().parseFromString(domText, 'text/html')
   const domRes = await handleDOM(dom)
