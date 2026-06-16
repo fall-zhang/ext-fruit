@@ -1,5 +1,5 @@
 import { cloneDeep } from 'es-toolkit'
-import type { Profile, ProfileMutable } from './index'
+import type { Profile } from './index'
 import { getDefaultProfile } from './index'
 
 /**
@@ -12,7 +12,7 @@ export function mergeProfile (
 ): Profile {
   const base: Profile = baseProfile
     ? cloneDeep(baseProfile)
-    : getDefaultProfile(oldProfile.id)
+    : getDefaultProfile()
 
   return base
 }

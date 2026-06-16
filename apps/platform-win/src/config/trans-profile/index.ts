@@ -1,26 +1,28 @@
 // 每个翻译对应的配置信息
 import { v4 as uuid } from 'uuid'
-import type { AllDictsConf, DictID } from '@/core/api-server/config'
-import { getAllDicts } from '@/core/api-server/config'
 import { getDefaultDictAuths, type DictAuths } from './auth'
 import type { ProfileID } from '@/core/api-local/profile'
+import type { AllDictsConf, DictID } from '@P/salad-api/src/api-trans'
+import { getAllDictsConf } from '@P/salad-api/src/api-trans'
 
 
-export type ProfileMutable = {
+export type Profile = {
   version: number
 
   id: string
 
-  dicts: {
-    /** default selected dictionaries */
-    selected: Array<keyof AllDictsConf>,
-    // settings of each dict will be auto-generated
-    all: AllDictsConf,
-  },
+  /** default selected dictionaries */
+  selectDict: Array<keyof AllDictsConf>,
+  // settings of each dict will be auto-generated
+  allDicts: AllDictsConf,
+  pronounceDict: {
+    zh: DictID[]
+    en: DictID[]
+    jp: DictID[]
+  }
   dictAuth: DictAuths
 }
-export type Profile = ProfileMutable
-export type AppProfile = ProfileMutable
+export type AppProfile = Profile
 
 export function getDefaultSelectDict (): Array<DictID> {
   return [
@@ -50,19 +52,18 @@ export function getDefaultSelectDict (): Array<DictID> {
   ]
 }
 
-export function getDefaultProfile (id?: string): Profile {
+export function getDefaultProfile (): Profile {
   return {
     version: 1,
-
-    id: id || uuid(),
-
-    dicts: {
-      /** default selected dictionaries */
-      selected: getDefaultSelectDict(),
-      // settings of each dict will be auto-generated
-      all: getAllDicts(),
-    },
+    id: uuid(),
+    selectDict: getDefaultSelectDict(),
+    allDicts: getAllDictsConf(),
     dictAuth: getDefaultDictAuths(),
+    pronounceDict: {
+      zh: [],
+      en: [],
+      jp: [],
+    },
   }
 }
 

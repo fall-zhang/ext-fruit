@@ -141,17 +141,7 @@ export type SaladConfigType = {
   language: SupportedLangs,
 
   /** auto pronunciation */
-  autoPronounce: {
-    cn: {
-      dict: DictID | '',
-      list: DictID[],
-    },
-    en: {
-      dict: DictID | '',
-      list: DictID[],
-      accent: 'us' | 'uk',
-    },
-  },
+  autoPronounce: boolean,
 
   /** enable Google analytics */
   analytics: boolean,

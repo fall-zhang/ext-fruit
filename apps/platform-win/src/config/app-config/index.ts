@@ -104,27 +104,6 @@ export function getDefaultConfig (): SaladConfigType {
     },
 
     /** auto pronunciation */
-    autoPronounce: {
-      cn: {
-        dict: '',
-        list: ['zdic', 'guoyu'],
-      },
-      en: {
-        dict: '',
-        list: [
-          'bing',
-          'cambridge',
-          'cobuild',
-          'eudic',
-          'longman',
-          'macmillan',
-          'lexico',
-          'urban',
-          'websterlearner',
-          'youdao',
-        ],
-        accent: 'uk',
-      },
-    },
+    autoPronounce: false,
   }
 }
