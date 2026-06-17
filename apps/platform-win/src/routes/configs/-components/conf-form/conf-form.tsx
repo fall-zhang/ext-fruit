@@ -17,7 +17,7 @@ import {
   FieldLabel
 } from '@P/ui/components/field'
 import type { AppConfig } from '@/config/app-config'
-import { useConfContext } from '@/context/conf-context'
+import { useConfContext } from '@/context/conf-context/context'
 import { useCallback, useId } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { SaladictFormItem } from './type'

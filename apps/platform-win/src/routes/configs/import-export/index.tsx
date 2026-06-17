@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createFileRoute } from '@tanstack/react-router'
 
 import type { TFunction } from 'i18next'
@@ -8,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 import type { AppConfig } from '@/config/app-config'
 import { mergeConfig } from '@/config/app-config/merge-config'
 import { useListLayout } from '../-utils/layout'
-import { useConfContext } from '@/context/conf-context'
+import { useConfContext } from '@/context/conf-context/context'
 import type { Profile } from '@/config/trans-profile'
 import { mergeProfile } from '@/config/trans-profile/merge-profile'
 import type { ProfileID } from '@/core/api-local/profile'

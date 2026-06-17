@@ -5,9 +5,7 @@ import { Input, Modal, Form } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import type { FormInstance } from 'antd/lib/form/Form'
 import { useTranslation } from 'react-i18next'
-import { useDictStore } from '@/store'
 import { useUpdateSetting } from '../-utils/upload'
-import { useConfContext } from '@/context/conf-context'
 
 export interface EditModalProps {
   menuID?: string | null

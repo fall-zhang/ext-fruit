@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { SaladictForm, type SaladictFormItem } from '../../-components/SaladictForm'
 import { getConfigPath } from '../../-utils/path-joiner'
-import { useConfContext } from '@/context/conf-context'
+import { useConfContext } from '@/context/conf-context/context'
 import AnkiSyncView from './sync-services/ankiconnect'
 import EudictSyncView from './sync-services/eudic'
 import ShanbaySynView from './sync-services/shanbay'

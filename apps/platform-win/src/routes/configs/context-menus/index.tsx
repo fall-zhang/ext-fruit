@@ -6,11 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { SortableList, reorder } from '../-components/SortableList'
 import { AddModal } from './-add-modal'
 import { EditModal } from './-edit-modal'
-import { useDictStore } from '@/store'
-import { getConfigPath } from '../-utils/path-joiner'
 import { useUpdateSetting } from '../-utils/upload'
 import { useListLayout } from '../-utils/layout'
-import { useConfContext } from '@/context/conf-context'
 
 export const Route = createFileRoute('/configs/context-menus/')({
   component: RouteComponent,

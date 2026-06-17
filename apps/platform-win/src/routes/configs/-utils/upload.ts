@@ -5,7 +5,7 @@ import type { AppConfig } from '@/config/app-config'
 import { cloneDeep, merge } from 'es-toolkit'
 import type { AppProfile } from '@/config/trans-profile'
 import { toast } from 'sonner'
-import { useConfContext } from '@/context/conf-context'
+import { useConfContext } from '@/context/conf-context/context'
 import { updateConfig, updateProfile } from '@/core/file-system/tauri-conf-system'
 
 

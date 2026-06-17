@@ -3,11 +3,11 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import './_style.scss'
-import type { DictID } from '@/core/api-server/config'
+import type { DictID } from '@P/salad-api/src/api-trans'
 export interface DictTitleProps {
   dictID: DictID
   /** Supported languages */
-  dictLangs: string
+  dictLangs: string[]
 }
 
 const langCodes = ['en', 'zhs', 'zht', 'ja', 'kor', 'fr', 'de', 'es'] as const
@@ -36,7 +36,7 @@ export const DictTitle: FC<DictTitleProps> = ({ dictID, dictLangs }) => {
         {title}
       </a>
       <span>
-        {dictLangs.split('').map((c, i) =>
+        {dictLangs.map((c, i) =>
           (c
             ? (<span className="ml-1 px-0.5 text-sm text-neutral-500 border border-neutral-500 rounded-xs" key={langCodes[i]}>
               {t(`dict.lang.${langCodes[i]}`)}

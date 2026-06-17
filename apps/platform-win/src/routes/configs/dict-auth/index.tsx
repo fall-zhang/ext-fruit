@@ -5,7 +5,7 @@ import { Input } from '@salad/ui/components/input'
 import { Trans, useTranslation } from 'react-i18next'
 import { SaladictForm, type SaladictFormItem } from '../-components/SaladictForm'
 import { getProfilePath } from '../-utils/path-joiner'
-import { useConfContext } from '@/context/conf-context'
+import { useConfContext } from '@/context/conf-context/context'
 import { isKey } from '@/utils/type-utils'
 
 export const RouteComponent: FC = () => {
