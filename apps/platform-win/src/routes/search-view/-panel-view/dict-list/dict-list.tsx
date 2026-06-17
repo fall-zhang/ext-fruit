@@ -1,6 +1,6 @@
 import type { FC } from 'react'
-import React, { Activity, Suspense, useRef } from 'react'
-import { useConfContext } from '@/context/conf-context'
+import { Activity, Suspense, useRef } from 'react'
+import { useConfContext } from '@/context/conf-context/context'
 import { DictItem, type DictItemProps } from './dict-list-item'
 
 // const memoizedDicts = memoizeOne((

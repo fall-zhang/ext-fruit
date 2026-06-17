@@ -8,7 +8,6 @@ import type { Word } from '@/types/word'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { SpeakerProvider } from '@/components/Speaker'
 import type { ViewProps } from '@/components/dict-api-view/type'
-import { SALADICT_PANEL } from '@/config/const/saladict'
 import type { DictID } from '@/core/api-server/config'
 
 import DefaultView from '@/components/dict-api-view/default/View'
@@ -91,7 +90,6 @@ export const DictItemBody: FC<DictItemBodyProps> = props => {
                 className={classNames(
                   `d-${props.dictID}`,
                   'dictRoot',
-                  SALADICT_PANEL,
                   { isAnimate: props.withAnimation }
                 )}
                 onMouseUp={props.onInPanelSelect}

@@ -77,7 +77,7 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
           <p>收藏</p>
         </TooltipContent>
       </Tooltip>
-      {/* <div className="dictItemHead-EmptyArea" onClick={props.toggleFold} /> */}
+      {/* <div className="grow" onClick={props.toggleFold} /> */}
     </header>
   )
 }

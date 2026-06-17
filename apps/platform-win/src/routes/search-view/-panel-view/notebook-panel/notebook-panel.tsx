@@ -8,7 +8,7 @@ export const NotebookPanel: FC<{
   words: Word[],
   onClose(): void
   onSelect(item: Word): void
-  onDelete(wordKey: number): void
+  onDelete(wordKey: string): void
 }> = (props) => {
   return <AnimatePresence>
     {props.open && (
@@ -61,7 +61,7 @@ export const NotebookPanel: FC<{
                       <button
                         onClick={(e) => {
                           e.stopPropagation()
-                          props.onDelete(item.date)
+                          props.onDelete(item.id)
                         }}
                         className="opacity-0 group-hover:opacity-40 hover:opacity-100! p-1 transition-opacity"
                       >
@@ -84,7 +84,7 @@ export const NotebookPanel: FC<{
               <button
                 onClick={() => {
                   if (window.confirm('确定要清空生词本吗？此操作不可恢复。')) {
-                    props.words.forEach(word => props.onDelete(word.date))
+                    props.words.forEach(word => props.onDelete(word.id))
                   }
                 }}
                 className="w-full py-2 text-[10px] font-bold uppercase tracking-widest text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-lg transition-colors border border-transparent hover:border-red-100 dark:hover:border-red-900/30"

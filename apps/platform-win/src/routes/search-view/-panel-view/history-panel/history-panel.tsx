@@ -3,13 +3,6 @@ import { ClockIcon, History, X, Trash2, BookmarkPlus, BookmarkIcon } from 'lucid
 import type { FC } from 'react'
 import type { Word } from '@/types/word'
 
-export interface HistoryItem {
-  id: string;
-  text: string;
-  from: string;
-  to: string;
-  timestamp: number;
-}
 // 将自动检测
 export const HistoryPanel: FC<{
   open: boolean
@@ -31,7 +24,7 @@ export const HistoryPanel: FC<{
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={props.onClose}
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-[60]"
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-60"
         />
         <motion.div
           initial={{ x: '100%' }}

@@ -1,4 +1,4 @@
-import { isContainEnglish } from '@/core/api-server/utils/lang-check'
+import { isContainEnglish } from '@P/salad-api/src/utils/detect-lang/lang-check'
 import { invoke } from '@tauri-apps/api/core'
 
 interface Suggest {

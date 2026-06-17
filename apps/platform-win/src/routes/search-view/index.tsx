@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createFileRoute } from '@tanstack/react-router'
 import { getCurrentWindow, Window } from '@tauri-apps/api/window'
 import { useEffect, useState } from 'react'
@@ -17,7 +18,7 @@ const appWindow = new Window('search-view')
 
 function RouteComponent () {
   const [isAlwaysOnTop, setAlwaysOnTop] = useState(false)
-  const [isInNotebook, setIsInNotebook] = useState(false)
+  // const [isInNotebook, setIsInNotebook] = useState(false)
 
   // 窗口间通信示例：监听来自配置窗口的消息
   useEffect(() => {
@@ -85,10 +86,10 @@ function RouteComponent () {
       <SaladPanel
         customButton={
           <>
-            <FavBtn
+            {/* <FavBtn
               isFav={isInNotebook}
               onClick={toggleFavState}
-            />
+            /> */}
             <PinBtn
               isPinned={isAlwaysOnTop}
               onClick={togglePin}

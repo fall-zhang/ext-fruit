@@ -1,5 +1,4 @@
 import { SALADICT_EXTERNAL } from '@/config/const/saladict'
-import { useConfContext } from '@/context/conf-context'
 import { useDictStore } from '@/store'
 import type { FC } from 'react'
 import { useEffect } from 'react'
