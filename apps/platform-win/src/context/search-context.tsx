@@ -3,13 +3,13 @@ import { createStore, useStore } from 'zustand'
 
 import type { HistoryWord, Word } from '../types/word'
 import { getDefaultSelectDict, type AppProfile, type Profile } from '@/config/trans-profile'
-import type { AllDictsConf, DictID } from '@/core/api-server/config'
 import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
 import { api } from '@/core/api-server/trans-api'
 import { checkSupportedLangs } from '@/core/api-server/utils/lang-check'
 import { countWords } from '@/core/api-server/utils/get-word-count'
 import { isInNotebook } from '@/core/index-db'
 import { getLocalHistory, updateHistory } from '@/core/local-store/history-store'
+import type { AllDictsConf, DictID } from '@P/salad-api/src/api-trans'
 
 
 type RenderDictItem = {
@@ -17,7 +17,6 @@ type RenderDictItem = {
   // idle 闲置
   readonly searchStatus: 'IDLE' | 'SEARCHING' | 'FINISH'
   readonly searchResult: any
-  readonly catalog?: DictSearchResult<DictID>['catalog']
 }
 
 export type DictSearchState = {

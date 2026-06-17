@@ -1,28 +1,18 @@
 import type { AppProfile } from '@/config/trans-profile'
-import type { DictSearchResult, SearchFunction } from '@/core/api-server/api-common/search-type'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { getDefaultSelectDict } from '@/config/trans-profile'
 import { SearchContext } from './context'
 import { getLocalHistory, updateHistory } from '@/core/local-store/history-store'
 import type { HistoryWord, Word } from '@/types/word'
 import type { DictSearchState, WordSearch } from './context'
-import { checkSupportedLangs } from '@/core/api-server/utils/lang-check'
-import { countWords } from '@/core/api-server/utils/get-word-count'
 import type { AsyncOptRes } from '@/core/file-system/types'
 import { isInNotebook } from '@/core/local-db'
 // import { api } from '@/core/api-server/trans-api'
 import type { DictID } from '@P/salad-api/src/api-trans'
 import * as api from '@P/salad-api/src/api-trans/api-all'
-import { combine } from '@/core/api-server/tauri-combine'
 import { fetch } from '@tauri-apps/plugin-http'
-
-type RenderDictItem = {
-  readonly dictID: DictID
-  // idle 闲置
-  readonly searchStatus: 'IDLE' | 'SEARCHING' | 'FINISH'
-  readonly searchResult: any
-  readonly catalog?: DictSearchResult<DictID>['catalog']
-}
+import type { RenderDictItem } from './utils/get-search-dict'
+import { getSearchInfo } from './utils/get-search-info'
 
 export function SearchProvider ({ children, profile }: {
   children: ReactNode
@@ -31,11 +21,12 @@ export function SearchProvider ({ children, profile }: {
   const [text, setText] = useState('')
   const activeProfile = profile
   const [searchHistory, setSearchHistory] = useState<HistoryWord[]>([])
+  const [isInNote, setIsInNote] = useState<boolean>(false)
   const [renderedDicts, setRenderDicts] = useState<RenderDictItem[]>([])
   const selectedDicts = getDefaultSelectDict()
   const userFoldedDicts = useRef<Partial<Record<DictID, boolean>>>({})
   async function clearHistory (): AsyncOptRes {
-    updateHistory([])
+    await updateHistory([])
     setSearchHistory([])
     return {
       state: 'success',
@@ -52,120 +43,113 @@ export function SearchProvider ({ children, profile }: {
     })
   }
   const searchStart: WordSearch = (searchOpt) => {
-    let dictList: RenderDictItem[] = []
+    const renderDictList: RenderDictItem[] = []
     let word: Word
-    // const { activeProfile, searchHistory, selectedDicts, renderedDicts, userFoldedDicts } = get()
     if (searchOpt && searchOpt.word) {
       word = searchOpt.word
     } else {
       // 默认为最后一次查找
       word = searchHistory[0]
     }
+    const transInfo = getSearchInfo(word, { localLang: 'zh' })
+    // 获取需要渲染的 dict
+    if (searchOpt.dictId) {
+      const isEnableDict = selectedDicts.some(item => item === searchOpt.dictId)
 
-    if (searchOpt && searchOpt.id) {
-      const searchDicts = renderedDicts.filter(item => item.dictID === searchOpt.id)
-      dictList = searchDicts.map(d => {
-        return {
-          dictID: d.dictID,
+      const requestConf = activeProfile.allDicts[searchOpt.dictId]
+
+      const toLang = transInfo.to.find(item => requestConf.to.includes(item))
+
+      if (isEnableDict && toLang) {
+        renderDictList.push({
+          dictID: searchOpt.dictId,
           searchStatus: 'SEARCHING',
-          searchResult: null,
-        }
-      })
-    } else {
-      // dicts that should be rendered
-      dictList = selectedDicts.filter(id => {
-        const dict = activeProfile.allDicts[id]
-        if (checkSupportedLangs(dict.from, word.text)) {
-          const wordCount = countWords(word.text)
-          const max = dict.maxWord
-          const min = dict.minWord
-          return wordCount >= min && wordCount <= max
-        }
-        return false
-      })
-        .map(id => {
-          // fold or unfold
-          const status = checkSupportedLangs(
-            activeProfile.allDicts[id],
-            word.text
-          ) && (!userFoldedDicts[id])
-            ? 'SEARCHING'
-            : 'IDLE'
-          return {
-            dictID: id,
-            searchStatus: status,
-            searchResult: null,
-          }
+          from: transInfo.from,
+          to: toLang,
         })
-      console.log('search dicts', dictList)
+      }
+    } else {
+      selectedDicts.forEach(id => {
+        const dictConf = activeProfile.allDicts[id]
+
+        const isWordCount = transInfo.wordCount >= dictConf.minWord && transInfo.wordCount <= dictConf.maxWord
+        const isSupportLang = dictConf.from.includes(transInfo.from)
+
+        const requestConf = activeProfile.allDicts[id]
+
+        const toLang = transInfo.to.find(item => requestConf.to.includes(item))
+        if (isWordCount && isSupportLang && toLang) {
+          if (userFoldedDicts.current[id]) {
+            renderDictList.push({
+              dictID: id,
+              searchStatus: 'IDLE',
+              from: transInfo.from,
+              to: toLang,
+            })
+          } else {
+            renderDictList.push({
+              dictID: id,
+              searchStatus: 'SEARCHING',
+              from: transInfo.from,
+              to: toLang,
+            })
+          }
+        }
+      })
+      console.log('search dicts', renderDictList)
     }
-    isInNotebook(word).then(isInNote => {
-      // res
+    setRenderDicts(renderDictList)
+    // searching
+    renderDictList.forEach((item) => {
+      const id: DictID = item.dictID
+      const requestApi = api[id]
+      const requestConf = activeProfile.allDicts[id]
+      if (id === 'google') {
+        activeProfile.dictAuth
+        return
+      }
+      const toLang = transInfo.to.find(item => requestConf.to.includes(item))
+      if (!toLang) {
+        return
+      }
+
+      const request: Request = requestApi.getRequest(word.text, {
+        from: transInfo.from,
+        to: toLang,
+      })
+      fetch(request).then(res => {
+        return requestApi.handleResponse(res, {
+          from: item.from,
+          to: item.to,
+          text,
+        })
+      }).then(res => {
+        const dictResult: RenderDictItem = {
+          dictID: id,
+          searchStatus: 'FINISH',
+          searchResult: res,
+          from: item.from,
+          to: item.to,
+        }
+        setRenderDicts(oldDict => {
+          return oldDict.map(oldItem => {
+            if (oldItem.dictID === dictResult.dictID) {
+              return dictResult
+            }
+            return oldItem
+          })
+        })
+      })
+        .catch(err => console.warn('request err: ', err))
+    })
+    isInNotebook(word).then(res => {
       if (!word) {
         console.warn('SEARCH_START: Empty word on first search', searchOpt)
         return
       }
-      let newHistory: HistoryWord[]
-      if (searchOpt.noHistory) {
-        newHistory = searchHistory
-      } else {
-        newHistory = [{
-          ...word,
-          isInNotebook: isInNote,
-        }, ...searchHistory]
-        updateHistory(newHistory)
-      }
-      return {
-        text: word.text,
-        searchHistory: newHistory,
-        renderedDicts: dictList,
-      }
+      setIsInNote(res)
     }).catch(err => {
       console.error('⚡️ line:145 ~ err: ', err)
-    })
-    // start search
-
-    // searching
-    // console.log('⚡️ line:157 ~ selectedDicts: ', selectedDicts)
-    dictList.forEach((item) => {
-      const id: DictID = item.dictID
-      const requestApi = api[id]
-      // const request:Request = requestApi.getRequest(word.text)
-      // const searchFunc: SearchFunction = combine(, requestApi.handleResponse)
-      searchFunc(word.text, {
-        profile: activeProfile.allDicts,
-        dictAuth: activeProfile.dictAuth,
-        localLang: 'zh-CN',
-      }).then((res: DictSearchResult) => {
-        const dictResult: RenderDictItem = {
-          dictID: id,
-          searchStatus: 'FINISH',
-          searchResult: res.result,
-        }
-
-        setRenderDicts(oldVal => {
-          const newDict = renderedDicts.map(item => {
-            if (item.dictID === id) {
-              return dictResult
-            }
-            return item
-          })
-          return newDict
-        })
-      }).catch((err: unknown) => {
-        console.warn(`current dict ${id} ~ err: `, err)
-        const newDict = renderedDicts.map(item => {
-          if (item.dictID === id) {
-            return {
-              searchStatus: 'IDLE',
-              dictID: id,
-              searchResult: null,
-            } satisfies RenderDictItem
-          }
-          return item
-        })
-        setRenderDicts(newDict)
-      })
     })
   }
   // 从本地获取历史记录
@@ -187,11 +171,12 @@ export function SearchProvider ({ children, profile }: {
     <SearchContext.Provider
       value={{
         text,
+        isInNotebook: isInNote,
         activeProfile,
         selectedDicts,
         renderedDicts,
         searchHistory,
-        userFoldedDicts,
+        userFoldedDicts: userFoldedDicts.current,
         removeHistoryItem,
         searchStart,
         clearHistory,
