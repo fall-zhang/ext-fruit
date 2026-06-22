@@ -1,73 +1,7 @@
 import DOMPurify from 'dompurify'
 import type { Config } from 'dompurify'
 import { isTagName } from './is-tag-name'
-import chsToChz from './chs-to-chz'
 
-export function handleNoResult<T = any> (): Promise<T> {
-  return Promise.reject(new Error('NO_RESULT'))
-}
-
-export function handleNetWorkError (err: any): Promise<never> {
-  console.log('⚡️ line:10 ~ err: ', err)
-  return Promise.reject(new Error('NETWORK_ERROR'))
-}
-
-/**
- * Get chs-chz transform function on-demand.
- * The dict object is huge.
- *
- * 将简体中文，翻译成繁体中文
- * @param langCode
- */
-// export function getChsToChz (langCode: undefined): (text: string) => string
-export function getChsToChz (langCode?: string): null | ((text: string) => string) {
-  if (!langCode) {
-    return chsToChz
-  }
-  if (['zh-TW', 'zh-HK'].includes(langCode)) {
-    return chsToChz
-  }
-  return null
-}
-
-/**
- * Get the textContent of a node or its child.
- */
-export function getText (
-  parent: ParentNode | null,
-  selector?: string,
-  transform?: null | ((text: string) => string)
-): string
-export function getText (
-  parent: ParentNode | null,
-  ...args:
-    | [string?, (null | ((text: string) => string))?] |
-    [(null | ((text: string) => string))?, string?]
-): string {
-  if (!parent) {
-    return ''
-  }
-
-  let selector = ''
-  let transform: null | ((text: string) => string) = null
-  for (let i = args.length - 1; i >= 0; i--) {
-    if (typeof args[i] === 'string') {
-      selector = args[i] as string
-    } else if (typeof args[i] === 'function') {
-      transform = args[i] as (text: string) => string
-    }
-  }
-
-  const child = selector
-    ? parent.querySelector(selector)
-    : (parent as HTMLElement)
-  if (!child) {
-    return ''
-  }
-
-  const textContent = child.textContent || ''
-  return transform ? transform(textContent) : textContent
-}
 
 export interface GetHTMLConfig {
   /** innerHTML or outerHTML */
@@ -138,31 +72,6 @@ export function getHTML (
   return transform ? transform(content) : content
 }
 
-export function getInnerHTML (
-  host: string,
-  parent: ParentNode,
-  selectorOrConfig: string | Omit<GetHTMLConfig, 'mode' | 'host'> = {}
-) {
-  return getHTML(
-    parent,
-    typeof selectorOrConfig === 'string'
-      ? { selector: selectorOrConfig, host, mode: 'innerHTML' }
-      : { ...selectorOrConfig, host, mode: 'innerHTML' }
-  )
-}
-
-export function getOuterHTML (
-  host: string,
-  parent: ParentNode,
-  selectorOrConfig: string | Omit<GetHTMLConfig, 'mode' | 'host'> = {}
-) {
-  return getHTML(
-    parent,
-    typeof selectorOrConfig === 'string'
-      ? { selector: selectorOrConfig, host, mode: 'outerHTML' }
-      : { ...selectorOrConfig, host, mode: 'outerHTML' }
-  )
-}
 
 /**
  * Remove a child node from a parent node

@@ -1,6 +1,5 @@
+import { getWordCount } from '@P/salad-api/src/utils/get-word-count'
 import { fetch } from '@tauri-apps/plugin-http'
-import { countWords } from '../utils/get-word-count'
-import { detectLang } from '@P/open-trans/utils/detect-lang'
 
 interface Suggest {
   entry: string
@@ -13,10 +12,8 @@ interface Suggest {
  * @returns
  */
 export async function getSuggests (text: string): Promise<Suggest[]> {
-  if (countWords(text) > 1) {
+  if (getWordCount(text) > 1) {
     return []
-  } else if (detectLang(text)) {
-
   }
   try {
     return await Promise.any([getCiba(text), getYoudao(text)])
@@ -28,7 +25,6 @@ export async function getSuggests (text: string): Promise<Suggest[]> {
 
 /** 金山词霸 */
 async function getCiba (text: string): Promise<Suggest[]> {
-  console.log('⚡️ line:1111 ~ text: ')
   const res = await fetch(
     'http://dict-mobile.iciba.com/interface/index.php?c=word&m=getsuggest&nums=10&client=6&uid=0&is_need_mean=1&word=' +
     encodeURIComponent(text)
