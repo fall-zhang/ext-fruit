@@ -208,3 +208,23 @@ export const getStaticSpeaker = (src?: string | null) => {
   $a.className = 'saladict-Speaker'
   return $a
 }
+
+
+/**
+ * Remove a child node from a parent node
+ */
+export function removeChild (parent: ParentNode, selector: string) {
+  const child = parent.querySelector(selector)
+  if (child) {
+    child.remove()
+  }
+}
+
+
+/**
+ * Returns an anchor element string
+ */
+export const getStaticSpeakerString = (src?: string | null) =>
+  (src
+    ? `<a href="${src}" target="_blank" rel="noopener noreferrer" class="saladict-Speaker"></a>`
+    : '')

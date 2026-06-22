@@ -1,8 +1,7 @@
-import { MockRequest } from '@/core/api-server/trans-api/helpers'
 
 export const mockSearchTexts = ['comment', 'love', 'salad']
 
-export const mockRequest: MockRequest = mock => {
+export const mockRequest = () => {
   // mock
   //   .onGet(/ahdictionary.+comment$/)
   //   .reply(200, require('!raw-loader!./response/comment.html').default)

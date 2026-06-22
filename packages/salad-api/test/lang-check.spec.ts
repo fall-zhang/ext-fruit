@@ -1,22 +1,21 @@
+import { SupportLanguage } from '../src/const/languages'
 import {
   isContainChinese,
   isContainEnglish,
-  checkSupportedLangs,
-  SupportedLangs
-} from '@/_helpers/lang-check'
+} from '../src/utils/detect-lang'
 import { describe, expect, it } from 'vitest'
 
 describe('Language Check', () => {
-  it('isContainChinese should return ture if text contains Chinese', () => {
+  it('isContainChinese should return true if text contains Chinese', () => {
     expect(isContainChinese('lo你ve.')).toBeTruthy()
   })
   it('isContainChinese should return false if text does not contain Chinese', () => {
     expect(isContainChinese('love.')).toBeFalsy()
   })
-  it('isContainEnglish should return ture if text contains English', () => {
+  it('isContainEnglish should return true if text contains English', () => {
     expect(isContainEnglish('lo你ve.')).toBeTruthy()
   })
-  it('isContainEnglish should return ture if text does not contain English', () => {
+  it('isContainEnglish should return true if text does not contain English', () => {
     expect(isContainEnglish('你.')).toBeFalsy()
   })
 
@@ -24,7 +23,7 @@ describe('Language Check', () => {
     function tlHelper (matchAll: boolean) {
       return function tl (
         text: string,
-        ...args: Array<Exclude<keyof SupportedLangs, 'matchAll'>>
+        ...args: Array<Exclude<keyof SupportLanguage, 'matchAll'>>
       ) {
         const langs = {
           chinese: false,

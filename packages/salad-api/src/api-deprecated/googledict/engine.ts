@@ -1,6 +1,5 @@
-import { getStaticSpeaker } from '@/components/Speaker'
 import type { GoogleDictResult, FragmentInfo, ImageInfo } from './type'
-import { getFullLink, getText, getInnerHTML, removeChildren } from '../../utils/dom-utils'
+import { getFullLink, getText, getInnerHTML, removeChildren, getStaticSpeaker } from '../../utils/dom-utils'
 import { handleNoResult } from '../../utils/error-response'
 import type { AtomSearchResult } from '../../types/res-type'
 

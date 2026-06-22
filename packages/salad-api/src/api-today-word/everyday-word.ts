@@ -1,4 +1,5 @@
-import { getText, handleNoResult } from '@/core/api-server/utils'
+import { getText } from '../utils/dom-utils'
+import { handleNoResult } from '../utils/error-response'
 import { fetchDirtyDOM } from './utils'
 
 

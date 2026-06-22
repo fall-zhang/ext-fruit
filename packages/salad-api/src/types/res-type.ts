@@ -48,7 +48,7 @@ export type WordResponse = {
     pronounce?: string
     phoneticSymbol?: string
     text: string
-    translate: string
+    translate?: string
   }>
   /**
    * 同义词，对内容进行扩展

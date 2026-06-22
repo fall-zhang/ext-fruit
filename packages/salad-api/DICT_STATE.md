@@ -1,4 +1,4 @@
-> 最近更新：2026-05-13
+> 最近更新：2026-06-22
 
 ## 所有词典的状态
 
@@ -26,23 +26,22 @@
 | ✅ | ahdict | 美国传统词典 | ✅ | ✅ | ✅ |
 | ❌ | etymonline | etymonline | ❌ | ❌ | ❌ |
 | ❌ | oaldict | 牛津高阶词典 | ❌ | ❌ | ❌ |
-|  | eudic |  |  |  |  |
-|  | hjdict |  |  |  |  |
-| | merriamwebster | | | | |
-| | weblioejje | | | | |
-| | weblio | | | | |
-| | tencent | | | | |
-| | sogou | | | | |
-| | renren | | | | |
-| | naver | | | | |
-| | mojidict | | | | |
-| | macmillan | | | | |
-| | longman | | | | |
-| | lexico | | | | |
-| | jukuu | | | | |
-| | websterlearner | | | | |
-| | wikipedia | | | | |
-| |  | | | | |
+| ❌ | eudic |  |  |  |  |
+| ❌ | hjdict |  |  |  |  |
+| ❌| merriamwebster | | | | |
+| ❌| weblioejje | | | | |
+| ❌| weblio | | | | |
+|❌ | tencent | | | | |
+|❌ | sogou | | | | |
+|❌ | renren | | | | |
+| ❌| naver | | | | |
+| ❌| mojidict | | | | |
+| ❌| macmillan | | | | |
+| ❌| longman | | | | |
+| ❌| lexico | | | | |
+| ❌| jukuu | | | | |
+| ❌| websterlearner | | | | |
+| ❌| wikipedia | | | | |
 
 ### 搜索建议
 
