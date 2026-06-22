@@ -13,7 +13,6 @@ import {
 import type { FormInstance } from 'antd/lib/form'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { removeSyncConfig, setSyncConfig } from '@/core/external-sync/sync-manager/helpers'
-import { InputNumberGroup } from '@/routes/configs/-components/InputNumberGroup'
 import { useTranslation } from 'react-i18next'
 import { Service, type SyncConfig } from '@/core/external-sync/sync-webdav'
 
@@ -35,7 +34,6 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
       title={t('sync:webdav.title')}
       onOk={submitForm}
       onCancel={closeModal}
-      destroyOnClose
       footer={[
         <Button key="delete" type="primary" danger onClick={deleteService}>
           {t('common:delete')}
@@ -109,7 +107,7 @@ export const WebdavModal: FC<WebdavModalProps> = props => {
             { type: 'number', message: t('form.number_error'), required: true },
           ]}
         >
-          <InputNumberGroup suffix={t('common:unit.mins')} />
+          {/* <InputNumberGroup suffix={t('common:unit.mins')} /> */}
         </Form.Item>
       </Form>
     </Modal>

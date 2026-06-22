@@ -44,49 +44,6 @@
   user-select: none;
 }
 
-.dictItem-Loader_Ball {
-  width: 10px;
-  height: 10px;
-  fill: orange;
-
-  &:nth-child(2) {
-    transform: translateX(15px);
-  }
-
-  &:nth-child(3) {
-    transform: translateX(30px);
-  }
-
-  &:nth-child(4) {
-    transform: translateX(45px);
-  }
-
-  &:nth-child(5) {
-    transform: translateX(60px);
-  }
-
-}
-
-.isAnimate .dictItem-Loader_Ball {
-  animation: dictItem-Loader-shift 2s linear infinite;
-
-  &:nth-child(2) {
-    animation-delay: -0.4s;
-  }
-
-  &:nth-child(3) {
-    animation-delay: -0.8s;
-  }
-
-  &:nth-child(4) {
-    animation-delay: -1.2s;
-  }
-
-  &:nth-child(5) {
-    animation-delay: -1.6s;
-  }
-}
-
 .dictItem-FoldMask {
   position: absolute;
   left: 0;

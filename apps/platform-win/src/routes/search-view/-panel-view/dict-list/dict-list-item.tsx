@@ -189,7 +189,7 @@ export const DictItem: FC<DictItemProps> = props => {
       <div
         className="dictItem-Body relative dark:bg-neutral-800 dark:text-neutral-100"
         key={props.dictID}
-        style={{ height: visibleHeight > -1 ? visibleHeight : undefined }}
+        style={{ maxHeight: visibleHeight > -1 ? visibleHeight : undefined }}
         onClick={searchLinkText}
       >
         <section className="dictItem-BodyMesure">

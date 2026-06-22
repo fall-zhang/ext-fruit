@@ -1,4 +1,4 @@
-import { common as _locale } from '../zh-CN/common'
+import type { common as _locale } from '../zh-CN/common'
 
 export const locale: typeof _locale = {
   add: '新增',

@@ -15,7 +15,7 @@ export function SearchArea ({
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [suggestState, setSuggestState] = useState<'not-search-show' | 'not-search-hidden' | 'searched-hidden'>('not-search-hidden')
   const [inputText, setInputText] = useState('')
-  console.log('⚡️ line:17 ~ inputText: ', inputText)
+  // console.log('⚡️ line:17 ~ inputText: ', inputText)
 
   useLayoutEffect(() => {
     const textarea = textareaRef.current

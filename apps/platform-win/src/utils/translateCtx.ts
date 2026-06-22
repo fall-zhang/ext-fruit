@@ -1,75 +1,9 @@
-import type { DictID } from '@/core/api-server/config'
-import type { MachineTranslateResult } from '@/core/api-server/api-common/result-handle'
 import type { AppConfig } from '@/config/app-config'
-import { api } from '@/core/api-server/trans-api'
-import { getDefaultProfile } from '@/config/trans-profile'
-import { getAllDicts } from '@/core/api-server/config'
 
 export type CtxTranslatorId = keyof AppConfig['ctxTrans']
 
 export type CtxTranslateResults = {
   [id in CtxTranslatorId]: string
-}
-
-export interface FetchDictResultResponse {
-  id: DictID
-  result: MachineTranslateResult
-}
-/**
- * translate selection context with selected machine translatior
- * @param text search text
- * @param id machine translatior id
- */
-export async function translateCtx (
-  text: string,
-  id: CtxTranslatorId
-): Promise<string> {
-  try {
-    const response = await api[id](text, {
-      profile: getAllDicts(),
-    })
-
-    return (
-      (response &&
-        response.result &&
-        response.result.trans &&
-        response.result.trans.paragraphs.join('\n')) ||
-      ''
-    )
-  } catch (e) {
-    return ''
-  }
-}
-/**
- * translate selection context with selected machine translatiors
- * @param text search text
- * @param ctxTrans machine translatiors
- */
-export async function translateCtxs (
-  text: string,
-  ctxTrans: AppConfig['ctxTrans']
-): Promise<CtxTranslateResults> {
-  return (
-    await Promise.all(
-      Object.keys(ctxTrans).map(async id => {
-        let content = ''
-        if (ctxTrans[id as CtxTranslatorId]) {
-          try {
-            content = await translateCtx(text, id as CtxTranslatorId)
-          } catch (e) {
-            console.warn(e)
-          }
-        }
-        return { id, content }
-      })
-    )
-  ).reduce((result, { id, content }) => {
-    // result[id] = content
-    return {
-      ...result,
-      [id]: content,
-    }
-  }, {} as CtxTranslateResults)
 }
 
 /**

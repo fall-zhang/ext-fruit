@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createFileRoute, Link, Outlet, useLocation, redirect } from '@tanstack/react-router'
 import {
   SwapOutlined,
@@ -61,12 +62,12 @@ const menuItems: Array<{
     label: i18n.t('options:nav.DictPanel'),
     icon: <ListIcon className="w-4 h-4" />,
   },
-  {
-    id: 'pronunciation',
-    path: '/configs/pronunciation',
-    label: i18n.t('options:nav.Pronunciation'),
-    icon: <SoundOutlined className="w-4 h-4" />,
-  },
+  // {
+  //   id: 'pronunciation',
+  //   path: '/configs/pronunciation',
+  //   label: i18n.t('options:nav.Pronunciation'),
+  //   icon: <SoundOutlined className="w-4 h-4" />,
+  // },
   {
     id: 'import-export',
     path: '/configs/import-export',

@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ConfigsRouteImport } from './routes/configs'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SystemTrayIndexRouteImport } from './routes/system-tray/index'
 import { Route as SearchViewIndexRouteImport } from './routes/search-view/index'
 import { Route as NotebookIndexRouteImport } from './routes/notebook/index'
 import { Route as NotebookAddIndexRouteImport } from './routes/notebook-add/index'
@@ -20,7 +19,6 @@ import { Route as ExternalUseIndexRouteImport } from './routes/external-use/inde
 import { Route as ConfigsWindowCommunicationRouteImport } from './routes/configs/window-communication'
 import { Route as ConfigsFormTestRouteImport } from './routes/configs/form-test'
 import { Route as ConfigsAppInfoRouteImport } from './routes/configs/app-info'
-import { Route as ConfigsPronunciationIndexRouteImport } from './routes/configs/pronunciation/index'
 import { Route as ConfigsNotebookIndexRouteImport } from './routes/configs/notebook/index'
 import { Route as ConfigsImportExportIndexRouteImport } from './routes/configs/import-export/index'
 import { Route as ConfigsGeneralIndexRouteImport } from './routes/configs/general/index'
@@ -42,11 +40,6 @@ const R404Route = R404RouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SystemTrayIndexRoute = SystemTrayIndexRouteImport.update({
-  id: '/system-tray/',
-  path: '/system-tray/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SearchViewIndexRoute = SearchViewIndexRouteImport.update({
@@ -85,12 +78,6 @@ const ConfigsAppInfoRoute = ConfigsAppInfoRouteImport.update({
   path: '/app-info',
   getParentRoute: () => ConfigsRoute,
 } as any)
-const ConfigsPronunciationIndexRoute =
-  ConfigsPronunciationIndexRouteImport.update({
-    id: '/pronunciation/',
-    path: '/pronunciation/',
-    getParentRoute: () => ConfigsRoute,
-  } as any)
 const ConfigsNotebookIndexRoute = ConfigsNotebookIndexRouteImport.update({
   id: '/notebook/',
   path: '/notebook/',
@@ -141,7 +128,6 @@ export interface FileRoutesByFullPath {
   '/notebook-add/': typeof NotebookAddIndexRoute
   '/notebook/': typeof NotebookIndexRoute
   '/search-view/': typeof SearchViewIndexRoute
-  '/system-tray/': typeof SystemTrayIndexRoute
   '/configs/context-menus/': typeof ConfigsContextMenusIndexRoute
   '/configs/dict-auth/': typeof ConfigsDictAuthIndexRoute
   '/configs/dict-panel/': typeof ConfigsDictPanelIndexRoute
@@ -149,7 +135,6 @@ export interface FileRoutesByFullPath {
   '/configs/general/': typeof ConfigsGeneralIndexRoute
   '/configs/import-export/': typeof ConfigsImportExportIndexRoute
   '/configs/notebook/': typeof ConfigsNotebookIndexRoute
-  '/configs/pronunciation/': typeof ConfigsPronunciationIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -162,7 +147,6 @@ export interface FileRoutesByTo {
   '/notebook-add': typeof NotebookAddIndexRoute
   '/notebook': typeof NotebookIndexRoute
   '/search-view': typeof SearchViewIndexRoute
-  '/system-tray': typeof SystemTrayIndexRoute
   '/configs/context-menus': typeof ConfigsContextMenusIndexRoute
   '/configs/dict-auth': typeof ConfigsDictAuthIndexRoute
   '/configs/dict-panel': typeof ConfigsDictPanelIndexRoute
@@ -170,7 +154,6 @@ export interface FileRoutesByTo {
   '/configs/general': typeof ConfigsGeneralIndexRoute
   '/configs/import-export': typeof ConfigsImportExportIndexRoute
   '/configs/notebook': typeof ConfigsNotebookIndexRoute
-  '/configs/pronunciation': typeof ConfigsPronunciationIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -184,7 +167,6 @@ export interface FileRoutesById {
   '/notebook-add/': typeof NotebookAddIndexRoute
   '/notebook/': typeof NotebookIndexRoute
   '/search-view/': typeof SearchViewIndexRoute
-  '/system-tray/': typeof SystemTrayIndexRoute
   '/configs/context-menus/': typeof ConfigsContextMenusIndexRoute
   '/configs/dict-auth/': typeof ConfigsDictAuthIndexRoute
   '/configs/dict-panel/': typeof ConfigsDictPanelIndexRoute
@@ -192,7 +174,6 @@ export interface FileRoutesById {
   '/configs/general/': typeof ConfigsGeneralIndexRoute
   '/configs/import-export/': typeof ConfigsImportExportIndexRoute
   '/configs/notebook/': typeof ConfigsNotebookIndexRoute
-  '/configs/pronunciation/': typeof ConfigsPronunciationIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -207,7 +188,6 @@ export interface FileRouteTypes {
     | '/notebook-add/'
     | '/notebook/'
     | '/search-view/'
-    | '/system-tray/'
     | '/configs/context-menus/'
     | '/configs/dict-auth/'
     | '/configs/dict-panel/'
@@ -215,7 +195,6 @@ export interface FileRouteTypes {
     | '/configs/general/'
     | '/configs/import-export/'
     | '/configs/notebook/'
-    | '/configs/pronunciation/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -228,7 +207,6 @@ export interface FileRouteTypes {
     | '/notebook-add'
     | '/notebook'
     | '/search-view'
-    | '/system-tray'
     | '/configs/context-menus'
     | '/configs/dict-auth'
     | '/configs/dict-panel'
@@ -236,7 +214,6 @@ export interface FileRouteTypes {
     | '/configs/general'
     | '/configs/import-export'
     | '/configs/notebook'
-    | '/configs/pronunciation'
   id:
     | '__root__'
     | '/'
@@ -249,7 +226,6 @@ export interface FileRouteTypes {
     | '/notebook-add/'
     | '/notebook/'
     | '/search-view/'
-    | '/system-tray/'
     | '/configs/context-menus/'
     | '/configs/dict-auth/'
     | '/configs/dict-panel/'
@@ -257,7 +233,6 @@ export interface FileRouteTypes {
     | '/configs/general/'
     | '/configs/import-export/'
     | '/configs/notebook/'
-    | '/configs/pronunciation/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -268,7 +243,6 @@ export interface RootRouteChildren {
   NotebookAddIndexRoute: typeof NotebookAddIndexRoute
   NotebookIndexRoute: typeof NotebookIndexRoute
   SearchViewIndexRoute: typeof SearchViewIndexRoute
-  SystemTrayIndexRoute: typeof SystemTrayIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -292,13 +266,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/system-tray/': {
-      id: '/system-tray/'
-      path: '/system-tray'
-      fullPath: '/system-tray/'
-      preLoaderRoute: typeof SystemTrayIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/search-view/': {
@@ -348,13 +315,6 @@ declare module '@tanstack/react-router' {
       path: '/app-info'
       fullPath: '/configs/app-info'
       preLoaderRoute: typeof ConfigsAppInfoRouteImport
-      parentRoute: typeof ConfigsRoute
-    }
-    '/configs/pronunciation/': {
-      id: '/configs/pronunciation/'
-      path: '/pronunciation'
-      fullPath: '/configs/pronunciation/'
-      preLoaderRoute: typeof ConfigsPronunciationIndexRouteImport
       parentRoute: typeof ConfigsRoute
     }
     '/configs/notebook/': {
@@ -420,7 +380,6 @@ interface ConfigsRouteChildren {
   ConfigsGeneralIndexRoute: typeof ConfigsGeneralIndexRoute
   ConfigsImportExportIndexRoute: typeof ConfigsImportExportIndexRoute
   ConfigsNotebookIndexRoute: typeof ConfigsNotebookIndexRoute
-  ConfigsPronunciationIndexRoute: typeof ConfigsPronunciationIndexRoute
 }
 
 const ConfigsRouteChildren: ConfigsRouteChildren = {
@@ -434,7 +393,6 @@ const ConfigsRouteChildren: ConfigsRouteChildren = {
   ConfigsGeneralIndexRoute: ConfigsGeneralIndexRoute,
   ConfigsImportExportIndexRoute: ConfigsImportExportIndexRoute,
   ConfigsNotebookIndexRoute: ConfigsNotebookIndexRoute,
-  ConfigsPronunciationIndexRoute: ConfigsPronunciationIndexRoute,
 }
 
 const ConfigsRouteWithChildren =
@@ -448,7 +406,6 @@ const rootRouteChildren: RootRouteChildren = {
   NotebookAddIndexRoute: NotebookAddIndexRoute,
   NotebookIndexRoute: NotebookIndexRoute,
   SearchViewIndexRoute: SearchViewIndexRoute,
-  SystemTrayIndexRoute: SystemTrayIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

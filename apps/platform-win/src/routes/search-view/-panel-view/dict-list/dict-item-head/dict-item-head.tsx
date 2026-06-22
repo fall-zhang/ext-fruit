@@ -8,8 +8,7 @@ import { BookmarkIcon, ChevronRight, ChevronRightIcon } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@P/ui/components/tooltip'
 import { cn } from '@P/ui/utils'
 import { dictImage } from '../dictImg'
-import type { DictID } from '@P/salad-api/src/api-trans'
-
+import { getAllDictsConf, type DictID } from '@P/salad-api/src/api-trans'
 // const error = import.meta.glob('@/core/api-server/trans-api/*/favicon.png')
 export interface DictItemHeadProps {
   dictID: DictID
@@ -21,8 +20,6 @@ export interface DictItemHeadProps {
 }
 
 export const DictItemHead: FC<DictItemHeadProps> = props => {
-  const { t } = useTranslation(['dicts', 'content', 'langcode'])
-
   const [showLoader, setShowLoader] = useState(false)
   useEffect(() => {
     // small time offset to add a little organic feeling
@@ -37,6 +34,7 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
 
   function addToNotebook () {
   }
+  const apiInfo = getAllDictsConf()
   return (
     <header
       className={clsx('dictItemHead border-t box-border sticky dark:border-t-neutral-500 border-t-neutral-400 border-dashed flex items-center dark:bg-neutral-900 dark:text-neutral-200 h-7', {
@@ -60,7 +58,7 @@ export const DictItemHead: FC<DictItemHeadProps> = props => {
             props.openDictSrcPage(props.dictID, e.ctrlKey)
           }}
         >
-          {t(`${props.dictID}.name`)}
+          {apiInfo[props.dictID].zhName}
         </a>
       </h4>
       {showLoader && (

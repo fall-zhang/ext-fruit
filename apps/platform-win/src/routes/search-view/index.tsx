@@ -9,6 +9,7 @@ import { listenFromWindow } from '@/core/bridge'
 import { message } from 'antd'
 import { SearchProvider } from '@/context/search-context/provider'
 import { useConfContext } from '@/context/conf-context/context'
+import type { UnlistenFn } from '@tauri-apps/api/event'
 /**
  * 生词本
  */
@@ -24,10 +25,8 @@ function RouteComponent () {
 
   // 窗口间通信示例：监听来自配置窗口的消息
   useEffect(() => {
-    // let unlisten: (() => void) | null = null
-    // console.timeEnd('start render')
-
-    let unListenRec: (() => void) | null = null
+    let isDestroy = false
+    let unListenRec: UnlistenFn | null = null
 
     const setupListener = async () => {
       try {
@@ -39,7 +38,7 @@ function RouteComponent () {
             message.success(`收到消息: ${payload.text}`)
           }
         )
-        if (unListenRec) {
+        if (isDestroy) {
           unListen()
           return
         }
@@ -55,6 +54,7 @@ function RouteComponent () {
 
     // 组件卸载时清理监听器
     return () => {
+      isDestroy = true
       if (unListenRec) {
         unListenRec()
       }

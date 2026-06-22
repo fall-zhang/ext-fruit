@@ -3,7 +3,6 @@
 export interface CSSProperties {
   '--panel-width'?: string
   '--panel-max-height'?: string
-  '--panel-font-size'?: string
   '--color-brand'?: string
   '--color-font'?: string
   '--color-background'?: string

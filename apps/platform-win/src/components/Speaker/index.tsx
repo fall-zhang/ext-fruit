@@ -88,21 +88,6 @@ export const SpeakerProvider: FC<SpeakerProviderProps> = ({ children, ...props }
 }
 
 /**
- * Returns a anchor element
- */
-export const getStaticSpeaker = (src?: string | null) => {
-  if (!src) {
-    return ''
-  }
-
-  const $a = document.createElement('a')
-  $a.target = '_blank'
-  $a.href = src
-  $a.className = 'saladict-Speaker'
-  return $a
-}
-
-/**
  * Returns an anchor element string
  */
 export const getStaticSpeakerString = (src?: string | null) =>

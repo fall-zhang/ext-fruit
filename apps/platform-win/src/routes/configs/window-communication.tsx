@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 import { Button, Input, Card, Space, Tag, message } from 'antd'
@@ -18,7 +19,7 @@ function RouteComponent () {
  * 窗口间通信示例组件
  * 演示如何在不同窗口之间发送消息
  */
-export default function WindowCommunicationDemo () {
+function WindowCommunicationDemo () {
   const [messageText, setMessageText] = useState('')
   const [targetWindow, setTargetWindow] = useState<'config-view' | 'search-view'>('search-view')
   const [customEvent, setCustomEvent] = useState('custom-message')
