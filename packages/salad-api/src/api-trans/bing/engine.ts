@@ -1,15 +1,11 @@
-import {
-  handleNoResult,
-  getText,
-  getInnerHTML
-} from '@/core/api-server/utils'
 import type { BingResult, BingResultLex } from './type'
 import type { AtomSearchResult } from '../../types/res-type'
+import { handleNoResult } from '../../utils/error-response'
+import { getInnerHTML, getText } from '../../utils/dom-utils'
 
 const HOST = 'https://cn.bing.com'
 
-// const DICT_LINK =
-//   'https://cn.bing.com/dict/clientsearch?mkt=zh-CN&setLang=zh&form=BDVEHC&ClientVer=BDDTV3.5.1.4320&q='
+// const DICT_LINK = 'https://cn.bing.com/dict/clientsearch?mkt=zh-CN&setLang=zh&form=BDVEHC&ClientVer=BDDTV3.5.1.4320&q='
 const SENTENCE_COUNT = 5
 
 
@@ -94,13 +90,18 @@ function handleLexResult (
   // if (options.tense) {
   const $infs = Array.from(doc.querySelectorAll('.client_word_change_word'))
   if ($infs.length > 0) {
-    searchResult.result.infs = $infs.map(el => (el.textContent || '').trim())
+    searchResult.result.infs = $infs.map(el => {
+      return (el.textContent || '').trim()
+    })
   }
   // }
 
   // if (options.sentence > 0) {
   const $sens = doc.querySelectorAll('.client_sentence_list')
   const sentences: typeof searchResult.result.sentences = []
+
+  const domParser = new DOMParser()
+
   for (
     let i = 0;
     i < $sens.length && sentences.length < SENTENCE_COUNT;
@@ -128,8 +129,11 @@ function handleLexResult (
         $word
       )}</span>`
     })
+    const enText = getInnerHTML(HOST, el, '.client_sen_en')
+    const doc = domParser.parseFromString(enText, 'text/html')
+
     sentences.push({
-      en: getInnerHTML(HOST, el, '.client_sen_en'),
+      en: doc.body.textContent,
       chs: getInnerHTML(HOST, el, {
         selector: '.client_sen_cn',
       }),

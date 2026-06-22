@@ -7,9 +7,9 @@ import type { AuthBody } from './config'
 export const getTranslator = memoizeOne(() =>
   new Caiyun({ })
 )
-export const getBaiduTranslator = memoizeOne(() =>
-  new Baidu({ })
-)
+// export const getBaiduTranslator = memoizeOne(() =>
+//   new Baidu({ })
+// )
 
 export const search = async (rawText: string, opt: {
   from?: Language
@@ -22,7 +22,7 @@ export const search = async (rawText: string, opt: {
   const from = opt.from
   const to = opt.to
 
-  const baiduTranslator = getBaiduTranslator()
+  // const baiduTranslator = getBaiduTranslator()
 
   // const caiYunToken = opt.dictAuth?.caiyun.token
   const caiYunToken = ''
@@ -30,14 +30,14 @@ export const search = async (rawText: string, opt: {
 
   try {
     const result = await translator.translate(rawText, from, to, caiYunConfig)
-    result.origin.tts = await baiduTranslator.textToSpeech(
-      result.origin.paragraphs.join('\n'),
-      result.from
-    )
-    result.trans.tts = await baiduTranslator.textToSpeech(
-      result.trans.paragraphs.join('\n'),
-      result.to
-    )
+    // result.origin.tts = await baiduTranslator.textToSpeech(
+    //   result.origin.paragraphs.join('\n'),
+    //   result.from
+    // )
+    // result.trans.tts = await baiduTranslator.textToSpeech(
+    //   result.trans.paragraphs.join('\n'),
+    //   result.to
+    // )
     return {
       result: {
         id: 'caiyun',

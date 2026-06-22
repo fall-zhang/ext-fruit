@@ -15,9 +15,8 @@ export const getFetchRequest: AtomFetchRequest = (text) => {
 
 export const handleResponse: AtomResponseHandle = async (res, { text, from, to }) => {
   const dom = await parseDirtyDom(res)
-  // Derive localLang from the 'to' language: zh-TW for Traditional Chinese, otherwise zh-CN
-  // const localLang = to === 'zh-TW' ? to : 'zh-CN'
   const domRes = await handleDOM(dom)
+  console.log('⚡️ line:18 ~ domRes: ', domRes)
   const result: WordResponse = {
     engin: 'bing',
     type: 'word-trans',
@@ -47,9 +46,29 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to }
       }
     })
   }
-  if (domRes.result.cdef) {
-    result.infinitive = domRes.result.infs?.at(0)
+  if (domRes.result.infs) {
+    result.associateWord = domRes.result.infs.map(item => ({ text: item }))
   }
+  if (domRes.result.sentences) {
+    result.exampleParagraph = domRes.result.sentences.map(item => {
+      return {
+        text: item.en || '',
+        translate: item.chs || '',
+        pronounce: item.mp3,
+        source: 'bing',
+      }
+    })
+  }
+  if (domRes.result.phsym) {
+    result.pronounce = domRes.result.phsym.map(item => {
+      return {
+        text: item.lang || '',
+        lang: 'auto',
+        src: '',
+      }
+    })
+  }
+
   return result
 }
 

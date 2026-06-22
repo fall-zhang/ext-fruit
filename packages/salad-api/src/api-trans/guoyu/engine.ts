@@ -1,8 +1,6 @@
 
 import type { GuoYuResult } from './type'
-import { handleNetWorkError, handleNoResult } from '@/core/api-server/utils'
 import type { AtomSearchResult } from '../../types/res-type'
-import { chsToChz } from '../../utils/chs-to-chz'
 
 export function handleResponse (data: GuoYuResult): AtomSearchResult<GuoYuResult> {
   for (const h of data.h!) {

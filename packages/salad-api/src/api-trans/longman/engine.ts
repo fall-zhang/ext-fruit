@@ -4,9 +4,9 @@ import type { LongmanResult, LongmanResultLex, LongmanResultRelated, LongmanResu
 import {
   getText,
   getInnerHTML,
-  getFullLink
+  getFullLink,
+  getStaticSpeaker
 } from '../../utils/dom-utils'
-import { getStaticSpeaker } from '@/components/Speaker'
 import { handleNoResult } from '../../utils/error-response'
 
 const HOST = 'https://www.ldoceonline.com'

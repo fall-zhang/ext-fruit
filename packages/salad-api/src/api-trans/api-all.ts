@@ -1,14 +1,14 @@
-import * as baiduAtom from './baidu/api-atom'
+// import * as baiduAtom from './baidu/api-atom'
 import * as ahdictAtom from './ahdict/api-atom'
 import * as bingAtom from './bing/api-atom'
-import * as caiyunAtom from './caiyun/api-atom'
+// import * as caiyunAtom from './caiyun/api-atom'
 import * as cambridgeAtom from './cambridge/api-atom'
 import * as cobuildAtom from './cobuild/api-atom'
 import * as etymonlineAtom from './etymonline/api-atom'
 import * as eudicAtom from './eudic/api-atom'
-import * as googleAtom from './google/api-atom'
+// import * as googleAtom from './google/api-atom'
 import * as guoyuAtom from './guoyu/api-atom'
-import * as hjdictAtom from './hjdict/api-atom'
+// import * as hjdictAtom from './hjdict/api-atom'
 import * as lianganAtom from './liangan/api-atom'
 import * as longmanAtom from './longman/api-atom'
 import * as merriamwebsterAtom from './merriamwebster/api-atom'
@@ -24,13 +24,13 @@ import * as weblioejjeAtom from './weblioejje/api-atom'
 import * as websterlearnerAtom from './websterlearner/api-atom'
 import * as wikipediaAtom from './wikipedia/api-atom'
 import * as youdaoAtom from './youdao/api-atom'
-import * as youdaotransAtom from './youdaotrans/api-atom'
+// import * as youdaotransAtom from './youdaotrans/api-atom'
 import * as zdicAtom from './zdic/api-atom'
 
-export const baidu = {
-  getRequest: baiduAtom.getFetchRequest,
-  handleResponse: baiduAtom.handleResponse,
-}
+// export const baidu = {
+//   getRequest: baiduAtom.getFetchRequest,
+//   handleResponse: baiduAtom.handleResponse,
+// }
 export const ahdict = {
   getRequest: ahdictAtom.getFetchRequest,
   handleResponse: ahdictAtom.handleResponse,
@@ -39,10 +39,10 @@ export const bing = {
   getRequest: bingAtom.getFetchRequest,
   handleResponse: bingAtom.handleResponse,
 }
-export const caiyun = {
-  getRequest: caiyunAtom.getFetchRequest,
-  handleResponse: caiyunAtom.handleResponse,
-}
+// export const caiyun = {
+//   getRequest: caiyunAtom.getFetchRequest,
+//   handleResponse: caiyunAtom.handleResponse,
+// }
 export const cambridge = {
   getRequest: cambridgeAtom.getFetchRequest,
   handleResponse: cambridgeAtom.handleResponse,
@@ -59,18 +59,18 @@ export const eudic = {
   getRequest: eudicAtom.getFetchRequest,
   handleResponse: eudicAtom.handleResponse,
 }
-export const google = {
-  getRequest: googleAtom.getFetchRequest,
-  handleResponse: googleAtom.handleResponse,
-}
+// export const google = {
+//   getRequest: googleAtom.getFetchRequest,
+//   handleResponse: googleAtom.handleResponse,
+// }
 export const guoyu = {
   getRequest: guoyuAtom.getFetchRequest,
   handleResponse: guoyuAtom.handleResponse,
 }
-export const hjdict = {
-  getRequest: hjdictAtom.getFetchRequest,
-  handleResponse: hjdictAtom.handleResponse,
-}
+// export const hjdict = {
+//   getRequest: hjdictAtom.getFetchRequest,
+//   handleResponse: hjdictAtom.handleResponse,
+// }
 export const liangan = {
   getRequest: lianganAtom.getFetchRequest,
   handleResponse: lianganAtom.handleResponse,
@@ -131,10 +131,10 @@ export const youdao = {
   getRequest: youdaoAtom.getFetchRequest,
   handleResponse: youdaoAtom.handleResponse,
 }
-export const youdaotrans = {
-  getRequest: youdaotransAtom.getFetchRequest,
-  handleResponse: youdaotransAtom.handleResponse,
-}
+// export const youdaotrans = {
+//   getRequest: youdaotransAtom.getFetchRequest,
+//   handleResponse: youdaotransAtom.handleResponse,
+// }
 export const zdic = {
   getRequest: zdicAtom.getFetchRequest,
   handleResponse: zdicAtom.handleResponse,

@@ -17,7 +17,7 @@ export interface BingResultLex {
     /** definition */
     def: string
   }>
-  /** infinitive */
+  /** word change */
   infs?: string[]
   sentences?: Array<{
     en?: string

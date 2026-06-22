@@ -1,15 +1,15 @@
-import baidu from './baidu/config'
+// import baidu from './baidu/config'
 import bing from './bing/config'
 import ahdict from './ahdict/config'
 import oaldict from './oaldict/config'
-import caiyun from './caiyun/config'
+// import caiyun from './caiyun/config'
 import cambridge from './cambridge/config'
 import cobuild from './cobuild/config'
 import etymonline from './etymonline/config'
 import eudic from './eudic/config'
-import google from './google/config'
+// import google from './google/config'
 import guoyu from './guoyu/config'
-import hjdict from './hjdict/config'
+// import hjdict from './hjdict/config'
 import liangan from './liangan/config'
 import longman from './longman/config'
 import mojidict from './mojidict/config'
@@ -25,7 +25,7 @@ import merriamwebster from './merriamwebster/config'
 import websterlearner from './websterlearner/config'
 import wikipedia from './wikipedia/config'
 import youdao from './youdao/config'
-import youdaotrans from './youdaotrans/config'
+// import youdaotrans from './youdaotrans/config'
 import zdic from './zdic/config'
 import shanbay from './shanbay/config'
 
@@ -47,18 +47,18 @@ export const defaultAllDicts = {
   // lexico: lexico(),
   // macmillan: macmillan(),
   // shanbay: shanbay(),
-  baidu: baidu(),
+  // baidu: baidu(),
   bing: bing(),
   ahdict: ahdict(),
   oaldict: oaldict(),
-  caiyun: caiyun(),
+  // caiyun: caiyun(),
   cambridge: cambridge(),
   cobuild: cobuild(),
   etymonline: etymonline(),
   eudic: eudic(),
-  google: google(),
+  // google: google(),
   guoyu: guoyu(),
-  hjdict: hjdict(),
+  // hjdict: hjdict(),
   liangan: liangan(),
   longman: longman(),
   mojidict: mojidict(),
@@ -74,7 +74,7 @@ export const defaultAllDicts = {
   websterlearner: websterlearner(),
   wikipedia: wikipedia(),
   youdao: youdao(),
-  youdaotrans: youdaotrans(),
+  // youdaotrans: youdaotrans(),
   zdic: zdic(),
 }
 

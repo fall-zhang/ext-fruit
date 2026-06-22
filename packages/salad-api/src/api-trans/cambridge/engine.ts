@@ -1,6 +1,5 @@
-import { getText, getFullLink, removeChild, getInnerHTML, externalLink } from '@/core/api-server/utils'
-import { getStaticSpeaker } from '@/components/Speaker'
 import type { WordResponse } from '../../types/res-type'
+import { getFullLink, getStaticSpeaker, getInnerHTML, externalLink, removeChild, getText } from '../../utils/dom-utils'
 import type { CambridgeResult } from './type'
 
 const HOST = 'https://dictionary.cambridge.org'

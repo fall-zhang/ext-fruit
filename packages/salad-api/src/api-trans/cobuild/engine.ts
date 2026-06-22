@@ -1,7 +1,7 @@
-import { externalLink, getInnerHTML, handleNoResult } from '@/core/api-server/utils'
-import { getStaticSpeaker } from '@/components/Speaker'
 import type { AtomSearchResult } from '../../types/res-type'
 import type { COBUILDResult, COBUILDColResult } from './type'
+import { externalLink, getInnerHTML, getStaticSpeaker } from '../../utils/dom-utils'
+import { handleNoResult } from '../../utils/error-response'
 
 type CobuildSearchResult = AtomSearchResult<COBUILDResult>
 

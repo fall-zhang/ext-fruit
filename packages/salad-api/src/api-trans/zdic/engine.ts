@@ -1,8 +1,6 @@
-
-import { getStaticSpeaker } from '@/components/Speaker'
-
-import { handleNetWorkError, getInnerHTML, handleNoResult } from '@/core/api-server/utils'
-import type { HTMLString, AtomSearchResult } from '../../types/res-type'
+import type { AtomSearchResult } from '../../types/res-type'
+import { getStaticSpeaker, getInnerHTML } from '../../utils/dom-utils'
+import { handleNoResult } from '../../utils/error-response'
 import type { ZdicResult } from './type'
 
 const HOST = 'https://www.zdic.net'
