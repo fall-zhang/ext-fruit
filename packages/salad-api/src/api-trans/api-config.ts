@@ -1,4 +1,4 @@
-// import baidu from './baidu/config'
+import baidu from './baidu/config'
 import bing from './bing/config'
 import ahdict from './ahdict/config'
 import oaldict from './oaldict/config'
@@ -46,8 +46,8 @@ export const defaultAllDicts = {
   // jukuu: jukuu(),
   // lexico: lexico(),
   // macmillan: macmillan(),
-  shanbay: shanbay(),
-  // baidu: baidu(),
+  // shanbay: shanbay(),
+  baidu: baidu(),
   bing: bing(),
   ahdict: ahdict(),
   oaldict: oaldict(),

@@ -1,9 +1,9 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
 import type { GuoYuResult } from './type'
-import { handleNetWorkError } from '@/core/api-server/utils'
-import chsToChz from '@/core/api-server/utils/chs-to-chz'
 import { handleResponse as handleGuoYuResponse } from './engine'
 import type { WordResponse } from '../../types/res-type'
+import { chsToChz } from '../../utils/chs-to-chz'
+import { handleNetWorkError } from '../../utils/error-response'
 
 export const getSrcPage: AtomGetSrcFunction = text => {
   return `https://www.moedict.tw/${chsToChz(text)}`

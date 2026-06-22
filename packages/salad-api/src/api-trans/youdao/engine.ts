@@ -1,13 +1,10 @@
-import { getChsToChz } from '../../utils/chs-to-chz'
 import {
   getText,
   getInnerHTML
 
 } from '../../utils/dom-utils'
 import {
-  handleNoResult,
-  handleNetWorkError
-
+  handleNoResult
 } from '../../utils/error-response'
 import type { YoudaoResult } from './type'
 

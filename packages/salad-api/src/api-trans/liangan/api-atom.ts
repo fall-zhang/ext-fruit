@@ -1,8 +1,8 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
 import type { LiangAnResult } from './type'
 import { handleNetWorkError } from '@/core/api-server/utils'
-import chsToChz from '@/core/api-server/utils/chs-to-chz'
 import { handleResponse as handleLiangAnResponse } from './engine'
+import { chsToChz } from '../../utils/chs-to-chz'
 
 export const getSrcPage: AtomGetSrcFunction = text => {
   return `https://www.moedict.tw/~${chsToChz(text)}`

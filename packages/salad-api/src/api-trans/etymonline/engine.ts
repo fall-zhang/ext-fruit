@@ -3,7 +3,6 @@ import {
   getInnerHTML,
   getFullLink
 } from '../../utils/dom-utils'
-import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
 import type { EtymonlineResult, EtymonlineResultItem } from './type'
 import { handleNoResult } from '../../utils/error-response'
 

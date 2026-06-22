@@ -26,7 +26,7 @@ export const handleResponse: AtomResponseHandle = async (res) => {
   removeChildren(doc, '.visible-xs')
   const domRes = handleDOM(doc)
   const result: WordResponse = {
-    engin: 'baidu',
+    engin: 'bing',
     type: 'word-trans',
     from: 'hr',
     to: 'hr',

@@ -19,7 +19,7 @@ export const handleResponse: AtomResponseHandle = async (res, { from, to, text }
   const domRes = handleDOM(dom, { resultCount })
   const result: WordResponse = {
     // engin: 'jikipedia',
-    engin: 'baidu',
+    engin: 'bing',
     type: 'word-trans',
     from,
     to,

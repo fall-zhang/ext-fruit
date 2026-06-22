@@ -33,7 +33,7 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to }
   const domRes = handleDOM(dom, 'zh-eng')
   const result: ParagraphResponse = {
     // engin: 'jukuu',
-    engin: 'baidu',
+    engin: 'bing',
     type: 'paragraph-trans',
     from,
     to,

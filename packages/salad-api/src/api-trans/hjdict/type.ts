@@ -1,5 +1,4 @@
-import type { DictSearchResult } from '@/core/api-server/api-common/search-type'
-import type { HTMLString } from '@/core/api-server/types'
+import type { HTMLString } from '../../types'
 
 export interface HjdictResultLex {
   type: 'lex'

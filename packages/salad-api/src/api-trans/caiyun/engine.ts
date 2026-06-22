@@ -1,7 +1,6 @@
 import memoizeOne from 'memoize-one'
 
 import { Baidu, Caiyun } from '@P/open-trans'
-import { detectLangInfo } from '@/core/api-server/api-common/detect-lang'
 import type { Language } from '@P/open-trans/languages'
 import type { AuthBody } from './config'
 
@@ -20,13 +19,8 @@ export const search = async (rawText: string, opt: {
   const translator = getTranslator()
   // const langcodes = translator.getSupportLanguages()
 
-  const { from: sl, to: tl, text } = detectLangInfo(
-    rawText,
-    {
-      from: opt.from,
-      to: opt.to,
-    }
-  )
+  const from = opt.from
+  const to = opt.to
 
   const baiduTranslator = getBaiduTranslator()
 
@@ -35,7 +29,7 @@ export const search = async (rawText: string, opt: {
   const caiYunConfig = caiYunToken ? { token: caiYunToken } : undefined
 
   try {
-    const result = await translator.translate(text, sl, tl, caiYunConfig)
+    const result = await translator.translate(rawText, from, to, caiYunConfig)
     result.origin.tts = await baiduTranslator.textToSpeech(
       result.origin.paragraphs.join('\n'),
       result.from
@@ -62,8 +56,8 @@ export const search = async (rawText: string, opt: {
     return {
       result: {
         id: 'caiyun',
-        sl,
-        tl,
+        sl: from,
+        tl: to,
         slInitial: 'hide',
         searchText: { paragraphs: [''] },
         trans: { paragraphs: [''] },

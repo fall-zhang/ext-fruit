@@ -1,12 +1,10 @@
 
-import type { HTMLString } from '@/core/api-server/types'
-import { getInnerHTML } from '@/core/api-server/utils'
-import { getStaticSpeaker } from '@/components/Speaker'
-import type { HjdictPayload, HjdictResult, HjdictResultRelated } from './type'
-import { isContainFrench, isContainDeutsch, isContainSpanish, isContainEnglish, isContainJapanese, isContainKorean, isContainChinese } from '@/core/api-server/utils/lang-check'
-import type { AllDictsConf } from '@/core/api-server/config'
+import type { HjdictResult } from './type'
 import { handleNoResult } from '../../utils/error-response'
 import type { AtomSearchResult } from '../../types/res-type'
+import { isContainFrench, isContainDeutsch, isContainSpanish, isContainJapanese, isContainKorean } from '../../utils/detect-lang/lang-check'
+import { getInnerHTML, getStaticSpeaker } from '../../utils/dom-utils'
+import type { HTMLString } from '../../types'
 
 const HOST = 'https://www.hjdict.com'
 

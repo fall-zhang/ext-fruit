@@ -17,7 +17,7 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to }
   const dom = new DOMParser().parseFromString(domText, 'text/html')
   const domRes = await handleDOM(dom)
   const result: WordResponse = {
-    engin: 'baidu',
+    engin: 'bing',
     type: 'word-trans',
     from: 'af',
     to: 'af',

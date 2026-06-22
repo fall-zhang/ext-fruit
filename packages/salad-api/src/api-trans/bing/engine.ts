@@ -1,8 +1,7 @@
 import {
   handleNoResult,
   getText,
-  getInnerHTML,
-  getChsToChz
+  getInnerHTML
 } from '@/core/api-server/utils'
 import type { BingResult, BingResultLex } from './type'
 import type { AtomSearchResult } from '../../types/res-type'

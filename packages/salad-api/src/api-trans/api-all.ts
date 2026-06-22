@@ -1,3 +1,4 @@
+import * as baiduAtom from './baidu/api-atom'
 import * as ahdictAtom from './ahdict/api-atom'
 import * as bingAtom from './bing/api-atom'
 import * as caiyunAtom from './caiyun/api-atom'
@@ -26,6 +27,10 @@ import * as youdaoAtom from './youdao/api-atom'
 import * as youdaotransAtom from './youdaotrans/api-atom'
 import * as zdicAtom from './zdic/api-atom'
 
+export const baidu = {
+  getRequest: baiduAtom.getFetchRequest,
+  handleResponse: baiduAtom.handleResponse,
+}
 export const ahdict = {
   getRequest: ahdictAtom.getFetchRequest,
   handleResponse: ahdictAtom.handleResponse,

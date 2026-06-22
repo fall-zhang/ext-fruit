@@ -38,6 +38,5 @@ export function handleGuoYuResponse (data: GuoYuResult): GuoYuResult {
 /**
  * @deprecated Use api-atom.ts instead. Kept for backward compatibility.
  */
-export { moedictSearch } from '../guoyu/engine'
 export type { GuoYuResult } from '../guoyu/type'
 export type { LiangAnResult } from './type'
