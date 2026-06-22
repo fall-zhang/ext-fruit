@@ -51,6 +51,9 @@ pub fn create_tray_menu(app: &AppHandle) -> Result<(), tauri::Error> {
                 println!("quit menu item was clicked");
                 app.exit(0);
             }
+            "show_search" => {
+                show_search_panel(app);
+            }
             "show_config" => {
                 show_config_page(app);
             }

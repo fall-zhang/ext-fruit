@@ -9,6 +9,7 @@
   "permissions": [
     "core:default",
     "core:window:allow-show",
+    "core:window:allow-set-cursor-visible",
     "fs:allow-read-file",
     "fs:allow-write-file",
     "fs:allow-read-dir",
@@ -53,6 +54,7 @@
     "store:allow-set",
     "store:allow-save",
     "store:allow-keys",
+    "sql:default",
     "store:allow-load"
   ]
 }
