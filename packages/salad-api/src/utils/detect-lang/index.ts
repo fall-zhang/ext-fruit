@@ -1,7 +1,9 @@
 import { isContainChinese, isContainDeutsch, isContainEnglish, isContainFrench, isContainJapanese, isContainKorean, isContainSpanish } from './lang-check'
-import type { Language } from '../../const/languages'
+import type { SupportLanguage } from '../../const/languages'
 
-export const baseLangDetect = (text: string): Language => {
+export * from './lang-check'
+
+export const baseLangDetect = (text: string): SupportLanguage => {
   if (isContainFrench(text)) {
     return 'fr'
   }
@@ -30,6 +32,10 @@ export const baseLangDetect = (text: string): Language => {
     return 'zh'
   }
 
+  return 'auto'
+}
+
+export const paragraphLangDetect = (): SupportLanguage => {
   return 'auto'
 }
 

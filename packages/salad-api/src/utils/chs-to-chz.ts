@@ -5,7 +5,6 @@
  * 将简体中文，翻译成繁体中文
  * @param langCode
  */
-// export function getChsToChz (langCode: undefined): (text: string) => string
 export function getChsToChz (text: string, langCode?: string): string {
   if (!langCode) {
     return chsToChz(text)

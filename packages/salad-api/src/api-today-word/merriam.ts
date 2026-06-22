@@ -1,6 +1,6 @@
 import { getText } from '../utils/dom-utils'
 import { handleNoResult } from '../utils/error-response'
-import { fetchDirtyDOM } from '@/core/api-server/utils/fetch-dom'
+import { fetchDirtyDOM } from './utils'
 
 export async function getWebsterWordOfTheDay (): Promise<string> {
   const doc = await fetchDirtyDOM('https://www.merriam-webster.com/word-of-the-day')

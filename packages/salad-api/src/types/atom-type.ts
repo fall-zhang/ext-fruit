@@ -12,7 +12,7 @@ export type AtomFetchRequest<T = unknown> = {
       to: Language
       option?: T
     }
-  ): Request | Promise<Request>
+  ): Request
 }
 
 

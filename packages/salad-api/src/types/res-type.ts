@@ -1,4 +1,4 @@
-import type { DictID } from '../api-trans'
+import type { DictID } from '../api-trans/api-config'
 import type { Language } from '../const/languages'
 export type HTMLString = string
 
