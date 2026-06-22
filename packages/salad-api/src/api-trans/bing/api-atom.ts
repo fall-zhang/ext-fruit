@@ -16,7 +16,6 @@ export const getFetchRequest: AtomFetchRequest = (text) => {
 export const handleResponse: AtomResponseHandle = async (res, { text, from, to }) => {
   const dom = await parseDirtyDom(res)
   const domRes = await handleDOM(dom)
-  console.log('⚡️ line:18 ~ domRes: ', domRes)
   const result: WordResponse = {
     engin: 'bing',
     type: 'word-trans',
@@ -39,9 +38,9 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to }
     })
   }
   if (domRes.result.cdef) {
-    result.commonDefinitions = domRes.result.cdef.map(item => {
+    result.translate = domRes.result.cdef.map(item => {
       return {
-        text: item.pos,
+        type: item.pos,
         translate: item.def,
       }
     })
@@ -68,7 +67,6 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to }
       }
     })
   }
-
   return result
 }
 

@@ -71,6 +71,7 @@ function handleLexResult (
     )
   }
   // }
+  const domParser = new DOMParser()
 
   // definitions
   // if (options.cdef) {
@@ -78,10 +79,14 @@ function handleLexResult (
   if ($container) {
     const $defs = Array.from($container.querySelectorAll('.client_def_bar'))
     if ($defs.length > 0) {
-      searchResult.result.cdef = $defs.map(el => ({
-        pos: getText(el, '.client_def_title_bar'),
-        def: getText(el, '.client_def_list'),
-      }))
+      searchResult.result.cdef = $defs.map(el => {
+        const defText = getText(el, '.client_def_list')
+
+        return ({
+          pos: getText(el, '.client_def_title_bar'),
+          def: domParser.parseFromString(defText, 'text/html').body.textContent,
+        })
+      })
     }
   }
   // }
@@ -100,7 +105,6 @@ function handleLexResult (
   const $sens = doc.querySelectorAll('.client_sentence_list')
   const sentences: typeof searchResult.result.sentences = []
 
-  const domParser = new DOMParser()
 
   for (
     let i = 0;

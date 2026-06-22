@@ -16,7 +16,7 @@ import * as mojidictAtom from './mojidict/api-atom'
 import * as naverAtom from './naver/api-atom'
 import * as oaldictAtom from './oaldict/api-atom'
 import * as renrenAtom from './renren/api-atom'
-import * as shanbayAtom from './shanbay/api-atom'
+// import * as shanbayAtom from './shanbay/api-atom'
 import * as urbanAtom from './urban/api-atom'
 import * as vocabularyAtom from './vocabulary/api-atom'
 import * as weblioAtom from './weblio/api-atom'
@@ -99,10 +99,10 @@ export const renren = {
   getRequest: renrenAtom.getFetchRequest,
   handleResponse: renrenAtom.handleResponse,
 }
-export const shanbay = {
-  getRequest: shanbayAtom.getFetchRequest,
-  handleResponse: shanbayAtom.handleResponse,
-}
+// export const shanbay = {
+//   getRequest: shanbayAtom.getFetchRequest,
+//   handleResponse: shanbayAtom.handleResponse,
+// }
 export const urban = {
   getRequest: urbanAtom.getFetchRequest,
   handleResponse: urbanAtom.handleResponse,

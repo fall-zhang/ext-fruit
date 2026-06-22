@@ -15,6 +15,7 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
 export const handleResponse: AtomResponseHandle = async (res, { text, from, to }) => {
   const dom = await parseDirtyDom(res)
   const domRes = await handleDOM(dom)
+  console.log('⚡️ line:17 ~ domRes: ', domRes)
   const result: WordResponse = {
     engin: 'cobuild',
     type: 'word-trans',

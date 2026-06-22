@@ -27,7 +27,7 @@ import wikipedia from './wikipedia/config'
 import youdao from './youdao/config'
 // import youdaotrans from './youdaotrans/config'
 import zdic from './zdic/config'
-import shanbay from './shanbay/config'
+// import shanbay from './shanbay/config'
 
 // @deprecated 已经弃用的翻译 API
 // import googledict from './googledict/config'

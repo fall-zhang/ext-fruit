@@ -28,12 +28,14 @@ export type WordResponse = {
   text: string
   /** （动词）原形 */
   infinitive?: string
+  /** 单词，来源，出自 */
+  origin?: string
   /** 单词出现频率，重要程度 */
   wordStars?: number // 1 | 2 | 3 | 4 | 5
   /** 单词翻译结果 */
   translate: Array<{
     translate: string
-    // type?: 'verb'
+    type?: string
   }>
   /** 发音 */
   pronounce: Array<{

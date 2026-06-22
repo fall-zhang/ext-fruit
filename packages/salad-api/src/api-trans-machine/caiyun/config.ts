@@ -1,15 +1,6 @@
 
 import type { ApiInfo } from '../../types/api-info'
 
-
-export interface AuthBody {
-  token: string
-}
-
-export const auth: AuthBody = {
-  token: '',
-}
-
 export const url = 'https://fanyi.caiyunapp.com/#/api'
 
 export default (): ApiInfo => ({

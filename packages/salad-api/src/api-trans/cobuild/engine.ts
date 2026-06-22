@@ -1,4 +1,4 @@
-import type { AtomSearchResult } from '../../types/res-type'
+import type { AtomSearchResult, WordResponse } from '../../types/res-type'
 import type { COBUILDResult, COBUILDColResult } from './type'
 import { externalLink, getInnerHTML, getStaticSpeaker } from '../../utils/dom-utils'
 import { handleNoResult } from '../../utils/error-response'
@@ -111,5 +111,12 @@ function getAudio ($section: HTMLElement): string | undefined {
     if (src) {
       return src
     }
+  }
+}
+
+export function handleDOMNext (doc: Document): Partial<WordResponse> {
+  return {
+    translate: [],
+    pronounce: [],
   }
 }
