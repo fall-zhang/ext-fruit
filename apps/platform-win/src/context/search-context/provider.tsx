@@ -104,10 +104,6 @@ export function SearchProvider ({ children, profile }: {
       const id: DictID = item.dictID
       const requestApi = api[id]
       const requestConf = activeProfile.allDicts[id]
-      if (id === 'google') {
-        activeProfile.dictAuth
-        return
-      }
       const toLang = transInfo.to.find(item => requestConf.to.includes(item))
       if (!toLang) {
         return
