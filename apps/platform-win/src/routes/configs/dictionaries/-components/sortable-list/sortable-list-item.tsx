@@ -1,5 +1,4 @@
-import type { DictID } from '@/core/api-server/config'
-import { Checkbox } from '@P/ui/components/checkbox'
+import type { DictID } from '@P/salad-api/src/api-trans'
 import {
   Field,
   FieldDescription,

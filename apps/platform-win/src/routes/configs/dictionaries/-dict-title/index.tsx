@@ -52,8 +52,6 @@ export const DictTitle: FC<DictTitleProps> = ({ dictID, dictLangs }) => {
   )
 }
 
-export const DictTitleMemo = React.memo(DictTitle)
-
 function openDictSrcPage (dictID: DictID, dictLangs: string) {
   // const text = +dictLangs[0]
   //   ? 'salad'

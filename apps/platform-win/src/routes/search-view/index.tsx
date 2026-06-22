@@ -4,10 +4,11 @@ import { getCurrentWindow, Window } from '@tauri-apps/api/window'
 import { useEffect, useState } from 'react'
 import { PinBtn } from './-components/pin-button'
 import { CloseBtn } from './-components/close-button'
-import { FavBtn } from './-components/fav-button'
 import { SaladPanel } from './-panel-view/salad-panel'
 import { listenFromWindow } from '@/core/bridge'
 import { message } from 'antd'
+import { SearchProvider } from '@/context/search-context/provider'
+import { useConfContext } from '@/context/conf-context/context'
 /**
  * 生词本
  */
@@ -19,6 +20,7 @@ const appWindow = new Window('search-view')
 function RouteComponent () {
   const [isAlwaysOnTop, setAlwaysOnTop] = useState(false)
   // const [isInNotebook, setIsInNotebook] = useState(false)
+  const configContext = useConfContext()
 
   // 窗口间通信示例：监听来自配置窗口的消息
   useEffect(() => {
@@ -81,7 +83,7 @@ function RouteComponent () {
   async function closeWindow () {
     const state = await getCurrentWindow().hide()
   }
-  return <>
+  return <SearchProvider profile={configContext.profile}>
     <div className='w-full relative h-screen'>
       <SaladPanel
         customButton={
@@ -99,5 +101,5 @@ function RouteComponent () {
         }
       />
     </div>
-  </>
+  </SearchProvider>
 }

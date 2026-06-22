@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createFileRoute } from '@tanstack/react-router'
 import { useRef, type FC } from 'react'
 import { Input } from '@salad/ui/components/input'
@@ -8,7 +9,7 @@ import { getProfilePath } from '../-utils/path-joiner'
 import { useConfContext } from '@/context/conf-context/context'
 import { isKey } from '@/utils/type-utils'
 
-export const RouteComponent: FC = () => {
+const RouteComponent: FC = () => {
   const { t } = useTranslation(['options', 'dicts'])
   const dictAuths = useConfContext().profile.dictAuth
 

@@ -1,4 +1,4 @@
-import { SearchProvider, useSearchContext } from '@/context/search-context'
+import { useSearchContext } from '@/context/search-context/context'
 import { TooltipProvider } from '@P/ui/components/tooltip'
 import type { FC, ReactNode } from 'react'
 import './_style.scss'
@@ -21,7 +21,6 @@ type SaladPanelProps = {
 }
 
 export const SaladPanel: FC<SaladPanelProps> = (props) => {
-  const configContext = useConfContext()
   const config = useConfContext().config
   const withAnimation = config.animation
   const enableSuggest = config.searchSuggests
@@ -29,10 +28,12 @@ export const SaladPanel: FC<SaladPanelProps> = (props) => {
   const [notebookShow, setNotebookShow] = useState(false)
   const [notebookWords, setNotebookWords] = useState<Word[]>([])
 
-  const searchStart = useSearchContext((store) => store.searchStart)
-  const renderedDicts = useSearchContext((store) => store.renderedDicts)
-  const searchDicts = useSearchContext((store) => store.selectedDicts)
-  const store = useSearchContext((store) => store)
+  const searchContext = useSearchContext()
+  const searchStart = searchContext.searchStart
+  const renderedDicts = searchContext.renderedDicts
+  const searchDicts = searchContext.selectedDicts
+  const searchHistory = searchContext.searchHistory
+  const removeHistoryItem = searchContext.removeHistoryItem
 
   // 加载生词本数据
   useEffect(() => {
@@ -80,62 +81,60 @@ export const SaladPanel: FC<SaladPanelProps> = (props) => {
 
   }
   return (
-    <SearchProvider profile={configContext.profile}>
-      <TooltipProvider>
-        <div
-          className={clsx('dictPanel-FloatBox-Container bg-neutral-100 dark:bg-neutral-900 ', {
-            isAnimate: withAnimation,
-          })}
-        >
-          <div ref={rootElRef} className="saladict-theme overflow-hidden h-screen">
-            <MenuBar
-              onShowHistory={() => setHistoryShow(true)}
-              onShowNotebook={() => setNotebookShow(true)}
-              customButton={props.customButton}
-            />
-            <div className={'dict-panel-root overflow-auto h-full flex flex-col'} >
-              <div className="search-zone ">
-                <SearchArea
-                  enableSuggest={enableSuggest}
-                  onSend={searchText} />
-              </div>
-              {
-                renderedDicts.length === 0
-                  ? <div className='flex grow flex-col justify-center items-center gap-4'>
-                    <div className="flex">
-                      {
-                        searchDicts.map(item => {
-                          return <div className='size-6 p-1 border-neutral-400 dark:border-neutral-700' key={item}>
-                            <img src={dictImage[item]} alt="" height='20' width='20' />
-                            {/* {dictname} */}
-                          </div>
-                        })
-                      }
-                    </div>
-                    <span className='text-neutral-500 text-sm'>将自动检测输入语言，并在以上词典中进行查找</span>
-                  </div>
-                  : <DictList dicts={renderedDicts} />
-              }
-              {/* {store.waveformBox && <WaveformBox />} */}
+    <TooltipProvider>
+      <div
+        className={clsx('dictPanel-FloatBox-Container bg-neutral-100 dark:bg-neutral-900 ', {
+          isAnimate: withAnimation,
+        })}
+      >
+        <div ref={rootElRef} className="saladict-theme overflow-hidden h-screen">
+          <MenuBar
+            onShowHistory={() => setHistoryShow(true)}
+            onShowNotebook={() => setNotebookShow(true)}
+            customButton={props.customButton}
+          />
+          <div className={'dict-panel-root overflow-auto h-full flex flex-col'} >
+            <div className="search-zone ">
+              <SearchArea
+                enableSuggest={enableSuggest}
+                onSend={searchText} />
             </div>
+            {
+              renderedDicts.length === 0
+                ? <div className='flex grow flex-col justify-center items-center gap-4'>
+                  <div className="flex">
+                    {
+                      searchDicts.map(item => {
+                        return <div className='size-6 p-1 border-neutral-400 dark:border-neutral-700' key={item}>
+                          <img src={dictImage[item]} alt="" height='20' width='20' />
+                          {/* {dictname} */}
+                        </div>
+                      })
+                    }
+                  </div>
+                  <span className='text-neutral-500 text-sm'>将自动检测输入语言，并在以上词典中进行查找</span>
+                </div>
+                : <DictList dicts={renderedDicts} />
+            }
+            {/* {store.waveformBox && <WaveformBox />} */}
           </div>
-          <HistoryPanel
-            open={historyShow}
-            history={store.searchHistory}
-            onRemoveHistoryItem={store.removeHistoryItem}
-            onClose={() => setHistoryShow(false)}
-            onSelect={handleSelectWord}
-            onClear={handleClearHistory} />
-          <NotebookPanel
-            open={notebookShow}
-            words={notebookWords}
-            onClose={() => setNotebookShow(false)}
-            onSelect={(item: Word) => {
-              setNotebookShow(false)
-            }}
-            onDelete={handleDeleteWord} />
         </div>
-      </TooltipProvider>
-    </SearchProvider>
+        <HistoryPanel
+          open={historyShow}
+          history={searchHistory}
+          onRemoveHistoryItem={removeHistoryItem}
+          onClose={() => setHistoryShow(false)}
+          onSelect={handleSelectWord}
+          onClear={handleClearHistory} />
+        <NotebookPanel
+          open={notebookShow}
+          words={notebookWords}
+          onClose={() => setNotebookShow(false)}
+          onSelect={(item: Word) => {
+            setNotebookShow(false)
+          }}
+          onDelete={handleDeleteWord} />
+      </div>
+    </TooltipProvider>
   )
 }

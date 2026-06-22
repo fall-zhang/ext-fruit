@@ -1,9 +1,10 @@
+/* eslint-disable react-refresh/only-export-components */
 import './root.scss'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { I18nextProvider } from 'react-i18next'
 import i18n from '@/locales/i18n'
-import { ConfProvider } from '@/context/conf-context'
+import { ConfProvider } from '@/context/conf-context/provider'
 import { useEffect, useState } from 'react'
 import type { AppConfig } from '@/config/app-config'
 import type { AppProfile } from '@/config/trans-profile'

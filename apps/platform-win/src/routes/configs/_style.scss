@@ -1,32 +1,3 @@
-/* ======================================= *\
- * Antd Patch
-\* ======================================= */
-
-.ant-form-item.form-item-inline {
-  display: inline-block;
-  margin: 0 10px 0 0;
-
-  &:last-of-type {
-    margin-right: 0;
-  }
-}
-
-.ant-form-item-label {
-  white-space: normal !important;
-
-  > label {
-    margin-top: 3px !important;
-    align-items: flex-start !important;
-    height: auto !important;
-
-    &.ant-form-item-required::before {
-      display: none !important;
-      line-height: unset !important;
-    }
-  }
-}
-
-
 .sortable-list-item {
   width: 100%;
   display: flex;

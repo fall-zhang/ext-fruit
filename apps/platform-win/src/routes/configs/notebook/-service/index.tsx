@@ -46,16 +46,16 @@ export const Notebook: FC = () => {
       valuePropName: 'checked',
       children: <Switch />,
     },
-    {
-      key: getConfigPath('ctxTrans'),
-      style: { marginBottom: 10 },
-      items: Object.keys(ctxTrans).map(id => ({
-        name: getConfigPath('ctxTrans', id as keyof DictAuths),
-        valuePropName: 'checked',
-        style: { marginBottom: 0 },
-        children: <Checkbox>{t(`dicts:${id}.name`)}</Checkbox>,
-      })),
-    },
+    // {
+    //   key: getConfigPath('ctxTrans'),
+    //   style: { marginBottom: 10 },
+    //   items: Object.keys(ctxTrans).map(id => ({
+    //     name: getConfigPath('ctxTrans', id),
+    //     valuePropName: 'checked',
+    //     style: { marginBottom: 0 },
+    //     children: <Checkbox>{t(`dicts:${id}.name`)}</Checkbox>,
+    //   })),
+    // },
   ]
 
   // syncServiceIds.forEach(id => {

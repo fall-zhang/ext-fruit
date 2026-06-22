@@ -8,7 +8,7 @@ import { getWordsByText, deleteWords, saveWord } from '@/core/index-db'
 import type { AppConfig } from '@/config/app-config'
 
 import type { CtxTranslateResults } from '@/utils/translateCtx'
-import { genCtxText, translateCtxs } from '@/utils/translateCtx'
+import { genCtxText } from '@/utils/translateCtx'
 
 import { WordCards } from './WordCards'
 import type {
@@ -65,11 +65,11 @@ export const Notes: FC<NotesProps> = props => {
       .catch(() => [])
   }
 
-  useEffect(() => {
-    if (props.wordEditor.translateCtx) {
-      translateCtxs(word.context || word.text, ctxTransConfig)
-    }
-  }, [ctxTransConfig, props.wordEditor.translateCtx, word])
+  // useEffect(() => {
+  //   if (props.wordEditor.translateCtx) {
+  //     translateCtxs(word.context || word.text, ctxTransConfig)
+  //   }
+  // }, [ctxTransConfig, props.wordEditor.translateCtx, word])
 
   useEffect(() => {
     getRelatedWords(word)
@@ -99,11 +99,11 @@ export const Notes: FC<NotesProps> = props => {
   }
 
   const panelBtns: WordEditorPanelBtns = [
-    {
-      type: 'normal',
-      title: t('content:transContext'),
-      onClick: () => translateCtxs(word.context || word.text, ctxTransConfig),
-    },
+    // {
+    //   type: 'normal',
+    //   title: t('content:transContext'),
+    //   onClick: () => translateCtxs(word.context || word.text, ctxTransConfig),
+    // },
     {
       type: 'normal',
       title: t('cancel'),

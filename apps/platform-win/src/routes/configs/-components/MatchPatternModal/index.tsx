@@ -77,8 +77,7 @@ export const MatchPatternModal: FC<MatchPatternModalProps> = ({
         ref={formRef}
         wrapperCol={{ span: 24 }}
         initialValues={{}}
-        onFinish={values => {
-        }}
+        onFinish={values => {}}
       >
         <Form.List name="patterns">
           {(fields, { add }) => (

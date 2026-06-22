@@ -3,7 +3,6 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { useState, useLayoutEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { DictTitleMemo } from './-dict-title'
 import { useUpdateSetting } from '../-utils/upload'
 import { getProfilePath } from '../-utils/path-joiner'
 import { reorder, SortableList } from '../-components/SortableList'
@@ -42,7 +41,8 @@ function RouteComponent () {
         title={''}
         list={selectedDicts.map(id => ({
           value: id,
-          title: <DictTitleMemo dictID={id} dictLangs={dicts.all[id].lang} />,
+          title: '',
+          // title: <DictTitleMemo dictID={id} dictLangs={dicts.allDicts[id].lang} />,
         }))}
         onAdd={async () => {
           setShowAddModal(true)

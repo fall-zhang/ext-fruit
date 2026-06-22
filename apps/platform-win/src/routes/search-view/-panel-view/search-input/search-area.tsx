@@ -15,6 +15,7 @@ export function SearchArea ({
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const [suggestState, setSuggestState] = useState<'not-search-show' | 'not-search-hidden' | 'searched-hidden'>('not-search-hidden')
   const [inputText, setInputText] = useState('')
+  console.log('⚡️ line:17 ~ inputText: ', inputText)
 
   useLayoutEffect(() => {
     const textarea = textareaRef.current
@@ -63,7 +64,7 @@ export function SearchArea ({
   }, [])
   // const clickOutside = useClickOutside()
   return (
-    <header className="bg-[#f7f7f7] dark:bg-[#191919] border-t border-[#d1d1d1] dark:border-[#222222] p-3 pb-safe relative" >
+    <section className="bg-[#f7f7f7] dark:bg-[#191919] border-t border-[#d1d1d1] dark:border-[#222222] p-3 pb-safe relative" >
       <div className="flex items-end gap-3 max-w-5xl mx-auto">
         <div className="flex-1 relative">
           <SuggestPanel
@@ -93,6 +94,6 @@ export function SearchArea ({
           </SuggestPanel>
         </div>
       </div>
-    </header>
+    </section>
   )
 }

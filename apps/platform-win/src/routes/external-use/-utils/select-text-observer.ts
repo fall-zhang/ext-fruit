@@ -15,11 +15,10 @@ import {
 
 import { isTypeField } from './selection/helper'
 import type { MouseEvent } from 'react'
-import { checkSupportedLangs } from '@/core/api-server/utils/lang-check'
-import { isInDictPanel } from './selection/utils'
-import type { SupportedLangs } from '@/core/api-server/types/dict-base'
 import { isFirefox } from '@/utils/browser'
 import { getSentenceFromSelection, getTextFromSelection } from '@/utils/get-selection-more'
+import type { SupportedLangs } from './type'
+import { checkSupportedLangs } from './check-support-lang'
 
 type SelectionConf = {
   // 启用 touch 事件的监听
@@ -87,7 +86,7 @@ function withTouchMode (config: SelectionConf) {
     map(([, isWithMouse]) => [window.getSelection(), isWithMouse] as const),
     withLatestFrom(mouseup$, mousedown$, clickPeriodCount$),
     map(([[selection, isWithMouse], mouseup, mousedown, clickPeriodCount]) => {
-      const self = isInDictPanel(selection?.anchorNode || mousedown.target)
+      const self = true
       if (!selection) {
         return {}
       }
@@ -196,10 +195,6 @@ function withoutTouchMode (config: SelectionConf) {
     withLatestFrom(mousedown$, clickPeriodCount$),
     // handle in-panel search separately
     // due to tricky shadow dom event retarget
-    filter(
-      ([mouseup, mousedown]) =>
-        !isInDictPanel(mouseup.target) && !isInDictPanel(mousedown.target)
-    ),
     map(([mouseup, mousedown, clickPeriodCount]) => {
       if (config.noTypeField && isTypeField(mousedown.currentTarget)) {
         return { self: false }

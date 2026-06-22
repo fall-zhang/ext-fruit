@@ -1,17 +1,12 @@
 import { useEffect, useRef, useState, type FC, type ReactNode } from 'react'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@salad/ui/components/dropdown-menu'
+
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger
 } from '@P/ui/components/hover-card'
 import { getSuggests } from './suggest-api'
-import { getWordCount } from '@/core/api-server/utils/get-word-count'
+import { getWordCount } from '@P/salad-api/src/utils/get-word-count'
 export interface SuggestItem {
   explain: string
   entry: string
