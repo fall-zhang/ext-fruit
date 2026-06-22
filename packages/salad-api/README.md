@@ -7,7 +7,12 @@
 en,    zh-CN,      zh-TW,     ja,     ko, fr,   de,   es
 英语，中文（简体），中文（繁体），日语，韩文，法文，德语，西班牙语
 
-- 不应该包含视图，或者任何翻译 API 以外的内容
+一系列请求相关工具
+
+### 如何使用
+
+
+
 - api-trans 目录下，所有文件夹都包含以下内容
   - api-atom 提供拆分各个 API 的多个原子化的方法
     - getFetchRequest 获取当前请求的 Request

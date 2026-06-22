@@ -364,6 +364,9 @@ importers:
       dompurify:
         specifier: ^3.3.3
         version: 3.4.1
+      franc-min:
+        specifier: ^6.2.0
+        version: 6.2.0
       md5:
         specifier: ^2.3.0
         version: 2.3.0

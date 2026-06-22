@@ -6,7 +6,7 @@ import tslint from 'typescript-eslint'
 import stylistic from '@stylistic/eslint-plugin'
 import globals from 'globals'
 import standardConfig from 'eslint-config-standard-new'
-
+import { reactRefresh } from 'eslint-plugin-react-refresh'
 const defaultConfig = {
   plugins: {
     react: lintReact,
@@ -88,6 +88,7 @@ export default [
     ignores: ['**/dist/**', '**/node_modules/**', '**/dist-ssr/**', '**/test/**', '**/temp.js', '**/release/**', '**/target/**'],
   },
   jslint.configs.recommended,
+  reactRefresh.configs.vite(),
   lintReact.configs.flat.recommended,
   lintReact.configs.flat['jsx-runtime'],
   standardConfig, // js 标准配置
