@@ -59,8 +59,6 @@ export const DictList: FC<DictListProps> = (props) => {
               }}
               onUserFold={(id, fold) => {
               }}
-              searchText={(arg) => {
-              }}
               onSpeakerPlay={async (src) => {
               }}
               key={data.dictID}

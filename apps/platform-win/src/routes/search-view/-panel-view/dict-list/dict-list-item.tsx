@@ -9,16 +9,16 @@ import {
 } from 'react'
 import clsx from 'clsx'
 import { newWord } from '@/utils/dict-utils/new-word'
-import type { DictItemHeadProps } from './dict-item/dict-item-head'
-import { DictItemHead } from './dict-item/dict-item-head'
+import type { DictItemHeadProps } from './dict-item-head/dict-item-head'
+import { DictItemHead } from './dict-item-head/dict-item-head'
 import type { DictItemBodyProps } from './dict-item/dict-item-body'
 import { DictItemBody } from './dict-item/dict-item-body'
 import { timer } from '@/utils/promise-more'
 import { isTagName } from '@/utils/dom'
 import './dict-item.scss'
-import type { DictID } from '@/core/api-server/config'
 import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
-import { useNavigate } from '@tanstack/react-router'
+import type { DictID } from '@P/salad-api/src/api-trans'
+import { useSearchContext } from '@/context/search-context/context'
 
 export interface DictItemProps
   extends Omit<DictItemBodyProps, 'dictRootRef' | 'onInPanelSelect'> {
@@ -33,9 +33,8 @@ export interface DictItemProps
 }
 
 export const DictItem: FC<DictItemProps> = props => {
-  const navigate = useNavigate()
   const [noHeightTransition, setNoHeightTransition] = useState(false)
-
+  const searchText = useSearchContext().searchStart
   const [foldState, setFoldState] = useState<'COLLAPSE' | 'HALF' | 'FULL'>(
     'COLLAPSE'
   )
@@ -137,7 +136,7 @@ export const DictItem: FC<DictItemProps> = props => {
         e.stopPropagation()
 
         const $a = el as HTMLAnchorElement
-        props.searchText({
+        searchText({
           word: newWord({
             text: $a.textContent || '',
           }),
@@ -164,7 +163,7 @@ export const DictItem: FC<DictItemProps> = props => {
     if (props.searchResult) {
       setFoldState('HALF')
     } else {
-      props.searchText({ id: props.dictID })
+      searchText({ dictId: props.dictID })
     }
   }
   function onInPanelSelect () {

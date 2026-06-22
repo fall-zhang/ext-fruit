@@ -4,11 +4,11 @@ import { useState, useEffect, useMemo } from 'react'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 import './dict-item-head.scss'
-import type { DictID } from '@/core/api-server/config'
 import { BookmarkIcon, ChevronRight, ChevronRightIcon } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@P/ui/components/tooltip'
 import { cn } from '@P/ui/utils'
 import { dictImage } from '../dictImg'
+import type { DictID } from '@P/salad-api/src/api-trans'
 
 // const error = import.meta.glob('@/core/api-server/trans-api/*/favicon.png')
 export interface DictItemHeadProps {
