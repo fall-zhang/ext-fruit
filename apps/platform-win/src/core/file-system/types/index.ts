@@ -8,3 +8,7 @@ export type OperateResult<T = any> = {
 }
 
 export type PromiseOptResult<T = any> = Promise<OperateResult<T>>
+
+export type OptRes = OperateResult
+
+export type AsyncOptRes = PromiseOptResult

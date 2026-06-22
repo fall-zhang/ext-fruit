@@ -3,9 +3,9 @@ import { mkdir as createDir, exists } from '@tauri-apps/plugin-fs'
 import { appDataDir, join } from '@tauri-apps/api/path'
 import { APP_CONFIG_DIR, APP_CONFIG_FILE_NAME, APP_PROFILE_FILE_NAME } from './const/file-name'
 import type { AppConfig } from '@/config/app-config'
-import type { ProfileMutable } from '@/config/trans-profile'
+import type { Profile } from '@/config/trans-profile'
 import type { FileItem } from './types/file-type'
-import { addJSONFile, addTextFile } from './utils/file-utils'
+import { addJSONFile } from './utils/file-utils'
 import { defaultConfig, defaultProfile } from './init-files/config'
 import type { OperateResult, PromiseOptResult } from './types'
 import { getAppConfig, getAppProfile } from './tauri-conf-system'
@@ -13,7 +13,7 @@ import { getAppConfig, getAppProfile } from './tauri-conf-system'
 export type AllInfo = {
   fileList: FileItem[]
   config: AppConfig
-  profile: ProfileMutable
+  profile: Profile
 }
 
 export async function initFileSystem (): PromiseOptResult<AllInfo> {

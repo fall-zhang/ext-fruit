@@ -42,14 +42,14 @@ export async function saveWords ({ area, words }: { area: DBArea; words: Word[] 
  * 删除单词
  * @param keyList 如果提供则删除指定 keys，否则清空整个表
  */
-export async function deleteWords ({ area, keyList }: { area: DBArea; keyList?: number[] }): Promise<void> {
+export async function deleteWords ({ area, keyList }: { area: DBArea; keyList?: string[] }): Promise<void> {
   const db = await getDB()
 
   if (Array.isArray(keyList)) {
     // 批量删除指定的记录
     for (const key of keyList) {
       // eslint-disable-next-line no-await-in-loop
-      await db.execute(`DELETE FROM ${area} WHERE date = $1`, [key])
+      await db.execute(`DELETE FROM ${area} WHERE id = $1`, [key])
     }
   } else {
     // 清空整个表

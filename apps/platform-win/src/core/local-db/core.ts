@@ -33,27 +33,27 @@ async function initializeTables (db: Database): Promise<void> {
   `)
 
   // 创建 history 表
-  await db.execute(`
-    CREATE TABLE IF NOT EXISTS history (
-      id TEXT PRIMARY KEY,
-      date INTEGER NOT NULL,
-      text TEXT NOT NULL,
-      context TEXT DEFAULT '',
-      trans TEXT DEFAULT '',
-      note TEXT DEFAULT '',
-      from TEXT,
-      to TEXT
-    )
-  `)
+  // await db.execute(`
+  //   CREATE TABLE IF NOT EXISTS history (
+  //     id TEXT PRIMARY KEY,
+  //     date INTEGER NOT NULL,
+  //     text TEXT NOT NULL,
+  //     context TEXT DEFAULT '',
+  //     trans TEXT DEFAULT '',
+  //     note TEXT DEFAULT '',
+  //     from TEXT,
+  //     to TEXT
+  //   )
+  // `)
 
   // 创建索引以提高查询性能
   await db.execute('CREATE INDEX IF NOT EXISTS idx_notebook_text ON notebook(text)')
   await db.execute('CREATE INDEX IF NOT EXISTS idx_notebook_context ON notebook(context)')
-  await db.execute('CREATE INDEX IF NOT EXISTS idx_notebook_url ON notebook(from)')
+  // await db.execute('CREATE INDEX IF NOT EXISTS idx_notebook_url ON notebook(from)')
 
-  await db.execute('CREATE INDEX IF NOT EXISTS idx_history_text ON history(text)')
-  await db.execute('CREATE INDEX IF NOT EXISTS idx_history_context ON history(context)')
-  await db.execute('CREATE INDEX IF NOT EXISTS idx_history_url ON history(from)')
+  // await db.execute('CREATE INDEX IF NOT EXISTS idx_history_text ON history(text)')
+  // await db.execute('CREATE INDEX IF NOT EXISTS idx_history_context ON history(context)')
+  // await db.execute('CREATE INDEX IF NOT EXISTS idx_history_url ON history(from)')
 }
 
 /**
