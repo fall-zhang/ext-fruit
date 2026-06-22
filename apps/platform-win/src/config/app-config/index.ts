@@ -90,19 +90,6 @@ export function getDefaultConfig (): SaladConfigType {
       // sogou: false,
     },
 
-    /** start searching when source containing the languages */
-    language: {
-      chinese: true,
-      english: true,
-      japanese: true,
-      korean: true,
-      french: true,
-      spanish: true,
-      deutsch: true,
-      others: false,
-      matchAll: false,
-    },
-
     /** auto pronunciation */
     autoPronounce: false,
   }

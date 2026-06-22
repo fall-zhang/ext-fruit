@@ -1,6 +1,3 @@
-import type { DictID } from '@/core/api-server/config'
-import type { SupportedLangs } from '@/core/api-server/types/dict-base'
-
 export type LangCode = 'zh-CN' | 'zh-TW' | 'en'
 
 type InstantSearchKey = 'direct' | 'ctrl' | 'alt' | 'shift'
@@ -136,9 +133,6 @@ export type SaladConfigType = {
     caiyun: boolean,
     // sogou: boolean,
   },
-
-  /** start searching when source containing the languages */
-  language: SupportedLangs,
 
   /** auto pronunciation */
   autoPronounce: boolean,

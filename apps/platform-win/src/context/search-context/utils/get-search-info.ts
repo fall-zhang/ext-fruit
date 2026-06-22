@@ -1,7 +1,7 @@
-import { countWords } from '@/core/api-server/utils/get-word-count'
 import type { Word } from '@/types/word'
 import type { SupportLanguage } from '@P/salad-api/src/main'
 import { baseLangDetect } from '@P/salad-api/src/utils/detect-lang'
+import { getWordCount } from '@P/salad-api/src/utils/get-word-count'
 
 /**
  *
@@ -14,7 +14,7 @@ export const getSearchInfo = (word: Word, { localLang, preferLang }: {
   localLang: SupportLanguage
   preferLang?: SupportLanguage[]
 }) => {
-  const wordCount = countWords(word.text)
+  const wordCount = getWordCount(word.text)
   let langFrom
   if (wordCount < 5) {
     langFrom = baseLangDetect(word.text)
