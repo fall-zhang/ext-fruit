@@ -8,7 +8,7 @@ import React, {
 import classNames from 'clsx'
 import QRCode from 'react-qr-code'
 import { useTranslation } from 'react-i18next'
-import { useConfContext } from '../../context/conf-context'
+import { useConfContext } from '@/context/conf-context/context'
 import { ScanQrCodeIcon } from 'lucide-react'
 
 

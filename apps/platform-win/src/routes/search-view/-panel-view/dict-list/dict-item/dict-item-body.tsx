@@ -61,7 +61,7 @@ function DictRenderError () {
       >
         report issue
       </a>
-      .
     </p>
   )
 }
+
