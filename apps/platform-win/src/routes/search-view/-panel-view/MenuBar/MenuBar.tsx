@@ -21,13 +21,14 @@ export const MenuBar: FC<MenuBarProps> = (props) => {
           size={18}
         />
       </button>
-      <button className="px-2 hover:bg-black/10 h-full  flex items-center justify-center" onClick={props.onShowNotebook} >
+      {/* 预计未来更新 bookmark */}
+      {/* <button className="px-2 hover:bg-black/10 h-full  flex items-center justify-center" onClick={props.onShowNotebook} >
         <BookMarkedIcon
           className="text-white dark:text-black"
           strokeWidth={1}
           size={18}
         />
-      </button>
+      </button> */}
       <div className="grow h-full" data-tauri-drag-region={true}></div>
       {/* 自定义 button 列表 */}
       {props.customButton}
