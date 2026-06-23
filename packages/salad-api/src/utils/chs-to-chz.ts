@@ -16,7 +16,7 @@ export function getChsToChz (text: string, langCode?: string): string {
 }
 
 
-const charMap = new Map([
+const charMap: Array<[string, string]> = [
   ['与', '與'],
   ['丒', '囟'],
   ['专', '專'],
@@ -2623,7 +2623,7 @@ const charMap = new Map([
   ['麽', '麼'],
   ['黄', '黃'],
   ['黉', '黌'],
-  ['黒', '黑'],
+  ['黑', '黒'],
   ['黙', '默'],
   ['黡', '黶'],
   ['黩', '黷'],
@@ -2654,14 +2654,30 @@ const charMap = new Map([
   ['龚', '龔'],
   ['龛', '龕'],
   ['龟', '龜'],
-])
+]
+
+const toChzMap = new Map(charMap)
+const toChsMap = new Map(charMap.map(([i1, i2]) => [i2, i1]))
 
 export function chsToChz (text: string): string {
   if (!text) return ''
 
   let result = ''
   for (let i = 0; i < text.length; i++) {
-    result += charMap.get(text[i]) || text[i]
+    result += toChzMap.get(text[i]) || text[i]
+  }
+
+  return result
+}
+/**
+ * 将繁体中文转换为简体中文
+ */
+export function chzToChs (text: string): string {
+  if (!text) return ''
+
+  let result = ''
+  for (let i = 0; i < text.length; i++) {
+    result += toChsMap.get(text[i]) || text[i]
   }
 
   return result
