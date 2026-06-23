@@ -36,7 +36,7 @@ export function getDefaultSelectDict (): Array<DictID> {
     // 'caiyun', // 彩云 ❌ 需要登录
     // 'youdaotrans', // 有道 ❌ 需要登录
     // 'zdic', // 汉语词典，不能查英文 ✅ 默认启用
-    // 'guoyu', // 汉语词典，不能查英文 ✅ 默认启用
+    'guoyu', // 汉语词典，不能查英文 ✅ 默认启用
     // 'liangan', // 汉语词典，不能查英文 ✅ 默认启用
     // 'googledict', // 当前无法爬取数据，需要更新
     // "google", // 谷歌 API ❌ 需要登录
