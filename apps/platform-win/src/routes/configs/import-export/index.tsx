@@ -8,7 +8,6 @@ import { DownloadOutlined, UploadOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import type { AppConfig } from '@/config/app-config'
 import { mergeConfig } from '@/config/app-config/merge-config'
-import { useListLayout } from '../-utils/layout'
 import { useConfContext } from '@/context/conf-context/context'
 import type { Profile } from '@/config/trans-profile'
 import { mergeProfile } from '@/config/trans-profile/merge-profile'
@@ -30,7 +29,6 @@ export type ConfigStorage = {
 
 function RouteComponent () {
   const { t } = useTranslation('options')
-  const layout = useListLayout()
   async function importConfig (file: RcFile, t: TFunction) {
     const result = await new Promise<Partial<ConfigStorage> | null>(resolve => {
       const fr = new FileReader()
@@ -114,7 +112,7 @@ function RouteComponent () {
     // }
   }
   const confContext = useConfContext()
-  const updateProfile = confContext.updateProfile
+  // const updateProfile = confContext.updateProfile
   const getConfig = () => confContext.config
   const getProfile = () => confContext.profile
   async function exportConfig (t: TFunction) {
@@ -166,8 +164,9 @@ function RouteComponent () {
 
   return (
     <>
+      <h3 className='text-lg mb-3'>配置</h3>
       <div className='grid gap-5 grid-cols-2'>
-        <div className='h-20 flex items-center justify-center border border-neutral-500 rounded'>
+        <div className='h-20 max-w-80 flex items-center justify-center border border-neutral-500 rounded-lg cursor-pointer m-3'>
           <button >
             <p className="ant-upload-drag-icon">
               <DownloadOutlined />
@@ -175,7 +174,7 @@ function RouteComponent () {
             <p className="ant-upload-text">{t('import.title')}</p>
           </button>
         </div>
-        <div className='h-20 flex items-center justify-center border border-neutral-500 rounded'>
+        <div className='h-20 max-w-80 flex items-center justify-center border border-neutral-500 rounded-lg cursor-pointer m-3'>
           <button onClick={() => exportConfig(t)}>
             <div className="ant-upload ant-upload-btn">
               <p className="ant-upload-drag-icon">
@@ -186,6 +185,28 @@ function RouteComponent () {
           </button>
         </div>
       </div>
+      {/* <h3 className='text-lg mb-3'>单词</h3>
+      <div className='grid gap-5 grid-cols-2'>
+        <div className='h-20 flex items-center justify-center border border-neutral-500 rounded-lg'>
+          <button>
+            <p className="ant-upload-drag-icon">
+              <DownloadOutlined />
+            </p>
+            <p className="ant-upload-text">导出为 json</p>
+          </button>
+        </div>
+        <div className='h-20 flex items-center justify-center border border-neutral-500 rounded-lg'>
+          <button onClick={() => exportConfig(t)}>
+            <div className="ant-upload ant-upload-btn">
+              <p className="ant-upload-drag-icon">
+                <UploadOutlined />
+              </p>
+              <p className="ant-upload-text">{t('export.title')}</p>
+            </div>
+          </button>
+        </div>
+      </div> */}
+      {/* <h3 className='text-lg mb-3'>历史记录</h3> */}
       <p className='p-4 text-sm'>{t('import_export_help')}</p>
     </>
   )

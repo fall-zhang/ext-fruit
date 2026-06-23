@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createFileRoute } from '@tanstack/react-router'
 import type { FC } from 'react'
 import { useState, useLayoutEffect } from 'react'
@@ -7,7 +8,6 @@ import { SortableList, reorder } from '../-components/SortableList'
 import { AddModal } from './-add-modal'
 import { EditModal } from './-edit-modal'
 import { useUpdateSetting } from '../-utils/upload'
-import { useListLayout } from '../-utils/layout'
 
 export const Route = createFileRoute('/configs/context-menus/')({
   component: RouteComponent,
@@ -18,14 +18,13 @@ function RouteComponent () {
   const upload = useUpdateSetting()
   const [showAddModal, setShowAddModal] = useState(false)
   const [editingMenu, setEditingMenu] = useState<string | null>(null)
-  const listLayout = useListLayout()
 
   // make a local copy to avoid flickering on drag end
   const [selectedMenus, setSelectedMenus] = useState<ReadonlyArray<string>>([])
 
   return (
-    <Row>
-      <Col {...listLayout}>
+    <>
+      <div>
         <SortableList
           title={t('nav.ContextMenus')}
           description={<p>{t('config.opt.contextMenus_description')}</p>}
@@ -50,13 +49,13 @@ function RouteComponent () {
             setSelectedMenus(newList)
           }}
         />
-      </Col>
+      </div>
       <AddModal
         show={showAddModal}
         onEdit={setEditingMenu}
         onClose={() => setShowAddModal(false)}
       />
       <EditModal menuID={editingMenu} onClose={() => setEditingMenu(null)} />
-    </Row>
+    </>
   )
 }

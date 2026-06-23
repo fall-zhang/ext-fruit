@@ -22,7 +22,7 @@ export const options = {
     Popup: '右上弹框',
     QuickSearch: '快捷查词',
     Pronunciation: '发音设置',
-    PDF: 'PDF 设置',
+    PDF: 'PDF 配置',
     ContextMenus: '右键菜单',
     BlackWhiteList: '黑白名单',
     ImportExport: '导入导出',
@@ -369,7 +369,7 @@ export const options = {
   import_export_help: '配置已经保存到本地，也可以手动导入导出。备份为明文保存，对安全性有要求的请自行加密。',
 
   import: {
-    title: '导入设定',
+    title: '导入配置',
     error: {
       title: '导入失败',
       parse: '备份解析失败，格式不正确。',
@@ -379,7 +379,7 @@ export const options = {
   },
 
   export: {
-    title: '导出设定',
+    title: '导出配置',
     error: {
       title: '导出失败',
       empty: '没有设置可以导出。',
