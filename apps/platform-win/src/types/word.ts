@@ -6,18 +6,14 @@ export interface Word {
   /** word text */
   text: string
   /** the sentence where the text string is located */
-  context: string
+  context?: string
   /** translation */
   trans: string
   /** custom note */
-  note: string
+  note?: string
   // 翻译源，翻译后的语言
   from?: string
   to?: string
-}
-
-export type HistoryWord = Word & {
-  isInNotebook: boolean
 }
 
 export interface WordSelection {

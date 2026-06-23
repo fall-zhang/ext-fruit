@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { ClockIcon, History, X, Trash2, BookmarkPlus, BookmarkIcon } from 'lucide-react'
 import type { FC } from 'react'
 import type { Word } from '@/types/word'
-
+import { format } from 'date-fns'
 // 将自动检测
 export const HistoryPanel: FC<{
   open: boolean
@@ -64,11 +64,12 @@ export const HistoryPanel: FC<{
                     className="group p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer border border-transparent hover:border-slate-100 dark:hover:border-slate-800 flex flex-col gap-1"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold opacity-30  tracking-tighter">
+                      <span className="text-xs font-bold opacity-30  tracking-tighter">
                         {item.from || 'auto'} → {item.to || 'auto'}
                       </span>
                       <div className="grow"></div>
-                      <div className="opt-group" onClick={ev => ev.stopPropagation()}>
+                      <div className="opt-group flex items-center" onClick={ev => ev.stopPropagation()}>
+                        <span className='text-[11px] text-neutral-800 dark:text-neutral-300 '>{format(new Date(item.date), 'yyyy-MM-dd HH:mm:ss')}</span>
                         <button
                           onClick={() => props.onRemoveHistoryItem(item.id)}
                           className="opacity-0 group-hover:opacity-40 hover:opacity-100! p-1 transition-opacity cursor-pointer"

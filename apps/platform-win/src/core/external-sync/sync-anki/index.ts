@@ -228,17 +228,17 @@ export class Service extends SyncService<SyncConfig> {
       ),
       // Context
       [this.noteFileds[3]]: this.multiline(
-        word.context,
+        word.context || '',
         this.config.escapeContext
       ),
       // ContextCloze
       [this.noteFileds[4]]:
         this.multiline(
-          word.context.split(word.text).join(`{{c1::${word.text}}}`),
+          word.context?.split(word.text).join(`{{c1::${word.text}}}`) || '',
           this.config.escapeContext
         ) || `{{c1::${word.text}}}`,
       // Note
-      [this.noteFileds[5]]: this.multiline(word.note, this.config.escapeNote),
+      [this.noteFileds[5]]: this.multiline(word.note || '', this.config.escapeNote),
       // Audio
       [this.noteFileds[9]]: '', // @TODO
     }

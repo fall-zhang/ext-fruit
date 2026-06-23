@@ -1,8 +1,3 @@
-export interface HistoryItem {
-  id: string;
-  text: string;
-  from: string;
-  to: string;
-  trans: string;
-  timestamp: number;
-}
+import type { Word } from './word'
+
+export type HistoryWord = Word

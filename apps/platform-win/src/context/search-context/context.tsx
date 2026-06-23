@@ -1,12 +1,13 @@
 import type { Profile } from '@/config/trans-profile'
 import { createContext, useContext } from 'react'
 
-import type { HistoryWord, Word } from '@/types/word'
+import type { Word } from '@/types/word'
 
 import type { AsyncOptRes } from '@/core/file-system/types'
 import type { AllDictsConf, DictID } from '@P/salad-api/src/api-trans'
 import type { RenderDictItem } from './utils/get-search-dict'
 import type { SupportLanguage } from '@P/salad-api'
+import type { HistoryWord } from '@/types/search-history'
 
 export type DictSearchState = {
   text: string

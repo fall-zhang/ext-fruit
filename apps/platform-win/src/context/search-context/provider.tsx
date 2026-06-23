@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { getDefaultSelectDict } from '@/config/trans-profile'
 import { SearchContext } from './context'
 import { getLocalHistory, updateHistory } from '@/core/local-store/history-store'
-import type { HistoryWord, Word } from '@/types/word'
+import type { Word } from '@/types/word'
 import type { DictSearchState, WordSearch } from './context'
 import type { AsyncOptRes } from '@/core/file-system/types'
 import { isInNotebook } from '@/core/local-db'
@@ -13,6 +13,7 @@ import * as api from '@P/salad-api/src/api-trans/api-all'
 import { fetch } from '@tauri-apps/plugin-http'
 import type { RenderDictItem } from './utils/get-search-dict'
 import { getSearchInfo } from './utils/get-search-info'
+import type { HistoryWord } from '@/types/search-history'
 
 export function SearchProvider ({ children, profile }: {
   children: ReactNode
@@ -99,6 +100,12 @@ export function SearchProvider ({ children, profile }: {
       console.log('search dicts', renderDictList)
     }
     setRenderDicts(renderDictList)
+    // add to history
+    setSearchHistory((oldVal) => {
+      const newHistory = [word, ...oldVal]
+      updateHistory(newHistory)
+      return newHistory
+    })
     // searching
     renderDictList.forEach((item) => {
       const id: DictID = item.dictID

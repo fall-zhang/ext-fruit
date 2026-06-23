@@ -2,7 +2,7 @@ import { Store } from '@tauri-apps/plugin-store'
 import { join } from '@tauri-apps/api/path'
 import { APP_CONFIG_DIR, SEARCH_HISTORY_FILE_NAME } from '../file-system/const/file-name'
 import type { PromiseOptResult } from '../file-system/types'
-import type { HistoryWord } from '@/types/word'
+import type { HistoryWord } from '@/types/search-history'
 
 let appHistoryStore: Store | undefined
 
