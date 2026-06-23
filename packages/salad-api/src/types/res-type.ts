@@ -1,5 +1,6 @@
+import type { MachineDictID } from '../api-trans-machine/api-config'
 import type { DictID } from '../api-trans/api-config'
-import type { Language } from '../const/languages'
+import type { SupportLanguage } from '../const/languages'
 export type HTMLString = string
 
 export interface AtomSearchResult<Result = unknown> {
@@ -20,10 +21,10 @@ export type WordResponse = {
   /**
    * 翻译的引擎
    */
-  engin: DictID
+  engin: DictID | MachineDictID
   type: 'word-trans'
-  from: Language
-  to: Language
+  from: SupportLanguage
+  to: SupportLanguage
   /** 翻译的文本 */
   text: string
   /** （动词）原形 */
@@ -40,7 +41,7 @@ export type WordResponse = {
   /** 发音 */
   pronounce: Array<{
     phoneticSymbols?: string
-    lang: Language | 'en-US' | 'en-UK'
+    lang: SupportLanguage | 'en-US' | 'en-UK'
     src: string
   }>
   /**
@@ -86,17 +87,17 @@ export type ParagraphResponse = {
   /**
    * 翻译的引擎
    */
-  engin: DictID
+  engin: DictID | MachineDictID
   type: 'paragraph-trans'
-  from: Language
-  to: Language
+  from: SupportLanguage
+  to: SupportLanguage
   /** 翻译的文本 */
   text: string
   /** 单词翻译结果 */
   translate: string
   /** 发音 */
   pronounce: Array<{
-    lang: Language
+    lang: SupportLanguage
     src: string
   }>
 }

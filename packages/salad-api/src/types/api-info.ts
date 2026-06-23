@@ -1,4 +1,4 @@
-import type { Language } from '@P/open-trans/languages'
+import type { SupportLanguage } from '../main'
 
 /**
  * 每个 API 翻译时需要的通用信息
@@ -7,8 +7,8 @@ export type ApiInfo = {
   enName: string,
   zhName: string,
 
-  from: Array<Language>
-  to: Array<Language>
+  from: Array<SupportLanguage>
+  to: Array<SupportLanguage>
   /**
    * 'self-trans' 自翻译类型，比如中译中，英译英
    * 'word-trans' 单词翻译

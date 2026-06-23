@@ -12,7 +12,10 @@ export interface AhdictResultItem {
   /** pronunciation */
   pron?: string
   /** meaning and eg */
-  meaning: HTMLString[]
+  meaning: {
+    translate: string
+    type?: string
+  }[]
   /** idiom and eg */
   idioms: Idiom[]
   origin?: HTMLString

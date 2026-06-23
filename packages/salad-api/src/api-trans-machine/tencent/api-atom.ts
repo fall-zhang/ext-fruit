@@ -21,7 +21,7 @@ export const getSrcPage: AtomGetSrcFunction = (text, localLang) => {
 /**
  * 该方法暂时不可用
  */
-export const getFetchRequest: AtomFetchRequest<AuthBody> = async (text, opt) => {
+export const getFetchRequest: AtomFetchRequest<AuthBody> = (text, opt) => {
   const secretId = opt.option?.secretId
   const secretKey = opt.option?.secretKey
   const translatorConfig = (secretId && secretKey) ? { secretId, secretKey } : undefined

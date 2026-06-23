@@ -15,7 +15,7 @@ export function handleDOM (
   options: { resultCount: number }
 ): AhdictResult | Promise<AhdictResult> {
   const result: AhdictResult = []
-
+  const domParser = new DOMParser()
   const tables = Array.from(doc.querySelectorAll('#results>table'))
 
   if (tables.length <= 0) {
@@ -45,9 +45,28 @@ export function handleDOM (
     const $pseg = Array.from($panel.querySelectorAll('.pseg'))
 
     $pseg.forEach(item => {
-      resultItem.meaning.push(
-        getInnerHTML(HOST, item).replace(/<\/?(span|font)[^>]*>/g, '')
-      )
+      // console.log('⚡️ line:47 ~ item: ', item.querySelector('.sds-list'))
+      const subArr = item.querySelectorAll('.sds-list')
+      const haveSub = Array.from(subArr).length > 0
+      const type = item.querySelector('i')?.innerText
+      item.querySelector('i')?.remove()
+      if (haveSub) {
+        Array.from(subArr).forEach(item => {
+          // getInnerHTML()
+          const trans = domParser.parseFromString(item?.textContent || '', 'text/html')
+          resultItem.meaning.push({
+            translate: trans.body.textContent,
+            type,
+          })
+        })
+      } else {
+        const trans = domParser.parseFromString(item?.textContent || '', 'text/html')
+
+        resultItem.meaning.push({
+          translate: trans.body.innerText,
+          type,
+        })
+      }
     })
 
     const $idmseg = Array.from($panel.querySelectorAll('.idmseg'))

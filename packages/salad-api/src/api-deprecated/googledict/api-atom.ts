@@ -36,7 +36,7 @@ export const handleResponse: AtomResponseHandle = async (res, { from, to, text }
   const domText = await res.text()
   const domRes = handleDOM(domText, text)
   const result: WordResponse = {
-    engin: 'google',
+    engin: 'bing',
     type: 'word-trans',
     from,
     to,

@@ -14,12 +14,10 @@ export const getFetchRequest: AtomFetchRequest = (text, opt) => {
 }
 
 export const handleResponse: AtomResponseHandle = async (res, { text, from, to }) => {
-  console.time('dom-handle')
   const domText = await res.text()
   const domParser = new DOMParser()
   const dom = domParser.parseFromString(domText, 'text/html')
   const domRes = await handleDOM(dom, { resultCount: 5 })
-  console.timeEnd('dom-handle')
 
   const result: WordResponse = {
     type: 'word-trans',
@@ -31,7 +29,6 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to }
     pronounce: [],
   }
   domRes.forEach(item => {
-    result.translate = item.meaning.map(item => ({ translate: item }))
     if (item.pron) {
       result.pronounce = [{
         lang: 'en',
@@ -47,14 +44,15 @@ export const handleResponse: AtomResponseHandle = async (res, { text, from, to }
         }
       })
     }
-    if (item.meaning) {
-      result.translate = item.meaning.map(transItem => {
-        const doc = domParser.parseFromString(transItem, 'text/html')
-        return {
-          translate: doc.body.textContent,
-        }
-      })
-    }
+    result.translate = item.meaning
+    // if (item.meaning) {
+    //   result.translate = item.meaning.map(transItem => {
+    //     const doc = domParser.parseFromString(transItem, 'text/html')
+    //     return {
+    //       translate: doc.body.textContent,
+    //     }
+    //   })
+    // }
     if (item.origin) {
       const doc = domParser.parseFromString(item.origin, 'text/html')
       result.origin = doc.body.textContent
