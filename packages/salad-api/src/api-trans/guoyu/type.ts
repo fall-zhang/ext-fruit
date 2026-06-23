@@ -21,6 +21,8 @@ export interface GuoYuResult {
     }>
     /** Pinyin */
     p: string
+    /** 片假名 */
+    // b: string
     /** Audio ID */
     '='?: string
   }>
