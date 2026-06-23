@@ -1,11 +1,11 @@
-import type { Language } from '@P/open-trans/languages'
+import type { SupportLanguage } from '../../main'
 
 export type CaiyunResult = {
   id: 'caiyun'
   /** Source language */
-  sl: Language
+  sl: SupportLanguage
   /** Target language */
-  tl: Language
+  tl: SupportLanguage
   searchText: {
     paragraphs: string[]
     tts?: string

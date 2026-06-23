@@ -7,13 +7,13 @@ import type { WordResponse } from '../../types/res-type'
 // 当前地址为 https://dict.hujiang.com
 export const getSrcPage: AtomGetSrcFunction = (text) => {
   const langCode = getLangCode(text)
-  return `https://www.hjdict.com/${langCode}/${encodeURIComponent(text)}`
+  return `https://dict.hujiang.com/${langCode}/${encodeURIComponent(text)}`
 }
 
 export const getFetchRequest: AtomFetchRequest = (text, opt) => {
   // Note: opt.option should contain the hjdict profile for lang detection
   const langCode = detectLang(text)
-  const url = `https://www.hjdict.com/${langCode}/${encodeURIComponent(text)}`
+  const url = `https://dict.hujiang.com/${langCode}/${encodeURIComponent(text)}`
   return getFetchDOMReq(url)
 }
 

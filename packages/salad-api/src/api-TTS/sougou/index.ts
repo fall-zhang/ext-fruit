@@ -1,4 +1,4 @@
-import { sougoLangMap } from '../../api-trans/sogou/engine'
+import { sougoLangMap } from '../../api-trans-machine/sogou/engine'
 import type { Language } from '../../const/languages'
 
 export async function textToSpeech (text: string, lang: Language): Promise<string | null> {

@@ -1,11 +1,11 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
 import { Baidu } from '@P/open-trans/service-baidu'
-import type { Language } from '@P/open-trans/languages'
 import md5 from 'md5'
 import { TranslateError } from '@P/open-trans/translator'
 import type { AuthBody } from './config'
 import type { BaiduTranslateError, BaiduTranslateResult } from './type'
 import type { UnitSearchResult } from '../../types/res-type'
+import type { SupportLanguage } from '../../main'
 
 export const getSrcPage: AtomGetSrcFunction = (text, langCode) => {
   let lang
@@ -101,7 +101,7 @@ const getTextSpeech = ({
   lang,
 }: {
   text: string
-  lang: Language
+  lang: SupportLanguage
 }) => {
   return `https://fanyi.baidu.com/gettts?${new URLSearchParams({
     lan: Baidu.langMap.get(lang !== 'auto' ? lang : 'zh-CN') || 'zh',

@@ -84,7 +84,6 @@ export function getLangCode (text: string): string {
     return 'es'
   }
 
-
   if (isContainJapanese(text)) {
     return 'jp/jc'
   }

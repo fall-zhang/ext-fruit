@@ -1,4 +1,4 @@
-import type { Language } from '@P/open-trans/languages'
+import type { SupportLanguage } from '../main'
 import type { UnitSearchResult } from './res-type'
 
 /**
@@ -8,8 +8,8 @@ export type AtomFetchRequest<T = unknown> = {
   (
     text: string,
     opt: {
-      from: Language
-      to: Language
+      from: SupportLanguage
+      to: SupportLanguage
       option?: T
     }
   ): Request
@@ -25,8 +25,8 @@ export type AtomResponseHandle = {
     res: Response,
     context: {
       text: string
-      from: Language
-      to: Language
+      from: SupportLanguage
+      to: SupportLanguage
     }
   ): Promise<UnitSearchResult>
 }

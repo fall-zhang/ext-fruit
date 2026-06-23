@@ -120,7 +120,7 @@ export const languages = [
   'zh-CN',
   'zh-TW',
   'zu',
-  'zh',
+  // 'zh', // zh 默认为 zh-CN
 ] as const
 
 export type Language = typeof languages[number]

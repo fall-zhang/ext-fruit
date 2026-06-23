@@ -123,5 +123,5 @@ export const languageZhCN: Locale = {
   'zh-CN': '简体中文',
   'zh-TW': '繁体中文',
   zu: '祖鲁语',
-  zh: '中文',
+  // zh: '中文',
 }

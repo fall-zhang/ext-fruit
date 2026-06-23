@@ -1,8 +1,8 @@
 import memoizeOne from 'memoize-one'
 
-import { Baidu, Caiyun } from '@P/open-trans'
-import type { Language } from '@P/open-trans/languages'
+import { Caiyun } from '@P/open-trans'
 import type { AuthBody } from './config'
+import type { SupportLanguage } from '../../main'
 
 export const getTranslator = memoizeOne(() =>
   new Caiyun({ })
@@ -12,9 +12,9 @@ export const getTranslator = memoizeOne(() =>
 // )
 
 export const search = async (rawText: string, opt: {
-  from?: Language
-  to?: Language
-  option?: AuthBody
+  from: SupportLanguage
+  to: SupportLanguage
+  option: AuthBody
 }) => {
   const translator = getTranslator()
   // const langcodes = translator.getSupportLanguages()

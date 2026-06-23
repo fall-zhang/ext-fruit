@@ -1,4 +1,4 @@
-import type { MerriamWebsterResultV2 } from '@/core/api-server/trans-api/merriamwebster/engine'
+import type { MerriamWebsterResultV2 } from '@P/salad-api/src/api-trans/merriamwebster/type'
 import fs from 'fs'
 import path from 'path'
 

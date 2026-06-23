@@ -1,10 +1,10 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
-import type { GoogleResult, SupportLang } from './type'
+import type { GoogleSupportLang } from './type'
 import type { ParagraphResponse } from '../../types/res-type'
 
-export const getSrcPage: AtomGetSrcFunction = (text, targetLang: SupportLang) => {
+export const getSrcPage: AtomGetSrcFunction = (text, targetLang: GoogleSupportLang) => {
   const domain = 'com'
-  const lang: SupportLang = targetLang
+  const lang: GoogleSupportLang = targetLang
 
   return `https://translate.google.${domain}/#auto/${lang}/${text}`
 }

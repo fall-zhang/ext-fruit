@@ -1,4 +1,4 @@
-import type { ExtendSupportLang } from '@P/open-trans/languages/src/languages'
+import type { ExtendSupportLang } from '../../types'
 import type { AuthApiInfo } from '../../types/api-info'
 
 export type YoudaotransLanguage = ExtendSupportLang<

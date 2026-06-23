@@ -41,7 +41,7 @@ export type WordResponse = {
   /** 发音 */
   pronounce: Array<{
     phoneticSymbols?: string
-    lang: SupportLanguage | 'en-US' | 'en-UK'
+    lang: string // SupportLanguage | 'en-US' | 'en-UK'
     src: string
   }>
   /**

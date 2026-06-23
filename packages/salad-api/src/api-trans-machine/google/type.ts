@@ -1,8 +1,8 @@
-import type { DictID } from '..'
+import type { MachineDictID } from '../api-config'
 import type { Language } from '../../const/languages'
 
 export type GoogleResult = {
-  id: DictID
+  id: MachineDictID
   slInitial: 'hide' | 'collapse' | 'full'
   /** Source language */
   sl: Language
@@ -20,4 +20,4 @@ export type GoogleResult = {
 }
 
 
-export type SupportLang = 'de' | 'en' | 'es' | 'fr' | 'ja' | 'ko' | 'nl' | 'ru' | 'zh-CN' | 'zh-TW' | 'default'
+export type GoogleSupportLang = 'de' | 'en' | 'es' | 'fr' | 'ja' | 'ko' | 'nl' | 'ru' | 'zh-CN' | 'zh-TW' | 'default'

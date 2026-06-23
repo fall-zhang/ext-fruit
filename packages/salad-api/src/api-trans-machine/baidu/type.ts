@@ -1,5 +1,4 @@
-import type { Language } from '@P/open-trans/languages'
-
+import type { SupportLanguage } from '../../main'
 
 /**
  * official doc: https://fanyi-api.baidu.com/doc/23
@@ -13,7 +12,7 @@ export type BaiduTranslateResult = {
     // 原文
     src: string;
   }>;
-  lan?: Language;
+  lan?: SupportLanguage;
 }
 export type BaiduTranslateError = {
   error_code: '54001' | string;

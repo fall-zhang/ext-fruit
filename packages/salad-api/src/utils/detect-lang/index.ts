@@ -29,7 +29,7 @@ export const baseLangDetect = (text: string): SupportLanguage => {
   }
 
   if (isContainChinese(text)) {
-    return 'zh'
+    return 'zh-CN'
   }
 
   return 'auto'

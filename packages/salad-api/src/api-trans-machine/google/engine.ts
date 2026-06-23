@@ -1,10 +1,10 @@
 import memoizeOne from 'memoize-one'
 
 import { Google } from '@P/open-trans/service-google'
-import type { Language } from '@P/open-trans/languages'
+import type { SupportLanguage } from '../../main'
 
 export const getTranslator = memoizeOne(() => new Google())
 
-export async function getTTS (text: string, lang: Language): Promise<string> {
+export async function getTTS (text: string, lang: SupportLanguage): Promise<string> {
   return (await getTranslator().textToSpeech(text, lang)) || ''
 }
