@@ -27,22 +27,22 @@ export type AppProfile = Profile
 export function getDefaultSelectDict (): Array<DictID> {
   return [
     'bing', // 必应词典 ✅ 默认启用
-    'cambridge', // 剑桥词典 ✅  默认启用
-    'youdao', // 有道词典 ✅  默认启用
-    'cobuild', // 科林斯高阶 ✅ 默认启用
-    'vocabulary', // vocabulary ✅ 默认启用（可以爬取更多有用的信息） 默认启用
+    // 'cambridge', // 剑桥词典 ✅  默认启用
+    // 'youdao', // 有道词典 ✅  默认启用
+    // 'cobuild', // 科林斯高阶 ✅ 默认启用
+    // 'vocabulary', // vocabulary ✅ 默认启用（可以爬取更多有用的信息） 默认启用
     // 'baidu', // 百度 ❌ 需要登录
     // 'urban', // urban ❌ 需要代理，且 DOM 已经更新，无法抓取 默认启用
     // 'caiyun', // 彩云 ❌ 需要登录
     // 'youdaotrans', // 有道 ❌ 需要登录
-    'zdic', // 汉语词典，不能查英文 ✅ 默认启用
-    'guoyu', // 汉语词典，不能查英文 ✅ 默认启用
-    'liangan', // 汉语词典，不能查英文 ✅ 默认启用
+    // 'zdic', // 汉语词典，不能查英文 ✅ 默认启用
+    // 'guoyu', // 汉语词典，不能查英文 ✅ 默认启用
+    // 'liangan', // 汉语词典，不能查英文 ✅ 默认启用
     // 'googledict', // 当前无法爬取数据，需要更新
     // "google", // 谷歌 API ❌ 需要登录
 
     'ahdict', // 美国传统词典 ✅
-    'oaldict', // 牛津高阶词典 ✅
+    // 'oaldict', // 牛津高阶词典 ✅
     // 'cnki', // CNKI 翻译(知网翻译)
     // "etymonline",
     // "eudic",

@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import './root.scss'
+// import './root.scss'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { I18nextProvider } from 'react-i18next'

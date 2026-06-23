@@ -1,5 +1,5 @@
 import en from '@P/open-trans/languages/locales/en.json'
-import { langCode as _locale } from '../zh-CN/lang-code'
+import type { langCode as _locale } from '../zh-CN/lang-code'
 
 export const locale: typeof _locale = {
   ...en,
@@ -25,5 +25,5 @@ export const locale: typeof _locale = {
   vie: 'Vietnamese',
   zh: 'Chinese (Simplified)',
   'zh-CHS': 'Chinese (Simplified)',
-  'zh-CHT': 'Chinese (Traditional)'
+  'zh-CHT': 'Chinese (Traditional)',
 }

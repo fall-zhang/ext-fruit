@@ -51,7 +51,7 @@ export function SearchProvider ({ children, profile }: {
       // 默认为最后一次查找
       word = searchHistory[0]
     }
-    const transInfo = getSearchInfo(word, { localLang: 'zh' })
+    const transInfo = getSearchInfo(word, { localLang: 'zh-CN' })
     // 获取需要渲染的 dict
     if (searchOpt.dictId) {
       const isEnableDict = selectedDicts.some(item => item === searchOpt.dictId)

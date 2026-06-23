@@ -48,7 +48,7 @@ export const DictList: FC<DictListProps> = (props) => {
   const dicts = props.dicts
 
   return (
-    <div className="dict-list-container overflow-hidden">
+    <div className="dict-list-container overflow-auto">
       <Suspense fallback={<h1>🌀 Loading...</h1>}>
         <Activity mode={props.dicts.length > 0 ? 'visible' : 'hidden'}>
           {dicts.map(data => (

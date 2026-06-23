@@ -1,4 +1,4 @@
-// import type { Language } from '@P/open-trans/languages'
+// import type { SupportLanguage } from '@P/open-trans/SupportLanguages'
 // import type { AllDictsConf, DictID } from './config'
 // import type { AppConfigMutable } from '@/config/app-config'
 // import type { DictSearchResult } from './api-common/search-type'
@@ -11,8 +11,8 @@
 //   id: DictID
 //   text: string
 //   /** engine search function payload */
-//   from?: Language
-//   to?: Language
+//   from?: SupportLanguage
+//   to?: SupportLanguage
 //   config: AppConfigMutable
 //   profile: AllDictsConf
 // }

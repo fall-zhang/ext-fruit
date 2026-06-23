@@ -24,10 +24,10 @@ export const getSearchInfo = (word: Word, { localLang, preferLang }: {
   // 可能的目标翻译语言可能和 from 相同，或者为 localLang
   let toLang: SupportLanguage[] = [localLang, langFrom]
   if (!preferLang) {
-    if (langFrom === 'zh') {
+    if (langFrom === 'zh-CN') {
       toLang.push('en')
     } else if (langFrom === 'en') {
-      toLang.push('zh')
+      toLang.push('zh-CN')
     }
   } else {
     toLang = toLang.concat(preferLang || [])

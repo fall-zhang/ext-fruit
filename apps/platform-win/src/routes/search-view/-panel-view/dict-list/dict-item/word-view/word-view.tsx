@@ -30,7 +30,7 @@ export const WordView: FC<WordResponse> = (props) => {
         )
       }
     </div>
-    <div className="trans-zone">
+    <div className="trans-zone p-2 flex flex-col gap-4">
       {/* 翻译 */}
       { props.translate.map((item, index) => {
         return <div key={index} className='flex'>

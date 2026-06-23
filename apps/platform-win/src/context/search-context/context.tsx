@@ -5,8 +5,8 @@ import type { HistoryWord, Word } from '@/types/word'
 
 import type { AsyncOptRes } from '@/core/file-system/types'
 import type { AllDictsConf, DictID } from '@P/salad-api/src/api-trans'
-import type { SupportLang } from '@P/salad-api/src/api-trans/google/type'
 import type { RenderDictItem } from './utils/get-search-dict'
+import type { SupportLanguage } from '@P/salad-api'
 
 export type DictSearchState = {
   text: string
@@ -34,8 +34,8 @@ export type WordSearch = {
     dictId?: DictID
     /** Search specific word */
     word?: Word
-    from?: SupportLang
-    to?: SupportLang
+    from?: SupportLanguage
+    to?: SupportLanguage
     /**
      * Do not update search history
      * 本次查询不计入历史查询
