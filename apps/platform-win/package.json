@@ -19,6 +19,7 @@
     "@hookform/resolvers": "^5.4.0",
     "@salad/trans": "workspace:*",
     "@salad/ui": "workspace:*",
+    "@tanstack/react-form": "^1.33.0",
     "@tauri-apps/api": "~2.10.1",
     "@tauri-apps/plugin-dialog": "~2.6.0",
     "@tauri-apps/plugin-fs": "~2.4.5",

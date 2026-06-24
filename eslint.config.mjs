@@ -40,6 +40,12 @@ const defaultConfig = {
     'react/display-name': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
+    'react/no-children-prop': [
+      2,
+      {
+        allowFunctions: true,
+      },
+    ],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     // typescript
