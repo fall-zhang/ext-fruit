@@ -1,4 +1,4 @@
-> 最近更新：2026-06-23
+> 最近更新：2026-06-24
 
 ## 所有词典的状态
 
@@ -14,20 +14,20 @@
 | ✅ | guoyu | 汉语词典 | ✅ | ✅ | ✅ |
 | ✅ | ahdict | 美国传统词典 | ✅ | ✅ | ✅ |
 | ❌ | baidu | 百度 | ❌ | ❌ | ❌ |
-| ❌ | cambridge  | 剑桥词典                      | ✅        | ✅        | ✅  |
-| ❌   | cobuild    | 科林斯高阶                    | ✅        | ✅        | ✅ |
-| ❌ | vocabulary | vocabulary                    | ✅        | ✅        |  ✅  |
-| ❌     | urban      | urban                         | ❌        | ❌        |  ✅  |
-| ❌      | zdic       | [漢典](https://www.zdic.net/) | ✅        | ✅        | ✅ |
-| ❌ | liangan | 两岸词典 | ✅ | ✅ | ✅ |
+| ❌ | cambridge  | 剑桥词典                      | ⭕        | ✅        | ✅  |
+| ❌   | cobuild    | 科林斯高阶                    | ⭕        | ✅        | ✅ |
+| ❌ | vocabulary | vocabulary                    | ⭕        | ✅        |  ✅  |
+| ❌     | urban      | urban                         | ⭕        | ❌        |  ✅  |
+| ❌      | zdic       | [漢典](https://www.zdic.net/) | ⭕        | ✅        | ✅ |
+| ❌ | liangan | 两岸词典 | ⭕ | ✅ | ✅ |
 |  ❌      |     cnki  |     [CNKI 知网翻译](https://dict.cnki.net)     |   ❌    |  ❌    |  ❌ |
 | ❌ | caiyun | 彩云 | ❌ | ❌ | ❌ |
 | ❌ | youdaotrans | 有道 | ❌ | ❌ | ❌ |
-| ❌ | google | 谷歌 | ✅ | ❌ | ❌ |
-| ❌    | youdao     | 有道词典                      | ✅        | ✅        |  ✅  |
+| ❌ | google | 谷歌 | ⭕ | ❌ | ❌ |
+| ❌    | youdao     | 有道词典                      | ⭕        | ✅        |  ✅  |
 | ❌ | etymonline | etymonline | ❌ | ❌ | ❌ |
 | ❌ | oaldict | 牛津高阶词典 | ❌ | ❌ | ❌ |
-| ❌ | eudic |  |  |  |  |
+| ❌ | eudic | 双语例句 | ❌ | ❌ | ❌ |
 | ❌ | hjdict |  |  |  |  |
 | ❌| merriamwebster | | | | |
 | ❌| weblioejje | | | | |
@@ -79,10 +79,7 @@ vocabulary 可以爬取更多有用的信息
 
 | 词典名称 | 中文名称 | 是否可用 | 废弃原因                                  |
 | -------- | -------- | -------- | ----------------------------------------- |
-| caiyun   |          |          | 暂不可用                                  |
-| cnki     |          |          | 当前翻译不可用，无法通过 url 控制访问内容 |
-|          |          |          |                                           |
-|          |          |          |                     |
+| cnki     |  知网翻译 |   ❌   | 当前翻译不可用，无法通过 url 控制访问内容 |
 |  googledict | 谷歌查词 | ❌ | 暂时不可用，无法解析 DOM |
 |  jikipedia | 小鸡词典 | ❌  | 团队解散，都奔向更好的未来了 |
 
