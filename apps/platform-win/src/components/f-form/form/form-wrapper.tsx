@@ -32,7 +32,7 @@ const formSchema = z.object({
   // .max(100, 'Description must be at most 100 characters.'),
 })
 
-function RouteComponent () {
+export function RouteComponent () {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

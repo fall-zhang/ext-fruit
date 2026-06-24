@@ -1,15 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createFileRoute, Link, Outlet, useLocation, redirect } from '@tanstack/react-router'
-import {
-  SwapOutlined,
-  SoundOutlined
-} from '@ant-design/icons'
 import { cn } from '@P/ui/lib/utils'
 import i18n from '@/locales/i18n'
 import { ConfirmProvider } from '@/context/confirm-context'
 
 import { TooltipProvider } from '@P/ui/components/tooltip'
-import { InfoIcon, ListIcon, SettingsIcon } from 'lucide-react'
+import { InfoIcon, ListIcon, SettingsIcon, FileInput } from 'lucide-react'
 import type { FileRoutesByTo } from '@/routeTree.gen'
 import type { ReactNode } from 'react'
 
@@ -72,7 +68,7 @@ const menuItems: Array<{
     id: 'import-export',
     path: '/configs/import-export',
     label: i18n.t('options:nav.ImportExport'),
-    icon: <SwapOutlined className="w-4 h-4" />,
+    icon: <FileInput className="w-4 h-4" />,
   },
   {
     id: 'app-info',

@@ -1,4 +1,5 @@
 import type { DictID } from '@P/salad-api/src/api-trans'
+import { dictImage } from '@P/salad-api/src/assets'
 import {
   Field,
   FieldDescription,
@@ -33,8 +34,7 @@ export const SortableListItem = (props: DictTitleProps) => {
       <span className="saladict-dict-title flex items-center justify-start">
         <img
           className="saladict-dict-title-icon"
-          src={'/src/core/api-server/trans-api/' + props.dictID + '/favicon.png'}
-          // /src/core/api-server/trans-api/bing/favicon.png
+          src={dictImage[props.dictID]}
           alt={`logo ${title}`}
         />
         <a
