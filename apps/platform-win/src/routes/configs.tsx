@@ -16,7 +16,7 @@ import type { ReactNode } from 'react'
 export const Route = createFileRoute('/configs')({
   component: RouteComponent,
   beforeLoad: ({ location }) => {
-    console.log('⚡️ line:18 ~ location: ', location)
+    // console.log('⚡️ line:18 ~ location: ', location)
     // 如果当前路径正好是 /configs，重定向到 /configs/general
     if (location.pathname === '/configs') {
       throw redirect({
@@ -132,7 +132,7 @@ function RouteComponent () {
                     to={item.path}
                     className={cn(
                       'flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200',
-                      'hover:bg-blue-50 dark:hover:bg-neutral-700 dark:text-white hover:text-neutral-200',
+                      'hover:bg-blue-50 dark:hover:bg-neutral-700 dark:text-white dark:hover:text-neutral-200',
                       isActive
                         ? 'bg-blue-50  dark:bg-neutral-700 border-l-4 border-blue-500 font-medium'
                         : 'text-neutral-700 dark:text-neutral-400 hover:border-l-4 hover:border-blue-200 hover:dark:border-neutral-500 '
