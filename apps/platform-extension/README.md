@@ -1,7 +1,7 @@
 
 ## 浏览器插件
 
-当前阶段并不支持作为浏览器插件的使用
+ext-saladict 原作者已经重新更新了该浏览器插件
 
 ```json
 "@types/firefox-webext-browser": "^67.0.2",

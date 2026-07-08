@@ -4,6 +4,8 @@ This package folk from https://github.com/allentown521/OpenTranslate
 
 列出所有可用的翻译 API，并且进行统一格式的包装
 
+该 package 将会废弃，所有内容将统一在 salad-api 中进行提供
+
 ## Usage
 
 ```
