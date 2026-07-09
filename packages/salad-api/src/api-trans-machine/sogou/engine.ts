@@ -1,8 +1,8 @@
-import type { Language } from '../../const/languages'
+import type { SupportLanguage } from '../../const/languages'
 
 export const SALT = '1508404016012'
 
-const langMap: [Language, string][] = [
+const langMap: [SupportLanguage, string][] = [
   ['auto', 'auto'],
   ['zh-CN', 'zh-CHS'],
   ['zh-TW', 'zh-CHT'],

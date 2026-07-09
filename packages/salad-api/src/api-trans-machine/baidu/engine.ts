@@ -1,0 +1,35 @@
+import type { SupportLanguage } from '../../main'
+
+
+export const langMap: [SupportLanguage, string][] = [
+  ['auto', 'auto'],
+  ['zh-CN', 'zh'],
+  ['zh-TW', 'cht'],
+  ['en', 'en'],
+  ['yue', 'yue'],
+  ['wyw', 'wyw'],
+  ['ja', 'jp'],
+  ['ko', 'kor'],
+  ['fr', 'fra'],
+  ['es', 'spa'],
+  ['th', 'th'],
+  ['ar', 'ara'],
+  ['ru', 'ru'],
+  ['pt', 'pt'],
+  ['de', 'de'],
+  ['it', 'it'],
+  ['el', 'el'],
+  ['nl', 'nl'],
+  ['pl', 'pl'],
+  ['bg', 'bul'],
+  ['et', 'est'],
+  ['da', 'dan'],
+  ['fi', 'fin'],
+  ['cs', 'cs'],
+  ['ro', 'rom'],
+  ['sl', 'slo'],
+  ['sv', 'swe'],
+  ['hu', 'hu'],
+  ['vi', 'vie'],
+]
+

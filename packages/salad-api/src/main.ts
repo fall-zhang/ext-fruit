@@ -1,5 +1,5 @@
 import type { DictID } from './api-trans'
-import type { SupportLanguage } from './const/languages'
+import type { SupportLanguage, ExtendSupportLang } from './const/languages'
 import type { AtomFetchRequest, AtomResponseHandle } from './types/atom-type'
 
 
@@ -21,6 +21,7 @@ export const getRecommendApi = (): Array<DictID> => {
 export type {
   SupportLanguage,
   AtomFetchRequest,
+  ExtendSupportLang,
   AtomResponseHandle
 }
 

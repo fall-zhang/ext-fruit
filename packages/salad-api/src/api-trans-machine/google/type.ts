@@ -1,13 +1,13 @@
 import type { MachineDictID } from '../api-config'
-import type { Language } from '../../const/languages'
+import type { SupportLanguage } from '../../const/languages'
 
 export type GoogleResult = {
   id: MachineDictID
   slInitial: 'hide' | 'collapse' | 'full'
   /** Source language */
-  sl: Language
+  sl: SupportLanguage
   /** Target language */
-  tl: Language
+  tl: SupportLanguage
   searchText: {
     paragraphs: string[]
     tts?: string

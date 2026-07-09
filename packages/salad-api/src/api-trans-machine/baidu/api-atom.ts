@@ -1,11 +1,11 @@
 import type { AtomFetchRequest, AtomGetSrcFunction, AtomResponseHandle } from '../../types/atom-type'
-import { Baidu } from '@P/open-trans/service-baidu'
 import md5 from 'md5'
-import { TranslateError } from '@P/open-trans/translator'
 import type { AuthBody } from './config'
 import type { BaiduTranslateError, BaiduTranslateResult } from './type'
 import type { UnitSearchResult } from '../../types/res-type'
 import type { SupportLanguage } from '../../main'
+import { langMap } from './engine'
+import { TranslateError } from '../../types/error-type'
 
 export const getSrcPage: AtomGetSrcFunction = (text, langCode) => {
   let lang
@@ -26,9 +26,10 @@ export const getFetchRequest: AtomFetchRequest<AuthBody> = (text, {
   option,
 }) => {
   const salt = Date.now().toString()
+  const langToBaidu = new Map(langMap)
   const reqBody = {
-    from: from || 'auto',
-    to: to || 'en',
+    from: langToBaidu.get(from) || 'auto',
+    to: langToBaidu.get(from) || 'en',
     q: text,
     salt,
     appid: option?.appid || '',
@@ -47,6 +48,7 @@ export const getFetchRequest: AtomFetchRequest<AuthBody> = (text, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
+    // body: JSON.stringify(reqBody),
   })
 }
 
@@ -103,8 +105,10 @@ const getTextSpeech = ({
   text: string
   lang: SupportLanguage
 }) => {
+  const langToBaidu = new Map(langMap)
+
   return `https://fanyi.baidu.com/gettts?${new URLSearchParams({
-    lan: Baidu.langMap.get(lang !== 'auto' ? lang : 'zh-CN') || 'zh',
+    lan: langToBaidu.get(lang !== 'auto' ? lang : 'zh-CN') || 'zh',
     text,
     spd: '5',
   }).toString()}`
