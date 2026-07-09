@@ -64,9 +64,8 @@ export function getDefaultConfig (): SaladConfigType {
     },
 
     /** double click delay, in ms */
-    doubleClickDelay: 450,
+    // doubleClickDelay: 450,
 
-    /** where should the dict appears */
     qsLocation: 'CENTER',
 
     /** focus quick search panel when shows up */

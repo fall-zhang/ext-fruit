@@ -3,7 +3,6 @@ import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import { zhCN } from './langMap'
 
-export type LangCode = 'zh-CN' | 'zh-TW' | 'en'
 export type Namespace = 'common' | 'content' | 'langCode' | 'menus' | 'options' | 'popup' | 'wordPage' | 'dicts' | 'sync'
 
 export interface RawLocale {

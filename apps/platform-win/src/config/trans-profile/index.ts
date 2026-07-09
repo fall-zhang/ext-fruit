@@ -5,7 +5,6 @@ import type { ProfileID } from '@/core/api-local/profile'
 import type { AllDictsConf, DictID } from '@P/salad-api/src/api-trans'
 import { getAllDictsConf } from '@P/salad-api/src/api-trans'
 
-
 export type Profile = {
   version: number
 

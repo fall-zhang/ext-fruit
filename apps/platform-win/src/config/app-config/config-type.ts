@@ -1,4 +1,6 @@
-export type LangCode = 'zh-CN' | 'zh-TW' | 'en'
+import type { ExtendSupportLang } from '@P/salad-api'
+
+type LocalLangCode = ExtendSupportLang<'zh-CN' | 'zh-TW' | 'en'>
 
 type InstantSearchKey = 'direct' | 'ctrl' | 'alt' | 'shift'
 export type TCDirection = |
@@ -69,7 +71,7 @@ export type SaladConfigType = {
   animation: boolean,
 
   /** language code for locales 本地 Language Code */
-  langCode: LangCode,
+  langCode: LocalLangCode,
 
   /** panel width */
   panelWidth: number,
@@ -109,7 +111,7 @@ export type SaladConfigType = {
   panelMode: ModeConfType
 
   /** double click delay, in ms */
-  doubleClickDelay: 450,
+  // doubleClickDelay: 450,
 
   /** where should the dict appears */
   qsLocation: TCDirection,
